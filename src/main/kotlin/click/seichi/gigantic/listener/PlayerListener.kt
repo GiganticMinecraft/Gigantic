@@ -1,7 +1,7 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.database.RemoteProfile
 import click.seichi.gigantic.profile.ProfileRepository
-import click.seichi.spade.database.RemoteProfile
 import kotlinx.coroutines.experimental.launch
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener

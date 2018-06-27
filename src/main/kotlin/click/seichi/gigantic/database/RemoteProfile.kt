@@ -1,4 +1,4 @@
-package click.seichi.spade.database
+package click.seichi.gigantic.database
 
 import click.seichi.gigantic.database.dao.UserDao
 import click.seichi.gigantic.profile.Profile
