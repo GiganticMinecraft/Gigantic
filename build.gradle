@@ -1,0 +1,82 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+buildscript {
+    ext.kotlin_version = '1.2.50'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+group = 'click.seichi'
+version = '1.0'
+
+apply plugin: 'kotlin'
+
+sourceCompatibility = targetCompatibility = 1.8
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+processResources {
+    filteringCharset = 'UTF-8'
+    from(sourceSets.main.resources.srcDirs) {
+        include '**/*.yml'
+        filter(ReplaceTokens, tokens: [version: project.version])
+        filter(ReplaceTokens, tokens: [name: project.rootProject.name])
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
+    }
+    maven {
+        url = 'https://jitpack.io'
+    }
+    maven {
+        name = "exposed-repo"
+        url = "https://dl.bintray.com/kotlin/exposed/"
+    }
+    maven {
+        name = "dmulloy2-repo"
+        url = "http://repo.dmulloy2.net/nexus/repository/public/"
+    }
+}
+
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    compile 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+
+    embed "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.4.0-SNAPSHOT"
+
+    embed 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5'
+    embed group: "org.slf4j", name: "slf4j-log4j12", version: "1.7.25"
+    embed group: "org.jetbrains.exposed", name: "exposed", version: "0.10.2"
+    embed group: "io.reactivex.rxjava2", name: "rxjava", version: "2.1.12"
+    embed group: "io.reactivex.rxjava2", name: "rxkotlin", version: "2.2.0"
+
+    compile fileTree(dir: "libs", include: "*.jar")
+}
+
+jar {
+    from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}

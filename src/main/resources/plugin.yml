@@ -1,0 +1,5 @@
+ame: @name@
+version: @version@
+main: click.seichi.gigantic.Gigantic
+
+depend: [ProtocolLib]
