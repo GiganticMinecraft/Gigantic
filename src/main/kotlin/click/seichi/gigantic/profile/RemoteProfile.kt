@@ -1,7 +1,6 @@
-package click.seichi.gigantic.database
+package click.seichi.gigantic.profile
 
 import click.seichi.gigantic.database.dao.UserDao
-import click.seichi.gigantic.profile.Profile
 import kotlinx.coroutines.experimental.async
 import org.bukkit.entity.Player
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -34,12 +33,12 @@ object RemoteProfile {
     suspend fun save(profile: Profile) {
         async {
             transaction {
-
                 UserDao[profile.uniqueId].apply {
                     // localeを更新
                     locale = profile.locale.toString()
+                    // 更新日時を記録
+                    updateDate = DateTime.now()
                 }
-
             }
         }.await()
     }
@@ -50,7 +49,6 @@ object RemoteProfile {
             name = player.name
             // 更新日時を記録
             updateDate = DateTime.now()
-
             // 以下profileのロード処理
             profile.locale = Locale(locale)
         }
