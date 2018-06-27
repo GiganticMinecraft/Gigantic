@@ -33,9 +33,7 @@ class PlayerListener : Listener {
 
         // プロフィールを保存
         launch {
-            //            DatabaseLang.SAVING_LOG.log(name)
             RemoteProfile.save(profile)
-//            DatabaseLang.SAVE_COMPLETED_LOG.log(name)
         }
         ProfileRepository.removeProfile(uniqueId)
     }

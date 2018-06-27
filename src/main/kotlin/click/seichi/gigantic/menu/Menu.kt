@@ -1,5 +1,6 @@
 package click.seichi.gigantic.menu
 
+import click.seichi.gigantic.sound.MenuSound
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -58,8 +59,7 @@ abstract class Menu : InventoryHolder {
      */
     fun open(player: Player, playSound: Boolean = true) {
         player.openInventory(getInventory(player))
-        // TODO
-//        if (playSound) GameSound.MENU_OPEN.play(player)
+        if (playSound) MenuSound.MENU_OPEN.play(player)
     }
 
     protected open fun getInventory(player: Player): Inventory {
@@ -95,8 +95,7 @@ abstract class Menu : InventoryHolder {
      */
     fun back(menu: Menu, player: Player, playSound: Boolean = true) {
         menu.open(player, playSound = false)
-        // TODO
-//        if (playSound) GameSound.MENU_CLOSE.play(player)
+        if (playSound) MenuSound.MENU_CLOSE.play(player)
     }
 
     /**
@@ -107,8 +106,7 @@ abstract class Menu : InventoryHolder {
      */
     fun close(player: Player, playSound: Boolean = true) {
         player.closeInventory()
-        // TODO
-//        if (playSound) GameSound.MENU_CLOSE.play(player)
+        if (playSound) MenuSound.MENU_CLOSE.play(player)
     }
 
     override fun getInventory(): Inventory? {

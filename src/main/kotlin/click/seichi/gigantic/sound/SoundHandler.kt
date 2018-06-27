@@ -8,11 +8,11 @@ import org.bukkit.entity.Player
 /**
  * @author tar0ss
  */
-data class SoundMetadata(
-        private val sound: Sound,
-        private val category: SoundCategory,
-        private val volume: Float = 1.0F,
-        private val pitch: Float = 1.0F
+data class SoundHandler(
+        val sound: Sound,
+        val category: SoundCategory,
+        val volume: Float = 1.0F,
+        val pitch: Float = 1.0F
 ) {
 
     fun play(player: Player) =

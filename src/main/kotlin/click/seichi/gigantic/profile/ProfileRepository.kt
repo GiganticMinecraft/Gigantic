@@ -13,14 +13,9 @@ object ProfileRepository {
 
     fun addProfile(player: Player, profile: Profile) {
         val uniqueId = player.uniqueId ?: return
-        val name = player.name ?: return
-
-        // TODO
         DatabaseLang.PROFILE_LOADING_MESSAGE.sendTo(player)
-//        DatabaseLang.LOADING_LOG.log(name)
         profileMap[uniqueId] = profile
         DatabaseLang.PROFILE_LOAD_COMPLETED_MESSAGE.sendTo(player)
-//        DatabaseLang.LOAD_COMPLETED_LOG.log(name)
     }
 
     fun removeProfile(uniqueId: UUID) {
