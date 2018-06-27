@@ -1,4 +1,4 @@
-ame: @name@
+name: @name@
 version: @version@
 main: click.seichi.gigantic.Gigantic
 
