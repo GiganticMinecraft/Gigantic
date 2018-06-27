@@ -1,0 +1,4 @@
+host: 'localhost'
+database: 'gigantic'
+user: 'root'
+password: ''
