@@ -1,5 +1,6 @@
 package click.seichi.gigantic.profile
 
+import org.joda.time.DateTime
 import java.util.*
 
 /**
@@ -8,5 +9,6 @@ import java.util.*
 data class Profile(
         val uniqueId: UUID,
         var playerName: String,
-        var locale: Locale = Locale.JAPANESE
+        var locale: Locale,
+        var lastSaveDate: DateTime
 )

@@ -18,6 +18,6 @@ class UserDao(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var createdDate by UserTable.createdAt
 
-    var updateDate by UserTable.updatedAt
+    var updatedDate by UserTable.updatedAt
 
 }

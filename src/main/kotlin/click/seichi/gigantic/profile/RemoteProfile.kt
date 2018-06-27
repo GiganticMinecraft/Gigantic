@@ -12,24 +12,31 @@ import java.util.*
  */
 object RemoteProfile {
 
+    /**
+     * player profileをロード、もしくは無ければ作成します
+     *
+     * @param player 対象プレイヤー
+     * @return プロフィール
+     */
     suspend fun loadOrCreate(player: Player): Profile {
 
-        val profile = Profile(player.uniqueId, player.name)
+        var profile: Profile? = null
 
         async {
             transaction {
                 val isFirstJoin = UserDao.findById(player.uniqueId) == null
-                if (isFirstJoin) {
-                    create(player)
-                } else {
-                    load(player, profile)
-                }
+                profile = if (isFirstJoin) create(player) else load(player)
             }
         }.await()
 
-        return profile
+        return profile!!
     }
 
+    /**
+     * player profile をデータベースに書き込みます
+     *
+     * @param profile プロフィール
+     */
     suspend fun save(profile: Profile) {
         async {
             transaction {
@@ -37,28 +44,47 @@ object RemoteProfile {
                     // localeを更新
                     locale = profile.locale.toString()
                     // 更新日時を記録
-                    updateDate = DateTime.now()
+                    updatedDate = DateTime.now()
                 }
             }
         }.await()
     }
 
-    private fun load(player: Player, profile: Profile): Profile {
-        UserDao[profile.uniqueId].apply {
-            // playerNameを更新
+    /**
+     * player profileをデータベースから読み込みます。
+     *
+     * @param player 対象プレイヤー
+     * @return プロフィール
+     */
+    private fun load(player: Player): Profile {
+        UserDao[player.uniqueId].run {
+            // playerNameを更新(更新日時は記録しない)
             name = player.name
-            // 更新日時を記録
-            updateDate = DateTime.now()
-            // 以下profileのロード処理
-            profile.locale = Locale(locale)
+            return Profile(
+                    player.uniqueId,
+                    name,
+                    Locale(locale),
+                    updatedDate
+            )
         }
-
-        return profile
     }
 
-    private fun create(player: Player) {
+    /**
+     * player profileを作成し、データベースに追加します。
+     *
+     * @param player 対象プレイヤー
+     * @return プロフィール
+     */
+    private fun create(player: Player): Profile {
         UserDao.new(player.uniqueId) {
             name = player.name
+        }.run {
+            return Profile(
+                    player.uniqueId,
+                    name,
+                    Locale(locale),
+                    updatedDate
+            )
         }
     }
 }
