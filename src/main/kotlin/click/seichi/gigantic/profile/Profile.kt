@@ -8,7 +8,7 @@ import java.util.*
  */
 data class Profile(
         val uniqueId: UUID,
-        var playerName: String,
+        val playerName: String,
         var locale: Locale,
-        var lastSaveDate: DateTime
+        val lastSaveDate: DateTime
 )

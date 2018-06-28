@@ -1,7 +1,17 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
+
 buildscript {
-    ext.kotlin_version = '1.2.50'
+    ext {
+        kotlin_version = '1.2.50'
+        coroutines_version = '0.22.5'
+        spigot_api_version = '1.12.2-R0.1-SNAPSHOT'
+        protcollib_version = '4.4.0-SNAPSHOT'
+        slf4j_version = '1.7.25'
+        exposed_version = '0.10.2'
+        rxjava_version = '2.1.12'
+        rxkotlin_version = '2.2.0'
+    }
     repositories {
         mavenCentral()
     }
@@ -9,6 +19,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
+
+
 
 group = 'click.seichi'
 version = '1.0-SNAPSHOT'
@@ -39,12 +51,12 @@ repositories {
         url = 'https://jitpack.io'
     }
     maven {
-        name = "exposed-repo"
-        url = "https://dl.bintray.com/kotlin/exposed/"
+        name = 'exposed-repo'
+        url = 'https://dl.bintray.com/kotlin/exposed/'
     }
     maven {
-        name = "dmulloy2-repo"
-        url = "http://repo.dmulloy2.net/nexus/repository/public/"
+        name = 'dmulloy2-repo'
+        url = 'http://repo.dmulloy2.net/nexus/repository/public/'
     }
 }
 
@@ -54,19 +66,20 @@ configurations {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    compile 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: kotlin_version
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: kotlin_version
+    compile group: 'org.spigotmc', name: 'spigot-api', version: spigot_api_version
 
-    embed "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    embed group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_version
 
-    compile group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.4.0-SNAPSHOT"
+    compile group: 'com.comphenix.protocol', name: 'ProtocolLib', version: protcollib_version
 
-    embed 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5'
-    embed group: "org.slf4j", name: "slf4j-log4j12", version: "1.7.25"
-    embed group: "org.jetbrains.exposed", name: "exposed", version: "0.10.2"
-    embed group: "io.reactivex.rxjava2", name: "rxjava", version: "2.1.12"
-    embed group: "io.reactivex.rxjava2", name: "rxkotlin", version: "2.2.0"
+    embed group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: coroutines_version
+    embed group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-rx2', version: coroutines_version
+    embed group: "org.slf4j", name: "slf4j-log4j12", version: slf4j_version
+    embed group: "org.jetbrains.exposed", name: "exposed", version: exposed_version
+    embed group: "io.reactivex.rxjava2", name: "rxjava", version: rxjava_version
+    embed group: "io.reactivex.rxjava2", name: "rxkotlin", version: rxkotlin_version
 
     compile fileTree(dir: "libs", include: "*.jar")
 }
@@ -75,8 +88,4 @@ jar {
     from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
+kotlin { experimental { coroutines 'enable' } }

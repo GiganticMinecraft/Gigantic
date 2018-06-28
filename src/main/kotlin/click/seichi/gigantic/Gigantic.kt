@@ -4,6 +4,7 @@ import click.seichi.gigantic.config.DatabaseSetting
 import click.seichi.gigantic.database.table.UserTable
 import click.seichi.gigantic.listener.InventoryListener
 import click.seichi.gigantic.listener.PlayerListener
+import kotlinx.coroutines.experimental.newSingleThreadContext
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -16,6 +17,7 @@ class Gigantic : JavaPlugin() {
 
     companion object {
         lateinit var PLUGIN: Gigantic
+        val DB = newSingleThreadContext("DB")
     }
 
     override fun onEnable() {

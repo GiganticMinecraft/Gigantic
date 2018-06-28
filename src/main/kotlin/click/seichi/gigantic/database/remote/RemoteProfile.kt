@@ -1,6 +1,7 @@
-package click.seichi.gigantic.profile
+package click.seichi.gigantic.database.remote
 
 import click.seichi.gigantic.database.dao.UserDao
+import click.seichi.gigantic.profile.Profile
 import kotlinx.coroutines.experimental.async
 import org.bukkit.entity.Player
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -10,26 +11,17 @@ import java.util.*
 /**
  * @author tar0ss
  */
-object RemoteProfile {
+class RemoteProfile(val player: Player) : Remotable {
 
     /**
-     * player profileをロード、もしくは無ければ作成します
+     * 非同期でplayer profileをロード、もしくは無ければ作成します
      *
-     * @param player 対象プレイヤー
      * @return プロフィール
      */
-    suspend fun loadOrCreate(player: Player): Profile {
-
-        var profile: Profile? = null
-
-        async {
-            transaction {
-                val isFirstJoin = UserDao.findById(player.uniqueId) == null
-                profile = if (isFirstJoin) create(player) else load(player)
-            }
-        }.await()
-
-        return profile!!
+    fun loadOrCreateAsync() = async(DB) {
+        transaction {
+            if (isExist()) load() else create()
+        }
     }
 
     /**
@@ -37,26 +29,33 @@ object RemoteProfile {
      *
      * @param profile プロフィール
      */
-    suspend fun save(profile: Profile) {
-        async {
-            transaction {
-                UserDao[profile.uniqueId].apply {
-                    // localeを更新
-                    locale = profile.locale.toString()
-                    // 更新日時を記録
-                    updatedDate = DateTime.now()
-                }
+    fun saveAsync(profile: Profile) = async {
+        transaction {
+            UserDao[profile.uniqueId].apply {
+                // localeを更新
+                locale = profile.locale.toString()
+                // 更新日時を記録
+                updatedDate = DateTime.now()
             }
-        }.await()
+        }
+    }
+
+
+    /**
+     * player profile がデータベースに存在するか調べます
+     *
+     * @return 存在すればTRUE,しなければFALSE
+     */
+    private fun isExist(): Boolean {
+        return UserDao.findById(player.uniqueId) != null
     }
 
     /**
      * player profileをデータベースから読み込みます。
      *
-     * @param player 対象プレイヤー
      * @return プロフィール
      */
-    private fun load(player: Player): Profile {
+    private fun load(): Profile {
         UserDao[player.uniqueId].run {
             // playerNameを更新(更新日時は記録しない)
             name = player.name
@@ -72,10 +71,9 @@ object RemoteProfile {
     /**
      * player profileを作成し、データベースに追加します。
      *
-     * @param player 対象プレイヤー
      * @return プロフィール
      */
-    private fun create(player: Player): Profile {
+    private fun create(): Profile {
         UserDao.new(player.uniqueId) {
             name = player.name
         }.run {
