@@ -1,7 +1,7 @@
 package click.seichi.gigantic.database.remote
 
 import click.seichi.gigantic.database.dao.UserDao
-import click.seichi.gigantic.profile.Profile
+import click.seichi.gigantic.player.profile.Profile
 import kotlinx.coroutines.experimental.async
 import org.bukkit.entity.Player
 import org.jetbrains.exposed.sql.transactions.transaction

@@ -1,6 +1,6 @@
 package click.seichi.gigantic.listener
 
-import click.seichi.gigantic.profile.ProfileRepository
+import click.seichi.gigantic.player.profile.ProfileRepository
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
