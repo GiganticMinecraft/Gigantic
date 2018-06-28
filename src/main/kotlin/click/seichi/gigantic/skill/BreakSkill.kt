@@ -1,21 +1,22 @@
 package click.seichi.gigantic.skill
 
 import click.seichi.gigantic.message.LocalizedString
-import click.seichi.gigantic.util.Box
+import org.bukkit.block.Block
 import org.bukkit.entity.Player
-import org.bukkit.event.Event
 
 /**
  * @author tar0ss
  */
-class BreakSkill(
-        override val displayName: LocalizedString,
-        override val shortName: LocalizedString,
-        val box: Box,
-        val breakStyle: BreakStyle
-) : Skill() {
+abstract class BreakSkill : Skill() {
+    // プレイヤーに表示される簡略名（1文字）
+    abstract val shortName: LocalizedString
 
-    override fun fire(player: Player, event: Event): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    /**
+     * スキル発火
+     *
+     * @param player 発火するプレイヤー
+     * @param baseBlock 発火するブロック
+     * @return 成功->TRUE,失敗->FALSE
+     */
+    abstract fun fire(player: Player, baseBlock: Block): Boolean
 }
