@@ -1,4 +1,4 @@
-package click.seichi.gigantic.player.profile
+package click.seichi.gigantic.profile
 
 import org.joda.time.DateTime
 import java.util.*

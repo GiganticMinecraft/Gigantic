@@ -1,4 +1,4 @@
-package click.seichi.gigantic.player.profile
+package click.seichi.gigantic.profile
 
 import click.seichi.gigantic.database.remote.RemoteProfile
 import click.seichi.gigantic.message.lang.DatabaseLang

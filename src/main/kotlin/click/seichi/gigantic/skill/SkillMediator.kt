@@ -1,6 +1,6 @@
 package click.seichi.gigantic.skill
 
-import click.seichi.gigantic.player.profile.Profile
+import click.seichi.gigantic.profile.Profile
 
 /**
  * @author tar0ss
