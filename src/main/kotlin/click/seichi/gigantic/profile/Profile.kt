@@ -9,6 +9,6 @@ import java.util.*
 data class Profile(
         val uniqueId: UUID,
         val playerName: String,
-        var locale: Locale,
-        val lastSaveDate: DateTime
+        val lastSaveDate: DateTime,
+        var locale: Locale
 )

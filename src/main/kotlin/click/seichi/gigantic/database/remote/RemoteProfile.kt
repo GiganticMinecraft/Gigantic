@@ -74,9 +74,9 @@ class RemoteProfile(val player: Player) : Remotable {
      * @return プロフィール
      */
     private fun UserDao.newProfile() = Profile(
-            player.uniqueId,
-            name,
-            Locale(locale),
-            updatedDate
+            uniqueId = player.uniqueId,
+            playerName = name,
+            locale = Locale(locale),
+            lastSaveDate = updatedDate
     )
 }
