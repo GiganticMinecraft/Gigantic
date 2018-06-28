@@ -55,34 +55,28 @@ class RemoteProfile(val player: Player) : Remotable {
      *
      * @return プロフィール
      */
-    private fun load(): Profile {
-        UserDao[player.uniqueId].run {
-            // playerNameを更新(更新日時は記録しない)
-            name = player.name
-            return Profile(
-                    player.uniqueId,
-                    name,
-                    Locale(locale),
-                    updatedDate
-            )
-        }
-    }
+    private fun load() = UserDao[player.uniqueId].apply {
+        name = player.name
+    }.newProfile()
 
     /**
      * player profileを作成し、データベースに追加します。
      *
      * @return プロフィール
      */
-    private fun create(): Profile {
-        UserDao.new(player.uniqueId) {
-            name = player.name
-        }.run {
-            return Profile(
-                    player.uniqueId,
-                    name,
-                    Locale(locale),
-                    updatedDate
-            )
-        }
-    }
+    private fun create() = UserDao.new(player.uniqueId) {
+        name = player.name
+    }.newProfile()
+
+    /**
+     * daoからprofileを生成します
+     *
+     * @return プロフィール
+     */
+    private fun UserDao.newProfile() = Profile(
+            player.uniqueId,
+            name,
+            Locale(locale),
+            updatedDate
+    )
 }
