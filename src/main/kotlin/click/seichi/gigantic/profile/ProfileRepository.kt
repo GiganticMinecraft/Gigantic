@@ -28,6 +28,6 @@ object ProfileRepository {
         RemoteProfile(player).saveAsync(profile).await()
     }
 
-    fun getProfile(uniqueId: UUID) = profileMap[uniqueId]
+    fun findProfile(uniqueId: UUID) = profileMap[uniqueId]
 
 }

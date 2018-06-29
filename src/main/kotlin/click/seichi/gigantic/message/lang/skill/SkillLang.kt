@@ -12,4 +12,9 @@ object SkillLang {
             Locale.JAPANESE to "ON",
             Locale.ENGLISH to "ON"
     )
+
+    val NOT_ACTIVATE = LocalizedString(
+            Locale.JAPANESE to "OFF",
+            Locale.ENGLISH to "OFF"
+    )
 }

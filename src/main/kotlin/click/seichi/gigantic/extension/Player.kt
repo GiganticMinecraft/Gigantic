@@ -25,7 +25,8 @@ fun Player.getHead() = ItemStack(Material.SKULL_ITEM, 1, 3).apply {
 }
 
 val Player.profile: Profile?
-    get() = ProfileRepository.getProfile(uniqueId)
+    get() = ProfileRepository.findProfile(uniqueId)
+
 
 val Player.wrappedLocale: Locale
     get() = profile?.locale ?: Locale.JAPANESE

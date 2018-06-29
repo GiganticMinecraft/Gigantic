@@ -6,8 +6,12 @@ import click.seichi.gigantic.message.lang.skill.SkillLang
 /**
  * @author tar0ss
  */
-enum class SkillState(val canPlay: Boolean, val localizedName: LocalizedString) {
-    ACTIVATE(true, SkillLang.ACTIVATE),
+enum class SkillState(
+        val canFire: Boolean,
+        val localizedName: LocalizedString = if (canFire) SkillLang.ACTIVATE else SkillLang.NOT_ACTIVATE
+) {
+    NOT_LOADING(false),
+    ACTIVATE(true),
 //    NOT_ACTIVATE(false, "OFF"),
 //    LOCK(false, "%DELETE%"),
 //    NOT_SURVIVAL(false, "NOT_SURVIVAL"),

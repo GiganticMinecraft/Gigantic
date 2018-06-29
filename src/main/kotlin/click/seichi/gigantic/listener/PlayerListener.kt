@@ -1,7 +1,7 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.profile.ProfileRepository
-import click.seichi.gigantic.skill.skills.Explosion
+import click.seichi.gigantic.skill.SkillResolver
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -32,6 +32,6 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         val block = event.block ?: return
         // エクスプロージョン発火
-        Explosion().fire(player, block)
+        SkillResolver(player).fireExplosion(block)
     }
 }
