@@ -22,3 +22,7 @@ fun World.spawnColoredParticleSpherically(
         count: Int = 1,
         radius: Double
 ) = players.forEach { it.spawnColoredParticleSpherically(location, color, count, radius) }
+
+// TODO implements
+val World.isSeichiWorld: Boolean
+    get() = true

@@ -4,6 +4,7 @@ import click.seichi.gigantic.message.LocalizedString
 import click.seichi.gigantic.message.messages.Message
 import click.seichi.gigantic.profile.Profile
 import click.seichi.gigantic.profile.ProfileRepository
+import click.seichi.gigantic.util.CardinalDirection
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
 import net.md_5.bungee.api.ChatMessageType
@@ -24,9 +25,11 @@ fun Player.getHead() = ItemStack(Material.SKULL_ITEM, 1, 3).apply {
     }
 }
 
-val Player.profile: Profile?
-    get() = ProfileRepository.findProfile(uniqueId)
+val Player.profile: Profile
+    get() = ProfileRepository.findProfile(uniqueId)!!
 
+val Player.cardinalDirection
+    get() = CardinalDirection.getCardinalDirection(this)
 
 val Player.wrappedLocale: Locale
     get() = profile?.locale ?: Locale.JAPANESE

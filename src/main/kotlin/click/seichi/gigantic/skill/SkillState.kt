@@ -10,9 +10,29 @@ enum class SkillState(
         val canFire: Boolean,
         val localizedName: LocalizedString = if (canFire) SkillLang.ACTIVATE else SkillLang.NOT_ACTIVATE
 ) {
+    // TODO string
     NOT_LOADING(false),
     ACTIVATE(true),
-//    NOT_ACTIVATE(false, "OFF"),
+    FIRE_COMPLETED(true),
+    NOT_ACTIVATE(false),
+    // TODO string
+    LOCKED(false),
+    // TODO string
+    COOLDOWN(false),
+    // TODO string
+    NOT_SURVIVAL(false),
+    // TODO string
+    NOT_SEICHI_WORLD(false),
+    // TODO string
+    FLYING(false),
+    // TODO string
+    NOT_SEICHI_TOOL(false),
+    // TODO string
+    UPPER_BLOCK(false),
+    // TODO string
+    UNDER_PLAYER(false),
+    // TODO string
+    NO_BLOCK(false),
 //    LOCK(false, "%DELETE%"),
 //    NOT_SURVIVAL(false, "NOT_SURVIVAL"),
 //    NOT_SEICHI_WORLD(false, "使用不可能ワールド"),
@@ -29,6 +49,5 @@ enum class SkillState(
 //    SOLID(false,"固体"),
 //    NO_TARGET(false,"ターゲット無し"),
 //    NO_FAIRY(false,"妖精要請中"),
-//    NO_BLOCK(false,"ON"),
 //    UPPER_BLOCK(false,"上方ブロック検知")
 }

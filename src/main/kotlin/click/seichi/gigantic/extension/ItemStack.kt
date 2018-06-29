@@ -53,3 +53,7 @@ fun ItemStack.addLine(bit: Int = 23, prefix: String = "$GRAY") {
 fun ItemStack.addClickToOpenLore() {
     addLore("$GREEN$BOLD$UNDERLINE" + "クリックで開く")
 }
+
+// TODO implements
+val ItemStack.isSeichiTool: Boolean
+    get() = true

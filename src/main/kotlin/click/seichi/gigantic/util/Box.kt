@@ -3,7 +3,7 @@ package click.seichi.gigantic.util
 /**
  * @author tar0ss
  */
-class Box(
+open class Box(
         val width: Int,
         val height: Int,
         val depth: Int
