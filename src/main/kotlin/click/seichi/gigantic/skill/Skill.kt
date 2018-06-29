@@ -6,16 +6,16 @@ import org.bukkit.entity.Player
 /**
  * @author tar0ss
  */
-abstract class Skill {
+abstract class Skill(protected val player: Player) {
     // プレイヤーに表示される名前
     abstract val displayName: LocalizedString
 
-    abstract fun fire(player: Player): SkillState
+    abstract val isUnlocked: Boolean
 
-    abstract fun load(player: Player): SkillState
+    abstract val isCooldown: Boolean
 
-    protected abstract fun isUnlocked(player: Player): Boolean
+    abstract fun fire(): SkillState
 
-    protected abstract fun isCooldown(player: Player): Boolean
+    abstract fun load(): SkillState
 
 }

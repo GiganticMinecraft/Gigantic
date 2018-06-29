@@ -25,8 +25,8 @@ fun Player.getHead() = ItemStack(Material.SKULL_ITEM, 1, 3).apply {
     }
 }
 
-val Player.profile: Profile
-    get() = ProfileRepository.findProfile(uniqueId)!!
+val Player.profile: Profile?
+    get() = ProfileRepository.findProfile(uniqueId)
 
 val Player.cardinalDirection
     get() = CardinalDirection.getCardinalDirection(this)

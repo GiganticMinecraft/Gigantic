@@ -10,21 +10,16 @@ import org.bukkit.util.Vector
  * @author tar0ss
  */
 class BreakBox(
-        width: Int,
-        height: Int,
-        depth: Int,
+        box: Box,
         style: BreakStyle,
         private val baseBlock: Block,
-        private val cardinalDirection: CardinalDirection
-) : Box(width, height, depth) {
+        private val cardinalDirection: CardinalDirection,
+        private val maxUpperNum: Int = 5
+) : Box(box) {
 
     private val mWidth = (width - 1) / 2
     private val mHeight = style.marginHeight(this)
     private val mDepth = (depth - 1) / 2
-
-    companion object {
-        private val UPPER_NUM = 10
-    }
 
     // 破壊範囲にあるすべてのブロック
     val blockSet by lazy {
@@ -34,11 +29,11 @@ class BreakBox(
                 (-mDepth until depth - mDepth)
         )
     }
-    // 破壊範囲の上方ブロック（上限[UPPER_NUM])
+    // 破壊範囲の上方ブロック（上限[maxUpperNum])
     val upperBlockSet by lazy {
         getBlockSet(
                 (-mWidth until width - mWidth),
-                (height - mHeight + 1..height - mHeight + UPPER_NUM),
+                (height - mHeight + 1..height - mHeight + maxUpperNum),
                 (-mDepth until depth - mDepth)
         )
     }

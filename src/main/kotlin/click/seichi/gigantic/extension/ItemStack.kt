@@ -57,3 +57,6 @@ fun ItemStack.addClickToOpenLore() {
 // TODO implements
 val ItemStack.isSeichiTool: Boolean
     get() = true
+
+fun ItemStack.canConsumeDurability(consumeDurability: Long) = consumeDurability < 0 ||
+        !(durability > type.maxDurability || type.maxDurability < durability + consumeDurability)

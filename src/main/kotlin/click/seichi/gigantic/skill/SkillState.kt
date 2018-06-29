@@ -33,6 +33,10 @@ enum class SkillState(
     UNDER_PLAYER(false),
     // TODO string
     NO_BLOCK(false),
+    // TODO string
+    NO_DURABILITY(false),
+    // TODO string
+    NO_MANA(false),
 //    LOCK(false, "%DELETE%"),
 //    NOT_SURVIVAL(false, "NOT_SURVIVAL"),
 //    NOT_SEICHI_WORLD(false, "使用不可能ワールド"),

@@ -1,88 +1,112 @@
 package click.seichi.gigantic.skill.skills
 
-import click.seichi.gigantic.extension.isRoot
-import click.seichi.gigantic.extension.isSeichiTool
-import click.seichi.gigantic.extension.isSeichiWorld
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.lang.skill.BreakSkillLang
 import click.seichi.gigantic.skill.BreakBox
 import click.seichi.gigantic.skill.BreakSkill
+import click.seichi.gigantic.skill.BreakStyle
 import click.seichi.gigantic.skill.SkillState
+import click.seichi.gigantic.util.Box
 import org.bukkit.GameMode
+import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
 /**
  * @author tar0ss
  */
-class Explosion(val block: Block) : BreakSkill() {
+class Explosion(player: Player, private val block: Block) : BreakSkill(player) {
 
     override val shortName = BreakSkillLang.EXPLOSION_SHORT_NAME
 
     override val displayName = BreakSkillLang.EXPLOSION_LONG_NAME
 
-    override fun load(player: Player): SkillState {
+    // TODO implements
+    override val isUnlocked: Boolean = true // player.profile.seichiLevel > 10
+
+    // TODO implements
+    override val isCooldown: Boolean = false
+
+    // TODO implements
+    override val toggle: Boolean = true
+
+    // TODO implements
+    override val skillLevel: Int = 3
+
+    // TODO implements
+    override val coolTime: Long = 0
+
+    // TODO implements
+    override val consumeMana: Long = 0
+
+    // TODO implements
+    override val consumeDurability: Long = 0
+
+
+    private val box = when (skillLevel) {
+        1 -> Box(1, 2, 1)
+        2 -> Box(3, 2, 1)
+        3 -> Box(3, 3, 3)
+        in 4..9 -> Box(
+                (skillLevel - 2) * 2 + 1,
+                (skillLevel - 3) * 2 + 1,
+                (skillLevel - 2) * 2 + 1
+        )
+        else -> throw IllegalArgumentException()
+    }
+
+    private val style = BreakStyle.NORMAL
+
+    override val breakBox by lazy {
+        BreakBox(box, style, block, player.cardinalDirection)
+    }
+
+    override val targetSet by lazy {
+        breakBox.blockSet
+                .filter { getBlockState(it).canFire }
+                .toSet()
+    }
+
+    override fun load(): SkillState {
         return when {
-            !isUnlocked(player) -> SkillState.LOCKED
-            !isCooldown(player) -> SkillState.COOLDOWN
+            !isUnlocked -> SkillState.LOCKED
+            isCooldown -> SkillState.COOLDOWN
             player.gameMode != GameMode.SURVIVAL -> SkillState.NOT_SURVIVAL
             !player.world.isSeichiWorld -> SkillState.NOT_SEICHI_WORLD
             player.isFlying -> SkillState.FLYING
-            !player.inventory.itemInMainHand.isSeichiTool -> SkillState.NOT_SEICHI_TOOL
-            !getToggle(player) -> SkillState.NOT_ACTIVATE
+            !tool.isSeichiTool -> SkillState.NOT_SEICHI_TOOL
+            !toggle -> SkillState.NOT_ACTIVATE
+            breakBox.upperBlockSet.firstOrNull { it.isRoot } == null -> SkillState.UPPER_BLOCK
+            targetSet.isEmpty() -> breakBox.blockSet
+                    .firstOrNull()?.let { getBlockState(it) } ?: SkillState.NO_BLOCK
+            !tool.canConsumeDurability(consumeDurability) -> SkillState.NO_DURABILITY
+            mana < consumeMana -> SkillState.NO_MANA
             else -> SkillState.ACTIVATE
         }
     }
 
-    override fun fire(player: Player): SkillState {
-        // 破壊範囲のクラス生成
-        val breakBox = getBreakBox(player)
-
-        // 上方にブロックを検知したとき終了
-        if (breakBox.upperBlockSet.firstOrNull { it.isRoot } == null) {
-            return SkillState.UPPER_BLOCK
+    override fun fire(): SkillState {
+        // TODO　mana and durability decrease
+        // TODO skilllevel update
+        // TODO coolTime invoke
+        targetSet.forEach { block ->
+            //TODO setMetadata
+            //TODO minestack add
+            //TODO add Statistic
+            block.type = Material.AIR
         }
-
-        // 破壊ブロックを取得
-        val breakBlockSet = breakBox.blockSet
-                .filter { getBreakBlockState(player, it).canFire }
-                .toSet()
-
-        // 破壊ブロックが空の時、原因を探して終了
-        if (breakBlockSet.isEmpty()) {
-            return breakBox.blockSet
-                    .map { getBreakBlockState(player, it) }
-                    .firstOrNull { !it.canFire } ?: SkillState.NO_BLOCK
-        }
-
-        // 破壊可能ブロックが割り出せたのでここから破壊の前処理に入る
-
         return SkillState.FIRE_COMPLETED
     }
 
-    override fun getBreakBlockState(player: Player, block: Block) = when {
+    override fun getBlockState(block: Block) = when {
     // TODO WorldGuard
     // TODO METADATA
-        canBreakUnderPlayer(player) -> SkillState.UNDER_PLAYER
+        !canBreakUnderPlayer(block) -> SkillState.UNDER_PLAYER
         else -> SkillState.ACTIVATE
     }
 
-    override fun getBreakBox(player: Player): BreakBox {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun isUnlocked(player: Player): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun isCooldown(player: Player): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getToggle(player: Player): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun canBreakUnderPlayer(player: Player): Boolean {
+    override fun canBreakUnderPlayer(block: Block): Boolean {
+        return true
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

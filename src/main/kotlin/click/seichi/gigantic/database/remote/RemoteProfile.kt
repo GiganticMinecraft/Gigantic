@@ -80,6 +80,8 @@ class RemoteProfile(val player: Player) : Remotable {
             locale = Locale(locale),
             lastSaveDate = updatedDate,
             // TODO create level column
-            skillPreferences = SkillPreferences(1)
+            skillPreferences = SkillPreferences(1),
+            // TODO implements
+            seichiLevel = 1
     )
 }
