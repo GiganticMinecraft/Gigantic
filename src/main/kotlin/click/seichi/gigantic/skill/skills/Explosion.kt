@@ -21,6 +21,15 @@ class Explosion(player: Player, private val block: Block) : BreakSkill(player) {
 
     override val displayName = BreakSkillLang.EXPLOSION_LONG_NAME
 
+    override val breakBox by lazy {
+        BreakBox(box, style, block, player.cardinalDirection)
+    }
+
+    override val targetSet by lazy {
+        breakBox.blockSet
+                .filter { getBlockState(it).canFire }
+                .toSet()
+    }
 
     override val isUnlocked = player.profile?.seichiLevel ?: 1 > 10
 
@@ -33,14 +42,11 @@ class Explosion(player: Player, private val block: Block) : BreakSkill(player) {
     // TODO implements
     override val skillLevel: Int = 3
 
-    // TODO implements
-    override val coolTime: Long = 0
+    override val coolTime: Long = (targetSet.size.let { Math.pow(it.toDouble(), 0.25) - 1 } * 20).toLong().let { if (it < 20) 0 else it }
 
-    // TODO implements
-    override val consumeMana: Long = 0
+    override val consumeMana: Long = targetSet.size.let { (it / Math.pow(it.toDouble(), 0.2) - 1).toLong() }
 
-    // TODO implements
-    override val consumeDurability: Long = 0
+    override val consumeDurability: Long = targetSet.size.toLong()
 
 
     private val box = when (skillLevel) {
@@ -57,15 +63,7 @@ class Explosion(player: Player, private val block: Block) : BreakSkill(player) {
 
     private val style = BreakStyle.NORMAL
 
-    override val breakBox by lazy {
-        BreakBox(box, style, block, player.cardinalDirection)
-    }
 
-    override val targetSet by lazy {
-        breakBox.blockSet
-                .filter { getBlockState(it).canFire }
-                .toSet()
-    }
 
     override fun load(): SkillState {
         return when {
@@ -100,7 +98,7 @@ class Explosion(player: Player, private val block: Block) : BreakSkill(player) {
 
     override fun getBlockState(block: Block) = when {
     // TODO METADATA
-        !canBreakUnderPlayer(block) -> SkillState.UNDER_PLAYER
+        !canBreakUnderPlayer(block) -> SkillState.FOOTHOLD_BLOCK
         else -> SkillState.ACTIVATE
     }
 

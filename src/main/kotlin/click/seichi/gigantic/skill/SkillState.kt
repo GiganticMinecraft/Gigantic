@@ -21,6 +21,7 @@ enum class SkillState(
     FLYING(false, SkillLang.FLYING),
     NOT_SEICHI_TOOL(false, SkillLang.NOT_SEICHI_TOOL),
     UPPER_BLOCK(false, SkillLang.UPPER_BLOCK),
+    FOOTHOLD_BLOCK(false, SkillLang.FOOTHOLD_BLOCK),
     NO_BLOCK(false, SkillLang.NO_BLOCK),
     NO_DURABILITY(false, SkillLang.NO_DURABILITY),
     NO_MANA(false, SkillLang.NO_MANA),
