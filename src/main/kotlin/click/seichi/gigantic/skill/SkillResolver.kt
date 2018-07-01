@@ -12,7 +12,7 @@ import org.bukkit.entity.Player
 class SkillResolver(val player: Player) {
 
     fun fireExplosion(block: Block): Boolean {
-        var state: SkillState = SkillState.NOT_LOADING
+        var state: SkillState = SkillState.FAILED_TO_LOAD
         Explosion(player, block).run {
             state = load()
             if (state.canFire) {

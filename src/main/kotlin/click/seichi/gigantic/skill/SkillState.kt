@@ -10,48 +10,19 @@ enum class SkillState(
         val canFire: Boolean,
         val localizedName: LocalizedString = if (canFire) SkillLang.ACTIVATE else SkillLang.NOT_ACTIVATE
 ) {
-    // TODO string
-    NOT_LOADING(false),
+    FAILED_TO_LOAD(false, SkillLang.FAILED_TO_LOAD),
     ACTIVATE(true),
     FIRE_COMPLETED(true),
-    NOT_ACTIVATE(false),
-    // TODO string
-    LOCKED(false),
-    // TODO string
-    COOLDOWN(false),
-    // TODO string
-    NOT_SURVIVAL(false),
-    // TODO string
-    NOT_SEICHI_WORLD(false),
-    // TODO string
-    FLYING(false),
-    // TODO string
-    NOT_SEICHI_TOOL(false),
-    // TODO string
-    UPPER_BLOCK(false),
-    // TODO string
-    UNDER_PLAYER(false),
-    // TODO string
-    NO_BLOCK(false),
-    // TODO string
-    NO_DURABILITY(false),
-    // TODO string
-    NO_MANA(false),
-//    LOCK(false, "%DELETE%"),
-//    NOT_SURVIVAL(false, "NOT_SURVIVAL"),
-//    NOT_SEICHI_WORLD(false, "使用不可能ワールド"),
-//    FLYING(false, "フライ使用中"),
-//    NOT_SEICHI_TOOL(false, "使用不可能ツール"),
-//    SAFETY_ACTUATED(false, "安全装置作動"),
-//    WORLD_GUARD(false,"自保護外"),
-//    SKILLED(false,"スキル発動済み"),
-//    UNDER_PLAYER(false,"破壊位置が低い"),
-//    NO_DURABILITY(false,"耐久不足"),
-//    NO_MANA(false,"マナ不足"),
-//    COOL_TIME(false,"クールタイム中"),
-//    LIQUID(false,"液体"),
-//    SOLID(false,"固体"),
-//    NO_TARGET(false,"ターゲット無し"),
-//    NO_FAIRY(false,"妖精要請中"),
-//    UPPER_BLOCK(false,"上方ブロック検知")
+    NOT_ACTIVATE(false, SkillLang.NOT_ACTIVATE),
+    LOCKED(false, SkillLang.LOCKED),
+    COOLDOWN(false, SkillLang.COOLDOWN),
+    NOT_SURVIVAL(false, SkillLang.NOT_SURVIVAL),
+    NOT_SEICHI_WORLD(false, SkillLang.NOT_SEICHI_WORLD),
+    FLYING(false, SkillLang.FLYING),
+    NOT_SEICHI_TOOL(false, SkillLang.NOT_SEICHI_TOOL),
+    UPPER_BLOCK(false, SkillLang.UPPER_BLOCK),
+    NO_BLOCK(false, SkillLang.NO_BLOCK),
+    NO_DURABILITY(false, SkillLang.NO_DURABILITY),
+    NO_MANA(false, SkillLang.NO_MANA),
+    ;
 }
