@@ -1,5 +1,6 @@
 package click.seichi.gigantic.database.remote
 
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.database.dao.UserDao
 import click.seichi.gigantic.profile.Profile
 import click.seichi.gigantic.profile.SkillPreferences
@@ -79,9 +80,9 @@ class RemoteProfile(val player: Player) : Remotable {
             playerName = name,
             locale = Locale(locale),
             lastSaveDate = updatedDate,
-            // TODO create level column
             skillPreferences = SkillPreferences(1),
-            // TODO implements
-            seichiLevel = 1
+            mineBlock = mineBlock,
+            mana = mana,
+            seichiLevel = Config.seichiLevel.calcLevel(player)
     )
 }

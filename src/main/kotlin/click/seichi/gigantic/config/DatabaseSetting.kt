@@ -5,13 +5,13 @@ import click.seichi.gigantic.Gigantic
 /**
  * @author tar0ss
  */
-object DatabaseSetting : SimpleConfiguration("database", Gigantic.PLUGIN) {
+object DatabaseSetting : SimpleConfiguration("DATABASE", Gigantic.PLUGIN) {
 
-    val host = getString("host")
+    val HOST: String = getString("HOST")
 
-    val database = getString("database")
+    val DATABASE: String = getString("DATABASE")
 
-    val user = getString("user")
+    val USER: String = getString("USER")
 
-    val password = getString("password")
+    val PASSWORD: String = getString("PASSWORD")
 }

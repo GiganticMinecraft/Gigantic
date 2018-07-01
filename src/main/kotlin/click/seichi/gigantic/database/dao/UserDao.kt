@@ -16,6 +16,10 @@ class UserDao(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var locale by UserTable.locale
 
+    var mineBlock by UserTable.mineBlock
+
+    var mana by UserTable.mana
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt

@@ -9,8 +9,8 @@ import org.bukkit.util.Vector
 /**
  * @author tar0ss
  */
-// 根を張るブロックかどうか（つまり、下のブロックが消えた時に状態が変化するかどうか）
-val Block.isRoot: Boolean
+// 浮けるかどうか
+val Block.canFloat: Boolean
     get() = when (type) {
         Material.AIR -> false
         else -> true

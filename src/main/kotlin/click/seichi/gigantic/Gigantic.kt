@@ -39,8 +39,8 @@ class Gigantic : JavaPlugin() {
 
     private fun prepareDatabase() {
         //connect MySQL
-        Database.connect("jdbc:mysql://${DatabaseSetting.host}/${DatabaseSetting.database}",
-                "com.mysql.jdbc.Driver", DatabaseSetting.user, DatabaseSetting.password)
+        Database.connect("jdbc:mysql://${DatabaseSetting.HOST}/${DatabaseSetting.DATABASE}",
+                "com.mysql.jdbc.Driver", DatabaseSetting.USER, DatabaseSetting.PASSWORD)
 
         //create Tables
         transaction {

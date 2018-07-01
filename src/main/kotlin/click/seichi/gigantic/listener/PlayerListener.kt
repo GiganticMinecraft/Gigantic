@@ -32,6 +32,8 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         val block = event.block ?: return
         // エクスプロージョン発火
-        SkillResolver(player).fireExplosion(block)
+        if (!SkillResolver(player).fireExplosion(block)) {
+            event.isCancelled = true
+        }
     }
 }

@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
  */
 class SkillResolver(val player: Player) {
 
-    fun fireExplosion(block: Block) {
+    fun fireExplosion(block: Block): Boolean {
         var state: SkillState = SkillState.NOT_LOADING
         Explosion(player, block).run {
             state = load()
@@ -19,7 +19,9 @@ class SkillResolver(val player: Player) {
                 state = fire()
             }
         }
+        // TODO remove
         Message(MessageProtocol.SUB_TITLE, state.localizedName).sendTo(player)
+        return state.canFire
     }
 
 }

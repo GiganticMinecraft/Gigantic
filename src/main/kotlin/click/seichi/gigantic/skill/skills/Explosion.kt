@@ -1,6 +1,9 @@
 package click.seichi.gigantic.skill.skills
 
-import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.extension.canConsumeDurability
+import click.seichi.gigantic.extension.cardinalDirection
+import click.seichi.gigantic.extension.isSeichiTool
+import click.seichi.gigantic.extension.isSeichiWorld
 import click.seichi.gigantic.message.lang.skill.BreakSkillLang
 import click.seichi.gigantic.skill.BreakBox
 import click.seichi.gigantic.skill.BreakSkill
@@ -76,7 +79,7 @@ class Explosion(player: Player, private val block: Block) : BreakSkill(player) {
             player.isFlying -> SkillState.FLYING
             !tool.isSeichiTool -> SkillState.NOT_SEICHI_TOOL
             !toggle -> SkillState.NOT_ACTIVATE
-            breakBox.upperBlockSet.firstOrNull { it.isRoot } == null -> SkillState.UPPER_BLOCK
+        //breakBox.upperBlockSet.firstOrNull { it.canFloat } != null -> SkillState.UPPER_BLOCK
             targetSet.isEmpty() -> breakBox.blockSet
                     .firstOrNull()?.let { getBlockState(it) } ?: SkillState.NO_BLOCK
             !tool.canConsumeDurability(consumeDurability) -> SkillState.NO_DURABILITY
@@ -92,14 +95,13 @@ class Explosion(player: Player, private val block: Block) : BreakSkill(player) {
         targetSet.forEach { block ->
             //TODO setMetadata
             //TODO minestack add
-            //TODO add Statistic
+            //TODO add mineBlock
             block.type = Material.AIR
         }
         return SkillState.FIRE_COMPLETED
     }
 
     override fun getBlockState(block: Block) = when {
-    // TODO WorldGuard
     // TODO METADATA
         !canBreakUnderPlayer(block) -> SkillState.UNDER_PLAYER
         else -> SkillState.ACTIVATE

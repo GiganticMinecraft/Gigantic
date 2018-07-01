@@ -10,7 +10,9 @@ data class Profile(
         val uniqueId: UUID,
         val playerName: String,
         val lastSaveDate: DateTime,
-        val seichiLevel: Long,
+        val mineBlock: Long,
+        val seichiLevel: Int,
+        val mana: Long,
         val skillPreferences: SkillPreferences,
         var locale: Locale
 )
