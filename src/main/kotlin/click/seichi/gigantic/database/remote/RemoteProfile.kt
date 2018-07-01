@@ -26,21 +26,7 @@ class RemoteProfile(val player: Player) : Remotable {
         }
     }
 
-    /**
-     * player profile をデータベースに書き込みます
-     *
-     * @param profile プロフィール
-     */
-    fun saveAsync(profile: Profile) = async {
-        transaction {
-            UserDao[profile.uniqueId].apply {
-                // localeを更新
-                locale = profile.locale.toString()
-                // 更新日時を記録
-                updatedDate = DateTime.now()
-            }
-        }
-    }
+
 
 
     /**
@@ -70,6 +56,18 @@ class RemoteProfile(val player: Player) : Remotable {
         name = player.name
     }.newProfile()
 
+
+    /**
+     * player profile をデータベースに書き込みます
+     *
+     * @param profile プロフィール
+     */
+    fun saveAsync(profile: Profile) = async {
+        transaction {
+            UserDao[profile.uniqueId].saveProfile(profile)
+        }
+    }
+
     /**
      * daoからprofileを生成します
      *
@@ -85,4 +83,21 @@ class RemoteProfile(val player: Player) : Remotable {
             mana = mana,
             seichiLevel = Config.seichiLevel.calcLevel(player)
     )
+
+    /**
+     * profileをセーブします
+     *
+     * @param profile プロフィール
+     */
+    private fun UserDao.saveProfile(profile: Profile) {
+        // localeを更新
+        locale = profile.locale.toString()
+        // 更新日時を記録
+        updatedDate = DateTime.now()
+        // MineBlockを更新
+        mineBlock = profile.mineBlock
+        // 現在のマナ値を更新
+        mana = profile.mana
+        // TODO skillpreference
+    }
 }

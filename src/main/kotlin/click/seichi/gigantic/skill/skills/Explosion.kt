@@ -1,9 +1,6 @@
 package click.seichi.gigantic.skill.skills
 
-import click.seichi.gigantic.extension.canConsumeDurability
-import click.seichi.gigantic.extension.cardinalDirection
-import click.seichi.gigantic.extension.isSeichiTool
-import click.seichi.gigantic.extension.isSeichiWorld
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.lang.skill.BreakSkillLang
 import click.seichi.gigantic.skill.BreakBox
 import click.seichi.gigantic.skill.BreakSkill
@@ -24,8 +21,8 @@ class Explosion(player: Player, private val block: Block) : BreakSkill(player) {
 
     override val displayName = BreakSkillLang.EXPLOSION_LONG_NAME
 
-    // TODO implements
-    override val isUnlocked: Boolean = true // player.profile.seichiLevel > 10
+
+    override val isUnlocked = player.profile?.seichiLevel ?: 1 > 10
 
     // TODO implements
     override val isCooldown: Boolean = false
