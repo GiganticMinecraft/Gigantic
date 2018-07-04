@@ -8,7 +8,7 @@ import org.bukkit.entity.Player
 /**
  * @author tar0ss
  */
-data class SoundHandler(
+data class SoundPlayer(
         val sound: Sound,
         val category: SoundCategory,
         val volume: Float = 1.0F,

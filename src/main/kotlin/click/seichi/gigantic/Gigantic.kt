@@ -17,6 +17,7 @@ class Gigantic : JavaPlugin() {
 
     companion object {
         lateinit var PLUGIN: Gigantic
+        // Database thread
         val DB = newSingleThreadContext("DB")
     }
 
