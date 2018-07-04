@@ -5,10 +5,12 @@ import click.seichi.gigantic.database.dao.UserDao
 import click.seichi.gigantic.profile.Profile
 import click.seichi.gigantic.profile.SkillPreferences
 import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
 import org.bukkit.entity.Player
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * @author tar0ss
@@ -21,12 +23,11 @@ class RemoteProfile(val player: Player) : Remotable {
      * @return プロフィール
      */
     fun loadOrCreateAsync() = async(DB) {
+        delay(3, TimeUnit.SECONDS)
         transaction {
             if (isExist()) load() else create()
         }
     }
-
-
 
 
     /**
