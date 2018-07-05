@@ -1,9 +1,7 @@
 package click.seichi.gigantic.database.remote
 
-import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.database.dao.UserDao
 import click.seichi.gigantic.player.GiganticPlayer
-import click.seichi.gigantic.player.SkillPreferences
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import org.bukkit.entity.Player
@@ -15,7 +13,11 @@ import java.util.concurrent.TimeUnit
 /**
  * @author tar0ss
  */
-class RemotePlayer(val player: Player) : Remotable {
+class RemotePlayer(player: Player) : Remotable {
+
+    private val uniqueId = player.uniqueId
+
+    private val playerName = player.name
 
     /**
      * 非同期でplayerをロード、もしくは無ければ作成します
@@ -36,7 +38,7 @@ class RemotePlayer(val player: Player) : Remotable {
      * @return 存在すればTRUE,しなければFALSE
      */
     private fun isExist(): Boolean {
-        return UserDao.findById(player.uniqueId) != null
+        return UserDao.findById(uniqueId) != null
     }
 
     /**
@@ -44,8 +46,8 @@ class RemotePlayer(val player: Player) : Remotable {
      *
      * @return GiganticPlayer
      */
-    private fun load() = UserDao[player.uniqueId].apply {
-        name = player.name
+    private fun load() = UserDao[uniqueId].apply {
+        name = playerName
     }.newPlayer()
 
     /**
@@ -53,8 +55,8 @@ class RemotePlayer(val player: Player) : Remotable {
      *
      * @return GiganticPlayer
      */
-    private fun create() = UserDao.new(player.uniqueId) {
-        name = player.name
+    private fun create() = UserDao.new(uniqueId) {
+        name = playerName
     }.newPlayer()
 
 
@@ -75,14 +77,10 @@ class RemotePlayer(val player: Player) : Remotable {
      * @return GiganticPlayer
      */
     private fun UserDao.newPlayer() = GiganticPlayer(
-            uniqueId = player.uniqueId,
+            uniqueId = uniqueId,
             playerName = name,
             locale = Locale(locale),
-            lastSaveDate = updatedDate,
-            skillPreferences = SkillPreferences(1),
-            mineBlock = mineBlock,
-            mana = mana,
-            seichiLevel = Config.seichiLevel.calcLevel(player)
+            lastSaveDate = updatedDate
     )
 
     /**
@@ -95,10 +93,5 @@ class RemotePlayer(val player: Player) : Remotable {
         locale = gPlayer.locale.toString()
         // 更新日時を記録
         updatedDate = DateTime.now()
-        // MineBlockを更新
-        mineBlock = gPlayer.mineBlock
-        // 現在のマナ値を更新
-        mana = gPlayer.mana
-        // TODO skillpreference
     }
 }
