@@ -1,6 +1,6 @@
 package click.seichi.gigantic.listener
 
-import click.seichi.gigantic.player.GiganticPlayerRepository
+import click.seichi.gigantic.player.PlayerRepository
 import click.seichi.gigantic.skill.SkillResolver
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -17,14 +17,14 @@ class PlayerListener : Listener {
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
 
-        GiganticPlayerRepository.add(player)
+        PlayerRepository.add(player)
     }
 
     @EventHandler
     fun onPlayerQuit(event: PlayerQuitEvent) {
         val player = event.player ?: return
 
-        GiganticPlayerRepository.remove(player)
+        PlayerRepository.remove(player)
     }
 
     @EventHandler

@@ -10,15 +10,13 @@ import java.io.File
 abstract class SimpleConfiguration(
         fileName: String,
         plugin: JavaPlugin,
-        val file: File = File(plugin.dataFolder, "$fileName.yml")
+        file: File = File(plugin.dataFolder, "$fileName.yml")
 ) : YamlConfiguration() {
 
     init {
         if (!file.exists()) {
             plugin.saveResource(file.name, false)
         }
-        this.load(file)
+        load(file)
     }
-
-    fun save() = save(file)
 }

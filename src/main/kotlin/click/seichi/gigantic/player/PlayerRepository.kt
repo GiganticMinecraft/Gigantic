@@ -9,7 +9,7 @@ import java.util.*
 /**
  * @author tar0ss
  */
-object GiganticPlayerRepository {
+object PlayerRepository {
 
     private val gPlayerMap = mutableMapOf<UUID, GiganticPlayer>()
 

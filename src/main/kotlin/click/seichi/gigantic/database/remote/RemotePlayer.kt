@@ -7,7 +7,6 @@ import kotlinx.coroutines.experimental.delay
 import org.bukkit.entity.Player
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -46,18 +45,22 @@ class RemotePlayer(player: Player) : Remotable {
      *
      * @return GiganticPlayer
      */
-    private fun load() = UserDao[uniqueId].apply {
-        name = playerName
-    }.newPlayer()
+    private fun load() = GiganticPlayer(
+            UserDao[uniqueId].apply {
+                name = playerName
+            }
+    )
 
     /**
      * playerを作成し、データベースに追加します。
      *
      * @return GiganticPlayer
      */
-    private fun create() = UserDao.new(uniqueId) {
-        name = playerName
-    }.newPlayer()
+    private fun create() = GiganticPlayer(
+            UserDao.new(uniqueId) {
+                name = playerName
+            }
+    )
 
 
     /**
@@ -67,31 +70,11 @@ class RemotePlayer(player: Player) : Remotable {
      */
     fun saveAsync(gPlayer: GiganticPlayer) = async {
         transaction {
-            UserDao[gPlayer.uniqueId].savePlayer(gPlayer)
+            gPlayer.save(
+                    UserDao[uniqueId].apply {
+                        updatedDate = DateTime.now()
+                    }
+            )
         }
-    }
-
-    /**
-     * daoからplayerを生成します
-     *
-     * @return GiganticPlayer
-     */
-    private fun UserDao.newPlayer() = GiganticPlayer(
-            uniqueId = uniqueId,
-            playerName = name,
-            locale = Locale(locale),
-            lastSaveDate = updatedDate
-    )
-
-    /**
-     * playerをセーブします
-     *
-     * @param gPlayer
-     */
-    private fun UserDao.savePlayer(gPlayer: GiganticPlayer) {
-        // localeを更新
-        locale = gPlayer.locale.toString()
-        // 更新日時を記録
-        updatedDate = DateTime.now()
     }
 }
