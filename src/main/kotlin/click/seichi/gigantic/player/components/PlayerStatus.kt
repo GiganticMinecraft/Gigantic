@@ -7,4 +7,6 @@ class PlayerStatus(userDao: UserDao) {
     val mana = Mana(userDao)
 
     val mineBlock = MineBlock(userDao)
+
+    val seichiLevel = SeichiLevel(userDao)
 }

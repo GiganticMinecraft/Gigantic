@@ -15,13 +15,13 @@ object SeichiLevelConfig : SimpleConfiguration("seichi_level", Gigantic.PLUGIN) 
 
     val MAX = getInt("max")
 
-    private val MINEBLOCK_MAP by lazy {
+    val MINEBLOCK_MAP by lazy {
         (1..MAX).map {
             it to getLong("level_map.$it.mineblock")
         }.toMap()
     }
 
-    private val MANA_MAP by lazy {
+    val MANA_MAP by lazy {
         (1..MAX).map {
             it to getLong("level_map.$it.mana")
         }.toMap()
