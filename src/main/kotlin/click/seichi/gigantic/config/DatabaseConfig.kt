@@ -5,7 +5,7 @@ import click.seichi.gigantic.Gigantic
 /**
  * @author tar0ss
  */
-object DatabaseSetting : SimpleConfiguration("database", Gigantic.PLUGIN) {
+object DatabaseConfig : SimpleConfiguration("database", Gigantic.PLUGIN) {
 
     val HOST: String = getString("host")
 

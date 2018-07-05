@@ -1,6 +1,6 @@
 package click.seichi.gigantic
 
-import click.seichi.gigantic.config.DatabaseSetting
+import click.seichi.gigantic.config.DatabaseConfig
 import click.seichi.gigantic.database.table.UserTable
 import click.seichi.gigantic.listener.InventoryListener
 import click.seichi.gigantic.listener.PlayerListener
@@ -40,8 +40,8 @@ class Gigantic : JavaPlugin() {
 
     private fun prepareDatabase() {
         //connect MySQL
-        Database.connect("jdbc:mysql://${DatabaseSetting.HOST}/${DatabaseSetting.DATABASE}",
-                "com.mysql.jdbc.Driver", DatabaseSetting.USER, DatabaseSetting.PASSWORD)
+        Database.connect("jdbc:mysql://${DatabaseConfig.HOST}/${DatabaseConfig.DATABASE}",
+                "com.mysql.jdbc.Driver", DatabaseConfig.USER, DatabaseConfig.PASSWORD)
 
         //create Tables
         transaction {

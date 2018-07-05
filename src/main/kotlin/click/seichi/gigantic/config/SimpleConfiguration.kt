@@ -15,8 +15,12 @@ abstract class SimpleConfiguration(
 
     init {
         if (!file.exists()) {
-            plugin.saveResource(file.name, false)
+            this.makeFile(file, plugin, fileName)
         }
-        load(file)
+        this.load(file)
+    }
+
+    protected open fun makeFile(file: File, plugin: JavaPlugin, fileName: String) {
+        plugin.saveResource(file.name, false)
     }
 }
