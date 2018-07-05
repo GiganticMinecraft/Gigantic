@@ -1,7 +1,7 @@
 package click.seichi.gigantic.config
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.profile.level.SeichiLevel
+import click.seichi.gigantic.player.level.SeichiLevel
 import click.seichi.gigantic.util.Polynomial
 
 /**

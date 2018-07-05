@@ -2,8 +2,8 @@ package click.seichi.gigantic.database.remote
 
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.database.dao.UserDao
-import click.seichi.gigantic.profile.Profile
-import click.seichi.gigantic.profile.SkillPreferences
+import click.seichi.gigantic.player.GiganticPlayer
+import click.seichi.gigantic.player.SkillPreferences
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import org.bukkit.entity.Player
@@ -15,12 +15,12 @@ import java.util.concurrent.TimeUnit
 /**
  * @author tar0ss
  */
-class RemoteProfile(val player: Player) : Remotable {
+class RemotePlayer(val player: Player) : Remotable {
 
     /**
-     * 非同期でplayer profileをロード、もしくは無ければ作成します
+     * 非同期でplayerをロード、もしくは無ければ作成します
      *
-     * @return プロフィール
+     * @return GiganticPlayer
      */
     fun loadOrCreateAsync() = async(DB) {
         delay(3, TimeUnit.SECONDS)
@@ -31,7 +31,7 @@ class RemoteProfile(val player: Player) : Remotable {
 
 
     /**
-     * player profile がデータベースに存在するか調べます
+     * player がデータベースに存在するか調べます
      *
      * @return 存在すればTRUE,しなければFALSE
      */
@@ -40,41 +40,41 @@ class RemoteProfile(val player: Player) : Remotable {
     }
 
     /**
-     * player profileをデータベースから読み込みます。
+     * playerをデータベースから読み込みます。
      *
-     * @return プロフィール
+     * @return GiganticPlayer
      */
     private fun load() = UserDao[player.uniqueId].apply {
         name = player.name
-    }.newProfile()
+    }.newPlayer()
 
     /**
-     * player profileを作成し、データベースに追加します。
+     * playerを作成し、データベースに追加します。
      *
-     * @return プロフィール
+     * @return GiganticPlayer
      */
     private fun create() = UserDao.new(player.uniqueId) {
         name = player.name
-    }.newProfile()
+    }.newPlayer()
 
 
     /**
-     * player profile をデータベースに書き込みます
+     * player をデータベースに書き込みます
      *
-     * @param profile プロフィール
+     * @param gPlayer
      */
-    fun saveAsync(profile: Profile) = async {
+    fun saveAsync(gPlayer: GiganticPlayer) = async {
         transaction {
-            UserDao[profile.uniqueId].saveProfile(profile)
+            UserDao[gPlayer.uniqueId].savePlayer(gPlayer)
         }
     }
 
     /**
-     * daoからprofileを生成します
+     * daoからplayerを生成します
      *
-     * @return プロフィール
+     * @return GiganticPlayer
      */
-    private fun UserDao.newProfile() = Profile(
+    private fun UserDao.newPlayer() = GiganticPlayer(
             uniqueId = player.uniqueId,
             playerName = name,
             locale = Locale(locale),
@@ -86,19 +86,19 @@ class RemoteProfile(val player: Player) : Remotable {
     )
 
     /**
-     * profileをセーブします
+     * playerをセーブします
      *
-     * @param profile プロフィール
+     * @param gPlayer
      */
-    private fun UserDao.saveProfile(profile: Profile) {
+    private fun UserDao.savePlayer(gPlayer: GiganticPlayer) {
         // localeを更新
-        locale = profile.locale.toString()
+        locale = gPlayer.locale.toString()
         // 更新日時を記録
         updatedDate = DateTime.now()
         // MineBlockを更新
-        mineBlock = profile.mineBlock
+        mineBlock = gPlayer.mineBlock
         // 現在のマナ値を更新
-        mana = profile.mana
+        mana = gPlayer.mana
         // TODO skillpreference
     }
 }

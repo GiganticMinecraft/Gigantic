@@ -2,8 +2,8 @@ package click.seichi.gigantic.extension
 
 import click.seichi.gigantic.message.LocalizedString
 import click.seichi.gigantic.message.messages.Message
-import click.seichi.gigantic.profile.Profile
-import click.seichi.gigantic.profile.ProfileRepository
+import click.seichi.gigantic.player.GiganticPlayer
+import click.seichi.gigantic.player.GiganticPlayerRepository
 import click.seichi.gigantic.util.CardinalDirection
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
@@ -25,14 +25,14 @@ fun Player.getHead() = ItemStack(Material.SKULL_ITEM, 1, 3).apply {
     }
 }
 
-val Player.profile: Profile?
-    get() = ProfileRepository.findProfile(uniqueId)
+val Player.gPlayer: GiganticPlayer?
+    get() = GiganticPlayerRepository.find(uniqueId)
 
 val Player.cardinalDirection
     get() = CardinalDirection.getCardinalDirection(this)
 
 val Player.wrappedLocale: Locale
-    get() = profile?.locale ?: Locale.JAPANESE
+    get() = gPlayer?.locale ?: Locale.JAPANESE
 
 fun Player.sendActionBar(message: String) = spigot().sendMessage(ChatMessageType.ACTION_BAR, ComponentSerializer.parse("{\"text\": \"$message\"}")[0])
 

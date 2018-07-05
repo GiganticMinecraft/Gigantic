@@ -31,7 +31,7 @@ class Explosion(player: Player, private val block: Block) : BreakSkill(player) {
                 .toSet()
     }
 
-    override val isUnlocked = player.profile?.seichiLevel ?: 1 > 10
+    override val isUnlocked = player.gPlayer?.seichiLevel ?: 1 > 10
 
     // TODO implements
     override val isCooldown: Boolean = false

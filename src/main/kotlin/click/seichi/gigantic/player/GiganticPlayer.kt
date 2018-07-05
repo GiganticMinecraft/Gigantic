@@ -1,4 +1,4 @@
-package click.seichi.gigantic.profile
+package click.seichi.gigantic.player
 
 import org.joda.time.DateTime
 import java.util.*
@@ -6,7 +6,7 @@ import java.util.*
 /**
  * @author tar0ss
  */
-data class Profile(
+data class GiganticPlayer(
         val uniqueId: UUID,
         val playerName: String,
         val lastSaveDate: DateTime,

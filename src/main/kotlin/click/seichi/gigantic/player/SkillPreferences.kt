@@ -1,4 +1,4 @@
-package click.seichi.gigantic.profile
+package click.seichi.gigantic.player
 
 /**
  * @author tar0ss

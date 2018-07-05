@@ -1,6 +1,6 @@
-package click.seichi.gigantic.profile.level
+package click.seichi.gigantic.player.level
 
-import click.seichi.gigantic.extension.profile
+import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.util.Polynomial
 import org.bukkit.entity.Player
 
@@ -23,7 +23,7 @@ class SeichiLevel(
                 }
     }.toMap()
 
-    override fun canLevelUp(currentLevel: Int, player: Player) = player.profile?.mineBlock ?: 0 >= mineBlockMap[currentLevel + 1] ?: Long.MAX_VALUE
+    override fun canLevelUp(currentLevel: Int, player: Player) = player.gPlayer?.mineBlock ?: 0 >= mineBlockMap[currentLevel + 1] ?: Long.MAX_VALUE
 
     override fun calcLevel(player: Player) = levelRange.firstOrNull { !canLevelUp(it + 1, player) } ?: max
 

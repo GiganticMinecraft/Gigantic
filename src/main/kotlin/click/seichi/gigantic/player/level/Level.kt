@@ -1,4 +1,4 @@
-package click.seichi.gigantic.profile.level
+package click.seichi.gigantic.player.level
 
 import org.bukkit.entity.Player
 

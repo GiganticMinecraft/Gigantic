@@ -1,6 +1,6 @@
 package click.seichi.gigantic.skill
 
-import click.seichi.gigantic.extension.profile
+import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.message.LocalizedString
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
@@ -29,7 +29,7 @@ abstract class BreakSkill(player: Player) : Skill(player) {
 
     val tool: ItemStack = player.inventory.itemInMainHand
 
-    val mana = player.profile?.mana ?: 0
+    val mana = player.gPlayer?.mana ?: 0
 
     abstract fun canBreakUnderPlayer(block: Block): Boolean
 
