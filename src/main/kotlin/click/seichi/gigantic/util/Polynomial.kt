@@ -9,7 +9,7 @@ package click.seichi.gigantic.util
 class Polynomial(vararg coef: Double) {
     private val coefList = coef.toList()
 
-    private val maxN = coefList.size
+    private val maxN = coefList.size - 1
 
     fun calculation(x: Int): Long {
         var sum = 0L

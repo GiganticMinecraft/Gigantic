@@ -10,10 +10,8 @@ import java.io.File
  */
 object SeichiLevelConfig : SimpleConfiguration("seichi_level", Gigantic.PLUGIN) {
 
-    private val mineBlockPolynomial = Polynomial(-3.0000, 6.3779, -5.4233, 1.9360, 0.11550)
-    private val manaPolynomial = Polynomial(-83.30, 12.50, 0.5833)
 
-    val MAX = getInt("max")
+    val MAX by lazy { getInt("max") }
 
     val MINEBLOCK_MAP by lazy {
         (1..MAX).map {
@@ -28,10 +26,14 @@ object SeichiLevelConfig : SimpleConfiguration("seichi_level", Gigantic.PLUGIN) 
     }
 
     override fun makeFile(file: File, plugin: JavaPlugin, fileName: String) {
+        val defaultMaxLevel = 999
+        val mineBlockPolynomial = Polynomial(-2.0000, 6.3779, -5.4233, 1.9360, 0.11550)
+        val manaPolynomial = Polynomial(-83.30, 12.50, 0.5833)
+
         file.printWriter().use { out ->
-            out.println("max: 999")
+            out.println("max: $defaultMaxLevel")
             out.println("level_map:")
-            for (level in 1..MAX) {
+            for (level in 1..defaultMaxLevel) {
                 val needMineBlock = mineBlockPolynomial.calculation(level)
                 val mana = when (level) {
                     in 1 until 10 -> 0L

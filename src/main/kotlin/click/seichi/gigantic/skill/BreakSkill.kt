@@ -29,7 +29,7 @@ abstract class BreakSkill(player: Player) : Skill(player) {
 
     val tool: ItemStack = player.inventory.itemInMainHand
 
-    val mana = player.gPlayer?.mana ?: 0
+    val mana = player.gPlayer?.status?.mana?.current ?: 0
 
     abstract fun canBreakUnderPlayer(block: Block): Boolean
 
