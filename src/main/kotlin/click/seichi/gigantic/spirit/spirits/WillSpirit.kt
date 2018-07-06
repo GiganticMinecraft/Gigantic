@@ -14,6 +14,7 @@ import click.seichi.gigantic.will.Sensor
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillSize
 import org.bukkit.Location
+import org.bukkit.entity.Player
 
 
 /**
@@ -22,12 +23,20 @@ import org.bukkit.Location
 class WillSpirit(
         spawnReason: SpawnReason,
         location: Location,
-        val willType: Will
+        val willType: Will,
+        targetPlayer: Player? = null
 ) : Spirit(spawnReason, location) {
 
     private val sensor = Sensor(
             location,
-            { true },
+            {
+                when {
+                    it == null -> true
+                    targetPlayer == null -> true
+                    it.uniqueId == targetPlayer.uniqueId -> true
+                    else -> false
+                }
+            },
             { player, count ->
                 player ?: return@Sensor
                 player.world.spawnColoredParticle(
@@ -53,8 +62,7 @@ class WillSpirit(
     val willSize: WillSize = Random.nextWillSizeWithRegularity()
 
     override val lifespan = when (spawnReason) {
-        WillSpawnReason.APPEARANCE -> 60 * 10 * 20
-        WillSpawnReason.AWAKE, WillSpawnReason.RELEASE -> 60 * 20
+        WillSpawnReason.AWAKE, WillSpawnReason.RELEASE -> Sensor.DURATION + 1
         else -> throw IllegalStateException()
     }
 

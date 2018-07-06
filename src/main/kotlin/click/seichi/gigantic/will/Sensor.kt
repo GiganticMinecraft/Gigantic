@@ -17,8 +17,7 @@ class Sensor(
 ) {
 
     companion object {
-        private const val RANGE = 3.0
-        private const val DURATION = 60
+        const val DURATION = 60
     }
 
     private val senseProgressMap = mutableMapOf<UUID, Int>()
@@ -26,9 +25,7 @@ class Sensor(
     private val alreadySensedSet = mutableSetOf<UUID>()
 
     fun update() {
-        val rangedPlayerSet = location.world
-                .getNearbyEntities(location, RANGE, RANGE, RANGE)
-                .mapNotNull { it as? Player }
+        val rangedPlayerSet = location.world.players
                 .filter { meetingConditions(it) }
                 .filterNot { alreadySensedSet.contains(it.uniqueId) }
 
