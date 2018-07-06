@@ -10,7 +10,6 @@ enum class SkillState(
         val canFire: Boolean,
         val localizedName: LocalizedString = if (canFire) SkillLang.ACTIVATE else SkillLang.NOT_ACTIVATE
 ) {
-    FAILED_TO_LOAD(false, SkillLang.FAILED_TO_LOAD),
     ACTIVATE(true),
     FIRE_COMPLETED(true),
     NOT_ACTIVATE(false, SkillLang.NOT_ACTIVATE),

@@ -1,7 +1,9 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.player.PlayerRepository
-import click.seichi.gigantic.skill.SkillResolver
+import click.seichi.gigantic.skill.dispather.BreakSkillDispatcher
+import click.seichi.gigantic.skill.skills.Explosion
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -31,8 +33,9 @@ class PlayerListener : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
         val block = event.block ?: return
+        val gPlayer = player.gPlayer ?: return
         // エクスプロージョン発火
-        if (!SkillResolver(player).fireExplosion(block)) {
+        if (!BreakSkillDispatcher(Explosion(), gPlayer, block).dispatch()) {
             event.isCancelled = true
         }
     }

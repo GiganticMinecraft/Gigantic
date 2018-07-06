@@ -9,4 +9,6 @@ class PlayerStatus(userDao: UserDao) {
     val mineBlock = MineBlock(userDao)
 
     val seichiLevel = SeichiLevel(userDao)
+    // TODO implements
+    val explosionLevel = 1
 }
