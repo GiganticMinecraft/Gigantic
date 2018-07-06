@@ -68,7 +68,7 @@ class RemotePlayer(player: Player) : Remotable {
      *
      * @param gPlayer
      */
-    fun saveAsync(gPlayer: GiganticPlayer) = async {
+    fun saveAsync(gPlayer: GiganticPlayer) = async(DB) {
         transaction {
             gPlayer.save(
                     UserDao[uniqueId].apply {
