@@ -1,6 +1,10 @@
 package click.seichi.gigantic.message.lang
 
 import click.seichi.gigantic.message.LocalizedString
+import click.seichi.gigantic.message.MessageProtocol
+import click.seichi.gigantic.message.messages.Message
+import click.seichi.gigantic.spirit.spirits.WillSpirit
+import org.bukkit.ChatColor
 import java.util.*
 
 /**
@@ -67,4 +71,22 @@ object WillLang {
     val PREFIX_HUGE_WILL = LocalizedString(
             Locale.JAPANESE to "巨大な"
     )
+
+    val SENSED_WILL = Message(MessageProtocol.ACTION_BAR) { argumentList ->
+        val willSpirit = argumentList[0] as WillSpirit
+        val sizePrefix = willSpirit.willSize.prefix
+        val memory = willSpirit.willSize.memory
+        val name = willSpirit.willType.localizedName
+
+        LocalizedString(
+                Locale.JAPANESE.let { it to "${ChatColor.GREEN}${sizePrefix.asSafety(it)}${name.asSafety(it)}のウィルから${memory}の記憶を得ました" },
+                Locale.ENGLISH.let { it to "${ChatColor.GREEN}$memory memory from ${sizePrefix.asSafety(it)}${name.asSafety(it)} will " }
+        )
+    }
+
+    val SENSE_NO_APTITUDE = Message(MessageProtocol.ACTION_BAR) {
+        LocalizedString(
+                Locale.JAPANESE to "${ChatColor.RED}${it[0]}のウィルとの適正がありません"
+        )
+    }
 }

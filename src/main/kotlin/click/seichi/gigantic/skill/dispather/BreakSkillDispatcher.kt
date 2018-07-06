@@ -1,5 +1,6 @@
 package click.seichi.gigantic.skill.dispather
 
+import click.seichi.gigantic.event.events.BlockBreakSkillEvent
 import click.seichi.gigantic.extension.cardinalDirection
 import click.seichi.gigantic.message.MessageProtocol
 import click.seichi.gigantic.message.messages.Message
@@ -7,6 +8,7 @@ import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.skill.SkillState
 import click.seichi.gigantic.skill.breakskill.BreakBox
 import click.seichi.gigantic.skill.breakskill.BreakSkill
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.Block
 
@@ -16,7 +18,7 @@ import org.bukkit.block.Block
 class BreakSkillDispatcher(
         override val skill: BreakSkill,
         override val gPlayer: GiganticPlayer,
-        private val block: Block
+        block: Block
 ) : SkillDispatcher {
 
     val player = gPlayer.player
@@ -29,6 +31,7 @@ class BreakSkillDispatcher(
     )
 
     private val targetSet = breakBox.blockSet
+            .filter { !it.isEmpty }
             .filter { skill.getState(it).canFire }.toSet()
 
 
@@ -73,6 +76,7 @@ class BreakSkillDispatcher(
         // TODO skilllevel update
         // TODO coolTime invoke
         targetSet.forEach { block ->
+            Bukkit.getPluginManager().callEvent(BlockBreakSkillEvent(player, block))
             //TODO setMetadata
             //TODO minestack add
             //TODO add mineBlock

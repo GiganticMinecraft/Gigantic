@@ -10,5 +10,5 @@ class PlayerStatus(userDao: UserDao) {
 
     val seichiLevel = SeichiLevel(userDao)
     // TODO implements
-    val explosionLevel = 1
+    val explosionLevel = 3
 }

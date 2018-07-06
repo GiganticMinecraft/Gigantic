@@ -1,0 +1,87 @@
+package click.seichi.gigantic.spirit.spirits
+
+import click.seichi.gigantic.extension.spawnColoredParticle
+import click.seichi.gigantic.extension.spawnColoredParticleSpherically
+import click.seichi.gigantic.message.lang.WillLang
+import click.seichi.gigantic.sound.WillSound
+import click.seichi.gigantic.spirit.Spirit
+import click.seichi.gigantic.spirit.SpiritType
+import click.seichi.gigantic.spirit.spawnreason.SpawnReason
+import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
+import click.seichi.gigantic.util.NoiseData
+import click.seichi.gigantic.util.Random
+import click.seichi.gigantic.will.Sensor
+import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.will.WillSize
+import org.bukkit.Location
+
+
+/**
+ * @author unicroak
+ */
+class WillSpirit(
+        spawnReason: SpawnReason,
+        location: Location,
+        val willType: Will
+) : Spirit(spawnReason, location) {
+
+    private val sensor = Sensor(
+            location,
+            { true },
+            { player, count ->
+                player ?: return@Sensor
+                player.world.spawnColoredParticle(
+                        player.location.clone().add(0.0, 1.0, 0.0).let { playerLocation ->
+                            playerLocation.add(location.clone().subtract(playerLocation).multiply(Random.nextDouble()))
+                        },
+                        willType.color,
+                        noiseData = NoiseData(0.1)
+                )
+
+                if (count % 10 == 0) {
+                    WillSound.SENSE_SUB.play(player)
+                }
+            },
+            { player ->
+                player ?: return@Sensor
+                WillLang.SENSED_WILL.sendTo(player, this)
+                WillSound.SENSED.play(player)
+                // TODO implements
+            }
+    )
+
+    val willSize: WillSize = Random.nextWillSizeWithRegularity()
+
+    override val lifespan = when (spawnReason) {
+        WillSpawnReason.APPEARANCE -> 60 * 10 * 20
+        WillSpawnReason.AWAKE, WillSpawnReason.RELEASE -> 60 * 20
+        else -> throw IllegalStateException()
+    }
+
+    override val spiritType: SpiritType = SpiritType.WILL
+
+    override fun onRender() {
+        sensor.update()
+
+        val renderingData = willSize.renderingData
+        location.world.spawnColoredParticleSpherically(
+                location,
+                willType.color,
+                if (lifeExpectancy < 10 * 20 && (renderingData.beatTiming == 0 || lifeExpectancy % renderingData.beatTiming == 0)) {
+                    renderingData.min
+                } else {
+                    renderingData.max
+                },
+                renderingData.radius
+        )
+    }
+
+    override fun onSpawn() {
+        WillSound.SPAWN.play(location)
+    }
+
+    override fun onRemove() {
+        WillSound.DEATH.play(location)
+    }
+
+}

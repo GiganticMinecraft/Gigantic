@@ -39,7 +39,7 @@ class BreakBox(
     }
 
     private fun getBlockSet(xRange: IntRange, yRange: IntRange, zRange: IntRange) =
-            yRange.map { y ->
+            yRange.reversed().map { y ->
                 xRange.map { x ->
                     zRange.map { z ->
                         baseBlock.getRelative(cardinalDirection, Vector(x, y, z))
