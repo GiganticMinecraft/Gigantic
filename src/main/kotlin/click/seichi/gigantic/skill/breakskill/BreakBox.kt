@@ -1,4 +1,4 @@
-package click.seichi.gigantic.skill
+package click.seichi.gigantic.skill.breakskill
 
 import click.seichi.gigantic.extension.getRelative
 import click.seichi.gigantic.util.Box

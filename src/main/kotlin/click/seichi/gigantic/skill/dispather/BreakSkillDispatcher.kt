@@ -4,9 +4,9 @@ import click.seichi.gigantic.extension.cardinalDirection
 import click.seichi.gigantic.message.MessageProtocol
 import click.seichi.gigantic.message.messages.Message
 import click.seichi.gigantic.player.GiganticPlayer
-import click.seichi.gigantic.skill.BreakBox
 import click.seichi.gigantic.skill.SkillState
-import click.seichi.gigantic.skill.skills.BreakSkill
+import click.seichi.gigantic.skill.breakskill.BreakBox
+import click.seichi.gigantic.skill.breakskill.BreakSkill
 import org.bukkit.Material
 import org.bukkit.block.Block
 

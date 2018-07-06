@@ -1,10 +1,9 @@
-package click.seichi.gigantic.skill.skills
+package click.seichi.gigantic.skill.breakskill
 
 import click.seichi.gigantic.extension.isSeichiTool
 import click.seichi.gigantic.extension.isSeichiWorld
 import click.seichi.gigantic.message.LocalizedString
 import click.seichi.gigantic.player.GiganticPlayer
-import click.seichi.gigantic.skill.BreakStyle
 import click.seichi.gigantic.skill.Skill
 import click.seichi.gigantic.skill.SkillState
 import click.seichi.gigantic.util.Box

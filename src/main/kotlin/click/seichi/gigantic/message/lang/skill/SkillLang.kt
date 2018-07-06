@@ -18,11 +18,6 @@ object SkillLang {
             Locale.ENGLISH to "OFF"
     )
 
-    val FAILED_TO_LOAD = LocalizedString(
-            Locale.JAPANESE to "読み込み失敗",
-            Locale.ENGLISH to "Failed to validate"
-    )
-
     val LOCKED = LocalizedString(
             Locale.JAPANESE to "%DELETE%",
             Locale.ENGLISH to "%DELETE%"
