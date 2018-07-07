@@ -7,7 +7,6 @@ import click.seichi.gigantic.database.table.UserMineBlockTable
 import click.seichi.gigantic.database.table.UserWillTable
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.player.MineBlockReason
-import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
@@ -70,21 +69,15 @@ class RemotePlayer(player: Player) : Remotable {
      * @return GiganticPlayer
      */
     private fun create(): GiganticPlayer {
-        // TODO
-        val yourWill = Random.nextWill()
         val newUser = User.new(uniqueId) {
             name = playerName
         }
         return GiganticPlayer(
                 newUser,
                 Will.values().map {
-                            it to
-                                    UserWill.new {
+                    it to UserWill.new {
                                         user = newUser
                                         willId = it.id
-                                        if (yourWill == it) {
-                                            hasAptitude = true
-                                        }
                                     }
                         }.toMap(),
                 MineBlockReason.values().map{

@@ -25,7 +25,8 @@ class GiganticPlayer(
 
     val setting = PlayerSetting(user)
 
-    val status = PlayerStatus(user, willMap,mineBlockMap)
+    val status = PlayerStatus(user, willMap, mineBlockMap, isFirstJoin
+    )
 
     fun save(user: User, willMap: Map<Will, UserWill>, mineBlockMap: Map<MineBlockReason, UserMineBlock>) {
         user.locale = setting.locale.toString()

@@ -19,7 +19,7 @@ import org.bukkit.block.Block
 class BreakSkillDispatcher(
         override val skill: BreakSkill,
         override val gPlayer: GiganticPlayer,
-        val mineBlockReason: MineBlockReason,
+        private val mineBlockReason: MineBlockReason,
         block: Block
 ) : SkillDispatcher {
 

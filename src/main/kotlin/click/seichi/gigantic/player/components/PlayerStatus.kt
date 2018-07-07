@@ -6,7 +6,12 @@ import click.seichi.gigantic.database.dao.UserWill
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.will.Will
 
-class PlayerStatus(user: User, willMap: Map<Will, UserWill>, mineBlockMap: Map<MineBlockReason, UserMineBlock>) {
+class PlayerStatus(
+        user: User,
+        willMap: Map<Will, UserWill>,
+        mineBlockMap: Map<MineBlockReason, UserMineBlock>,
+        isFirstJoin: Boolean
+) {
 
     val mana = Mana(user)
 
@@ -18,5 +23,5 @@ class PlayerStatus(user: User, willMap: Map<Will, UserWill>, mineBlockMap: Map<M
 
     val memory = Memory(willMap)
 
-    val aptitude = Aptitude(willMap)
+    val aptitude = Aptitude(willMap, isFirstJoin)
 }
