@@ -1,6 +1,7 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.extension.gPlayer
+import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.player.PlayerRepository
 import click.seichi.gigantic.skill.breakskill.Explosion
 import click.seichi.gigantic.skill.dispather.BreakSkillDispatcher
@@ -35,7 +36,7 @@ class PlayerListener : Listener {
         val block = event.block ?: return
         val gPlayer = player.gPlayer ?: return
         // エクスプロージョン発火
-        if (!BreakSkillDispatcher(Explosion(), gPlayer, block).dispatch()) {
+        if (!BreakSkillDispatcher(Explosion(), gPlayer, MineBlockReason.EXPLOSION, block).dispatch()) {
             event.isCancelled = true
         }
     }

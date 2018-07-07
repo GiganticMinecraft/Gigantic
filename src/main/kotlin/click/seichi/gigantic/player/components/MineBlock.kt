@@ -7,9 +7,10 @@ class MineBlock(mineBlockMap: Map<MineBlockReason, UserMineBlock>) {
 
     private val currentMap = mineBlockMap.map { it.key to it.value.mineBlock }.toMap().toMutableMap()
 
-    fun add(num: Long,reason: MineBlockReason = MineBlockReason.GENERAL) {
+    fun add(num: Long, reason: MineBlockReason = MineBlockReason.GENERAL): Long {
         val next = currentMap[reason] ?: 0L + num
         currentMap[reason] = next
+        return next
     }
 
     fun get(reason: MineBlockReason = MineBlockReason.GENERAL) = currentMap[reason] ?: 0L

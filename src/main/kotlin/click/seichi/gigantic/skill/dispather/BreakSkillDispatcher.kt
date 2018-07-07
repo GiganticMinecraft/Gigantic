@@ -5,6 +5,7 @@ import click.seichi.gigantic.extension.cardinalDirection
 import click.seichi.gigantic.message.MessageProtocol
 import click.seichi.gigantic.message.messages.Message
 import click.seichi.gigantic.player.GiganticPlayer
+import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.skill.SkillState
 import click.seichi.gigantic.skill.breakskill.BreakBox
 import click.seichi.gigantic.skill.breakskill.BreakSkill
@@ -18,6 +19,7 @@ import org.bukkit.block.Block
 class BreakSkillDispatcher(
         override val skill: BreakSkill,
         override val gPlayer: GiganticPlayer,
+        val mineBlockReason: MineBlockReason,
         block: Block
 ) : SkillDispatcher {
 
@@ -75,11 +77,13 @@ class BreakSkillDispatcher(
         // TODO　mana and durability decrease
         // TODO skilllevel update
         // TODO coolTime invoke
+        gPlayer.status.run {
+            mineBlock.add(targetSet.size.toLong(), mineBlockReason)
+        }
+
         targetSet.forEach { block ->
             Bukkit.getPluginManager().callEvent(BlockBreakSkillEvent(player, block))
-            //TODO setMetadata
-            //TODO minestack add
-            //TODO add mineBlock
+            //TODO removeMetadata
             block.type = Material.AIR
         }
         return SkillState.FIRE_COMPLETED
