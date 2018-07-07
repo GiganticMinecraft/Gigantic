@@ -59,7 +59,7 @@ class RemotePlayer(player: Player) : Remotable {
     private fun create() = GiganticPlayer(
             UserDao.new(uniqueId) {
                 name = playerName
-            }
+            }, isFirstJoin = true
     )
 
 

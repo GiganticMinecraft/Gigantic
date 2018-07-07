@@ -9,7 +9,7 @@ import org.bukkit.entity.Player
 /**
  * @author tar0ss
  */
-class GiganticPlayer(userDao: UserDao) {
+class GiganticPlayer(userDao: UserDao, val isFirstJoin: Boolean = false) {
 
     val player: Player
         get() = Bukkit.getServer().getPlayer(uniqueId)
