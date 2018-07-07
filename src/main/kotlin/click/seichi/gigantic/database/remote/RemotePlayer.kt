@@ -1,9 +1,12 @@
 package click.seichi.gigantic.database.remote
 
 import click.seichi.gigantic.database.dao.User
+import click.seichi.gigantic.database.dao.UserMineBlock
 import click.seichi.gigantic.database.dao.UserWill
+import click.seichi.gigantic.database.table.UserMineBlockTable
 import click.seichi.gigantic.database.table.UserWillTable
 import click.seichi.gigantic.player.GiganticPlayer
+import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
 import kotlinx.coroutines.experimental.async
@@ -55,6 +58,9 @@ class RemotePlayer(player: Player) : Remotable {
             },
             UserWill.find { UserWillTable.userId eq uniqueId }
                     .map { Will.findWillById(it.willId)!! to it }
+                    .toMap(),
+            UserMineBlock.find{ UserMineBlockTable.userId eq uniqueId}
+                    .map{ MineBlockReason.findById(it.reasonId)!! to it}
                     .toMap()
     )
 
@@ -71,8 +77,7 @@ class RemotePlayer(player: Player) : Remotable {
         }
         return GiganticPlayer(
                 newUser,
-                Will.values()
-                        .map {
+                Will.values().map {
                             it to
                                     UserWill.new {
                                         user = newUser
@@ -82,6 +87,12 @@ class RemotePlayer(player: Player) : Remotable {
                                         }
                                     }
                         }.toMap(),
+                MineBlockReason.values().map{
+                    it to UserMineBlock.new{
+                        user = newUser
+                        reasonId = it.id
+                    }
+                }.toMap(),
                 isFirstJoin = true
         )
     }
@@ -100,6 +111,9 @@ class RemotePlayer(player: Player) : Remotable {
                     },
                     UserWill.find { UserWillTable.userId eq uniqueId }
                             .map { Will.findWillById(it.willId)!! to it }
+                            .toMap(),
+                    UserMineBlock.find{ UserMineBlockTable.userId eq uniqueId}
+                            .map{ MineBlockReason.findById(it.reasonId)!! to it}
                             .toMap()
             )
         }

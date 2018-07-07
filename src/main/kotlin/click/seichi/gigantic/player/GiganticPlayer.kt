@@ -1,6 +1,7 @@
 package click.seichi.gigantic.player
 
 import click.seichi.gigantic.database.dao.User
+import click.seichi.gigantic.database.dao.UserMineBlock
 import click.seichi.gigantic.database.dao.UserWill
 import click.seichi.gigantic.player.components.PlayerSetting
 import click.seichi.gigantic.player.components.PlayerStatus
@@ -14,6 +15,7 @@ import org.bukkit.entity.Player
 class GiganticPlayer(
         user: User,
         willMap: Map<Will, UserWill>,
+        mineBlockMap : Map<MineBlockReason,UserMineBlock>,
         val isFirstJoin: Boolean = false) {
 
     val player: Player
@@ -23,12 +25,14 @@ class GiganticPlayer(
 
     val setting = PlayerSetting(user)
 
-    val status = PlayerStatus(user, willMap)
+    val status = PlayerStatus(user, willMap,mineBlockMap)
 
-    fun save(user: User, willMap: Map<Will, UserWill>) {
+    fun save(user: User, willMap: Map<Will, UserWill>, mineBlockMap: Map<MineBlockReason, UserMineBlock>) {
         user.locale = setting.locale.toString()
         user.mana = status.mana.current
-        user.mineBlock = status.mineBlock.current
+        mineBlockMap.forEach { reason, userMineBlock ->
+            userMineBlock.mineBlock = status.mineBlock.get(reason)
+        }
         willMap.forEach { will, userWill ->
             userWill.memory = status.memory.memoryMap[will] ?: 0
             userWill.hasAptitude = status.aptitude.willAptitude.contains(will)

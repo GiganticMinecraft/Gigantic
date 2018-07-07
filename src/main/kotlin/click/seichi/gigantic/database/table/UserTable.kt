@@ -15,8 +15,6 @@ object UserTable : IdTable<UUID>("users") {
 
     val locale = varchar("locale", 2).default(Locale.JAPANESE.toString())
 
-    val mineBlock = long("mineBlock").default(0L)
-
     val mana = long("mana").default(0L)
 
     val createdAt = datetime("created_at").default(DateTime.now())

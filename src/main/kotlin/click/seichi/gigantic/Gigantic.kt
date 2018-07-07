@@ -1,10 +1,12 @@
 package click.seichi.gigantic
 
 import click.seichi.gigantic.config.DatabaseConfig
+import click.seichi.gigantic.database.table.UserMineBlockTable
 import click.seichi.gigantic.database.table.UserTable
 import click.seichi.gigantic.database.table.UserWillTable
 import click.seichi.gigantic.listener.InventoryListener
 import click.seichi.gigantic.listener.PlayerListener
+import click.seichi.gigantic.listener.PlayerMonitor
 import click.seichi.gigantic.listener.SpiritListener
 import kotlinx.coroutines.experimental.newSingleThreadContext
 import org.bukkit.plugin.java.JavaPlugin
@@ -38,6 +40,7 @@ class Gigantic : JavaPlugin() {
             registerEvents(InventoryListener(), this@Gigantic)
             registerEvents(PlayerListener(), this@Gigantic)
             registerEvents(SpiritListener(), this@Gigantic)
+            registerEvents(PlayerMonitor(), this@Gigantic)
         }
     }
 
@@ -49,7 +52,7 @@ class Gigantic : JavaPlugin() {
         //create Tables
         transaction {
             // プレイヤー用のテーブルを作成
-            SchemaUtils.createMissingTablesAndColumns(UserTable, UserWillTable)
+            SchemaUtils.createMissingTablesAndColumns(UserTable, UserWillTable,UserMineBlockTable)
         }
     }
 

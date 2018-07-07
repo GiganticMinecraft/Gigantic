@@ -15,7 +15,7 @@ object SeichiLevelConfig : SimpleConfiguration("seichi_level", Gigantic.PLUGIN) 
 
     val MINEBLOCK_MAP by lazy {
         (1..MAX).map {
-            it to getLong("level_map.$it.mineblock")
+            it to getLong("level_map.$it.mineBlock")
         }.toMap()
     }
 
@@ -40,7 +40,7 @@ object SeichiLevelConfig : SimpleConfiguration("seichi_level", Gigantic.PLUGIN) 
                     else -> manaPolynomial.calculation(level)
                 }
                 out.println("  $level:")
-                out.println("    mineblock : $needMineBlock")
+                out.println("    mineBlock : $needMineBlock")
                 out.println("    mana : $mana")
             }
         }
