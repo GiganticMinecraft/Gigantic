@@ -1,7 +1,11 @@
 package click.seichi.gigantic.database.remote
 
-import click.seichi.gigantic.database.dao.UserDao
+import click.seichi.gigantic.database.dao.User
+import click.seichi.gigantic.database.dao.UserWill
+import click.seichi.gigantic.database.table.UserWillTable
 import click.seichi.gigantic.player.GiganticPlayer
+import click.seichi.gigantic.util.Random
+import click.seichi.gigantic.will.Will
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import org.bukkit.entity.Player
@@ -37,7 +41,7 @@ class RemotePlayer(player: Player) : Remotable {
      * @return 存在すればTRUE,しなければFALSE
      */
     private fun isExist(): Boolean {
-        return UserDao.findById(uniqueId) != null
+        return User.findById(uniqueId) != null
     }
 
     /**
@@ -46,9 +50,12 @@ class RemotePlayer(player: Player) : Remotable {
      * @return GiganticPlayer
      */
     private fun load() = GiganticPlayer(
-            UserDao[uniqueId].apply {
+            User[uniqueId].apply {
                 name = playerName
-            }
+            },
+            UserWill.find { UserWillTable.userId eq uniqueId }
+                    .map { Will.findWillById(it.willId)!! to it }
+                    .toMap()
     )
 
     /**
@@ -56,11 +63,28 @@ class RemotePlayer(player: Player) : Remotable {
      *
      * @return GiganticPlayer
      */
-    private fun create() = GiganticPlayer(
-            UserDao.new(uniqueId) {
-                name = playerName
-            }, isFirstJoin = true
-    )
+    private fun create(): GiganticPlayer {
+        // TODO
+        val yourWill = Random.nextWill()
+        val newUser = User.new(uniqueId) {
+            name = playerName
+        }
+        return GiganticPlayer(
+                newUser,
+                Will.values()
+                        .map {
+                            it to
+                                    UserWill.new {
+                                        user = newUser
+                                        willId = it.id
+                                        if (yourWill == it) {
+                                            hasAptitude = true
+                                        }
+                                    }
+                        }.toMap(),
+                isFirstJoin = true
+        )
+    }
 
 
     /**
@@ -71,9 +95,12 @@ class RemotePlayer(player: Player) : Remotable {
     fun saveAsync(gPlayer: GiganticPlayer) = async(DB) {
         transaction {
             gPlayer.save(
-                    UserDao[uniqueId].apply {
+                    User[uniqueId].apply {
                         updatedDate = DateTime.now()
-                    }
+                    },
+                    UserWill.find { UserWillTable.userId eq uniqueId }
+                            .map { Will.findWillById(it.willId)!! to it }
+                            .toMap()
             )
         }
     }

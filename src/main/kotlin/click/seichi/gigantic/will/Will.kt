@@ -24,4 +24,10 @@ enum class Will(val id: Int, val color: Color, val grade: WillGrade, val localiz
 
     override fun toString(): String = name.toLowerCase()
 
+    companion object {
+
+        private val typeMap = values().map { it.id to it }.toMap()
+
+        fun findWillById(id: Int) = typeMap[id]
+    }
 }

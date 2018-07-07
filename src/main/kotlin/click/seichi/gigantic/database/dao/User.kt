@@ -9,8 +9,8 @@ import java.util.*
 /**
  * @author tar0ss
  */
-class UserDao(id: EntityID<UUID>) : Entity<UUID>(id) {
-    companion object : EntityClass<UUID, UserDao>(UserTable)
+class User(id: EntityID<UUID>) : Entity<UUID>(id) {
+    companion object : EntityClass<UUID, User>(UserTable)
 
     var name by UserTable.name
 

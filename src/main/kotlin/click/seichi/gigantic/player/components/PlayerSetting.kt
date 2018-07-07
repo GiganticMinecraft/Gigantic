@@ -1,9 +1,9 @@
 package click.seichi.gigantic.player.components
 
-import click.seichi.gigantic.database.dao.UserDao
+import click.seichi.gigantic.database.dao.User
 import java.util.*
 
-class PlayerSetting(userDao: UserDao) {
+class PlayerSetting(user: User) {
 
-    val locale = Locale(userDao.locale)
+    val locale = Locale(user.locale)
 }

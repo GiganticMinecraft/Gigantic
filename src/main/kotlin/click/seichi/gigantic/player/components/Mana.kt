@@ -1,8 +1,8 @@
 package click.seichi.gigantic.player.components
 
-import click.seichi.gigantic.database.dao.UserDao
+import click.seichi.gigantic.database.dao.User
 
-class Mana(userDao: UserDao) {
+class Mana(user: User) {
 
-    var current = userDao.mana
+    var current = user.mana
 }

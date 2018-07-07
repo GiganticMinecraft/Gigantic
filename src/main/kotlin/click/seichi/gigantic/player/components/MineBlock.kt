@@ -1,7 +1,7 @@
 package click.seichi.gigantic.player.components
 
-import click.seichi.gigantic.database.dao.UserDao
+import click.seichi.gigantic.database.dao.User
 
-class MineBlock(userDao: UserDao) {
-    var current = userDao.mineBlock
+class MineBlock(user: User) {
+    var current = user.mineBlock
 }

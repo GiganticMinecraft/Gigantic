@@ -1,14 +1,14 @@
 package click.seichi.gigantic.player.components
 
 import click.seichi.gigantic.config.SeichiLevelConfig
-import click.seichi.gigantic.database.dao.UserDao
+import click.seichi.gigantic.database.dao.User
 
-class SeichiLevel(userDao: UserDao) {
+class SeichiLevel(user: User) {
     companion object {
         private val max = SeichiLevelConfig.MAX
     }
 
-    var current = calcLevel(userDao.mineBlock)
+    var current = calcLevel(user.mineBlock)
 
     fun calcLevel(mineBlock: Long) =
             (1..max).firstOrNull {
