@@ -2,6 +2,7 @@ package click.seichi.gigantic
 
 import click.seichi.gigantic.config.DatabaseConfig
 import click.seichi.gigantic.database.table.UserTable
+import click.seichi.gigantic.database.table.UserWillTable
 import click.seichi.gigantic.listener.InventoryListener
 import click.seichi.gigantic.listener.PlayerListener
 import click.seichi.gigantic.listener.SpiritListener
@@ -48,7 +49,7 @@ class Gigantic : JavaPlugin() {
         //create Tables
         transaction {
             // プレイヤー用のテーブルを作成
-            SchemaUtils.createMissingTablesAndColumns(UserTable)
+            SchemaUtils.createMissingTablesAndColumns(UserTable, UserWillTable)
         }
     }
 
