@@ -19,6 +19,7 @@ import org.bukkit.entity.Player
 
 /**
  * @author unicroak
+ * @author tar0ss
  */
 class WillSpirit(
         spawnReason: SpawnReason,

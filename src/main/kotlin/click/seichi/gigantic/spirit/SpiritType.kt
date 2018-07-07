@@ -31,7 +31,9 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
                 spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, event.player))
             },
             RandomSummonCase(1.0/*0.08*/, EntityDeathEvent::class.java) { event ->
-                spawn(WillSpirit(WillSpawnReason.RELEASE, event.entity.eyeLocation, Random.nextWill()))
+                val player = event.entity.killer ?: return@RandomSummonCase
+                val will = Random.nextWill()
+                spawn(WillSpirit(WillSpawnReason.RELEASE, event.entity.eyeLocation, will, player))
             }
     )
     ;
