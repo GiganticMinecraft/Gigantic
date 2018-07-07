@@ -12,7 +12,7 @@ class PlayerStatus(user: User, willMap: Map<Will, UserWill>, mineBlockMap: Map<M
 
     val mineBlock = MineBlock(mineBlockMap)
 
-    val seichiLevel = SeichiLevel(user)
+    val seichiLevel = SeichiLevel(mineBlockMap)
     // TODO implements
     val explosionLevel = 3
 
