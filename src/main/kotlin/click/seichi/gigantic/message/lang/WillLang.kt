@@ -76,7 +76,7 @@ object WillLang {
         val willSpirit = argumentList[0] as WillSpirit
         val sizePrefix = willSpirit.willSize.prefix
         val memory = willSpirit.willSize.memory
-        val name = willSpirit.willType.localizedName
+        val name = willSpirit.will.localizedName
 
         LocalizedString(
                 Locale.JAPANESE.let { it to "${ChatColor.GREEN}${sizePrefix.asSafety(it)}${name.asSafety(it)}のウィルから${memory}の記憶を得ました" },

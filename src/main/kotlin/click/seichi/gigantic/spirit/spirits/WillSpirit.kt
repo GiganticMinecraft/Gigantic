@@ -1,5 +1,6 @@
 package click.seichi.gigantic.spirit.spirits
 
+import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.extension.spawnColoredParticle
 import click.seichi.gigantic.extension.spawnColoredParticleSpherically
 import click.seichi.gigantic.message.lang.WillLang
@@ -24,7 +25,7 @@ import org.bukkit.entity.Player
 class WillSpirit(
         spawnReason: SpawnReason,
         location: Location,
-        val willType: Will,
+        val will: Will,
         targetPlayer: Player? = null
 ) : Spirit(spawnReason, location) {
 
@@ -44,7 +45,7 @@ class WillSpirit(
                         player.location.clone().add(0.0, 1.0, 0.0).let { playerLocation ->
                             playerLocation.add(location.clone().subtract(playerLocation).multiply(Random.nextDouble()))
                         },
-                        willType.color,
+                        will.color,
                         noiseData = NoiseData(0.1)
                 )
 
@@ -54,9 +55,10 @@ class WillSpirit(
             },
             { player ->
                 player ?: return@Sensor
+                val gPlayer = player.gPlayer ?: return@Sensor
                 WillLang.SENSED_WILL.sendTo(player, this)
                 WillSound.SENSED.play(player)
-                // TODO implements
+                gPlayer.status.memory.add(will, willSize.memory.toLong())
             }
     )
 
@@ -75,7 +77,7 @@ class WillSpirit(
         val renderingData = willSize.renderingData
         location.world.spawnColoredParticleSpherically(
                 location,
-                willType.color,
+                will.color,
                 if (lifeExpectancy < 10 * 20 && (renderingData.beatTiming == 0 || lifeExpectancy % renderingData.beatTiming == 0)) {
                     renderingData.min
                 } else {

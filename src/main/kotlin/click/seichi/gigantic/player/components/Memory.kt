@@ -5,7 +5,15 @@ import click.seichi.gigantic.will.Will
 
 class Memory(willMap: Map<Will, UserWill>) {
 
-    val memoryMap: Map<Will, Long> = willMap
+    private val memoryMap: MutableMap<Will, Long> = willMap
             .map { it.key to it.value.memory }
-            .toMap()
+            .toMap().toMutableMap()
+
+    fun add(will: Will, n: Long): Long {
+        val next = memoryMap[will] ?: 0L+n
+        memoryMap[will] = next
+        return next
+    }
+
+    fun get(will: Will) = memoryMap[will] ?: 0L
 }
