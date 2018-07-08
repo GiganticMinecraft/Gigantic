@@ -4,7 +4,7 @@ import click.seichi.gigantic.config.DatabaseConfig
 import click.seichi.gigantic.database.table.UserMineBlockTable
 import click.seichi.gigantic.database.table.UserTable
 import click.seichi.gigantic.database.table.UserWillTable
-import click.seichi.gigantic.listener.InventoryListener
+import click.seichi.gigantic.listener.MenuListener
 import click.seichi.gigantic.listener.PlayerListener
 import click.seichi.gigantic.listener.PlayerMonitor
 import click.seichi.gigantic.listener.SpiritListener
@@ -37,7 +37,7 @@ class Gigantic : JavaPlugin() {
 
     private fun registerListener() {
         server.pluginManager.run {
-            registerEvents(InventoryListener(), this@Gigantic)
+            registerEvents(MenuListener(), this@Gigantic)
             registerEvents(PlayerListener(), this@Gigantic)
             registerEvents(SpiritListener(), this@Gigantic)
             registerEvents(PlayerMonitor(), this@Gigantic)

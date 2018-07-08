@@ -16,6 +16,13 @@ import org.bukkit.event.entity.EntityDeathEvent
 /**
  * @author unicroak
  * @author tar0ss
+ *
+ * if you want to summon spirit on a event,you need to listen that event yourself.
+ * ex)
+ *   @EventHandler
+ *   fun onBlockBreak(event: BlockBreakEvent) {
+ *      event.summonSpirit()
+ *   }
  */
 enum class SpiritType(vararg summonCases: SummonCase<*>) {
 

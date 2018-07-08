@@ -15,21 +15,27 @@ import java.util.*
 /**
  * @author tar0ss
  */
-object StickMenu : Menu() {
+object MainMenu : Menu() {
 
-    private val TITLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}メインメニュー"
-    )
-    private val PROFILE_BUTTON_TITLE = LocalizedText(
-            Locale.JAPANESE to "プロフィール"
-    )
+//    =
+//    {
+//        gPlayer, event ->
+//        val tool = gPlayer.player.inventory.itemInMainHand
+//        tool.type == Material.STICK
+//    }
 
+
+    override val size: Int = 4 * 9
 
     init {
         registerButton(0, object : Button {
             override fun getItemStack(player: Player): ItemStack? {
                 return player.getHead().apply {
-                    setTitle(PROFILE_BUTTON_TITLE.asSafety(player.wrappedLocale))
+                    setTitle(
+                            LocalizedText(
+                                    Locale.JAPANESE to "プロフィール"
+                            ).asSafety(player.wrappedLocale)
+                    )
                 }
             }
 
@@ -60,6 +66,6 @@ object StickMenu : Menu() {
 
 
     override fun getTitle(player: Player): LocalizedText {
-        return TITLE
+        return LocalizedText(Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}メインメニュー")
     }
 }
