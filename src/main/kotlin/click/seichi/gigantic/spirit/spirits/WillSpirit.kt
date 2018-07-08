@@ -31,22 +31,24 @@ class WillSpirit(
 
     private val sensor = Sensor(
             location,
-            {
+            { player ->
+                player ?: return@Sensor false
+                val gPlayer = player.gPlayer ?: return@Sensor false
                 when {
-                    it == null -> true
+                    !gPlayer.status.aptitude.hasAptitude(will) -> false
                     targetPlayer == null -> true
-                    it.uniqueId == targetPlayer.uniqueId -> true
+                    player.uniqueId == targetPlayer.uniqueId -> true
                     else -> false
                 }
             },
             { player, count ->
                 player ?: return@Sensor
                 player.world.spawnColoredParticle(
-                        player.location.clone().add(0.0, 1.0, 0.0).let { playerLocation ->
+                        player.location.clone().add(0.0, 0.9, 0.0).let { playerLocation ->
                             playerLocation.add(location.clone().subtract(playerLocation).multiply(Random.nextDouble()))
                         },
                         will.color,
-                        noiseData = NoiseData(0.1)
+                        noiseData = NoiseData(0.05)
                 )
 
                 if (count % 10 == 0) {
