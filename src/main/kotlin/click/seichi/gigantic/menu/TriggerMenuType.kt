@@ -30,6 +30,7 @@ enum class TriggerMenuType(vararg triggerCases: TriggerCase<*>) {
 
     private val triggerCaseSet = setOf(*triggerCases)
 
+    // TODO Bukkitを亡き者にし, ジェネリクスを蘇らせる
     fun <T : Event> openIfNeeded(event: T) {
         triggerCaseSet
                 .firstOrNull { it.clazz == event::class.java }
