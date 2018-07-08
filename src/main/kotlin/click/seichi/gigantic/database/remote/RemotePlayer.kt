@@ -106,7 +106,7 @@ class RemotePlayer(player: Player) {
      */
     fun saveAsync(gPlayer: GiganticPlayer) = async(DB) {
         transaction {
-            gPlayer.onFinish(gPlayer)
+            gPlayer.finish(gPlayer)
             User[uniqueId].apply {
                 updatedDate = DateTime.now()
             }

@@ -2,7 +2,6 @@ package click.seichi.gigantic.player.components
 
 import click.seichi.gigantic.config.SeichiLevelConfig
 import click.seichi.gigantic.database.UserContainer
-import click.seichi.gigantic.player.PlayerContainer
 import click.seichi.gigantic.player.Remotable
 
 class Mana : Remotable {

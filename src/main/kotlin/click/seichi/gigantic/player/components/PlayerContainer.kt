@@ -1,8 +1,7 @@
-package click.seichi.gigantic.player
+package click.seichi.gigantic.player.components
 
 import click.seichi.gigantic.database.UserContainer
-import click.seichi.gigantic.player.components.PlayerSetting
-import click.seichi.gigantic.player.components.PlayerStatus
+import click.seichi.gigantic.player.Remotable
 import java.util.*
 
 /**

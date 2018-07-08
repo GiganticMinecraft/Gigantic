@@ -1,7 +1,6 @@
 package click.seichi.gigantic.player.components
 
 import click.seichi.gigantic.database.UserContainer
-import click.seichi.gigantic.player.PlayerContainer
 import click.seichi.gigantic.player.Remotable
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will

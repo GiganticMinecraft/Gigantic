@@ -1,6 +1,7 @@
 package click.seichi.gigantic.player
 
 import click.seichi.gigantic.database.UserContainer
+import click.seichi.gigantic.player.components.PlayerContainer
 
 /**
  * @author tar0ss

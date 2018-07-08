@@ -1,5 +1,6 @@
 package click.seichi.gigantic.player
 
+import click.seichi.gigantic.player.components.PlayerContainer
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
