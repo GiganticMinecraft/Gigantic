@@ -1,4 +1,4 @@
-package click.seichi.gigantic.language.messages.skill
+package click.seichi.gigantic.language.messages
 
 import click.seichi.gigantic.language.LocalizedText
 import java.util.*
@@ -6,7 +6,7 @@ import java.util.*
 /**
  * @author tar0ss
  */
-object BreakSkillLang {
+object BreakSkillMessages {
     val EXPLOSION_LONG_NAME = LocalizedText(
             Locale.JAPANESE to "エクスプロージョン",
             Locale.ENGLISH to "Explosion"

@@ -17,14 +17,6 @@ import java.util.*
  */
 object MainMenu : Menu() {
 
-//    =
-//    {
-//        gPlayer, event ->
-//        val tool = gPlayer.player.inventory.itemInMainHand
-//        tool.type == Material.STICK
-//    }
-
-
     override val size: Int = 4 * 9
 
     init {

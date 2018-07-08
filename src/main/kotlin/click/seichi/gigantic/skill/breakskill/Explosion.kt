@@ -1,6 +1,6 @@
 package click.seichi.gigantic.skill.breakskill
 
-import click.seichi.gigantic.language.messages.skill.BreakSkillLang
+import click.seichi.gigantic.language.messages.BreakSkillMessages
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.util.Box
 import org.bukkit.inventory.ItemStack
@@ -10,8 +10,8 @@ import org.bukkit.inventory.ItemStack
  */
 class Explosion : BreakSkill() {
 
-    override val shortName = BreakSkillLang.EXPLOSION_SHORT_NAME
-    override val displayName = BreakSkillLang.EXPLOSION_LONG_NAME
+    override val shortName = BreakSkillMessages.EXPLOSION_SHORT_NAME
+    override val displayName = BreakSkillMessages.EXPLOSION_LONG_NAME
 
     override fun calcConsumeMana(n: Int) = (n / Math.pow(n.toDouble(), 0.2) - 1).toInt()
 

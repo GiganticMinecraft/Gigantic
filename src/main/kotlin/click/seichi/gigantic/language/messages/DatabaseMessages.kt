@@ -9,7 +9,7 @@ import java.util.*
 /**
  * @author tar0ss
  */
-object DatabaseLang {
+object DatabaseMessages {
 
     val PLAYER_LOADING_MESSAGE = ChatMessage(ChatMessageProtocol.SUB_TITLE, LocalizedText(
             Locale.JAPANESE to "${ChatColor.BLUE}${ChatColor.BOLD}読み込み中...",
