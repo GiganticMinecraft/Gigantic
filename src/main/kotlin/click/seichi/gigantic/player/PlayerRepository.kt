@@ -1,7 +1,7 @@
 package click.seichi.gigantic.player
 
 import click.seichi.gigantic.database.remote.RemotePlayer
-import click.seichi.gigantic.message.lang.DatabaseLang
+import click.seichi.gigantic.language.messages.DatabaseLang
 import kotlinx.coroutines.experimental.launch
 import org.bukkit.entity.Player
 import java.util.*

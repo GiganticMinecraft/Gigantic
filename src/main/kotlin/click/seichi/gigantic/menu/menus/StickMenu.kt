@@ -3,9 +3,9 @@ package click.seichi.gigantic.menu.menus
 import click.seichi.gigantic.extension.getHead
 import click.seichi.gigantic.extension.setTitle
 import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.language.LocalizedText
 import click.seichi.gigantic.menu.Button
 import click.seichi.gigantic.menu.Menu
-import click.seichi.gigantic.message.LocalizedString
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -17,10 +17,10 @@ import java.util.*
  */
 object StickMenu : Menu() {
 
-    private val TITLE = LocalizedString(
+    private val TITLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}メインメニュー"
     )
-    private val PROFILE_BUTTON_TITLE = LocalizedString(
+    private val PROFILE_BUTTON_TITLE = LocalizedText(
             Locale.JAPANESE to "プロフィール"
     )
 
@@ -59,7 +59,7 @@ object StickMenu : Menu() {
     }
 
 
-    override fun getTitle(player: Player): LocalizedString {
+    override fun getTitle(player: Player): LocalizedText {
         return TITLE
     }
 }

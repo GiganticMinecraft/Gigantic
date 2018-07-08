@@ -9,11 +9,11 @@ import org.bukkit.event.block.BlockBreakEvent
 /**
  * @author tar0ss
  */
-class PlayerMonitor:Listener {
+class PlayerMonitor : Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
-    fun onBlockBreak(event:BlockBreakEvent){
-        if(event.isCancelled)return
+    fun onBlockBreak(event: BlockBreakEvent) {
+        if (event.isCancelled) return
         val gPlayer = event.player.gPlayer ?: return
         gPlayer.status.mineBlock.add(1L)
         gPlayer.status.seichiLevel.update(gPlayer)

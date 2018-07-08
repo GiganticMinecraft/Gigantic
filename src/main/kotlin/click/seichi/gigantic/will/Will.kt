@@ -1,25 +1,25 @@
 package click.seichi.gigantic.will
 
-import click.seichi.gigantic.message.LocalizedString
-import click.seichi.gigantic.message.lang.WillLang
+import click.seichi.gigantic.language.LocalizedText
+import click.seichi.gigantic.language.messages.WillMessages
 import org.bukkit.Color
 
 /**
  * @author unicroak
  * @author tar0ss
  */
-enum class Will(val id: Int, val color: Color, val grade: WillGrade, val localizedName: LocalizedString) {
+enum class Will(val id: Int, val color: Color, val grade: WillGrade, val LocalizedText: LocalizedText) {
 
-    AER(1, Color.fromRGB(240, 248, 255), WillGrade.BASIC, WillLang.AER),
-    AQUA(2, Color.fromRGB(0, 0, 128), WillGrade.BASIC, WillLang.AQUA),
-    IGNIS(3, Color.fromRGB(255, 69, 0), WillGrade.BASIC, WillLang.IGNIS),
-    NATURA(4, Color.fromRGB(0, 255, 0), WillGrade.BASIC, WillLang.NATURA),
-    TERRA(5, Color.fromRGB(139, 69, 19), WillGrade.BASIC, WillLang.TERRA),
-    GLACIES(6, Color.fromRGB(127, 255, 255), WillGrade.ADVANCED, WillLang.GLACIES),
-    LUX(7, Color.fromRGB(255, 255, 77), WillGrade.ADVANCED, WillLang.LUX),
-    SOLUM(8, Color.fromRGB(105, 105, 105), WillGrade.ADVANCED, WillLang.SOLUM),
-    UMBRA(9, Color.fromRGB(148, 0, 211), WillGrade.ADVANCED, WillLang.UMBRA),
-    VENTUS(10, Color.fromRGB(123, 104, 238), WillGrade.ADVANCED, WillLang.VENTUS)
+    AER(1, Color.fromRGB(240, 248, 255), WillGrade.BASIC, WillMessages.AER),
+    AQUA(2, Color.fromRGB(0, 0, 128), WillGrade.BASIC, WillMessages.AQUA),
+    IGNIS(3, Color.fromRGB(255, 69, 0), WillGrade.BASIC, WillMessages.IGNIS),
+    NATURA(4, Color.fromRGB(0, 255, 0), WillGrade.BASIC, WillMessages.NATURA),
+    TERRA(5, Color.fromRGB(139, 69, 19), WillGrade.BASIC, WillMessages.TERRA),
+    GLACIES(6, Color.fromRGB(127, 255, 255), WillGrade.ADVANCED, WillMessages.GLACIES),
+    LUX(7, Color.fromRGB(255, 255, 77), WillGrade.ADVANCED, WillMessages.LUX),
+    SOLUM(8, Color.fromRGB(105, 105, 105), WillGrade.ADVANCED, WillMessages.SOLUM),
+    UMBRA(9, Color.fromRGB(148, 0, 211), WillGrade.ADVANCED, WillMessages.UMBRA),
+    VENTUS(10, Color.fromRGB(123, 104, 238), WillGrade.ADVANCED, WillMessages.VENTUS)
     ;
 
     override fun toString(): String = name.toLowerCase()

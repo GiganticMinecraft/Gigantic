@@ -1,14 +1,14 @@
 package click.seichi.gigantic.skill
 
-import click.seichi.gigantic.message.LocalizedString
-import click.seichi.gigantic.message.lang.skill.SkillLang
+import click.seichi.gigantic.language.LocalizedText
+import click.seichi.gigantic.language.messages.skill.SkillLang
 
 /**
  * @author tar0ss
  */
 enum class SkillState(
         val canFire: Boolean,
-        val localizedName: LocalizedString = if (canFire) SkillLang.ACTIVATE else SkillLang.NOT_ACTIVATE
+        val LocalizedText: LocalizedText = if (canFire) SkillLang.ACTIVATE else SkillLang.NOT_ACTIVATE
 ) {
     ACTIVATE(true),
     FIRE_COMPLETED(true),

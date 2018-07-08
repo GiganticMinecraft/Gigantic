@@ -1,8 +1,8 @@
-package click.seichi.gigantic.message.lang
+package click.seichi.gigantic.language.messages
 
-import click.seichi.gigantic.message.LocalizedString
-import click.seichi.gigantic.message.MessageProtocol
-import click.seichi.gigantic.message.messages.Message
+import click.seichi.gigantic.language.ChatMessage
+import click.seichi.gigantic.language.ChatMessageProtocol
+import click.seichi.gigantic.language.LocalizedText
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -11,12 +11,12 @@ import java.util.*
  */
 object DatabaseLang {
 
-    val PLAYER_LOADING_MESSAGE = Message(MessageProtocol.SUB_TITLE, LocalizedString(
+    val PLAYER_LOADING_MESSAGE = ChatMessage(ChatMessageProtocol.SUB_TITLE, LocalizedText(
             Locale.JAPANESE to "${ChatColor.BLUE}${ChatColor.BOLD}読み込み中...",
             Locale.ENGLISH to "${ChatColor.BLUE}${ChatColor.BOLD}Loading..."
     ))
 
-    val PLAYER_LOAD_COMPLETED_MESSAGE = Message(MessageProtocol.SUB_TITLE, LocalizedString(
+    val PLAYER_LOAD_COMPLETED_MESSAGE = ChatMessage(ChatMessageProtocol.SUB_TITLE, LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}ロード完了",
             Locale.ENGLISH to "${ChatColor.YELLOW}${ChatColor.BOLD}Load is completed"
     ))

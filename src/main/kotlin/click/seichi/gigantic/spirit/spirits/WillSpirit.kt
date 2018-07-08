@@ -3,7 +3,7 @@ package click.seichi.gigantic.spirit.spirits
 import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.extension.spawnColoredParticle
 import click.seichi.gigantic.extension.spawnColoredParticleSpherically
-import click.seichi.gigantic.message.lang.WillLang
+import click.seichi.gigantic.language.messages.WillMessages
 import click.seichi.gigantic.sound.WillSound
 import click.seichi.gigantic.spirit.Spirit
 import click.seichi.gigantic.spirit.SpiritType
@@ -58,7 +58,7 @@ class WillSpirit(
             { player ->
                 player ?: return@Sensor
                 val gPlayer = player.gPlayer ?: return@Sensor
-                WillLang.SENSED_WILL.sendTo(player, this)
+                WillMessages.SENSED_WILL(this).sendTo(player)
                 WillSound.SENSED.play(player)
                 gPlayer.status.memory.add(will, willSize.memory.toLong())
             }

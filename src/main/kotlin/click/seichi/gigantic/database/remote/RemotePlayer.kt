@@ -93,7 +93,7 @@ class RemotePlayer(player: Player) {
                             user = newUser
                             reasonId = reason.id
                         }
-            }
+                    }
         }
         return !isExist
     }

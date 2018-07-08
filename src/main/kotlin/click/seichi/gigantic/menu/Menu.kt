@@ -1,7 +1,7 @@
 package click.seichi.gigantic.menu
 
 import click.seichi.gigantic.extension.wrappedLocale
-import click.seichi.gigantic.message.LocalizedString
+import click.seichi.gigantic.language.LocalizedText
 import click.seichi.gigantic.sound.MenuSound
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -29,7 +29,7 @@ abstract class Menu : InventoryHolder {
      *
      * @param player Menuを開いているplayer
      */
-    abstract fun getTitle(player: Player): LocalizedString
+    abstract fun getTitle(player: Player): LocalizedText
 
     /**
      * MenuにButtonを登録します

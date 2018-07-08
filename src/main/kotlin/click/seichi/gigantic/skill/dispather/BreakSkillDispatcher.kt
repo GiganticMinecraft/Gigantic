@@ -2,8 +2,8 @@ package click.seichi.gigantic.skill.dispather
 
 import click.seichi.gigantic.event.events.BlockBreakSkillEvent
 import click.seichi.gigantic.extension.cardinalDirection
-import click.seichi.gigantic.message.MessageProtocol
-import click.seichi.gigantic.message.messages.Message
+import click.seichi.gigantic.language.ChatMessage
+import click.seichi.gigantic.language.ChatMessageProtocol
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.skill.SkillState
@@ -82,7 +82,7 @@ class BreakSkillDispatcher(
     private fun sendErrorMessage(state: SkillState) {
         // TODO implements
         if (state.canFire) return
-        Message(MessageProtocol.CHAT, state.localizedName).sendTo(player)
+        ChatMessage(ChatMessageProtocol.CHAT, state.LocalizedText).sendTo(player)
     }
 
     private fun fire(): SkillState {

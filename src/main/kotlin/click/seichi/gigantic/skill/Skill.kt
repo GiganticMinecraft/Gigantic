@@ -1,6 +1,6 @@
 package click.seichi.gigantic.skill
 
-import click.seichi.gigantic.message.LocalizedString
+import click.seichi.gigantic.language.LocalizedText
 import click.seichi.gigantic.player.GiganticPlayer
 
 /**
@@ -8,7 +8,7 @@ import click.seichi.gigantic.player.GiganticPlayer
  */
 abstract class Skill {
     // プレイヤーに表示される名前
-    abstract val displayName: LocalizedString
+    abstract val displayName: LocalizedText
 
     abstract fun isUnlocked(gPlayer: GiganticPlayer): Boolean
 

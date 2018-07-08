@@ -1,4 +1,4 @@
-package click.seichi.gigantic.message
+package click.seichi.gigantic.language
 
 import click.seichi.gigantic.extension.sendActionBar
 import org.bukkit.entity.Player
@@ -6,7 +6,7 @@ import org.bukkit.entity.Player
 /**
  * @author unicroak
  */
-enum class MessageProtocol(val sending: (Player, String) -> Unit) {
+enum class ChatMessageProtocol(val sendTo: (Player, String) -> Unit) {
 
     ACTION_BAR({ player, message -> player.sendActionBar(message) }),
 
@@ -15,5 +15,7 @@ enum class MessageProtocol(val sending: (Player, String) -> Unit) {
     SUB_TITLE({ player, message -> player.sendTitle("", message, 10, 80, 10) }),
 
     TITLE({ player, message -> player.sendTitle(message, "", 10, 80, 10) }),
+
+    ;
 
 }

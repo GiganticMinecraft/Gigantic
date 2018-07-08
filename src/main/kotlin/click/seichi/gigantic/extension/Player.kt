@@ -1,7 +1,5 @@
 package click.seichi.gigantic.extension
 
-import click.seichi.gigantic.message.LocalizedString
-import click.seichi.gigantic.message.messages.Message
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.player.PlayerRepository
 import click.seichi.gigantic.util.CardinalDirection
@@ -35,10 +33,6 @@ val Player.wrappedLocale: Locale
     get() = gPlayer?.setting?.locale ?: Locale.JAPANESE
 
 fun Player.sendActionBar(message: String) = spigot().sendMessage(ChatMessageType.ACTION_BAR, ComponentSerializer.parse("{\"text\": \"$message\"}")[0])
-
-fun Player.sendMessage(message: LocalizedString) = sendMessage(message.`as`(this.wrappedLocale))
-
-fun Player.sendMessage(message: Message, vararg arguments: Any) = message.sendTo(this, *arguments)
 
 fun Player.spawnColoredParticle(
         location: Location,

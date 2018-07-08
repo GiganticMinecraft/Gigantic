@@ -52,7 +52,7 @@ class Gigantic : JavaPlugin() {
         //create Tables
         transaction {
             // プレイヤー用のテーブルを作成
-            SchemaUtils.createMissingTablesAndColumns(UserTable, UserWillTable,UserMineBlockTable)
+            SchemaUtils.createMissingTablesAndColumns(UserTable, UserWillTable, UserMineBlockTable)
         }
     }
 

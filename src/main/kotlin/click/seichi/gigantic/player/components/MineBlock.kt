@@ -9,7 +9,7 @@ class MineBlock : Remotable {
     private var currentMap: MutableMap<MineBlockReason, Long> = mutableMapOf()
 
     fun add(num: Long, reason: MineBlockReason = MineBlockReason.GENERAL): Long {
-        val next = currentMap[reason] ?: 0L + num
+        val next = currentMap[reason] ?: 0L+num
         currentMap[reason] = next
         return next
     }

@@ -2,7 +2,7 @@ package click.seichi.gigantic.skill.breakskill
 
 import click.seichi.gigantic.extension.isSeichiTool
 import click.seichi.gigantic.extension.isSeichiWorld
-import click.seichi.gigantic.message.LocalizedString
+import click.seichi.gigantic.language.LocalizedText
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.skill.Skill
 import click.seichi.gigantic.skill.SkillState
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack
  */
 abstract class BreakSkill : Skill() {
     // プレイヤーに表示される簡略名（1文字）
-    abstract val shortName: LocalizedString
+    abstract val shortName: LocalizedText
 
     abstract fun calcConsumeMana(n: Int): Int
 
