@@ -1,5 +1,6 @@
 package click.seichi.gigantic.config
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.util.Polynomial
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -7,10 +8,19 @@ import java.io.File
 /**
  * @author tar0ss
  */
-object SeichiLevelConfig : MineBlockBasedLevelConfig("seichi_level") {
+object SeichiLevelConfig : SimpleConfiguration("seichi_level", Gigantic.PLUGIN) {
 
-    val manaMap by lazy {
-        (1..max).map {
+
+    val MAX by lazy { getInt("max") }
+
+    val MINEBLOCK_MAP by lazy {
+        (1..MAX).map {
+            it to getLong("level_map.$it.mineBlock")
+        }.toMap()
+    }
+
+    val MANA_MAP by lazy {
+        (1..MAX).map {
             it to getLong("level_map.$it.mana")
         }.toMap()
     }

@@ -8,7 +8,7 @@ import click.seichi.gigantic.player.Remotable
 
 class SeichiLevel : Remotable {
     companion object {
-        private val MAX = SeichiLevelConfig.max
+        private val MAX = SeichiLevelConfig.MAX
     }
 
     var current: Int = 0
@@ -20,7 +20,7 @@ class SeichiLevel : Remotable {
             } ?: MAX
 
     private fun canLevelUp(nextLevel: Int, mineBlock: Long) =
-            mineBlock > SeichiLevelConfig.mineblockMap[nextLevel] ?: Long.MAX_VALUE
+            mineBlock > SeichiLevelConfig.MINEBLOCK_MAP[nextLevel] ?: Long.MAX_VALUE
 
     fun update(gPlayer: GiganticPlayer) {
         val mineBlock = gPlayer.status.mineBlock.get()
