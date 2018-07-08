@@ -32,6 +32,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
+        if (event.isCancelled) return
         val player = event.player ?: return
         val block = event.block ?: return
         val gPlayer = player.gPlayer ?: return
