@@ -5,12 +5,15 @@ import click.seichi.gigantic.database.UserContainer
 import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.database.dao.UserMineBlock
 import click.seichi.gigantic.database.dao.UserWill
+import click.seichi.gigantic.database.table.UserMineBlockTable
+import click.seichi.gigantic.database.table.UserWillTable
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.will.Will
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import org.bukkit.entity.Player
+import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 import java.util.concurrent.TimeUnit
@@ -37,22 +40,9 @@ class RemotePlayer(player: Player) {
     fun loadOrCreateAsync() = async(DB) {
         delay(3, TimeUnit.SECONDS)
         transaction {
-            val isFirstJoin = !isExist()
-            if (isFirstJoin) {
-                create()
-            }
+            val isFirstJoin = createIfNotExists()
             load(isFirstJoin)
         }
-    }
-
-
-    /**
-     * player がデータベースに存在するか調べます
-     *
-     * @return 存在すればTRUE,しなければFALSE
-     */
-    private fun isExist(): Boolean {
-        return User.findById(uniqueId) != null
     }
 
     /**
@@ -74,22 +64,38 @@ class RemotePlayer(player: Player) {
     /**
      * playerを作成し、データベースに追加します。
      */
-    private fun create() {
-        val newUser = User.new(uniqueId) {
-            name = playerName
+    private fun createIfNotExists(): Boolean {
+        val isExist = User.findById(uniqueId) != null
+        if (!isExist) {
+            User.new(uniqueId) {
+                name = playerName
+            }
         }
-        Will.values().map {
-            it to UserWill.new {
-                user = newUser
-                willId = it.id
+
+        val newUser = User[uniqueId]
+
+        Will.values().forEach { will ->
+            will to UserWill
+                    .find { (UserWillTable.userId eq uniqueId) and (UserWillTable.willId eq will.id) }
+                    .firstOrNull().let {
+                        it ?: UserWill.new {
+                            user = newUser
+                            willId = will.id
+                        }
+                    }
+        }
+
+        MineBlockReason.values().forEach { reason ->
+            reason to UserMineBlock
+                    .find { (UserMineBlockTable.userId eq uniqueId) and (UserMineBlockTable.reasonId eq reason.id) }
+                    .firstOrNull().let {
+                        it ?: UserMineBlock.new {
+                            user = newUser
+                            reasonId = reason.id
+                        }
             }
-        }.toMap()
-        MineBlockReason.values().map {
-            it to UserMineBlock.new {
-                user = newUser
-                reasonId = it.id
-            }
-        }.toMap()
+        }
+        return !isExist
     }
 
 
