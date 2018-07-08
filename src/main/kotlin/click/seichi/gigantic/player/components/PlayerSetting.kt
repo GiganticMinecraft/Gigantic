@@ -1,9 +1,17 @@
 package click.seichi.gigantic.player.components
 
-import click.seichi.gigantic.database.dao.User
+import click.seichi.gigantic.database.UserContainer
+import click.seichi.gigantic.player.Remotable
 import java.util.*
 
-class PlayerSetting(user: User) {
+class PlayerSetting : Remotable {
+    lateinit var locale: Locale
 
-    val locale = Locale(user.locale)
+    override fun onLoad(userContainer: UserContainer) {
+        locale = Locale(userContainer.user.locale)
+    }
+
+    override fun onSave(userContainer: UserContainer) {
+        userContainer.user.locale = locale.toString()
+    }
 }

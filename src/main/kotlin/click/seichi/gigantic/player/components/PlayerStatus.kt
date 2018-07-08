@@ -1,27 +1,26 @@
 package click.seichi.gigantic.player.components
 
-import click.seichi.gigantic.database.dao.User
-import click.seichi.gigantic.database.dao.UserMineBlock
-import click.seichi.gigantic.database.dao.UserWill
-import click.seichi.gigantic.player.MineBlockReason
-import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.player.Remotable
 
-class PlayerStatus(
-        user: User,
-        willMap: Map<Will, UserWill>,
-        mineBlockMap: Map<MineBlockReason, UserMineBlock>,
-        isFirstJoin: Boolean
-) {
+class PlayerStatus : Remotable {
 
-    val mana = Mana(user)
+    val mana = Mana()
 
-    val mineBlock = MineBlock(mineBlockMap)
+    val mineBlock = MineBlock()
 
-    val seichiLevel = SeichiLevel(mineBlockMap)
+    val seichiLevel = SeichiLevel()
     // TODO implements
     val explosionLevel = 3
 
-    val memory = Memory(willMap)
+    val memory = Memory()
 
-    val aptitude = Aptitude(willMap, isFirstJoin)
+    val aptitude = WillAptitude()
+
+    override fun getRemotableComponents() = listOf(
+            mana,
+            mineBlock,
+            seichiLevel,
+            memory,
+            aptitude
+    )
 }
