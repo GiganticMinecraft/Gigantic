@@ -6,7 +6,7 @@ import org.bukkit.SoundCategory
 /**
  * @author tar0ss
  */
-object WillSound {
+object WillSounds {
 
     val SENSE_SUB = SoundPlayer(
             Sound.ENTITY_VEX_AMBIENT,

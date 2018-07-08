@@ -6,7 +6,7 @@ import org.bukkit.SoundCategory
 /**
  * @author tar0ss
  */
-object MenuSound {
+object MenuSounds {
     val MENU_OPEN = SoundPlayer(
             Sound.BLOCK_FENCE_GATE_OPEN,
             SoundCategory.BLOCKS,
