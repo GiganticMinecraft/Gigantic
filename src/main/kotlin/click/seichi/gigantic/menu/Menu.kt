@@ -1,13 +1,13 @@
 package click.seichi.gigantic.menu
 
+import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.message.LocalizedString
 import click.seichi.gigantic.sound.MenuSound
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
-import org.bukkit.inventory.ItemStack
 
 /**
  * @author tar0ss
@@ -29,7 +29,7 @@ abstract class Menu : InventoryHolder {
      *
      * @param player Menuを開いているplayer
      */
-    abstract fun getTitle(player: Player): String
+    abstract fun getTitle(player: Player): LocalizedString
 
     /**
      * MenuにButtonを登録します
@@ -64,9 +64,9 @@ abstract class Menu : InventoryHolder {
 
     protected open fun getInventory(player: Player): Inventory {
         val inventory = if (type == InventoryType.CHEST)
-            Bukkit.createInventory(this, size, getTitle(player))
+            Bukkit.createInventory(this, size, getTitle(player).asSafety(player.wrappedLocale))
         else
-            Bukkit.createInventory(this, type, getTitle(player))
+            Bukkit.createInventory(this, type, getTitle(player).asSafety(player.wrappedLocale))
 
         (0..inventory.size).forEach { slot ->
             val itemStack = getButton(player, slot)?.getItemStack(player) ?: return@forEach
@@ -111,23 +111,6 @@ abstract class Menu : InventoryHolder {
 
     override fun getInventory(): Inventory? {
         return null
-    }
-
-    interface Button {
-
-        /**
-         * Menuに表示されるItemStackを取得します
-         *
-         * @param player Menuを開いているPlayer
-         */
-        fun getItemStack(player: Player): ItemStack?
-
-        /**
-         * Buttonクリック時に実行されます
-         *
-         * @param event クリック時のInventoryClickEvent
-         */
-        fun onClick(player: Player, event: InventoryClickEvent)
     }
 
 }

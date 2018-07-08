@@ -1,6 +1,7 @@
 package click.seichi.gigantic.menu.button
 
 import click.seichi.gigantic.extension.setTitle
+import click.seichi.gigantic.menu.Button
 import click.seichi.gigantic.menu.Menu
 import org.bukkit.ChatColor
 import org.bukkit.Material
@@ -11,7 +12,7 @@ import org.bukkit.inventory.ItemStack
 /**
  * @author tar0ss
  */
-class BackButton(private val currentMenu: Menu, private val menu: Menu) : Menu.Button {
+class BackButton(private val currentMenu: Menu, private val menu: Menu) : Button {
 
     override fun getItemStack(player: Player): ItemStack? {
         return ItemStack(Material.LADDER).apply {
