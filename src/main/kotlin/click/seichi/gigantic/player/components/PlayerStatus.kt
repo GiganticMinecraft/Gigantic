@@ -6,6 +6,8 @@ class PlayerStatus : Remotable {
 
     val mana = Mana()
 
+    val abilityPoint = AbilityPoint()
+
     val mineBlock = MineBlock()
 
     val seichiLevel = SeichiLevel()
