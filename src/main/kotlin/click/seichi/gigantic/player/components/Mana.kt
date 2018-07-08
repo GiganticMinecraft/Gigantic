@@ -13,9 +13,15 @@ class Mana : Remotable {
     var max: Long = 0L
         private set
 
-    fun add(n: Long): Long {
+    fun increase(n: Long): Long {
         val next = current + n
         current = if (next > max) max else next
+        return current
+    }
+
+    fun decrease(n: Long): Long {
+        val next = current - n
+        current = if (next < 0) 0L else next
         return current
     }
 

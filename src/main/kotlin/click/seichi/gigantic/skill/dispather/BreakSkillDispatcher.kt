@@ -56,6 +56,18 @@ class BreakSkillDispatcher(
                 }
             }
         }
+        val numOfBreak = targetSet.size
+
+        val consumeMana = skill.calcConsumeMana(numOfBreak).toLong()
+        val playerMana = gPlayer.status.mana.current
+
+        if (playerMana < consumeMana) {
+            sendErrorMessage(SkillState.NO_MANA)
+            return false
+        }
+
+        gPlayer.status.mana.decrease(consumeMana)
+
 
         fire().let {
             if (!it.canFire) {
@@ -74,7 +86,6 @@ class BreakSkillDispatcher(
     }
 
     private fun fire(): SkillState {
-        // TODO　mana and durability decrease
         // TODO skilllevel update
         // TODO coolTime invoke
         gPlayer.status.run {
