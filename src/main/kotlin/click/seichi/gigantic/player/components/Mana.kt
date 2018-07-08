@@ -30,7 +30,7 @@ class Mana : Remotable {
     }
 
     override fun onInit(playerContainer: PlayerContainer) {
-        max = SeichiLevelConfig.MANA_MAP[playerContainer.status.seichiLevel.current] ?: 0L
+        max = SeichiLevelConfig.manaMap[playerContainer.status.seichiLevel.current] ?: 0L
     }
 
     override fun onSave(userContainer: UserContainer) {
