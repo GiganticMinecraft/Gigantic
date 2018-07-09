@@ -30,7 +30,7 @@ val Player.cardinalDirection
     get() = CardinalDirection.getCardinalDirection(this)
 
 val Player.wrappedLocale: Locale
-    get() = gPlayer?.setting?.locale ?: Locale.JAPANESE
+    get() = gPlayer?.locale ?: Locale.JAPANESE
 
 fun Player.sendActionBar(message: String) = spigot().sendMessage(ChatMessageType.ACTION_BAR, ComponentSerializer.parse("{\"text\": \"$message\"}")[0])
 

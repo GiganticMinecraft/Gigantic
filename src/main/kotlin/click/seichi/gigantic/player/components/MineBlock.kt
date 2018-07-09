@@ -1,12 +1,8 @@
 package click.seichi.gigantic.player.components
 
-import click.seichi.gigantic.database.UserContainer
 import click.seichi.gigantic.player.MineBlockReason
-import click.seichi.gigantic.player.PlayerComponent
 
-class MineBlock : PlayerComponent {
-
-    private var currentMap: MutableMap<MineBlockReason, Long> = mutableMapOf()
+class MineBlock(private val currentMap: MutableMap<MineBlockReason, Long>) {
 
     fun add(num: Long, reason: MineBlockReason = MineBlockReason.GENERAL): Long {
         val next = currentMap[reason] ?: 0L+num
@@ -16,13 +12,6 @@ class MineBlock : PlayerComponent {
 
     fun get(reason: MineBlockReason = MineBlockReason.GENERAL) = currentMap[reason] ?: 0L
 
-    override fun onLoad(userContainer: UserContainer) {
-        currentMap = userContainer.userMineBlockMap.map { it.key to it.value.mineBlock }.toMap().toMutableMap()
-    }
+    fun copyMap() = currentMap.toMap()
 
-    override fun onSave(userContainer: UserContainer) {
-        currentMap.forEach { reason, current ->
-            userContainer.userMineBlockMap[reason]?.mineBlock = current
-        }
-    }
 }

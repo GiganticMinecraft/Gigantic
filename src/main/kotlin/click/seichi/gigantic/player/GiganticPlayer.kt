@@ -1,15 +1,21 @@
 package click.seichi.gigantic.player
 
-import click.seichi.gigantic.player.components.PlayerContainer
-import org.bukkit.Bukkit
+import click.seichi.gigantic.player.components.*
 import org.bukkit.entity.Player
+import java.util.*
 
-/**
- * @author tar0ss
- */
-class GiganticPlayer(override val isFirstJoin: Boolean = false) : PlayerContainer() {
+interface GiganticPlayer {
 
     val player: Player
-        get() = Bukkit.getServer().getPlayer(uniqueId)
+    val uniqueId: UUID
+    val locale: Locale
+    val mana: Mana
+    val mineBlock: MineBlock
+    val level: PlayerLevel
+    val abilityPoint: AbilityPoint
+    val memory: Memory
+    val aptitude: WillAptitude
+    // TODO implements
+    val explosionLevel: Int
 
 }

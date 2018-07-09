@@ -10,7 +10,7 @@ class AbilityPoint {
     enum class AbilityPointConsumer(private val consuming: (GiganticPlayer) -> Int) {
         EXPLOSION_LEVEL(
                 // TODO implements
-                { it.status.explosionLevel }
+                { it.explosionLevel }
         )
         ;
 
@@ -19,7 +19,7 @@ class AbilityPoint {
 
     enum class AbilityPointProducer(private val producing: (GiganticPlayer) -> Int) {
         SEICHI_LEVEL(
-                { it.status.level.current * 3 }
+                { it.level.current * 3 }
         )
         ;
 

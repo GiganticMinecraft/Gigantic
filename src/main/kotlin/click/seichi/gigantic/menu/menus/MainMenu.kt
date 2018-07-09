@@ -33,24 +33,24 @@ object MainMenu : Menu() {
 
             override fun onClick(player: Player, event: InventoryClickEvent) {}
         })
-//            override fun getItemStack(gPlayer: GiganticPlayer): ItemStack {
-//                return gPlayer.player.getHeadItem().apply {
+//            override fun getItemStack(gPlayer: CraftPlayer): ItemStack {
+//                return gPlayer.gPlayer.getHeadItem().apply {
 //                    setTitle(gPlayer.name)
 //                    setLore("総整地量:${gPlayer.statistic.mineBlock.all}", prefix = "$AQUA")
 //                }
 //            }
 //
-//            override fun onClick(gPlayer: GiganticPlayer, event: InventoryClickEvent) {
+//            override fun onClick(gPlayer: CraftPlayer, event: InventoryClickEvent) {
 //            }
 //        })
 //        registerButton(1, object : Button {
-//            override fun getItemStack(gPlayer: GiganticPlayer): ItemStack {
+//            override fun getItemStack(gPlayer: CraftPlayer): ItemStack {
 //                return ItemStack(Material.TRIPWIRE_HOOK, 1).apply {
 //                    setTitle("設定")
 //                }
 //            }
 //
-//            override fun onClick(gPlayer: GiganticPlayer, event: InventoryClickEvent) {
+//            override fun onClick(gPlayer: CraftPlayer, event: InventoryClickEvent) {
 //                SettingMenu.open(gPlayer)
 //            }
 //        })

@@ -15,7 +15,7 @@ class PlayerMonitor : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         if (event.isCancelled) return
         val gPlayer = event.player.gPlayer ?: return
-        gPlayer.status.mineBlock.add(1L)
-        gPlayer.status.level.update(gPlayer)
+        gPlayer.mineBlock.add(1L)
+        gPlayer.level.update(gPlayer)
     }
 }

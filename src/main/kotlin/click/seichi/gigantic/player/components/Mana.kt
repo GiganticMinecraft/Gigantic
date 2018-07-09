@@ -1,39 +1,46 @@
 package click.seichi.gigantic.player.components
 
 import click.seichi.gigantic.config.ManaConfig
-import click.seichi.gigantic.database.UserContainer
-import click.seichi.gigantic.player.PlayerComponent
+import click.seichi.gigantic.player.GiganticPlayer
+import kotlin.properties.Delegates
 
-class Mana : PlayerComponent {
+class Mana(current: Long) {
 
-    var current: Long = 0L
+    var current: Long = current
+        private set
+    var max: Long by Delegates.notNull()
         private set
 
-    var max: Long = 0L
-        private set
 
-    fun increase(n: Long): Long {
-        val next = current + n
-        current = if (next > max) max else next
-        return current
+    fun increase(other: Long, ignoreMax: Boolean = false) {
+        val next = current + other
+        when {
+            other < 0 -> throw IllegalArgumentException("$other must not be negative.")
+            next < current && ignoreMax -> current = Long.MAX_VALUE // overflow
+            current in next..max -> current = max // overflow
+            next < current -> {
+            } // overflow,current = current
+            ignoreMax -> current = next
+            current < max -> current = next.coerceAtMost(max)
+            else -> {
+            } // current = current
+        }
     }
 
-    fun decrease(n: Long): Long {
-        val next = current - n
-        current = if (next < 0) 0L else next
-        return current
+    fun decrease(other: Long) {
+        val next = current - other
+        current = when {
+            other > 0 -> throw IllegalArgumentException("$other must not be positive.")
+            next > current -> 0L
+            else -> next.coerceAtLeast(0L)
+        }
     }
 
-    override fun onLoad(userContainer: UserContainer) {
-        current = userContainer.user.mana
-    }
+    operator fun plus(other: Long) = increase(other, false)
+    operator fun minus(other: Long) = decrease(other)
 
-    override fun onInit(playerContainer: PlayerContainer) {
-        max = ManaConfig.MANA_MAP[playerContainer.status.level.current] ?: 0L
-    }
-
-    override fun onSave(userContainer: UserContainer) {
-        userContainer.user.mana = current
+    fun update(gPlayer: GiganticPlayer) {
+        max = ManaConfig.MANA_MAP[gPlayer.level.current] ?: 0L
     }
 
 }

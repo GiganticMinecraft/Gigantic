@@ -12,7 +12,7 @@ import java.util.*
 /**
  * @author tar0ss
  */
-class UserContainer(uniqueId: UUID) {
+class PlayerDao(uniqueId: UUID) {
     val user = User[uniqueId]
     val userWillMap = UserWill
             .find { UserWillTable.userId eq uniqueId }

@@ -35,7 +35,7 @@ class WillSpirit(
                 player ?: return@Sensor false
                 val gPlayer = player.gPlayer ?: return@Sensor false
                 when {
-                    !gPlayer.status.aptitude.hasAptitude(will) -> false
+                    !gPlayer.aptitude.has(will) -> false
                     targetPlayer == null -> true
                     player.uniqueId == targetPlayer.uniqueId -> true
                     else -> false
@@ -60,7 +60,7 @@ class WillSpirit(
                 val gPlayer = player.gPlayer ?: return@Sensor
                 WillMessages.SENSED_WILL(this).sendTo(player)
                 WillSounds.SENSED.play(player)
-                gPlayer.status.memory.add(will, willSize.memory.toLong())
+                gPlayer.memory.add(will, willSize.memory.toLong())
             }
     )
 

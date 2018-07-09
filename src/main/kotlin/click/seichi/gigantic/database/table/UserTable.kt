@@ -13,7 +13,7 @@ object UserTable : IdTable<UUID>("users") {
 
     val name = varchar("name", 50)
 
-    val locale = varchar("locale", 2).default(Locale.JAPANESE.toString())
+    val localeString = varchar("localeString", 2).default(Locale.JAPANESE.toString())
 
     val mana = long("mana").default(0L)
 

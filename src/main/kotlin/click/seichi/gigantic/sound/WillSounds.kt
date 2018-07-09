@@ -13,7 +13,7 @@ object WillSounds {
             SoundCategory.BLOCKS,
             pitch = 0.5F
     )
-    //player.location, Sound.ENTITY_VEX_AMBIENT, SoundCategory.BLOCKS, 1.0F, 0.5F)
+    //gPlayer.location, Sound.ENTITY_VEX_AMBIENT, SoundCategory.BLOCKS, 1.0F, 0.5F)
     val SENSED = SoundPlayer(
             Sound.ITEM_ARMOR_EQUIP_DIAMOND,
             SoundCategory.BLOCKS,

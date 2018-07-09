@@ -21,7 +21,7 @@ class Explosion : BreakSkill() {
             .let { if (it < 20) 0 else it }
 
     override fun calcBox(gPlayer: GiganticPlayer) =
-            gPlayer.status.explosionLevel.let { level ->
+            gPlayer.explosionLevel.let { level ->
                 when (level) {
                     1 -> Box(1, 2, 1)
                     2 -> Box(3, 2, 1)
@@ -35,7 +35,7 @@ class Explosion : BreakSkill() {
                 }
             }
 
-    override fun isUnlocked(gPlayer: GiganticPlayer) = gPlayer.status.level.current >= 10
+    override fun isUnlocked(gPlayer: GiganticPlayer) = gPlayer.level.current >= 10
     // TODO implements
     override fun isCooldown(gPlayer: GiganticPlayer) = false
 

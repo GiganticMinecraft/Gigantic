@@ -14,7 +14,7 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var name by UserTable.name
 
-    var locale by UserTable.locale
+    var localeString by UserTable.localeString
 
     var mana by UserTable.mana
 

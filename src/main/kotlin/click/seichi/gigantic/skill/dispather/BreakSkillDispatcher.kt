@@ -59,14 +59,14 @@ class BreakSkillDispatcher(
         val numOfBreak = targetSet.size
 
         val consumeMana = skill.calcConsumeMana(numOfBreak).toLong()
-        val playerMana = gPlayer.status.mana.current
+        val playerMana = gPlayer.mana.current
 
         if (playerMana < consumeMana) {
             sendErrorMessage(SkillState.NO_MANA)
             return false
         }
 
-        gPlayer.status.mana.decrease(consumeMana)
+        gPlayer.mana.decrease(consumeMana)
 
 
         fire().let {
@@ -88,7 +88,7 @@ class BreakSkillDispatcher(
     private fun fire(): SkillState {
         // TODO skilllevel update
         // TODO coolTime invoke
-        gPlayer.status.run {
+        gPlayer.run {
             mineBlock.add(targetSet.size.toLong(), mineBlockReason)
         }
 

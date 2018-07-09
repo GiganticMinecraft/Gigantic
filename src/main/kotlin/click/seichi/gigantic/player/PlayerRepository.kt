@@ -11,23 +11,23 @@ import java.util.*
  */
 object PlayerRepository {
 
-    private val gPlayerMap = mutableMapOf<UUID, GiganticPlayer>()
+    private val craftPlayerMap = mutableMapOf<UUID, CraftPlayer>()
 
 
     fun add(player: Player) = launch {
         val uniqueId = player.uniqueId ?: return@launch
         DatabaseMessages.PLAYER_LOADING_MESSAGE.sendTo(player)
-        // gPlayerを非同期取得
-        gPlayerMap[uniqueId] = RemotePlayer(player).loadOrCreateAsync().await()
+        // craftPlayerを非同期取得
+        craftPlayerMap[uniqueId] = RemotePlayer(player).loadOrCreateAsync().await()
         DatabaseMessages.PLAYER_LOAD_COMPLETED_MESSAGE.sendTo(player)
     }
 
     fun remove(player: Player) = launch {
         val uniqueId = player.uniqueId ?: return@launch
-        val gPlayer = gPlayerMap[uniqueId] ?: return@launch
-        RemotePlayer(player).saveAsync(gPlayer).await()
+        val craftPlayer = craftPlayerMap[uniqueId] ?: return@launch
+        RemotePlayer(player).saveAsync(craftPlayer).await()
     }
 
-    fun find(uniqueId: UUID) = gPlayerMap[uniqueId]
+    fun find(uniqueId: UUID) = craftPlayerMap[uniqueId]
 
 }

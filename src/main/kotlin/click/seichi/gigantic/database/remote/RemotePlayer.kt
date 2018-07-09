@@ -1,13 +1,13 @@
 package click.seichi.gigantic.database.remote
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.database.UserContainer
+import click.seichi.gigantic.database.PlayerDao
 import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.database.dao.UserMineBlock
 import click.seichi.gigantic.database.dao.UserWill
 import click.seichi.gigantic.database.table.UserMineBlockTable
 import click.seichi.gigantic.database.table.UserWillTable
-import click.seichi.gigantic.player.GiganticPlayer
+import click.seichi.gigantic.player.CraftPlayer
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.will.Will
 import kotlinx.coroutines.experimental.async
@@ -35,7 +35,7 @@ class RemotePlayer(player: Player) {
     /**
      * 非同期でplayerをロード、もしくは無ければ作成します
      *
-     * @return GiganticPlayer
+     * @return CraftPlayer
      */
     fun loadOrCreateAsync() = async(DB) {
         delay(3, TimeUnit.SECONDS)
@@ -48,16 +48,16 @@ class RemotePlayer(player: Player) {
     /**
      * playerをデータベースから読み込みます。
      *
-     * @return GiganticPlayer
+     * @return CraftPlayer
      */
-    private fun load(isFirstJoin: Boolean): GiganticPlayer {
+    private fun load(isFirstJoin: Boolean): CraftPlayer {
         User[uniqueId].apply {
             name = playerName
         }
-        val gPlayer = GiganticPlayer(isFirstJoin)
-        gPlayer.load(UserContainer(uniqueId))
-        gPlayer.init(gPlayer)
-        return gPlayer
+        val craftPlayer = CraftPlayer(isFirstJoin)
+        craftPlayer.load(PlayerDao(uniqueId))
+        craftPlayer.init()
+        return craftPlayer
     }
 
 
@@ -100,17 +100,17 @@ class RemotePlayer(player: Player) {
 
 
     /**
-     * player をデータベースに書き込みます
+     * gPlayer をデータベースに書き込みます
      *
-     * @param gPlayer
+     * @param craftPlayer
      */
-    fun saveAsync(gPlayer: GiganticPlayer) = async(DB) {
+    fun saveAsync(craftPlayer: CraftPlayer) = async(DB) {
         transaction {
-            gPlayer.finish(gPlayer)
+            craftPlayer.finish()
             User[uniqueId].apply {
                 updatedDate = DateTime.now()
             }
-            gPlayer.save(UserContainer(uniqueId))
+            craftPlayer.save(PlayerDao(uniqueId))
         }
     }
 }
