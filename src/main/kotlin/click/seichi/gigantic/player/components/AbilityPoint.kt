@@ -26,16 +26,16 @@ class AbilityPoint {
         fun produce(gPlayer: GiganticPlayer) = producing(gPlayer)
     }
 
-    private val producedPoint: (GiganticPlayer) -> Int = { gPlayer ->
+    private val producedCalculating: (GiganticPlayer) -> Int = { gPlayer ->
         AbilityPointProducer.values().sumBy { it.produce(gPlayer) }
     }
 
-    private val consumedPoint: (GiganticPlayer) -> Int = { gPlayer ->
+    private val consumedCalculating: (GiganticPlayer) -> Int = { gPlayer ->
         AbilityPointConsumer.values().sumBy { it.consume(gPlayer) }
     }
 
-    var current: (GiganticPlayer) -> Int = { gPlayer ->
-        (producedPoint(gPlayer) - consumedPoint(gPlayer)).coerceAtLeast(0)
+    private val currentCaluculating: (GiganticPlayer) -> Int = { gPlayer ->
+        (producedCalculating(gPlayer) - consumedCalculating(gPlayer)).coerceAtLeast(0)
     }
 
 }
