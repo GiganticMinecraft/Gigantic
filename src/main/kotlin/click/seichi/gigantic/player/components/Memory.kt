@@ -1,10 +1,10 @@
 package click.seichi.gigantic.player.components
 
 import click.seichi.gigantic.database.UserContainer
-import click.seichi.gigantic.player.Remotable
+import click.seichi.gigantic.player.PlayerComponent
 import click.seichi.gigantic.will.Will
 
-class Memory : Remotable {
+class Memory : PlayerComponent {
 
     private var currentMap: MutableMap<Will, Long> = mutableMapOf()
 

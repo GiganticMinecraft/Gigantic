@@ -1,12 +1,12 @@
 package click.seichi.gigantic.player.components
 
 import click.seichi.gigantic.database.UserContainer
-import click.seichi.gigantic.player.Remotable
+import click.seichi.gigantic.player.PlayerComponent
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 
-class WillAptitude : Remotable {
+class WillAptitude : PlayerComponent {
 
     var willAptitude: MutableSet<Will> = mutableSetOf()
         private set

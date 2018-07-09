@@ -2,9 +2,9 @@ package click.seichi.gigantic.player.components
 
 import click.seichi.gigantic.database.UserContainer
 import click.seichi.gigantic.player.MineBlockReason
-import click.seichi.gigantic.player.Remotable
+import click.seichi.gigantic.player.PlayerComponent
 
-class MineBlock : Remotable {
+class MineBlock : PlayerComponent {
 
     private var currentMap: MutableMap<MineBlockReason, Long> = mutableMapOf()
 

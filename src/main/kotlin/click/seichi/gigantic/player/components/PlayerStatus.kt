@@ -1,8 +1,8 @@
 package click.seichi.gigantic.player.components
 
-import click.seichi.gigantic.player.Remotable
+import click.seichi.gigantic.player.PlayerComponent
 
-class PlayerStatus : Remotable {
+class PlayerStatus : PlayerComponent {
 
     val mana = Mana()
 
@@ -10,7 +10,7 @@ class PlayerStatus : Remotable {
 
     val mineBlock = MineBlock()
 
-    val seichiLevel = PlayerLevel()
+    val level = PlayerLevel()
     // TODO implements
     val explosionLevel = 3
 
@@ -18,10 +18,10 @@ class PlayerStatus : Remotable {
 
     val aptitude = WillAptitude()
 
-    override fun getRemotableComponents() = listOf(
+    override fun getComponents() = listOf(
             mana,
             mineBlock,
-            seichiLevel,
+            level,
             memory,
             aptitude
     )

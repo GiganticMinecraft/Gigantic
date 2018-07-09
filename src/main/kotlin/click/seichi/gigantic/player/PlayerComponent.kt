@@ -6,28 +6,28 @@ import click.seichi.gigantic.player.components.PlayerContainer
 /**
  * @author tar0ss
  */
-interface Remotable {
+interface PlayerComponent {
 
-    fun getRemotableComponents(): List<Remotable> = listOf()
+    fun getComponents(): List<PlayerComponent> = listOf()
 
     fun load(userContainer: UserContainer) {
         onLoad(userContainer)
-        getRemotableComponents().forEach { it.load(userContainer) }
+        getComponents().forEach { it.load(userContainer) }
     }
 
     fun init(playerContainer: PlayerContainer) {
         onInit(playerContainer)
-        getRemotableComponents().forEach { it.init(playerContainer) }
+        getComponents().forEach { it.init(playerContainer) }
     }
 
     fun finish(playerContainer: PlayerContainer) {
         onFinish(playerContainer)
-        getRemotableComponents().forEach { it.finish(playerContainer) }
+        getComponents().forEach { it.finish(playerContainer) }
     }
 
     fun save(userContainer: UserContainer) {
         onSave(userContainer)
-        getRemotableComponents().forEach { it.save(userContainer) }
+        getComponents().forEach { it.save(userContainer) }
     }
 
     fun onLoad(userContainer: UserContainer) {}

@@ -19,23 +19,23 @@ class AbilityPoint {
 
     enum class AbilityPointProducer(private val producing: (GiganticPlayer) -> Int) {
         SEICHI_LEVEL(
-                { it.status.seichiLevel.current * 3 }
+                { it.status.level.current * 3 }
         )
         ;
 
         fun produce(gPlayer: GiganticPlayer) = producing(gPlayer)
     }
 
-    private val producedCalculating: (GiganticPlayer) -> Int = { gPlayer ->
+    private val produceCalculating: (GiganticPlayer) -> Int = { gPlayer ->
         AbilityPointProducer.values().sumBy { it.produce(gPlayer) }
     }
 
-    private val consumedCalculating: (GiganticPlayer) -> Int = { gPlayer ->
+    private val consumeCalculating: (GiganticPlayer) -> Int = { gPlayer ->
         AbilityPointConsumer.values().sumBy { it.consume(gPlayer) }
     }
 
-    private val currentCaluculating: (GiganticPlayer) -> Int = { gPlayer ->
-        (producedCalculating(gPlayer) - consumedCalculating(gPlayer)).coerceAtLeast(0)
+    private val currentCalculating: (GiganticPlayer) -> Int = { gPlayer ->
+        (produceCalculating(gPlayer) - consumeCalculating(gPlayer)).coerceAtLeast(0)
     }
 
 }

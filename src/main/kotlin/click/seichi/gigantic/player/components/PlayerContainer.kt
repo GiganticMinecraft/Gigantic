@@ -1,13 +1,13 @@
 package click.seichi.gigantic.player.components
 
 import click.seichi.gigantic.database.UserContainer
-import click.seichi.gigantic.player.Remotable
+import click.seichi.gigantic.player.PlayerComponent
 import java.util.*
 
 /**
  * @author tar0ss
  */
-abstract class PlayerContainer : Remotable {
+abstract class PlayerContainer : PlayerComponent {
 
     lateinit var uniqueId: UUID
         private set
@@ -18,7 +18,7 @@ abstract class PlayerContainer : Remotable {
 
     val status = PlayerStatus()
 
-    override fun getRemotableComponents() = listOf(setting, status)
+    override fun getComponents() = listOf(setting, status)
 
     override fun onLoad(userContainer: UserContainer) {
         userContainer.run {

@@ -35,7 +35,7 @@ class Explosion : BreakSkill() {
                 }
             }
 
-    override fun isUnlocked(gPlayer: GiganticPlayer) = gPlayer.status.seichiLevel.current >= 10
+    override fun isUnlocked(gPlayer: GiganticPlayer) = gPlayer.status.level.current >= 10
     // TODO implements
     override fun isCooldown(gPlayer: GiganticPlayer) = false
 

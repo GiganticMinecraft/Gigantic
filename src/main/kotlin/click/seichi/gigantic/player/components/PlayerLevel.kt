@@ -1,30 +1,42 @@
 package click.seichi.gigantic.player.components
 
-import click.seichi.gigantic.config.PlayerLevelConfig
-import click.seichi.gigantic.database.UserContainer
-import click.seichi.gigantic.player.GiganticPlayer
+import click.seichi.gigantic.config.PlayerLevelConfig.LEVEL_MAP
+import click.seichi.gigantic.config.PlayerLevelConfig.MAX
 import click.seichi.gigantic.player.MineBlockReason
-import click.seichi.gigantic.player.Remotable
+import click.seichi.gigantic.player.PlayerComponent
 
-class PlayerLevel : Remotable {
-    companion object {
-        private val MAX = PlayerLevelConfig.MAX
+class PlayerLevel : PlayerComponent {
+
+    enum class ExpProducer(private val producing: (PlayerContainer) -> Long) {
+        MINE_BLOCK(
+                { container ->
+                    container.status.mineBlock.get(MineBlockReason.GENERAL)
+                }
+        )
+        ;
+
+        fun produce(playerContainer: PlayerContainer) = producing(playerContainer)
     }
+
+    private val expProduceCalculating: (PlayerContainer) -> Long = { container ->
+        ExpProducer.values().map { it.produce(container) }.sum()
+    }
+
 
     var current: Int = 0
         private set
 
-    private fun calcLevel(mineBlock: Long) =
+    private fun calcLevel(exp: Long) =
             (1..MAX).firstOrNull {
-                !canLevelUp(it + 1, mineBlock)
+                !canLevelUp(it + 1, exp)
             } ?: MAX
 
-    private fun canLevelUp(nextLevel: Int, mineBlock: Long) =
-            mineBlock > PlayerLevelConfig.LEVEL_MAP[nextLevel] ?: Long.MAX_VALUE
+    private fun canLevelUp(nextLevel: Int, exp: Long) =
+            exp > LEVEL_MAP[nextLevel] ?: Long.MAX_VALUE
 
-    fun update(gPlayer: GiganticPlayer) {
-        val mineBlock = gPlayer.status.mineBlock.get()
-        while (canLevelUp(current + 1, mineBlock)) {
+    fun update(playerContainer: PlayerContainer) {
+        val exp = expProduceCalculating(playerContainer)
+        while (canLevelUp(current + 1, exp)) {
             current++
             if (current >= MAX) {
                 current = MAX
@@ -33,7 +45,9 @@ class PlayerLevel : Remotable {
         }
     }
 
-    override fun onLoad(userContainer: UserContainer) {
-        current = calcLevel(userContainer.userMineBlockMap[MineBlockReason.GENERAL]!!.mineBlock)
+    override fun onInit(playerContainer: PlayerContainer) {
+        update(playerContainer)
     }
+
+
 }

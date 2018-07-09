@@ -1,10 +1,10 @@
 package click.seichi.gigantic.player.components
 
 import click.seichi.gigantic.database.UserContainer
-import click.seichi.gigantic.player.Remotable
+import click.seichi.gigantic.player.PlayerComponent
 import java.util.*
 
-class PlayerSetting : Remotable {
+class PlayerSetting : PlayerComponent {
     lateinit var locale: Locale
 
     override fun onLoad(userContainer: UserContainer) {
