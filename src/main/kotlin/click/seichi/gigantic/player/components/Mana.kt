@@ -1,6 +1,6 @@
 package click.seichi.gigantic.player.components
 
-import click.seichi.gigantic.config.SeichiLevelConfig
+import click.seichi.gigantic.config.ManaConfig
 import click.seichi.gigantic.database.UserContainer
 import click.seichi.gigantic.player.Remotable
 
@@ -29,7 +29,7 @@ class Mana : Remotable {
     }
 
     override fun onInit(playerContainer: PlayerContainer) {
-        max = SeichiLevelConfig.MANA_MAP[playerContainer.status.seichiLevel.current] ?: 0L
+        max = ManaConfig.MANA_MAP[playerContainer.status.seichiLevel.current] ?: 0L
     }
 
     override fun onSave(userContainer: UserContainer) {

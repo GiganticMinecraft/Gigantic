@@ -10,7 +10,7 @@ class PlayerStatus : Remotable {
 
     val mineBlock = MineBlock()
 
-    val seichiLevel = SeichiLevel()
+    val seichiLevel = PlayerLevel()
     // TODO implements
     val explosionLevel = 3
 
