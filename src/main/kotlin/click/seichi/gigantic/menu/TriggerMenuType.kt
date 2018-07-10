@@ -1,10 +1,7 @@
 package click.seichi.gigantic.menu
 
-import click.seichi.gigantic.menu.menus.MainMenu
 import click.seichi.gigantic.menu.triggercase.TriggerCase
-import org.bukkit.Material
 import org.bukkit.event.Event
-import org.bukkit.event.player.PlayerInteractEvent
 
 /**
  * @author tar0ss
@@ -18,14 +15,14 @@ import org.bukkit.event.player.PlayerInteractEvent
  *   }
  */
 enum class TriggerMenuType(vararg triggerCases: TriggerCase<*>) {
-    MAIN_MENU(
+/*    MAIN_MENU(
             TriggerCase(PlayerInteractEvent::class.java) { event ->
                 val player = event.player ?: return@TriggerCase
                 val tool = player.inventory.itemInMainHand ?: return@TriggerCase
                 if (tool.type != Material.STICK) return@TriggerCase
                 MainMenu.open(event.player)
             }
-    )
+    )*/
     ;
 
     private val triggerCaseSet = setOf(*triggerCases)

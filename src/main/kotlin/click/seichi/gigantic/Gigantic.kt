@@ -4,10 +4,7 @@ import click.seichi.gigantic.config.DatabaseConfig
 import click.seichi.gigantic.database.table.UserMineBlockTable
 import click.seichi.gigantic.database.table.UserTable
 import click.seichi.gigantic.database.table.UserWillTable
-import click.seichi.gigantic.listener.MenuListener
-import click.seichi.gigantic.listener.PlayerListener
-import click.seichi.gigantic.listener.PlayerMonitor
-import click.seichi.gigantic.listener.SpiritListener
+import click.seichi.gigantic.listener.*
 import kotlinx.coroutines.experimental.newSingleThreadContext
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.exposed.sql.Database
@@ -41,6 +38,7 @@ class Gigantic : JavaPlugin() {
             registerEvents(PlayerListener(), this@Gigantic)
             registerEvents(SpiritListener(), this@Gigantic)
             registerEvents(PlayerMonitor(), this@Gigantic)
+            registerEvents(ItemListener(), this@Gigantic)
         }
     }
 
