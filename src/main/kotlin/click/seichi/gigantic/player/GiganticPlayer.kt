@@ -11,7 +11,7 @@ interface GiganticPlayer {
     val locale: Locale
     val mana: Mana
     val mineBlock: MineBlock
-    val level: PlayerLevel
+    val level: Level
     val abilityPoint: AbilityPoint
     val memory: Memory
     val aptitude: WillAptitude

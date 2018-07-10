@@ -5,7 +5,7 @@ import click.seichi.gigantic.config.PlayerLevelConfig.MAX
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.player.MineBlockReason
 
-class PlayerLevel {
+class Level {
 
     enum class ExpProducer(private val producing: (GiganticPlayer) -> Long) {
         MINE_BLOCK(

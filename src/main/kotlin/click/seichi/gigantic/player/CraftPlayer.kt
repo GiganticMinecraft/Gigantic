@@ -29,7 +29,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, Remotable 
 
     override lateinit var aptitude: WillAptitude
 
-    override val level = PlayerLevel()
+    override val level = Level()
 
     override val abilityPoint = AbilityPoint()
     // TODO implements
