@@ -15,6 +15,6 @@ class LocalizedText(vararg texts: Pair<Locale, String>) {
 
     fun `as`(locale: Locale) = textMap[locale]
 
-    fun asSafety(locale: Locale) = textMap[locale] ?: textMap[Locale.ENGLISH] ?: NOT_AVAILABLE
+    fun asSafety(locale: Locale) = textMap[locale] ?: textMap[Locale.JAPANESE] ?: NOT_AVAILABLE
 
 }

@@ -1,12 +1,10 @@
 package click.seichi.gigantic.listener
 
-import click.seichi.gigantic.extension.openMenu
 import click.seichi.gigantic.menu.Menu
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.player.PlayerInteractEvent
 
 /**
  * @author tar0ss
@@ -26,8 +24,9 @@ class MenuListener : Listener {
         }
     }
 
-    @EventHandler
-    fun onPlayerInteract(event: PlayerInteractEvent) {
-        event.openMenu()
-    }
+    // 今回はインベントリを固定してるので動作しない
+//    @EventHandler
+//    fun onPlayerInteract(event: PlayerInteractEvent) {
+//        event.openMenu()
+//    }
 }

@@ -2,6 +2,7 @@ package click.seichi.gigantic.player
 
 import click.seichi.gigantic.database.PlayerDao
 import click.seichi.gigantic.player.components.*
+import click.seichi.gigantic.player.inventory.PlayerInventoryLoader
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.Bukkit
@@ -19,7 +20,6 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         private set
 
     override lateinit var locale: Locale
-        private set
 
     override lateinit var mana: Mana
 
@@ -68,6 +68,9 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         }
         level.update(this)
         mana.update(this)
+
+        // インベントリーを設定
+        val loader = PlayerInventoryLoader()
     }
 
     override fun finish() {
@@ -75,7 +78,8 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
     override fun save(playerDao: PlayerDao) {
         playerDao.user.run {
-            localeString = locale.toString()
+            // ja_jpとなったときにjaを保存する
+            localeString = locale.language.substringBefore("_")
             mana = this@CraftPlayer.mana.current
         }
         mineBlock.copyMap().forEach { reason, current ->

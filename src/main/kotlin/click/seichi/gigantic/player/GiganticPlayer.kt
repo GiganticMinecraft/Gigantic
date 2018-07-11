@@ -8,7 +8,7 @@ interface GiganticPlayer {
 
     val player: Player
     val uniqueId: UUID
-    val locale: Locale
+    var locale: Locale
     val mana: Mana
     val mineBlock: MineBlock
     val level: Level
