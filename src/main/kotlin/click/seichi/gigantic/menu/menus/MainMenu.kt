@@ -9,6 +9,7 @@ import click.seichi.gigantic.menu.Menu
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
@@ -17,7 +18,7 @@ import java.util.*
  */
 object MainMenu : Menu() {
 
-    override val size: Int = 4 * 9
+    override val type: InventoryType = InventoryType.PLAYER
 
     init {
         registerButton(0, object : Button {
@@ -33,27 +34,6 @@ object MainMenu : Menu() {
 
             override fun onClick(player: Player, event: InventoryClickEvent) {}
         })
-//            override fun getItemStack(gPlayer: CraftPlayer): ItemStack {
-//                return gPlayer.gPlayer.getHeadItem().apply {
-//                    setTitle(gPlayer.name)
-//                    setLore("総整地量:${gPlayer.statistic.mineBlock.all}", prefix = "$AQUA")
-//                }
-//            }
-//
-//            override fun onClick(gPlayer: CraftPlayer, event: InventoryClickEvent) {
-//            }
-//        })
-//        registerButton(1, object : Button {
-//            override fun getItemStack(gPlayer: CraftPlayer): ItemStack {
-//                return ItemStack(Material.TRIPWIRE_HOOK, 1).apply {
-//                    setTitle("設定")
-//                }
-//            }
-//
-//            override fun onClick(gPlayer: CraftPlayer, event: InventoryClickEvent) {
-//                SettingMenu.open(gPlayer)
-//            }
-//        })
     }
 
 

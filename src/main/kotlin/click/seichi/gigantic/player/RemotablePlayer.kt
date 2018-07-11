@@ -2,7 +2,7 @@ package click.seichi.gigantic.player
 
 import click.seichi.gigantic.database.PlayerDao
 
-interface Remotable {
+interface RemotablePlayer {
     fun load(playerDao: PlayerDao)
     fun init()
     fun finish()

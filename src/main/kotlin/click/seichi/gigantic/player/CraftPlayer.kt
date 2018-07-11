@@ -11,7 +11,7 @@ import java.util.*
 /**
  * @author tar0ss
  */
-class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, Remotable {
+class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotablePlayer {
     override val player: Player
         get() = Bukkit.getServer().getPlayer(uniqueId)
 
