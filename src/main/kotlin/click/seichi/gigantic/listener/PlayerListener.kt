@@ -2,10 +2,12 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.menu.Menu
+import click.seichi.gigantic.menu.menus.MainMenu
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.player.PlayerRepository
 import click.seichi.gigantic.skill.breakskill.Explosion
 import click.seichi.gigantic.skill.dispather.BreakSkillDispatcher
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -14,6 +16,7 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
+import org.bukkit.inventory.ItemStack
 
 /**
  * @author tar0ss
@@ -23,6 +26,10 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
+        val inventory = player.inventory
+        MainMenu.getInventory(player).forEachIndexed { index, itemStack ->
+            inventory.setItem(index, itemStack ?: ItemStack(Material.AIR))
+        }
         PlayerRepository.add(player)
     }
 

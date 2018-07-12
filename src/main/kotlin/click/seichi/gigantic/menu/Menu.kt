@@ -57,12 +57,12 @@ abstract class Menu : InventoryHolder {
      * @param playSound 音を流す時true
      *
      */
-    fun open(player: Player, playSound: Boolean = true) {
+    open fun open(player: Player, playSound: Boolean = true) {
         player.openInventory(getInventory(player))
         if (playSound) MenuSounds.MENU_OPEN.play(player)
     }
 
-    protected open fun getInventory(player: Player): Inventory {
+    open fun getInventory(player: Player): Inventory {
         val title = getTitle(player)
         val inventory = when (type) {
             InventoryType.CHEST -> {
