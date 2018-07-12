@@ -56,7 +56,6 @@ class RemotePlayer(player: Player) {
         }
         val craftPlayer = CraftPlayer(isFirstJoin)
         craftPlayer.load(PlayerDao(uniqueId))
-        craftPlayer.init()
         return craftPlayer
     }
 
@@ -106,7 +105,6 @@ class RemotePlayer(player: Player) {
      */
     fun saveAsync(craftPlayer: CraftPlayer) = async(DB) {
         transaction {
-            craftPlayer.finish()
             User[uniqueId].apply {
                 updatedDate = DateTime.now()
             }

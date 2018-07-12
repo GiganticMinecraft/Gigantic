@@ -18,14 +18,22 @@ object PlayerRepository {
         val uniqueId = player.uniqueId ?: return@launch
         DatabaseMessages.PLAYER_LOADING_MESSAGE.sendTo(player)
         // craftPlayerを非同期取得
-        craftPlayerMap[uniqueId] = RemotePlayer(player).loadOrCreateAsync().await()
+        craftPlayerMap[uniqueId] = RemotePlayer(player)
+                .loadOrCreateAsync()
+                .await()
+                .apply {
+                    init()
+                }
         DatabaseMessages.PLAYER_LOAD_COMPLETED_MESSAGE.sendTo(player)
     }
 
     fun remove(player: Player) = launch {
         val uniqueId = player.uniqueId ?: return@launch
         val craftPlayer = craftPlayerMap[uniqueId] ?: return@launch
-        RemotePlayer(player).saveAsync(craftPlayer).await()
+        craftPlayer.finish()
+        RemotePlayer(player)
+                .saveAsync(craftPlayer)
+                .await()
     }
 
     fun find(uniqueId: UUID) = craftPlayerMap[uniqueId]
