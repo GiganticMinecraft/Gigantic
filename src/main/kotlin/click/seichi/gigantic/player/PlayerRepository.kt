@@ -18,12 +18,11 @@ object PlayerRepository {
         val uniqueId = player.uniqueId ?: return@launch
         DatabaseMessages.PLAYER_LOADING_MESSAGE.sendTo(player)
         // craftPlayerを非同期取得
-        craftPlayerMap[uniqueId] = RemotePlayer(player)
+        val craftPlayer = RemotePlayer(player)
                 .loadOrCreateAsync()
                 .await()
-                .apply {
-                    init()
-                }
+        craftPlayerMap[uniqueId] = craftPlayer
+        craftPlayer.init()
         DatabaseMessages.PLAYER_LOAD_COMPLETED_MESSAGE.sendTo(player)
     }
 

@@ -1,12 +1,14 @@
 package click.seichi.gigantic.player
 
 import click.seichi.gigantic.database.PlayerDao
+import click.seichi.gigantic.menu.menus.MainMenu
 import click.seichi.gigantic.player.components.*
-import click.seichi.gigantic.player.inventory.PlayerInventoryLoader
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import java.util.*
 
 /**
@@ -68,9 +70,10 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         }
         level.update(this)
         mana.update(this)
-
         // インベントリーを設定
-        val loader = PlayerInventoryLoader()
+        MainMenu.getInventory(player).forEachIndexed { index, itemStack ->
+            player.inventory.setItem(index, itemStack ?: ItemStack(Material.AIR))
+        }
     }
 
     override fun finish() {
