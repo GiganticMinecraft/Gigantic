@@ -1,7 +1,6 @@
 package click.seichi.gigantic.player
 
 import click.seichi.gigantic.database.PlayerDao
-import click.seichi.gigantic.menu.menus.MainMenu
 import click.seichi.gigantic.player.components.*
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.WillGrade
@@ -37,6 +36,10 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
     // TODO implements
     override val explosionLevel: Int = 3
 
+    override val defaultInventory = DefaultInventory.MAIN
+
+    override val belt: Belt = Belt.MINE_BELT
+
 
     override fun load(playerDao: PlayerDao) {
         playerDao.user.run {
@@ -71,7 +74,11 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         level.update(this)
         mana.update(this)
         // インベントリーを設定
-        MainMenu.getInventory(player).forEachIndexed { index, itemStack ->
+        defaultInventory.forEachIndexed(player) { index, itemStack ->
+            player.inventory.setItem(index, itemStack ?: ItemStack(Material.AIR))
+        }
+        // ベルトを設定
+        belt.forEachIndexed(player) { index, itemStack ->
             player.inventory.setItem(index, itemStack ?: ItemStack(Material.AIR))
         }
     }

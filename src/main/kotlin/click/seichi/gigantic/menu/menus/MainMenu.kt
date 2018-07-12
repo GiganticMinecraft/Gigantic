@@ -25,7 +25,7 @@ object MainMenu : Menu() {
     override val type: InventoryType = InventoryType.PLAYER
 
     init {
-        registerButton(0, object : Button {
+        registerButton(9, object : Button {
             override fun getItemStack(player: Player): ItemStack? {
                 return player.getHead().apply {
                     setTitle(

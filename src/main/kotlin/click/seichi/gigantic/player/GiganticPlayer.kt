@@ -17,5 +17,6 @@ interface GiganticPlayer {
     val aptitude: WillAptitude
     // TODO implements
     val explosionLevel: Int
-
+    val defaultInventory: DefaultInventory
+    val belt: Belt
 }
