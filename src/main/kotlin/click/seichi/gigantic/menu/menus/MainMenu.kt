@@ -36,6 +36,7 @@ object MainMenu : Menu() {
         })
     }
 
+
     override fun getTitle(player: Player): LocalizedText {
         return LocalizedText(Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}メインメニュー")
     }

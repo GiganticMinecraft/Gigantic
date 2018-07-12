@@ -29,7 +29,7 @@ abstract class Menu : InventoryHolder {
      *
      * @param player Menuを開いているplayer
      */
-    abstract fun getTitle(player: Player): LocalizedText
+    abstract fun getTitle(player: Player): LocalizedText?
 
     /**
      * MenuにButtonを登録します
@@ -63,11 +63,17 @@ abstract class Menu : InventoryHolder {
     }
 
     protected open fun getInventory(player: Player): Inventory {
-        val inventory = if (type == InventoryType.CHEST)
-            Bukkit.createInventory(this, size, getTitle(player).asSafety(player.wrappedLocale))
-        else
-            Bukkit.createInventory(this, type, getTitle(player).asSafety(player.wrappedLocale))
-
+        val title = getTitle(player)
+        val inventory = when (type) {
+            InventoryType.CHEST -> {
+                if (title == null) Bukkit.createInventory(this, size)
+                else Bukkit.createInventory(this, size, title.asSafety(player.wrappedLocale))
+            }
+            else -> {
+                if (title == null) Bukkit.createInventory(this, type)
+                else Bukkit.createInventory(this, type, title.asSafety(player.wrappedLocale))
+            }
+        }
         (0..inventory.size).forEach { slot ->
             val itemStack = getButton(player, slot)?.getItemStack(player) ?: return@forEach
             inventory.setItem(slot, itemStack)
