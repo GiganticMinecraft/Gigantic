@@ -46,7 +46,7 @@ abstract class Menu : InventoryHolder {
      *
      * @param slot 取得するスロット番号
      */
-    open fun getButton(player: Player, slot: Int): Button? {
+    open fun getButton(slot: Int): Button? {
         return buttonMap[slot]
     }
 
@@ -75,7 +75,7 @@ abstract class Menu : InventoryHolder {
             }
         }
         (0..inventory.size).forEach { slot ->
-            val itemStack = getButton(player, slot)?.getItemStack(player) ?: return@forEach
+            val itemStack = getButton(slot)?.getItemStack(player) ?: return@forEach
             inventory.setItem(slot, itemStack)
         }
         return inventory

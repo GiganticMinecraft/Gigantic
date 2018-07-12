@@ -14,6 +14,7 @@ import java.util.*
  * @author tar0ss
  */
 class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotablePlayer {
+
     override val player: Player
         get() = Bukkit.getServer().getPlayer(uniqueId)
 
@@ -40,6 +41,9 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
     override val belt: Belt = Belt.MINE_BELT
 
+    override fun switchBelt() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun load(playerDao: PlayerDao) {
         playerDao.user.run {

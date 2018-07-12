@@ -82,4 +82,20 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
+    @EventHandler
+    fun onPlayerInteract(event: PlayerInteractEvent) {
+        val player = event.player ?: return
+        val slot = player.inventory.heldItemSlot
+        val gPlayer = player.gPlayer ?: return
+        gPlayer.belt.getHookedItem(slot)?.onInteract(player, event)
+    }
+
+    @EventHandler
+    fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
+        event.isCancelled = true
+        val player = event.player ?: return
+        val gPlayer = player.gPlayer ?: return
+        gPlayer.switchBelt()
+    }
+
 }

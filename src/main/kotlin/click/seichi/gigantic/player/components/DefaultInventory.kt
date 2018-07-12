@@ -15,6 +15,6 @@ sealed class DefaultInventory(private val menu: Menu) {
         menu.getInventory(player).forEachIndexed(action)
     }
 
-    fun getButton(player: Player, slot: Int) = menu.getButton(player, slot)
+    fun getButton(player: Player, slot: Int) = menu.getButton(slot)
 
 }

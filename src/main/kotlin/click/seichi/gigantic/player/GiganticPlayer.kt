@@ -5,7 +5,6 @@ import org.bukkit.entity.Player
 import java.util.*
 
 interface GiganticPlayer {
-
     val player: Player
     val uniqueId: UUID
     var locale: Locale
@@ -19,4 +18,6 @@ interface GiganticPlayer {
     val explosionLevel: Int
     val defaultInventory: DefaultInventory
     val belt: Belt
+
+    fun switchBelt()
 }
