@@ -1,6 +1,8 @@
 package click.seichi.gigantic.player
 
+import click.seichi.gigantic.player.belt.Belt
 import click.seichi.gigantic.player.components.*
+import click.seichi.gigantic.player.defalutInventory.DefaultInventory
 import org.bukkit.entity.Player
 import java.util.*
 
@@ -17,7 +19,7 @@ interface GiganticPlayer {
     // TODO implements
     val explosionLevel: Int
     val defaultInventory: DefaultInventory
-    val belt: Belt
+    var belt: Belt
 
     fun switchBelt()
 }

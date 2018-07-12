@@ -1,13 +1,15 @@
 package click.seichi.gigantic.player
 
 import click.seichi.gigantic.database.PlayerDao
+import click.seichi.gigantic.player.belt.Belt
+import click.seichi.gigantic.player.belt.belts.FightBelt
+import click.seichi.gigantic.player.belt.belts.MineBelt
 import click.seichi.gigantic.player.components.*
+import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
 import java.util.*
 
 /**
@@ -37,12 +39,18 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
     // TODO implements
     override val explosionLevel: Int = 3
 
-    override val defaultInventory = DefaultInventory.MAIN
+    override val defaultInventory = MainInventory
 
-    override val belt: Belt = Belt.MINE_BELT
+    override var belt: Belt = MineBelt
 
     override fun switchBelt() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        when (belt) {
+            is MineBelt -> belt = FightBelt
+            is FightBelt -> belt = MineBelt
+            else -> {
+            }
+        }
+        belt.apply(player)
     }
 
     override fun load(playerDao: PlayerDao) {
@@ -78,13 +86,9 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         level.update(this)
         mana.update(this)
         // インベントリーを設定
-        defaultInventory.forEachIndexed(player) { index, itemStack ->
-            player.inventory.setItem(index, itemStack ?: ItemStack(Material.AIR))
-        }
+        defaultInventory.apply(player)
         // ベルトを設定
-        belt.forEachIndexed(player) { index, itemStack ->
-            player.inventory.setItem(index, itemStack ?: ItemStack(Material.AIR))
-        }
+        belt.apply(player)
     }
 
     override fun finish() {

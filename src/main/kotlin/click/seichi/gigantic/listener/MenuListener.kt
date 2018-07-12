@@ -26,7 +26,7 @@ class MenuListener : Listener {
                 if (event.isBeltSlot) {
                     gPlayer.belt.getHookedItem(event.slot)?.onClick(player, event)
                 } else {
-                    gPlayer.defaultInventory.getButton(player, event.slot)?.onClick(player, event)
+                    gPlayer.defaultInventory.getSlotItem(event.slot)?.onClick(player, event)
                 }
             }
         } else if (player.inventory.holder == holder) {
@@ -35,7 +35,7 @@ class MenuListener : Listener {
             if (event.isBeltSlot) {
                 gPlayer.belt.getHookedItem(event.slot)?.onClick(player, event)
             } else {
-                gPlayer.defaultInventory.getButton(player, event.slot)?.onClick(player, event)
+                gPlayer.defaultInventory.getSlotItem(event.slot)?.onClick(player, event)
             }
         }
     }

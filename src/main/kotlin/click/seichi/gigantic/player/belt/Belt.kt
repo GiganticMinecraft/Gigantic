@@ -1,23 +1,25 @@
-package click.seichi.gigantic.player.components
+package click.seichi.gigantic.player.belt
 
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
-sealed class Belt {
-    object MINE_BELT : Belt() {
-        override val hookedItemMap: Map<Int, HookedItem> = mapOf(
-                // TODO implements
-        )
-
-    }
+abstract class Belt {
 
     protected abstract val hookedItemMap: Map<Int, HookedItem>
 
-    fun forEachIndexed(player: Player, action: (Int, ItemStack?) -> Unit) {
-        hookedItemMap
-                .map { it.key to it.value.getItemStack(player) }
+    private val slotRange = (0 until 9)
+
+    fun apply(player: Player) {
+        forEachIndexed(player) { index, itemStack ->
+            player.inventory.setItem(index, itemStack ?: ItemStack(Material.AIR))
+        }
+    }
+
+    private fun forEachIndexed(player: Player, action: (Int, ItemStack?) -> Unit) {
+        slotRange.map { it to hookedItemMap[it]?.getItemStack(player) }
                 .toMap()
                 .forEach(action)
     }
