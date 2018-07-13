@@ -83,8 +83,8 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         if (isFirstJoin) {
             aptitude.add(Random.nextWill(WillGrade.BASIC))
         }
-        level.update(this)
-        mana.update(this)
+        level.update(player, false)
+        mana.update(player)
         // インベントリーを設定
         defaultInventory.apply(player)
         // ベルトを設定

@@ -1,7 +1,8 @@
 package click.seichi.gigantic.player.components
 
 import click.seichi.gigantic.config.ManaConfig
-import click.seichi.gigantic.player.GiganticPlayer
+import click.seichi.gigantic.extension.gPlayer
+import org.bukkit.entity.Player
 import kotlin.properties.Delegates
 
 class Mana(current: Long) {
@@ -39,8 +40,8 @@ class Mana(current: Long) {
     operator fun plus(other: Long) = increase(other, false)
     operator fun minus(other: Long) = decrease(other)
 
-    fun update(gPlayer: GiganticPlayer) {
-        max = ManaConfig.MANA_MAP[gPlayer.level.current] ?: 0L
+    fun update(player: Player) {
+        max = ManaConfig.MANA_MAP[player.gPlayer?.level?.current ?: 1] ?: 0L
     }
 
 }

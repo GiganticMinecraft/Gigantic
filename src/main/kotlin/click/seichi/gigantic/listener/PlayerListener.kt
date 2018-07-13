@@ -2,10 +2,7 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.menu.Menu
-import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.player.PlayerRepository
-import click.seichi.gigantic.skill.breakskill.Explosion
-import click.seichi.gigantic.skill.dispather.BreakSkillDispatcher
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -41,9 +38,9 @@ class PlayerListener : Listener {
         val block = event.block ?: return
         val gPlayer = player.gPlayer ?: return
         // エクスプロージョン発火
-        if (!BreakSkillDispatcher(Explosion(), gPlayer, MineBlockReason.EXPLOSION, block).dispatch()) {
-            event.isCancelled = true
-        }
+//        if (!BreakSkillDispatcher(Explosion(), gPlayer, MineBlockReason.EXPLOSION, block).dispatch()) {
+//            event.isCancelled = true
+//        }
     }
 
     // プレイヤーの全てのインベントリークリックをキャンセル

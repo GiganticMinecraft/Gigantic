@@ -27,7 +27,7 @@ object MainInventory : DefaultInventory() {
                 }
 
                 override fun onClick(player: Player, event: InventoryClickEvent) {
-                    player.sendMessage("hello world!!")
+//                    player.sendMessage("hello world!!")
                 }
             }
     )

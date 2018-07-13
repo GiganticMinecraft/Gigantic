@@ -86,10 +86,10 @@ class BreakSkillDispatcher(
     }
 
     private fun fire(): SkillState {
-        // TODO skilllevel update
         // TODO coolTime invoke
         gPlayer.run {
             mineBlock.add(targetSet.size.toLong(), mineBlockReason)
+            level.update(player, true)
         }
 
         targetSet.forEach { block ->

@@ -7,10 +7,12 @@ import click.seichi.gigantic.database.table.UserWillTable
 import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
+import click.seichi.gigantic.player.PlayerRepository
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
 import com.comphenix.protocol.events.PacketListener
 import kotlinx.coroutines.experimental.newSingleThreadContext
+import org.bukkit.Bukkit
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.exposed.sql.Database
@@ -69,6 +71,7 @@ class Gigantic : JavaPlugin() {
     }
 
     override fun onDisable() {
+        Bukkit.getOnlinePlayers().filterNotNull().forEach { player -> PlayerRepository.remove(player) }
         server.scheduler.cancelTasks(this)
         logger.info("Gigantic is disabled!!")
     }

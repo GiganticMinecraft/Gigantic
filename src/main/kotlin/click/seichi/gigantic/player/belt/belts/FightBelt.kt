@@ -21,11 +21,11 @@ object FightBelt : Belt() {
                 }
 
                 override fun onClick(player: Player, event: InventoryClickEvent) {
-                    player.sendMessage("hello world!!")
+//                    player.sendMessage("hello world!!")
                 }
 
                 override fun onInteract(player: Player, event: PlayerInteractEvent) {
-                    player.sendMessage("hello world!!")
+//                    player.sendMessage("hello world!!")
                 }
             }
     )

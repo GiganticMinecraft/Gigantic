@@ -27,17 +27,17 @@ import org.bukkit.event.entity.EntityDeathEvent
 enum class SpiritType(vararg summonCases: SummonCase<*>) {
 
     WILL(
-            RandomSummonCase(1.0/*0.05*/, BlockBreakEvent::class.java) { event ->
+            RandomSummonCase(0.05, BlockBreakEvent::class.java) { event ->
                 if (event.isCancelled) return@RandomSummonCase
                 val player = event.player ?: return@RandomSummonCase
                 val will = Random.nextWill()
                 spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, player))
             },
-            RandomSummonCase(1.0/*0.01*/, BlockBreakSkillEvent::class.java) { event ->
+            RandomSummonCase(0.01, BlockBreakSkillEvent::class.java) { event ->
                 val will = Random.nextWill()
                 spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, event.player))
             },
-            RandomSummonCase(1.0/*0.08*/, EntityDeathEvent::class.java) { event ->
+            RandomSummonCase(0.08, EntityDeathEvent::class.java) { event ->
                 val player = event.entity.killer ?: return@RandomSummonCase
                 val will = Random.nextWill()
                 spawn(WillSpirit(WillSpawnReason.RELEASE, event.entity.eyeLocation, will, player))
