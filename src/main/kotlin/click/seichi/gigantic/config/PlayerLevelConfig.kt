@@ -20,7 +20,7 @@ object PlayerLevelConfig : SimpleConfiguration("level", Gigantic.PLUGIN) {
 
     override fun makeFile(file: File, plugin: JavaPlugin, fileName: String) {
         val defaultMaxLevel = 999
-        val pol = Polynomial(-2.0000, 6.3779, -5.4233, 1.9360, 0.11550)
+        val pol = Polynomial(-1.0000, 6.3779, -5.4233, 1.9360, 0.11550)
         file.printWriter().use { out ->
             out.println("max: $defaultMaxLevel")
             out.println("level_to_exp:")

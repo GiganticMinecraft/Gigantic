@@ -30,33 +30,35 @@ class Level {
     }
 
 
-    var current: Int = 1
+    var current: Int = 0
         private set
 
     private var exp: Long = 0L
 
-    private fun calcLevel(exp: Long) =
-            (1..MAX).firstOrNull {
-                !canLevelUp(it + 1, exp)
-            } ?: MAX
-
     private fun canLevelUp(nextLevel: Int, exp: Long) =
-            exp > LEVEL_MAP[nextLevel] ?: Long.MAX_VALUE
+            exp >= LEVEL_MAP[nextLevel] ?: Long.MAX_VALUE
 
     fun update(player: Player, playSound: Boolean) {
+        // 次の経験値を計算
         val nextExp = expProduceCalculating(player)
         val diff = nextExp - exp
         exp = nextExp
-        var isLevelUp = false
-        while (canLevelUp(current + 1, exp)) {
-            current++
-            isLevelUp = true
-            if (current >= MAX) {
-                current = MAX
-                break
-            }
-        }
-        if (!playSound) return
+        // レベルを更新
+        val isLevelUp = updateLevel()
+        // レベルと経験値によって音を出力
+        if (playSound) playSound(player, isLevelUp, diff)
+        // 表示を更新
+        updateDisplay(player)
+    }
+
+    private fun updateDisplay(player: Player) {
+        player.level = current
+        val expToLevel = LEVEL_MAP[current] ?: 0L
+        val expToNextLevel = LEVEL_MAP[current + 1] ?: LEVEL_MAP[MAX]!!
+        player.exp = (exp - expToLevel).div((expToNextLevel - expToLevel).toFloat())
+    }
+
+    private fun playSound(player: Player, isLevelUp: Boolean, diff: Long) {
         if (isLevelUp) {
             PlayerSounds.LEVEL_UP.play(player.location)
         } else if (diff > 0) {
@@ -66,6 +68,19 @@ class Level {
                     .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                     .subscribe { PlayerSounds.INCREASE_EXP.play(player) }
         }
+    }
+
+    private fun updateLevel(): Boolean {
+        var isLevelUp = false
+        while (canLevelUp(current + 1, exp)) {
+            current++
+            isLevelUp = true
+            if (current >= MAX) {
+                current = MAX
+                break
+            }
+        }
+        return isLevelUp
     }
 
 }

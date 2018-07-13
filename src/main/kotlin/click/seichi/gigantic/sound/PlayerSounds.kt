@@ -9,7 +9,8 @@ import org.bukkit.SoundCategory
  */
 object PlayerSounds {
 
-    val INCREASE_EXP = SoundPlayer(
+    val INCREASE_EXP
+        get() = SoundPlayer(
             Sound.ENTITY_EXPERIENCE_ORB_PICKUP,
             SoundCategory.PLAYERS,
             pitch = Random.nextGaussian(1.0, 0.2).toFloat()
