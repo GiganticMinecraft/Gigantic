@@ -1,5 +1,6 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.player.PlayerRepository
@@ -93,6 +94,12 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         val gPlayer = player.gPlayer ?: return
         gPlayer.switchBelt()
+    }
+
+    @EventHandler
+    fun onLevelUp(event: LevelUpEvent) {
+        val gPlayer = event.player.gPlayer ?: return
+        gPlayer.mana.onLevelUp(event)
     }
 
 }

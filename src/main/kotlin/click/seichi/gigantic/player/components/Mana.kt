@@ -1,8 +1,10 @@
 package click.seichi.gigantic.player.components
 
-import click.seichi.gigantic.config.ManaConfig
+import click.seichi.gigantic.config.ManaConfig.MANA_MAP
+import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.gPlayer
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.boss.BossBar
@@ -15,7 +17,11 @@ class Mana(current: Long) {
         private set
     var max: Long by Delegates.notNull()
         private set
-    lateinit var bar: BossBar
+    val bar: BossBar by lazy {
+        Bukkit.createBossBar("title", BarColor.YELLOW, BarStyle.SOLID).apply {
+            isVisible = false
+        }
+    }
 
     fun increase(other: Long, ignoreMax: Boolean = false) {
         val next = current + other
@@ -41,40 +47,50 @@ class Mana(current: Long) {
         }
     }
 
-    fun isUnlocked(player: Player): Boolean {
+    private fun isUnlocked(player: Player): Boolean {
         val gPlayer = player.gPlayer ?: return false
         return gPlayer.level.current >= 10
     }
 
     fun init(player: Player) {
-        updateMaxMana(player)
-        bar = Bukkit.createBossBar("title", BarColor.YELLOW, BarStyle.SOLID)
-        bar.isVisible = false
-        bar.addPlayer(player)
-        display()
-        bar.isVisible = true
+        if (isUnlocked(player)) {
+            updateMaxMana(player)
+            display(player)
+        }
     }
 
-    fun display() {
+    fun display(player: Player) {
+        if (!isUnlocked(player)) return
         bar.run {
-            title = "$current / $max"
-            progress = current.div(max.toDouble())
+            if (!players.contains(player)) {
+                addPlayer(player)
+                bar.isVisible = true
+            }
+            title = "${ChatColor.AQUA}${ChatColor.BOLD}$current / $max"
+            progress = current.div(max.toDouble()).let { if (it > 1.0) 1.0 else it }
             color = when (progress) {
-                in 0.00..0.01 -> BarColor.RED
-                in 0.01..0.10 -> BarColor.PINK
-                in 0.10..0.99 -> BarColor.BLUE
+                1.00 -> BarColor.WHITE
                 in 0.99..1.00 -> BarColor.PURPLE
+                in 0.10..0.99 -> BarColor.BLUE
+                in 0.01..0.10 -> BarColor.PINK
+                in 0.00..0.01 -> BarColor.RED
                 else -> BarColor.YELLOW
             }
         }
     }
 
-    fun updateMaxMana(player: Player) {
-        max = ManaConfig.MANA_MAP[player.gPlayer?.level?.current ?: 1] ?: 0L
+    private fun updateMaxMana(player: Player) {
+        max = MANA_MAP[player.gPlayer?.level?.current ?: 1] ?: 0L
     }
 
     fun finish(player: Player) {
         bar.removeAll()
+    }
+
+    fun onLevelUp(event: LevelUpEvent) {
+        updateMaxMana(event.player)
+        display(event.player)
+        increase(max, true)
     }
 
 }

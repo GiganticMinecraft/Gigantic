@@ -43,7 +43,7 @@ class Level {
         // 経験値を計算
         exp = expProduceCalculating(player)
         // レベルを更新
-        updateLevel()
+        updateLevel(player, true)
         // 表示を更新
         display(player)
     }
@@ -55,11 +55,9 @@ class Level {
         val diff = nextExp - exp
         exp = nextExp
         // レベルを更新
-        val isLevelUp = updateLevel()
+        val isLevelUp = updateLevel(player)
         // レベルと経験値によって音を出力
         playSound(player, isLevelUp, diff)
-        // call Event
-        if (isLevelUp) Bukkit.getPluginManager().callEvent(LevelUpEvent(current, player))
         // 表示を更新
         display(player)
     }
@@ -83,14 +81,16 @@ class Level {
         }
     }
 
-    private fun updateLevel(): Boolean {
+    private fun updateLevel(player: Player, isFirstCalculation: Boolean = false): Boolean {
         var isLevelUp = false
         while (canLevelUp(current + 1, exp)) {
+            if (current + 1 > MAX) {
+                break
+            }
             current++
             isLevelUp = true
-            if (current >= MAX) {
-                current = MAX
-                break
+            if (!isFirstCalculation) {
+                Bukkit.getPluginManager().callEvent(LevelUpEvent(current, player))
             }
         }
         return isLevelUp

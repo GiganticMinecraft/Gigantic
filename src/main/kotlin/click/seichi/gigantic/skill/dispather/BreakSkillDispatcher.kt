@@ -67,7 +67,7 @@ class BreakSkillDispatcher(
         }
 
         gPlayer.mana.decrease(consumeMana)
-        gPlayer.mana.display()
+        gPlayer.mana.display(player)
 
 
         fire().let {
