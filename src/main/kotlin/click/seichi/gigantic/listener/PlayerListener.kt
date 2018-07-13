@@ -100,6 +100,7 @@ class PlayerListener : Listener {
     fun onLevelUp(event: LevelUpEvent) {
         val gPlayer = event.player.gPlayer ?: return
         gPlayer.mana.onLevelUp(event)
+        gPlayer.aptitude.onLevelUp(event)
     }
 
 }

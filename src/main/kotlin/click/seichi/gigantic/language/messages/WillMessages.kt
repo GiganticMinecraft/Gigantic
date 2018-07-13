@@ -4,6 +4,7 @@ import click.seichi.gigantic.language.ChatMessage
 import click.seichi.gigantic.language.ChatMessageProtocol
 import click.seichi.gigantic.language.LocalizedText
 import click.seichi.gigantic.spirit.spirits.WillSpirit
+import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -78,18 +79,14 @@ object WillMessages {
         val name = willSpirit.will.LocalizedText
 
         ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
-                Locale.JAPANESE.let { it to "${ChatColor.GREEN}${sizePrefix.asSafety(it)}${name.asSafety(it)}のウィルから${memory}の記憶を得ました" },
+                Locale.JAPANESE.let { it to "${ChatColor.GREEN}${sizePrefix.asSafety(it)}${name.asSafety(it)}の遺志から${memory}の記憶を享受した" },
                 Locale.ENGLISH.let { it to "${ChatColor.GREEN}$memory memory from ${sizePrefix.asSafety(it)}${name.asSafety(it)} will " }
         ))
     }
 
-//  使用しないため抜いておく
-//    val SENSE_NO_APTITUDE = { will: Will ->
-//
-//        ChatMessage(ChatMessageProtocol.ACTION_BAR,
-//                LocalizedText(
-//                        Locale.JAPANESE to "${ChatColor.RED}${will}のウィルとの適正がありません"
-//                )
-//        )
-//    }
+    val OBTAIN_WILL_APTITUDE = { will: Will ->
+        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+                Locale.JAPANESE.let { it to "${ChatColor.AQUA}${ChatColor.BOLD}新しく${will.LocalizedText.asSafety(it)}の遺志と交感できるようになった" }
+        ))
+    }
 }

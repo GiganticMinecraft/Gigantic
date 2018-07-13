@@ -6,8 +6,6 @@ import click.seichi.gigantic.player.belt.belts.FightBelt
 import click.seichi.gigantic.player.belt.belts.MineBelt
 import click.seichi.gigantic.player.components.*
 import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
-import click.seichi.gigantic.util.Random
-import click.seichi.gigantic.will.WillGrade
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.util.*
@@ -81,7 +79,6 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
     override fun init() {
         if (isFirstJoin) {
-            aptitude.add(Random.nextWill(WillGrade.BASIC))
         }
         level.init(player)
         mana.init(player)
