@@ -83,8 +83,8 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         if (isFirstJoin) {
             aptitude.add(Random.nextWill(WillGrade.BASIC))
         }
-        level.update(player, false)
-        mana.init(player)
+        level.init(player)
+        if (mana.isUnlocked(player)) mana.init(player)
         // インベントリーを設定
         defaultInventory.apply(player)
         // ベルトを設定
@@ -92,7 +92,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
     }
 
     override fun finish() {
-        mana.finish(player)
+        if (mana.isUnlocked(player)) mana.finish(player)
     }
 
     override fun save(playerDao: PlayerDao) {

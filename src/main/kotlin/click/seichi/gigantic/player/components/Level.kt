@@ -3,6 +3,7 @@ package click.seichi.gigantic.player.components
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.config.PlayerLevelConfig.LEVEL_MAP
 import click.seichi.gigantic.config.PlayerLevelConfig.MAX
+import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.schedule.Scheduler
@@ -38,7 +39,17 @@ class Level {
     private fun canLevelUp(nextLevel: Int, exp: Long) =
             exp >= LEVEL_MAP[nextLevel] ?: Long.MAX_VALUE
 
-    fun update(player: Player, playSound: Boolean) {
+    fun init(player: Player) {
+        // 経験値を計算
+        exp = expProduceCalculating(player)
+        // レベルを更新
+        updateLevel()
+        // 表示を更新
+        display(player)
+    }
+
+
+    fun update(player: Player) {
         // 次の経験値を計算
         val nextExp = expProduceCalculating(player)
         val diff = nextExp - exp
@@ -46,7 +57,9 @@ class Level {
         // レベルを更新
         val isLevelUp = updateLevel()
         // レベルと経験値によって音を出力
-        if (playSound) playSound(player, isLevelUp, diff)
+        playSound(player, isLevelUp, diff)
+        // call Event
+        if (isLevelUp) Bukkit.getPluginManager().callEvent(LevelUpEvent(current, player))
         // 表示を更新
         display(player)
     }

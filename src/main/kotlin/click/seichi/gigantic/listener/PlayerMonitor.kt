@@ -17,6 +17,6 @@ class PlayerMonitor : Listener {
         val player = event.player ?: return
         val gPlayer = player.gPlayer ?: return
         gPlayer.mineBlock.add(1L)
-        gPlayer.level.update(player, true)
+        gPlayer.level.update(player)
     }
 }

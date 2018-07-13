@@ -41,9 +41,13 @@ class Mana(current: Long) {
         }
     }
 
+    fun isUnlocked(player: Player): Boolean {
+        val gPlayer = player.gPlayer ?: return false
+        return gPlayer.level.current >= 10
+    }
+
     fun init(player: Player) {
         updateMaxMana(player)
-        val progress = current.div(max.toFloat())
         bar = Bukkit.createBossBar("title", BarColor.YELLOW, BarStyle.SOLID)
         bar.isVisible = false
         bar.addPlayer(player)
