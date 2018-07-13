@@ -4,8 +4,14 @@ import click.seichi.gigantic.config.DatabaseConfig
 import click.seichi.gigantic.database.table.UserMineBlockTable
 import click.seichi.gigantic.database.table.UserTable
 import click.seichi.gigantic.database.table.UserWillTable
+import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.listener.*
+import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
+import com.comphenix.protocol.ProtocolLibrary
+import com.comphenix.protocol.ProtocolManager
+import com.comphenix.protocol.events.PacketListener
 import kotlinx.coroutines.experimental.newSingleThreadContext
+import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -13,6 +19,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 /**
  * @author tar0ss
+ * @author unicroak
  */
 class Gigantic : JavaPlugin() {
 
@@ -20,27 +27,34 @@ class Gigantic : JavaPlugin() {
         lateinit var PLUGIN: Gigantic
         // Database thread
         val DB = newSingleThreadContext("DB")
+        // protocolLib manager
+        lateinit var PROTOCOL_MG: ProtocolManager
     }
 
     override fun onEnable() {
         PLUGIN = this
+        PROTOCOL_MG = ProtocolLibrary.getProtocolManager()
 
-        registerListener()
+        registerListeners(
+                Menu(),
+                Player(),
+                Spirit(),
+                PlayerMonitor(),
+                Item()
+        )
+
+        registerPacketListeners(
+                ExperienceOrbSpawn(this)
+        )
 
         prepareDatabase()
 
         logger.info("Gigantic is enabled!!")
     }
 
-    private fun registerListener() {
-        server.pluginManager.run {
-            registerEvents(MenuListener(), this@Gigantic)
-            registerEvents(PlayerListener(), this@Gigantic)
-            registerEvents(SpiritListener(), this@Gigantic)
-            registerEvents(PlayerMonitor(), this@Gigantic)
-            registerEvents(ItemListener(), this@Gigantic)
-        }
-    }
+    private fun registerListeners(vararg listeners: Listener) = listeners.forEach { it.register() }
+
+    private fun registerPacketListeners(vararg listeners: PacketListener) = listeners.forEach { PROTOCOL_MG.addPacketListener(it) }
 
     private fun prepareDatabase() {
         //connect MySQL
