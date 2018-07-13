@@ -11,10 +11,10 @@ object PlayerSounds {
 
     val INCREASE_EXP
         get() = SoundPlayer(
-            Sound.ENTITY_EXPERIENCE_ORB_PICKUP,
-            SoundCategory.PLAYERS,
-            pitch = Random.nextGaussian(1.0, 0.2).toFloat()
-    )
+                Sound.ENTITY_EXPERIENCE_ORB_PICKUP,
+                SoundCategory.PLAYERS,
+                pitch = Random.nextGaussian(1.0, 0.2).toFloat()
+        )
 
     val LEVEL_UP = SoundPlayer(
             Sound.ENTITY_PLAYER_LEVELUP,
