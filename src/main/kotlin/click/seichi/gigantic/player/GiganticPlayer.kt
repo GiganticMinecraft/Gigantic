@@ -20,7 +20,6 @@ interface GiganticPlayer {
     val explosionLevel: Int
     val defaultInventory: DefaultInventory
     var belt: Belt
-//    val topBarMap:Map<TopBar>
 
     fun switchBelt()
 }
