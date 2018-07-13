@@ -3,12 +3,12 @@ package click.seichi.gigantic.spirit
 
 import click.seichi.gigantic.event.events.BlockBreakSkillEvent
 import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.spirit.SpiritManager.spawn
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.spirit.summoncase.RandomSummonCase
 import click.seichi.gigantic.spirit.summoncase.SummonCase
-import click.seichi.gigantic.util.Random
 import org.bukkit.event.Event
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDeathEvent
@@ -30,16 +30,23 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
             RandomSummonCase(0.05, BlockBreakEvent::class.java) { event ->
                 if (event.isCancelled) return@RandomSummonCase
                 val player = event.player ?: return@RandomSummonCase
-                val will = Random.nextWill()
+                val gPlayer = player.gPlayer ?: return@RandomSummonCase
+                val aptitudeSet = gPlayer.aptitude.copySet()
+                val will = aptitudeSet.shuffled().first()
                 spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, player))
             },
             RandomSummonCase(0.01, BlockBreakSkillEvent::class.java) { event ->
-                val will = Random.nextWill()
+                val player = event.player
+                val gPlayer = player.gPlayer ?: return@RandomSummonCase
+                val aptitudeSet = gPlayer.aptitude.copySet()
+                val will = aptitudeSet.shuffled().first()
                 spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, event.player))
             },
             RandomSummonCase(0.08, EntityDeathEvent::class.java) { event ->
                 val player = event.entity.killer ?: return@RandomSummonCase
-                val will = Random.nextWill()
+                val gPlayer = player.gPlayer ?: return@RandomSummonCase
+                val aptitudeSet = gPlayer.aptitude.copySet()
+                val will = aptitudeSet.shuffled().first()
                 spawn(WillSpirit(WillSpawnReason.RELEASE, event.entity.eyeLocation, will, player))
             }
     )

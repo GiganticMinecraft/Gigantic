@@ -47,11 +47,6 @@ class Mana(current: Long) {
         }
     }
 
-    private fun isUnlocked(player: Player): Boolean {
-        val gPlayer = player.gPlayer ?: return false
-        return gPlayer.level.current >= 10
-    }
-
     fun init(player: Player) {
         if (isUnlocked(player)) {
             updateMaxMana(player)
@@ -79,10 +74,6 @@ class Mana(current: Long) {
         }
     }
 
-    private fun updateMaxMana(player: Player) {
-        max = MANA_MAP[player.gPlayer?.level?.current ?: 1] ?: 0L
-    }
-
     fun finish(player: Player) {
         bar.removeAll()
     }
@@ -91,6 +82,15 @@ class Mana(current: Long) {
         updateMaxMana(event.player)
         display(event.player)
         increase(max, true)
+    }
+
+    private fun updateMaxMana(player: Player) {
+        max = MANA_MAP[player.gPlayer?.level?.current ?: 1] ?: 0L
+    }
+
+    private fun isUnlocked(player: Player): Boolean {
+        val gPlayer = player.gPlayer ?: return false
+        return gPlayer.level.current >= 10
     }
 
 }
