@@ -11,7 +11,7 @@ import org.bukkit.event.entity.EntityDeathEvent
  * @unicroak
  * @author tar0ss
  */
-class Spirit : Listener {
+class SpiritListener : Listener {
 
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {

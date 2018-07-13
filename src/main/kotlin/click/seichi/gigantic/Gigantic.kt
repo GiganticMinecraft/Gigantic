@@ -19,7 +19,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 /**
  * @author tar0ss
- * @author unicroak
+ * @unicroak
  */
 class Gigantic : JavaPlugin() {
 
@@ -36,11 +36,11 @@ class Gigantic : JavaPlugin() {
         PROTOCOL_MG = ProtocolLibrary.getProtocolManager()
 
         registerListeners(
-                Menu(),
-                Player(),
-                Spirit(),
+                MenuListener(),
+                PlayerListener(),
+                SpiritListener(),
                 PlayerMonitor(),
-                Item()
+                ItemListener()
         )
 
         registerPacketListeners(

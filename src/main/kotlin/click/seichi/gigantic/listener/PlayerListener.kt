@@ -18,7 +18,7 @@ import org.bukkit.event.player.*
 /**
  * @author tar0ss
  */
-class Player : Listener {
+class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {

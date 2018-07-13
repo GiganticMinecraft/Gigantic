@@ -8,7 +8,7 @@ import org.bukkit.event.entity.ItemSpawnEvent
 /**
  * @author tar0ss
  */
-class Item : Listener {
+class ItemListener : Listener {
 
     // 全てのアイテムスポーンをキャンセル
     @EventHandler(priority = EventPriority.HIGHEST)
