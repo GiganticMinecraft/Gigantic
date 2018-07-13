@@ -48,10 +48,10 @@ class Level {
         // レベルと経験値によって音を出力
         if (playSound) playSound(player, isLevelUp, diff)
         // 表示を更新
-        updateDisplay(player)
+        display(player)
     }
 
-    private fun updateDisplay(player: Player) {
+    private fun display(player: Player) {
         player.level = current
         val expToLevel = LEVEL_MAP[current] ?: 0L
         val expToNextLevel = LEVEL_MAP[current + 1] ?: LEVEL_MAP[MAX]!!
