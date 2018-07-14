@@ -1,6 +1,7 @@
 package click.seichi.gigantic.player
 
 import click.seichi.gigantic.database.PlayerDao
+import click.seichi.gigantic.language.messages.PlayerMessages
 import click.seichi.gigantic.player.belt.Belt
 import click.seichi.gigantic.player.belt.belts.FightBelt
 import click.seichi.gigantic.player.belt.belts.MineBelt
@@ -78,8 +79,10 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
     }
 
     override fun init() {
-        if (isFirstJoin) {
-        }
+        // TODO remove
+//        if (isFirstJoin) {
+        PlayerMessages.FIRST_JOIN.sendTo(player)
+//        }
         level.init(player)
         mana.init(player)
         // インベントリーを設定

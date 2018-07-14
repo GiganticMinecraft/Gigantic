@@ -4,7 +4,6 @@ import click.seichi.gigantic.language.ChatMessage
 import click.seichi.gigantic.language.ChatMessageProtocol
 import click.seichi.gigantic.language.LocalizedText
 import click.seichi.gigantic.spirit.spirits.WillSpirit
-import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -84,9 +83,4 @@ object WillMessages {
         ))
     }
 
-    val OBTAIN_WILL_APTITUDE = { will: Will ->
-        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-                Locale.JAPANESE.let { it to "${ChatColor.AQUA}${ChatColor.BOLD}新しく${will.LocalizedText.asSafety(it)}の遺志と交感できるようになった" }
-        ))
-    }
 }

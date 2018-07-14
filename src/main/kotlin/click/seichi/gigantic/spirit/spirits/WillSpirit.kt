@@ -26,7 +26,8 @@ class WillSpirit(
         spawnReason: SpawnReason,
         location: Location,
         val will: Will,
-        targetPlayer: Player? = null
+        targetPlayer: Player? = null,
+        val willSize: WillSize = Random.nextWillSizeWithRegularity()
 ) : Spirit(spawnReason, location) {
 
     private val sensor = Sensor(
@@ -64,7 +65,6 @@ class WillSpirit(
             }
     )
 
-    val willSize: WillSize = Random.nextWillSizeWithRegularity()
 
     override val lifespan = when (spawnReason) {
         WillSpawnReason.AWAKE, WillSpawnReason.RELEASE -> Sensor.DURATION + 1
