@@ -42,6 +42,8 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
     override var belt: Belt = MineBelt
 
+    override val breakCombo = BreakCombo()
+
     override fun switchBelt() {
         when (belt) {
             is MineBelt -> belt = FightBelt
