@@ -85,6 +85,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 //        }
         level.init(player)
         mana.init(player)
+        memory.display(player)
         // インベントリーを設定
         defaultInventory.apply(player)
         // ベルトを設定

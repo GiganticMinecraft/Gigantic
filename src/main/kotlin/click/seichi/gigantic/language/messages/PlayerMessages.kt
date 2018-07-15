@@ -3,6 +3,8 @@ package click.seichi.gigantic.language.messages
 import click.seichi.gigantic.language.ChatMessage
 import click.seichi.gigantic.language.ChatMessageProtocol
 import click.seichi.gigantic.language.LocalizedText
+import click.seichi.gigantic.language.SideBarMessage
+import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.util.*
@@ -11,6 +13,28 @@ import java.util.*
  * @author tar0ss
  */
 object PlayerMessages {
+
+    val MEMORY_SIDEBAR = { currentMap: Map<Will, Long> ->
+        SideBarMessage(
+                "memory",
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.DARK_GREEN}${ChatColor.BOLD}" +
+                                "遺志の記憶"
+                ),
+                currentMap.keys.map { will ->
+                    SideBarRow.getRowById(will.id) to LocalizedText(
+                            Locale.JAPANESE.let {
+                                it to "${ChatColor.GREEN}${ChatColor.BOLD}" +
+                                        "${will.LocalizedText.asSafety(it)} : " +
+                                        "${ChatColor.RESET}${ChatColor.WHITE}" +
+                                        "${currentMap[will]}個"
+                            }
+                    )
+                }.toMap()
+                , true
+        )
+    }
+
 
     val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             // TODO

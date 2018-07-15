@@ -62,6 +62,7 @@ class WillSpirit(
                 WillMessages.SENSED_WILL(this).sendTo(player)
                 WillSounds.SENSED.play(player)
                 gPlayer.memory.add(will, willSize.memory.toLong())
+                gPlayer.memory.display(player)
             }
     )
 

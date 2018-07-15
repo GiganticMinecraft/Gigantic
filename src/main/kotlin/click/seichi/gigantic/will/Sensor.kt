@@ -41,9 +41,9 @@ class Sensor(
                 .onEach { inProgress(Bukkit.getPlayer(it.key), it.value) }
                 .filterValues { DURATION <= it }
                 .forEach { uniqueId, _ ->
-                    sense(Bukkit.getPlayer(uniqueId))
                     senseProgressMap.remove(uniqueId)
                     alreadySensedSet.add(uniqueId)
+                    sense(Bukkit.getPlayer(uniqueId))
                 }
     }
 

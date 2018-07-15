@@ -42,17 +42,17 @@ class WillAptitude(
         } ?: return
         add(will)
 
-        if (event.level == 1) {
-            PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(will).sendTo(event.player)
-            spawn(WillSpirit(WillSpawnReason.AWAKE, event.player.eyeLocation
-                    .clone()
-                    .let {
-                        it.add(
-                                it.direction.x * 2,
-                                0.0,
-                                it.direction.z * 2
-                        )
-                    }, will, event.player, WillSize.MEDIUM))
-        } else PlayerMessages.OBTAIN_WILL_APTITUDE(will).sendTo(event.player)
+        if (event.level == 1) PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(will).sendTo(event.player)
+        else PlayerMessages.OBTAIN_WILL_APTITUDE(will).sendTo(event.player)
+
+        spawn(WillSpirit(WillSpawnReason.AWAKE, event.player.eyeLocation
+                .clone()
+                .let {
+                    it.add(
+                            it.direction.x * 2,
+                            0.0,
+                            it.direction.z * 2
+                    )
+                }, will, event.player, WillSize.MEDIUM))
     }
 }

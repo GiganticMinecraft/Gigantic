@@ -19,7 +19,8 @@ class SideBarMessage(
 ) : Message {
 
     companion object {
-        private val scoreboardManager: ScoreboardManager = Bukkit.getScoreboardManager()
+        private val scoreboardManager: ScoreboardManager
+            get() = Bukkit.getScoreboardManager()
     }
 
     override fun sendTo(player: Player) {
