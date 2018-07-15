@@ -79,10 +79,9 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
     }
 
     override fun init() {
-        // TODO remove
-//        if (isFirstJoin) {
+        if (isFirstJoin) {
         PlayerMessages.FIRST_JOIN.sendTo(player)
-//        }
+        }
         level.init(player)
         mana.init(player)
         memory.display(player)
