@@ -66,15 +66,11 @@ object MineBelt : Belt() {
                         mineBurst.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
                             mineBurst.run {
                                 amount = remainTimeToFire.toInt() + 1
-//                                durability = Material.FLINT_AND_STEEL.maxDurability
-//                                        .times(remainTimeToFire.div(coolTime)).toShort()
                             }
                         }
                         mineBurst.duringFire() -> ItemStack(Material.ENCHANTED_BOOK).apply {
                             mineBurst.run {
                                 amount = remainTimeToCool.toInt() + 1
-//                                durability = Material.FLINT_AND_STEEL.maxDurability
-//                                        .times(1.0F.minus(remainTimeToCool.div(duration))).toShort()
                             }
                         }
                         else -> ItemStack(Material.ENCHANTED_BOOK)

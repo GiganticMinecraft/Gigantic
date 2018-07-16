@@ -66,11 +66,6 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         belt.apply(player)
     }
 
-    override fun fireMineBurst(player: Player) {
-
-    }
-
-
     override fun load(playerDao: PlayerDao) {
         playerDao.user.run {
             uniqueId = id.value

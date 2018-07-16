@@ -27,6 +27,4 @@ interface GiganticPlayer {
     val manaBar: BossBar
 
     fun switchBelt()
-
-    fun fireMineBurst(player: Player)
 }
