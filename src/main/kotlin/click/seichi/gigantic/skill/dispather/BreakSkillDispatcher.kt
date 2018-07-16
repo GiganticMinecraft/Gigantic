@@ -1,15 +1,19 @@
 package click.seichi.gigantic.skill.dispather
 
 import click.seichi.gigantic.event.events.BlockBreakSkillEvent
+import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.cardinalDirection
+import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.language.ChatMessage
 import click.seichi.gigantic.language.ChatMessageProtocol
 import click.seichi.gigantic.language.messages.PlayerMessages
+import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.skill.SkillState
 import click.seichi.gigantic.skill.breakskill.BreakBox
 import click.seichi.gigantic.skill.breakskill.BreakSkill
+import click.seichi.gigantic.sound.PlayerSounds
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -91,7 +95,18 @@ class BreakSkillDispatcher(
         // TODO coolTime invoke
         gPlayer.run {
             mineBlock.add(targetSet.size.toLong(), mineBlockReason)
-            updateLevel()
+            val player = player
+
+            val level = player.gPlayer?.level ?: return@run
+            val isLevelUp = level.updateLevel(ExpProducer.calcExp(player)) {
+                Bukkit.getPluginManager().callEvent(LevelUpEvent(it, player))
+            }
+            PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
+            if (isLevelUp) {
+                PlayerSounds.LEVEL_UP.play(player.location)
+            } else {
+                PlayerSounds.OBTAIN_EXP.play(player)
+            }
         }
 
         targetSet.forEach { block ->

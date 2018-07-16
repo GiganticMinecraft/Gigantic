@@ -14,6 +14,8 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 
 /**
  * @author tar0ss
@@ -93,7 +95,21 @@ object MineBelt : Belt() {
                     event.isCancelled = true
                     val gPlayer = player.gPlayer ?: return
                     if (!LockedFunction.MINE_BURST.isUnlocked(gPlayer.level)) return
-                    player.gPlayer?.fireMineBurst(player) ?: return
+                    gPlayer.run {
+                        mineBurst.run {
+                            if (canFire()) {
+                                fire({
+                                    player.removePotionEffect(PotionEffectType.FAST_DIGGING)
+                                    player.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
+                                    belt.apply(player)
+                                }, {
+                                    belt.apply(player, MineBelt.ItemSlot.MINE_BURST.slot)
+                                }, {
+                                    belt.apply(player)
+                                })
+                            }
+                        }
+                    }
                     player.inventory.heldItemSlot = ItemSlot.PICKEL.slot
                 }
 

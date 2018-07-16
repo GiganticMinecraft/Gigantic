@@ -1,27 +1,18 @@
 package click.seichi.gigantic.player
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.database.PlayerDao
-import click.seichi.gigantic.event.events.LevelUpEvent
-import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.language.messages.PlayerMessages
 import click.seichi.gigantic.player.belt.Belt
 import click.seichi.gigantic.player.belt.belts.FightBelt
 import click.seichi.gigantic.player.belt.belts.MineBelt
 import click.seichi.gigantic.player.components.*
 import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
-import click.seichi.gigantic.schedule.Scheduler
-import click.seichi.gigantic.sound.PlayerSounds
-import io.reactivex.Observable
 import org.bukkit.Bukkit
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.boss.BossBar
 import org.bukkit.entity.Player
-import org.bukkit.potion.PotionEffect
-import org.bukkit.potion.PotionEffectType
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * @author tar0ss
@@ -75,41 +66,8 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         belt.apply(player)
     }
 
-    override fun updateLevel() {
-        val player = player
-        val level = player.gPlayer?.level ?: return
-        val expBefore = level.exp
-        val expAfter = ExpProducer.calcExp(player)
-        val diff = expAfter - expBefore
-        val isLevelUp = level.updateLevel(expAfter) {
-            Bukkit.getPluginManager().callEvent(LevelUpEvent(it, player))
-        }
-        PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
-        if (isLevelUp) {
-            PlayerSounds.LEVEL_UP.play(player.location)
-        } else if (diff > 0) {
-            val count = if (diff > 20) 20 else diff
-            Observable.interval(2, TimeUnit.MILLISECONDS)
-                    .take(count)
-                    .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
-                    .subscribe { PlayerSounds.OBTAIN_EXP.play(player) }
-        }
-    }
-
     override fun fireMineBurst(player: Player) {
-        mineBurst.run {
-            if (canFire()) {
-                fire({
-                    player.removePotionEffect(PotionEffectType.FAST_DIGGING)
-                    player.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
-                    belt.apply(player)
-                }, {
-                    belt.apply(player, MineBelt.ItemSlot.MINE_BURST.slot)
-                }, {
-                    belt.apply(player)
-                })
-            }
-        }
+
     }
 
 

@@ -28,7 +28,5 @@ interface GiganticPlayer {
 
     fun switchBelt()
 
-    fun updateLevel()
-
     fun fireMineBurst(player: Player)
 }
