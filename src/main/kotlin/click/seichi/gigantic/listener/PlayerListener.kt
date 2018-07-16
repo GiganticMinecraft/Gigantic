@@ -5,6 +5,10 @@ import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.language.messages.PlayerMessages
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.player.PlayerRepository
+import click.seichi.gigantic.spirit.SpiritManager
+import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
+import click.seichi.gigantic.spirit.spirits.WillSpirit
+import click.seichi.gigantic.will.WillSize
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -105,7 +109,19 @@ class PlayerListener : Listener {
             PlayerMessages.MANA_DISPLAY(gPlayer.manaBar, this@run)
             increase(max, true)
         }
-        gPlayer.aptitude.onLevelUp(event)
+        val will = gPlayer.aptitude.addIfNeeded(gPlayer.level) ?: return
+        // level up で適正が追加された場合、そのwillを発現させる.
+        if (gPlayer.level.current == 1) PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(will).sendTo(event.player)
+        else PlayerMessages.OBTAIN_WILL_APTITUDE(will).sendTo(event.player)
+        SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, event.player.eyeLocation
+                .clone()
+                .let {
+                    it.add(
+                            it.direction.x * 2,
+                            0.0,
+                            it.direction.z * 2
+                    )
+                }, will, event.player, WillSize.MEDIUM))
     }
 
 }
