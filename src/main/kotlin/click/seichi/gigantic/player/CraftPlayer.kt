@@ -14,6 +14,9 @@ import click.seichi.gigantic.schedule.Scheduler
 import click.seichi.gigantic.sound.PlayerSounds
 import io.reactivex.Observable
 import org.bukkit.Bukkit
+import org.bukkit.boss.BarColor
+import org.bukkit.boss.BarStyle
+import org.bukkit.boss.BossBar
 import org.bukkit.entity.Player
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -22,6 +25,13 @@ import java.util.concurrent.TimeUnit
  * @author tar0ss
  */
 class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotablePlayer {
+
+    override val manaBar: BossBar by lazy {
+        Bukkit.createBossBar("title", BarColor.YELLOW, BarStyle.SOLID).apply {
+            isVisible = false
+            addPlayer(player)
+        }
+    }
 
     override val player: Player
         get() = Bukkit.getServer().getPlayer(uniqueId)
@@ -82,6 +92,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         }
     }
 
+
     override fun load(playerDao: PlayerDao) {
         playerDao.user.run {
             uniqueId = id.value
@@ -116,8 +127,10 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         level.updateLevel(ExpProducer.calcExp(player)) {}
         // 表示を更新
         PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
-
-        mana.init(player)
+        if (LockedFunction.MANA.isUnlocked(level)) {
+            mana.updateMaxMana(level)
+            PlayerMessages.MANA_DISPLAY(manaBar, mana).sendTo(player)
+        }
         memory.display(player)
         // インベントリーを設定
         defaultInventory.apply(player)
@@ -126,7 +139,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
     }
 
     override fun finish() {
-        mana.finish(player)
+        manaBar.removeAll()
     }
 
     override fun save(playerDao: PlayerDao) {

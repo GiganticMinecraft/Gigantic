@@ -3,9 +3,13 @@ package click.seichi.gigantic.language.messages
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.language.*
 import click.seichi.gigantic.player.components.Level
+import click.seichi.gigantic.player.components.Mana
 import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
+import org.bukkit.boss.BarColor
+import org.bukkit.boss.BarStyle
+import org.bukkit.boss.BossBar
 import java.util.*
 
 /**
@@ -39,6 +43,28 @@ object PlayerMessages {
         val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1]
                 ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
         LevelMessage(level.current, (level.exp - expToLevel).div((expToNextLevel - expToLevel).toFloat()))
+    }
+
+    val MANA_DISPLAY = { bar: BossBar, mana: Mana ->
+        mana.run {
+            val progress = current.div(max.toDouble()).let { if (it > 1.0) 1.0 else it }
+            BossBarMessage(
+                    bar,
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}$current / $max"
+                    ),
+                    progress,
+                    when (progress) {
+                        1.00 -> BarColor.WHITE
+                        in 0.99..1.00 -> BarColor.PURPLE
+                        in 0.10..0.99 -> BarColor.BLUE
+                        in 0.01..0.10 -> BarColor.PINK
+                        in 0.00..0.01 -> BarColor.RED
+                        else -> BarColor.YELLOW
+                    },
+                    BarStyle.SOLID
+            )
+        }
     }
 
 

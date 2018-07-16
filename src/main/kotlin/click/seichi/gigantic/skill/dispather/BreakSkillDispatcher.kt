@@ -4,6 +4,7 @@ import click.seichi.gigantic.event.events.BlockBreakSkillEvent
 import click.seichi.gigantic.extension.cardinalDirection
 import click.seichi.gigantic.language.ChatMessage
 import click.seichi.gigantic.language.ChatMessageProtocol
+import click.seichi.gigantic.language.messages.PlayerMessages
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.skill.SkillState
@@ -67,7 +68,7 @@ class BreakSkillDispatcher(
         }
 
         gPlayer.mana.decrease(consumeMana)
-        gPlayer.mana.display(player)
+        PlayerMessages.MANA_DISPLAY(gPlayer.manaBar, gPlayer.mana)
 
 
         fire().let {

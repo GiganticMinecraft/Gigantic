@@ -3,6 +3,7 @@ package click.seichi.gigantic.player
 import click.seichi.gigantic.player.belt.Belt
 import click.seichi.gigantic.player.components.*
 import click.seichi.gigantic.player.defalutInventory.DefaultInventory
+import org.bukkit.boss.BossBar
 import org.bukkit.entity.Player
 import java.util.*
 
@@ -21,6 +22,8 @@ interface GiganticPlayer {
     val defaultInventory: DefaultInventory
     var belt: Belt
     val mineCombo: MineCombo
+
+    val manaBar: BossBar
 
     fun switchBelt()
 

@@ -2,6 +2,7 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.gPlayer
+import click.seichi.gigantic.language.messages.PlayerMessages
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.player.PlayerRepository
 import org.bukkit.entity.Player
@@ -99,7 +100,11 @@ class PlayerListener : Listener {
     @EventHandler
     fun onLevelUp(event: LevelUpEvent) {
         val gPlayer = event.player.gPlayer ?: return
-        gPlayer.mana.onLevelUp(event)
+        gPlayer.mana.run {
+            updateMaxMana(gPlayer.level)
+            PlayerMessages.MANA_DISPLAY(gPlayer.manaBar, this@run)
+            increase(max, true)
+        }
         gPlayer.aptitude.onLevelUp(event)
     }
 
