@@ -18,6 +18,10 @@ abstract class Belt {
         }
     }
 
+    fun apply(player: Player, slot: Int) {
+        player.inventory.setItem(slot, hookedItemMap[slot]?.getItemStack(player) ?: ItemStack(Material.AIR))
+    }
+
     private fun forEachIndexed(player: Player, action: (Int, ItemStack?) -> Unit) {
         slotRange.map { it to hookedItemMap[it]?.getItemStack(player) }
                 .toMap()

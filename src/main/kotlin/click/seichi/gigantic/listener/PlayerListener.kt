@@ -109,6 +109,7 @@ class PlayerListener : Listener {
             PlayerMessages.MANA_DISPLAY(gPlayer.manaBar, this@run)
             increase(max, true)
         }
+        gPlayer.belt.apply(event.player)
         val will = gPlayer.aptitude.addIfNeeded(gPlayer.level) ?: return
         // level up で適正が追加された場合、そのwillを発現させる.
         if (gPlayer.level.current == 1) PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(will).sendTo(event.player)

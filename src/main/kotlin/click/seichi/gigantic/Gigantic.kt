@@ -13,6 +13,7 @@ import com.comphenix.protocol.ProtocolManager
 import com.comphenix.protocol.events.PacketListener
 import kotlinx.coroutines.experimental.newSingleThreadContext
 import org.bukkit.Bukkit
+import org.bukkit.entity.ArmorStand
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.exposed.sql.Database
@@ -36,6 +37,8 @@ class Gigantic : JavaPlugin() {
     override fun onEnable() {
         PLUGIN = this
         PROTOCOL_MG = ProtocolLibrary.getProtocolManager()
+
+        server.worlds.forEach { it.getEntitiesByClass(ArmorStand::class.java).forEach { it.remove() } }
 
         registerListeners(
                 MenuListener(),

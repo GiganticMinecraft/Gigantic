@@ -41,10 +41,12 @@ class MineCombo {
     }
 
     fun display(location: Location) {
-        location.world.spawn(location, ArmorStand::class.java).run {
+        location.world.spawn(location, ArmorStand::class.java) {
+            it.isVisible = false
+        }.run {
             setBasePlate(false)
             setArms(true)
-            isVisible = false
+            isMarker = true
             isInvulnerable = true
             canPickupItems = false
             setGravity(false)
