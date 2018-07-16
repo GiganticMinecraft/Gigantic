@@ -11,7 +11,5 @@ class MineBoost {
     var current: Int = 0
         private set
 
-    fun update(nextAmplifier: Int) {
-        current = nextAmplifier.coerceAtMost(MAX_BOOST)
-    }
+
 }

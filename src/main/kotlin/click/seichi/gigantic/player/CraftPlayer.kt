@@ -18,8 +18,6 @@ import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.boss.BossBar
 import org.bukkit.entity.Player
-import org.bukkit.potion.PotionEffect
-import org.bukkit.potion.PotionEffectType
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -63,8 +61,6 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
     override val mineCombo = MineCombo()
 
-    override val mineBoost = MineBoost()
-
     override fun switchBelt() {
         when (belt) {
             is MineBelt -> belt = FightBelt
@@ -94,23 +90,6 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
                     .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                     .subscribe { PlayerSounds.OBTAIN_EXP.play(player) }
         }
-    }
-
-    override fun addMineBoost() {
-        val player = player
-        val amplifier = MineBooster.calcBoost(player)
-        mineBoost.update(amplifier)
-        val duration = 100
-        player.removePotionEffect(PotionEffectType.FAST_DIGGING)
-        player.addPotionEffect(
-                PotionEffect(
-                        PotionEffectType.FAST_DIGGING,
-                        duration,
-                        amplifier,
-                        false,
-                        false
-                )
-        )
     }
 
 

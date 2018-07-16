@@ -8,7 +8,6 @@ import click.seichi.gigantic.player.components.Level
 enum class LockedFunction(
         private val unlockLevel: Int
 ) {
-    MINE_BOOST(5),
     MANA(10),
     ;
 

@@ -22,13 +22,10 @@ interface GiganticPlayer {
     val defaultInventory: DefaultInventory
     var belt: Belt
     val mineCombo: MineCombo
-    val mineBoost: MineBoost
 
     val manaBar: BossBar
 
     fun switchBelt()
 
     fun updateLevel()
-
-    fun addMineBoost()
 }
