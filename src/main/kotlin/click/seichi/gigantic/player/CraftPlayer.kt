@@ -120,6 +120,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
     }
 
     override fun init() {
+        val player = player
         if (isFirstJoin) {
             PlayerMessages.FIRST_JOIN.sendTo(player)
         }
@@ -131,7 +132,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
             mana.updateMaxMana(level)
             PlayerMessages.MANA_DISPLAY(manaBar, mana).sendTo(player)
         }
-        memory.display(player)
+        PlayerMessages.MEMORY_SIDEBAR(memory, aptitude).sendTo(player)
         // インベントリーを設定
         defaultInventory.apply(player)
         // ベルトを設定

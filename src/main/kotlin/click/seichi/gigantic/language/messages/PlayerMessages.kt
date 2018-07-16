@@ -4,6 +4,8 @@ import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.language.*
 import click.seichi.gigantic.player.components.Level
 import click.seichi.gigantic.player.components.Mana
+import click.seichi.gigantic.player.components.Memory
+import click.seichi.gigantic.player.components.WillAptitude
 import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
@@ -17,20 +19,23 @@ import java.util.*
  */
 object PlayerMessages {
 
-    val MEMORY_SIDEBAR = { currentMap: Map<Will, Long> ->
+    val MEMORY_SIDEBAR = { memory: Memory, aptitude: WillAptitude ->
+        val willMap = Will.values()
+                .filter { aptitude.has(it) }
+                .map { it to (memory.get(it)) }.toMap()
         SideBarMessage(
                 "memory",
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.DARK_GREEN}${ChatColor.BOLD}" +
                                 "遺志の記憶"
                 ),
-                currentMap.keys.map { will ->
+                willMap.keys.map { will ->
                     SideBarRow.getRowById(will.id) to LocalizedText(
                             Locale.JAPANESE.let {
                                 it to "${ChatColor.GREEN}${ChatColor.BOLD}" +
                                         "${will.LocalizedText.asSafety(it)} : " +
                                         "${ChatColor.RESET}${ChatColor.WHITE}" +
-                                        "${currentMap[will]}個"
+                                        "${willMap[will]}個"
                             }
                     )
                 }.toMap()
