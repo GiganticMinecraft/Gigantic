@@ -9,7 +9,7 @@ import org.bukkit.SoundCategory
  */
 object PlayerSounds {
 
-    val INCREASE_EXP
+    val OBTAIN_EXP
         get() = SoundPlayer(
                 Sound.ENTITY_EXPERIENCE_ORB_PICKUP,
                 SoundCategory.PLAYERS,

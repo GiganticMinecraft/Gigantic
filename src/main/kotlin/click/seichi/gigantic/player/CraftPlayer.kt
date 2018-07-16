@@ -1,15 +1,22 @@
 package click.seichi.gigantic.player
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.database.PlayerDao
+import click.seichi.gigantic.event.events.LevelUpEvent
+import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.language.messages.PlayerMessages
 import click.seichi.gigantic.player.belt.Belt
 import click.seichi.gigantic.player.belt.belts.FightBelt
 import click.seichi.gigantic.player.belt.belts.MineBelt
 import click.seichi.gigantic.player.components.*
 import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
+import click.seichi.gigantic.schedule.Scheduler
+import click.seichi.gigantic.sound.PlayerSounds
+import io.reactivex.Observable
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * @author tar0ss
@@ -42,7 +49,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
     override var belt: Belt = MineBelt
 
-    override val breakCombo = BreakCombo()
+    override val mineCombo = MineCombo()
 
     override fun switchBelt() {
         when (belt) {
@@ -52,6 +59,27 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
             }
         }
         belt.apply(player)
+    }
+
+    override fun updateLevel() {
+        val player = player
+        val level = player.gPlayer?.level ?: return
+        val expBefore = level.exp
+        val expAfter = ExpProducer.calcExp(player)
+        val diff = expAfter - expBefore
+        val isLevelUp = level.updateLevel(expAfter) {
+            Bukkit.getPluginManager().callEvent(LevelUpEvent(it, player))
+        }
+        PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
+        if (isLevelUp) {
+            PlayerSounds.LEVEL_UP.play(player.location)
+        } else if (diff > 0) {
+            val count = if (diff > 20) 20 else diff
+            Observable.interval(2, TimeUnit.MILLISECONDS)
+                    .take(count)
+                    .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
+                    .subscribe { PlayerSounds.OBTAIN_EXP.play(player) }
+        }
     }
 
     override fun load(playerDao: PlayerDao) {
@@ -82,9 +110,13 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
     override fun init() {
         if (isFirstJoin) {
-        PlayerMessages.FIRST_JOIN.sendTo(player)
+            PlayerMessages.FIRST_JOIN.sendTo(player)
         }
-        level.init(player)
+        // レベル更新
+        level.updateLevel(ExpProducer.calcExp(player)) {}
+        // 表示を更新
+        PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
+
         mana.init(player)
         memory.display(player)
         // インベントリーを設定
@@ -116,4 +148,6 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         }
 
     }
+
+
 }

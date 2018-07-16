@@ -90,7 +90,7 @@ class BreakSkillDispatcher(
         // TODO coolTime invoke
         gPlayer.run {
             mineBlock.add(targetSet.size.toLong(), mineBlockReason)
-            level.update(player)
+            updateLevel()
         }
 
         targetSet.forEach { block ->

@@ -1,9 +1,8 @@
 package click.seichi.gigantic.language.messages
 
-import click.seichi.gigantic.language.ChatMessage
-import click.seichi.gigantic.language.ChatMessageProtocol
-import click.seichi.gigantic.language.LocalizedText
-import click.seichi.gigantic.language.SideBarMessage
+import click.seichi.gigantic.config.PlayerLevelConfig
+import click.seichi.gigantic.language.*
+import click.seichi.gigantic.player.components.Level
 import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
@@ -33,6 +32,13 @@ object PlayerMessages {
                 }.toMap()
                 , true
         )
+    }
+
+    val LEVEL_DISPLAY = { level: Level ->
+        val expToLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
+        val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1]
+                ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
+        LevelMessage(level.current, (level.exp - expToLevel).div((expToNextLevel - expToLevel).toFloat()))
     }
 
 

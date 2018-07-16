@@ -9,7 +9,7 @@ import org.bukkit.entity.ArmorStand
 /**
  * @author tar0ss
  */
-class BreakCombo {
+class MineCombo {
 
     var currentCombo: Long = 0L
         private set

@@ -20,7 +20,9 @@ interface GiganticPlayer {
     val explosionLevel: Int
     val defaultInventory: DefaultInventory
     var belt: Belt
-    val breakCombo: BreakCombo
+    val mineCombo: MineCombo
 
     fun switchBelt()
+
+    fun updateLevel()
 }

@@ -18,8 +18,10 @@ class PlayerMonitor : Listener {
         val player = event.player ?: return
         val gPlayer = player.gPlayer ?: return
         gPlayer.mineBlock.add(1L)
-        gPlayer.breakCombo.combo(1L)
-        gPlayer.breakCombo.display(event.block.centralLocation.clone().add(0.0, -2.0, 0.0))
-        gPlayer.level.update(player)
+        gPlayer.mineCombo.combo(1L)
+        gPlayer.mineCombo.display(event.block.centralLocation.clone().add(0.0, -2.0, 0.0))
+        gPlayer.updateLevel()
     }
+
+
 }
