@@ -10,11 +10,14 @@ import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.will.WillSize
+import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
@@ -31,6 +34,7 @@ class PlayerListener : Listener {
         PlayerRepository.add(player)
         player.inventory.heldItemSlot = Belt.TOOL_SLOT
         player.updateInventory()
+        player.foodLevel = 20
     }
 
     @EventHandler
@@ -55,7 +59,8 @@ class PlayerListener : Listener {
     // プレイヤーの全てのインベントリークリックをキャンセル
     @EventHandler
     fun onInventoryClick(event: InventoryClickEvent) {
-        event.whoClicked as? Player ?: return
+        val player = event.whoClicked as? Player ?: return
+        if (player.gameMode == GameMode.CREATIVE) return
         event.isCancelled = true
     }
 
@@ -90,14 +95,12 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerItemHeld(event: PlayerItemHeldEvent) {
-
         val player = event.player ?: return
         val gPlayer = player.gPlayer ?: return
         gPlayer.belt.getHookedItem(event.newSlot)?.onItemHeld(player, event)
         if (event.newSlot != Belt.TOOL_SLOT) {
             event.isCancelled = true
         }
-
     }
 
     @EventHandler
@@ -130,6 +133,19 @@ class PlayerListener : Listener {
                             it.direction.z * 2
                     )
                 }, will, event.player, WillSize.MEDIUM))
+    }
+
+    @EventHandler
+    fun onChangeFoodLevel(event: FoodLevelChangeEvent) {
+        event.isCancelled = true
+    }
+
+    @EventHandler
+    fun onHunger(event: EntityDamageEvent) {
+        event.entity as? Player ?: return
+        if (event.cause == EntityDamageEvent.DamageCause.STARVATION) {
+            event.isCancelled = true
+        }
     }
 
 }
