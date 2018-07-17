@@ -45,7 +45,7 @@ class PlayerMonitor : Listener {
 
         when {
             isLevelUp -> PlayerSounds.LEVEL_UP.play(player.location)
-            gPlayer.mineBurst.duringFire() -> SkillSounds.MINE_BURST.play(location)
+            gPlayer.mineBurst.duringFire() -> SkillSounds.MINE_BURST_ON_BREAK.play(location)
             else -> PlayerSounds.OBTAIN_EXP.play(player)
         }
     }

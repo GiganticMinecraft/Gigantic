@@ -7,6 +7,7 @@ import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.language.messages.HookedItemMessages
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.belt.Belt
+import click.seichi.gigantic.sound.SkillSounds
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
@@ -97,6 +98,7 @@ object MineBelt : Belt() {
                                 fire({
                                     player.removePotionEffect(PotionEffectType.FAST_DIGGING)
                                     player.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
+                                    SkillSounds.MINE_BURST_ON_FIRE.play(player.location)
                                     belt.apply(player)
                                 }, {
                                     belt.apply(player, MineBelt.ItemSlot.MINE_BURST.slot)
