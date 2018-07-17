@@ -40,7 +40,7 @@ class PlayerMonitor : Listener {
         val location = event.block.location.central
 
         if (gPlayer.mineBurst.duringFire()) {
-            location.world.spawnParticle(Particle.ENCHANTMENT_TABLE, location, 10)
+            location.world.spawnParticle(Particle.SPELL_INSTANT, location, 10)
         }
 
         when {
