@@ -5,6 +5,7 @@ import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.language.messages.PlayerMessages
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.player.PlayerRepository
+import click.seichi.gigantic.player.belt.Belt
 import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
@@ -28,6 +29,8 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         val inventory = player.inventory
         PlayerRepository.add(player)
+        player.inventory.heldItemSlot = Belt.TOOL_SLOT
+        player.updateInventory()
     }
 
     @EventHandler
@@ -86,11 +89,15 @@ class PlayerListener : Listener {
     }
 
     @EventHandler
-    fun onPlayerInteract(event: PlayerInteractEvent) {
+    fun onPlayerItemHeld(event: PlayerItemHeldEvent) {
+
         val player = event.player ?: return
-        val slot = player.inventory.heldItemSlot
         val gPlayer = player.gPlayer ?: return
-        gPlayer.belt.getHookedItem(slot)?.onInteract(player, event)
+        gPlayer.belt.getHookedItem(event.newSlot)?.onItemHeld(player, event)
+        if (event.newSlot != Belt.TOOL_SLOT) {
+            event.isCancelled = true
+        }
+
     }
 
     @EventHandler
@@ -109,7 +116,7 @@ class PlayerListener : Listener {
             PlayerMessages.MANA_DISPLAY(gPlayer.manaBar, this@run)
             increase(max, true)
         }
-        gPlayer.belt.apply(event.player)
+        gPlayer.belt.update(event.player)
         val will = gPlayer.aptitude.addIfNeeded(gPlayer.level) ?: return
         // level up で適正が追加された場合、そのwillを発現させる.
         if (gPlayer.level.current == 1) PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(will).sendTo(event.player)

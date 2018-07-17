@@ -9,12 +9,14 @@ import org.bukkit.SoundCategory
  */
 object SkillSounds {
     val MINE_BURST_ON_BREAK
-        get() = SoundPlayer(
-                Sound.BLOCK_ENCHANTMENT_TABLE_USE,
-                SoundCategory.BLOCKS,
-                pitch = Random.nextDouble(1.6, 2.0).toFloat(),
-                volume = 0.3F
-        )
+        get() =
+            SoundPlayer(
+                    Sound.BLOCK_NOTE_CHIME,
+                    SoundCategory.BLOCKS,
+                    pitch = Random.nextGaussian(1.0, 0.2).toFloat(),
+                    volume = 0.3F
+            )
+
 
     val MINE_BURST_ON_FIRE = SoundPlayer(
             Sound.BLOCK_ENCHANTMENT_TABLE_USE,

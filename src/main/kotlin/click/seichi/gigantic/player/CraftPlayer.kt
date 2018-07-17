@@ -63,7 +63,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
             else -> {
             }
         }
-        belt.apply(player)
+        belt.update(player)
     }
 
     override fun load(playerDao: PlayerDao) {
@@ -109,7 +109,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         // インベントリーを設定
         defaultInventory.apply(player)
         // ベルトを設定
-        belt.apply(player)
+        belt.update(player)
     }
 
     override fun finish() {
