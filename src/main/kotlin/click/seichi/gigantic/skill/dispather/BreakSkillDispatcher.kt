@@ -7,7 +7,6 @@ import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.message.sounds.PlayerSounds
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.player.MineBlockReason
@@ -103,9 +102,9 @@ class BreakSkillDispatcher(
             }
             PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
             if (isLevelUp) {
-                PlayerSounds.LEVEL_UP.sendTo(player.location)
+                PlayerMessages.LEVEL_UP.sendTo(player.location)
             } else {
-                PlayerSounds.OBTAIN_EXP.sendTo(player)
+                PlayerMessages.OBTAIN_EXP.sendTo(player)
             }
         }
 

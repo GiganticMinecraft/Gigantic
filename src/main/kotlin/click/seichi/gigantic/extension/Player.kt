@@ -44,7 +44,7 @@ fun Player.spawnColoredParticle(
             Particle.REDSTONE,
             location.noised(noiseData),
             0,
-            color.red.toDouble() / 255.0 + 0.001,
+            color.red.toDouble() / 255.0 + Float.MIN_VALUE,
             color.green.toDouble() / 255.0,
             color.blue.toDouble() / 255.0,
             1.0

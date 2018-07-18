@@ -1,4 +1,4 @@
-package click.seichi.gigantic.message.sounds
+package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.message.WorldSound
 import click.seichi.gigantic.util.DetailedSound
@@ -8,7 +8,7 @@ import org.bukkit.SoundCategory
 /**
  * @author tar0ss
  */
-object MenuSounds {
+object MenuMessages {
     val MENU_OPEN = WorldSound(
             DetailedSound(
                     Sound.BLOCK_FENCE_GATE_OPEN,
@@ -24,5 +24,4 @@ object MenuSounds {
                     pitch = 0.1F
             )
     )
-
 }
