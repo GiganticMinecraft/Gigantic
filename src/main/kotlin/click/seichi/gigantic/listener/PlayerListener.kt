@@ -35,7 +35,8 @@ class PlayerListener : Listener {
         PlayerRepository.add(player)
         player.inventory.heldItemSlot = Belt.TOOL_SLOT
         player.updateInventory()
-        player.foodLevel = 20
+        player.saturation = Float.MAX_VALUE
+        player.foodLevel = 0
     }
 
     @EventHandler
@@ -153,5 +154,4 @@ class PlayerListener : Listener {
         event.keepInventory = true
         event.keepLevel = true
     }
-
 }
