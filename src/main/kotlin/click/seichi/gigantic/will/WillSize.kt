@@ -1,7 +1,7 @@
 package click.seichi.gigantic.will
 
-import click.seichi.gigantic.language.LocalizedText
-import click.seichi.gigantic.language.messages.WillMessages
+import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.message.messages.WillMessages
 
 /**
  * @author tar0ss

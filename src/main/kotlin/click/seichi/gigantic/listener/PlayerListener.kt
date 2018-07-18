@@ -2,8 +2,8 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.gPlayer
-import click.seichi.gigantic.language.messages.PlayerMessages
 import click.seichi.gigantic.menu.Menu
+import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.PlayerRepository
 import click.seichi.gigantic.player.belt.Belt
 import click.seichi.gigantic.spirit.SpiritManager

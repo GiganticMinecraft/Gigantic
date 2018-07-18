@@ -2,7 +2,7 @@ package click.seichi.gigantic.skill.breakskill
 
 import click.seichi.gigantic.extension.isSeichiTool
 import click.seichi.gigantic.extension.isSeichiWorld
-import click.seichi.gigantic.language.LocalizedText
+import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.skill.Skill
 import click.seichi.gigantic.skill.SkillState

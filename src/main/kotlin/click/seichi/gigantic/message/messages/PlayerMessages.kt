@@ -1,7 +1,7 @@
-package click.seichi.gigantic.language.messages
+package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.config.PlayerLevelConfig
-import click.seichi.gigantic.language.*
+import click.seichi.gigantic.message.*
 import click.seichi.gigantic.player.components.Level
 import click.seichi.gigantic.player.components.Mana
 import click.seichi.gigantic.player.components.Memory

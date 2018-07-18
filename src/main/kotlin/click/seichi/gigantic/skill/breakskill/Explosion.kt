@@ -1,6 +1,6 @@
 package click.seichi.gigantic.skill.breakskill
 
-import click.seichi.gigantic.language.messages.BreakSkillMessages
+import click.seichi.gigantic.message.messages.BreakSkillMessages
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.util.Box
 import org.bukkit.inventory.ItemStack

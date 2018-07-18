@@ -4,10 +4,10 @@ import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.central
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.gPlayer
-import click.seichi.gigantic.language.messages.PlayerMessages
+import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.message.sounds.PlayerSounds
+import click.seichi.gigantic.message.sounds.SkillSounds
 import click.seichi.gigantic.player.ExpProducer
-import click.seichi.gigantic.sound.PlayerSounds
-import click.seichi.gigantic.sound.SkillSounds
 import org.bukkit.Bukkit
 import org.bukkit.Particle
 import org.bukkit.event.EventHandler
@@ -44,9 +44,9 @@ class PlayerMonitor : Listener {
         }
 
         when {
-            isLevelUp -> PlayerSounds.LEVEL_UP.play(player.location)
-            gPlayer.mineBurst.duringFire() -> SkillSounds.MINE_BURST_ON_BREAK.play(location)
-            else -> PlayerSounds.OBTAIN_EXP.play(player)
+            isLevelUp -> PlayerSounds.LEVEL_UP.sendTo(location)
+            gPlayer.mineBurst.duringFire() -> SkillSounds.MINE_BURST_ON_BREAK.sendTo(location)
+            else -> PlayerSounds.OBTAIN_EXP.sendTo(player)
         }
     }
 

@@ -4,16 +4,16 @@ import click.seichi.gigantic.event.events.BlockBreakSkillEvent
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.cardinalDirection
 import click.seichi.gigantic.extension.gPlayer
-import click.seichi.gigantic.language.ChatMessage
-import click.seichi.gigantic.language.ChatMessageProtocol
-import click.seichi.gigantic.language.messages.PlayerMessages
+import click.seichi.gigantic.message.ChatMessage
+import click.seichi.gigantic.message.ChatMessageProtocol
+import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.message.sounds.PlayerSounds
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.GiganticPlayer
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.skill.SkillState
 import click.seichi.gigantic.skill.breakskill.BreakBox
 import click.seichi.gigantic.skill.breakskill.BreakSkill
-import click.seichi.gigantic.sound.PlayerSounds
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -103,9 +103,9 @@ class BreakSkillDispatcher(
             }
             PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
             if (isLevelUp) {
-                PlayerSounds.LEVEL_UP.play(player.location)
+                PlayerSounds.LEVEL_UP.sendTo(player.location)
             } else {
-                PlayerSounds.OBTAIN_EXP.play(player)
+                PlayerSounds.OBTAIN_EXP.sendTo(player)
             }
         }
 

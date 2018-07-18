@@ -1,6 +1,6 @@
 package click.seichi.gigantic.skill
 
-import click.seichi.gigantic.language.LocalizedText
+import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.GiganticPlayer
 
 /**

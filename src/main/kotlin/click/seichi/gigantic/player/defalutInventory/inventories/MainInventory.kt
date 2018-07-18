@@ -3,7 +3,7 @@ package click.seichi.gigantic.player.defalutInventory.inventories
 import click.seichi.gigantic.extension.getHead
 import click.seichi.gigantic.extension.setTitle
 import click.seichi.gigantic.extension.wrappedLocale
-import click.seichi.gigantic.language.LocalizedText
+import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.defalutInventory.DefaultInventory
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent

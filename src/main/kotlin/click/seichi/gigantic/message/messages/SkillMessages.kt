@@ -1,6 +1,6 @@
-package click.seichi.gigantic.language.messages
+package click.seichi.gigantic.message.messages
 
-import click.seichi.gigantic.language.LocalizedText
+import click.seichi.gigantic.message.LocalizedText
 import java.util.*
 
 /**

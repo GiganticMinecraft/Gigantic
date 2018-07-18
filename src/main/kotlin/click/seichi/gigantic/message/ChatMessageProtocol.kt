@@ -1,4 +1,4 @@
-package click.seichi.gigantic.language
+package click.seichi.gigantic.message
 
 import click.seichi.gigantic.extension.sendActionBar
 import org.bukkit.entity.Player

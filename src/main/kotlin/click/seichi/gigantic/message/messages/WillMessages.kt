@@ -1,8 +1,8 @@
-package click.seichi.gigantic.language.messages
+package click.seichi.gigantic.message.messages
 
-import click.seichi.gigantic.language.ChatMessage
-import click.seichi.gigantic.language.ChatMessageProtocol
-import click.seichi.gigantic.language.LocalizedText
+import click.seichi.gigantic.message.ChatMessage
+import click.seichi.gigantic.message.ChatMessageProtocol
+import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.spirit.spirits.WillSpirit
 import org.bukkit.ChatColor
 import java.util.*

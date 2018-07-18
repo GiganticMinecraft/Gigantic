@@ -1,8 +1,8 @@
 package click.seichi.gigantic.menu
 
 import click.seichi.gigantic.extension.wrappedLocale
-import click.seichi.gigantic.language.LocalizedText
-import click.seichi.gigantic.sound.MenuSounds
+import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.message.sounds.MenuSounds
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryType
@@ -59,7 +59,7 @@ abstract class Menu : InventoryHolder {
      */
     open fun open(player: Player, playSound: Boolean = true) {
         player.openInventory(getInventory(player))
-        if (playSound) MenuSounds.MENU_OPEN.play(player)
+        if (playSound) MenuSounds.MENU_OPEN.sendTo(player)
     }
 
     open fun getInventory(player: Player): Inventory {
@@ -101,7 +101,7 @@ abstract class Menu : InventoryHolder {
      */
     fun back(menu: Menu, player: Player, playSound: Boolean = true) {
         menu.open(player, playSound = false)
-        if (playSound) MenuSounds.MENU_CLOSE.play(player)
+        if (playSound) MenuSounds.MENU_CLOSE.sendTo(player)
     }
 
     /**
@@ -112,7 +112,7 @@ abstract class Menu : InventoryHolder {
      */
     fun close(player: Player, playSound: Boolean = true) {
         player.closeInventory()
-        if (playSound) MenuSounds.MENU_CLOSE.play(player)
+        if (playSound) MenuSounds.MENU_CLOSE.sendTo(player)
     }
 
     override fun getInventory(): Inventory? {
