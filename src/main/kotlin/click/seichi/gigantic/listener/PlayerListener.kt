@@ -18,6 +18,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
+import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
@@ -40,7 +41,6 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerQuit(event: PlayerQuitEvent) {
         val player = event.player ?: return
-
         PlayerRepository.remove(player)
     }
 
@@ -146,6 +146,12 @@ class PlayerListener : Listener {
         if (event.cause == EntityDamageEvent.DamageCause.STARVATION) {
             event.isCancelled = true
         }
+    }
+
+    @EventHandler
+    fun onDeath(event: PlayerDeathEvent) {
+        event.keepInventory = true
+        event.keepLevel = true
     }
 
 }
