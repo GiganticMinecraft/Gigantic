@@ -5,6 +5,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
 /**
+ * @author Mon_chi
  * @author tar0ss
  */
 interface Button {
