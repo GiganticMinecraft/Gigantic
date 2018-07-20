@@ -44,10 +44,6 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
     override val level = Level()
 
-    override val abilityPoint = AbilityPoint()
-    // TODO implements
-    override val explosionLevel: Int = 3
-
     override val defaultInventory = MainInventory
 
     override var belt: Belt = MineBelt

@@ -18,9 +18,9 @@ class Animation(
     fun start(location: Location) {
         Observable.interval(50L, TimeUnit.MILLISECONDS)
                 .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
-                .take(ticks * 50L)
+                .take(ticks)
                 .subscribe {
-                    val ticks = it.div(50L)
+                    val ticks = it
                     rendering(location, ticks)
                 }
     }

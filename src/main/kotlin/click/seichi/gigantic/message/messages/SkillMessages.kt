@@ -33,19 +33,9 @@ object SkillMessages {
             Locale.ENGLISH to "Not survival"
     )
 
-    val NOT_SEICHI_WORLD = LocalizedText(
-            Locale.JAPANESE to "非整地ワールド",
-            Locale.ENGLISH to "Not seichi world"
-    )
-
     val FLYING = LocalizedText(
             Locale.JAPANESE to "Flyモード",
             Locale.ENGLISH to "Fly mode"
-    )
-
-    val NOT_SEICHI_TOOL = LocalizedText(
-            Locale.JAPANESE to "非整地ツール",
-            Locale.ENGLISH to "Not seichi tool"
     )
 
 

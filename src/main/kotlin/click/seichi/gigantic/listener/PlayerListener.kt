@@ -15,7 +15,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
-import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.entity.PlayerDeathEvent
@@ -35,25 +34,13 @@ class PlayerListener : Listener {
         player.inventory.heldItemSlot = Belt.TOOL_SLOT
         player.updateInventory()
         player.saturation = Float.MAX_VALUE
-        player.foodLevel = 7
+        player.foodLevel = 20
     }
 
     @EventHandler
     fun onPlayerQuit(event: PlayerQuitEvent) {
         val player = event.player ?: return
         PlayerRepository.remove(player)
-    }
-
-    @EventHandler
-    fun onBlockBreak(event: BlockBreakEvent) {
-        if (event.isCancelled) return
-        val player = event.player ?: return
-        val block = event.block ?: return
-        val gPlayer = player.gPlayer ?: return
-        // エクスプロージョン発火
-//        if (!BreakSkillDispatcher(Explosion(), gPlayer, MineBlockReason.EXPLOSION, block).dispatch()) {
-//            event.isCancelled = true
-//        }
     }
 
     // プレイヤーの全てのインベントリークリックをキャンセル

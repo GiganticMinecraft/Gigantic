@@ -14,11 +14,8 @@ interface GiganticPlayer {
     val mana: Mana
     val mineBlock: MineBlock
     val level: Level
-    val abilityPoint: AbilityPoint
     val memory: Memory
     val aptitude: WillAptitude
-    // TODO implements
-    val explosionLevel: Int
     val defaultInventory: DefaultInventory
     var belt: Belt
     val mineCombo: MineCombo
