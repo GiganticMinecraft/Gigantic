@@ -24,6 +24,11 @@ class MineCombo {
         return currentCombo
     }
 
+    fun reset(count: Long) {
+        currentCombo = count
+        updateComboTime()
+    }
+
     private fun updateComboTime() {
         lastComboTime = System.currentTimeMillis()
     }
