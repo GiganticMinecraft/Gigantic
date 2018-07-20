@@ -101,16 +101,27 @@ class PlayerListener : Listener {
     @EventHandler
     fun onLevelUp(event: LevelUpEvent) {
         val gPlayer = event.player.gPlayer ?: return
+
+        // Update player mana
         gPlayer.mana.run {
             updateMaxMana(gPlayer.level)
-            PlayerMessages.MANA_DISPLAY(gPlayer.manaBar, this@run)
             increase(max, true)
         }
+
+        // Displays
+        PlayerMessages.MANA_DISPLAY(gPlayer.manaBar, gPlayer.mana)
+
+        // Update player Belt
         gPlayer.belt.update(event.player)
+
+        // Update will aptitude
         val will = gPlayer.aptitude.addIfNeeded(gPlayer.level) ?: return
-        // level up で適正が追加された場合、そのwillを発現させる.
+
+        // Messages
         if (gPlayer.level.current == 1) PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(will).sendTo(event.player)
         else PlayerMessages.OBTAIN_WILL_APTITUDE(will).sendTo(event.player)
+
+        // Spawn will that added to player
         SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, event.player.eyeLocation
                 .clone()
                 .let {

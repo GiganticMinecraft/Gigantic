@@ -56,7 +56,7 @@ object PlayerMessages {
             BossBarMessage(
                     bar,
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}$current / $max"
+                            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}マナ $current / $max"
                     ),
                     progress,
                     when (progress) {

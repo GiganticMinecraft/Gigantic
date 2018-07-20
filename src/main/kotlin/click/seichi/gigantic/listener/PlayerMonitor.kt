@@ -24,26 +24,30 @@ class PlayerMonitor : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onBlockBreak(event: BlockBreakEvent) {
         if (event.isCancelled) return
+        // player process
         val player = event.player ?: return
         val gPlayer = player.gPlayer ?: return
+        val level = player.gPlayer?.level ?: return
+        val location = event.block.location.central
 
+        // update player data
         gPlayer.mineBlock.add(1L)
         gPlayer.mineCombo.combo(1L)
-        SkillPops.MINE_COMBO(gPlayer.mineCombo).pop(event.block.centralLocation.add(0.0, 0.0, 0.0))
-
-        val level = player.gPlayer?.level ?: return
         val isLevelUp = level.updateLevel(ExpProducer.calcExp(player)) {
             Bukkit.getPluginManager().callEvent(LevelUpEvent(it, player))
         }
 
+        // Displays
         PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
+        SkillPops.MINE_COMBO(gPlayer.mineCombo).pop(event.block.centralLocation.add(0.0, 0.0, 0.0))
 
-        val location = event.block.location.central
 
+        // Animations
         if (gPlayer.mineBurst.duringFire()) {
             SkillAnimations.MINE_BURST_ON_BREAK.start(location)
         }
 
+        // Sounds
         when {
             isLevelUp -> PlayerSounds.LEVEL_UP.play(location)
             gPlayer.mineBurst.duringFire() -> SkillSounds.MINE_BURST_ON_BREAK.play(location)
