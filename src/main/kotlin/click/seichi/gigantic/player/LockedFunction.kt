@@ -1,16 +1,18 @@
 package click.seichi.gigantic.player
 
-import click.seichi.gigantic.player.components.Level
-
 /**
  * @author tar0ss
  */
 enum class LockedFunction(
-        private val unlockLevel: Int
+        private val isUnlocking: (GiganticPlayer) -> Boolean
 ) {
-    MINE_BURST(5),
-    MANA(10),
+    MINE_BURST(
+            { it.level.current >= 5 }
+    ),
+    MANA(
+            { it.level.current >= 10 }
+    ),
     ;
 
-    fun isUnlocked(level: Level) = level.current >= unlockLevel
+    fun isUnlocked(gPlayer: GiganticPlayer) = isUnlocking(gPlayer)
 }

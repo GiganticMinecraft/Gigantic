@@ -5,6 +5,7 @@ import click.seichi.gigantic.extension.spawnColoredParticle
 import click.seichi.gigantic.extension.spawnColoredParticleSpherically
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.WillMessages
+import click.seichi.gigantic.sound.sounds.WillSounds
 import click.seichi.gigantic.spirit.Spirit
 import click.seichi.gigantic.spirit.SpiritType
 import click.seichi.gigantic.spirit.spawnreason.SpawnReason
@@ -53,14 +54,14 @@ class WillSpirit(
                 )
 
                 if (count % 10 == 0) {
-                    WillMessages.SENSE_SUB.sendTo(player)
+                    WillSounds.SENSE_SUB.playOnly(player)
                 }
             },
             { player ->
                 player ?: return@Sensor
                 val gPlayer = player.gPlayer ?: return@Sensor
                 WillMessages.SENSED_WILL(this).sendTo(player)
-                WillMessages.SENSED.sendTo(player)
+                WillSounds.SENSED.playOnly(player)
                 gPlayer.run {
                     memory.add(will, willSize.memory.toLong())
                     PlayerMessages.MEMORY_SIDEBAR(memory, aptitude).sendTo(player)
@@ -93,11 +94,11 @@ class WillSpirit(
     }
 
     override fun onSpawn() {
-        WillMessages.SPAWN.sendTo(location)
+        WillSounds.SPAWN.play(location)
     }
 
     override fun onRemove() {
-        WillMessages.DEATH.sendTo(location)
+        WillSounds.DEATH.play(location)
     }
 
 }

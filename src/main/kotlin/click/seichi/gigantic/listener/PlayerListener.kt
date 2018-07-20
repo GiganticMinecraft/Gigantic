@@ -31,12 +31,11 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
-        val inventory = player.inventory
         PlayerRepository.add(player)
         player.inventory.heldItemSlot = Belt.TOOL_SLOT
         player.updateInventory()
         player.saturation = Float.MAX_VALUE
-        player.foodLevel = 0
+        player.foodLevel = 7
     }
 
     @EventHandler

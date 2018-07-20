@@ -6,13 +6,9 @@ import click.seichi.gigantic.player.components.Level
 import click.seichi.gigantic.player.components.Mana
 import click.seichi.gigantic.player.components.Memory
 import click.seichi.gigantic.player.components.WillAptitude
-import click.seichi.gigantic.util.DetailedSound
-import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
-import org.bukkit.Sound
-import org.bukkit.SoundCategory
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.boss.BossBar
@@ -105,23 +101,5 @@ object PlayerMessages {
     }
 
 
-    val OBTAIN_EXP
-        get() = WorldSound(
-                DetailedSound(
-                        Sound.ENTITY_EXPERIENCE_ORB_PICKUP,
-                        SoundCategory.PLAYERS,
-                        pitch = Random.nextGaussian(1.0, 0.2).toFloat(),
-                        volume = 0.2F
-                )
-        )
-
-    val LEVEL_UP = WorldSound(
-            DetailedSound(
-                    Sound.ENTITY_PLAYER_LEVELUP,
-                    SoundCategory.PLAYERS,
-                    pitch = 0.8F,
-                    volume = 0.5F
-            )
-    )
 
 }

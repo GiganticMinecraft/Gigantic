@@ -101,7 +101,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         level.updateLevel(ExpProducer.calcExp(player)) {}
         // 表示を更新
         PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
-        if (LockedFunction.MANA.isUnlocked(level)) {
+        if (LockedFunction.MANA.isUnlocked(this)) {
             mana.updateMaxMana(level)
             PlayerMessages.MANA_DISPLAY(manaBar, mana).sendTo(player)
         }

@@ -13,6 +13,7 @@ import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.skill.SkillState
 import click.seichi.gigantic.skill.breakskill.BreakBox
 import click.seichi.gigantic.skill.breakskill.BreakSkill
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -102,9 +103,9 @@ class BreakSkillDispatcher(
             }
             PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
             if (isLevelUp) {
-                PlayerMessages.LEVEL_UP.sendTo(player.location)
+                PlayerSounds.LEVEL_UP.play(player.location)
             } else {
-                PlayerMessages.OBTAIN_EXP.sendTo(player)
+                PlayerSounds.OBTAIN_EXP.playOnly(player)
             }
         }
 

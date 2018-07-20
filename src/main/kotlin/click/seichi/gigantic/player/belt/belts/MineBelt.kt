@@ -5,9 +5,9 @@ import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.HookedItemMessages
-import click.seichi.gigantic.message.messages.SkillMessages
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.belt.Belt
+import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
@@ -40,7 +40,7 @@ object MineBelt : Belt() {
                 }
 
                 val gPlayer = player.gPlayer ?: return@apply
-                if (!LockedFunction.MINE_BURST.isUnlocked(gPlayer.level)) return@apply
+                if (!LockedFunction.MINE_BURST.isUnlocked(gPlayer)) return@apply
                 val mineBurst = gPlayer.mineBurst
                 if (mineBurst.duringFire()) {
                     addEnchantment(Enchantment.DIG_SPEED, 5)
@@ -58,7 +58,7 @@ object MineBelt : Belt() {
             ItemSlot.MINE_BURST.slot to object : HookedItem {
                 override fun getItemStack(player: Player): ItemStack? {
                     val gPlayer = player.gPlayer ?: return null
-                    if (!LockedFunction.MINE_BURST.isUnlocked(gPlayer.level)) return null
+                    if (!LockedFunction.MINE_BURST.isUnlocked(gPlayer)) return null
                     val mineBurst = gPlayer.mineBurst
                     return when {
                         mineBurst.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
@@ -86,14 +86,14 @@ object MineBelt : Belt() {
 
                 override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
                     val gPlayer = player.gPlayer ?: return
-                    if (!LockedFunction.MINE_BURST.isUnlocked(gPlayer.level)) return
+                    if (!LockedFunction.MINE_BURST.isUnlocked(gPlayer)) return
                     gPlayer.run {
                         mineBurst.run {
                             if (canFire()) {
                                 fire({
                                     player.removePotionEffect(PotionEffectType.FAST_DIGGING)
                                     player.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
-                                    SkillMessages.MINE_BURST_ON_FIRE.sendTo(player.location)
+                                    SkillSounds.MINE_BURST_ON_FIRE.play(player.location)
                                     update(player)
                                 }, {
                                     belt.update(player, MineBelt.ItemSlot.MINE_BURST.slot)
