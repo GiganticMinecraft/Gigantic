@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 
 /**
+ * @author Mon_chi
  * @author tar0ss
  */
 abstract class Menu : InventoryHolder {
