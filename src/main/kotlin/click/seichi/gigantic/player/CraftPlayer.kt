@@ -103,7 +103,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         }
         PlayerMessages.MEMORY_SIDEBAR(memory, aptitude).sendTo(player)
         // インベントリーを設定
-        defaultInventory.apply(player)
+        defaultInventory.update(player)
         // ベルトを設定
         belt.update(player)
     }

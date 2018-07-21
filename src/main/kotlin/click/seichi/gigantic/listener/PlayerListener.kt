@@ -6,6 +6,7 @@ import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.PlayerRepository
 import click.seichi.gigantic.player.belt.Belt
+import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
 import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
@@ -18,9 +19,10 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.entity.PlayerDeathEvent
-import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 
 /**
  * @author tar0ss
@@ -31,36 +33,44 @@ class PlayerListener : Listener {
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
         PlayerRepository.add(player)
+        player.gameMode = GameMode.SURVIVAL
         player.inventory.heldItemSlot = Belt.TOOL_SLOT
         player.updateInventory()
         player.saturation = Float.MAX_VALUE
         player.foodLevel = 20
+        // 4秒間無敵付与
+        player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,
+                80,
+                5,
+                false,
+                false
+        ))
     }
 
     @EventHandler
     fun onPlayerQuit(event: PlayerQuitEvent) {
         val player = event.player ?: return
-        PlayerRepository.remove(player)
-    }
 
-    // プレイヤーの全てのインベントリークリックをキャンセル
-    @EventHandler
-    fun onInventoryClick(event: InventoryClickEvent) {
-        val player = event.whoClicked as? Player ?: return
-        if (player.gameMode == GameMode.CREATIVE) return
-        event.isCancelled = true
+        if (player.gameMode == GameMode.SPECTATOR) {
+            player.teleport(MainInventory.lastLocationMap.remove(player.uniqueId))
+            player.gameMode = GameMode.SURVIVAL
+        }
+
+        PlayerRepository.remove(player)
     }
 
     // プレイヤーのメニュー以外のインベントリーオープンをキャンセル
     @EventHandler
     fun onInventoryOpen(event: InventoryOpenEvent) {
         event.player as? Player ?: return
+        if (event.player.gameMode != GameMode.SURVIVAL) return
         if (event.inventory.holder is Menu) return
         event.isCancelled = true
     }
 
     @EventHandler
     fun onPlayerArmorStandManipulate(event: PlayerArmorStandManipulateEvent) {
+        if (event.player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
     }
 
@@ -77,12 +87,14 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerItemConsume(event: PlayerItemConsumeEvent) {
+        if (event.player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
     }
 
     @EventHandler
     fun onPlayerItemHeld(event: PlayerItemHeldEvent) {
         val player = event.player ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
         val gPlayer = player.gPlayer ?: return
         gPlayer.belt.getHookedItem(event.newSlot)?.onItemHeld(player, event)
         if (event.newSlot != Belt.TOOL_SLOT) {
@@ -92,8 +104,10 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
-        event.isCancelled = true
         val player = event.player ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
+        event.isCancelled = true
+
         val gPlayer = player.gPlayer ?: return
         gPlayer.switchBelt()
     }
@@ -150,5 +164,14 @@ class PlayerListener : Listener {
     fun onDeath(event: PlayerDeathEvent) {
         event.keepInventory = true
         event.keepLevel = true
+    }
+
+    @EventHandler
+    fun onChangeGameMode(event: PlayerGameModeChangeEvent) {
+        if (event.newGameMode != GameMode.SURVIVAL) return
+        val player = event.player ?: return
+        val gPlayer = player.gPlayer ?: return
+        gPlayer.belt.update(player)
+        gPlayer.defaultInventory.update(player)
     }
 }

@@ -14,7 +14,7 @@ abstract class DefaultInventory {
 
     private val slotRange = (9 until 36)
 
-    fun apply(player: Player) {
+    fun update(player: Player) {
         forEachIndexed(player) { index, itemStack ->
             player.inventory.setItem(index, itemStack ?: ItemStack(Material.AIR))
         }
