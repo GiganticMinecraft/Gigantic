@@ -3,8 +3,9 @@ package click.seichi.gigantic.player
 import click.seichi.gigantic.database.PlayerDao
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.belt.Belt
-import click.seichi.gigantic.player.belt.belts.FightBelt
-import click.seichi.gigantic.player.belt.belts.MineBelt
+import click.seichi.gigantic.player.belt.belts.AxeBelt
+import click.seichi.gigantic.player.belt.belts.PickelBelt
+import click.seichi.gigantic.player.belt.belts.SpadeBelt
 import click.seichi.gigantic.player.components.*
 import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
 import org.bukkit.Bukkit
@@ -46,7 +47,7 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
     override val defaultInventory = MainInventory
 
-    override var belt: Belt = MineBelt
+    override var belt: Belt = PickelBelt
 
     override val mineCombo = MineCombo()
 
@@ -54,8 +55,9 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
     override fun switchBelt() {
         when (belt) {
-            is MineBelt -> belt = FightBelt
-            is FightBelt -> belt = MineBelt
+            is PickelBelt -> belt = SpadeBelt
+            is SpadeBelt -> belt = AxeBelt
+            is AxeBelt -> belt = PickelBelt
             else -> {
             }
         }

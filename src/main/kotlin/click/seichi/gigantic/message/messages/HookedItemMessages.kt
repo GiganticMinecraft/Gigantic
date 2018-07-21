@@ -16,6 +16,18 @@ object HookedItemMessages {
                     "ピッケル"
     )
 
+    val SPADE = LocalizedText(
+            Locale.JAPANESE to
+                    "${ChatColor.WHITE}" +
+                    "シャベル"
+    )
+
+    val AXE = LocalizedText(
+            Locale.JAPANESE to
+                    "${ChatColor.WHITE}" +
+                    "斧"
+    )
+
     val MINE_BURST = LocalizedText(
             Locale.JAPANESE to
                     "${ChatColor.BLUE}" +

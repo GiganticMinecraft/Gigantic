@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.EntityRegainHealthEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
@@ -33,7 +34,6 @@ class PlayerListener : Listener {
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
         PlayerRepository.add(player)
-        player.gameMode = GameMode.SURVIVAL
         player.inventory.heldItemSlot = Belt.TOOL_SLOT
         player.updateInventory()
         player.saturation = Float.MAX_VALUE
@@ -173,5 +173,11 @@ class PlayerListener : Listener {
         val gPlayer = player.gPlayer ?: return
         gPlayer.belt.update(player)
         gPlayer.defaultInventory.update(player)
+    }
+
+    @EventHandler
+    fun onRegainBySatiated(event: EntityRegainHealthEvent) {
+        if (event.regainReason != EntityRegainHealthEvent.RegainReason.SATIATED) return
+        event.isCancelled = true
     }
 }
