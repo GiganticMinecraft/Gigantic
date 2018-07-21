@@ -1,6 +1,8 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.event.events.LevelUpEvent
+import click.seichi.gigantic.extension.central
 import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
@@ -11,6 +13,8 @@ import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.will.WillSize
+import org.bukkit.Bukkit
+import org.bukkit.Effect
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -190,6 +194,7 @@ class PlayerListener : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
+        if (event.block.type != Material.LOG && event.block.type != Material.LOG_2) return
         breakTree(event.block, event.block)
     }
 
@@ -197,13 +202,16 @@ class PlayerListener : Listener {
     private fun breakTree(tree: Block, baseBlock: Block) {
         if (tree.type != Material.LOG && tree.type != Material.LOG_2 &&
                 tree.type != Material.LEAVES && tree.type != Material.LEAVES_2) return
-        if (Math.abs(tree.location.x - baseBlock.location.x) >= 5
-                || Math.abs(tree.location.z - baseBlock.location.z) >= 5) return
+        if (Math.abs(tree.location.x - baseBlock.location.x) >= 3
+                || Math.abs(tree.location.z - baseBlock.location.z) >= 3) return
         if (tree != baseBlock) {
-            tree.breakNaturally()
+            tree.world.playEffect(tree.location.central, Effect.STEP_SOUND, tree.type.id)
+            tree.type = Material.AIR
         }
         for (face in BlockFace.values().subtract(listOf(BlockFace.SELF)))
-            breakTree(tree.getRelative(face), baseBlock)
+            Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, { breakTree(tree.getRelative(face), baseBlock) }, 4L)
+
+
     }
 
 }
