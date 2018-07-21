@@ -12,10 +12,14 @@ import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.will.WillSize
 import org.bukkit.GameMode
+import org.bukkit.Material
+import org.bukkit.block.Block
+import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
@@ -24,6 +28,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+
 
 /**
  * @author tar0ss
@@ -180,4 +185,25 @@ class PlayerListener : Listener {
         if (event.regainReason != EntityRegainHealthEvent.RegainReason.SATIATED) return
         event.isCancelled = true
     }
+
+    @EventHandler
+    fun onBlockBreak(event: BlockBreakEvent) {
+        val player = event.player ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
+        breakTree(event.block, event.block)
+    }
+
+    @Suppress("DEPRECATION")
+    private fun breakTree(tree: Block, baseBlock: Block) {
+        if (tree.type != Material.LOG && tree.type != Material.LOG_2 &&
+                tree.type != Material.LEAVES && tree.type != Material.LEAVES_2) return
+        if (Math.abs(tree.location.x - baseBlock.location.x) >= 5
+                || Math.abs(tree.location.z - baseBlock.location.z) >= 5) return
+        if (tree != baseBlock) {
+            tree.breakNaturally()
+        }
+        for (face in BlockFace.values().subtract(listOf(BlockFace.SELF)))
+            breakTree(tree.getRelative(face), baseBlock)
+    }
+
 }
