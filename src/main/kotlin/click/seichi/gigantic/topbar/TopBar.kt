@@ -1,26 +1,27 @@
-package click.seichi.gigantic.message
+package click.seichi.gigantic.topbar
 
-import click.seichi.gigantic.extension.wrappedLocale
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.boss.BossBar
-import org.bukkit.entity.Player
 
 /**
  * @author tar0ss
  */
-class BossBarMessage(
-        private val bar: BossBar,
-        private val title: LocalizedText,
+class TopBar(
+        private val title: String,
         private val progress: Double,
         private val color: BarColor,
         private val style: BarStyle
-) : Message {
-    override fun sendTo(player: Player) {
-        bar.title = title.asSafety(player.wrappedLocale)
+) {
+    fun show(bar: BossBar) {
+        bar.title = title
         bar.progress = progress
         bar.color = color
         bar.style = style
         bar.isVisible = true
+    }
+
+    fun hide(bar: BossBar) {
+        bar.isVisible = false
     }
 }

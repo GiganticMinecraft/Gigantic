@@ -1,10 +1,11 @@
 package click.seichi.gigantic.menu.button
 
-import click.seichi.gigantic.extension.setTitle
+import click.seichi.gigantic.extension.setDisplayName
+import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.menu.Button
 import click.seichi.gigantic.menu.Menu
-import org.bukkit.ChatColor
-import org.bukkit.Material
+import click.seichi.gigantic.message.messages.MenuMessages
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
@@ -15,8 +16,11 @@ import org.bukkit.inventory.ItemStack
 class BackButton(private val currentMenu: Menu, private val menu: Menu) : Button {
 
     override fun getItemStack(player: Player): ItemStack? {
-        return ItemStack(Material.LADDER).apply {
-            setTitle("に戻る", prefix = "${menu.getTitle(player)}${ChatColor.RESET}${ChatColor.WHITE}")
+        return Head.LEFT.toItemStack().apply {
+            val title = menu.getTitle(player)
+            setDisplayName(
+                    MenuMessages.BACK_BUTTON(title).asSafety(player.wrappedLocale)
+            )
         }
     }
 

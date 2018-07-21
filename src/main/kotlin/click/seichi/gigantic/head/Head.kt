@@ -13,7 +13,10 @@ import java.util.*
 enum class Head(
         private val urlString: String
 ) {
+    // raid boss heads
     PIG("http://textures.minecraft.net/texture/621668ef7cb79dd9c22ce3d1f3f4cb6e2559893b6df4a469514e667c16aa4"),
+    // menu heads
+    LEFT("http://textures.minecraft.net/texture/3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
     ;
 
     private val baseItemStack: ItemStack by lazy {
@@ -35,5 +38,5 @@ enum class Head(
         skull
     }
 
-    fun getItemStack() = baseItemStack.clone()
+    fun toItemStack() = baseItemStack.clone()
 }

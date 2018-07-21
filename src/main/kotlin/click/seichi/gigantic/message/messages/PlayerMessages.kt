@@ -9,15 +9,18 @@ import click.seichi.gigantic.player.components.WillAptitude
 import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
-import org.bukkit.boss.BarColor
-import org.bukkit.boss.BarStyle
-import org.bukkit.boss.BossBar
 import java.util.*
 
 /**
  * @author tar0ss
  */
 object PlayerMessages {
+
+    val MANA_BAR_TITLE = { mana: Mana ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}マナ ${mana.current} / ${mana.max}"
+        )
+    }
 
     val MEMORY_SIDEBAR = { memory: Memory, aptitude: WillAptitude ->
         val willMap = Will.values()
@@ -50,29 +53,6 @@ object PlayerMessages {
         LevelMessage(level.current, (level.exp - expToLevel).div((expToNextLevel - expToLevel).toFloat()))
     }
 
-    val MANA_DISPLAY = { bar: BossBar, mana: Mana ->
-        mana.run {
-            val progress = current.div(max.toDouble()).let { if (it > 1.0) 1.0 else it }
-            BossBarMessage(
-                    bar,
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}マナ $current / $max"
-                    ),
-                    progress,
-                    when (progress) {
-                        1.00 -> BarColor.WHITE
-                        in 0.99..1.00 -> BarColor.PURPLE
-                        in 0.10..0.99 -> BarColor.BLUE
-                        in 0.01..0.10 -> BarColor.PINK
-                        in 0.00..0.01 -> BarColor.RED
-                        else -> BarColor.YELLOW
-                    },
-                    BarStyle.SOLID
-            )
-        }
-    }
-
-
     val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             // TODO
             Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}" +
@@ -99,7 +79,5 @@ object PlayerMessages {
                 }
         ))
     }
-
-
 
 }

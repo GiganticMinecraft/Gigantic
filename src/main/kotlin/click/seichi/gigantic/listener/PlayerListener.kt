@@ -12,6 +12,7 @@ import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
 import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
+import click.seichi.gigantic.topbar.topbars.PlayerBars
 import click.seichi.gigantic.will.WillSize
 import org.bukkit.Bukkit
 import org.bukkit.Effect
@@ -132,7 +133,8 @@ class PlayerListener : Listener {
         }
 
         // Displays
-        PlayerMessages.MANA_DISPLAY(gPlayer.manaBar, gPlayer.mana)
+        val title = PlayerMessages.MANA_BAR_TITLE(gPlayer.mana).asSafety(gPlayer.locale)
+        PlayerBars.MANA(gPlayer.mana, title).show(gPlayer.manaBar)
 
         // Update player Belt
         gPlayer.belt.update(event.player)
@@ -177,11 +179,15 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onChangeGameMode(event: PlayerGameModeChangeEvent) {
-        if (event.newGameMode != GameMode.SURVIVAL) return
-        val player = event.player ?: return
-        val gPlayer = player.gPlayer ?: return
-        gPlayer.belt.update(player)
-        gPlayer.defaultInventory.update(player)
+        when (event.newGameMode) {
+            GameMode.SURVIVAL -> {
+                val player = event.player ?: return
+                val gPlayer = player.gPlayer ?: return
+                player.inventory.heldItemSlot = Belt.TOOL_SLOT
+                gPlayer.belt.update(player)
+                gPlayer.defaultInventory.update(player)
+            }
+        }
     }
 
     @EventHandler

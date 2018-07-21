@@ -10,12 +10,16 @@ import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
 import click.seichi.gigantic.player.PlayerRepository
 import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
+import click.seichi.gigantic.raid.RaidManager
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
 import com.comphenix.protocol.events.PacketListener
 import kotlinx.coroutines.experimental.newSingleThreadContext
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
+import org.bukkit.boss.BarColor
+import org.bukkit.boss.BarStyle
+import org.bukkit.boss.BossBar
 import org.bukkit.entity.ArmorStand
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
@@ -35,12 +39,21 @@ class Gigantic : JavaPlugin() {
         val DB = newSingleThreadContext("DB")
         // protocolLib manager
         lateinit var PROTOCOL_MG: ProtocolManager
+
+        fun createInvisibleBossBar(): BossBar = Bukkit.createBossBar(
+                "title",
+                BarColor.YELLOW,
+                BarStyle.SOLID
+        ).apply {
+            isVisible = false
+        }
     }
 
     override fun onEnable() {
         PLUGIN = this
         PROTOCOL_MG = ProtocolLibrary.getProtocolManager()
 
+        // Remove all armor stands
         server.worlds.forEach { it.getEntitiesByClass(ArmorStand::class.java).forEach { it.remove() } }
 
         registerListeners(
@@ -57,8 +70,12 @@ class Gigantic : JavaPlugin() {
 
         prepareDatabase()
 
-        //reflectionを使うので先に生成
-        Head.values().forEach { it.getItemStack() }
+        // reflectionを使うので先に生成
+        Head.values().forEach { it.toItemStack() }
+
+        // add new battle
+        (1..RaidManager.maxBattle).forEach { RaidManager.newBattle() }
+
 
         logger.info("Gigantic is enabled!!")
     }

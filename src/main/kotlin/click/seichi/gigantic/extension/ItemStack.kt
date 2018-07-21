@@ -1,6 +1,6 @@
 package click.seichi.gigantic.extension
 
-import org.bukkit.ChatColor.*
+import org.bukkit.ChatColor.RESET
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
@@ -16,21 +16,15 @@ fun ItemStack.setDisplayName(name: String) {
     }
 }
 
-fun ItemStack.setTitle(name: String, prefix: String = "$AQUA$BOLD$UNDERLINE") {
+fun ItemStack.setLore(vararg lore: String) {
     itemMeta = itemMeta.also { meta ->
-        meta.displayName = prefix + name
+        meta.lore = lore.map { "$RESET$it" }.toList()
     }
 }
 
-fun ItemStack.setLore(vararg lore: String, prefix: String = "$GRAY") {
+fun ItemStack.addLore(vararg lore: String) {
     itemMeta = itemMeta.also { meta ->
-        meta.lore = lore.map { "$RESET$prefix$it" }.toList()
-    }
-}
-
-fun ItemStack.addLore(vararg lore: String, prefix: String = "$GRAY") {
-    itemMeta = itemMeta.also { meta ->
-        lore.map { "$RESET$prefix$it" }.let { newLore ->
+        lore.map { "$RESET$it" }.let { newLore ->
             meta.lore = meta.lore?.apply { addAll(newLore) } ?: newLore
         }
     }
@@ -45,18 +39,6 @@ fun ItemStack.setEnchanted(flag: Boolean) {
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
     }
 }
-
-fun ItemStack.addLine(bit: Int = 23, prefix: String = "$GRAY") {
-    addLore(prefix + (1..bit).joinToString("") { "-" })
-}
-
-fun ItemStack.addClickToOpenLore() {
-    addLore("$GREEN$BOLD$UNDERLINE" + "クリックで開く")
-}
-
-// TODO implements
-val ItemStack.isSeichiTool: Boolean
-    get() = true
 
 fun ItemStack.canConsumeDurability(consumeDurability: Long) = consumeDurability < 0 ||
         !(durability > type.maxDurability || type.maxDurability < durability + consumeDurability)

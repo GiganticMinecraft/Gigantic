@@ -1,5 +1,6 @@
 package click.seichi.gigantic.player
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.database.PlayerDao
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.belt.Belt
@@ -8,9 +9,8 @@ import click.seichi.gigantic.player.belt.belts.PickelBelt
 import click.seichi.gigantic.player.belt.belts.SpadeBelt
 import click.seichi.gigantic.player.components.*
 import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
+import click.seichi.gigantic.topbar.topbars.PlayerBars
 import org.bukkit.Bukkit
-import org.bukkit.boss.BarColor
-import org.bukkit.boss.BarStyle
 import org.bukkit.boss.BossBar
 import org.bukkit.entity.Player
 import java.util.*
@@ -21,8 +21,7 @@ import java.util.*
 class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotablePlayer {
 
     override val manaBar: BossBar by lazy {
-        Bukkit.createBossBar("title", BarColor.YELLOW, BarStyle.SOLID).apply {
-            isVisible = false
+        Gigantic.createInvisibleBossBar().apply {
             addPlayer(player)
         }
     }
@@ -101,7 +100,8 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
         PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
         if (LockedFunction.MANA.isUnlocked(this)) {
             mana.updateMaxMana(level)
-            PlayerMessages.MANA_DISPLAY(manaBar, mana).sendTo(player)
+            val title = PlayerMessages.MANA_BAR_TITLE(mana).asSafety(locale)
+            PlayerBars.MANA(mana, title).show(manaBar)
         }
         PlayerMessages.MEMORY_SIDEBAR(memory, aptitude).sendTo(player)
         // インベントリーを設定

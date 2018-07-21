@@ -1,9 +1,13 @@
 package click.seichi.gigantic.player.defalutInventory.inventories
 
-import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.extension.gPlayer
+import click.seichi.gigantic.extension.getHead
+import click.seichi.gigantic.extension.setDisplayName
+import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.menu.menus.RaidBattleMenu
+import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.player.defalutInventory.DefaultInventory
-import org.bukkit.ChatColor
+import click.seichi.gigantic.raid.RaidManager
 import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.Material
@@ -23,10 +27,8 @@ object MainInventory : DefaultInventory() {
             9 to object : SlotItem {
                 override fun getItemStack(player: Player): ItemStack? {
                     return player.getHead().apply {
-                        setTitle(
-                                LocalizedText(
-                                        Locale.JAPANESE to "プロフィール"
-                                ).asSafety(player.wrappedLocale)
+                        setDisplayName(
+                                MenuMessages.PROFILE.asSafety(player.wrappedLocale)
                         )
                     }
                 }
@@ -34,19 +36,30 @@ object MainInventory : DefaultInventory() {
                 override fun onClick(player: Player, event: InventoryClickEvent) {
                 }
             },
+            19 to object : SlotItem {
+                override fun getItemStack(player: Player): ItemStack? {
+                    return RaidManager.getBattleList().first().boss.head.toItemStack().apply {
+                        setDisplayName(
+                                MenuMessages.RAID_BOSS.asSafety(player.wrappedLocale)
+                        )
+                    }
+                }
+
+                override fun onClick(player: Player, event: InventoryClickEvent) {
+                    if (event.inventory.holder is RaidBattleMenu) return
+                    RaidBattleMenu.open(player)
+                }
+            }
+            ,
             25 to object : SlotItem {
                 override fun getItemStack(player: Player): ItemStack? {
                     return ItemStack(Material.RED_ROSE, 1, 8).apply {
                         when (player.gameMode) {
                             GameMode.SURVIVAL -> setDisplayName(
-                                    LocalizedText(
-                                            Locale.JAPANESE to "${ChatColor.GREEN}休憩"
-                                    ).asSafety(player.wrappedLocale)
+                                    MenuMessages.REST.asSafety(player.wrappedLocale)
                             )
                             GameMode.SPECTATOR -> setDisplayName(
-                                    LocalizedText(
-                                            Locale.JAPANESE to "${ChatColor.GREEN}戻る"
-                                    ).asSafety(player.wrappedLocale)
+                                    MenuMessages.BACK_FROM_REST.asSafety(player.wrappedLocale)
                             )
                         }
                     }

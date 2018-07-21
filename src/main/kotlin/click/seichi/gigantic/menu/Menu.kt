@@ -1,7 +1,5 @@
 package click.seichi.gigantic.menu
 
-import click.seichi.gigantic.extension.wrappedLocale
-import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.sound.sounds.MenuSounds
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -23,6 +21,10 @@ abstract class Menu : InventoryHolder {
         type.defaultSize
     }
 
+    open val openSound = MenuSounds.MENU_OPEN
+
+    open val closeSound = MenuSounds.MENU_CLOSE
+
     protected fun getButtonMap() = buttonMap.toMap()
 
     /**
@@ -30,7 +32,7 @@ abstract class Menu : InventoryHolder {
      *
      * @param player Menuを開いているplayer
      */
-    abstract fun getTitle(player: Player): LocalizedText?
+    abstract fun getTitle(player: Player): String
 
     /**
      * MenuにButtonを登録します
@@ -47,7 +49,7 @@ abstract class Menu : InventoryHolder {
      *
      * @param slot 取得するスロット番号
      */
-    open fun getButton(slot: Int): Button? {
+    fun getButton(slot: Int): Button? {
         return buttonMap[slot]
     }
 
@@ -58,25 +60,23 @@ abstract class Menu : InventoryHolder {
      * @param playSound 音を流す時true
      *
      */
-    open fun open(player: Player, playSound: Boolean = true) {
-        player.openInventory(getInventory(player))
-        if (playSound) MenuSounds.MENU_OPEN.playOnly(player)
+    fun open(player: Player, playSound: Boolean = true) {
+        player.openInventory(createInventory(player))
+        if (playSound) openSound.playOnly(player)
     }
 
-    open fun getInventory(player: Player): Inventory {
+    private fun createInventory(player: Player): Inventory {
         val title = getTitle(player)
         val inventory = when (type) {
             InventoryType.CHEST -> {
-                if (title == null) Bukkit.createInventory(this, size)
-                else Bukkit.createInventory(this, size, title.asSafety(player.wrappedLocale))
+                Bukkit.createInventory(this, size, title)
             }
             else -> {
-                if (title == null) Bukkit.createInventory(this, type)
-                else Bukkit.createInventory(this, type, title.asSafety(player.wrappedLocale))
+                Bukkit.createInventory(this, type, title)
             }
         }
-        (0..inventory.size).forEach { slot ->
-            val itemStack = getButton(slot)?.getItemStack(player) ?: return@forEach
+        (0 until size).forEach { slot ->
+            val itemStack = buttonMap[slot]?.getItemStack(player) ?: return@forEach
             inventory.setItem(slot, itemStack)
         }
         return inventory
@@ -102,7 +102,7 @@ abstract class Menu : InventoryHolder {
      */
     fun back(menu: Menu, player: Player, playSound: Boolean = true) {
         menu.open(player, playSound = false)
-        if (playSound) MenuSounds.MENU_CLOSE.playOnly(player)
+        if (playSound) closeSound.playOnly(player)
     }
 
     /**
@@ -113,7 +113,7 @@ abstract class Menu : InventoryHolder {
      */
     fun close(player: Player, playSound: Boolean = true) {
         player.closeInventory()
-        if (playSound) MenuSounds.MENU_CLOSE.playOnly(player)
+        if (playSound) closeSound.playOnly(player)
     }
 
     override fun getInventory(): Inventory? {
