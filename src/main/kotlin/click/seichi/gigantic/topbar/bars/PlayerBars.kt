@@ -1,4 +1,4 @@
-package click.seichi.gigantic.topbar.topbars
+package click.seichi.gigantic.topbar.bars
 
 import click.seichi.gigantic.player.components.Mana
 import click.seichi.gigantic.topbar.TopBar

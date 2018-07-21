@@ -9,7 +9,7 @@ import click.seichi.gigantic.player.belt.belts.PickelBelt
 import click.seichi.gigantic.player.belt.belts.SpadeBelt
 import click.seichi.gigantic.player.components.*
 import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
-import click.seichi.gigantic.topbar.topbars.PlayerBars
+import click.seichi.gigantic.topbar.bars.PlayerBars
 import org.bukkit.Bukkit
 import org.bukkit.boss.BossBar
 import org.bukkit.entity.Player

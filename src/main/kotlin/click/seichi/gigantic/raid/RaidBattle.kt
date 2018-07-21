@@ -3,7 +3,7 @@ package click.seichi.gigantic.raid
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.extension.wrappedLocale
-import click.seichi.gigantic.topbar.topbars.BossBars
+import click.seichi.gigantic.topbar.bars.BossBars
 import org.bukkit.entity.Player
 import java.util.*
 

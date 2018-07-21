@@ -10,6 +10,7 @@ import click.seichi.gigantic.extension.isCrust
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.popup.SkillPops
+import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit
@@ -46,6 +47,19 @@ class PlayerMonitor : Listener {
         val isLevelUp = level.updateLevel(ExpProducer.calcExp(player)) {
             Bukkit.getPluginManager().callEvent(LevelUpEvent(it, player))
         }
+
+        // raid battle process
+        RaidManager
+                .getBattleList()
+                .firstOrNull { it.joinedPlayerSet.contains(player.uniqueId) }
+                ?.run {
+                    val attackDamage = 1L
+                    raidBoss.damage(attackDamage)
+                    if (raidBoss.isDead()) {
+                        // TODO implements
+                    }
+                }
+
 
         // Displays
         PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)

@@ -12,7 +12,7 @@ import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
 import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
-import click.seichi.gigantic.topbar.topbars.PlayerBars
+import click.seichi.gigantic.topbar.bars.PlayerBars
 import click.seichi.gigantic.will.WillSize
 import org.bukkit.Bukkit
 import org.bukkit.Effect
