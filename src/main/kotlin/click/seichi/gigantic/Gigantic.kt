@@ -5,6 +5,7 @@ import click.seichi.gigantic.database.table.UserMineBlockTable
 import click.seichi.gigantic.database.table.UserTable
 import click.seichi.gigantic.database.table.UserWillTable
 import click.seichi.gigantic.extension.register
+import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
 import click.seichi.gigantic.player.PlayerRepository
@@ -55,6 +56,9 @@ class Gigantic : JavaPlugin() {
         )
 
         prepareDatabase()
+
+        //reflectionを使うので先に生成
+        Head.values().forEach { it.getItemStack() }
 
         logger.info("Gigantic is enabled!!")
     }

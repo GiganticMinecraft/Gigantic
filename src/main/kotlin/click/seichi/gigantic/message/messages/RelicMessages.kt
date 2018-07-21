@@ -21,4 +21,14 @@ object RelicMessages {
             )
     )
 
+    val PIG_TAILS_NAME = LocalizedText(
+            Locale.JAPANESE to "豚さんのしっぽ"
+    )
+
+    val PIG_TAILS_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "かわいいしっぽ"
+            )
+    )
+
 }

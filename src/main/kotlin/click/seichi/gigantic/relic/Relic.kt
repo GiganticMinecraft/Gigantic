@@ -13,6 +13,7 @@ enum class Relic(
         val description: List<LocalizedText>
 ) {
     SHELLS(1000, RelicRarity.NORMAL, RelicMessages.SHELLS_NAME, RelicMessages.SHELLS_DESCRIPTION),
+    PIG_TAILS(1001, RelicRarity.NORMAL, RelicMessages.PIG_TAILS_NAME, RelicMessages.PIG_TAILS_DESCRIPTION),
     ;
 
 }
