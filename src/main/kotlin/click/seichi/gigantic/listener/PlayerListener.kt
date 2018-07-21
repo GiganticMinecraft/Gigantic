@@ -208,10 +208,8 @@ class PlayerListener : Listener {
             tree.world.playEffect(tree.location.central, Effect.STEP_SOUND, tree.type.id)
             tree.type = Material.AIR
         }
-        for (face in BlockFace.values().subtract(listOf(BlockFace.SELF)))
+        for (face in BlockFace.values().subtract(listOf(BlockFace.SELF, BlockFace.DOWN)))
             Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, { breakTree(tree.getRelative(face), baseBlock) }, 4L)
-
-
     }
 
 }
