@@ -1,4 +1,4 @@
-package click.seichi.gigantic.player.belt.belts
+package click.seichi.gigantic.player.belt
 
 import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.extension.setDisplayName
@@ -6,14 +6,11 @@ import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.player.LockedFunction
-import click.seichi.gigantic.player.belt.Belt
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Material
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerItemHeldEvent
-import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
@@ -21,41 +18,14 @@ import org.bukkit.potion.PotionEffectType
 /**
  * @author tar0ss
  */
-object MineBelt : Belt() {
-    enum class ItemSlot(val slot: Int) {
+abstract class SkillBelt : Belt() {
+    enum class SkillSlot(val slot: Int) {
         MINE_BURST(1),
         ;
     }
 
-    override val hookedTool = object : HookedItem {
-
-        override fun getItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.DIAMOND_PICKAXE).apply {
-                setDisplayName(HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
-                itemMeta = itemMeta.apply {
-                    isUnbreakable = true
-                    addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
-                    addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
-                }
-
-                val gPlayer = player.gPlayer ?: return@apply
-                if (!LockedFunction.MINE_BURST.isUnlocked(gPlayer)) return@apply
-                val mineBurst = gPlayer.mineBurst
-                if (mineBurst.duringFire()) {
-                    addEnchantment(Enchantment.DIG_SPEED, 5)
-                }
-            }
-        }
-
-        override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
-        }
-
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-        }
-    }
     override val hookedItemMap: Map<Int, HookedItem> = mapOf(
-            ItemSlot.MINE_BURST.slot to object : HookedItem {
+            SkillSlot.MINE_BURST.slot to object : HookedItem {
                 override fun getItemStack(player: Player): ItemStack? {
                     val gPlayer = player.gPlayer ?: return null
                     if (!LockedFunction.MINE_BURST.isUnlocked(gPlayer)) return null
@@ -94,9 +64,9 @@ object MineBelt : Belt() {
                                     player.removePotionEffect(PotionEffectType.FAST_DIGGING)
                                     player.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
                                     SkillSounds.MINE_BURST_ON_FIRE.play(player.location)
-                                    update(player)
+                                    belt.update(player)
                                 }, {
-                                    belt.update(player, MineBelt.ItemSlot.MINE_BURST.slot)
+                                    belt.update(player, SkillSlot.MINE_BURST.slot)
                                 }, {
                                     belt.update(player)
                                 })
@@ -107,5 +77,4 @@ object MineBelt : Belt() {
 
             }
     )
-
 }

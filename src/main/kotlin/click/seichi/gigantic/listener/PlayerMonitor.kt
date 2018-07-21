@@ -13,6 +13,7 @@ import click.seichi.gigantic.popup.SkillPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.event.EventHandler
@@ -28,6 +29,7 @@ class PlayerMonitor : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onBlockBreak(event: BlockBreakEvent) {
         if (event.isCancelled) return
+        if (event.player.gameMode != GameMode.SURVIVAL) return
 
         // Gravity process
         fallUpperBlock(event.block)

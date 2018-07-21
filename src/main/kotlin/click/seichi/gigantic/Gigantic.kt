@@ -8,11 +8,13 @@ import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
 import click.seichi.gigantic.player.PlayerRepository
+import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
 import com.comphenix.protocol.events.PacketListener
 import kotlinx.coroutines.experimental.newSingleThreadContext
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.entity.ArmorStand
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
@@ -74,7 +76,13 @@ class Gigantic : JavaPlugin() {
     }
 
     override fun onDisable() {
-        Bukkit.getOnlinePlayers().filterNotNull().forEach { player -> PlayerRepository.remove(player) }
+        Bukkit.getOnlinePlayers().filterNotNull().forEach { player ->
+            if (player.gameMode == GameMode.SPECTATOR) {
+                player.teleport(MainInventory.lastLocationMap.remove(player.uniqueId))
+                player.gameMode = GameMode.SURVIVAL
+            }
+            PlayerRepository.remove(player)
+        }
         server.scheduler.cancelTasks(this)
         logger.info("Gigantic is disabled!!")
     }

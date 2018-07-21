@@ -1,7 +1,7 @@
 package click.seichi.gigantic.listener
 
-import click.seichi.gigantic.event.events.BlockBreakSkillEvent
 import click.seichi.gigantic.extension.summonSpirit
+import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -15,16 +15,14 @@ class SpiritListener : Listener {
 
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
-        event.summonSpirit()
-    }
-
-    @EventHandler
-    fun onBlockBreakSkill(event: BlockBreakSkillEvent) {
+        if (event.player.gameMode != GameMode.SURVIVAL) return
         event.summonSpirit()
     }
 
     @EventHandler
     fun onEntityDeath(event: EntityDeathEvent) {
+        val killer = event.entity.killer ?: return
+        if (killer.gameMode != GameMode.SURVIVAL) return
         event.summonSpirit()
     }
 
