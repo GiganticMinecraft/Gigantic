@@ -33,7 +33,7 @@ object PlayerMessages {
                     SideBarRow.getRowById(will.id) to LocalizedText(
                             Locale.JAPANESE.let {
                                 it to "${ChatColor.GREEN}${ChatColor.BOLD}" +
-                                        "${will.LocalizedText.asSafety(it)} : " +
+                                        "${will.localizedName.asSafety(it)} : " +
                                         "${ChatColor.RESET}${ChatColor.WHITE}" +
                                         "${willMap[will]}個"
                             }
@@ -81,7 +81,7 @@ object PlayerMessages {
 
     val OBTAIN_WILL_APTITUDE = { will: Will ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-                Locale.JAPANESE.let { it to "${ChatColor.AQUA}${ChatColor.BOLD}新しく${will.LocalizedText.asSafety(it)}の遺志と交感できるようになった" }
+                Locale.JAPANESE.let { it to "${ChatColor.AQUA}${ChatColor.BOLD}新しく${will.localizedName.asSafety(it)}の遺志と交感できるようになった" }
         ))
     }
 
@@ -92,7 +92,7 @@ object PlayerMessages {
                             "ブロックを破壊すると、稀に遺志が現れます\n" +
                             "遺志と交感することで記憶を獲得できます\n" +
                             "${ChatColor.AQUA}${ChatColor.BOLD}" +
-                            "${will.LocalizedText.asSafety(it)}の遺志と交感できるようになりました\n" +
+                            "${will.localizedName.asSafety(it)}の遺志と交感できるようになりました\n" +
                             "${ChatColor.GRAY}" +
                             "遺志は${Will.values().size}種類存在します\n" +
                             "レベルを上げてたくさんの遺志と交感しましょう\n"

@@ -75,7 +75,7 @@ object WillMessages {
     val SENSED_WILL = { willSpirit: WillSpirit ->
         val sizePrefix = willSpirit.willSize.prefix
         val memory = willSpirit.willSize.memory
-        val name = willSpirit.will.LocalizedText
+        val name = willSpirit.will.localizedName
 
         ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
                 Locale.JAPANESE.let { it to "${ChatColor.GREEN}${sizePrefix.asSafety(it)}${name.asSafety(it)}の遺志から${memory}の記憶を享受した" },

@@ -1,14 +1,18 @@
 package click.seichi.gigantic.relic
 
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.message.messages.RelicMessages
 
 /**
  * @author tar0ss
  */
-class Relic(
+enum class Relic(
         val id: Int,
-        val name: LocalizedText,
-        vararg description: LocalizedText
+        val rarity: RelicRarity,
+        val localizedName: LocalizedText,
+        val description: List<LocalizedText>
 ) {
-    val descriptionList = description.toList()
+    SHELLS(1000, RelicRarity.NORMAL, RelicMessages.SHELLS_NAME, RelicMessages.SHELLS_DESCRIPTION),
+    ;
+
 }
