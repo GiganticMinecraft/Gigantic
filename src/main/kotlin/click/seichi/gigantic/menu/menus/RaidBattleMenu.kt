@@ -46,6 +46,9 @@ object RaidBattleMenu : Menu() {
                             .getOrNull(slot) ?: return ItemStack(Material.AIR)
                     val boss = battle.boss
                     val bossName = boss.localizedName.asSafety(player.wrappedLocale)
+                    val isJoinedOtherRaid = RaidManager
+                            .getBattleList()
+                            .firstOrNull { it.joinedPlayerSet.contains(player.uniqueId) } != null
                     return boss.head.toItemStack().apply {
                         setDisplayName(MenuMessages.BATTLE_BUTTON_TITLE(bossName).asSafety(player.wrappedLocale))
                         setLore(*MenuMessages.BATTLE_BUTTON_LORE(battle)
@@ -58,6 +61,8 @@ object RaidBattleMenu : Menu() {
                                         MenuMessages.BATTLE_BUTTON_DROPPED
                                     battle.joinedPlayerSet.contains(player.uniqueId) ->
                                         MenuMessages.BATTLE_BUTTON_LEFT
+                                    isJoinedOtherRaid ->
+                                        MenuMessages.BATTLE_BUTTON_JOINED
                                     else -> MenuMessages.BATTLE_BUTTON_JOIN
                                 }.asSafety(player.wrappedLocale)
                         )
@@ -68,11 +73,15 @@ object RaidBattleMenu : Menu() {
                     val battle = RaidManager
                             .getBattleList()
                             .getOrNull(slot) ?: return
+                    val isJoinedOtherRaid = RaidManager
+                            .getBattleList()
+                            .firstOrNull { it.joinedPlayerSet.contains(player.uniqueId) } != null
                     when {
                         battle.droppedPlayerSet.contains(player.uniqueId) -> return
                         battle.joinedPlayerSet.contains(player.uniqueId) -> {
                             battle.left(player)
                         }
+                        isJoinedOtherRaid -> return
                         else -> {
                             battle.join(player)
                         }

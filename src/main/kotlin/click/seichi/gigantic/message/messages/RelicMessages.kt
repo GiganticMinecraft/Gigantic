@@ -31,4 +31,24 @@ object RelicMessages {
             )
     )
 
+    val MOLE_FAR_NAME = LocalizedText(
+            Locale.JAPANESE to "もぐらの皮"
+    )
+
+    val MOLE_FAR_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "柔らかく、肌触りの良い毛皮"
+            )
+    )
+
+    val FROG_OIL_NAME = LocalizedText(
+            Locale.JAPANESE to "ガマの油"
+    )
+
+    val FROG_OIL_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "べとべとしてる傷薬"
+            )
+    )
+
 }

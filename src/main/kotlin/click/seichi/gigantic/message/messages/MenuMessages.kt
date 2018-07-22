@@ -63,4 +63,8 @@ object MenuMessages {
             Locale.JAPANESE to "${ChatColor.RED}復帰不可"
     )
 
+    val BATTLE_BUTTON_JOINED = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}他の戦闘に参加中"
+    )
+
 }
