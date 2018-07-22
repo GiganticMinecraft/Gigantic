@@ -22,6 +22,8 @@ enum class Head(
     BIRD("http://textures.minecraft.net/texture/64d53333f18ccd7a7fae59f8415a438ec9b6535998962695cc4f68ed2d31"),
     GUARDIAN_OF_THE_FOREST("http://textures.minecraft.net/texture/2dfe709da2cf32e1e273f5d72c66fc36dc64366fecd980aa6b1480d79bc64cd7"),
     TURKEY("http://textures.minecraft.net/texture/d4faa6771b5de536ebed6c85366ab343f2ef53269ead1173a84dae42d6cf2"),
+    PINK_MUSHROOM("http://textures.minecraft.net/texture/167f1225d1ebb96ac85355c949e8ce23f6e1222aa66c09566285c6c27435163"),
+    RAINBOW("http://textures.minecraft.net/texture/3386f9b0b1d9879c3da33c7a8ca2440c1e411fe93c27c9dbbff56bd697bb7375"),
     // menu heads
     LEFT("http://textures.minecraft.net/texture/3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
     ;

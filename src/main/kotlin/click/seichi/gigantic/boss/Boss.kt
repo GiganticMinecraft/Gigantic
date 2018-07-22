@@ -23,6 +23,8 @@ enum class Boss(
     BIRD(5, Head.BIRD, BossMessages.BIRD_NAME, 50.0, DropRelic(Relic.FEATHERS, 1.0)),
     GUARDIAN_OF_THE_FOREST(6, Head.GUARDIAN_OF_THE_FOREST, BossMessages.GUARDIAN_OF_THE_FOREST_NAME, 4000.0, DropRelic(Relic.BEAR_HAND, 0.3)),
     TURKEY(7, Head.TURKEY, BossMessages.TURKEY_NAME, 450.0, DropRelic(Relic.GRILLED_TURKEY, 0.6)),
+    PINK_MUSHROOM(8, Head.PINK_MUSHROOM, BossMessages.PINK_MUSHROOM_NAME, 200.0, DropRelic(Relic.PINK_SPORES, 0.9)),
+    RAINBOW(9, Head.RAINBOW, BossMessages.RAINBOW_NAME, 123456.0, DropRelic(Relic.A_PIECE_OF_RAINBOW, 0.28))
     ;
 
     val dropRelicSet = dropRelic.toSet()
@@ -33,9 +35,9 @@ enum class Boss(
         fun findById(id: Int) = idMap[id]
     }
 
-
     data class DropRelic(
             val relic: Relic,
             val probability: Double
     )
+
 }

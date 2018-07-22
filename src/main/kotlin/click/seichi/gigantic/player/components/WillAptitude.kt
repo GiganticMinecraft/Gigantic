@@ -13,6 +13,8 @@ class WillAptitude(
 
     private fun add(will: Will) = willAptitude.add(will)
 
+    // 前はレベルで判定していたが、エラーで適正が正しく付与されなかったときに、
+    // 直す術がないので、毎レベルごとに、正しい個数の適性があるか判定する。
     fun addIfNeeded(level: Level): Set<Will> {
         val newWillSet = mutableSetOf<Will>()
         WillGrade.values().forEach { grade ->

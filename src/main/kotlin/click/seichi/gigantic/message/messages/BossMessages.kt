@@ -32,5 +32,11 @@ object BossMessages {
     val TURKEY_NAME = LocalizedText(
             Locale.JAPANESE to "七面鳥"
     )
+    val PINK_MUSHROOM_NAME = LocalizedText(
+            Locale.JAPANESE to "きの子"
+    )
+    val RAINBOW_NAME = LocalizedText(
+            Locale.JAPANESE to "虹"
+    )
 
 }

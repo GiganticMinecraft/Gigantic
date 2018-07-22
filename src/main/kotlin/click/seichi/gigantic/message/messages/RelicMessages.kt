@@ -109,4 +109,24 @@ object RelicMessages {
             )
     )
 
+    val PINK_SPORES_NAME = LocalizedText(
+            Locale.JAPANESE to "ピンク色の胞子"
+    )
+
+    val PINK_SPORES_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "ピンク色のふわふわ～"
+            )
+    )
+
+    val A_PIECE_OF_RAINBOW_NAME = LocalizedText(
+            Locale.JAPANESE to "虹のかけら"
+    )
+
+    val A_PIECE_OF_RAINBOW_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "様々な色に輝いている"
+            )
+    )
+
 }

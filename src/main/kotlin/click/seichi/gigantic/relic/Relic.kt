@@ -21,6 +21,8 @@ enum class Relic(
     FEATHERS(1006, RelicRarity.NORMAL, RelicMessages.FEATHERS_NAME, RelicMessages.FEATHERS_DESCRIPTION),
     BEAR_HAND(1007, RelicRarity.RARE, RelicMessages.BEAR_HAND_NAME, RelicMessages.BEAR_HAND_DESCRIPTION),
     GRILLED_TURKEY(1008, RelicRarity.NORMAL, RelicMessages.GRILLED_TURKEY_NAME, RelicMessages.GRILLED_TURKEY_DESCRIPTION),
+    PINK_SPORES(1009, RelicRarity.NORMAL, RelicMessages.PINK_SPORES_NAME, RelicMessages.PINK_SPORES_DESCRIPTION),
+    A_PIECE_OF_RAINBOW(1010, RelicRarity.RARE, RelicMessages.A_PIECE_OF_RAINBOW_NAME, RelicMessages.A_PIECE_OF_RAINBOW_DESCRIPTION)
     ;
 
     companion object {
