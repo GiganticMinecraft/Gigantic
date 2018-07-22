@@ -6,6 +6,7 @@ import click.seichi.gigantic.extension.central
 import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.PlayerRepository
 import click.seichi.gigantic.player.belt.Belt
 import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
@@ -133,8 +134,10 @@ class PlayerListener : Listener {
         }
 
         // Displays
-        val title = PlayerMessages.MANA_BAR_TITLE(gPlayer.mana).asSafety(gPlayer.locale)
-        PlayerBars.MANA(gPlayer.mana, title).show(gPlayer.manaBar)
+        if (LockedFunction.MANA.isUnlocked(gPlayer)) {
+            val title = PlayerMessages.MANA_BAR_TITLE(gPlayer.mana).asSafety(gPlayer.locale)
+            PlayerBars.MANA(gPlayer.mana, title).show(gPlayer.manaBar)
+        }
 
         // Update player Belt
         gPlayer.belt.update(event.player)

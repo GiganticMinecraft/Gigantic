@@ -51,4 +51,42 @@ object RelicMessages {
             )
     )
 
+    val EARTH_CORE_NAME = LocalizedText(
+            Locale.JAPANESE to "世界の塊"
+    )
+
+    val EARTH_CORE_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "莫大なエネルギーを感じる"
+            ),
+
+            LocalizedText(
+                    Locale.JAPANESE to "現状では受け取れなさそうだ"
+            )
+    )
+
+    val STEEL_INGOT_NAME = LocalizedText(
+            Locale.JAPANESE to "鋼鉄インゴット"
+    )
+
+    val STEEL_INGOT_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "鋼鉄でできたインゴット"
+            ),
+
+            LocalizedText(
+                    Locale.JAPANESE to "硬そう"
+            )
+    )
+
+    val FEATHERS_NAME = LocalizedText(
+            Locale.JAPANESE to "羽根"
+    )
+
+    val FEATHERS_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "ふわふわ"
+            )
+    )
+
 }

@@ -22,6 +22,7 @@ private val crustMaterialSet = setOf(
         Material.DIRT,
         Material.WATER,
         Material.LAVA,
+
         Material.NETHERRACK,
         Material.GRASS,
         Material.SAND,

@@ -8,6 +8,10 @@ import org.bukkit.Bukkit
  */
 object RaidManager {
 
+    init {
+        Bukkit.getScheduler()
+    }
+
     const val maxBattle = 9
 
     private val battleList = mutableListOf<RaidBattle>()
@@ -28,7 +32,7 @@ object RaidManager {
     fun getBattleList() = battleList.toList()
 
     fun endBattle(raidBattle: RaidBattle) {
-        raidBattle.joinedPlayerSet.forEach {
+        raidBattle.getJoinedPlayerSet().forEach {
             val player = Bukkit.getPlayer(it) ?: return@forEach
             raidBattle.left(player)
         }

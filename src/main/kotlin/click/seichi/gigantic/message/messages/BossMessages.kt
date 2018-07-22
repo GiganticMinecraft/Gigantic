@@ -17,4 +17,13 @@ object BossMessages {
     val FROG_NAME = LocalizedText(
             Locale.JAPANESE to "かえる"
     )
+    val THE_EARTH_NAME = LocalizedText(
+            Locale.JAPANESE to "地球"
+    )
+    val STEEL_NAME = LocalizedText(
+            Locale.JAPANESE to "鋼鉄"
+    )
+    val BIRD_NAME = LocalizedText(
+            Locale.JAPANESE to "鳥"
+    )
 }

@@ -2,6 +2,7 @@ package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.raid.RaidBattle
+import click.seichi.gigantic.relic.RelicRarity
 import org.bukkit.ChatColor
 import java.math.RoundingMode
 import java.util.*
@@ -48,26 +49,25 @@ object MenuMessages {
                         Locale.JAPANESE to "${ChatColor.GRAY}残りHP : ${raidBattle.raidBoss.health.toBigDecimal().setScale(1, RoundingMode.UP)}"
                 ),
                 LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GRAY}戦闘中 : ${raidBattle.joinedPlayerSet.size}人"
+                        Locale.JAPANESE to "${ChatColor.GRAY}戦闘中 : ${raidBattle.getJoinedPlayerSet().size}人"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GRAY}落とすもの : "
                 )
-                // TODO drop process
-//                LocalizedText(
-//                        Locale.JAPANESE to "${ChatColor.GRAY}落とすもの : "
-//                )
         ).apply {
-            //            bossDrop.forEach { drop ->
-//                val color = when (drop.relic.rarity) {
-//                    RelicRarity.NORMAL -> ChatColor.GRAY
-//                    RelicRarity.RARE -> ChatColor.DARK_PURPLE
-//                }
-//                add(
-//                        LocalizedText(
-//                                Locale.JAPANESE.let { locale ->
-//                                    locale to "$color${drop.relic.localizedName.asSafety(locale)}"
-//                                }
-//                        )
-//                )
-//            }
+            bossDrop.forEach { drop ->
+                val color = when (drop.relic.rarity) {
+                    RelicRarity.NORMAL -> ChatColor.GRAY
+                    RelicRarity.RARE -> ChatColor.DARK_PURPLE
+                }
+                add(
+                        LocalizedText(
+                                Locale.JAPANESE.let { locale ->
+                                    locale to "$color${drop.relic.localizedName.asSafety(locale)}"
+                                }
+                        )
+                )
+            }
         }
     }
 

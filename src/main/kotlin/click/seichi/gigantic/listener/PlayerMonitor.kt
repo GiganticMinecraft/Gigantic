@@ -53,7 +53,7 @@ class PlayerMonitor : Listener {
         // raid battle process
         RaidManager
                 .getBattleList()
-                .firstOrNull { it.joinedPlayerSet.contains(player.uniqueId) }
+                .firstOrNull { it.isJoined(player) }
                 ?.run {
                     val attackDamage = 1.0.times(when (gPlayer.mineCombo.currentCombo) {
                         in 0..9 -> 1.0
@@ -67,7 +67,8 @@ class PlayerMonitor : Listener {
                     })
                     raidBoss.damage(player, attackDamage)
                     if (raidBoss.isDead()) {
-                        joinedPlayerSet.forEach {
+
+                        getJoinedPlayerSet().forEach {
                             BattleSounds.WIN.playOnly(player)
                             raidBoss.getDrop(player)?.run {
                                 gPlayer.raidData.addRelic(this)

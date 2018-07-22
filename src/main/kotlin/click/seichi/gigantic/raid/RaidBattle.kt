@@ -17,9 +17,9 @@ class RaidBattle(val boss: Boss) {
 
     private val bossBar = Gigantic.createInvisibleBossBar()
 
-    val joinedPlayerSet: MutableSet<UUID> = mutableSetOf()
+    private val joinedPlayerSet: MutableSet<UUID> = mutableSetOf()
 
-    val droppedPlayerSet: MutableSet<UUID> = mutableSetOf()
+    private val droppedPlayerSet: MutableSet<UUID> = mutableSetOf()
 
     fun join(player: Player) {
         joinedPlayerSet.add(player.uniqueId)
@@ -31,6 +31,11 @@ class RaidBattle(val boss: Boss) {
         joinedPlayerSet.remove(player.uniqueId)
         bossBar.removePlayer(player)
     }
+
+    fun getJoinedPlayerSet() = joinedPlayerSet.toSet()
+    fun getDroppedPlayerSet() = droppedPlayerSet.toSet()
+    fun isJoined(player: Player) = joinedPlayerSet.contains(player.uniqueId)
+    fun isDropped(player: Player) = droppedPlayerSet.contains(player.uniqueId)
 
     fun update() = BossBars.RAID_BOSS(this, boss.localizedName.asSafety(Gigantic.DEFAULT_LOCALE)).show(bossBar)
 

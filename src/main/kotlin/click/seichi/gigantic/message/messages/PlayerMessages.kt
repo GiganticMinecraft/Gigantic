@@ -50,7 +50,8 @@ object PlayerMessages {
         val expToLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
         val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1]
                 ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
-        LevelMessage(level.current, (level.exp - expToLevel).div((expToNextLevel - expToLevel).toFloat()))
+
+        LevelMessage(level.current, (level.exp - expToLevel).div((expToNextLevel - expToLevel).toFloat().coerceAtLeast(Float.MIN_VALUE)))
     }
 
     val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
