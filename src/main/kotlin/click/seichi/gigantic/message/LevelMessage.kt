@@ -11,6 +11,6 @@ class LevelMessage(
 ) : Message {
     override fun sendTo(player: Player) {
         player.level = level
-        player.exp = exp
+        player.exp = exp.coerceIn(0.0F, 1.0F)
     }
 }

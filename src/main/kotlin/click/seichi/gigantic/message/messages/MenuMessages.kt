@@ -2,6 +2,7 @@ package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.raid.RaidBattle
+import click.seichi.gigantic.relic.RelicRarity
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -41,14 +42,32 @@ object MenuMessages {
     }
 
     val BATTLE_BUTTON_LORE = { raidBattle: RaidBattle ->
-        listOf(
+        val bossDrop = raidBattle.boss.dropRelicSet
+        mutableListOf(
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.GRAY}残りHP : ${raidBattle.raidBoss.health}"
                 ),
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.GRAY}戦闘中 : ${raidBattle.joinedPlayerSet.size}人"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GRAY}落とすもの : "
                 )
-        )
+        ).apply {
+            bossDrop.forEach { drop ->
+                val color = when (drop.relic.rarity) {
+                    RelicRarity.NORMAL -> ChatColor.GRAY
+                    RelicRarity.RARE -> ChatColor.DARK_PURPLE
+                }
+                add(
+                        LocalizedText(
+                                Locale.JAPANESE.let { locale ->
+                                    locale to "$color${drop.relic.localizedName.asSafety(locale)}"
+                                }
+                        )
+                )
+            }
+        }
     }
 
     val BATTLE_BUTTON_JOIN = LocalizedText(
