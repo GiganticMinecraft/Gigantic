@@ -57,7 +57,7 @@ object PlayerMessages {
     val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             // TODO
             Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}" +
-                    "ブロックを破壊しましょう"
+                    "ブロックを破壊しよう"
     ))
 
     val OBTAIN_WILL_APTITUDE = { will: Will ->
@@ -70,13 +70,13 @@ object PlayerMessages {
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE.let {
                     it to "${ChatColor.GRAY}" +
-                            "ブロックを破壊すると、稀に遺志が現れます\n" +
-                            "遺志と交感することで記憶を獲得できます\n" +
+                            "ブロックを破壊すると、稀に遺志が現れるぞ!!\n" +
+                            "遺志と交感することで記憶を獲得しよう\n" +
                             "${ChatColor.AQUA}${ChatColor.BOLD}" +
-                            "${will.localizedName.asSafety(it)}の遺志と交感できるようになりました\n" +
+                            "${will.localizedName.asSafety(it)}の遺志と交感できるようになった\n" +
                             "${ChatColor.GRAY}" +
-                            "遺志は${Will.values().size}種類存在します\n" +
-                            "レベルを上げてたくさんの遺志と交感しましょう\n"
+                            "遺志は${Will.values().size}種類存在する\n" +
+                            "レベルを上げてたくさんの遺志と交感しよう!!\n"
                 }
         ))
     }
