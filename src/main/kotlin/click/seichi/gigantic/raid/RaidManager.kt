@@ -1,6 +1,7 @@
 package click.seichi.gigantic.raid
 
 import click.seichi.gigantic.boss.Boss
+import click.seichi.gigantic.sound.sounds.BattleSounds
 import org.bukkit.Bukkit
 
 /**
@@ -8,12 +9,12 @@ import org.bukkit.Bukkit
  */
 object RaidManager {
 
-    const val maxBattle = 5
+    const val maxBattle = 9
 
     private val battleList = mutableListOf<RaidBattle>()
 
     fun newBattle(): RaidBattle? {
-        if (battleList.size >= 5) return null
+        if (battleList.size >= maxBattle) return null
 
         val selectedBossSet = battleList.map { it.boss }.toSet()
         val newBoss = Boss.values()
@@ -27,9 +28,12 @@ object RaidManager {
 
     fun getBattleList() = battleList.toList()
 
+    // TODO drop relic
     fun endBattle(raidBattle: RaidBattle) {
         raidBattle.joinedPlayerSet.forEach {
-            raidBattle.left(Bukkit.getPlayer(it))
+            val player = Bukkit.getPlayer(it) ?: return@forEach
+            BattleSounds.END_BATTLE.playOnly(player)
+            raidBattle.left(player)
         }
         battleList.remove(raidBattle)
     }

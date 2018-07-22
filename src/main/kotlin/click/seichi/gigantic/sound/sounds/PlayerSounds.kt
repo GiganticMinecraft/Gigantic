@@ -15,7 +15,6 @@ object PlayerSounds {
                 SoundCategory.PLAYERS,
                 pitch = Random.nextGaussian(1.0, 0.2).toFloat(),
                 volume = 0.2F
-
         )
 
     val LEVEL_UP = DetailedSound(
@@ -23,6 +22,5 @@ object PlayerSounds {
             SoundCategory.PLAYERS,
             pitch = 0.8F,
             volume = 0.5F
-
     )
 }
