@@ -6,6 +6,7 @@ import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.menus.RaidBattleMenu
 import click.seichi.gigantic.message.messages.MenuMessages
+import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.defalutInventory.DefaultInventory
 import click.seichi.gigantic.raid.RaidManager
 import org.bukkit.GameMode
@@ -38,6 +39,8 @@ object MainInventory : DefaultInventory() {
             },
             19 to object : SlotItem {
                 override fun getItemStack(player: Player): ItemStack? {
+                    val gPlayer = player.gPlayer ?: return null
+                    if (!LockedFunction.RAID_BATTLE.isUnlocked(gPlayer)) return null
                     return RaidManager.getBattleList().first().boss.head.toItemStack().apply {
                         setDisplayName(
                                 MenuMessages.RAID_BOSS.asSafety(player.wrappedLocale)
@@ -46,7 +49,9 @@ object MainInventory : DefaultInventory() {
                 }
 
                 override fun onClick(player: Player, event: InventoryClickEvent) {
-                    if (event.inventory.holder is RaidBattleMenu) return
+                    val gPlayer = player.gPlayer ?: return
+                    if (!LockedFunction.RAID_BATTLE.isUnlocked(gPlayer)) return
+                    if (event.inventory.holder === RaidBattleMenu) return
                     RaidBattleMenu.open(player)
                 }
             }

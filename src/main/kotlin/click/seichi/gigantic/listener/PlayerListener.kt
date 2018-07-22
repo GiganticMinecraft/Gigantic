@@ -127,6 +127,11 @@ class PlayerListener : Listener {
     fun onLevelUp(event: LevelUpEvent) {
         val gPlayer = event.player.gPlayer ?: return
 
+        // Update unlock function
+        LockedFunction.values()
+                .firstOrNull { gPlayer.level.current == it.unlockLevel }
+                ?.unlockMessage?.sendTo(event.player)
+
         // Update player mana
         gPlayer.mana.run {
             updateMaxMana(gPlayer.level)
@@ -141,6 +146,9 @@ class PlayerListener : Listener {
 
         // Update player Belt
         gPlayer.belt.update(event.player)
+
+        // Update player inventory
+        gPlayer.defaultInventory.update(event.player)
 
         // Update will aptitude
         val newWillList = gPlayer.aptitude.addIfNeeded(gPlayer.level).toMutableList()
@@ -170,8 +178,6 @@ class PlayerListener : Listener {
                 PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(event.player)
             }
         }
-
-
     }
 
     @EventHandler
