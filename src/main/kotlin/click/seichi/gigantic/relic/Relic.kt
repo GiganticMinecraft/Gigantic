@@ -19,6 +19,8 @@ enum class Relic(
     EARTH_CORE(1004, RelicRarity.RARE, RelicMessages.EARTH_CORE_NAME, RelicMessages.EARTH_CORE_DESCRIPTION),
     STEEL_INGOT(1005, RelicRarity.NORMAL, RelicMessages.STEEL_INGOT_NAME, RelicMessages.STEEL_INGOT_DESCRIPTION),
     FEATHERS(1006, RelicRarity.NORMAL, RelicMessages.FEATHERS_NAME, RelicMessages.FEATHERS_DESCRIPTION),
+    BEAR_HAND(1007, RelicRarity.RARE, RelicMessages.BEAR_HAND_NAME, RelicMessages.BEAR_HAND_DESCRIPTION),
+    GRILLED_TURKEY(1008, RelicRarity.NORMAL, RelicMessages.GRILLED_TURKEY_NAME, RelicMessages.GRILLED_TURKEY_DESCRIPTION),
     ;
 
     companion object {

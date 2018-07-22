@@ -89,4 +89,24 @@ object RelicMessages {
             )
     )
 
+    val BEAR_HAND_NAME = LocalizedText(
+            Locale.JAPANESE to "クマの手"
+    )
+
+    val BEAR_HAND_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "肉球パンチを喰らうがよい"
+            )
+    )
+
+    val GRILLED_TURKEY_NAME = LocalizedText(
+            Locale.JAPANESE to "七面鳥の丸焼き"
+    )
+
+    val GRILLED_TURKEY_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "クリスマスのごちそう"
+            )
+    )
+
 }

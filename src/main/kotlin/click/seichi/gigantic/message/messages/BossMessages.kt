@@ -26,4 +26,11 @@ object BossMessages {
     val BIRD_NAME = LocalizedText(
             Locale.JAPANESE to "鳥"
     )
+    val GUARDIAN_OF_THE_FOREST_NAME = LocalizedText(
+            Locale.JAPANESE to "森の番人"
+    )
+    val TURKEY_NAME = LocalizedText(
+            Locale.JAPANESE to "七面鳥"
+    )
+
 }

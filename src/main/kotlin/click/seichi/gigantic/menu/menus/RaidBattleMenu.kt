@@ -48,7 +48,7 @@ object RaidBattleMenu : Menu() {
                     val bossName = boss.localizedName.asSafety(player.wrappedLocale)
                     val isJoinedOtherRaid = RaidManager
                             .getBattleList()
-                            .firstOrNull { it.getJoinedPlayerSet().contains(player.uniqueId) } != null
+                            .firstOrNull { it.isJoined(player) } != null
                     return boss.head.toItemStack().apply {
                         setDisplayName(MenuMessages.BATTLE_BUTTON_TITLE(bossName).asSafety(player.wrappedLocale))
                         setLore(*MenuMessages.BATTLE_BUTTON_LORE(battle)
@@ -57,9 +57,9 @@ object RaidBattleMenu : Menu() {
                         addLore(MenuMessages.LINE)
                         addLore(
                                 when {
-                                    battle.getDroppedPlayerSet().contains(player.uniqueId) ->
+                                    battle.isDropped(player) ->
                                         MenuMessages.BATTLE_BUTTON_DROPPED
-                                    battle.getJoinedPlayerSet().contains(player.uniqueId) ->
+                                    battle.isJoined(player) ->
                                         MenuMessages.BATTLE_BUTTON_LEFT
                                     isJoinedOtherRaid ->
                                         MenuMessages.BATTLE_BUTTON_JOINED
@@ -75,10 +75,10 @@ object RaidBattleMenu : Menu() {
                             .getOrNull(slot) ?: return
                     val isJoinedOtherRaid = RaidManager
                             .getBattleList()
-                            .firstOrNull { it.getJoinedPlayerSet().contains(player.uniqueId) } != null
+                            .firstOrNull { it.isJoined(player) } != null
                     when {
-                        battle.getDroppedPlayerSet().contains(player.uniqueId) -> return
-                        battle.getJoinedPlayerSet().contains(player.uniqueId) -> {
+                        battle.isDropped(player) -> return
+                        battle.isJoined(player) -> {
                             battle.left(player)
                         }
                         isJoinedOtherRaid -> return

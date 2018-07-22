@@ -21,6 +21,8 @@ enum class Boss(
     THE_EARTH(3, Head.THE_EARTH, BossMessages.THE_EARTH_NAME, 7000000000.0, DropRelic(Relic.EARTH_CORE, 0.4)),
     STEEL(4, Head.STEEL, BossMessages.STEEL_NAME, 100000.0, DropRelic(Relic.STEEL_INGOT, 0.8)),
     BIRD(5, Head.BIRD, BossMessages.BIRD_NAME, 50.0, DropRelic(Relic.FEATHERS, 1.0)),
+    GUARDIAN_OF_THE_FOREST(6, Head.GUARDIAN_OF_THE_FOREST, BossMessages.GUARDIAN_OF_THE_FOREST_NAME, 4000.0, DropRelic(Relic.BEAR_HAND, 0.3)),
+    TURKEY(7, Head.TURKEY, BossMessages.TURKEY_NAME, 450.0, DropRelic(Relic.GRILLED_TURKEY, 0.6)),
     ;
 
     val dropRelicSet = dropRelic.toSet()
