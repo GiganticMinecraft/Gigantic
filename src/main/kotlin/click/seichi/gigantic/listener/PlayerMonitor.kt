@@ -7,6 +7,7 @@ import click.seichi.gigantic.extension.central
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.extension.isCrust
+import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.popup.SkillPops
@@ -64,11 +65,18 @@ class PlayerMonitor : Listener {
                         in 800..1199 -> 1.6
                         else -> 1.7
                     })
-                    raidBoss.damage(attackDamage)
+                    raidBoss.damage(player, attackDamage)
                     if (raidBoss.isDead()) {
                         joinedPlayerSet.forEach {
-                            // TODO drop relic
                             BattleSounds.WIN.playOnly(player)
+                            raidBoss.getDrop(player)?.run {
+                                gPlayer.raidData.addRelic(this)
+                                BattleMessages.GET_RELIC(this).sendTo(player)
+                            }
+                            if (raidBoss.isDefeated(player)) {
+                                gPlayer.raidData.defeat(boss)
+                                BattleMessages.DEFEAT_BOSS(boss).sendTo(player)
+                            }
                         }
                         RaidManager.endBattle(this)
                         RaidManager.newBattle()

@@ -22,6 +22,13 @@ enum class Boss(
 
     val dropRelicSet = dropRelic.toSet()
 
+    companion object {
+        private val idMap = values().map { it.id to it }.toMap()
+
+        fun findById(id: Int) = idMap[id]
+    }
+
+
     data class DropRelic(
             val relic: Relic,
             val probability: Double

@@ -52,6 +52,8 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
     override val mineBurst = MineBurst()
 
+    override lateinit var raidData: RaidData
+
     override fun switchBelt() {
         when (belt) {
             is PickelBelt -> belt = SpadeBelt
@@ -87,6 +89,14 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
                             .toSet().toMutableSet()
             )
         }
+        raidData = RaidData(
+                playerDao.userBossMap
+                        .map { it.key to it.value.defeat }
+                        .toMap().toMutableMap(),
+                playerDao.userRelicMap
+                        .map { it.key to it.value.amount }
+                        .toMap().toMutableMap()
+        )
     }
 
     override fun init() {
@@ -130,6 +140,14 @@ class CraftPlayer(val isFirstJoin: Boolean = false) : GiganticPlayer, RemotableP
 
         aptitude.copySet().forEach { will ->
             playerDao.userWillMap[will]?.hasAptitude = true
+        }
+
+        raidData.copyBossMap().forEach { boss, defeat ->
+            playerDao.userBossMap[boss]?.defeat = defeat
+        }
+
+        raidData.copyRelicMap().forEach { relic, amount ->
+            playerDao.userRelicMap[relic]?.amount = amount
         }
 
     }

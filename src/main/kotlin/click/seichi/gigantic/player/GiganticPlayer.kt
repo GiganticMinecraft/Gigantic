@@ -20,6 +20,7 @@ interface GiganticPlayer {
     var belt: Belt
     val mineCombo: MineCombo
     val mineBurst: MineBurst
+    val raidData: RaidData
 
     val manaBar: BossBar
 

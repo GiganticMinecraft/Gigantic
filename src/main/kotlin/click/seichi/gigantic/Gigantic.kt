@@ -1,9 +1,7 @@
 package click.seichi.gigantic
 
 import click.seichi.gigantic.config.DatabaseConfig
-import click.seichi.gigantic.database.table.UserMineBlockTable
-import click.seichi.gigantic.database.table.UserTable
-import click.seichi.gigantic.database.table.UserWillTable
+import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
@@ -95,7 +93,13 @@ class Gigantic : JavaPlugin() {
         //create Tables
         transaction {
             // プレイヤー用のテーブルを作成
-            SchemaUtils.createMissingTablesAndColumns(UserTable, UserWillTable, UserMineBlockTable)
+            SchemaUtils.createMissingTablesAndColumns(
+                    UserTable,
+                    UserWillTable,
+                    UserMineBlockTable,
+                    UserBossTable,
+                    UserRelicTable
+            )
         }
     }
 

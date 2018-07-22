@@ -1,14 +1,16 @@
 package click.seichi.gigantic.database.remote
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.database.PlayerDao
-import click.seichi.gigantic.database.dao.User
-import click.seichi.gigantic.database.dao.UserMineBlock
-import click.seichi.gigantic.database.dao.UserWill
+import click.seichi.gigantic.database.dao.*
+import click.seichi.gigantic.database.table.UserBossTable
 import click.seichi.gigantic.database.table.UserMineBlockTable
+import click.seichi.gigantic.database.table.UserRelicTable
 import click.seichi.gigantic.database.table.UserWillTable
 import click.seichi.gigantic.player.CraftPlayer
 import click.seichi.gigantic.player.MineBlockReason
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
@@ -94,6 +96,29 @@ class RemotePlayer(player: Player) {
                         }
                     }
         }
+
+        Boss.values().forEach { boss ->
+            boss to UserBoss
+                    .find { (UserBossTable.userId eq uniqueId) and (UserBossTable.bossId eq boss.id) }
+                    .firstOrNull().let {
+                        it ?: UserBoss.new {
+                            user = newUser
+                            bossId = boss.id
+                        }
+                    }
+        }
+
+        Relic.values().forEach { relic ->
+            relic to UserRelic
+                    .find { (UserRelicTable.userId eq uniqueId) and (UserRelicTable.relicId eq relic.id) }
+                    .firstOrNull().let {
+                        it ?: UserRelic.new {
+                            user = newUser
+                            relicId = relic.id
+                        }
+                    }
+        }
+
         return !isExist
     }
 

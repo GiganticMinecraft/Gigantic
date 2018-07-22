@@ -17,4 +17,9 @@ enum class Relic(
     MOLE_FUR(1002, RelicRarity.NORMAL, RelicMessages.MOLE_FAR_NAME, RelicMessages.MOLE_FAR_DESCRIPTION),
     FROG_OIL(1003, RelicRarity.NORMAL, RelicMessages.FROG_OIL_NAME, RelicMessages.FROG_OIL_DESCRIPTION),
     ;
+
+    companion object {
+        private val idMap = values().map { it.id to it }.toMap()
+        fun findById(id: Int) = idMap[id]
+    }
 }
