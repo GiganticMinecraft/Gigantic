@@ -143,22 +143,35 @@ class PlayerListener : Listener {
         gPlayer.belt.update(event.player)
 
         // Update will aptitude
-        val will = gPlayer.aptitude.addIfNeeded(gPlayer.level) ?: return
-
-        // Messages
-        if (gPlayer.level.current == 1) PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(will).sendTo(event.player)
-        else PlayerMessages.OBTAIN_WILL_APTITUDE(will).sendTo(event.player)
+        val newWillList = gPlayer.aptitude.addIfNeeded(gPlayer.level).toMutableList()
+        if (newWillList.isEmpty()) return
 
         // Spawn will that added to player
-        SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, event.player.eyeLocation
-                .clone()
-                .let {
-                    it.add(
-                            it.direction.x * 2,
-                            0.0,
-                            it.direction.z * 2
-                    )
-                }, will, event.player, WillSize.MEDIUM))
+        newWillList.forEachIndexed { index, will ->
+            SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, event.player.eyeLocation
+                    .clone()
+                    .let {
+                        it.add(
+                                it.direction.x * 2,
+                                index.toDouble(),
+                                it.direction.z * 2
+                        )
+                    }, will, event.player, WillSize.MEDIUM))
+        }
+
+        // Will messages
+        if (gPlayer.level.current == 1) {
+            PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(newWillList.removeAt(0)).sendTo(event.player)
+            newWillList.forEach {
+                PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(event.player)
+            }
+        } else {
+            newWillList.forEach {
+                PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(event.player)
+            }
+        }
+
+
     }
 
     @EventHandler

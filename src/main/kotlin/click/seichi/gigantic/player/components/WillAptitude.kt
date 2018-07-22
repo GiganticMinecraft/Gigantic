@@ -13,27 +13,37 @@ class WillAptitude(
 
     private fun add(will: Will) = willAptitude.add(will)
 
-
-    fun addIfNeeded(level: Level): Will? {
-        val will = when (level.current) {
-            1, 21, 41, 61, 81 -> {
+    fun addIfNeeded(level: Level): Set<Will> {
+        val newWillSet = mutableSetOf<Will>()
+        WillGrade.values().forEach { grade ->
+            (0..calcMissingAptitude(level, grade)).forEach {
                 Will.values().toList().filter {
                     it.grade == WillGrade.BASIC
                 }.filterNot {
                     has(it)
-                }.shuffled().first()
+                }.shuffled().firstOrNull()?.run {
+                    newWillSet.add(this)
+                    add(this)
+                }
             }
-            101, 121, 141, 161, 181 -> {
-                Will.values().toList().filter {
-                    it.grade == WillGrade.ADVANCED
-                }.filterNot {
-                    has(it)
-                }.shuffled().first()
+        }
+        return newWillSet
+    }
 
-            }
-            else -> null
-        } ?: return null
-        add(will)
-        return will
+    private fun count(grade: WillGrade): Int {
+        return Will.values()
+                .filter { it.grade == grade }
+                .count { has(it) }
+    }
+
+    private fun needAptitude(level: Level, grade: WillGrade): Int {
+        return when (grade) {
+            WillGrade.BASIC -> level.current.div(20).plus(1).coerceIn(0, 5)
+            WillGrade.ADVANCED -> level.current.div(20).minus(4).coerceIn(0, 5)
+        }
+    }
+
+    private fun calcMissingAptitude(level: Level, grade: WillGrade): Int {
+        return needAptitude(level, grade).minus(count(grade)).coerceAtLeast(0)
     }
 }
