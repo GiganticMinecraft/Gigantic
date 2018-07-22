@@ -208,8 +208,8 @@ class PlayerListener : Listener {
     private fun breakTree(tree: Block, baseBlock: Block) {
         if (tree.type != Material.LOG && tree.type != Material.LOG_2 &&
                 tree.type != Material.LEAVES && tree.type != Material.LEAVES_2) return
-        if (Math.abs(tree.location.x - baseBlock.location.x) >= 3
-                || Math.abs(tree.location.z - baseBlock.location.z) >= 3) return
+        if (Math.abs(tree.location.x - baseBlock.location.x) >= 5
+                || Math.abs(tree.location.z - baseBlock.location.z) >= 5) return
         if (tree != baseBlock) {
             tree.world.playEffect(tree.location.central, Effect.STEP_SOUND, tree.type.id)
             tree.type = Material.AIR

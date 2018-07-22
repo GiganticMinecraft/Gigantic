@@ -9,11 +9,11 @@ class RaidBoss(private val boss: Boss) {
 
     var health = boss.maxHealth
 
-    fun damage(amount: Long) {
-        health -= amount.coerceAtLeast(0)
-        health.coerceAtLeast(0L)
+    fun damage(amount: Double) {
+        health -= amount.coerceAtLeast(0.0)
+        health.coerceAtLeast(0.0)
     }
 
-    fun isDead() = health <= 0L
+    fun isDead() = health <= 0.0
 
 }

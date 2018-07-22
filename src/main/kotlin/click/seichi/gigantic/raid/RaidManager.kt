@@ -1,6 +1,7 @@
 package click.seichi.gigantic.raid
 
 import click.seichi.gigantic.boss.Boss
+import org.bukkit.Bukkit
 
 /**
  * @author tar0ss
@@ -25,4 +26,12 @@ object RaidManager {
     }
 
     fun getBattleList() = battleList.toList()
+
+    fun endBattle(raidBattle: RaidBattle) {
+        raidBattle.joinedPlayerSet.forEach {
+            raidBattle.left(Bukkit.getPlayer(it))
+        }
+        battleList.remove(raidBattle)
+    }
+
 }

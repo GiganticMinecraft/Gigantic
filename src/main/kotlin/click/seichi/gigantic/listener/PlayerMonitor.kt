@@ -53,11 +53,22 @@ class PlayerMonitor : Listener {
                 .getBattleList()
                 .firstOrNull { it.joinedPlayerSet.contains(player.uniqueId) }
                 ?.run {
-                    val attackDamage = 1L
+                    val attackDamage = 1.0.times(when (gPlayer.mineCombo.currentCombo) {
+                        in 0..9 -> 1.0
+                        in 10..29 -> 1.1
+                        in 30..69 -> 1.2
+                        in 70..149 -> 1.3
+                        in 150..349 -> 1.4
+                        in 350..799 -> 1.5
+                        in 800..1199 -> 1.6
+                        else -> 1.7
+                    })
                     raidBoss.damage(attackDamage)
                     if (raidBoss.isDead()) {
-                        // TODO implements
+                        RaidManager.endBattle(this)
+                        RaidManager.newBattle()
                     }
+                    update()
                 }
 
 

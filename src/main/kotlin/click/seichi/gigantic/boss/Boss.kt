@@ -12,10 +12,10 @@ enum class Boss(
         val id: Int,
         val head: Head,
         val localizedName: LocalizedText,
-        val maxHealth: Long,
+        val maxHealth: Double,
         vararg dropRelic: DropRelic
 ) {
-    PIG(0, Head.PIG, BossMessages.PIG_NAME, 100L, DropRelic(Relic.PIG_TAILS, 0.1))
+    PIG(0, Head.PIG, BossMessages.PIG_NAME, 100.0, DropRelic(Relic.PIG_TAILS, 0.1))
     ;
 
     val dropRelicSet = dropRelic.toSet()

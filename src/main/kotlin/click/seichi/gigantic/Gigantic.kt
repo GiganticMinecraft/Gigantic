@@ -26,6 +26,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.util.*
 
 /**
  * @author tar0ss
@@ -39,6 +40,8 @@ class Gigantic : JavaPlugin() {
         val DB = newSingleThreadContext("DB")
         // protocolLib manager
         lateinit var PROTOCOL_MG: ProtocolManager
+
+        val DEFAULT_LOCALE = Locale.JAPANESE
 
         fun createInvisibleBossBar(): BossBar = Bukkit.createBossBar(
                 "title",
