@@ -9,7 +9,7 @@ import org.bukkit.SoundCategory
  */
 object BattleSounds {
 
-    val END_BATTLE = DetailedSound(
+    val WIN = DetailedSound(
             Sound.ENTITY_ENDERDRAGON_DEATH,
             SoundCategory.HOSTILE,
             pitch = 1.4F,

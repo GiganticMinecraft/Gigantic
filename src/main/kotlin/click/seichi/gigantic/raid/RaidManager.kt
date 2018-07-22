@@ -1,7 +1,6 @@
 package click.seichi.gigantic.raid
 
 import click.seichi.gigantic.boss.Boss
-import click.seichi.gigantic.sound.sounds.BattleSounds
 import org.bukkit.Bukkit
 
 /**
@@ -28,11 +27,9 @@ object RaidManager {
 
     fun getBattleList() = battleList.toList()
 
-    // TODO drop relic
     fun endBattle(raidBattle: RaidBattle) {
         raidBattle.joinedPlayerSet.forEach {
             val player = Bukkit.getPlayer(it) ?: return@forEach
-            BattleSounds.END_BATTLE.playOnly(player)
             raidBattle.left(player)
         }
         battleList.remove(raidBattle)

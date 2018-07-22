@@ -11,6 +11,7 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.popup.SkillPops
 import click.seichi.gigantic.raid.RaidManager
+import click.seichi.gigantic.sound.sounds.BattleSounds
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit
@@ -65,6 +66,10 @@ class PlayerMonitor : Listener {
                     })
                     raidBoss.damage(attackDamage)
                     if (raidBoss.isDead()) {
+                        joinedPlayerSet.forEach {
+                            // TODO drop relic
+                            BattleSounds.WIN.playOnly(player)
+                        }
                         RaidManager.endBattle(this)
                         RaidManager.newBattle()
                     }
