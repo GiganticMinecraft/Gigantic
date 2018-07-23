@@ -38,7 +38,4 @@ data class UserEntityData(val uniqueId: UUID) {
             .map { Relic.findById(it.relicId)!! to it }
             .toMap()
 
-    init {
-
-    }
 }
