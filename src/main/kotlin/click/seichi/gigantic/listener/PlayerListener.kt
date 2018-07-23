@@ -1,20 +1,14 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.database.cache.PlayerCacheMemory
+import click.seichi.gigantic.database.cache.keys.PlayerCacheKeys
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.central
-import click.seichi.gigantic.extension.gPlayer
+import click.seichi.gigantic.extension.getOrDefault
 import click.seichi.gigantic.menu.Menu
-import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.player.LockedFunction
-import click.seichi.gigantic.player.PlayerRepository
 import click.seichi.gigantic.player.belt.Belt
 import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
-import click.seichi.gigantic.spirit.SpiritManager
-import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
-import click.seichi.gigantic.spirit.spirits.WillSpirit
-import click.seichi.gigantic.topbar.bars.PlayerBars
-import click.seichi.gigantic.will.WillSize
 import org.bukkit.Bukkit
 import org.bukkit.Effect
 import org.bukkit.GameMode
@@ -42,9 +36,20 @@ import org.bukkit.potion.PotionEffectType
 class PlayerListener : Listener {
 
     @EventHandler
+    fun onPlayerPreLoginAsync(event: AsyncPlayerPreLoginEvent) {
+        PlayerCacheMemory.preLoginAsync(event.uniqueId, event.name)
+    }
+
+    @EventHandler
+    fun onPlayer(event: PlayerQuitEvent) {
+        val uniqueId = event.player.uniqueId
+        PlayerCacheMemory.quit(uniqueId)
+    }
+
+    @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
-        PlayerRepository.add(player)
+        val locale = player.getOrDefault(PlayerCacheKeys.LOCALE)!!
         player.inventory.heldItemSlot = Belt.TOOL_SLOT
         player.updateInventory()
         player.saturation = Float.MAX_VALUE
@@ -66,8 +71,6 @@ class PlayerListener : Listener {
             player.teleport(MainInventory.lastLocationMap.remove(player.uniqueId))
             player.gameMode = GameMode.SURVIVAL
         }
-
-        PlayerRepository.remove(player)
     }
 
     // プレイヤーのメニュー以外のインベントリーオープンをキャンセル
@@ -106,11 +109,11 @@ class PlayerListener : Listener {
     fun onPlayerItemHeld(event: PlayerItemHeldEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
-        val gPlayer = player.gPlayer ?: return
-        gPlayer.belt.getHookedItem(event.newSlot)?.onItemHeld(player, event)
-        if (event.newSlot != Belt.TOOL_SLOT) {
-            event.isCancelled = true
-        }
+//        val gPlayer = player.gPlayer ?: return
+//        gPlayer.belt.getHookedItem(event.newSlot)?.onItemHeld(player, event)
+//        if (event.newSlot != Belt.TOOL_SLOT) {
+//            event.isCancelled = true
+//        }
     }
 
     @EventHandler
@@ -119,65 +122,65 @@ class PlayerListener : Listener {
         if (player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
 
-        val gPlayer = player.gPlayer ?: return
-        gPlayer.switchBelt()
+//        val gPlayer = player.gPlayer ?: return
+//        gPlayer.switchBelt()
     }
 
     @EventHandler
     fun onLevelUp(event: LevelUpEvent) {
-        val gPlayer = event.player.gPlayer ?: return
-
-        // Update unlock function
-        LockedFunction.values()
-                .firstOrNull { gPlayer.level.current == it.unlockLevel }
-                ?.unlockMessage?.sendTo(event.player)
-
-        // Update player mana
-        gPlayer.mana.run {
-            updateMaxMana(gPlayer.level)
-            increase(max, true)
-        }
-
-        // Displays
-        if (LockedFunction.MANA.isUnlocked(gPlayer)) {
-            val title = PlayerMessages.MANA_BAR_TITLE(gPlayer.mana).asSafety(gPlayer.locale)
-            PlayerBars.MANA(gPlayer.mana, title).show(gPlayer.manaBar)
-        }
-
-        // Update player Belt
-        gPlayer.belt.update(event.player)
-
-        // Update player inventory
-        gPlayer.defaultInventory.update(event.player)
-
-        // Update will aptitude
-        val newWillList = gPlayer.aptitude.addIfNeeded(gPlayer.level).toMutableList()
-        if (newWillList.isEmpty()) return
-
-        // Spawn will that added to player
-        newWillList.forEachIndexed { index, will ->
-            SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, event.player.eyeLocation
-                    .clone()
-                    .let {
-                        it.add(
-                                it.direction.x * 2,
-                                index.toDouble(),
-                                it.direction.z * 2
-                        )
-                    }, will, event.player, WillSize.MEDIUM))
-        }
-
-        // Will messages
-        if (gPlayer.level.current == 1) {
-            PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(newWillList.removeAt(0)).sendTo(event.player)
-            newWillList.forEach {
-                PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(event.player)
-            }
-        } else {
-            newWillList.forEach {
-                PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(event.player)
-            }
-        }
+//        val gPlayer = event.player.gPlayer ?: return
+//
+//        // Update unlock function
+//        LockedFunction.values()
+//                .firstOrNull { gPlayer.level.current == it.unlockLevel }
+//                ?.unlockMessage?.sendTo(event.player)
+//
+//        // Update player mana
+//        gPlayer.mana.run {
+//            updateMaxMana(gPlayer.level)
+//            increase(max, true)
+//        }
+//
+//        // Displays
+//        if (LockedFunction.MANA.isUnlocked(gPlayer)) {
+//            val title = PlayerMessages.MANA_BAR_TITLE(gPlayer.mana).asSafety(gPlayer.locale)
+//            PlayerBars.MANA(gPlayer.mana, title).show(gPlayer.manaBar)
+//        }
+//
+//        // Update player Belt
+//        gPlayer.belt.update(event.player)
+//
+//        // Update player inventory
+//        gPlayer.defaultInventory.update(event.player)
+//
+//        // Update will aptitude
+//        val newWillList = gPlayer.aptitude.addIfNeeded(gPlayer.level).toMutableList()
+//        if (newWillList.isEmpty()) return
+//
+//        // Spawn will that added to player
+//        newWillList.forEachIndexed { index, will ->
+//            SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, event.player.eyeLocation
+//                    .clone()
+//                    .let {
+//                        it.add(
+//                                it.direction.x * 2,
+//                                index.toDouble(),
+//                                it.direction.z * 2
+//                        )
+//                    }, will, event.player, WillSize.MEDIUM))
+//        }
+//
+//        // Will messages
+//        if (gPlayer.level.current == 1) {
+//            PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(newWillList.removeAt(0)).sendTo(event.player)
+//            newWillList.forEach {
+//                PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(event.player)
+//            }
+//        } else {
+//            newWillList.forEach {
+//                PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(event.player)
+//            }
+//        }
     }
 
     @EventHandler
@@ -201,15 +204,15 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onChangeGameMode(event: PlayerGameModeChangeEvent) {
-        when (event.newGameMode) {
-            GameMode.SURVIVAL -> {
-                val player = event.player ?: return
-                val gPlayer = player.gPlayer ?: return
-                player.inventory.heldItemSlot = Belt.TOOL_SLOT
-                gPlayer.belt.update(player)
-                gPlayer.defaultInventory.update(player)
-            }
-        }
+//        when (event.newGameMode) {
+//            GameMode.SURVIVAL -> {
+//                val player = event.player ?: return
+//                val gPlayer = player.gPlayer ?: return
+//                player.inventory.heldItemSlot = Belt.TOOL_SLOT
+//                gPlayer.belt.update(player)
+//                gPlayer.defaultInventory.update(player)
+//            }
+//        }
     }
 
     @EventHandler

@@ -1,65 +1,52 @@
 package click.seichi.gigantic.database.remote
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.boss.Boss
-import click.seichi.gigantic.database.PlayerDao
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.database.table.UserBossTable
 import click.seichi.gigantic.database.table.UserMineBlockTable
 import click.seichi.gigantic.database.table.UserRelicTable
 import click.seichi.gigantic.database.table.UserWillTable
-import click.seichi.gigantic.player.CraftPlayer
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.delay
 import org.bukkit.entity.Player
 import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.joda.time.DateTime
-import java.util.concurrent.TimeUnit
 
 /**
  * @author tar0ss
  */
 class RemotePlayer(player: Player) {
 
-    companion object {
-        private val DB
-            get() = Gigantic.DB
-    }
-
     private val uniqueId = player.uniqueId
 
     private val playerName = player.name
 
-    /**
-     * 非同期でplayerをロード、もしくは無ければ作成します
-     *
-     * @return CraftPlayer
-     */
-    fun loadOrCreateAsync() = async(DB) {
-        delay(3, TimeUnit.SECONDS)
-        transaction {
-            val isFirstJoin = createIfNotExists()
-            load(isFirstJoin)
-        }
-    }
-
-    /**
-     * playerをデータベースから読み込みます。
-     *
-     * @return CraftPlayer
-     */
-    private fun load(isFirstJoin: Boolean): CraftPlayer {
-        User[uniqueId].apply {
-            name = playerName
-        }
-        val craftPlayer = CraftPlayer(isFirstJoin)
-        craftPlayer.load(PlayerDao(uniqueId))
-        return craftPlayer
-    }
+//    /**
+//     * 非同期でplayerをロード、もしくは無ければ作成します
+//     *
+//     * @return CraftPlayer
+//     */
+//    fun loadOrCreateAsync() = async(DB) {
+//        delay(3, TimeUnit.SECONDS)
+//        transaction {
+//            val isFirstJoin = createIfNotExists()
+//            load(isFirstJoin)
+//        }
+//    }
+//
+//    /**
+//     * playerをデータベースから読み込みます。
+//     *
+//     * @return CraftPlayer
+//     */
+//    private fun load(isFirstJoin: Boolean): CraftPlayer {
+//        User[uniqueId].apply {
+//            name = playerName
+//        }
+//        val craftPlayer = CraftPlayer(isFirstJoin)
+//        craftPlayer.load(UserEntityData(uniqueId))
+//        return craftPlayer
+//    }
 
 
     /**
@@ -121,19 +108,19 @@ class RemotePlayer(player: Player) {
 
         return !isExist
     }
-
-
-    /**
-     * gPlayer をデータベースに書き込みます
-     *
-     * @param craftPlayer
-     */
-    fun saveAsync(craftPlayer: CraftPlayer) = async(DB) {
-        transaction {
-            User[uniqueId].apply {
-                updatedDate = DateTime.now()
-            }
-            craftPlayer.save(PlayerDao(uniqueId))
-        }
-    }
+//
+//
+//    /**
+//     * gPlayer をデータベースに書き込みます
+//     *
+//     * @param craftPlayer
+//     */
+//    fun saveAsync(craftPlayer: CraftPlayer) = async(DB) {
+//        transaction {
+//            User[uniqueId].apply {
+//                updatedDate = DateTime.now()
+//            }
+//            craftPlayer.save(UserEntityData(uniqueId))
+//        }
+//    }
 }

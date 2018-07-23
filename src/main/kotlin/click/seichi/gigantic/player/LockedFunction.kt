@@ -15,5 +15,5 @@ enum class LockedFunction(
     MANA(10),
     ;
 
-    fun isUnlocked(gPlayer: GiganticPlayer) = gPlayer.level.current >= unlockLevel
+//    fun isUnlocked(gPlayer: GiganticPlayer) = gPlayer.level.current >= unlockLevel
 }

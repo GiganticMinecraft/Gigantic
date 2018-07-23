@@ -1,10 +1,7 @@
 package click.seichi.gigantic.spirit.spirits
 
-import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.extension.spawnColoredParticle
 import click.seichi.gigantic.extension.spawnColoredParticleSpherically
-import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.message.messages.WillMessages
 import click.seichi.gigantic.sound.sounds.WillSounds
 import click.seichi.gigantic.spirit.Spirit
 import click.seichi.gigantic.spirit.SpiritType
@@ -35,13 +32,15 @@ class WillSpirit(
             location,
             { player ->
                 player ?: return@Sensor false
-                val gPlayer = player.gPlayer ?: return@Sensor false
-                when {
-                    !gPlayer.aptitude.has(will) -> false
-                    targetPlayer == null -> true
-                    player.uniqueId == targetPlayer.uniqueId -> true
-                    else -> false
-                }
+//                val gPlayer = player.gPlayer ?: return@Sensor false
+//                when {
+//                    !gPlayer.aptitude.has(will) -> false
+//                    targetPlayer == null -> true
+//                    player.uniqueId == targetPlayer.uniqueId -> true
+//                    else -> false
+//                }
+                // TODO remove
+                true
             },
             { player, count ->
                 player ?: return@Sensor
@@ -59,13 +58,13 @@ class WillSpirit(
             },
             { player ->
                 player ?: return@Sensor
-                val gPlayer = player.gPlayer ?: return@Sensor
-                WillMessages.SENSED_WILL(this).sendTo(player)
-                WillSounds.SENSED.playOnly(player)
-                gPlayer.run {
-                    memory.add(will, willSize.memory.toLong())
-                    PlayerMessages.MEMORY_SIDEBAR(memory, aptitude).sendTo(player)
-                }
+//                val gPlayer = player.gPlayer ?: return@Sensor
+//                WillMessages.SENSED_WILL(this).sendTo(player)
+//                WillSounds.SENSED.playOnly(player)
+//                gPlayer.run {
+//                    memory.add(will, willSize.memory.toLong())
+//                    PlayerMessages.MEMORY_SIDEBAR(memory, aptitude).sendTo(player)
+//                }
             }
     )
 

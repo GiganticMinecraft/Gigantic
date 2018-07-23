@@ -1,13 +1,10 @@
 package click.seichi.gigantic.player.belt.belts
 
-import click.seichi.gigantic.extension.gPlayer
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.HookedItemMessages
-import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.belt.SkillBelt
 import org.bukkit.Material
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerItemHeldEvent
@@ -31,12 +28,12 @@ object PickelBelt : SkillBelt() {
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
                 }
 
-                val gPlayer = player.gPlayer ?: return@apply
-                if (!LockedFunction.MINE_BURST.isUnlocked(gPlayer)) return@apply
-                val mineBurst = gPlayer.mineBurst
-                if (mineBurst.duringFire()) {
-                    addEnchantment(Enchantment.DIG_SPEED, 5)
-                }
+//                val gPlayer = player.gPlayer ?: return@apply
+//                if (!LockedFunction.MINE_BURST.isUnlocked(gPlayer)) return@apply
+//                val mineBurst = gPlayer.mineBurst
+//                if (mineBurst.duringFire()) {
+//                    addEnchantment(Enchantment.DIG_SPEED, 5)
+//                }
             }
         }
 

@@ -1,18 +1,17 @@
 package click.seichi.gigantic
 
 import click.seichi.gigantic.config.DatabaseConfig
+import click.seichi.gigantic.database.cache.PlayerCacheMemory
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
-import click.seichi.gigantic.player.PlayerRepository
 import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
 import click.seichi.gigantic.raid.RaidManager
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
 import com.comphenix.protocol.events.PacketListener
-import kotlinx.coroutines.experimental.newSingleThreadContext
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.boss.BarColor
@@ -34,12 +33,10 @@ class Gigantic : JavaPlugin() {
 
     companion object {
         lateinit var PLUGIN: Gigantic
-        // Database thread
-        val DB = newSingleThreadContext("DB")
         // protocolLib manager
         lateinit var PROTOCOL_MG: ProtocolManager
 
-        val DEFAULT_LOCALE = Locale.JAPANESE
+        val DEFAULT_LOCALE = Locale.JAPANESE!!
 
         fun createInvisibleBossBar(): BossBar = Bukkit.createBossBar(
                 "title",
@@ -109,7 +106,8 @@ class Gigantic : JavaPlugin() {
                 player.teleport(MainInventory.lastLocationMap.remove(player.uniqueId))
                 player.gameMode = GameMode.SURVIVAL
             }
-            PlayerRepository.remove(player)
+            PlayerCacheMemory.stopServerWith(player.uniqueId)
+            player.kickPlayer("Thank you for playing!!")
         }
         server.scheduler.cancelTasks(this)
         logger.info("Gigantic is disabled!!")

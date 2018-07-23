@@ -1,6 +1,5 @@
 package click.seichi.gigantic.player
 
-import click.seichi.gigantic.extension.gPlayer
 import org.bukkit.entity.Player
 
 /**
@@ -9,7 +8,8 @@ import org.bukkit.entity.Player
 enum class ExpProducer(private val producing: (Player) -> Long) {
     MINE_BLOCK(
             { player ->
-                player.gPlayer?.mineBlock?.get(MineBlockReason.GENERAL) ?: 0L
+                //                player.gPlayer?.mineBlock?.get(MineBlockReason.GENERAL) ?: 0L
+                0L
             }
     )
     ;

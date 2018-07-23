@@ -1,16 +1,8 @@
 package click.seichi.gigantic.spirit
 
 
-import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.gPlayer
-import click.seichi.gigantic.spirit.SpiritManager.spawn
-import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
-import click.seichi.gigantic.spirit.spirits.WillSpirit
-import click.seichi.gigantic.spirit.summoncase.RandomSummonCase
 import click.seichi.gigantic.spirit.summoncase.SummonCase
 import org.bukkit.event.Event
-import org.bukkit.event.block.BlockBreakEvent
-import org.bukkit.event.entity.EntityDeathEvent
 
 /**
  * @author unicroak
@@ -26,21 +18,21 @@ import org.bukkit.event.entity.EntityDeathEvent
 enum class SpiritType(vararg summonCases: SummonCase<*>) {
 
     WILL(
-            RandomSummonCase(0.05, BlockBreakEvent::class.java) { event ->
-                if (event.isCancelled) return@RandomSummonCase
-                val player = event.player ?: return@RandomSummonCase
-                val gPlayer = player.gPlayer ?: return@RandomSummonCase
-                val aptitudeSet = gPlayer.aptitude.copySet()
-                val will = aptitudeSet.shuffled().firstOrNull() ?: return@RandomSummonCase
-                spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, player))
-            },
-            RandomSummonCase(0.08, EntityDeathEvent::class.java) { event ->
-                val player = event.entity.killer ?: return@RandomSummonCase
-                val gPlayer = player.gPlayer ?: return@RandomSummonCase
-                val aptitudeSet = gPlayer.aptitude.copySet()
-                val will = aptitudeSet.shuffled().firstOrNull() ?: return@RandomSummonCase
-                spawn(WillSpirit(WillSpawnReason.RELEASE, event.entity.eyeLocation, will, player))
-            }
+//            RandomSummonCase(0.05, BlockBreakEvent::class.java) { event ->
+//                if (event.isCancelled) return@RandomSummonCase
+//                val player = event.player ?: return@RandomSummonCase
+//                val gPlayer = player.gPlayer ?: return@RandomSummonCase
+//                val aptitudeSet = gPlayer.aptitude.copySet()
+//                val will = aptitudeSet.shuffled().firstOrNull() ?: return@RandomSummonCase
+//                spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, player))
+//            },
+//            RandomSummonCase(0.08, EntityDeathEvent::class.java) { event ->
+//                val player = event.entity.killer ?: return@RandomSummonCase
+//                val gPlayer = player.gPlayer ?: return@RandomSummonCase
+//                val aptitudeSet = gPlayer.aptitude.copySet()
+//                val will = aptitudeSet.shuffled().firstOrNull() ?: return@RandomSummonCase
+//                spawn(WillSpirit(WillSpawnReason.RELEASE, event.entity.eyeLocation, will, player))
+//            }
     )
     ;
 
