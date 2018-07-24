@@ -25,12 +25,12 @@ fun Player.getHead() = ItemStack(Material.SKULL_ITEM, 1, 3).apply {
     }
 }
 
-fun <V : Any> Player.getOrDefault(key: CacheKey<PlayerCache, out V>) = PlayerCacheMemory.find(uniqueId)?.get(key)
+fun <V : Any> Player.getOrDefaultFromCache(key: CacheKey<PlayerCache, out V>) = PlayerCacheMemory.get(uniqueId).get(key)
 
-fun <V : Any> Player.put(key: CacheKey<PlayerCache, out V>, value: V) = PlayerCacheMemory.find(uniqueId)?.put(key, value)
+fun <V : Any> Player.putIntoCache(key: CacheKey<PlayerCache, out V>, value: V) = PlayerCacheMemory.get(uniqueId).put(key, value)
 
 val Player.wrappedLocale: Locale
-    get() = getOrDefault(PlayerCacheKeys.LOCALE) ?: Locale.JAPANESE
+    get() = getOrDefaultFromCache(PlayerCacheKeys.LOCALE)
 
 val Player.cardinalDirection
     get() = CardinalDirection.getCardinalDirection(this)

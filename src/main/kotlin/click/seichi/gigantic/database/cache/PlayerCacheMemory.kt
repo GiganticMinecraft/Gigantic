@@ -1,11 +1,8 @@
 package click.seichi.gigantic.database.cache
 
 import click.seichi.gigantic.database.cache.caches.PlayerCache
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.runBlocking
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * @author tar0ss
@@ -15,8 +12,9 @@ object PlayerCacheMemory {
 
     fun find(uniqueId: UUID) = playerCacheMap[uniqueId]
 
-    fun preLoginAsync(uniqueId: UUID, playerName: String) = runBlocking {
-        delay(3L, TimeUnit.SECONDS)
+    fun get(uniqueId: UUID) = playerCacheMap[uniqueId]!!
+
+    fun add(uniqueId: UUID, playerName: String) {
 
         val newCache = PlayerCache(uniqueId, playerName)
 
@@ -27,14 +25,13 @@ object PlayerCacheMemory {
         playerCacheMap[uniqueId] = newCache
     }
 
-    fun quit(uniqueId: UUID) {
-        val cache = playerCacheMap.remove(uniqueId) ?: return
-        cache.writeAsync()
-    }
-
-    fun stopServerWith(uniqueId: UUID) {
-        val cache = playerCacheMap.remove(uniqueId) ?: return
-        cache.write()
+    fun remove(uniqueId: UUID, isAsync: Boolean) {
+        playerCacheMap.remove(uniqueId)?.run {
+            transaction {
+                if (isAsync) writeAsync()
+                else write()
+            }
+        }
     }
 
 }

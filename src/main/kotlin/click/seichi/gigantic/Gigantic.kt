@@ -106,7 +106,7 @@ class Gigantic : JavaPlugin() {
                 player.teleport(MainInventory.lastLocationMap.remove(player.uniqueId))
                 player.gameMode = GameMode.SURVIVAL
             }
-            PlayerCacheMemory.stopServerWith(player.uniqueId)
+            PlayerCacheMemory.remove(player.uniqueId, false)
             player.kickPlayer("Thank you for playing!!")
         }
         server.scheduler.cancelTasks(this)

@@ -2,13 +2,13 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.database.cache.PlayerCacheMemory
-import click.seichi.gigantic.database.cache.keys.PlayerCacheKeys
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.central
-import click.seichi.gigantic.extension.getOrDefault
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.player.belt.Belt
 import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.Effect
 import org.bukkit.GameMode
@@ -28,6 +28,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -37,19 +38,31 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerPreLoginAsync(event: AsyncPlayerPreLoginEvent) {
-        PlayerCacheMemory.preLoginAsync(event.uniqueId, event.name)
+        runBlocking {
+            /**
+             * 複数サーバで動かすと，ログアウト時の書き込みよりもログイン時の読込の方が早くなってしまい，
+             * データが消失するので，ある程度余裕を持って３秒delay．
+             * このためだけのcolumn用意するべきかも
+             */
+            delay(3L, TimeUnit.SECONDS)
+            PlayerCacheMemory.add(event.uniqueId, event.name)
+        }
     }
 
     @EventHandler
-    fun onPlayer(event: PlayerQuitEvent) {
-        val uniqueId = event.player.uniqueId
-        PlayerCacheMemory.quit(uniqueId)
+    fun onPlayerQuit(event: PlayerQuitEvent) {
+        val player = event.player ?: return
+        if (player.gameMode == GameMode.SPECTATOR) {
+            player.teleport(MainInventory.lastLocationMap.remove(player.uniqueId))
+            player.gameMode = GameMode.SURVIVAL
+        }
+        val uniqueId = player.uniqueId
+        PlayerCacheMemory.remove(uniqueId, true)
     }
 
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
-        val locale = player.getOrDefault(PlayerCacheKeys.LOCALE)!!
         player.inventory.heldItemSlot = Belt.TOOL_SLOT
         player.updateInventory()
         player.saturation = Float.MAX_VALUE
@@ -61,16 +74,6 @@ class PlayerListener : Listener {
                 false,
                 false
         ))
-    }
-
-    @EventHandler
-    fun onPlayerQuit(event: PlayerQuitEvent) {
-        val player = event.player ?: return
-
-        if (player.gameMode == GameMode.SPECTATOR) {
-            player.teleport(MainInventory.lastLocationMap.remove(player.uniqueId))
-            player.gameMode = GameMode.SURVIVAL
-        }
     }
 
     // プレイヤーのメニュー以外のインベントリーオープンをキャンセル

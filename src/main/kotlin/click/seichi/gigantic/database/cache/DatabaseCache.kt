@@ -34,8 +34,8 @@ abstract class DatabaseCache<C : DatabaseCache<C>>(vararg keys: CacheKey<C, out 
 
     // All return value must be V
     @Suppress("UNCHECKED_CAST")
-    fun <V : Any> get(key: CacheKey<C, out V>): V? {
-        return cacheMap.getOrPut(key) { key.default } as V?
+    fun <V : Any> get(key: CacheKey<C, out V>): V {
+        return cacheMap.getOrPut(key) { key.default } as V
     }
 
     fun <V : Any> put(key: CacheKey<C, out V>, value: V?) {

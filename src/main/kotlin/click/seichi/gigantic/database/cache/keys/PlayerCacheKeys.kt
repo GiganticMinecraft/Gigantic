@@ -45,100 +45,101 @@ object PlayerCacheKeys {
         }
     }
 
-    val MINEBLOCK_MAP = MineBlockReason.values()
-            .map { it to MineBlockCacheKey(it) }
+    val MINEBLOCK_MAP: Map<MineBlockReason, PlayerCacheKey<Long>> = MineBlockReason.values()
+            .map {
+                it to object : PlayerCacheKey<Long> {
+                    override val default: Long
+                        get() = 0L
+
+                    override fun read(entity: Entity<*>): Long? {
+                        val userMineBlock = entity as UserMineBlock
+                        return userMineBlock.mineBlock
+                    }
+
+                    override fun store(entity: Entity<*>, value: Long) {
+                        val userMineBlock = entity as UserMineBlock
+                        userMineBlock.mineBlock = value
+                    }
+                }
+            }
             .toMap()
 
-    val MEMORY_MAP = Will.values()
-            .map { it to MemoryCacheKey(it) }
+    val MEMORY_MAP: Map<Will, PlayerCacheKey<Long>> = Will.values()
+            .map {
+                it to object : PlayerCacheKey<Long> {
+                    override val default: Long
+                        get() = 0L
+
+                    override fun read(entity: Entity<*>): Long? {
+                        val userWill = entity as UserWill
+                        return userWill.memory
+                    }
+
+                    override fun store(entity: Entity<*>, value: Long) {
+                        val userWill = entity as UserWill
+                        userWill.memory = value
+                    }
+                }
+            }
             .toMap()
 
-    val APTITUDE_MAP = Will.values()
-            .map { it to AptitudeCacheKey(it) }
+    val APTITUDE_MAP: Map<Will, PlayerCacheKey<Boolean>> = Will.values()
+            .map {
+                it to object : PlayerCacheKey<Boolean> {
+                    override val default: Boolean
+                        get() = false
+
+                    override fun read(entity: Entity<*>): Boolean? {
+                        val userWill = entity as UserWill
+                        return userWill.hasAptitude
+                    }
+
+                    override fun store(entity: Entity<*>, value: Boolean) {
+                        val userWill = entity as UserWill
+                        userWill.hasAptitude = value
+                    }
+                }
+            }
             .toMap()
 
-    val BOSS_MAP = Boss.values()
-            .map { it to BossCacheKey(it) }
+    val BOSS_MAP: Map<Boss, PlayerCacheKey<Long>> = Boss.values()
+            .map {
+                it to object : PlayerCacheKey<Long> {
+                    override val default: Long
+                        get() = 0L
+
+                    override fun read(entity: Entity<*>): Long? {
+                        val userBoss = entity as UserBoss
+                        return userBoss.defeat
+                    }
+
+                    override fun store(entity: Entity<*>, value: Long) {
+                        val userBoss = entity as UserBoss
+                        userBoss.defeat = value
+                    }
+                }
+            }
             .toMap()
 
-    val RELIC_MAP = Relic.values()
-            .map { it to RelicCacheKey(it) }
+    val RELIC_MAP: Map<Relic, PlayerCacheKey<Long>> = Relic.values()
+            .map {
+                it to object : PlayerCacheKey<Long> {
+                    override val default: Long
+                        get() = 0L
+
+                    override fun read(entity: Entity<*>): Long? {
+                        val userRelic = entity as UserRelic
+                        return userRelic.amount
+                    }
+
+                    override fun store(entity: Entity<*>, value: Long) {
+                        val userRelic = entity as UserRelic
+                        userRelic.amount = value
+                    }
+                }
+            }
             .toMap()
-
-    class MineBlockCacheKey(mineBlockReason: MineBlockReason) : PlayerCacheKey<Long> {
-        override val default: Long
-            get() = 0L
-
-        override fun read(entity: Entity<*>): Long? {
-            val userMineBlock = entity as UserMineBlock
-            return userMineBlock.mineBlock
-        }
-
-        override fun store(entity: Entity<*>, value: Long) {
-            val userMineBlock = entity as UserMineBlock
-            userMineBlock.mineBlock = value
-        }
-    }
-
-    class MemoryCacheKey(will: Will) : PlayerCacheKey<Long> {
-        override val default: Long
-            get() = 0L
-
-        override fun read(entity: Entity<*>): Long? {
-            val userWill = entity as UserWill
-            return userWill.memory
-        }
-
-        override fun store(entity: Entity<*>, value: Long) {
-            val userWill = entity as UserWill
-            userWill.memory = value
-        }
-    }
-
-    class AptitudeCacheKey(will: Will) : PlayerCacheKey<Boolean> {
-        override val default: Boolean
-            get() = false
-
-        override fun read(entity: Entity<*>): Boolean? {
-            val userWill = entity as UserWill
-            return userWill.hasAptitude
-        }
-
-        override fun store(entity: Entity<*>, value: Boolean) {
-            val userWill = entity as UserWill
-            userWill.hasAptitude = value
-        }
-    }
-
-    class BossCacheKey(boss: Boss) : PlayerCacheKey<Long> {
-        override val default: Long
-            get() = 0L
-
-        override fun read(entity: Entity<*>): Long? {
-            val userBoss = entity as UserBoss
-            return userBoss.defeat
-        }
-
-        override fun store(entity: Entity<*>, value: Long) {
-            val userBoss = entity as UserBoss
-            userBoss.defeat = value
-        }
-    }
-
-    class RelicCacheKey(relic: Relic) : PlayerCacheKey<Long> {
-        override val default: Long
-            get() = 0L
-
-        override fun read(entity: Entity<*>): Long? {
-            val userRelic = entity as UserRelic
-            return userRelic.amount
-        }
-
-        override fun store(entity: Entity<*>, value: Long) {
-            val userRelic = entity as UserRelic
-            userRelic.amount = value
-        }
-    }
 
     interface PlayerCacheKey<V> : CacheKey<PlayerCache, V>
+
 }
