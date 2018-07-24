@@ -14,9 +14,8 @@ class MenuListener : Listener {
     fun onInventoryClick(event: InventoryClickEvent) {
         val player = event.whoClicked as? org.bukkit.entity.Player ?: return
         if (player.gameMode != GameMode.SURVIVAL && player.gameMode != GameMode.SPECTATOR) return
-//        val gPlayer = player.gPlayer ?: return
-//        val holder = event.inventory.holder
-//        event.isCancelled = true
+        val holder = event.inventory.holder
+        event.isCancelled = true
 //
 //        when (holder) {
 //            is Menu -> {

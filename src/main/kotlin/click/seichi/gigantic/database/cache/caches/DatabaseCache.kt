@@ -1,6 +1,7 @@
-package click.seichi.gigantic.database.cache
+package click.seichi.gigantic.database.cache.caches
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.database.cache.keys.CacheKey
 import org.bukkit.Bukkit
 
 
@@ -11,10 +12,10 @@ import org.bukkit.Bukkit
  * @author tar0ss
  */
 abstract class DatabaseCache<C : DatabaseCache<C>>(vararg keys: CacheKey<C, out Any>) {
-    private val cacheMap: MutableMap<CacheKey<C, out Any>, Any?> = keys.map { it to null }.toMap().toMutableMap()
-
-    val keys: Set<CacheKey<C, out Any>>
-        get() = cacheMap.keys.toSet()
+    private val cacheMap: MutableMap<CacheKey<C, out Any>, Any?> = keys
+            .map { it to null }
+            .toMap()
+            .toMutableMap()
 
     abstract fun read()
 

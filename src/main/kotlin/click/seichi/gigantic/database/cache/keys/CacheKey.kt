@@ -1,5 +1,6 @@
-package click.seichi.gigantic.database.cache
+package click.seichi.gigantic.database.cache.keys
 
+import click.seichi.gigantic.database.cache.caches.DatabaseCache
 import org.jetbrains.exposed.dao.Entity
 
 

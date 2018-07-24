@@ -8,6 +8,11 @@ import org.bukkit.Location
 import java.util.concurrent.TimeUnit
 
 /**
+ * [Location] に 視覚的なエフェクトを表示する
+ *
+ * @param ticks 継続時間(ticks)
+ * @param rendering tick毎の処理
+ *
  * @author tar0ss
  */
 class Animation(

@@ -1,7 +1,6 @@
 package click.seichi.gigantic.database.cache.keys
 
 import click.seichi.gigantic.boss.Boss
-import click.seichi.gigantic.database.cache.CacheKey
 import click.seichi.gigantic.database.cache.caches.PlayerCache
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.player.MineBlockReason

@@ -1,6 +1,7 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.data.PlayerDataMemory
 import click.seichi.gigantic.database.cache.PlayerCacheMemory
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.central
@@ -45,7 +46,9 @@ class PlayerListener : Listener {
              * このためだけのcolumn用意するべきかも
              */
             delay(3L, TimeUnit.SECONDS)
+
             PlayerCacheMemory.add(event.uniqueId, event.name)
+            PlayerDataMemory.add(event.uniqueId)
         }
     }
 
@@ -53,16 +56,18 @@ class PlayerListener : Listener {
     fun onPlayerQuit(event: PlayerQuitEvent) {
         val player = event.player ?: return
         if (player.gameMode == GameMode.SPECTATOR) {
-            player.teleport(MainInventory.lastLocationMap.remove(player.uniqueId))
+            player.teleport(MainInventory.lastLocationMap.remove(player.uniqueId) ?: return)
             player.gameMode = GameMode.SURVIVAL
         }
         val uniqueId = player.uniqueId
+        PlayerDataMemory.remove(uniqueId)
         PlayerCacheMemory.remove(uniqueId, true)
     }
 
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
+        if (!player.isOp) player.gameMode = GameMode.SURVIVAL
         player.inventory.heldItemSlot = Belt.TOOL_SLOT
         player.updateInventory()
         player.saturation = Float.MAX_VALUE

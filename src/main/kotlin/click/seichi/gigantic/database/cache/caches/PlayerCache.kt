@@ -1,7 +1,6 @@
 package click.seichi.gigantic.database.cache.caches
 
 import click.seichi.gigantic.boss.Boss
-import click.seichi.gigantic.database.cache.DatabaseCache
 import click.seichi.gigantic.database.cache.keys.PlayerCacheKeys
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.database.table.UserBossTable
@@ -82,6 +81,8 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
     }
 
     /**
+     * [UUID]に紐づけられたエンティティデータクラス
+     *
      * @author tar0ss
      */
     class UserEntityData(uniqueId: UUID, playerName: String) {

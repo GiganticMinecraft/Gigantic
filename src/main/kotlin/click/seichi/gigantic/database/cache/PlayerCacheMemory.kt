@@ -10,6 +10,7 @@ import java.util.*
 object PlayerCacheMemory {
     private val playerCacheMap = mutableMapOf<UUID, PlayerCache>()
 
+    // やるならname:Stringから
     fun find(uniqueId: UUID) = playerCacheMap[uniqueId]
 
     fun get(uniqueId: UUID) = playerCacheMap[uniqueId]!!

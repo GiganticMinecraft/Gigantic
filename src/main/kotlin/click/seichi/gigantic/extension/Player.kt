@@ -1,8 +1,11 @@
 package click.seichi.gigantic.extension
 
-import click.seichi.gigantic.database.cache.CacheKey
+import click.seichi.gigantic.data.PlayerDataMemory
+import click.seichi.gigantic.data.container.PlayerDataContainer
+import click.seichi.gigantic.data.key.Key
 import click.seichi.gigantic.database.cache.PlayerCacheMemory
 import click.seichi.gigantic.database.cache.caches.PlayerCache
+import click.seichi.gigantic.database.cache.keys.CacheKey
 import click.seichi.gigantic.database.cache.keys.PlayerCacheKeys
 import click.seichi.gigantic.util.CardinalDirection
 import click.seichi.gigantic.util.NoiseData
@@ -28,6 +31,14 @@ fun Player.getHead() = ItemStack(Material.SKULL_ITEM, 1, 3).apply {
 fun <V : Any> Player.getOrDefaultFromCache(key: CacheKey<PlayerCache, out V>) = PlayerCacheMemory.get(uniqueId).get(key)
 
 fun <V : Any> Player.putIntoCache(key: CacheKey<PlayerCache, out V>, value: V) = PlayerCacheMemory.get(uniqueId).put(key, value)
+
+fun <V : Any> Player.supports(key: Key<PlayerDataContainer, out V>) = PlayerDataMemory.get(uniqueId).support(key)
+
+fun <V : Any> Player.get(key: Key<PlayerDataContainer, out V>) = PlayerDataMemory.get(uniqueId).get(key)
+
+fun <V : Any> Player.offer(key: Key<PlayerDataContainer, V>, value: V) = PlayerDataMemory.get(uniqueId).offer(key, value)
+
+fun <V : Any> Player.transform(key: Key<PlayerDataContainer, V>, transforming: (V) -> V) = PlayerDataMemory.get(uniqueId).transform(key, transforming)
 
 val Player.wrappedLocale: Locale
     get() = getOrDefaultFromCache(PlayerCacheKeys.LOCALE)
