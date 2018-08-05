@@ -1,7 +1,7 @@
-package click.seichi.gigantic.database.cache.caches
+package click.seichi.gigantic.data.caches
 
 import click.seichi.gigantic.boss.Boss
-import click.seichi.gigantic.database.cache.keys.PlayerCacheKeys
+import click.seichi.gigantic.data.keys.Keys
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.database.table.UserBossTable
 import click.seichi.gigantic.database.table.UserMineBlockTable
@@ -17,37 +17,54 @@ import java.util.*
 /**
  * @author tar0ss
  */
-class PlayerCache(private val uniqueId: UUID, private val playerName: String) : DatabaseCache<PlayerCache>(
-        PlayerCacheKeys.LOCALE,
-        PlayerCacheKeys.MANA,
-        *PlayerCacheKeys.MINEBLOCK_MAP.values.toTypedArray(),
-        *PlayerCacheKeys.MEMORY_MAP.values.toTypedArray(),
-        *PlayerCacheKeys.APTITUDE_MAP.values.toTypedArray(),
-        *PlayerCacheKeys.BOSS_MAP.values.toTypedArray(),
-        *PlayerCacheKeys.RELIC_MAP.values.toTypedArray()
-) {
+class PlayerCache(private val uniqueId: UUID, private val playerName: String) : Cache<PlayerCache>() {
+
+    init {
+        registerKey(Keys.LOCALE)
+        registerKey(Keys.MANA)
+        Keys.MINEBLOCK_MAP.values.forEach {
+            registerKey(it)
+        }
+        Keys.MEMORY_MAP.values.forEach {
+            registerKey(it)
+        }
+        Keys.APTITUDE_MAP.values.forEach {
+            registerKey(it)
+        }
+        Keys.BOSS_MAP.values.forEach {
+            registerKey(it)
+        }
+        Keys.RELIC_MAP.values.forEach {
+            registerKey(it)
+        }
+        registerKey(Keys.BELT)
+        registerKey(Keys.BAG)
+        registerKey(Keys.LEVEL)
+        registerKey(Keys.EXP)
+    }
+
     override fun read() {
         UserEntityData(uniqueId, playerName).run {
-            PlayerCacheKeys.LOCALE.let {
-                put(it, it.read(user))
+            Keys.LOCALE.let {
+                offer(it, it.read(user))
             }
-            PlayerCacheKeys.MANA.let {
-                put(it, it.read(user))
+            Keys.MANA.let {
+                offer(it, it.read(user))
             }
-            PlayerCacheKeys.MINEBLOCK_MAP.forEach { reason, key ->
-                put(key, key.read(userMineBlockMap[reason] ?: return@forEach))
+            Keys.MINEBLOCK_MAP.forEach { reason, key ->
+                offer(key, key.read(userMineBlockMap[reason] ?: return@forEach))
             }
-            PlayerCacheKeys.MEMORY_MAP.forEach { will, key ->
-                put(key, key.read(userWillMap[will] ?: return@forEach))
+            Keys.MEMORY_MAP.forEach { will, key ->
+                offer(key, key.read(userWillMap[will] ?: return@forEach))
             }
-            PlayerCacheKeys.APTITUDE_MAP.forEach { will, key ->
-                put(key, key.read(userWillMap[will] ?: return@forEach))
+            Keys.APTITUDE_MAP.forEach { will, key ->
+                offer(key, key.read(userWillMap[will] ?: return@forEach))
             }
-            PlayerCacheKeys.BOSS_MAP.forEach { boss, key ->
-                put(key, key.read(userBossMap[boss] ?: return@forEach))
+            Keys.BOSS_MAP.forEach { boss, key ->
+                offer(key, key.read(userBossMap[boss] ?: return@forEach))
             }
-            PlayerCacheKeys.RELIC_MAP.forEach { relic, key ->
-                put(key, key.read(userRelicMap[relic] ?: return@forEach))
+            Keys.RELIC_MAP.forEach { relic, key ->
+                offer(key, key.read(userRelicMap[relic] ?: return@forEach))
             }
         }
     }
@@ -56,26 +73,26 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
         UserEntityData(uniqueId, playerName).run {
             // 更新時間を記録
             user.updatedDate = DateTime.now()
-            PlayerCacheKeys.LOCALE.let {
-                it.store(user, get(it))
+            Keys.LOCALE.let {
+                it.store(user, getOrDefault(it))
             }
-            PlayerCacheKeys.MANA.let {
-                it.store(user, get(it))
+            Keys.MANA.let {
+                it.store(user, getOrDefault(it))
             }
-            PlayerCacheKeys.MINEBLOCK_MAP.forEach { reason, key ->
-                key.store(userMineBlockMap[reason] ?: return@forEach, get(key))
+            Keys.MINEBLOCK_MAP.forEach { reason, key ->
+                key.store(userMineBlockMap[reason] ?: return@forEach, getOrDefault(key))
             }
-            PlayerCacheKeys.MEMORY_MAP.forEach { will, key ->
-                key.store(userWillMap[will] ?: return@forEach, get(key))
+            Keys.MEMORY_MAP.forEach { will, key ->
+                key.store(userWillMap[will] ?: return@forEach, getOrDefault(key))
             }
-            PlayerCacheKeys.APTITUDE_MAP.forEach { will, key ->
-                key.store(userWillMap[will] ?: return@forEach, get(key))
+            Keys.APTITUDE_MAP.forEach { will, key ->
+                key.store(userWillMap[will] ?: return@forEach, getOrDefault(key))
             }
-            PlayerCacheKeys.BOSS_MAP.forEach { boss, key ->
-                key.store(userBossMap[boss] ?: return@forEach, get(key))
+            Keys.BOSS_MAP.forEach { boss, key ->
+                key.store(userBossMap[boss] ?: return@forEach, getOrDefault(key))
             }
-            PlayerCacheKeys.RELIC_MAP.forEach { relic, key ->
-                key.store(userRelicMap[relic] ?: return@forEach, get(key))
+            Keys.RELIC_MAP.forEach { relic, key ->
+                key.store(userRelicMap[relic] ?: return@forEach, getOrDefault(key))
             }
         }
     }

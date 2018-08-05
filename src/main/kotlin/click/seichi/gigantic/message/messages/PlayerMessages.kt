@@ -2,7 +2,6 @@ package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.*
-import click.seichi.gigantic.player.components.Level
 import click.seichi.gigantic.player.components.Mana
 import click.seichi.gigantic.player.components.Memory
 import click.seichi.gigantic.player.components.WillAptitude
@@ -46,12 +45,12 @@ object PlayerMessages {
         )
     }
 
-    val LEVEL_DISPLAY = { level: Level ->
-        val expToLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
-        val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1]
+    val EXP_BAR_DISPLAY = { level: Int, exp: Long ->
+        val expToLevel = PlayerLevelConfig.LEVEL_MAP[level] ?: 0L
+        val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level + 1]
                 ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
 
-        LevelMessage(level.current, (level.exp - expToLevel).div((expToNextLevel - expToLevel).toFloat().coerceAtLeast(Float.MIN_VALUE)))
+        LevelMessage(level, (exp - expToLevel).div((expToNextLevel - expToLevel).toFloat().coerceAtLeast(Float.MIN_VALUE)))
     }
 
     val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(

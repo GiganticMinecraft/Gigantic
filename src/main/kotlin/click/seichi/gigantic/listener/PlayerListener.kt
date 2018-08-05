@@ -1,13 +1,22 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.data.PlayerDataMemory
-import click.seichi.gigantic.database.cache.PlayerCacheMemory
+import click.seichi.gigantic.bag.bags.MainBag
+import click.seichi.gigantic.belt.belts.CutBelt
+import click.seichi.gigantic.belt.belts.DigBelt
+import click.seichi.gigantic.belt.belts.MineBelt
+import click.seichi.gigantic.config.PlayerLevelConfig
+import click.seichi.gigantic.config.PlayerLevelConfig.MAX
+import click.seichi.gigantic.data.PlayerCacheMemory
+import click.seichi.gigantic.data.keys.Keys
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.central
+import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.menu.Menu
-import click.seichi.gigantic.player.belt.Belt
-import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
+import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.ExpProducer
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import org.bukkit.Bukkit
@@ -46,9 +55,7 @@ class PlayerListener : Listener {
              * このためだけのcolumn用意するべきかも
              */
             delay(3L, TimeUnit.SECONDS)
-
             PlayerCacheMemory.add(event.uniqueId, event.name)
-            PlayerDataMemory.add(event.uniqueId)
         }
     }
 
@@ -56,11 +63,10 @@ class PlayerListener : Listener {
     fun onPlayerQuit(event: PlayerQuitEvent) {
         val player = event.player ?: return
         if (player.gameMode == GameMode.SPECTATOR) {
-            player.teleport(MainInventory.lastLocationMap.remove(player.uniqueId) ?: return)
+            player.teleport(MainBag.lastLocationMap.remove(player.uniqueId) ?: return)
             player.gameMode = GameMode.SURVIVAL
         }
         val uniqueId = player.uniqueId
-        PlayerDataMemory.remove(uniqueId)
         PlayerCacheMemory.remove(uniqueId, true)
     }
 
@@ -68,7 +74,21 @@ class PlayerListener : Listener {
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
         if (!player.isOp) player.gameMode = GameMode.SURVIVAL
-        player.inventory.heldItemSlot = Belt.TOOL_SLOT
+        player.offer(Keys.EXP, ExpProducer.calcExp(player))
+
+        // level計算
+        val exp = player.find(Keys.EXP) ?: 0L
+        player.transform(Keys.LEVEL) { current ->
+            var level = current
+            while (exp >= PlayerLevelConfig.LEVEL_MAP[level + 1] ?: Long.MAX_VALUE) {
+                if (level + 1 > MAX) break
+                level++
+            }
+            level
+        }
+
+        player.find(Keys.BELT)?.wear(player)
+        player.find(Keys.BAG)?.carry(player)
         player.updateInventory()
         player.saturation = Float.MAX_VALUE
         player.foodLevel = 20
@@ -79,6 +99,13 @@ class PlayerListener : Listener {
                 false,
                 false
         ))
+
+        // display
+        PlayerMessages.EXP_BAR_DISPLAY(
+                player.find(Keys.LEVEL) ?: 0,
+                player.find(Keys.EXP) ?: 0L
+        ).sendTo(player)
+//        PlayerMessages.MEMORY_SIDEBAR(player.find(Keys.MEMORY_MAP[]))
     }
 
     // プレイヤーのメニュー以外のインベントリーオープンをキャンセル
@@ -104,7 +131,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerChangedMainHand(event: PlayerChangedMainHandEvent) {
-        // TODO change item
+        // TODO change button
     }
 
     @EventHandler
@@ -117,11 +144,11 @@ class PlayerListener : Listener {
     fun onPlayerItemHeld(event: PlayerItemHeldEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
-//        val gPlayer = player.gPlayer ?: return
-//        gPlayer.belt.getHookedItem(event.newSlot)?.onItemHeld(player, event)
-//        if (event.newSlot != Belt.TOOL_SLOT) {
-//            event.isCancelled = true
-//        }
+        val belt = player.find(Keys.BELT) ?: return
+        belt.getHotButton(event.newSlot)?.onItemHeld(player, event)
+        if (!belt.isFixed(event.newSlot)) {
+            event.isCancelled
+        }
     }
 
     @EventHandler
@@ -129,13 +156,22 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
+        switchBelt(player)
+    }
 
-//        val gPlayer = player.gPlayer ?: return
-//        gPlayer.switchBelt()
+    // TODO 自由に選択できるようにする
+    fun switchBelt(player: Player) {
+        val oldBelt = player.find(Keys.BELT) ?: return
+        player.offer(Keys.BELT, when (oldBelt) {
+            is MineBelt -> DigBelt
+            is DigBelt -> CutBelt
+            else -> MineBelt
+        })
     }
 
     @EventHandler
     fun onLevelUp(event: LevelUpEvent) {
+
 //        val gPlayer = event.player.gPlayer ?: return
 //
 //        // Update unlock function
@@ -156,10 +192,10 @@ class PlayerListener : Listener {
 //        }
 //
 //        // Update player Belt
-//        gPlayer.belt.update(event.player)
+//        gPlayer.belt.carry(event.player)
 //
 //        // Update player inventory
-//        gPlayer.defaultInventory.update(event.player)
+//        gPlayer.defaultInventory.carry(event.player)
 //
 //        // Update will aptitude
 //        val newWillList = gPlayer.aptitude.addIfNeeded(gPlayer.level).toMutableList()
@@ -217,8 +253,8 @@ class PlayerListener : Listener {
 //                val player = event.player ?: return
 //                val gPlayer = player.gPlayer ?: return
 //                player.inventory.heldItemSlot = Belt.TOOL_SLOT
-//                gPlayer.belt.update(player)
-//                gPlayer.defaultInventory.update(player)
+//                gPlayer.belt.carry(player)
+//                gPlayer.defaultInventory.carry(player)
 //            }
 //        }
     }

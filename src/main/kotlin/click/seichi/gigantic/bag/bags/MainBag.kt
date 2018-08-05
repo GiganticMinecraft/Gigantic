@@ -1,17 +1,17 @@
-package click.seichi.gigantic.player.defalutInventory.inventories
+package click.seichi.gigantic.bag.bags
 
-import click.seichi.gigantic.player.defalutInventory.DefaultInventory
+import click.seichi.gigantic.bag.Bag
 import org.bukkit.Location
 import java.util.*
 
 /**
  * @author tar0ss
  */
-object MainInventory : DefaultInventory() {
+object MainBag : Bag() {
 
     val lastLocationMap = mutableMapOf<UUID, Location>()
 
-    override val slotItemMap: Map<Int, SlotItem> = mapOf(
+    // TODO
 //            9 to object : SlotItem {
 //                override fun getItemStack(player: Player): ItemStack? {
 //                    return player.getHead().apply {
@@ -63,19 +63,18 @@ object MainInventory : DefaultInventory() {
 //                        GameMode.SURVIVAL -> {
 //                            player.gameMode = GameMode.SPECTATOR
 //                            lastLocationMap[player.uniqueId] = player.location
-//                            gPlayer.defaultInventory.update(player)
+//                            gPlayer.defaultInventory.carry(player)
 //                        }
 //                        GameMode.SPECTATOR -> {
 //                            player.gameMode = GameMode.SURVIVAL
 //                            lastLocationMap.remove(player.uniqueId)?.run {
 //                                player.teleport(this)
 //                            }
-//                            gPlayer.defaultInventory.update(player)
+//                            gPlayer.defaultInventory.carry(player)
 //                        }
 //                    }
 //                }
 //
 //            }
-    )
 
 }

@@ -21,7 +21,7 @@ class PlayerMonitor : Listener {
 //        val level = player.gPlayer?.level ?: return
 //        val location = event.block.location.central
 //
-//        // update player data
+//        // carry player data
 //        gPlayer.mineBlock.add(1L)
 //        gPlayer.mineCombo.combo(1L)
 //        val isLevelUp = level.updateLevel(ExpProducer.calcExp(player)) {
@@ -60,12 +60,12 @@ class PlayerMonitor : Listener {
 //                        RaidManager.endBattle(this)
 //                        RaidManager.newBattle()
 //                    }
-//                    update()
+//                    carry()
 //                }
 //
 //
 //        // Displays
-//        PlayerMessages.LEVEL_DISPLAY(level).sendTo(player)
+//        PlayerMessages.EXP_BAR_DISPLAY(level).sendTo(player)
 //        SkillPops.MINE_COMBO(gPlayer.mineCombo).pop(event.block.centralLocation.add(0.0, 0.0, 0.0))
 //
 //

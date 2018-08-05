@@ -1,4 +1,4 @@
-package click.seichi.gigantic.menu
+package click.seichi.gigantic.button
 
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -11,14 +11,14 @@ import org.bukkit.inventory.ItemStack
 interface Button {
 
     /**
-     * Menuに表示されるItemStackを取得します
+     * ItemStackを取得します
      *
      * @param player Menuを開いているPlayer
      */
     fun getItemStack(player: Player): ItemStack?
 
     /**
-     * Buttonクリック時に実行されます
+     * クリック時に実行されます
      *
      * @param event クリック時のInventoryClickEvent
      */

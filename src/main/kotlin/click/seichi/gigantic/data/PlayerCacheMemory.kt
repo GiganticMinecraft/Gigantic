@@ -1,6 +1,6 @@
-package click.seichi.gigantic.database.cache
+package click.seichi.gigantic.data
 
-import click.seichi.gigantic.database.cache.caches.PlayerCache
+import click.seichi.gigantic.data.caches.PlayerCache
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -9,9 +9,6 @@ import java.util.*
  */
 object PlayerCacheMemory {
     private val playerCacheMap = mutableMapOf<UUID, PlayerCache>()
-
-    // やるならname:Stringから
-    fun find(uniqueId: UUID) = playerCacheMap[uniqueId]
 
     fun get(uniqueId: UUID) = playerCacheMap[uniqueId]!!
 

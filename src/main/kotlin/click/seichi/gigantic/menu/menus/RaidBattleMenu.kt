@@ -1,10 +1,10 @@
 package click.seichi.gigantic.menu.menus
 
+import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.extension.addLore
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
-import click.seichi.gigantic.menu.Button
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.raid.RaidManager

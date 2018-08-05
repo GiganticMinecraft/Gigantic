@@ -1,7 +1,7 @@
 package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.player.components.MineBurst
+import click.seichi.gigantic.skill.SkillTimer
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -34,17 +34,17 @@ object HookedItemMessages {
                     "マインバースト"
     )
 
-    val MINE_BURST_LORE = { mineBurst: MineBurst ->
+    val MINE_BURST_LORE = { mineBurstTimer: SkillTimer ->
         listOf(
                 LocalizedText(
                         Locale.JAPANESE to
                                 "${ChatColor.GRAY}" +
-                                "${mineBurst.duration}秒間破壊速度上昇"
+                                "${mineBurstTimer.duration}秒間破壊速度上昇"
                 ),
                 LocalizedText(
                         Locale.JAPANESE to
                                 "${ChatColor.AQUA}" +
-                                "クールタイム : ${mineBurst.coolTime}秒"
+                                "クールタイム : ${mineBurstTimer.coolTime}秒"
                 )
         )
     }

@@ -1,7 +1,7 @@
 package click.seichi.gigantic.menu.button
 
+import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.head.Head
-import click.seichi.gigantic.menu.Button
 import click.seichi.gigantic.menu.Menu
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent

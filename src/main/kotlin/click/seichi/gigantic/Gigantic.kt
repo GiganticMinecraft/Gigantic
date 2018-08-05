@@ -1,13 +1,13 @@
 package click.seichi.gigantic
 
+import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.config.DatabaseConfig
-import click.seichi.gigantic.database.cache.PlayerCacheMemory
+import click.seichi.gigantic.data.PlayerCacheMemory
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
-import click.seichi.gigantic.player.defalutInventory.inventories.MainInventory
 import click.seichi.gigantic.raid.RaidManager
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
@@ -103,7 +103,7 @@ class Gigantic : JavaPlugin() {
     override fun onDisable() {
         Bukkit.getOnlinePlayers().filterNotNull().forEach { player ->
             if (player.gameMode == GameMode.SPECTATOR) {
-                player.teleport(MainInventory.lastLocationMap.remove(player.uniqueId))
+                player.teleport(MainBag.lastLocationMap.remove(player.uniqueId))
                 player.gameMode = GameMode.SURVIVAL
             }
             PlayerCacheMemory.remove(player.uniqueId, false)
