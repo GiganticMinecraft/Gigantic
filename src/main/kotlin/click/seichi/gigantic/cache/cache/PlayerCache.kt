@@ -23,7 +23,11 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
         registerKey(Keys.BAG)
         registerKey(Keys.LEVEL)
         registerKey(Keys.EXP)
+        registerKey(Keys.MANA)
         register(CatalogPlayerCache.LEVEL)
+        register(CatalogPlayerCache.MANA)
+        register(CatalogPlayerCache.MEMORY)
+        register(CatalogPlayerCache.APTITUDE)
     }
 
     override fun read() {

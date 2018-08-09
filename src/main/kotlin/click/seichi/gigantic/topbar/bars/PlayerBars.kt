@@ -1,7 +1,6 @@
 package click.seichi.gigantic.topbar.bars
 
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.player.components.Mana
 import click.seichi.gigantic.topbar.TopBar
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle

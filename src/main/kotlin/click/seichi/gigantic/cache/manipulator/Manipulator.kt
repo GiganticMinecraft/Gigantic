@@ -17,4 +17,5 @@ interface Manipulator<M : Manipulator<M, C>, C : Cache<C>> {
     fun from(cache: Cache<C>): M?
 
     fun set(cache: Cache<C>): Boolean
+
 }

@@ -9,10 +9,11 @@ import java.util.concurrent.TimeUnit
 /**
  * @author tar0ss
  */
-class SkillTimer(
-        val duration: Long,
-        val coolTime: Long
-) {
+abstract class SkillTimer {
+
+    abstract val duration: Long
+    abstract val coolTime: Long
+
     var remainTimeToFire: Long = 0L
         private set
 

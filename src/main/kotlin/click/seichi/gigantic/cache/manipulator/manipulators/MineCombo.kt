@@ -1,4 +1,4 @@
-package click.seichi.gigantic.player.components
+package click.seichi.gigantic.cache.manipulator.manipulators
 
 /**
  * @author tar0ss

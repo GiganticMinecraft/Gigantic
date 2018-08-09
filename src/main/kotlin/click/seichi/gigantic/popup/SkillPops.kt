@@ -1,6 +1,6 @@
 package click.seichi.gigantic.popup
 
-import click.seichi.gigantic.player.components.MineCombo
+import click.seichi.gigantic.cache.manipulator.manipulators.MineCombo
 import org.bukkit.ChatColor
 
 /**

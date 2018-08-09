@@ -1,6 +1,5 @@
 package click.seichi.gigantic.cache.key
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.bag.Bag
 import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.belt.Belt
@@ -10,12 +9,8 @@ import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.MineBlockReason
-import click.seichi.gigantic.player.components.Mana
 import click.seichi.gigantic.relic.Relic
-import click.seichi.gigantic.skill.SkillParameters
-import click.seichi.gigantic.skill.SkillTimer
 import click.seichi.gigantic.will.Will
-import org.bukkit.boss.BossBar
 import org.jetbrains.exposed.dao.Entity
 import java.util.*
 
@@ -64,32 +59,22 @@ object Keys {
 
     }
 
-    val MANA = object : DatabaseKey<PlayerCache, Mana> {
-        override val default: Mana
-            get() = Mana()
+    val MANA = object : DatabaseKey<PlayerCache, Long> {
+        override val default: Long
+            get() = 0L
 
-        override fun read(entity: Entity<*>): Mana {
+        override fun read(entity: Entity<*>): Long {
             val user = entity as User
-            return Mana(user.mana)
+            return user.mana
         }
 
-        override fun store(entity: Entity<*>, value: Mana) {
+        override fun store(entity: Entity<*>, value: Long) {
             val user = entity as User
-            user.mana = value.current
+            user.mana = value
         }
 
-        override fun satisfyWith(value: Mana): Boolean {
-            return false
-        }
-
-    }
-
-    val MANA_BAR = object : Key<PlayerCache, BossBar> {
-        override val default: BossBar
-            get() = Gigantic.createInvisibleBossBar()
-
-        override fun satisfyWith(value: BossBar): Boolean {
-            return false
+        override fun satisfyWith(value: Long): Boolean {
+            return value >= 0L
         }
 
     }
@@ -285,16 +270,6 @@ object Keys {
 
         override fun satisfyWith(value: Bag): Boolean {
             return true
-        }
-
-    }
-
-    val MINE_BURST_TIMER = object : Key<PlayerCache, SkillTimer> {
-        override val default: SkillTimer
-            get() = SkillTimer(SkillParameters.MINE_BURST_DURATION, SkillParameters.MINE_BURST_COOLTIME)
-
-        override fun satisfyWith(value: SkillTimer): Boolean {
-            return false
         }
 
     }

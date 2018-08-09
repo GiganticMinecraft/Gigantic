@@ -1,4 +1,4 @@
-package click.seichi.gigantic.player.components
+package click.seichi.gigantic.cache.manipulator.manipulators
 
 import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.relic.Relic

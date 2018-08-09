@@ -14,7 +14,6 @@ import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.LockedFunction
-import click.seichi.gigantic.topbar.bars.PlayerBars
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import org.bukkit.Bukkit
@@ -73,15 +72,17 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         if (!player.isOp) player.gameMode = GameMode.SURVIVAL
 
-        // Calculate level
         player.manipulate(CatalogPlayerCache.LEVEL) {
             it.calculate(ExpProducer.calcExp(player)) {}
+            PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
         }
 
-        // Update max mana
-        val mana = player.find(Keys.MANA)?.apply {
-            updateMaxMana(level)
-        } ?: return
+        player.manipulate(CatalogPlayerCache.MANA) {
+            it.updateMaxMana()
+            it.createBar()
+            if (LockedFunction.MANA.isUnlocked(player))
+                it.display()
+        }
 
         player.find(Keys.BELT)?.wear(player)
         player.find(Keys.BAG)?.carry(player)
@@ -97,12 +98,6 @@ class PlayerListener : Listener {
                 false
         ))
 
-        // Show bar
-        val manaBar = player.find(Keys.MANA_BAR) ?: return
-        val locale = player.find(Keys.LOCALE) ?: return
-        if (LockedFunction.MANA.isUnlocked(player))
-            PlayerBars.MANA(mana, locale).show(manaBar)
-
         // Messages
         player.transform(Keys.IS_FIRST_JOIN) {
             if (it) PlayerMessages.FIRST_JOIN.sendTo(player)
@@ -117,9 +112,13 @@ class PlayerListener : Listener {
             }
         }
 
-        player.find(Keys.LEVEL)?.let { PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player) }
+        PlayerMessages.MEMORY_SIDEBAR(
+                player.find(CatalogPlayerCache.MEMORY) ?: return,
+                player.find(CatalogPlayerCache.APTITUDE) ?: return
+        )
 
-//        PlayerMessages.MEMORY_SIDEBAR(player.find(Keys.MEMORY_MAP[]))
+
+
     }
 
     // プレイヤーのメニュー以外のインベントリーオープンをキャンセル

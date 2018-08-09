@@ -1,10 +1,11 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.cache.manipulator.manipulators.Level
+import click.seichi.gigantic.cache.manipulator.manipulators.Mana
+import click.seichi.gigantic.cache.manipulator.manipulators.Memory
+import click.seichi.gigantic.cache.manipulator.manipulators.WillAptitude
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.*
-import click.seichi.gigantic.player.components.Mana
-import click.seichi.gigantic.player.components.Memory
-import click.seichi.gigantic.player.components.WillAptitude
 import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
