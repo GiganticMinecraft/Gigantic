@@ -1,6 +1,6 @@
-package click.seichi.gigantic.data
+package click.seichi.gigantic.cache
 
-import click.seichi.gigantic.data.caches.PlayerCache
+import click.seichi.gigantic.cache.cache.PlayerCache
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 

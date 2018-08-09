@@ -1,7 +1,7 @@
 package click.seichi.gigantic.button.buttons
 
 import click.seichi.gigantic.button.Button
-import click.seichi.gigantic.data.keys.Keys
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.wrappedLocale

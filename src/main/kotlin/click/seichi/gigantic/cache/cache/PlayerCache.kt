@@ -1,12 +1,11 @@
-package click.seichi.gigantic.data.caches
+package click.seichi.gigantic.cache.cache
 
 import click.seichi.gigantic.boss.Boss
-import click.seichi.gigantic.data.keys.Keys
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.database.dao.*
-import click.seichi.gigantic.database.table.UserBossTable
-import click.seichi.gigantic.database.table.UserMineBlockTable
-import click.seichi.gigantic.database.table.UserRelicTable
-import click.seichi.gigantic.database.table.UserWillTable
+import click.seichi.gigantic.database.table.*
+import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
@@ -20,51 +19,41 @@ import java.util.*
 class PlayerCache(private val uniqueId: UUID, private val playerName: String) : Cache<PlayerCache>() {
 
     init {
-        registerKey(Keys.LOCALE)
-        registerKey(Keys.MANA)
-        Keys.MINEBLOCK_MAP.values.forEach {
-            registerKey(it)
-        }
-        Keys.MEMORY_MAP.values.forEach {
-            registerKey(it)
-        }
-        Keys.APTITUDE_MAP.values.forEach {
-            registerKey(it)
-        }
-        Keys.BOSS_MAP.values.forEach {
-            registerKey(it)
-        }
-        Keys.RELIC_MAP.values.forEach {
-            registerKey(it)
-        }
         registerKey(Keys.BELT)
         registerKey(Keys.BAG)
         registerKey(Keys.LEVEL)
         registerKey(Keys.EXP)
+        register(CatalogPlayerCache.LEVEL)
     }
 
     override fun read() {
         UserEntityData(uniqueId, playerName).run {
+            Keys.IS_FIRST_JOIN.let {
+                registerKey(it, it.read(user))
+            }
             Keys.LOCALE.let {
-                offer(it, it.read(user))
+                registerKey(it, it.read(user))
             }
             Keys.MANA.let {
-                offer(it, it.read(user))
+                registerKey(it, it.read(user))
             }
             Keys.MINEBLOCK_MAP.forEach { reason, key ->
-                offer(key, key.read(userMineBlockMap[reason] ?: return@forEach))
+                registerKey(key, key.read(userMineBlockMap[reason] ?: return@forEach))
             }
             Keys.MEMORY_MAP.forEach { will, key ->
-                offer(key, key.read(userWillMap[will] ?: return@forEach))
+                registerKey(key, key.read(userWillMap[will] ?: return@forEach))
             }
             Keys.APTITUDE_MAP.forEach { will, key ->
-                offer(key, key.read(userWillMap[will] ?: return@forEach))
+                registerKey(key, key.read(userWillMap[will] ?: return@forEach))
             }
             Keys.BOSS_MAP.forEach { boss, key ->
-                offer(key, key.read(userBossMap[boss] ?: return@forEach))
+                registerKey(key, key.read(userBossMap[boss] ?: return@forEach))
             }
             Keys.RELIC_MAP.forEach { relic, key ->
-                offer(key, key.read(userRelicMap[relic] ?: return@forEach))
+                registerKey(key, key.read(userRelicMap[relic] ?: return@forEach))
+            }
+            Keys.HAS_UNLOCKED_MAP.forEach { func, key ->
+                registerKey(key, key.read(userLockedMap[func] ?: return@forEach))
             }
         }
     }
@@ -73,6 +62,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
         UserEntityData(uniqueId, playerName).run {
             // 更新時間を記録
             user.updatedDate = DateTime.now()
+            Keys.IS_FIRST_JOIN.let {
+                it.store(user, getOrDefault(it))
+            }
             Keys.LOCALE.let {
                 it.store(user, getOrDefault(it))
             }
@@ -93,6 +85,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             }
             Keys.RELIC_MAP.forEach { relic, key ->
                 key.store(userRelicMap[relic] ?: return@forEach, getOrDefault(key))
+            }
+            Keys.HAS_UNLOCKED_MAP.forEach { func, key ->
+                key.store(userLockedMap[func] ?: return@forEach, getOrDefault(key))
             }
         }
     }
@@ -143,6 +138,15 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                     .firstOrNull() ?: UserRelic.new {
                 user = this@UserEntityData.user
                 relicId = relic.id
+            })
+        }.toMap()
+
+        val userLockedMap = LockedFunction.values().map { func ->
+            func to (UserLocked
+                    .find { (UserLockedTable.userId eq uniqueId) and (UserLockedTable.lockedId eq func.id) }
+                    .firstOrNull() ?: UserLocked.new {
+                user = this@UserEntityData.user
+                lockedId = func.id
             })
         }.toMap()
 

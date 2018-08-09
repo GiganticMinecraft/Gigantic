@@ -1,18 +1,21 @@
-package click.seichi.gigantic.data.keys
+package click.seichi.gigantic.cache.key
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.bag.Bag
 import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.belt.belts.MineBelt
 import click.seichi.gigantic.boss.Boss
-import click.seichi.gigantic.config.PlayerLevelConfig
-import click.seichi.gigantic.data.caches.PlayerCache
+import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.database.dao.*
+import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.MineBlockReason
+import click.seichi.gigantic.player.components.Mana
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.skill.SkillParameters
 import click.seichi.gigantic.skill.SkillTimer
 import click.seichi.gigantic.will.Will
+import org.bukkit.boss.BossBar
 import org.jetbrains.exposed.dao.Entity
 import java.util.*
 
@@ -20,6 +23,26 @@ import java.util.*
  * @author tar0ss
  */
 object Keys {
+
+    val IS_FIRST_JOIN = object : DatabaseKey<PlayerCache, Boolean> {
+        override val default: Boolean
+            get() = false
+
+        override fun read(entity: Entity<*>): Boolean {
+            val user = entity as User
+            return user.isFirstJoin
+        }
+
+        override fun store(entity: Entity<*>, value: Boolean) {
+            val user = entity as User
+            user.isFirstJoin = value
+        }
+
+        override fun satisfyWith(value: Boolean): Boolean {
+            return true
+        }
+
+    }
 
     val LOCALE = object : DatabaseKey<PlayerCache, Locale> {
         override val default
@@ -41,22 +64,32 @@ object Keys {
 
     }
 
-    val MANA = object : DatabaseKey<PlayerCache, Long> {
-        override val default: Long
-            get() = 0L
+    val MANA = object : DatabaseKey<PlayerCache, Mana> {
+        override val default: Mana
+            get() = Mana()
 
-        override fun read(entity: Entity<*>): Long {
+        override fun read(entity: Entity<*>): Mana {
             val user = entity as User
-            return user.mana
+            return Mana(user.mana)
         }
 
-        override fun store(entity: Entity<*>, value: Long) {
+        override fun store(entity: Entity<*>, value: Mana) {
             val user = entity as User
-            user.mana = value
+            user.mana = value.current
         }
 
-        override fun satisfyWith(value: Long): Boolean {
-            return value >= 0L
+        override fun satisfyWith(value: Mana): Boolean {
+            return false
+        }
+
+    }
+
+    val MANA_BAR = object : Key<PlayerCache, BossBar> {
+        override val default: BossBar
+            get() = Gigantic.createInvisibleBossBar()
+
+        override fun satisfyWith(value: BossBar): Boolean {
+            return false
         }
 
     }
@@ -182,12 +215,36 @@ object Keys {
             }
             .toMap()
 
+    val HAS_UNLOCKED_MAP: Map<LockedFunction, DatabaseKey<PlayerCache, Boolean>> = LockedFunction.values()
+            .map {
+                it to object : DatabaseKey<PlayerCache, Boolean> {
+                    override val default: Boolean
+                        get() = false
+
+                    override fun read(entity: Entity<*>): Boolean {
+                        val userLocked = entity as UserLocked
+                        return userLocked.hasUnlocked
+                    }
+
+                    override fun store(entity: Entity<*>, value: Boolean) {
+                        val userLocked = entity as UserLocked
+                        userLocked.hasUnlocked = value
+                    }
+
+                    override fun satisfyWith(value: Boolean): Boolean {
+                        return true
+                    }
+
+                }
+            }
+            .toMap()
+
     val LEVEL = object : Key<PlayerCache, Int> {
         override val default: Int
             get() = 0
 
         override fun satisfyWith(value: Int): Boolean {
-            return value in 0..PlayerLevelConfig.MAX
+            return value >= 0
         }
 
     }
@@ -197,7 +254,7 @@ object Keys {
             get() = 0L
 
         override fun satisfyWith(value: Long): Boolean {
-            return value >= 0
+            return value >= 0L
         }
 
     }

@@ -21,10 +21,10 @@ class PlayerMonitor : Listener {
 //        val level = player.gPlayer?.level ?: return
 //        val location = event.block.location.central
 //
-//        // carry player data
+//        // carry player cache
 //        gPlayer.mineBlock.add(1L)
 //        gPlayer.mineCombo.combo(1L)
-//        val isLevelUp = level.updateLevel(ExpProducer.calcExp(player)) {
+//        val isLevelUp = level.calculate(ExpProducer.calcExp(player)) {
 //            Bukkit.getPluginManager().callEvent(LevelUpEvent(it, player))
 //        }
 //
@@ -93,7 +93,7 @@ class PlayerMonitor : Listener {
 //                    target.location.world.spawnFallingBlock(
 //                            target.location.central.subtract(0.0, 0.5, 0.0),
 //                            target.type,
-//                            target.data
+//                            target.cache
 //                    )
 //                    target.type = Material.AIR
 //                    count++

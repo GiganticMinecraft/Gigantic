@@ -3,7 +3,7 @@ package click.seichi.gigantic.player.components
 import click.seichi.gigantic.config.ManaConfig.MANA_MAP
 import kotlin.properties.Delegates
 
-class Mana(current: Long) {
+class Mana(current: Long = 0L) {
 
     var current: Long = current
         private set

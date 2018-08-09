@@ -1,7 +1,8 @@
-package click.seichi.gigantic.data.caches
+package click.seichi.gigantic.cache.cache
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.data.keys.Key
+import click.seichi.gigantic.cache.key.Key
+import click.seichi.gigantic.cache.manipulator.Manipulator
 import org.bukkit.Bukkit
 
 
@@ -12,7 +13,23 @@ import org.bukkit.Bukkit
  * @author tar0ss
  */
 abstract class Cache<C : Cache<C>> {
-    private val map: MutableMap<Key<C, out Any>, Any> = mutableMapOf()
+    private val keyMap: MutableMap<Key<C, out Any>, Any> = mutableMapOf()
+
+    private val manipulatorMap: MutableMap<Class<out Any>, Any> = mutableMapOf()
+
+    fun <M : Manipulator<M, C>> register(clazz: Class<M>) {
+        manipulatorMap[clazz] = clazz.newInstance()
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <M : Manipulator<M, C>> find(clazz: Class<M>) = (manipulatorMap[clazz] as M?)?.from(this)
+
+    fun <M : Manipulator<M, C>> offer(manipulator: M) = manipulator.set(this)
+
+    @Suppress("UNCHECKED_CAST")
+    fun <M : Manipulator<M, C>> manipulate(clazz: Class<M>, manipulating: (M) -> Unit): Boolean {
+        return find(clazz)?.apply(manipulating)?.set(this) ?: false
+    }
 
     abstract fun read()
 
@@ -33,26 +50,22 @@ abstract class Cache<C : Cache<C>> {
     // All return value must be V
     @Suppress("UNCHECKED_CAST")
     protected fun <V : Any> getOrDefault(key: Key<C, out V>): V {
-        return map.getOrDefault(key, key.default) as V
+        return keyMap.getOrDefault(key, key.default) as V
     }
 
     // All return value must be V
     @Suppress("UNCHECKED_CAST")
     fun <V : Any> find(key: Key<C, out V>): V? {
-        return map[key] as V?
+        return keyMap[key] as V?
     }
 
-    fun <V : Any> registerKey(key: Key<C, out V>) {
-        map.putIfAbsent(key, key.default)
-    }
-
-    fun <V : Any> removeKey(key: Key<C, out V>) {
-        map.remove(key)
+    fun <V : Any> registerKey(key: Key<C, out V>, value: V? = null) {
+        keyMap.putIfAbsent(key, value ?: key.default)
     }
 
     fun <V : Any> offer(key: Key<C, V>, value: V): Boolean {
         if (!key.satisfyWith(value)) return false
-        map.replace(key, value) ?: return false
+        keyMap.replace(key, value) ?: return false
         return true
     }
 
@@ -60,10 +73,6 @@ abstract class Cache<C : Cache<C>> {
         val oldValue = find(key) ?: return false
         val newValue = transforming(oldValue)
         return offer(key, newValue)
-    }
-
-    fun <V : Any> support(key: Key<C, out V>): Boolean {
-        return map.containsKey(key)
     }
 
 }

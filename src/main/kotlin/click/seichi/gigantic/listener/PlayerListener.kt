@@ -5,18 +5,16 @@ import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.belt.belts.CutBelt
 import click.seichi.gigantic.belt.belts.DigBelt
 import click.seichi.gigantic.belt.belts.MineBelt
-import click.seichi.gigantic.config.PlayerLevelConfig
-import click.seichi.gigantic.config.PlayerLevelConfig.MAX
-import click.seichi.gigantic.data.PlayerCacheMemory
-import click.seichi.gigantic.data.keys.Keys
+import click.seichi.gigantic.cache.PlayerCacheMemory
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent
-import click.seichi.gigantic.extension.central
-import click.seichi.gigantic.extension.find
-import click.seichi.gigantic.extension.offer
-import click.seichi.gigantic.extension.transform
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
+import click.seichi.gigantic.player.LockedFunction
+import click.seichi.gigantic.topbar.bars.PlayerBars
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import org.bukkit.Bukkit
@@ -74,21 +72,20 @@ class PlayerListener : Listener {
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
         if (!player.isOp) player.gameMode = GameMode.SURVIVAL
-        player.offer(Keys.EXP, ExpProducer.calcExp(player))
 
-        // level計算
-        val exp = player.find(Keys.EXP) ?: 0L
-        player.transform(Keys.LEVEL) { current ->
-            var level = current
-            while (exp >= PlayerLevelConfig.LEVEL_MAP[level + 1] ?: Long.MAX_VALUE) {
-                if (level + 1 > MAX) break
-                level++
-            }
-            level
+        // Calculate level
+        player.manipulate(CatalogPlayerCache.LEVEL) {
+            it.calculate(ExpProducer.calcExp(player)) {}
         }
+
+        // Update max mana
+        val mana = player.find(Keys.MANA)?.apply {
+            updateMaxMana(level)
+        } ?: return
 
         player.find(Keys.BELT)?.wear(player)
         player.find(Keys.BAG)?.carry(player)
+
         player.updateInventory()
         player.saturation = Float.MAX_VALUE
         player.foodLevel = 20
@@ -100,11 +97,28 @@ class PlayerListener : Listener {
                 false
         ))
 
-        // display
-        PlayerMessages.EXP_BAR_DISPLAY(
-                player.find(Keys.LEVEL) ?: 0,
-                player.find(Keys.EXP) ?: 0L
-        ).sendTo(player)
+        // Show bar
+        val manaBar = player.find(Keys.MANA_BAR) ?: return
+        val locale = player.find(Keys.LOCALE) ?: return
+        if (LockedFunction.MANA.isUnlocked(player))
+            PlayerBars.MANA(mana, locale).show(manaBar)
+
+        // Messages
+        player.transform(Keys.IS_FIRST_JOIN) {
+            if (it) PlayerMessages.FIRST_JOIN.sendTo(player)
+            false
+        }
+
+        Keys.HAS_UNLOCKED_MAP.forEach { func, key ->
+            if (!func.isUnlocked(player)) return@forEach
+            player.transform(key) { hasUnlocked ->
+                if (!hasUnlocked) func.unlockMessage?.sendTo(player)
+                true
+            }
+        }
+
+        player.find(Keys.LEVEL)?.let { PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player) }
+
 //        PlayerMessages.MEMORY_SIDEBAR(player.find(Keys.MEMORY_MAP[]))
     }
 

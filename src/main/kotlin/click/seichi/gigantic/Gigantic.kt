@@ -1,8 +1,8 @@
 package click.seichi.gigantic
 
 import click.seichi.gigantic.bag.bags.MainBag
+import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.config.DatabaseConfig
-import click.seichi.gigantic.data.PlayerCacheMemory
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.head.Head

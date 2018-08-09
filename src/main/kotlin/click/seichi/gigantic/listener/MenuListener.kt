@@ -1,6 +1,6 @@
 package click.seichi.gigantic.listener
 
-import click.seichi.gigantic.data.keys.Keys
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.isBeltSlot
 import click.seichi.gigantic.menu.Menu

@@ -1,9 +1,10 @@
 package click.seichi.gigantic.extension
 
-import click.seichi.gigantic.data.PlayerCacheMemory
-import click.seichi.gigantic.data.caches.PlayerCache
-import click.seichi.gigantic.data.keys.Key
-import click.seichi.gigantic.data.keys.Keys
+import click.seichi.gigantic.cache.PlayerCacheMemory
+import click.seichi.gigantic.cache.cache.PlayerCache
+import click.seichi.gigantic.cache.key.Key
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.util.CardinalDirection
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
@@ -25,13 +26,17 @@ fun Player.getHead() = ItemStack(Material.SKULL_ITEM, 1, 3).apply {
     }
 }
 
-fun <V : Any> Player.supports(key: Key<PlayerCache, out V>) = PlayerCacheMemory.get(uniqueId).support(key)
-
 fun <V : Any> Player.find(key: Key<PlayerCache, out V>) = PlayerCacheMemory.get(uniqueId).find(key)
 
 fun <V : Any> Player.offer(key: Key<PlayerCache, V>, value: V) = PlayerCacheMemory.get(uniqueId).offer(key, value)
 
 fun <V : Any> Player.transform(key: Key<PlayerCache, V>, transforming: (V) -> V) = PlayerCacheMemory.get(uniqueId).transform(key, transforming)
+
+fun <M : Manipulator<M, PlayerCache>> Player.find(clazz: Class<M>) = PlayerCacheMemory.get(uniqueId).find(clazz)
+
+fun <M : Manipulator<M, PlayerCache>> Player.offer(manipulator: M) = PlayerCacheMemory.get(uniqueId).offer(manipulator)
+
+fun <M : Manipulator<M, PlayerCache>> Player.manipulate(clazz: Class<M>, transforming: (M) -> Unit) = PlayerCacheMemory.get(uniqueId).manipulate(clazz, transforming)
 
 val Player.wrappedLocale: Locale
     get() = find(Keys.LOCALE) ?: Locale.JAPANESE

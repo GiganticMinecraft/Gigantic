@@ -1,15 +1,18 @@
 package click.seichi.gigantic.topbar.bars
 
+import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.components.Mana
 import click.seichi.gigantic.topbar.TopBar
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
+import java.util.*
 
 /**
  * @author tar0ss
  */
 object PlayerBars {
-    val MANA = { mana: Mana, title: String ->
+    val MANA = { mana: Mana, locale: Locale ->
+        val title = PlayerMessages.MANA_BAR_TITLE(mana).asSafety(locale)
         mana.run {
             val progress = current.div(max.toDouble()).let { if (it > 1.0) 1.0 else it }
             TopBar(
