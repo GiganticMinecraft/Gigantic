@@ -79,4 +79,8 @@ abstract class Belt {
 
     fun isFixed(slot: Int) = fixedButton != null && fixedSlot == slot
 
+    fun getFixedSlot(): Int? {
+        if (fixedButton == null) return null
+        return fixedSlot
+    }
 }

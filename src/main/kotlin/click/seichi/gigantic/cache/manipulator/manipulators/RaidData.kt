@@ -1,12 +1,36 @@
 package click.seichi.gigantic.cache.manipulator.manipulators
 
 import click.seichi.gigantic.boss.Boss
+import click.seichi.gigantic.cache.cache.Cache
+import click.seichi.gigantic.cache.cache.PlayerCache
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.relic.Relic
 
-class RaidData(
-        private val bossMap: MutableMap<Boss, Long>,
-        private val relicMap: MutableMap<Relic, Long>
-) {
+class RaidData : Manipulator<RaidData, PlayerCache> {
+
+    override fun from(cache: Cache<PlayerCache>): RaidData? {
+        Boss.values().forEach {
+            bossMap[it] = cache.find(Keys.BOSS_MAP[it] ?: return null) ?: return null
+        }
+        Relic.values().forEach {
+            relicMap[it] = cache.find(Keys.RELIC_MAP[it] ?: return null) ?: return null
+        }
+        return this
+    }
+
+    override fun set(cache: Cache<PlayerCache>): Boolean {
+        Boss.values().forEach {
+            cache.offer(Keys.BOSS_MAP[it] ?: return false, bossMap[it] ?: return false)
+        }
+        Relic.values().forEach {
+            cache.offer(Keys.RELIC_MAP[it] ?: return false, relicMap[it] ?: return false)
+        }
+        return true
+    }
+
+    private val bossMap: MutableMap<Boss, Long> = mutableMapOf()
+    private val relicMap: MutableMap<Relic, Long> = mutableMapOf()
 
     fun defeat(boss: Boss): Long {
         val next = (bossMap[boss] ?: 0L) + 1L

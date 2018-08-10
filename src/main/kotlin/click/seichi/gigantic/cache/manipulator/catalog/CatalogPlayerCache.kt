@@ -1,9 +1,6 @@
 package click.seichi.gigantic.cache.manipulator.catalog
 
-import click.seichi.gigantic.cache.manipulator.manipulators.Level
-import click.seichi.gigantic.cache.manipulator.manipulators.Mana
-import click.seichi.gigantic.cache.manipulator.manipulators.Memory
-import click.seichi.gigantic.cache.manipulator.manipulators.WillAptitude
+import click.seichi.gigantic.cache.manipulator.manipulators.*
 
 /**
  * @author tar0ss
@@ -17,4 +14,11 @@ object CatalogPlayerCache {
     val MEMORY = Memory::class.java
 
     val APTITUDE = WillAptitude::class.java
+
+    val MINE_BURST = MineBurst::class.java
+
+    val MINE_COMBO = MineCombo::class.java
+
+    val RAID_DATA = RaidData::class.java
+
 }

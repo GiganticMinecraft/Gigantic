@@ -28,6 +28,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
         register(CatalogPlayerCache.MANA)
         register(CatalogPlayerCache.MEMORY)
         register(CatalogPlayerCache.APTITUDE)
+        register(CatalogPlayerCache.MINE_BURST)
+        register(CatalogPlayerCache.MINE_COMBO)
+        register(CatalogPlayerCache.RAID_DATA)
     }
 
     override fun read() {

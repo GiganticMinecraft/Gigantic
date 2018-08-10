@@ -116,9 +116,6 @@ class PlayerListener : Listener {
                 player.find(CatalogPlayerCache.MEMORY) ?: return,
                 player.find(CatalogPlayerCache.APTITUDE) ?: return
         )
-
-
-
     }
 
     // プレイヤーのメニュー以外のインベントリーオープンをキャンセル
@@ -261,15 +258,16 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onChangeGameMode(event: PlayerGameModeChangeEvent) {
-//        when (event.newGameMode) {
-//            GameMode.SURVIVAL -> {
-//                val player = event.player ?: return
-//                val gPlayer = player.gPlayer ?: return
-//                player.inventory.heldItemSlot = Belt.TOOL_SLOT
-//                gPlayer.belt.carry(player)
-//                gPlayer.defaultInventory.carry(player)
-//            }
-//        }
+        when (event.newGameMode) {
+            GameMode.SURVIVAL -> {
+                val belt = event.player.find(Keys.BELT) ?: return
+                belt.getFixedSlot()?.let {
+                    event.player.inventory.heldItemSlot = it
+                }
+                belt.wear(event.player)
+                event.player.find(Keys.BAG)?.carry(event.player)
+            }
+        }
     }
 
     @EventHandler
