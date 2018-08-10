@@ -4,24 +4,25 @@ import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
+import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
-import kotlin.properties.Delegates
 
 /**
  * @author tar0ss
  */
 class WillAptitude : Manipulator<WillAptitude, PlayerCache> {
 
-    private var level by Delegates.notNull<Int>()
+    private lateinit var level: Level
 
     private val set = mutableSetOf<Will>()
 
     override fun from(cache: Cache<PlayerCache>): WillAptitude? {
+        set.clear()
         Will.values().mapNotNull { it to cache.find(Keys.APTITUDE_MAP[it] ?: return null) }
                 .filter { it.second == true }
                 .forEach { add(it.first) }
-        level = cache.find(Keys.LEVEL) ?: return null
+        level = cache.find(CatalogPlayerCache.LEVEL) ?: return null
         return this
     }
 
@@ -38,9 +39,11 @@ class WillAptitude : Manipulator<WillAptitude, PlayerCache> {
 
     // 前はレベルで判定していたが、エラーで適正が正しく付与されなかったときに、
     // 直す術がないので、毎レベルごとに、正しい個数の適性があるか判定する。
-    fun addIfNeeded(level: Level): Set<Will> {
+    fun addIfNeeded(): Set<Will> {
         val newWillSet = mutableSetOf<Will>()
         WillGrade.values().forEach { grade ->
+            val missingWillCount = calcMissingAptitude(grade)
+            if (missingWillCount == 0) return@forEach
             (1..calcMissingAptitude(grade)).forEach {
                 Will.values().toList().filter {
                     it.grade == grade
@@ -63,7 +66,7 @@ class WillAptitude : Manipulator<WillAptitude, PlayerCache> {
 
     private fun needAptitude(grade: WillGrade): Int {
         return when (grade) {
-            WillGrade.BASIC -> when (level) {
+            WillGrade.BASIC -> when (level.current) {
                 0 -> 0
                 in 1..20 -> 1
                 in 21..40 -> 2
@@ -71,7 +74,7 @@ class WillAptitude : Manipulator<WillAptitude, PlayerCache> {
                 in 61..80 -> 4
                 else -> 5
             }
-            WillGrade.ADVANCED -> when (level) {
+            WillGrade.ADVANCED -> when (level.current) {
                 in 0..100 -> 0
                 in 101..120 -> 1
                 in 121..140 -> 2

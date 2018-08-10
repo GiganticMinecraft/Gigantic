@@ -1,7 +1,7 @@
 package click.seichi.gigantic.button.buttons
 
 import click.seichi.gigantic.button.Button
-import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.wrappedLocale
@@ -28,8 +28,8 @@ object FixedButtons {
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
                 }
-                val mineBurstTimer = player.find(Keys.MINE_BURST_TIMER) ?: return@apply
-                if (mineBurstTimer.duringFire()) {
+                val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return@apply
+                if (mineBurst.duringFire()) {
                     addEnchantment(Enchantment.DIG_SPEED, 5)
                 }
             }
@@ -49,8 +49,8 @@ object FixedButtons {
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
                 }
-                val mineBurstTimer = player.find(Keys.MINE_BURST_TIMER) ?: return@apply
-                if (mineBurstTimer.duringFire()) {
+                val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return@apply
+                if (mineBurst.duringFire()) {
                     addEnchantment(Enchantment.DIG_SPEED, 5)
                 }
             }
@@ -70,8 +70,8 @@ object FixedButtons {
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
                 }
-                val mineBurstTimer = player.find(Keys.MINE_BURST_TIMER) ?: return@apply
-                if (mineBurstTimer.duringFire()) {
+                val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return@apply
+                if (mineBurst.duringFire()) {
                     addEnchantment(Enchantment.DIG_SPEED, 5)
                 }
             }

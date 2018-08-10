@@ -1,9 +1,10 @@
 package click.seichi.gigantic
 
-import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.cache.PlayerCacheMemory
+import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.DatabaseConfig
 import click.seichi.gigantic.database.table.*
+import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
@@ -104,7 +105,9 @@ class Gigantic : JavaPlugin() {
     override fun onDisable() {
         Bukkit.getOnlinePlayers().filterNotNull().forEach { player ->
             if (player.gameMode == GameMode.SPECTATOR) {
-                player.teleport(MainBag.lastLocationMap.remove(player.uniqueId))
+                player.find(CatalogPlayerCache.AFK_LOCATION)?.let {
+                    player.teleport(it.getLocation())
+                }
                 player.gameMode = GameMode.SURVIVAL
             }
             PlayerCacheMemory.remove(player.uniqueId, false)

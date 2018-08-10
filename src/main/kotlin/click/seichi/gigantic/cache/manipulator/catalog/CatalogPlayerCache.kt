@@ -17,8 +17,12 @@ object CatalogPlayerCache {
 
     val MINE_BURST = MineBurst::class.java
 
+    val MINE_BLOCK = MineBlock::class.java
+
     val MINE_COMBO = MineCombo::class.java
 
     val RAID_DATA = RaidData::class.java
+
+    val AFK_LOCATION = AfkLocation::class.java
 
 }

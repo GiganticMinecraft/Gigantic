@@ -2,7 +2,6 @@ package click.seichi.gigantic.cache.manipulator.manipulators
 
 import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
-import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.config.PlayerLevelConfig
 
@@ -22,13 +21,11 @@ class Level : Manipulator<Level, PlayerCache> {
         private set
 
     override fun from(cache: Cache<PlayerCache>): Level? {
-        exp = cache.find(Keys.EXP) ?: return null
-        current = cache.find(Keys.LEVEL) ?: return null
         return this
     }
 
     override fun set(cache: Cache<PlayerCache>): Boolean {
-        return cache.offer(Keys.EXP, exp) && cache.offer(Keys.LEVEL, current)
+        return true
     }
 
     fun calculate(

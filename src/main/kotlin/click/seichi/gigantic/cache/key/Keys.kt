@@ -224,26 +224,6 @@ object Keys {
             }
             .toMap()
 
-    val LEVEL = object : Key<PlayerCache, Int> {
-        override val default: Int
-            get() = 0
-
-        override fun satisfyWith(value: Int): Boolean {
-            return value >= 0
-        }
-
-    }
-
-    val EXP = object : Key<PlayerCache, Long> {
-        override val default: Long
-            get() = 0L
-
-        override fun satisfyWith(value: Long): Boolean {
-            return value >= 0L
-        }
-
-    }
-
     val BELT = object : Key<PlayerCache, Belt> {
         override val default: Belt
             get() = MineBelt

@@ -1,5 +1,6 @@
 package click.seichi.gigantic.topbar.bars
 
+import click.seichi.gigantic.cache.manipulator.manipulators.Mana
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.topbar.TopBar
 import org.bukkit.boss.BarColor

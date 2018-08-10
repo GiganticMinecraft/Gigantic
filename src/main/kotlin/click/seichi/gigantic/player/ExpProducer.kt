@@ -1,6 +1,6 @@
 package click.seichi.gigantic.player
 
-import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import org.bukkit.entity.Player
 
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player
 enum class ExpProducer(private val producing: (Player) -> Long) {
     MINE_BLOCK(
             { player ->
-                player.find(Keys.EXP) ?: 0L
+                player.find(CatalogPlayerCache.MINE_BLOCK)?.get() ?: 0L
             }
     )
     ;

@@ -15,6 +15,7 @@ class Memory : Manipulator<Memory, PlayerCache> {
 
 
     override fun from(cache: Cache<PlayerCache>): Memory? {
+        map.clear()
         Will.values().forEach { add(it, cache.find(Keys.MEMORY_MAP[it] ?: return null) ?: return null) }
         return this
     }

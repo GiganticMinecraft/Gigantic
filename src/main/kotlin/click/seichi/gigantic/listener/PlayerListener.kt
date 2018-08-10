@@ -1,7 +1,6 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.belt.belts.CutBelt
 import click.seichi.gigantic.belt.belts.DigBelt
 import click.seichi.gigantic.belt.belts.MineBelt
@@ -14,6 +13,10 @@ import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.LockedFunction
+import click.seichi.gigantic.spirit.SpiritManager
+import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
+import click.seichi.gigantic.spirit.spirits.WillSpirit
+import click.seichi.gigantic.will.WillSize
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import org.bukkit.Bukkit
@@ -60,7 +63,9 @@ class PlayerListener : Listener {
     fun onPlayerQuit(event: PlayerQuitEvent) {
         val player = event.player ?: return
         if (player.gameMode == GameMode.SPECTATOR) {
-            player.teleport(MainBag.lastLocationMap.remove(player.uniqueId) ?: return)
+            player.find(CatalogPlayerCache.AFK_LOCATION)?.getLocation()?.let {
+                player.teleport(it)
+            }
             player.gameMode = GameMode.SURVIVAL
         }
         val uniqueId = player.uniqueId
@@ -104,6 +109,15 @@ class PlayerListener : Listener {
             false
         }
 
+        trySendingUnlockMessage(player)
+
+        PlayerMessages.MEMORY_SIDEBAR(
+                player.find(CatalogPlayerCache.MEMORY) ?: return,
+                player.find(CatalogPlayerCache.APTITUDE) ?: return
+        )
+    }
+
+    fun trySendingUnlockMessage(player: Player) {
         Keys.HAS_UNLOCKED_MAP.forEach { func, key ->
             if (!func.isUnlocked(player)) return@forEach
             player.transform(key) { hasUnlocked ->
@@ -111,11 +125,6 @@ class PlayerListener : Listener {
                 true
             }
         }
-
-        PlayerMessages.MEMORY_SIDEBAR(
-                player.find(CatalogPlayerCache.MEMORY) ?: return,
-                player.find(CatalogPlayerCache.APTITUDE) ?: return
-        )
     }
 
     // プレイヤーのメニュー以外のインベントリーオープンをキャンセル
@@ -167,6 +176,7 @@ class PlayerListener : Listener {
         if (player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
         switchBelt(player)
+
     }
 
     // TODO 自由に選択できるようにする
@@ -176,65 +186,52 @@ class PlayerListener : Listener {
             is MineBelt -> DigBelt
             is DigBelt -> CutBelt
             else -> MineBelt
-        })
+        }.apply { wear(player) }
+        )
     }
 
     @EventHandler
     fun onLevelUp(event: LevelUpEvent) {
+        val player = event.player
 
-//        val gPlayer = event.player.gPlayer ?: return
-//
-//        // Update unlock function
-//        LockedFunction.values()
-//                .firstOrNull { gPlayer.level.current == it.unlockLevel }
-//                ?.unlockMessage?.sendTo(event.player)
-//
-//        // Update player mana
-//        gPlayer.mana.run {
-//            updateMaxMana(gPlayer.level)
-//            increase(max, true)
-//        }
-//
-//        // Displays
-//        if (LockedFunction.MANA.isUnlocked(gPlayer)) {
-//            val title = PlayerMessages.MANA_BAR_TITLE(gPlayer.mana).asSafety(gPlayer.locale)
-//            PlayerBars.MANA(gPlayer.mana, title).show(gPlayer.manaBar)
-//        }
-//
-//        // Update player Belt
-//        gPlayer.belt.carry(event.player)
-//
-//        // Update player inventory
-//        gPlayer.defaultInventory.carry(event.player)
-//
-//        // Update will aptitude
-//        val newWillList = gPlayer.aptitude.addIfNeeded(gPlayer.level).toMutableList()
-//        if (newWillList.isEmpty()) return
-//
-//        // Spawn will that added to player
-//        newWillList.forEachIndexed { index, will ->
-//            SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, event.player.eyeLocation
-//                    .clone()
-//                    .let {
-//                        it.add(
-//                                it.direction.x * 2,
-//                                index.toDouble(),
-//                                it.direction.z * 2
-//                        )
-//                    }, will, event.player, WillSize.MEDIUM))
-//        }
-//
-//        // Will messages
-//        if (gPlayer.level.current == 1) {
-//            PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(newWillList.removeAt(0)).sendTo(event.player)
-//            newWillList.forEach {
-//                PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(event.player)
-//            }
-//        } else {
-//            newWillList.forEach {
-//                PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(event.player)
-//            }
-//        }
+        trySendingUnlockMessage(player)
+
+        player.manipulate(CatalogPlayerCache.MANA) {
+            it.updateMaxMana()
+            it.increase(it.max, true)
+            if (LockedFunction.MANA.isUnlocked(player))
+                it.display()
+        }
+
+        player.find(Keys.BELT)?.wear(player)
+        player.find(Keys.BAG)?.carry(player)
+
+        player.updateInventory()
+
+        // Update will aptitude
+        spawnNewWill(player)
+    }
+
+    fun spawnNewWill(player: Player) {
+        val level = player.find(CatalogPlayerCache.LEVEL) ?: return
+        player.manipulate(CatalogPlayerCache.APTITUDE) {
+            it.addIfNeeded().forEachIndexed { index, will ->
+                SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, player.eyeLocation
+                        .clone()
+                        .let {
+                            it.add(
+                                    it.direction.x * 2,
+                                    index.toDouble(),
+                                    it.direction.z * 2
+                            )
+                        }, will, player, WillSize.MEDIUM))
+                if (index == 0 && level.current == 1) {
+                    PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(will).sendTo(player)
+                } else {
+                    PlayerMessages.OBTAIN_WILL_APTITUDE(will).sendTo(player)
+                }
+            }
+        }
     }
 
     @EventHandler

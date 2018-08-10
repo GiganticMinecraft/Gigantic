@@ -10,6 +10,7 @@ import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
 import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 import java.util.*
 
@@ -21,80 +22,84 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
     init {
         registerKey(Keys.BELT)
         registerKey(Keys.BAG)
-        registerKey(Keys.LEVEL)
-        registerKey(Keys.EXP)
         registerKey(Keys.MANA)
         register(CatalogPlayerCache.LEVEL)
         register(CatalogPlayerCache.MANA)
         register(CatalogPlayerCache.MEMORY)
         register(CatalogPlayerCache.APTITUDE)
         register(CatalogPlayerCache.MINE_BURST)
+        register(CatalogPlayerCache.MINE_BLOCK)
         register(CatalogPlayerCache.MINE_COMBO)
         register(CatalogPlayerCache.RAID_DATA)
+        register(CatalogPlayerCache.AFK_LOCATION)
     }
 
     override fun read() {
-        UserEntityData(uniqueId, playerName).run {
-            Keys.IS_FIRST_JOIN.let {
-                registerKey(it, it.read(user))
-            }
-            Keys.LOCALE.let {
-                registerKey(it, it.read(user))
-            }
-            Keys.MANA.let {
-                registerKey(it, it.read(user))
-            }
-            Keys.MINEBLOCK_MAP.forEach { reason, key ->
-                registerKey(key, key.read(userMineBlockMap[reason] ?: return@forEach))
-            }
-            Keys.MEMORY_MAP.forEach { will, key ->
-                registerKey(key, key.read(userWillMap[will] ?: return@forEach))
-            }
-            Keys.APTITUDE_MAP.forEach { will, key ->
-                registerKey(key, key.read(userWillMap[will] ?: return@forEach))
-            }
-            Keys.BOSS_MAP.forEach { boss, key ->
-                registerKey(key, key.read(userBossMap[boss] ?: return@forEach))
-            }
-            Keys.RELIC_MAP.forEach { relic, key ->
-                registerKey(key, key.read(userRelicMap[relic] ?: return@forEach))
-            }
-            Keys.HAS_UNLOCKED_MAP.forEach { func, key ->
-                registerKey(key, key.read(userLockedMap[func] ?: return@forEach))
+        transaction {
+            UserEntityData(uniqueId, playerName).run {
+                Keys.IS_FIRST_JOIN.let {
+                    registerKey(it, it.read(user))
+                }
+                Keys.LOCALE.let {
+                    registerKey(it, it.read(user))
+                }
+                Keys.MANA.let {
+                    registerKey(it, it.read(user))
+                }
+                Keys.MINEBLOCK_MAP.forEach { reason, key ->
+                    registerKey(key, key.read(userMineBlockMap[reason] ?: return@forEach))
+                }
+                Keys.MEMORY_MAP.forEach { will, key ->
+                    registerKey(key, key.read(userWillMap[will] ?: return@forEach))
+                }
+                Keys.APTITUDE_MAP.forEach { will, key ->
+                    registerKey(key, key.read(userWillMap[will] ?: return@forEach))
+                }
+                Keys.BOSS_MAP.forEach { boss, key ->
+                    registerKey(key, key.read(userBossMap[boss] ?: return@forEach))
+                }
+                Keys.RELIC_MAP.forEach { relic, key ->
+                    registerKey(key, key.read(userRelicMap[relic] ?: return@forEach))
+                }
+                Keys.HAS_UNLOCKED_MAP.forEach { func, key ->
+                    registerKey(key, key.read(userLockedMap[func] ?: return@forEach))
+                }
             }
         }
     }
 
     override fun write() {
-        UserEntityData(uniqueId, playerName).run {
-            // 更新時間を記録
-            user.updatedDate = DateTime.now()
-            Keys.IS_FIRST_JOIN.let {
-                it.store(user, getOrDefault(it))
-            }
-            Keys.LOCALE.let {
-                it.store(user, getOrDefault(it))
-            }
-            Keys.MANA.let {
-                it.store(user, getOrDefault(it))
-            }
-            Keys.MINEBLOCK_MAP.forEach { reason, key ->
-                key.store(userMineBlockMap[reason] ?: return@forEach, getOrDefault(key))
-            }
-            Keys.MEMORY_MAP.forEach { will, key ->
-                key.store(userWillMap[will] ?: return@forEach, getOrDefault(key))
-            }
-            Keys.APTITUDE_MAP.forEach { will, key ->
-                key.store(userWillMap[will] ?: return@forEach, getOrDefault(key))
-            }
-            Keys.BOSS_MAP.forEach { boss, key ->
-                key.store(userBossMap[boss] ?: return@forEach, getOrDefault(key))
-            }
-            Keys.RELIC_MAP.forEach { relic, key ->
-                key.store(userRelicMap[relic] ?: return@forEach, getOrDefault(key))
-            }
-            Keys.HAS_UNLOCKED_MAP.forEach { func, key ->
-                key.store(userLockedMap[func] ?: return@forEach, getOrDefault(key))
+        transaction {
+            UserEntityData(uniqueId, playerName).run {
+                // 更新時間を記録
+                user.updatedDate = DateTime.now()
+                Keys.IS_FIRST_JOIN.let {
+                    it.store(user, getOrDefault(it))
+                }
+                Keys.LOCALE.let {
+                    it.store(user, getOrDefault(it))
+                }
+                Keys.MANA.let {
+                    it.store(user, getOrDefault(it))
+                }
+                Keys.MINEBLOCK_MAP.forEach { reason, key ->
+                    key.store(userMineBlockMap[reason] ?: return@forEach, getOrDefault(key))
+                }
+                Keys.MEMORY_MAP.forEach { will, key ->
+                    key.store(userWillMap[will] ?: return@forEach, getOrDefault(key))
+                }
+                Keys.APTITUDE_MAP.forEach { will, key ->
+                    key.store(userWillMap[will] ?: return@forEach, getOrDefault(key))
+                }
+                Keys.BOSS_MAP.forEach { boss, key ->
+                    key.store(userBossMap[boss] ?: return@forEach, getOrDefault(key))
+                }
+                Keys.RELIC_MAP.forEach { relic, key ->
+                    key.store(userRelicMap[relic] ?: return@forEach, getOrDefault(key))
+                }
+                Keys.HAS_UNLOCKED_MAP.forEach { func, key ->
+                    key.store(userLockedMap[func] ?: return@forEach, getOrDefault(key))
+                }
             }
         }
     }

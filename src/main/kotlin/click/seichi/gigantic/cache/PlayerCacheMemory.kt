@@ -1,7 +1,6 @@
 package click.seichi.gigantic.cache
 
 import click.seichi.gigantic.cache.cache.PlayerCache
-import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
 /**
@@ -16,19 +15,15 @@ object PlayerCacheMemory {
 
         val newCache = PlayerCache(uniqueId, playerName)
 
-        transaction {
-            newCache.read()
-        }
+        newCache.read()
 
         playerCacheMap[uniqueId] = newCache
     }
 
     fun remove(uniqueId: UUID, isAsync: Boolean) {
         playerCacheMap.remove(uniqueId)?.run {
-            transaction {
-                if (isAsync) writeAsync()
-                else write()
-            }
+            if (isAsync) writeAsync()
+            else write()
         }
     }
 

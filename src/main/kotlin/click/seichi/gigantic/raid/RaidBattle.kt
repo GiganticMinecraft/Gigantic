@@ -37,7 +37,7 @@ class RaidBattle(val boss: Boss) {
     fun isJoined(player: Player) = joinedPlayerSet.contains(player.uniqueId)
     fun isDropped(player: Player) = droppedPlayerSet.contains(player.uniqueId)
 
-    fun update() = BossBars.RAID_BOSS(this, boss.localizedName.asSafety(Gigantic.DEFAULT_LOCALE)).show(bossBar)
+    fun display() = BossBars.RAID_BOSS(this, boss.localizedName.asSafety(Gigantic.DEFAULT_LOCALE)).show(bossBar)
 
     override fun equals(other: Any?): Boolean {
         val battle = other as? RaidBattle ?: return false

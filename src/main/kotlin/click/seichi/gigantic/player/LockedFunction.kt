@@ -1,6 +1,6 @@
 package click.seichi.gigantic.player
 
-import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.UnlockMessages
@@ -15,15 +15,15 @@ enum class LockedFunction(
         val unlockMessage: ChatMessage? = null
 ) {
     MINE_BURST(0, {
-        it.find(Keys.LEVEL)?.current ?: 0 >= 5
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
     }, UnlockMessages.UNLOCK_MINE_BURST),
 
     RAID_BATTLE(1, {
-        it.find(Keys.LEVEL)?.current ?: 0 >= 6
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 6
     }, UnlockMessages.UNLOCK_RAID_BATTLE),
 
     MANA(2, {
-        it.find(Keys.LEVEL)?.current ?: 0 >= 10
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }),
     ;
 

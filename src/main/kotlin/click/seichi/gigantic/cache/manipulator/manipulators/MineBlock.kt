@@ -11,6 +11,7 @@ class MineBlock : Manipulator<MineBlock, PlayerCache> {
     private val map: MutableMap<MineBlockReason, Long> = mutableMapOf()
 
     override fun from(cache: Cache<PlayerCache>): MineBlock? {
+        map.clear()
         MineBlockReason.values()
                 .map { add(cache.find(Keys.MINEBLOCK_MAP[it] ?: return null) ?: return null, it) }
         return this

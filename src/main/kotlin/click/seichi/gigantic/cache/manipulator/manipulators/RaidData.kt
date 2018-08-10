@@ -10,6 +10,8 @@ import click.seichi.gigantic.relic.Relic
 class RaidData : Manipulator<RaidData, PlayerCache> {
 
     override fun from(cache: Cache<PlayerCache>): RaidData? {
+        bossMap.clear()
+        relicMap.clear()
         Boss.values().forEach {
             bossMap[it] = cache.find(Keys.BOSS_MAP[it] ?: return null) ?: return null
         }
