@@ -42,9 +42,7 @@ class WillAptitude : Manipulator<WillAptitude, PlayerCache> {
     fun addIfNeeded(): Set<Will> {
         val newWillSet = mutableSetOf<Will>()
         WillGrade.values().forEach { grade ->
-            val missingWillCount = calcMissingAptitude(grade)
-            if (missingWillCount == 0) return@forEach
-            (1..calcMissingAptitude(grade)).forEach {
+            (0 until calcMissingAptitude(grade)).forEach {
                 Will.values().toList().filter {
                     it.grade == grade
                 }.filterNot {

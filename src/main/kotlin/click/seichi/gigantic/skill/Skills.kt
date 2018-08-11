@@ -1,9 +1,9 @@
 package click.seichi.gigantic.skill
 
-import click.seichi.gigantic.button.buttons.HotButtons
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
@@ -21,7 +21,7 @@ object Skills {
             get() = SkillParameters.MINE_BURST_COOLTIME
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            val belt = player.find(Keys.BELT) ?: return null
+            if (!LockedFunction.MINE_BURST.isUnlocked(player)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             if (!mineBurst.canStart()) return null
             return Consumer { player ->
@@ -29,15 +29,16 @@ object Skills {
                     player.removePotionEffect(PotionEffectType.FAST_DIGGING)
                     player.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
                     SkillSounds.MINE_BURST_ON_FIRE.play(player.location)
-                    belt.wear(player)
+                }.onStart {
+                    player.find(Keys.BELT)?.wear(player)
                 }.onFire {
-                    belt.updateHotButton(player, HotButtons.MINE_BURST_BOOK)
+                    player.find(Keys.BELT)?.wear(player, false)
                 }.onCompleteFire {
-                    belt.wear(player)
+                    player.find(Keys.BELT)?.wear(player)
                 }.onCooldown {
-                    belt.updateHotButton(player, HotButtons.MINE_BURST_BOOK)
+                    player.find(Keys.BELT)?.wear(player, false)
                 }.onCompleteCooldown {
-                    belt.wear(player)
+                    player.find(Keys.BELT)?.wear(player)
                 }.start()
             }
         }

@@ -1,6 +1,5 @@
-package click.seichi.gigantic.menu.button
+package click.seichi.gigantic.button
 
-import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.head.Head

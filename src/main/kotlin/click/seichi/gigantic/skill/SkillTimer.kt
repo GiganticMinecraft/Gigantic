@@ -64,20 +64,21 @@ abstract class SkillTimer {
     fun start() {
         remainTimeToCool = duration
         onStart()
-        Observable.interval(50, TimeUnit.MILLISECONDS)
+        Observable.interval(1, TimeUnit.SECONDS)
                 .take(duration, TimeUnit.SECONDS)
                 .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .subscribe({ elapsedSeconds ->
-                    remainTimeToCool = duration.minus(elapsedSeconds)
+                    remainTimeToCool = duration.minus(elapsedSeconds + 1)
                     onFire(remainTimeToCool)
                 }, {}, {
                     remainTimeToCool = 0L
+                    remainTimeToFire = coolTime
                     onCompleteFire()
-                    Observable.interval(50, TimeUnit.MILLISECONDS)
+                    Observable.interval(1, TimeUnit.SECONDS)
                             .take(coolTime, TimeUnit.SECONDS)
                             .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
-                            .subscribe({ elapsedTime ->
-                                remainTimeToFire = coolTime.minus(elapsedTime)
+                            .subscribe({ elapsedSeconds ->
+                                remainTimeToFire = coolTime.minus(elapsedSeconds + 1)
                                 onCooldown(remainTimeToFire)
                             }, {}, {
                                 remainTimeToFire = 0L

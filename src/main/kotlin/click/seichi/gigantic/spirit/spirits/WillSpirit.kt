@@ -68,7 +68,7 @@ class WillSpirit(
                 PlayerMessages.MEMORY_SIDEBAR(
                         player.find(CatalogPlayerCache.MEMORY) ?: return@Sensor,
                         player.find(CatalogPlayerCache.APTITUDE) ?: return@Sensor
-                )
+                ).sendTo(player)
             }
     )
 

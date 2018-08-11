@@ -10,66 +10,50 @@ import org.bukkit.inventory.ItemStack
  * @author tar0ss
  */
 abstract class Belt {
-    private val hotButtonMap: MutableMap<Int, HotButton> = mutableMapOf()
-    private val slotMap: MutableMap<HotButton, Int> = mutableMapOf()
+
+    private val buttonMap: MutableMap<Int, Button> = mutableMapOf()
     // 手に固定されたスロット番号
     private var fixedSlot: Int? = null
-    private var fixedButton: Button? = null
 
-    protected fun registerFixedButton(slot: Int?, button: Button?) {
-        if (slot != null && hotButtonMap.containsKey(slot)) {
-            slotMap.remove(hotButtonMap.remove(slot))
-        }
+    protected fun registerFixedButton(slot: Int, button: Button) {
         fixedSlot = slot
-        fixedButton = button
+        buttonMap[slot] = button
     }
 
 
     protected fun registerHotButton(slot: Int, button: HotButton) {
         if (slot == fixedSlot) {
             fixedSlot = null
-            fixedButton = null
         }
-        hotButtonMap[slot] = button
-        slotMap[button] = slot
+        buttonMap[slot] = button
     }
 
-    fun wear(player: Player) {
+    /**
+     * ベルトを身に着ける
+     *
+     * @param applyFixed 固定しているアイテムも更新するかどうか
+     */
+    fun wear(player: Player, applyFixed: Boolean = true) {
         player.inventory?.run {
             fixedSlot?.let { heldItemSlot = it }
             (0..8).forEach { slot ->
+                if (!applyFixed && slot == fixedSlot) return@forEach
                 setItem(slot,
-                        if (isFixed(slot)) {
-                            fixedButton
-                        } else {
-                            hotButtonMap[slot]
-                        }?.getItemStack(player) ?: ItemStack(Material.AIR)
+                        buttonMap[slot]?.getItemStack(player) ?: ItemStack(Material.AIR)
                 )
             }
         }
-        player.updateInventory()
-    }
-
-    fun updateHotButton(player: Player, button: HotButton) {
-        if (!slotMap.contains(button)) return
-        player.inventory?.run {
-            setItem(slotMap[button]!!, button.getItemStack(player) ?: ItemStack(Material.AIR))
-        }
-    }
-
-    fun updateFixedButton(player: Player, button: Button) {
-        if (fixedButton != button) return
-        player.inventory?.run {
-            setItem(fixedSlot!!, button.getItemStack(player) ?: ItemStack(Material.AIR))
-        }
+        if (applyFixed)
+            player.updateInventory()
     }
 
     fun getHotButton(slot: Int): HotButton? {
-        return hotButtonMap[slot]
+        if (isFixed(slot)) return null
+        return buttonMap[slot] as HotButton?
     }
 
     fun getFixedButton(): Button? {
-        return fixedButton
+        return buttonMap[fixedSlot ?: return null] ?: return null
     }
 
     fun getButton(slot: Int): Button? {
@@ -77,10 +61,17 @@ abstract class Belt {
         else getHotButton(slot)
     }
 
-    fun isFixed(slot: Int) = fixedButton != null && fixedSlot == slot
+    fun isFixed(slot: Int) = when {
+        fixedSlot == null -> false
+        fixedSlot != slot -> false
+        buttonMap[fixedSlot!!] == null -> false
+        else -> true
+    }
+
+    fun hasFixedSlot() = fixedSlot != null && buttonMap[fixedSlot!!] != null
 
     fun getFixedSlot(): Int? {
-        if (fixedButton == null) return null
+        buttonMap[fixedSlot ?: return null] ?: return null
         return fixedSlot
     }
 }

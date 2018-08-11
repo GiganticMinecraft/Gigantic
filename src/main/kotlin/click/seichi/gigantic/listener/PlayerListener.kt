@@ -114,7 +114,7 @@ class PlayerListener : Listener {
         PlayerMessages.MEMORY_SIDEBAR(
                 player.find(CatalogPlayerCache.MEMORY) ?: return,
                 player.find(CatalogPlayerCache.APTITUDE) ?: return
-        )
+        ).sendTo(player)
     }
 
     fun trySendingUnlockMessage(player: Player) {
@@ -165,9 +165,8 @@ class PlayerListener : Listener {
         if (player.gameMode != GameMode.SURVIVAL) return
         val belt = player.find(Keys.BELT) ?: return
         belt.getHotButton(event.newSlot)?.onItemHeld(player, event)
-        if (!belt.isFixed(event.newSlot)) {
-            event.isCancelled
-        }
+        if (belt.hasFixedSlot() && !belt.isFixed(event.newSlot))
+            event.isCancelled = true
     }
 
     @EventHandler
@@ -183,11 +182,10 @@ class PlayerListener : Listener {
     fun switchBelt(player: Player) {
         val oldBelt = player.find(Keys.BELT) ?: return
         player.offer(Keys.BELT, when (oldBelt) {
-            is MineBelt -> DigBelt
+            MineBelt -> DigBelt
             is DigBelt -> CutBelt
             else -> MineBelt
-        }.apply { wear(player) }
-        )
+        }.apply { wear(player) })
     }
 
     @EventHandler

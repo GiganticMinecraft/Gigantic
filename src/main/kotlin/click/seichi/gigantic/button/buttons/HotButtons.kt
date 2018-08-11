@@ -8,6 +8,7 @@ import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.player.LockedFunction
+import click.seichi.gigantic.skill.Skills
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -27,12 +28,12 @@ object HotButtons {
             return when {
                 mineBurst.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
                     mineBurst.run {
-                        amount = remainTimeToFire.toInt() + 1
+                        amount = remainTimeToFire.toInt()
                     }
                 }
                 mineBurst.duringFire() -> ItemStack(Material.ENCHANTED_BOOK).apply {
                     mineBurst.run {
-                        amount = remainTimeToCool.toInt() + 1
+                        amount = remainTimeToCool.toInt()
                     }
                 }
                 else -> ItemStack(Material.ENCHANTED_BOOK)
@@ -46,13 +47,7 @@ object HotButtons {
         }
 
         override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
-            if (!LockedFunction.MINE_BURST.isUnlocked(player)) return
-            val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return
-            mineBurst.run {
-                if (canStart()) {
-                    start()
-                }
-            }
+            Skills.MINE_BURST.tryInvoke(player)
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
