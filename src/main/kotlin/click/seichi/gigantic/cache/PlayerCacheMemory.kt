@@ -11,6 +11,8 @@ object PlayerCacheMemory {
 
     fun get(uniqueId: UUID) = playerCacheMap[uniqueId]!!
 
+    fun contains(uniqueId: UUID) = playerCacheMap.contains(uniqueId)
+
     fun add(uniqueId: UUID, playerName: String) {
 
         val newCache = PlayerCache(uniqueId, playerName)

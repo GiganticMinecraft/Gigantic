@@ -62,6 +62,9 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerQuit(event: PlayerQuitEvent) {
         val player = event.player ?: return
+        if (!PlayerCacheMemory.contains(player.uniqueId)) {
+            return
+        }
         if (player.gameMode == GameMode.SPECTATOR) {
             player.find(CatalogPlayerCache.AFK_LOCATION)?.getLocation()?.let {
                 player.teleport(it)
@@ -75,6 +78,16 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
+
+        /**
+         * この処理がないと、cacheがロードされずに参加できてしまう
+         *
+         */
+        if (!PlayerCacheMemory.contains(player.uniqueId)) {
+            player.kickPlayer("Server is starting...Please wait a few seconds.")
+            return
+        }
+
         if (!player.isOp) player.gameMode = GameMode.SURVIVAL
 
         player.manipulate(CatalogPlayerCache.LEVEL) {
