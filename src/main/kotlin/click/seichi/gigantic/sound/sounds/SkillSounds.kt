@@ -26,4 +26,18 @@ object SkillSounds {
             volume = 0.3F
     )
 
+    val FLASH_FIRE = DetailedSound(
+            Sound.ENTITY_SNOWBALL_THROW,
+            SoundCategory.BLOCKS,
+            pitch = 4.0F,
+            volume = 1.0F
+    )
+
+    val FLASH_MISS = DetailedSound(
+            Sound.ENTITY_PIG_AMBIENT,
+            SoundCategory.BLOCKS,
+            pitch = 4.0F,
+            volume = 1.0F
+    )
+
 }

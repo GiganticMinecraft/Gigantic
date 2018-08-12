@@ -13,10 +13,11 @@ object UnlockMessages {
 
     val UNLOCK_MINE_BURST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
-                it to "${ChatColor.AQUA}${ChatColor.BOLD}" +
-                        "初めてのスキル･マインバーストを習得した!!\n" +
+                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                        "スキル:マインバースト を習得した!!\n" +
                         "${ChatColor.GRAY}" +
-                        "ショートカットキー: 2\n"
+                        "効果: 少しの間だけ掘る速度が上昇\n" +
+                        "\"2\" キー を押して発動!!\n"
             }
     ))
 
@@ -26,7 +27,19 @@ object UnlockMessages {
                         "レイドバトル解禁!!敵を倒してレアアイテムをゲット!!\n" +
                         "${ChatColor.GRAY}" +
                         "インベントリから敵を選択しよう\n" +
-                        "ブロックを破壊することで敵を攻撃しよう\n"
+                        "ブロックを破壊することで敵を攻撃!!\n"
             }
     ))
+
+    val UNLOCK_FLASH = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                        "初めてのスキル:フラッシュ を習得した!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "効果: ブロックに向けて発動すると\n" +
+                        "そのブロックの上にワープする\n" +
+                        "\"3\" キー を押して発動!!\n"
+            }
+    ))
+
 }

@@ -27,4 +27,6 @@ object CatalogPlayerCache {
 
     val MENU_DATA = MenuData::class.java
 
+    val FLASH = Flash::class.java
+
 }

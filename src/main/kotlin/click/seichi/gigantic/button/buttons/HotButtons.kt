@@ -55,4 +55,34 @@ object HotButtons {
 
     }
 
+    val FLASH_BOOK = object : HotButton {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.FLASH.isUnlocked(player)) return null
+            val flash = player.find(CatalogPlayerCache.FLASH) ?: return null
+            return when {
+                flash.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
+                    flash.run {
+                        amount = remainTimeToFire.toInt()
+                    }
+                }
+                else -> ItemStack(Material.ENCHANTED_BOOK)
+            }.apply {
+                setDisplayName(HookedItemMessages.FLASH.asSafety(player.wrappedLocale))
+                setLore(*HookedItemMessages.FLASH_LORE(flash)
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
+            }
+        }
+
+        override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
+            Skills.FLASH.tryInvoke(player)
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
+    }
+
 }

@@ -26,9 +26,11 @@ enum class LockedFunction(
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }),
 
-    EXPLOSION(3, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
-    })
+    FLASH(3, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 4
+    }, UnlockMessages.UNLOCK_FLASH),
+
+
     ;
 
     fun isUnlocked(player: Player) = isUnlocking(player)

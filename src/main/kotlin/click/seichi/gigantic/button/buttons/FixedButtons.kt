@@ -42,7 +42,7 @@ object FixedButtons {
     val SPADE = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_SPADE).apply {
-                setDisplayName(HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
+                setDisplayName(HookedItemMessages.SPADE.asSafety(player.wrappedLocale))
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -63,7 +63,7 @@ object FixedButtons {
     val AXE = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_AXE).apply {
-                setDisplayName(HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
+                setDisplayName(HookedItemMessages.AXE.asSafety(player.wrappedLocale))
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)

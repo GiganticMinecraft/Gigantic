@@ -20,7 +20,6 @@ abstract class Belt {
         buttonMap[slot] = button
     }
 
-
     protected fun registerHotButton(slot: Int, button: HotButton) {
         if (slot == fixedSlot) {
             fixedSlot = null
@@ -74,4 +73,5 @@ abstract class Belt {
         buttonMap[fixedSlot ?: return null] ?: return null
         return fixedSlot
     }
+
 }

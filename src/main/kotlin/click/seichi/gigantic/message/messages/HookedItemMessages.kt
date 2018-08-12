@@ -1,7 +1,8 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.cache.manipulator.manipulators.Flash
+import click.seichi.gigantic.cache.manipulator.manipulators.MineBurst
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.skill.LingeringSkillTimer
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -34,18 +35,45 @@ object HookedItemMessages {
                     "マインバースト"
     )
 
-    val MINE_BURST_LORE = { mineBurstTimer: LingeringSkillTimer ->
+    val MINE_BURST_LORE = { mineburst: MineBurst ->
         listOf(
                 LocalizedText(
                         Locale.JAPANESE to
                                 "${ChatColor.GRAY}" +
-                                "${mineBurstTimer.duration}秒間破壊速度上昇"
+                                "${mineburst.duration}秒間破壊速度上昇"
                 ),
                 LocalizedText(
                         Locale.JAPANESE to
                                 "${ChatColor.AQUA}" +
-                                "クールタイム : ${mineBurstTimer.coolTime}秒"
+                                "クールタイム : ${mineburst.coolTime}秒"
                 )
         )
     }
+
+    val FLASH = LocalizedText(
+            Locale.JAPANESE to
+                    "${ChatColor.BLUE}" +
+                    "フラッシュ"
+    )
+
+    val FLASH_LORE = { flash: Flash ->
+        listOf(
+                LocalizedText(
+                        Locale.JAPANESE to
+                                "${ChatColor.GRAY}" +
+                                "ブロックに向けて発動すると"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to
+                                "${ChatColor.GRAY}" +
+                                "そのブロックに向けてテレポート"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to
+                                "${ChatColor.AQUA}" +
+                                "クールタイム : ${flash.coolTime}秒"
+                )
+        )
+    }
+
 }
