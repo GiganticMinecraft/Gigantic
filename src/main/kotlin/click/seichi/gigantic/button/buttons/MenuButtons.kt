@@ -23,10 +23,10 @@ import org.bukkit.inventory.ItemStack
  */
 object MenuButtons {
 
-    val PROFILE = object : Button {
+    val PROFILE_PROFILE = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
             return player.getHead().apply {
-                setDisplayName(MenuMessages.PROFILE.asSafety(player.wrappedLocale))
+                setDisplayName(MenuMessages.PROFILE_PROFILE.asSafety(player.wrappedLocale))
                 val level = player.find(CatalogPlayerCache.LEVEL) ?: return@apply
                 val aptitude = player.find(CatalogPlayerCache.APTITUDE) ?: return@apply
                 setLore(

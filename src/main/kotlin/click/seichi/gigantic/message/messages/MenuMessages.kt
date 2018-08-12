@@ -20,15 +20,19 @@ object MenuMessages {
     val LINE = (1..23).joinToString("") { "-" }
 
     val PROFILE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}${ChatColor.UNDERLINE}プロフィール"
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}${ChatColor.UNDERLINE}プロフィールを見る"
+    )
+
+    val PROFILE_PROFILE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}プロフィール"
     )
 
     val RAID_BOSS = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.DARK_RED}${ChatColor.BOLD}${ChatColor.UNDERLINE}レイドボス"
+            Locale.JAPANESE to "${ChatColor.DARK_RED}${ChatColor.BOLD}${ChatColor.UNDERLINE}レイドボスと戦う"
     )
 
     val REST = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.BOLD}${ChatColor.UNDERLINE}休憩"
+            Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.BOLD}${ChatColor.UNDERLINE}休憩する"
     )
 
     val BACK_FROM_REST = LocalizedText(
@@ -102,7 +106,7 @@ object MenuMessages {
     )
 
     val PROFILE_TITLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}プロフィール"
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}${ChatColor.UNDERLINE}プロフィール"
     )
 
     val PROFILE_LEVEL = { level: Level ->

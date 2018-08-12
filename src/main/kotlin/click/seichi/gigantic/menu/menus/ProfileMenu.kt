@@ -19,7 +19,7 @@ object ProfileMenu : Menu() {
     }
 
     init {
-        registerButton(0, MenuButtons.PROFILE)
+        registerButton(0, MenuButtons.PROFILE_PROFILE)
         registerButton(1, MenuButtons.PROFILE_RAID_BOSS)
         registerButton(2, MenuButtons.PROFILE_RELIC)
     }
