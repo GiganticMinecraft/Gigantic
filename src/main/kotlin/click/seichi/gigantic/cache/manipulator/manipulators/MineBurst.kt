@@ -3,13 +3,13 @@ package click.seichi.gigantic.cache.manipulator.manipulators
 import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.manipulator.Manipulator
+import click.seichi.gigantic.skill.LingeringSkillTimer
 import click.seichi.gigantic.skill.SkillParameters
-import click.seichi.gigantic.skill.SkillTimer
 
 /**
  * @author tar0ss
  */
-class MineBurst : SkillTimer(), Manipulator<MineBurst, PlayerCache> {
+class MineBurst : LingeringSkillTimer(), Manipulator<MineBurst, PlayerCache> {
     override val duration: Long
         get() = SkillParameters.MINE_BURST_DURATION
 

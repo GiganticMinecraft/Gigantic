@@ -14,6 +14,7 @@ import java.util.function.Consumer
  * @author tar0ss
  */
 object Skills {
+
     val MINE_BURST = object : LingeringSkill {
         override val duration: Long
             get() = SkillParameters.MINE_BURST_DURATION

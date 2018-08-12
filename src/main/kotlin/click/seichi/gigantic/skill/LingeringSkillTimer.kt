@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 /**
  * @author tar0ss
  */
-abstract class SkillTimer {
+abstract class LingeringSkillTimer {
 
     abstract val duration: Long
     abstract val coolTime: Long
@@ -22,35 +22,35 @@ abstract class SkillTimer {
 
     private var onStart: () -> Unit = {}
 
-    fun onStart(starting: () -> Unit): SkillTimer {
+    fun onStart(starting: () -> Unit): LingeringSkillTimer {
         onStart = starting
         return this
     }
 
     private var onFire: (Long) -> Unit = {}
 
-    fun onFire(firing: (Long) -> Unit): SkillTimer {
+    fun onFire(firing: (Long) -> Unit): LingeringSkillTimer {
         onFire = firing
         return this
     }
 
     private var onCompleteFire: () -> Unit = {}
 
-    fun onCompleteFire(completeFiring: () -> Unit): SkillTimer {
+    fun onCompleteFire(completeFiring: () -> Unit): LingeringSkillTimer {
         onCompleteFire = completeFiring
         return this
     }
 
     private var onCooldown: (Long) -> Unit = {}
 
-    fun onCooldown(cooling: (Long) -> Unit): SkillTimer {
+    fun onCooldown(cooling: (Long) -> Unit): LingeringSkillTimer {
         onCooldown = cooling
         return this
     }
 
     private var onCompleteCooldown: () -> Unit = {}
 
-    fun onCompleteCooldown(completeCooling: () -> Unit): SkillTimer {
+    fun onCompleteCooldown(completeCooling: () -> Unit): LingeringSkillTimer {
         onCompleteCooldown = completeCooling
         return this
     }

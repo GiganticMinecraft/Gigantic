@@ -28,7 +28,7 @@ class RaidBoss(boss: Boss) {
         health.coerceAtLeast(0.0)
     }
 
-    private fun getTotalDamage(player: Player) = totalDamageMap[player.uniqueId] ?: 0.0
+    fun getTotalDamage(player: Player) = totalDamageMap[player.uniqueId] ?: 0.0
 
     fun getDrop(player: Player): Relic? {
         if (!isDefeated(player)) return null

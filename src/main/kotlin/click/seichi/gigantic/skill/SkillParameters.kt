@@ -8,4 +8,5 @@ object SkillParameters {
     const val MINE_BURST_DURATION = 5L
 
     const val MINE_BURST_COOLTIME = 60L
+
 }

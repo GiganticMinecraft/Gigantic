@@ -5,7 +5,7 @@ package click.seichi.gigantic.player
  */
 enum class MineBlockReason(val id: Int) {
     GENERAL(0),
-    EXPLOSION(1)
+    RAID_BOSS(1),
     ;
 
     companion object {

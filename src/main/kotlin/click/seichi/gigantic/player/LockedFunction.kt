@@ -25,6 +25,10 @@ enum class LockedFunction(
     MANA(2, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }),
+
+    EXPLOSION(3, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+    })
     ;
 
     fun isUnlocked(player: Player) = isUnlocking(player)

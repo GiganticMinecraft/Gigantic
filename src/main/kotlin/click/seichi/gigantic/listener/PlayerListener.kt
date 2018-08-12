@@ -195,7 +195,7 @@ class PlayerListener : Listener {
         val oldBelt = player.find(Keys.BELT) ?: return
         player.offer(Keys.BELT, when (oldBelt) {
             MineBelt -> DigBelt
-            is DigBelt -> CutBelt
+            DigBelt -> CutBelt
             else -> MineBelt
         }.apply { wear(player) })
     }
@@ -219,10 +219,10 @@ class PlayerListener : Listener {
         player.updateInventory()
 
         // Update will aptitude
-        spawnNewWill(player)
+        tryToSpawnNewWill(player)
     }
 
-    fun spawnNewWill(player: Player) {
+    fun tryToSpawnNewWill(player: Player) {
         val level = player.find(CatalogPlayerCache.LEVEL) ?: return
         player.manipulate(CatalogPlayerCache.APTITUDE) {
             it.addIfNeeded().forEachIndexed { index, will ->

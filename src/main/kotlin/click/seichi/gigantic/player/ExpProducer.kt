@@ -12,6 +12,11 @@ enum class ExpProducer(private val producing: (Player) -> Long) {
             { player ->
                 player.find(CatalogPlayerCache.MINE_BLOCK)?.get() ?: 0L
             }
+    ),
+    RAID_BOSS(
+            { player ->
+                player.find(CatalogPlayerCache.MINE_BLOCK)?.get(MineBlockReason.RAID_BOSS) ?: 0L
+            }
     )
     ;
 

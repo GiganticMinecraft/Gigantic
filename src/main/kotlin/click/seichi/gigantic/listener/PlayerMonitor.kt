@@ -46,6 +46,10 @@ class PlayerMonitor : Listener {
             SkillPops.MINE_COMBO(it).pop(event.block.centralLocation.add(0.0, 0.0, 0.0))
         }
 
+        // raid battle process
+        RaidManager.playBattle(player)
+
+
         var isLevelUp = false
         player.manipulate(CatalogPlayerCache.LEVEL) {
             isLevelUp = it.calculate(ExpProducer.calcExp(player)) { current ->
@@ -57,9 +61,6 @@ class PlayerMonitor : Listener {
         val mineBurst = player.find(CatalogPlayerCache.MINE_BURST)
         if (mineBurst?.duringFire() == true)
             SkillAnimations.MINE_BURST_ON_BREAK.start(location)
-
-        // raid battle process
-        RaidManager.playBattle(player)
 
         // Sounds
         when {

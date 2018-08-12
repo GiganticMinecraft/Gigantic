@@ -10,11 +10,14 @@ import org.bukkit.entity.ArmorStand
  */
 class PopUp(
         private val text: String,
-        private val delay: Long
+        private val duration: Long,
+        private val diffX: Double = 0.0,
+        private val diffY: Double = 0.0,
+        private val diffZ: Double = 0.0
 ) {
 
     fun pop(location: Location) {
-        location.world.spawn(location, ArmorStand::class.java) {
+        location.world.spawn(location.clone().add(diffX, diffY, diffZ), ArmorStand::class.java) {
             it.run {
                 isVisible = false
                 setBasePlate(false)
@@ -29,7 +32,7 @@ class PopUp(
         }.run {
             Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
                 remove()
-            }, delay)
+            }, duration)
         }
     }
 }

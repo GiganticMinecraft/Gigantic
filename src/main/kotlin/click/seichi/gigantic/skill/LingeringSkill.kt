@@ -1,6 +1,8 @@
 package click.seichi.gigantic.skill
 
 /**
+ * スキルの効果が一定時間続く
+ *
  * @author tar0ss
  */
 interface LingeringSkill : Skill {

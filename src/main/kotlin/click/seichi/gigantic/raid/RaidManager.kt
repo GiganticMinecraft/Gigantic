@@ -5,6 +5,7 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.message.messages.BattleMessages
+import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.sound.sounds.BattleSounds
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -37,9 +38,31 @@ object RaidManager {
 
     fun getBattleList() = battleList.toList()
 
-    fun endBattle(raidBattle: RaidBattle) {
+    private fun endBattle(raidBattle: RaidBattle) {
         raidBattle.getJoinedPlayerSet().forEach {
             val player = Bukkit.getPlayer(it) ?: return@forEach
+            BattleSounds.WIN.playOnly(player)
+            val raidBoss = raidBattle.raidBoss
+            val boss = raidBattle.boss
+            player.manipulate(CatalogPlayerCache.RAID_DATA) {
+                if (raidBoss.isDefeated(player)) {
+                    it.defeat(boss)
+                    BattleMessages.DEFEAT_BOSS(boss).sendTo(player)
+                }
+                raidBoss.getDrop(player)?.run {
+                    it.addRelic(this)
+                    BattleMessages.GET_RELIC(this).sendTo(player)
+                }
+            }
+            player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
+                // 20 percent
+                val bonusMineBlock = (if (raidBoss.isDefeated(player))
+                    raidBoss.getTotalDamage(player).div(10.0).times(2.0)
+                else
+                    0.0).toLong()
+                it.add(bonusMineBlock, MineBlockReason.RAID_BOSS)
+                BattleMessages.BONUS_EXP(bonusMineBlock).sendTo(player)
+            }
             raidBattle.left(player)
         }
         battleList.remove(raidBattle)
@@ -49,6 +72,7 @@ object RaidManager {
         getBattleList()
                 .firstOrNull { it.isJoined(player) }
                 ?.run {
+                    if (raidBoss.isDead()) return@run
                     val attackDamage = baseDamage.times(
                             when (player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0L) {
                                 0L -> 0.0
@@ -64,19 +88,6 @@ object RaidManager {
                     )
                     raidBoss.damage(player, attackDamage)
                     if (raidBoss.isDead()) {
-                        getJoinedPlayerSet().forEach {
-                            BattleSounds.WIN.playOnly(player)
-                            player.manipulate(CatalogPlayerCache.RAID_DATA) {
-                                raidBoss.getDrop(player)?.run {
-                                    it.addRelic(this)
-                                    BattleMessages.GET_RELIC(this).sendTo(player)
-                                }
-                                if (raidBoss.isDefeated(player)) {
-                                    it.defeat(boss)
-                                    BattleMessages.DEFEAT_BOSS(boss).sendTo(player)
-                                }
-                            }
-                        }
                         RaidManager.endBattle(this)
                         RaidManager.newBattle()
                     }
