@@ -1,20 +1,14 @@
 package click.seichi.gigantic.menu.menus
 
-import click.seichi.gigantic.button.Button
-import click.seichi.gigantic.extension.addLore
-import click.seichi.gigantic.extension.setDisplayName
-import click.seichi.gigantic.extension.setLore
+import click.seichi.gigantic.button.buttons.MenuButtons
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.sound.DetailedSound
 import click.seichi.gigantic.sound.sounds.MenuSounds
-import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
-import org.bukkit.inventory.ItemStack
 
 /**
  * @author tar0ss
@@ -39,57 +33,7 @@ object RaidBattleMenu : Menu() {
 
     init {
         (0..RaidManager.maxBattle.coerceAtMost(size)).forEach { slot ->
-            registerButton(slot, object : Button {
-                override fun getItemStack(player: Player): ItemStack? {
-                    val battle = RaidManager
-                            .getBattleList()
-                            .getOrNull(slot) ?: return ItemStack(Material.AIR)
-                    val boss = battle.boss
-                    val bossName = boss.localizedName.asSafety(player.wrappedLocale)
-                    val isJoinedOtherRaid = RaidManager
-                            .getBattleList()
-                            .firstOrNull { it.isJoined(player) } != null
-                    return boss.head.toItemStack().apply {
-                        setDisplayName(MenuMessages.BATTLE_BUTTON_TITLE(bossName).asSafety(player.wrappedLocale))
-                        setLore(*MenuMessages.BATTLE_BUTTON_LORE(battle)
-                                .map { it.asSafety(player.wrappedLocale) }
-                                .toTypedArray())
-                        addLore(MenuMessages.LINE)
-                        addLore(
-                                when {
-                                    battle.isDropped(player) ->
-                                        MenuMessages.BATTLE_BUTTON_DROPPED
-                                    battle.isJoined(player) ->
-                                        MenuMessages.BATTLE_BUTTON_LEFT
-                                    isJoinedOtherRaid ->
-                                        MenuMessages.BATTLE_BUTTON_JOINED
-                                    else -> MenuMessages.BATTLE_BUTTON_JOIN
-                                }.asSafety(player.wrappedLocale)
-                        )
-                    }
-                }
-
-                override fun onClick(player: Player, event: InventoryClickEvent) {
-                    val battle = RaidManager
-                            .getBattleList()
-                            .getOrNull(slot) ?: return
-                    val isJoinedOtherRaid = RaidManager
-                            .getBattleList()
-                            .firstOrNull { it.isJoined(player) } != null
-                    when {
-                        battle.isDropped(player) -> return
-                        battle.isJoined(player) -> {
-                            battle.left(player)
-                        }
-                        isJoinedOtherRaid -> return
-                        else -> {
-                            battle.join(player)
-                        }
-                    }
-                    reopen(player)
-                }
-
-            })
+            registerButton(slot, MenuButtons.RAID_BATTLE_BOSS(slot))
         }
     }
 

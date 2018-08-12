@@ -26,6 +26,13 @@ enum class Head(
     RAINBOW("http://textures.minecraft.net/texture/3386f9b0b1d9879c3da33c7a8ca2440c1e411fe93c27c9dbbff56bd697bb7375"),
     // menu heads
     LEFT("http://textures.minecraft.net/texture/3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
+    PUMPKIN_RIGHT_ARROW("http://textures.minecraft.net/texture/c9895d58a04626d5cce18769d54198d0355fd770683bdfb7176d08c7547de"),
+    PUMPKIN_LEFT_ARROW("http://textures.minecraft.net/texture/28a86bb4fcac3862aad3d51393faa7a1cf3553e4934103ed45ac2a9a888eb9a"),
+    JEWELLERY_BOX("http://textures.minecraft.net/texture/3de2984bd5645f9d865a9e8c69352ad4e0109a5b38f3a4243e4d6cb92c8333"),
+    DIAMOND_JEWELLERY("http://textures.minecraft.net/texture/fbeade3a333063f0c0ca8426636a71344dc278e561a72f57a39735b097719f85"),
+    RUBY_JEWELLERY("http://textures.minecraft.net/texture/2aba74d812f3c5e97ad0f1e6cb1d24fc9e13788196cf1bc473211ff142beab"),
+    EMERALD_JEWELLERY("http://textures.minecraft.net/texture/84ab77eefad0b0cdbdf3261a7a4729d5504d6f96d3c162832197443ebe346e6"),
+    SAPPHIRE_JEWELLERY("http://textures.minecraft.net/texture/6183c88db98426c64c37e6d789d4ec1e3de43efaafe4be161961ef943dbe83"),
     ;
 
     private val baseItemStack: ItemStack by lazy {

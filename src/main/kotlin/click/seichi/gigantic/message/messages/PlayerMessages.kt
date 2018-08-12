@@ -38,7 +38,7 @@ object PlayerMessages {
                                 it to "${ChatColor.GREEN}${ChatColor.BOLD}" +
                                         "${will.localizedName.asSafety(it)} : " +
                                         "${ChatColor.RESET}${ChatColor.WHITE}" +
-                                        "${willMap[will]}個"
+                                        "${willMap[will] ?: 0}個"
                             }
                     )
                 }.toMap()

@@ -32,6 +32,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
         register(CatalogPlayerCache.MINE_COMBO)
         register(CatalogPlayerCache.RAID_DATA)
         register(CatalogPlayerCache.AFK_LOCATION)
+        register(CatalogPlayerCache.MENU_DATA)
     }
 
     override fun read() {

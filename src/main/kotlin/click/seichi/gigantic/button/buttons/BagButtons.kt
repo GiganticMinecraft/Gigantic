@@ -7,6 +7,7 @@ import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.getHead
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.menu.menus.ProfileMenu
 import click.seichi.gigantic.menu.menus.RaidBattleMenu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.player.LockedFunction
@@ -32,6 +33,8 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (event.inventory.holder === ProfileMenu) return
+            ProfileMenu.open(player)
         }
 
     }

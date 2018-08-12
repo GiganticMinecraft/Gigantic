@@ -47,7 +47,6 @@ abstract class Menu : InventoryHolder {
 
     /**
      * スロット番号のButtonを取得します
-     *
      * @param slot 取得するスロット番号
      */
     fun getButton(slot: Int): Button? {
@@ -61,12 +60,12 @@ abstract class Menu : InventoryHolder {
      * @param playSound 音を流す時true
      *
      */
-    fun open(player: Player, playSound: Boolean = true) {
+    open fun open(player: Player, playSound: Boolean = true) {
         player.openInventory(createInventory(player))
         if (playSound) openSound.playOnly(player)
     }
 
-    private fun createInventory(player: Player): Inventory {
+    protected open fun createInventory(player: Player): Inventory {
         val title = getTitle(player)
         val inventory = when (type) {
             InventoryType.CHEST -> {

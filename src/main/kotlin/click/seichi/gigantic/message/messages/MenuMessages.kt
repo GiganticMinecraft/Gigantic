@@ -1,8 +1,13 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.cache.manipulator.manipulators.Level
+import click.seichi.gigantic.cache.manipulator.manipulators.WillAptitude
+import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.raid.RaidBattle
 import click.seichi.gigantic.relic.RelicRarity
+import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor
 import java.math.RoundingMode
 import java.util.*
@@ -35,6 +40,15 @@ object MenuMessages {
                 Locale.JAPANESE to "$menuTitle${ChatColor.RESET}${ChatColor.WHITE}に戻る"
         )
     }
+
+    val NEXT_BUTTON = LocalizedText(
+            Locale.JAPANESE to "次へ"
+    )
+
+    val PREV_BUTTON = LocalizedText(
+            Locale.JAPANESE to "前へ"
+    )
+
 
     val BATTLE_BUTTON_TITLE = { bossName: String ->
         LocalizedText(
@@ -86,5 +100,83 @@ object MenuMessages {
     val BATTLE_BUTTON_JOINED = LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}他の戦闘に参加中"
     )
+
+    val PROFILE_TITLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}プロフィール"
+    )
+
+    val PROFILE_LEVEL = { level: Level ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GREEN}整地レベル: ${ChatColor.WHITE}${level.current}"
+        )
+    }
+
+    val PROFILE_EXP = { level: Level ->
+        val isMax = level.current == PlayerLevelConfig.MAX
+        if (isMax) {
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GREEN}経験値: ${ChatColor.WHITE}${level.exp} / ${level.exp}"
+            )
+        } else {
+            val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1]
+                    ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GREEN}経験値: ${ChatColor.WHITE}${level.exp} / $expToNextLevel"
+            )
+        }
+    }
+
+    val PROFILE_WILL_APTITUDE = { aptitude: WillAptitude ->
+        arrayOf(
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GREEN}適正遺志"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE.let { locale ->
+                            locale to Will.values()
+                                    .filter { it.grade == WillGrade.BASIC }
+                                    .joinToString(" ") {
+                                        if (aptitude.has(it))
+                                            "${ChatColor.WHITE}${it.localizedName.asSafety(locale)}"
+                                        else
+                                            "${ChatColor.DARK_GRAY}${it.localizedName.asSafety(locale)}"
+                                    }
+                        }
+                ),
+                LocalizedText(
+                        Locale.JAPANESE.let { locale ->
+                            locale to Will.values()
+                                    .filter { it.grade == WillGrade.ADVANCED }
+                                    .joinToString(" ") {
+                                        if (aptitude.has(it))
+                                            "${ChatColor.WHITE}${it.localizedName.asSafety(locale)}"
+                                        else
+                                            "${ChatColor.DARK_GRAY}${it.localizedName.asSafety(locale)}"
+                                    }
+                        }
+                )
+
+        )
+    }
+
+    val PROFILE_RAID_BOSS = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}倒したレイドボス"
+    )
+
+    val PROFILE_RAID_RELIC = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}手に入れたレリック"
+    )
+
+    val PROFILE_RAID_BOSS_DEFEATED = { defeatCount: Long ->
+        LocalizedText(
+                Locale.JAPANESE to "討伐数: $defeatCount"
+        )
+    }
+
+    val PROFILE_RAID_RELIC_AMOUNT = { amount: Long ->
+        LocalizedText(
+                Locale.JAPANESE to "$amount 個"
+        )
+    }
 
 }

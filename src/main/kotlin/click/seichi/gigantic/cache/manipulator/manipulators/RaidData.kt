@@ -9,6 +9,9 @@ import click.seichi.gigantic.relic.Relic
 
 class RaidData : Manipulator<RaidData, PlayerCache> {
 
+    private val bossMap: MutableMap<Boss, Long> = mutableMapOf()
+    private val relicMap: MutableMap<Relic, Long> = mutableMapOf()
+
     override fun from(cache: Cache<PlayerCache>): RaidData? {
         bossMap.clear()
         relicMap.clear()
@@ -30,9 +33,6 @@ class RaidData : Manipulator<RaidData, PlayerCache> {
         }
         return true
     }
-
-    private val bossMap: MutableMap<Boss, Long> = mutableMapOf()
-    private val relicMap: MutableMap<Relic, Long> = mutableMapOf()
 
     fun defeat(boss: Boss): Long {
         val next = (bossMap[boss] ?: 0L) + 1L

@@ -81,7 +81,6 @@ class PlayerListener : Listener {
 
         /**
          * この処理がないと、cacheがロードされずに参加できてしまう
-         *
          */
         if (!PlayerCacheMemory.contains(player.uniqueId)) {
             player.kickPlayer("Server is starting...Please wait a few seconds.")

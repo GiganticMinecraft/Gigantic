@@ -21,6 +21,12 @@ object MenuSounds {
             pitch = 0.1F
     )
 
+    val PAGE_CHANGE = DetailedSound(
+            Sound.BLOCK_DISPENSER_LAUNCH,
+            SoundCategory.BLOCKS,
+            pitch = 4.0F
+    )
+
     val BATTLE_MENU_OPEN = DetailedSound(
             Sound.BLOCK_ENDERCHEST_OPEN,
             SoundCategory.BLOCKS,

@@ -25,4 +25,6 @@ object CatalogPlayerCache {
 
     val AFK_LOCATION = AfkLocation::class.java
 
+    val MENU_DATA = MenuData::class.java
+
 }

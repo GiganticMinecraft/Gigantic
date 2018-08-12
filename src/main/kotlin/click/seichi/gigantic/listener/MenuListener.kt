@@ -3,6 +3,7 @@ package click.seichi.gigantic.listener
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.isBeltSlot
+import click.seichi.gigantic.menu.BookMenu
 import click.seichi.gigantic.menu.Menu
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
@@ -24,7 +25,10 @@ class MenuListener : Listener {
         when (holder) {
             is Menu -> {
                 when (event.clickedInventory) {
-                    event.view.topInventory -> holder.getButton(event.slot)?.onClick(player, event)
+                    event.view.topInventory -> when (holder) {
+                        is BookMenu -> holder.getButton(player, event.slot)?.onClick(player, event)
+                        else -> holder.getButton(event.slot)?.onClick(player, event)
+                    }
                     event.view.bottomInventory -> {
                         if (event.isBeltSlot) player.find(Keys.BELT)?.getButton(event.slot)?.onClick(player, event)
                         else player.find(Keys.BAG)?.getButton(event.slot)?.onClick(player, event)
