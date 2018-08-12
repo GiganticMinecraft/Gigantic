@@ -129,4 +129,34 @@ object RelicMessages {
             )
     )
 
+    val MERMAID_TEARS_NAME = LocalizedText(
+            Locale.JAPANESE to "人魚の涙"
+    )
+
+    val MERMAID_TEARS_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "一粒だが希少価値はとても高い"
+            )
+    )
+
+    val FISHERMAN_SCALES_NAME = LocalizedText(
+            Locale.JAPANESE to "魚人の鱗"
+    )
+
+    val FISHERMAN_SCALES_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "固くて頑丈な鱗"
+            )
+    )
+
+    val TRITON_TRIDENT_NAME = LocalizedText(
+            Locale.JAPANESE to "トリトンのトライデント"
+    )
+
+    val TRITON_TRIDENT_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "神器の一つ"
+            )
+    )
+
 }

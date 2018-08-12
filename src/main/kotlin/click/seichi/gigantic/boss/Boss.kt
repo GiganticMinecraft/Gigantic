@@ -24,7 +24,10 @@ enum class Boss(
     GUARDIAN_OF_THE_FOREST(6, Head.GUARDIAN_OF_THE_FOREST, BossMessages.GUARDIAN_OF_THE_FOREST_NAME, 4000.0, DropRelic(Relic.BEAR_HAND, 0.3)),
     TURKEY(7, Head.TURKEY, BossMessages.TURKEY_NAME, 450.0, DropRelic(Relic.GRILLED_TURKEY, 0.6)),
     PINK_MUSHROOM(8, Head.PINK_MUSHROOM, BossMessages.PINK_MUSHROOM_NAME, 200.0, DropRelic(Relic.PINK_SPORES, 0.9)),
-    RAINBOW(9, Head.RAINBOW, BossMessages.RAINBOW_NAME, 123456.0, DropRelic(Relic.A_PIECE_OF_RAINBOW, 0.28))
+    RAINBOW(9, Head.RAINBOW, BossMessages.RAINBOW_NAME, 123456.0, DropRelic(Relic.A_PIECE_OF_RAINBOW, 0.28)),
+    MERMAID(10, Head.MERMAID, BossMessages.MERMAID_NAME, 136000.0, DropRelic(Relic.MERMAID_TEARS, 0.33)),
+    MERMAN(11, Head.MERMAN, BossMessages.MERMAN_NAME, 182000.0, DropRelic(Relic.MERMAN_SCALES, 0.88)),
+    TRITON(12, Head.TRITON, BossMessages.TRITON_NAME, 132000000.0, DropRelic(Relic.TRITON_TRIDENT, 0.42)),
     ;
 
     val dropRelicSet = dropRelic.toSet()

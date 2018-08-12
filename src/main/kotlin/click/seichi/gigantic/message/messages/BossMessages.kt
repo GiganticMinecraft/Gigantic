@@ -38,5 +38,14 @@ object BossMessages {
     val RAINBOW_NAME = LocalizedText(
             Locale.JAPANESE to "虹"
     )
+    val MERMAID_NAME = LocalizedText(
+            Locale.JAPANESE to "人魚"
+    )
+    val MERMAN_NAME = LocalizedText(
+            Locale.JAPANESE to "半魚人"
+    )
+    val TRITON_NAME = LocalizedText(
+            Locale.JAPANESE to "深淵より来たりし使者 トリトン"
+    )
 
 }

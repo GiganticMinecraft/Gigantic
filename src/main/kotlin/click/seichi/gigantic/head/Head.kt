@@ -24,6 +24,9 @@ enum class Head(
     TURKEY("http://textures.minecraft.net/texture/d4faa6771b5de536ebed6c85366ab343f2ef53269ead1173a84dae42d6cf2"),
     PINK_MUSHROOM("http://textures.minecraft.net/texture/167f1225d1ebb96ac85355c949e8ce23f6e1222aa66c09566285c6c27435163"),
     RAINBOW("http://textures.minecraft.net/texture/3386f9b0b1d9879c3da33c7a8ca2440c1e411fe93c27c9dbbff56bd697bb7375"),
+    MERMAID("http://textures.minecraft.net/texture/52eb6f41adb8803f2b6a3ce1d7df253cb73131607216a9ff3161cf4af619636"),
+    MERMAN("http://textures.minecraft.net/texture/7f44e58c2794f4ab8599dfc671b649bf775402a4dcbf26fe780f954963797b"),
+    TRITON("http://textures.minecraft.net/texture/a158ab215a93f5c456378935e6a9fe4aeb1f92ffe41a2739e51e8742c1d"),
     // menu heads
     LEFT("http://textures.minecraft.net/texture/3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
     PUMPKIN_RIGHT_ARROW("http://textures.minecraft.net/texture/c9895d58a04626d5cce18769d54198d0355fd770683bdfb7176d08c7547de"),
