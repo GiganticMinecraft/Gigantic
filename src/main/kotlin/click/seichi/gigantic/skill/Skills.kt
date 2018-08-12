@@ -1,5 +1,6 @@
 package click.seichi.gigantic.skill
 
+import click.seichi.gigantic.animation.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
@@ -74,10 +75,14 @@ object Skills {
                         while (!nextBlock.isSurface) {
                             nextBlock = nextBlock.getRelative(BlockFace.UP)
                         }
-                        nextBlock.location.clone().add(0.0, 1.75, 0.0)
+                        nextBlock.location.clone().add(0.0, 1.75, 0.0).apply {
+                            direction = player.location.direction
+                        }
                     }
                     if (tpLocation != null) {
+                        SkillAnimations.FLASH_BEFORE.start(player.location)
                         player.teleport(tpLocation)
+                        SkillAnimations.FLASH_BEFORE.start(player.location)
                         SkillSounds.FLASH_FIRE.play(player.location)
                     } else {
                         SkillSounds.FLASH_MISS.play(player.location)
