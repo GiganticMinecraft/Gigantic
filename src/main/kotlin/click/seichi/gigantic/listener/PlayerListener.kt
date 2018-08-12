@@ -252,9 +252,7 @@ class PlayerListener : Listener {
     @EventHandler
     fun onHunger(event: EntityDamageEvent) {
         event.entity as? Player ?: return
-        if (event.cause == EntityDamageEvent.DamageCause.STARVATION) {
-            event.isCancelled = true
-        }
+        event.isCancelled = true
     }
 
     @EventHandler
