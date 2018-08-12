@@ -61,7 +61,7 @@ object Skills {
         val maxDistance = 50
 
         override val coolTime: Long
-            get() = 5L
+            get() = 15L
 
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.FLASH.isUnlocked(player)) return null

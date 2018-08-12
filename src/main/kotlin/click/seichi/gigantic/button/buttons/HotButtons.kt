@@ -2,10 +2,7 @@ package click.seichi.gigantic.button.buttons
 
 import click.seichi.gigantic.button.HotButton
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.find
-import click.seichi.gigantic.extension.setDisplayName
-import click.seichi.gigantic.extension.setLore
-import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.skill.Skills
@@ -31,12 +28,13 @@ object HotButtons {
                         amount = remainTimeToFire.toInt()
                     }
                 }
-                mineBurst.duringFire() -> ItemStack(Material.ENCHANTED_BOOK).apply {
+                mineBurst.duringFire() -> ItemStack(Material.BLAZE_POWDER).apply {
+                    setEnchanted(true)
                     mineBurst.run {
                         amount = remainTimeToCool.toInt()
                     }
                 }
-                else -> ItemStack(Material.ENCHANTED_BOOK)
+                else -> ItemStack(Material.BLAZE_POWDER)
             }.apply {
                 setDisplayName(HookedItemMessages.MINE_BURST.asSafety(player.wrappedLocale))
                 setLore(*HookedItemMessages.MINE_BURST_LORE(mineBurst)
@@ -66,7 +64,7 @@ object HotButtons {
                         amount = remainTimeToFire.toInt()
                     }
                 }
-                else -> ItemStack(Material.ENCHANTED_BOOK)
+                else -> ItemStack(Material.FEATHER)
             }.apply {
                 setDisplayName(HookedItemMessages.FLASH.asSafety(player.wrappedLocale))
                 setLore(*HookedItemMessages.FLASH_LORE(flash)
