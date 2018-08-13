@@ -79,6 +79,27 @@ object Keys {
 
     }
 
+    val HEALTH = object : DatabaseKey<PlayerCache, Long> {
+
+        override val default: Long
+            get() = 100L
+
+        override fun read(entity: Entity<*>): Long {
+            val user = entity as User
+            return user.health
+        }
+
+        override fun store(entity: Entity<*>, value: Long) {
+            val user = entity as User
+            user.health = value
+        }
+
+        override fun satisfyWith(value: Long): Boolean {
+            return value >= 0
+        }
+
+    }
+
     val MINEBLOCK_MAP: Map<MineBlockReason, DatabaseKey<PlayerCache, Long>> = MineBlockReason.values()
             .map {
                 it to object : DatabaseKey<PlayerCache, Long> {

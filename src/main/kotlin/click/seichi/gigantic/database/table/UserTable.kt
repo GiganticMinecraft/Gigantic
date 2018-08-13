@@ -17,6 +17,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val mana = long("mana").default(0L)
 
+    val health = long("health").default(100L)
+
     val isFirstJoin = bool("isFirstJoin").default(true)
 
     val createdAt = datetime("created_at").default(DateTime.now())

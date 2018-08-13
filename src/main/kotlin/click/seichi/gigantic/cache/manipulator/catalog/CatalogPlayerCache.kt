@@ -29,4 +29,6 @@ object CatalogPlayerCache {
 
     val FLASH = Flash::class.java
 
+    val HEALTH = Health::class.java
+
 }

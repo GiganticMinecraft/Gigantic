@@ -18,6 +18,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var mana by UserTable.mana
 
+    var health by UserTable.health
+
     var isFirstJoin by UserTable.isFirstJoin
 
     var createdDate by UserTable.createdAt

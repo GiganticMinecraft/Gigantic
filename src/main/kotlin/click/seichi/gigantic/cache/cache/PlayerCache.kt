@@ -34,6 +34,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
         register(CatalogPlayerCache.AFK_LOCATION)
         register(CatalogPlayerCache.MENU_DATA)
         register(CatalogPlayerCache.FLASH)
+        register(CatalogPlayerCache.HEALTH)
     }
 
     override fun read() {
@@ -46,6 +47,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                     registerKey(it, it.read(user))
                 }
                 Keys.MANA.let {
+                    registerKey(it, it.read(user))
+                }
+                Keys.HEALTH.let {
                     registerKey(it, it.read(user))
                 }
                 Keys.MINEBLOCK_MAP.forEach { reason, key ->
@@ -82,6 +86,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                     it.store(user, getOrDefault(it))
                 }
                 Keys.MANA.let {
+                    it.store(user, getOrDefault(it))
+                }
+                Keys.HEALTH.let {
                     it.store(user, getOrDefault(it))
                 }
                 Keys.MINEBLOCK_MAP.forEach { reason, key ->
