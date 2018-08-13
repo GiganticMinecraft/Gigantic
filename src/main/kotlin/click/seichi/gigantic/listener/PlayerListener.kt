@@ -43,6 +43,7 @@ import org.bukkit.event.player.*
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.concurrent.TimeUnit
+import kotlin.math.roundToLong
 
 
 /**
@@ -277,14 +278,44 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onDamage(event: EntityDamageEvent) {
-        event.entity as? Player ?: return
-        event.isCancelled = true
+        val player = event.entity as? Player ?: return
+        if (event.cause == EntityDamageEvent.DamageCause.STARVATION) {
+            event.isCancelled = true
+            return
+        }
+        // 5 times damage
+        var wrappedDamage = event.finalDamage.times(5).roundToLong()
+        event.damage = 0.0
+        player.manipulate(CatalogPlayerCache.HEALTH) {
+
+            if (event.cause == EntityDamageEvent.DamageCause.SUICIDE)
+                wrappedDamage = Long.MAX_VALUE
+
+            it.decrease(wrappedDamage)
+            // 遅延なしだと２回死んでしまう(体力が0.0になったあとにダメージを受けるため)
+            Bukkit.getScheduler().runTaskLater(
+                    Gigantic.PLUGIN,
+                    { PlayerMessages.HEALTH_DISPLAY(it).sendTo(player) },
+                    1
+            )
+
+        }
     }
 
     @EventHandler
     fun onRegainHealth(event: EntityRegainHealthEvent) {
-        event.entity as? Player ?: return
-        event.isCancelled = true
+        val player = event.entity as? Player ?: return
+        if (event.regainReason == EntityRegainHealthEvent.RegainReason.SATIATED) {
+            event.isCancelled = true
+            return
+        }
+        player.manipulate(CatalogPlayerCache.HEALTH) {
+            // 5 times regain
+            val wrappedRegain = event.amount.times(5).roundToLong()
+            it.increase(wrappedRegain)
+            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+        }
+        event.amount = 0.0
     }
 
     @EventHandler
@@ -296,17 +327,31 @@ class PlayerListener : Listener {
         player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
             // 7 percent
             val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
-            val penaltyMineBlock = level.exp.minus(expToCurrentLevel).div(100L).times(7L)
+            val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1] ?: 0L
+            val maxPenalty = level.exp.minus(expToCurrentLevel)
+            val penaltyMineBlock = expToNextLevel.minus(expToCurrentLevel).div(100L).times(7L).coerceAtMost(maxPenalty)
             it.add(penaltyMineBlock, MineBlockReason.DEATH_PENALTY)
-            PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
+            if (penaltyMineBlock != 0L)
+                PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
         }
         player.manipulate(CatalogPlayerCache.LEVEL) {
             it.calculate(ExpProducer.calcExp(player)) {}
             PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
         }
+    }
+
+    @EventHandler
+    fun onReSpawn(event: PlayerRespawnEvent) {
+        val player = event.player ?: return
         player.manipulate(CatalogPlayerCache.HEALTH) {
+            // 30 percent
             it.increase(it.max.div(10.0).times(3.0).toLong())
-            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+            // 遅延させないと反映されないため
+            Bukkit.getScheduler().runTaskLater(
+                    Gigantic.PLUGIN,
+                    { PlayerMessages.HEALTH_DISPLAY(it).sendTo(player) },
+                    1
+            )
         }
     }
 

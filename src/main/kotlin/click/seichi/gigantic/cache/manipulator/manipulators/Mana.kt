@@ -53,7 +53,7 @@ class Mana : Manipulator<Mana, PlayerCache> {
     fun decrease(other: Long) {
         val next = current - other
         current = when {
-            other > 0 -> throw IllegalArgumentException("$other must be negative.")
+            other < 0 -> throw IllegalArgumentException("$other must be positive.")
             next > current -> 0L
             else -> next.coerceAtLeast(0L)
         }
