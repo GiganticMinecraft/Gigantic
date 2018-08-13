@@ -16,7 +16,7 @@ import kotlin.properties.Delegates
  * @author tar0ss
  */
 class Mana : Manipulator<Mana, PlayerCache> {
-    var current: Long = 0L
+    var current: Long by Delegates.notNull()
         private set
     var max: Long by Delegates.notNull()
         private set
@@ -35,11 +35,10 @@ class Mana : Manipulator<Mana, PlayerCache> {
         return cache.offer(Keys.MANA, current)
     }
 
-
     fun increase(other: Long, ignoreMax: Boolean = false) {
         val next = current + other
         when {
-            other < 0 -> throw IllegalArgumentException("$other must not be negative.")
+            other < 0 -> throw IllegalArgumentException("$other must be positive.")
             next < current && ignoreMax -> current = Long.MAX_VALUE // overflow
             current in next..max -> current = max // overflow
             next < current -> {
@@ -54,7 +53,7 @@ class Mana : Manipulator<Mana, PlayerCache> {
     fun decrease(other: Long) {
         val next = current - other
         current = when {
-            other > 0 -> throw IllegalArgumentException("$other must not be positive.")
+            other > 0 -> throw IllegalArgumentException("$other must be negative.")
             next > current -> 0L
             else -> next.coerceAtLeast(0L)
         }

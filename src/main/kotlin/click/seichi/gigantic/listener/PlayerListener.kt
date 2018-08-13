@@ -101,6 +101,11 @@ class PlayerListener : Listener {
                 it.display()
         }
 
+        player.manipulate(CatalogPlayerCache.HEALTH) {
+            it.updateMaxHealth()
+            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+        }
+
         player.find(Keys.BELT)?.wear(player)
         player.find(Keys.BAG)?.carry(player)
 
@@ -211,6 +216,12 @@ class PlayerListener : Listener {
             it.increase(it.max, true)
             if (LockedFunction.MANA.isUnlocked(player))
                 it.display()
+        }
+
+        player.manipulate(CatalogPlayerCache.HEALTH) {
+            it.updateMaxHealth()
+            it.increase(it.max)
+            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
         }
 
         player.find(Keys.BELT)?.wear(player)

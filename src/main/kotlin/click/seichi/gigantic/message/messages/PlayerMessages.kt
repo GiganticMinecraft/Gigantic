@@ -1,9 +1,6 @@
 package click.seichi.gigantic.message.messages
 
-import click.seichi.gigantic.cache.manipulator.manipulators.Level
-import click.seichi.gigantic.cache.manipulator.manipulators.Mana
-import click.seichi.gigantic.cache.manipulator.manipulators.Memory
-import click.seichi.gigantic.cache.manipulator.manipulators.WillAptitude
+import click.seichi.gigantic.cache.manipulator.manipulators.*
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.*
 import click.seichi.gigantic.util.SideBarRow
@@ -51,6 +48,12 @@ object PlayerMessages {
         val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1]
                 ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
         LevelMessage(level.current, (level.exp - expToLevel).div((expToNextLevel - expToLevel).toFloat().coerceAtLeast(Float.MIN_VALUE)))
+    }
+
+    val HEALTH_DISPLAY = { health: Health ->
+        val interval = health.max.div(20.0)
+        val healthAmount = health.current.div(interval)
+        HealthMessage(healthAmount)
     }
 
     val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
