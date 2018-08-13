@@ -250,7 +250,13 @@ class PlayerListener : Listener {
     }
 
     @EventHandler
-    fun onHunger(event: EntityDamageEvent) {
+    fun onDamage(event: EntityDamageEvent) {
+        event.entity as? Player ?: return
+        event.isCancelled = true
+    }
+
+    @EventHandler
+    fun onRegainHealth(event: EntityRegainHealthEvent) {
         event.entity as? Player ?: return
         event.isCancelled = true
     }
@@ -273,12 +279,6 @@ class PlayerListener : Listener {
                 event.player.find(Keys.BAG)?.carry(event.player)
             }
         }
-    }
-
-    @EventHandler
-    fun onRegainBySatiated(event: EntityRegainHealthEvent) {
-        if (event.regainReason != EntityRegainHealthEvent.RegainReason.SATIATED) return
-        event.isCancelled = true
     }
 
     @EventHandler
