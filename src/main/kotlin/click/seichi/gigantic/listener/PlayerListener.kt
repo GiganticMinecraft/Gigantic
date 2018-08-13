@@ -293,6 +293,7 @@ class PlayerListener : Listener {
 
             it.decrease(wrappedDamage)
             // 遅延なしだと２回死んでしまう(体力が0.0になったあとにダメージを受けるため)
+            // ダメージを受けない（イベントをキャンセル）すればいいのだが、そうすると、各ダメージごとのEntityEffectが表示されない
             Bukkit.getScheduler().runTaskLater(
                     Gigantic.PLUGIN,
                     { PlayerMessages.HEALTH_DISPLAY(it).sendTo(player) },
