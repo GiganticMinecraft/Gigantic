@@ -43,7 +43,7 @@ class PlayerMonitor : Listener {
         }
         player.manipulate(CatalogPlayerCache.MINE_COMBO) {
             it.combo(1L)
-            SkillPops.MINE_COMBO(it).pop(event.block.centralLocation.add(0.0, 0.0, 0.0))
+            SkillPops.MINE_COMBO(it).pop(event.block.centralLocation)
         }
 
         // raid battle process
