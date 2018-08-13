@@ -13,6 +13,8 @@ import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.LockedFunction
+import click.seichi.gigantic.popup.PlayerPops
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
@@ -209,25 +211,36 @@ class PlayerListener : Listener {
     fun onLevelUp(event: LevelUpEvent) {
         val player = event.player
 
-        trySendingUnlockMessage(player)
+        PlayerMessages.LEVEL_UP_LEVEL(event.level).sendTo(player)
+        PlayerPops.LEVEL_UP.pop(player.eyeLocation.clone().add(0.0, 2.0, 0.0))
+        PlayerSounds.LEVEL_UP.play(player.location)
 
         player.manipulate(CatalogPlayerCache.MANA) {
+            val prevMax = it.max
             it.updateMaxMana()
             it.increase(it.max, true)
-            if (LockedFunction.MANA.isUnlocked(player))
+            if (prevMax == it.max) return@manipulate
+            if (LockedFunction.MANA.isUnlocked(player)) {
                 it.display()
+                PlayerMessages.LEVEL_UP_MANA(prevMax, it.max).sendTo(player)
+            }
         }
 
         player.manipulate(CatalogPlayerCache.HEALTH) {
+            val prevMax = it.max
             it.updateMaxHealth()
             it.increase(it.max)
             PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+            if (prevMax == it.max) return@manipulate
+            PlayerMessages.LEVEL_UP_HEALTH(prevMax, it.max).sendTo(player)
         }
 
         player.find(Keys.BELT)?.wear(player)
         player.find(Keys.BAG)?.carry(player)
 
         player.updateInventory()
+
+        trySendingUnlockMessage(player)
 
         // Update will aptitude
         tryToSpawnNewWill(player)

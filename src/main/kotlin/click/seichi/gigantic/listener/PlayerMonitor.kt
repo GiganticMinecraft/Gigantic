@@ -49,10 +49,8 @@ class PlayerMonitor : Listener {
         // raid battle process
         RaidManager.playBattle(player)
 
-
-        var isLevelUp = false
         player.manipulate(CatalogPlayerCache.LEVEL) {
-            isLevelUp = it.calculate(ExpProducer.calcExp(player)) { current ->
+            it.calculate(ExpProducer.calcExp(player)) { current ->
                 Bukkit.getPluginManager().callEvent(LevelUpEvent(current, player))
             }
             PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
@@ -64,7 +62,6 @@ class PlayerMonitor : Listener {
 
         // Sounds
         when {
-            isLevelUp -> PlayerSounds.LEVEL_UP.play(location)
             mineBurst?.duringFire() == true -> SkillSounds.MINE_BURST_ON_BREAK.play(location)
             else -> PlayerSounds.OBTAIN_EXP.playOnly(player)
         }

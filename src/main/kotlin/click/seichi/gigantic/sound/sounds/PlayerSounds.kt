@@ -21,6 +21,7 @@ object PlayerSounds {
             Sound.ENTITY_PLAYER_LEVELUP,
             SoundCategory.PLAYERS,
             pitch = 0.8F,
-            volume = 0.5F
+            volume = 1.0F
     )
+
 }

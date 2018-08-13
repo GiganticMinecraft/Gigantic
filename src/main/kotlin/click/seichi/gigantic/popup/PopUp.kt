@@ -1,6 +1,7 @@
 package click.seichi.gigantic.popup
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.util.Random
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
@@ -10,14 +11,15 @@ import org.bukkit.entity.ArmorStand
  */
 class PopUp(
         private val text: String,
-        private val duration: Long,
-        private val diffX: Double = 0.0,
-        private val diffY: Double = 0.0,
-        private val diffZ: Double = 0.0
+        private val duration: Long
 ) {
 
-    fun pop(location: Location) {
-        location.world.spawn(location.clone().add(diffX, diffY, diffZ), ArmorStand::class.java) {
+    fun pop(location: Location, diffX: Double = 0.0, diffY: Double = 0.0, diffZ: Double = 0.0) {
+        location.world.spawn(location.clone().add(
+                Random.nextDouble() * diffX,
+                Random.nextDouble() * diffY,
+                Random.nextDouble() * diffZ
+        ), ArmorStand::class.java) {
             it.run {
                 isVisible = false
                 setBasePlate(false)

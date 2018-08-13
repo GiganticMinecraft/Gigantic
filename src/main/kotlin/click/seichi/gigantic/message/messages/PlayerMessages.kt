@@ -83,4 +83,25 @@ object PlayerMessages {
         ))
     }
 
+    val LEVEL_UP_LEVEL = { level: Int ->
+        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.AQUA}" +
+                        "レベルアップ!! ( ${level - 1} → ${level} ) \n"
+        ))
+    }
+
+    val LEVEL_UP_MANA = { prevMax: Long, nextMax: Long ->
+        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.AQUA}" +
+                        "マナの最大値が上がった ( $prevMax → $nextMax ) \n"
+        ))
+    }
+
+    val LEVEL_UP_HEALTH = { prevMax: Long, nextMax: Long ->
+        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.AQUA}" +
+                        "体力の最大値が上がった ( $prevMax → $nextMax ) \n"
+        ))
+    }
+
 }
