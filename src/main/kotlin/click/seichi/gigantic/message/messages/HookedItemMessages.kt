@@ -46,6 +46,11 @@ object HookedItemMessages {
                         Locale.JAPANESE to
                                 "${ChatColor.AQUA}" +
                                 "クールタイム : ${mineburst.coolTime}秒"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to
+                                "${ChatColor.DARK_GRAY}" +
+                                "\"2\" キー を押して発動!!"
                 )
         )
     }
@@ -72,6 +77,11 @@ object HookedItemMessages {
                         Locale.JAPANESE to
                                 "${ChatColor.AQUA}" +
                                 "クールタイム : ${flash.coolTime}秒"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to
+                                "${ChatColor.DARK_GRAY}" +
+                                "\"3\" キー を押して発動!!"
                 )
         )
     }

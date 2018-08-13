@@ -7,12 +7,14 @@ import click.seichi.gigantic.belt.belts.MineBelt
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.LockedFunction
+import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.popup.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.spirit.SpiritManager
@@ -287,8 +289,25 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onDeath(event: PlayerDeathEvent) {
+        val player = event.entity ?: return
         event.keepInventory = true
         event.keepLevel = true
+        val level = player.find(CatalogPlayerCache.LEVEL) ?: return
+        player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
+            // 7 percent
+            val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
+            val penaltyMineBlock = level.exp.minus(expToCurrentLevel).div(100L).times(7L)
+            it.add(penaltyMineBlock, MineBlockReason.DEATH_PENALTY)
+            PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
+        }
+        player.manipulate(CatalogPlayerCache.LEVEL) {
+            it.calculate(ExpProducer.calcExp(player)) {}
+            PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
+        }
+        player.manipulate(CatalogPlayerCache.HEALTH) {
+            it.increase(it.max.div(10.0).times(3.0).toLong())
+            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+        }
     }
 
     @EventHandler

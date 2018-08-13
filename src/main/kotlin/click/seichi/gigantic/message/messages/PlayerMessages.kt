@@ -86,21 +86,28 @@ object PlayerMessages {
     val LEVEL_UP_LEVEL = { level: Int ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.AQUA}" +
-                        "レベルアップ!! ( ${level - 1} → ${level} ) \n"
+                        "レベルアップ!! ( ${level - 1} → $level )"
         ))
     }
 
     val LEVEL_UP_MANA = { prevMax: Long, nextMax: Long ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.AQUA}" +
-                        "マナの最大値が上がった ( $prevMax → $nextMax ) \n"
+                        "マナの最大値が上がった ( $prevMax → $nextMax )"
         ))
     }
 
     val LEVEL_UP_HEALTH = { prevMax: Long, nextMax: Long ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.AQUA}" +
-                        "体力の最大値が上がった ( $prevMax → $nextMax ) \n"
+                        "体力の最大値が上がった ( $prevMax → $nextMax )"
+        ))
+    }
+
+    val DEATH_PENALTY = { penaltyMineBlock: Long ->
+        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                        "経験値を$penaltyMineBlock 失った..."
         ))
     }
 
