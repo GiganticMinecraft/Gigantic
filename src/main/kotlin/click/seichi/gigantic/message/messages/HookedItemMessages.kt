@@ -50,7 +50,7 @@ object HookedItemMessages {
                 LocalizedText(
                         Locale.JAPANESE to
                                 "${ChatColor.DARK_GRAY}" +
-                                "\"2\" キー を押して発動!!"
+                                "\"2\" キー を押して発動"
                 )
         )
     }
@@ -81,7 +81,7 @@ object HookedItemMessages {
                 LocalizedText(
                         Locale.JAPANESE to
                                 "${ChatColor.DARK_GRAY}" +
-                                "\"3\" キー を押して発動!!"
+                                "\"3\" キー を押して発動"
                 )
         )
     }

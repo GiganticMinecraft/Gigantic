@@ -5,6 +5,8 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.isSurface
+import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Material
@@ -97,6 +99,21 @@ object Skills {
             }
         }
 
+    }
+
+    val HEAL = object : Skill {
+
+        override val coolTime: Long
+            get() = 0L
+
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            return Consumer { player ->
+                player.manipulate(CatalogPlayerCache.HEALTH) {
+                    it.increase(it.max.div(100L))
+                    PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+                }
+            }
+        }
     }
 
 }
