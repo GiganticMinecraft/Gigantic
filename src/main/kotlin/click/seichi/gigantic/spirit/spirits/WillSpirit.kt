@@ -53,7 +53,6 @@ class WillSpirit(
                         will.color,
                         noiseData = NoiseData(0.05)
                 )
-
                 if (count % 10 == 0) {
                     WillSounds.SENSE_SUB.playOnly(player)
                 }
@@ -67,7 +66,8 @@ class WillSpirit(
                 }
                 PlayerMessages.MEMORY_SIDEBAR(
                         player.find(CatalogPlayerCache.MEMORY) ?: return@Sensor,
-                        player.find(CatalogPlayerCache.APTITUDE) ?: return@Sensor
+                        player.find(CatalogPlayerCache.APTITUDE) ?: return@Sensor,
+                        false
                 ).sendTo(player)
             }
     )

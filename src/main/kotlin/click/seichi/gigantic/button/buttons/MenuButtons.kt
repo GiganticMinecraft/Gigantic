@@ -128,12 +128,11 @@ object MenuButtons {
                         .getBattleList()
                         .getOrNull(slot) ?: return ItemStack(Material.AIR)
                 val boss = battle.boss
-                val bossName = boss.localizedName.asSafety(player.wrappedLocale)
                 val isJoinedOtherRaid = RaidManager
                         .getBattleList()
                         .firstOrNull { it.isJoined(player) } != null
                 return boss.head.toItemStack().apply {
-                    setDisplayName(MenuMessages.BATTLE_BUTTON_TITLE(bossName).asSafety(player.wrappedLocale))
+                    setDisplayName(MenuMessages.BATTLE_BUTTON_TITLE(boss).asSafety(player.wrappedLocale))
                     setLore(*MenuMessages.BATTLE_BUTTON_LORE(battle)
                             .map { it.asSafety(player.wrappedLocale) }
                             .toTypedArray())

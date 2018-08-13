@@ -19,7 +19,7 @@ object PlayerMessages {
         )
     }
 
-    val MEMORY_SIDEBAR = { memory: Memory, aptitude: WillAptitude ->
+    val MEMORY_SIDEBAR = { memory: Memory, aptitude: WillAptitude, isForced: Boolean ->
         val willMap = Will.values()
                 .filter { aptitude.has(it) }
                 .map { it to (memory.get(it)) }.toMap()
@@ -39,7 +39,7 @@ object PlayerMessages {
                             }
                     )
                 }.toMap()
-                , true
+                , isForced
         )
     }
 

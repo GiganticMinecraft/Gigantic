@@ -9,11 +9,10 @@ import java.util.*
 /**
  * @author tar0ss
  */
-class RaidBoss(boss: Boss) {
+class RaidBoss(private val boss: Boss) {
 
     var health = boss.maxHealth
-
-    val maxHealth = boss.maxHealth
+        private set
 
     private val totalDamageMap = mutableMapOf<UUID, Long>()
 
@@ -28,6 +27,10 @@ class RaidBoss(boss: Boss) {
         health.coerceAtLeast(0L)
     }
 
+    fun resetDamage(player: Player) {
+        totalDamageMap.remove(player.uniqueId)
+    }
+
     fun getTotalDamage(player: Player) = totalDamageMap[player.uniqueId] ?: 0L
 
     fun getDrop(player: Player): Relic? {
@@ -38,9 +41,14 @@ class RaidBoss(boss: Boss) {
     // if player hurts ten percents of max health -> true
     fun isDefeated(player: Player): Boolean {
         val totalDamage = getTotalDamage(player)
-        return totalDamage >= maxHealth.div(10.0).times(1.0)
+        return totalDamage >= boss.maxHealth.div(10.0).times(1.0)
     }
 
     fun isDead() = health <= 0L
+
+
+    fun fullHealth() {
+        health = boss.maxHealth
+    }
 
 }

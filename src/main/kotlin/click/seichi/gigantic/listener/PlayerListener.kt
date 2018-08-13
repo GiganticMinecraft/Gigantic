@@ -16,6 +16,7 @@ import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.popup.PlayerPops
+import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
@@ -70,6 +71,9 @@ class PlayerListener : Listener {
         if (!PlayerCacheMemory.contains(player.uniqueId)) {
             return
         }
+
+        RaidManager.getBattleList().firstOrNull { it.isJoined(player) }?.left(player)
+
         if (player.gameMode == GameMode.SPECTATOR) {
             player.find(CatalogPlayerCache.AFK_LOCATION)?.getLocation()?.let {
                 player.teleport(it)
@@ -135,7 +139,8 @@ class PlayerListener : Listener {
 
         PlayerMessages.MEMORY_SIDEBAR(
                 player.find(CatalogPlayerCache.MEMORY) ?: return,
-                player.find(CatalogPlayerCache.APTITUDE) ?: return
+                player.find(CatalogPlayerCache.APTITUDE) ?: return,
+                true
         ).sendTo(player)
     }
 

@@ -2,9 +2,19 @@ package click.seichi.gigantic.raid
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.boss.Boss
+import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.message.messages.BattleMessages
+import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.schedule.Scheduler
 import click.seichi.gigantic.topbar.bars.BossBars
+import io.reactivex.Observable
+import org.bukkit.Bukkit
+import org.bukkit.EntityEffect
 import org.bukkit.entity.Player
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * @author tar0ss
@@ -24,12 +34,52 @@ class RaidBattle(val boss: Boss) {
     fun join(player: Player) {
         joinedPlayerSet.add(player.uniqueId)
         bossBar.addPlayer(player)
-        BossBars.RAID_BOSS(this, boss.localizedName.asSafety(Gigantic.DEFAULT_LOCALE)).show(bossBar)
+        display()
+        BattleMessages.BATTLE_INFO(this, player.find(CatalogPlayerCache.HEALTH)
+                ?: return, boss.attackInterval, true).sendTo(player)
+        val uniqueId = player.uniqueId
+        Observable.interval(1, TimeUnit.SECONDS)
+                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
+                .takeWhile {
+                    val player = Bukkit.getPlayer(uniqueId) ?: return@takeWhile false
+                    isJoined(player)
+                }.subscribe {
+                    val player = Bukkit.getPlayer(uniqueId) ?: return@subscribe
+                    val remainTimeToAttack = boss.attackInterval - ((it + 1) % boss.attackInterval)
+                    BattleMessages.BATTLE_INFO(this, player.find(CatalogPlayerCache.HEALTH)
+                            ?: return@subscribe, remainTimeToAttack, false).sendTo(player)
+                    if ((it + 1) % boss.attackInterval != 0L) return@subscribe
+                    // attack
+                    player.manipulate(CatalogPlayerCache.HEALTH) {
+                        it.decrease(boss.attackDamage)
+                        if (it.current == 0L) {
+                            drop(player)
+                        }
+                        PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+                        player.playEffect(EntityEffect.HURT)
+                    }
+                }
     }
 
     fun left(player: Player) {
+        raidBoss.resetDamage(player)
         joinedPlayerSet.remove(player.uniqueId)
         bossBar.removePlayer(player)
+        if (joinedPlayerSet.isEmpty()) {
+            raidBoss.fullHealth()
+        }
+        display()
+
+        PlayerMessages.MEMORY_SIDEBAR(
+                player.find(CatalogPlayerCache.MEMORY) ?: return,
+                player.find(CatalogPlayerCache.APTITUDE) ?: return,
+                true
+        ).sendTo(player)
+    }
+
+    fun drop(player: Player) {
+        droppedPlayerSet.add(player.uniqueId)
+        left(player)
     }
 
     fun getJoinedPlayerSet() = joinedPlayerSet.toSet()
@@ -37,7 +87,9 @@ class RaidBattle(val boss: Boss) {
     fun isJoined(player: Player) = joinedPlayerSet.contains(player.uniqueId)
     fun isDropped(player: Player) = droppedPlayerSet.contains(player.uniqueId)
 
-    fun display() = BossBars.RAID_BOSS(this, boss.localizedName.asSafety(Gigantic.DEFAULT_LOCALE)).show(bossBar)
+    fun display() {
+        BossBars.RAID_BOSS(this, boss.localizedName.asSafety(Gigantic.DEFAULT_LOCALE)).show(bossBar)
+    }
 
     override fun equals(other: Any?): Boolean {
         val battle = other as? RaidBattle ?: return false

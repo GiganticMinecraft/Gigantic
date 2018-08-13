@@ -1,5 +1,6 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.manipulator.manipulators.Level
 import click.seichi.gigantic.cache.manipulator.manipulators.WillAptitude
 import click.seichi.gigantic.config.PlayerLevelConfig
@@ -9,7 +10,6 @@ import click.seichi.gigantic.relic.RelicRarity
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor
-import java.math.RoundingMode
 import java.util.*
 
 /**
@@ -54,9 +54,17 @@ object MenuMessages {
     )
 
 
-    val BATTLE_BUTTON_TITLE = { bossName: String ->
+    val BATTLE_BUTTON_TITLE = { boss: Boss ->
+        val color = when (boss.maxHealth) {
+            in 0L..9999L -> ChatColor.GOLD
+            in 10000L..99999L -> ChatColor.RED
+            in 100000L..999999L -> ChatColor.LIGHT_PURPLE
+            else -> ChatColor.DARK_PURPLE
+        }
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.RED}$bossName"
+                Locale.JAPANESE.let {
+                    it to "$color${ChatColor.BOLD}${boss.localizedName.asSafety(it)}"
+                }
         )
     }
 
@@ -64,10 +72,16 @@ object MenuMessages {
         val bossDrop = raidBattle.boss.dropRelicSet
         mutableListOf(
                 LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GRAY}残りHP : ${raidBattle.raidBoss.health.toBigDecimal().setScale(1, RoundingMode.UP)}"
+                        Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.BOLD}戦闘中 : ${raidBattle.getJoinedPlayerSet().size}人"
                 ),
                 LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GRAY}戦闘中 : ${raidBattle.getJoinedPlayerSet().size}人"
+                        Locale.JAPANESE to "${ChatColor.GRAY}残りHP : ${raidBattle.raidBoss.health}"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GRAY}攻撃力 : ${raidBattle.boss.attackDamage}"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GRAY}攻撃間隔 : ${raidBattle.boss.attackInterval}秒"
                 ),
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.GRAY}落とすもの : "
