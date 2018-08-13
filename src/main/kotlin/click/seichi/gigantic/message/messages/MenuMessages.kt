@@ -1,6 +1,7 @@
 package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.boss.Boss
+import click.seichi.gigantic.cache.manipulator.manipulators.Health
 import click.seichi.gigantic.cache.manipulator.manipulators.Level
 import click.seichi.gigantic.cache.manipulator.manipulators.WillAptitude
 import click.seichi.gigantic.config.PlayerLevelConfig
@@ -68,25 +69,37 @@ object MenuMessages {
         )
     }
 
-    val BATTLE_BUTTON_LORE = { raidBattle: RaidBattle ->
+    val BATTLE_BUTTON_LORE = { raidBattle: RaidBattle, health: Health ->
+        val afterHealth = health.current.minus(raidBattle.boss.attackDamage).coerceAtLeast(0L)
         val bossDrop = raidBattle.boss.dropRelicSet
-        mutableListOf(
-                LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.BOLD}戦闘中 : ${raidBattle.getJoinedPlayerSet().size}人"
-                ),
-                LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GRAY}残りHP : ${raidBattle.raidBoss.health}"
-                ),
-                LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GRAY}攻撃力 : ${raidBattle.boss.attackDamage}"
-                ),
-                LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GRAY}攻撃間隔 : ${raidBattle.boss.attackInterval}秒"
-                ),
-                LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GRAY}落とすもの : "
+        mutableListOf<LocalizedText>().apply {
+            if (afterHealth == 0L) {
+                add(
+                        LocalizedText(
+                                Locale.JAPANESE to "${ChatColor.RED}${ChatColor.BOLD}" +
+                                        "非推奨!!一撃で死亡!!"
+                        )
                 )
-        ).apply {
+            }
+            addAll(
+                    mutableListOf(
+                            LocalizedText(
+                                    Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.BOLD}戦闘中 : ${raidBattle.getJoinedPlayerSet().size}人"
+                            ),
+                            LocalizedText(
+                                    Locale.JAPANESE to "${ChatColor.GRAY}残りHP : ${raidBattle.raidBoss.health}"
+                            ),
+                            LocalizedText(
+                                    Locale.JAPANESE to "${ChatColor.GRAY}攻撃力 : ${raidBattle.boss.attackDamage}"
+                            ),
+                            LocalizedText(
+                                    Locale.JAPANESE to "${ChatColor.GRAY}攻撃間隔 : ${raidBattle.boss.attackInterval}秒"
+                            ),
+                            LocalizedText(
+                                    Locale.JAPANESE to "${ChatColor.GRAY}落とすもの : "
+                            )
+                    )
+            )
             bossDrop.forEach { drop ->
                 val color = when (drop.relic.rarity) {
                     RelicRarity.NORMAL -> ChatColor.GRAY

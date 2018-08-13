@@ -133,7 +133,8 @@ object MenuButtons {
                         .firstOrNull { it.isJoined(player) } != null
                 return boss.head.toItemStack().apply {
                     setDisplayName(MenuMessages.BATTLE_BUTTON_TITLE(boss).asSafety(player.wrappedLocale))
-                    setLore(*MenuMessages.BATTLE_BUTTON_LORE(battle)
+                    setLore(*MenuMessages.BATTLE_BUTTON_LORE(battle, player.find(CatalogPlayerCache.HEALTH)
+                            ?: return@apply)
                             .map { it.asSafety(player.wrappedLocale) }
                             .toTypedArray())
                     addLore(MenuMessages.LINE)
