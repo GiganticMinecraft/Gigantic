@@ -178,11 +178,6 @@ class PlayerListener : Listener {
     }
 
     @EventHandler
-    fun onPlayerChangedMainHand(event: PlayerChangedMainHandEvent) {
-        // TODO change button
-    }
-
-    @EventHandler
     fun onPlayerItemConsume(event: PlayerItemConsumeEvent) {
         if (event.player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
@@ -328,18 +323,17 @@ class PlayerListener : Listener {
         val player = event.entity ?: return
         event.keepInventory = true
         event.keepLevel = true
-        val level = player.find(CatalogPlayerCache.LEVEL) ?: return
-        player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
-            // 7 percent
-            val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
-            val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1] ?: 0L
-            val maxPenalty = level.exp.minus(expToCurrentLevel)
-            val penaltyMineBlock = expToNextLevel.minus(expToCurrentLevel).div(100L).times(7L).coerceAtMost(maxPenalty)
-            it.add(penaltyMineBlock, MineBlockReason.DEATH_PENALTY)
-            if (penaltyMineBlock != 0L)
-                PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
-        }
         player.manipulate(CatalogPlayerCache.LEVEL) { level ->
+            player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
+                // 7 percent
+                val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
+                val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1] ?: 0L
+                val maxPenalty = level.exp.minus(expToCurrentLevel)
+                val penaltyMineBlock = expToNextLevel.minus(expToCurrentLevel).div(100L).times(7L).coerceAtMost(maxPenalty)
+                it.add(penaltyMineBlock, MineBlockReason.DEATH_PENALTY)
+                if (penaltyMineBlock != 0L)
+                    PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
+            }
             level.calculate(ExpProducer.calcExp(player)) {}
             PlayerMessages.EXP_BAR_DISPLAY(level).sendTo(player)
         }

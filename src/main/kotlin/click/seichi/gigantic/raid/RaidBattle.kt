@@ -41,22 +41,22 @@ class RaidBattle(val boss: Boss) {
         Observable.interval(1, TimeUnit.SECONDS)
                 .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .takeWhile {
-                    val player = Bukkit.getPlayer(uniqueId) ?: return@takeWhile false
-                    isJoined(player)
-                }.subscribe {
-                    val player = Bukkit.getPlayer(uniqueId) ?: return@subscribe
-                    val remainTimeToAttack = boss.attackInterval - ((it + 1) % boss.attackInterval)
-                    BattleMessages.BATTLE_INFO(this, player.find(CatalogPlayerCache.HEALTH)
-                            ?: return@subscribe, remainTimeToAttack, false).sendTo(player)
-                    if ((it + 1) % boss.attackInterval != 0L) return@subscribe
+                    val p = Bukkit.getPlayer(uniqueId) ?: return@takeWhile false
+                    isJoined(p)
+                }.subscribe { elapsedSeconds ->
+                    val p = Bukkit.getPlayer(uniqueId) ?: return@subscribe
+                    val remainTimeToAttack = boss.attackInterval - ((elapsedSeconds + 1) % boss.attackInterval)
+                    BattleMessages.BATTLE_INFO(this, p.find(CatalogPlayerCache.HEALTH)
+                            ?: return@subscribe, remainTimeToAttack, false).sendTo(p)
+                    if ((elapsedSeconds + 1) % boss.attackInterval != 0L) return@subscribe
                     // attack
-                    player.manipulate(CatalogPlayerCache.HEALTH) {
+                    p.manipulate(CatalogPlayerCache.HEALTH) {
                         it.decrease(boss.attackDamage)
                         if (it.current == 0L) {
-                            drop(player)
+                            drop(p)
                         }
-                        PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
-                        player.playEffect(EntityEffect.HURT)
+                        PlayerMessages.HEALTH_DISPLAY(it).sendTo(p)
+                        p.playEffect(EntityEffect.HURT)
                     }
                 }
     }
@@ -94,6 +94,10 @@ class RaidBattle(val boss: Boss) {
     override fun equals(other: Any?): Boolean {
         val battle = other as? RaidBattle ?: return false
         return battle.uniqueId == uniqueId
+    }
+
+    override fun hashCode(): Int {
+        return uniqueId.hashCode()
     }
 
 }

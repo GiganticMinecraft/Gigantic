@@ -11,6 +11,7 @@ class TriggerCase<T : Event>(
         private val opening: (T) -> Unit
 ) {
 
+    @Suppress("UNCHECKED_CAST")
     fun open(event: Event) = opening(event as T)
 
 }
