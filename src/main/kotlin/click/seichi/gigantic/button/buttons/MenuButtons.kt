@@ -7,10 +7,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.head.Head
-import click.seichi.gigantic.menu.menus.BeltSwitchSettingMenu
-import click.seichi.gigantic.menu.menus.ProfileBossMenu
-import click.seichi.gigantic.menu.menus.ProfileRelicMenu
-import click.seichi.gigantic.menu.menus.RaidBattleMenu
+import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.relic.Relic
@@ -206,6 +203,101 @@ object MenuButtons {
             }
 
         }
+    }
+
+    val PROFILE_SKILL = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.BLAZE_POWDER).apply {
+                setDisplayName(MenuMessages.PROFILE_SKILL.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (event.inventory.holder === ProfileSkillMenu) return
+            ProfileSkillMenu.open(player)
+        }
+
+    }
+
+    val PROFILE_SKILL_MINEBURST = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.BLAZE_POWDER).apply {
+                setDisplayName(MenuMessages.MINE_BURST_TITLE.asSafety(player.wrappedLocale))
+                setLore(*MenuMessages.MINE_BURST
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray())
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
+    }
+
+    val PROFILE_SKILL_FLASH = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.FEATHER).apply {
+                setDisplayName(MenuMessages.FLASH_TITLE.asSafety(player.wrappedLocale))
+                setLore(*MenuMessages.FLASH
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray())
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
+    }
+
+    val PROFILE_SKILL_HEAL = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.APPLE).apply {
+                setDisplayName(MenuMessages.HEAL_TITLE.asSafety(player.wrappedLocale))
+                setLore(*MenuMessages.HEAL
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray())
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
+    }
+
+    val PROFILE_SKILL_SWITCH = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.LEVER).apply {
+                setDisplayName(MenuMessages.SWITCH_TITLE.asSafety(player.wrappedLocale))
+                setLore(*MenuMessages.SWITCH
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray())
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
+    }
+
+    val PROFILE_SKILL_TERRA_DRAIN = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.SEEDS).apply {
+                setDisplayName(MenuMessages.TERRA_DRAIN_TITLE.asSafety(player.wrappedLocale))
+                setLore(*MenuMessages.TERRA_DRAIN
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray())
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
     }
 
 }

@@ -8,6 +8,7 @@ import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.raid.RaidBattle
 import click.seichi.gigantic.relic.RelicRarity
+import click.seichi.gigantic.skill.SkillParameters
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor
@@ -198,6 +199,10 @@ object MenuMessages {
             Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}手に入れたレリック"
     )
 
+    val PROFILE_SKILL = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}覚えたスキル"
+    )
+
     val PROFILE_RAID_BOSS_DEFEATED = { defeatCount: Long ->
         LocalizedText(
                 Locale.JAPANESE to "討伐数: $defeatCount"
@@ -236,5 +241,102 @@ object MenuMessages {
             )
         }
     }
+
+    val MINE_BURST =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "アクティブ効果: 少しの間だけ掘る速度が上昇"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "\"${SkillParameters.MINE_BURST_KEY}\" キー を押して発動"
+                    )
+            )
+
+    val MINE_BURST_TITLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                    "バフスキル: マインバースト"
+    )
+
+    val FLASH =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "アクティブ効果: ブロックに向けて発動すると"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "そのブロックの上にワープ"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "\"${SkillParameters.FLASH_KEY}\" キー を押して発動"
+                    )
+            )
+
+    val FLASH_TITLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                    "移動スキル: フラッシュ"
+    )
+
+    val HEAL =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "パッシブ効果: ブロックを破壊で"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "最大体力の${SkillParameters.HEAL_PERCENT}%を回復"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "通常破壊時に一定確率で発動する"
+                    )
+            )
+
+    val HEAL_TITLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                    "回復スキル: ヒール"
+    )
+
+    val SWITCH =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "アクティブ効果: 持ち物を入れ替える"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "\"${SkillParameters.SWITCH_KEY}\" キー を押して発動"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "\"${SkillParameters.SWITCH_SETTING_KEY}\" キー を押して詳細設定を変更できる"
+                    )
+            )
+
+    val SWITCH_TITLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                    "切り替えスキル: スイッチ"
+    )
+
+    val TERRA_DRAIN =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "パッシブ効果: 木を倒し、自身を回復する"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "原木を破壊して発動"
+                    )
+            )
+
+    val TERRA_DRAIN_TITLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                    "回復スキル: テラドレイン"
+    )
 
 }
