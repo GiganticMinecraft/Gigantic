@@ -3,6 +3,7 @@ package click.seichi.gigantic.button.buttons
 import click.seichi.gigantic.button.HotButton
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.menu.menus.BeltSwitchSettingMenu
 import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.skill.Skills
@@ -17,7 +18,7 @@ import org.bukkit.inventory.ItemStack
  */
 object HotButtons {
 
-    val MINE_BURST_BOOK = object : HotButton {
+    val MINE_BURST = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
             if (!LockedFunction.MINE_BURST.isUnlocked(player)) return null
@@ -53,7 +54,7 @@ object HotButtons {
 
     }
 
-    val FLASH_BOOK = object : HotButton {
+    val FLASH = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
             if (!LockedFunction.FLASH.isUnlocked(player)) return null
@@ -79,6 +80,28 @@ object HotButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
+    }
+
+    val BELT_SWITCHER_SETTING = object : HotButton {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.SWITCH.isUnlocked(player)) return null
+            val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
+            val nextBelt = switcher.nextBelt()
+            return nextBelt.getFixedButton().getItemStack(player)?.apply {
+                setDisplayName(HookedItemMessages.SWITCH.asSafety(player.wrappedLocale))
+                clearLore()
+            }
+        }
+
+        override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
+            BeltSwitchSettingMenu.open(player)
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            BeltSwitchSettingMenu.open(player)
         }
 
     }

@@ -1,5 +1,6 @@
 package click.seichi.gigantic.database.table
 
+import click.seichi.gigantic.player.Defaults
 import org.jetbrains.exposed.dao.IdTable
 import org.joda.time.DateTime
 import java.util.*
@@ -15,9 +16,11 @@ object UserTable : IdTable<UUID>("users") {
 
     val localeString = varchar("localeString", 2).default(Locale.JAPANESE.toString())
 
-    val mana = long("mana").default(0L)
+    val mana = long("mana").default(Defaults.mana)
 
-    val health = long("health").default(100L)
+    val health = long("health").default(Defaults.health)
+
+    val beltId = integer("belt_id").default(Defaults.beltId)
 
     val isFirstJoin = bool("isFirstJoin").default(true)
 

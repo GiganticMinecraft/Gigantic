@@ -2,6 +2,10 @@ package click.seichi.gigantic.belt
 
 import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.button.HotButton
+import click.seichi.gigantic.button.buttons.FixedButtons
+import click.seichi.gigantic.button.buttons.HotButtons
+import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.message.messages.BeltMessages
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -9,23 +13,45 @@ import org.bukkit.inventory.ItemStack
 /**
  * @author tar0ss
  */
-abstract class Belt {
+enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair<Int, Button>, vararg hotButtons: Pair<Int, HotButton>) {
+    DIG(
+            1,
+            BeltMessages.DIG,
+            0 to FixedButtons.SPADE,
+            1 to HotButtons.FLASH,
+            2 to HotButtons.MINE_BURST,
+            8 to HotButtons.BELT_SWITCHER_SETTING
+    ),
+    MINE(
+            2,
+            BeltMessages.MINE,
+            0 to FixedButtons.PICKEL,
+            1 to HotButtons.FLASH,
+            2 to HotButtons.MINE_BURST,
+            8 to HotButtons.BELT_SWITCHER_SETTING
+    ),
+    CUT(
+            3,
+            BeltMessages.CUT,
+            0 to FixedButtons.AXE,
+            1 to HotButtons.FLASH,
+            2 to HotButtons.MINE_BURST,
+            8 to HotButtons.BELT_SWITCHER_SETTING
+    ),
+    ;
 
-    private val buttonMap: MutableMap<Int, Button> = mutableMapOf()
+    companion object {
+        private val idMap = values().map { it.id to it }.toMap()
+        fun findById(id: Int) = idMap[id]
+    }
+
     // 手に固定されたスロット番号
-    private var fixedSlot: Int? = null
+    private var fixedSlot = fixedButton.first
 
-    protected fun registerFixedButton(slot: Int, button: Button) {
-        fixedSlot = slot
-        buttonMap[slot] = button
-    }
-
-    protected fun registerHotButton(slot: Int, button: HotButton) {
-        if (slot == fixedSlot) {
-            fixedSlot = null
-        }
-        buttonMap[slot] = button
-    }
+    private val buttonMap: MutableMap<Int, Button> = mutableMapOf(
+            *hotButtons,
+            fixedButton
+    )
 
     /**
      * ベルトを身に着ける
@@ -34,7 +60,7 @@ abstract class Belt {
      */
     fun wear(player: Player, applyFixed: Boolean = true) {
         player.inventory?.run {
-            fixedSlot?.let { heldItemSlot = it }
+            heldItemSlot = fixedSlot
             (0..8).forEach { slot ->
                 if (!applyFixed && slot == fixedSlot) return@forEach
                 setItem(slot,
@@ -51,8 +77,8 @@ abstract class Belt {
         return buttonMap[slot] as HotButton?
     }
 
-    fun getFixedButton(): Button? {
-        return buttonMap[fixedSlot ?: return null] ?: return null
+    fun getFixedButton(): Button {
+        return buttonMap[fixedSlot]!!
     }
 
     fun getButton(slot: Int): Button? {
@@ -61,16 +87,15 @@ abstract class Belt {
     }
 
     fun isFixed(slot: Int) = when {
-        fixedSlot == null -> false
         fixedSlot != slot -> false
-        buttonMap[fixedSlot!!] == null -> false
+        buttonMap[fixedSlot] == null -> false
         else -> true
     }
 
-    fun hasFixedSlot() = fixedSlot != null && buttonMap[fixedSlot!!] != null
+    fun hasFixedSlot() = buttonMap[fixedSlot] != null
 
     fun getFixedSlot(): Int? {
-        buttonMap[fixedSlot ?: return null] ?: return null
+        buttonMap[fixedSlot] ?: return null
         return fixedSlot
     }
 

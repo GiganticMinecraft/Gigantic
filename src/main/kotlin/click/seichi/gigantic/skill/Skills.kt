@@ -1,15 +1,12 @@
 package click.seichi.gigantic.skill
 
 import click.seichi.gigantic.animation.SkillAnimations
-import click.seichi.gigantic.belt.belts.CutBelt
-import click.seichi.gigantic.belt.belts.DigBelt
-import click.seichi.gigantic.belt.belts.MineBelt
+import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.isSurface
 import click.seichi.gigantic.extension.manipulate
-import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.sound.sounds.SkillSounds
@@ -111,6 +108,7 @@ object Skills {
             get() = 0L
 
         override fun findInvokable(player: Player): Consumer<Player>? {
+            if (!LockedFunction.HEAL.isUnlocked(player)) return null
             return Consumer { p ->
                 p.manipulate(CatalogPlayerCache.HEALTH) {
                     it.increase(it.max.div(100L))
@@ -121,21 +119,24 @@ object Skills {
 
     }
 
-
-    val SWAP = object : Skill {
+    val SWITCH = object : Skill {
 
         override val coolTime: Long
             get() = 0L
 
         override fun findInvokable(player: Player): Consumer<Player>? {
+            if (!LockedFunction.SWITCH.isUnlocked(player)) return null
             return Consumer { p ->
-                val oldBelt = p.find(Keys.BELT) ?: return@Consumer
-                p.offer(Keys.BELT, when (oldBelt) {
-                    MineBelt -> DigBelt
-                    DigBelt -> CutBelt
-                    else -> MineBelt
-                }.apply { wear(p) })
-                SkillSounds.SWAP.playOnly(p)
+                var current: Belt? = null
+                p.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
+                    current = it.current
+                    it.switch()
+                }
+                val nextBelt = p.find(Keys.BELT) ?: return@Consumer
+                if (current == nextBelt) return@Consumer
+                nextBelt.wear(p)
+                SkillSounds.SWITCH.playOnly(p)
+
             }
         }
 

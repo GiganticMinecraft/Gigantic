@@ -1,5 +1,6 @@
 package click.seichi.gigantic.cache.cache
 
+import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -20,7 +21,6 @@ import java.util.*
 class PlayerCache(private val uniqueId: UUID, private val playerName: String) : Cache<PlayerCache>() {
 
     init {
-        registerKey(Keys.BELT)
         registerKey(Keys.BAG)
         registerKey(Keys.MANA)
         register(CatalogPlayerCache.LEVEL)
@@ -35,6 +35,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
         register(CatalogPlayerCache.MENU_DATA)
         register(CatalogPlayerCache.FLASH)
         register(CatalogPlayerCache.HEALTH)
+        register(CatalogPlayerCache.BELT_SWITCHER)
     }
 
     override fun read() {
@@ -52,6 +53,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.HEALTH.let {
                     registerKey(it, it.read(user))
                 }
+                Keys.BELT.let {
+                    registerKey(it, it.read(user))
+                }
                 Keys.MINEBLOCK_MAP.forEach { reason, key ->
                     registerKey(key, key.read(userMineBlockMap[reason] ?: return@forEach))
                 }
@@ -67,8 +71,11 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.RELIC_MAP.forEach { relic, key ->
                     registerKey(key, key.read(userRelicMap[relic] ?: return@forEach))
                 }
-                Keys.HAS_UNLOCKED_MAP.forEach { func, key ->
+                Keys.LOCKED_FUNCTION_MAP.forEach { func, key ->
                     registerKey(key, key.read(userLockedMap[func] ?: return@forEach))
+                }
+                Keys.BELT_MAP.forEach { belt, key ->
+                    registerKey(key, key.read(userBeltMap[belt] ?: return@forEach))
                 }
             }
         }
@@ -91,6 +98,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.HEALTH.let {
                     it.store(user, getOrDefault(it))
                 }
+                Keys.BELT.let {
+                    it.store(user, getOrDefault(it))
+                }
                 Keys.MINEBLOCK_MAP.forEach { reason, key ->
                     key.store(userMineBlockMap[reason] ?: return@forEach, getOrDefault(key))
                 }
@@ -106,8 +116,11 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.RELIC_MAP.forEach { relic, key ->
                     key.store(userRelicMap[relic] ?: return@forEach, getOrDefault(key))
                 }
-                Keys.HAS_UNLOCKED_MAP.forEach { func, key ->
+                Keys.LOCKED_FUNCTION_MAP.forEach { func, key ->
                     key.store(userLockedMap[func] ?: return@forEach, getOrDefault(key))
+                }
+                Keys.BELT_MAP.forEach { belt, key ->
+                    key.store(userBeltMap[belt] ?: return@forEach, getOrDefault(key))
                 }
             }
         }
@@ -171,6 +184,14 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             })
         }.toMap()
 
+        val userBeltMap = Belt.values().map { belt ->
+            belt to (UserBelt
+                    .find { (UserBeltTable.userId eq uniqueId) and (UserBeltTable.beltId eq belt.id) }
+                    .firstOrNull() ?: UserBelt.new {
+                user = this@UserEntityData.user
+                beltId = belt.id
+            })
+        }.toMap()
     }
 
 }

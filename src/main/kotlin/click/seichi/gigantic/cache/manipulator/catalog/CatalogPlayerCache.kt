@@ -31,4 +31,6 @@ object CatalogPlayerCache {
 
     val HEALTH = Health::class.java
 
+    val BELT_SWITCHER = BeltSwitcher::class.java
+
 }

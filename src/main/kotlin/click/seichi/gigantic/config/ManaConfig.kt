@@ -2,6 +2,7 @@ package click.seichi.gigantic.config
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.config.PlayerLevelConfig.MAX
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.util.Polynomial
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -22,7 +23,7 @@ object ManaConfig : SimpleConfiguration("mana", Gigantic.PLUGIN) {
 
         file.printWriter().use { out ->
             out.println("level_to_mana:")
-            (1..9).forEach { out.println("  $it: 0") }
+            (0..9).forEach { out.println("  $it: ${Defaults.mana}") }
             (10..MAX).forEach { out.println("  $it: ${pol.calculation(it)}") }
         }
     }

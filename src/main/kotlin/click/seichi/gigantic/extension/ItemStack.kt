@@ -22,6 +22,13 @@ fun ItemStack.setLore(vararg lore: String) {
     }
 }
 
+fun ItemStack.clearLore() {
+    itemMeta = itemMeta.also { meta ->
+        if (meta.hasLore())
+            meta.lore.clear()
+    }
+}
+
 fun ItemStack.addLore(vararg lore: String) {
     itemMeta = itemMeta.also { meta ->
         lore.map { "$RESET$it" }.let { newLore ->

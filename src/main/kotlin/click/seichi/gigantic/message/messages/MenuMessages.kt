@@ -210,4 +210,31 @@ object MenuMessages {
         )
     }
 
+    val BELT_SWITCHER_SETTING = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}${ChatColor.UNDERLINE}スイッチ詳細設定"
+    )
+
+    val BELT_SWITCHER_SETTING_BUTTON_LORE = { canSwitch: Boolean ->
+        if (canSwitch) {
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GREEN}選択済"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "クリックで切り替え"
+                    )
+            )
+
+        } else {
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.RED}未選択"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "クリックで切り替え"
+                    )
+            )
+        }
+    }
+
 }

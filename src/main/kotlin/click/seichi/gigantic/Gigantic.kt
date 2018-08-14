@@ -97,7 +97,8 @@ class Gigantic : JavaPlugin() {
                     UserMineBlockTable,
                     UserBossTable,
                     UserRelicTable,
-                    UserLockedTable
+                    UserLockedTable,
+                    UserBeltTable
             )
         }
     }

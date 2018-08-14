@@ -1,6 +1,7 @@
 package click.seichi.gigantic.config
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.util.Polynomial
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -21,7 +22,7 @@ object HealthConfig : SimpleConfiguration("health", Gigantic.PLUGIN) {
 
         file.printWriter().use { out ->
             out.println("level_to_health:")
-            (1..6).forEach { out.println("  $it: 100") }
+            (0..6).forEach { out.println("  $it: ${Defaults.health}") }
             (7..PlayerLevelConfig.MAX).forEach { out.println("  $it: ${pol.calculation(it)}") }
         }
     }

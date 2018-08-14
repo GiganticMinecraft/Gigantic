@@ -2,6 +2,7 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.PlayerAnimations
+import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -117,6 +118,13 @@ class PlayerListener : Listener {
             PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
         }
 
+        player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
+            if (!LockedFunction.SWITCH.isUnlocked(player)) return@manipulate
+            it.setCanSwitch(Belt.DIG, true)
+            it.setCanSwitch(Belt.MINE, true)
+            it.setCanSwitch(Belt.CUT, true)
+        }
+
         player.find(Keys.BELT)?.wear(player)
         player.find(Keys.BAG)?.carry(player)
 
@@ -147,7 +155,7 @@ class PlayerListener : Listener {
     }
 
     fun trySendingUnlockMessage(player: Player) {
-        Keys.HAS_UNLOCKED_MAP.forEach { func, key ->
+        Keys.LOCKED_FUNCTION_MAP.forEach { func, key ->
             if (!func.isUnlocked(player)) return@forEach
             player.transform(key) { hasUnlocked ->
                 if (!hasUnlocked) func.unlockMessage?.sendTo(player)
@@ -198,13 +206,8 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
-        switchBelt(player)
+        Skills.SWITCH.tryInvoke(player)
 
-    }
-
-    // TODO 自由に選択できるようにする
-    fun switchBelt(player: Player) {
-        Skills.SWAP.tryInvoke(player)
     }
 
     @EventHandler
@@ -235,6 +238,13 @@ class PlayerListener : Listener {
             PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
             if (prevMax == it.max) return@manipulate
             PlayerMessages.LEVEL_UP_HEALTH(prevMax, it.max).sendTo(player)
+        }
+
+        player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
+            if (!LockedFunction.SWITCH.isUnlocked(player)) return@manipulate
+            it.setCanSwitch(Belt.DIG, true)
+            it.setCanSwitch(Belt.MINE, true)
+            it.setCanSwitch(Belt.CUT, true)
         }
 
         player.find(Keys.BELT)?.wear(player)

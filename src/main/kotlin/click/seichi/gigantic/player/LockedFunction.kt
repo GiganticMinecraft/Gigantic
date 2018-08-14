@@ -30,6 +30,14 @@ enum class LockedFunction(
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 4
     }, UnlockMessages.UNLOCK_FLASH),
 
+    HEAL(4, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
+    }, UnlockMessages.UNLOCK_HEAL),
+
+    SWITCH(5, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 2
+    }, UnlockMessages.UNLOCK_SWITCH),
+
 
     ;
 

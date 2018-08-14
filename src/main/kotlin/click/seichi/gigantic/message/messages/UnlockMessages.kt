@@ -14,9 +14,9 @@ object UnlockMessages {
     val UNLOCK_MINE_BURST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
-                        "スキル:マインバースト を習得した!!\n" +
+                        "バフスキル: マインバースト を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "効果: 少しの間だけ掘る速度が上昇\n" +
+                        "アクティブ効果: 少しの間だけ掘る速度が上昇!!\n" +
                         "\"3\" キー を押して発動!!\n"
             }
     ))
@@ -34,12 +34,32 @@ object UnlockMessages {
     val UNLOCK_FLASH = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
-                        "初めてのスキル:フラッシュ を習得した!!\n" +
+                        "移動スキル: フラッシュ を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "効果: ブロックに向けて発動すると\n" +
-                        "そのブロックの上にワープする\n" +
+                        "アクティブ効果: ブロックに向けて発動するとそのブロックの上にワープ!!\n" +
                         "\"2\" キー を押して発動!!\n"
             }
     ))
+
+    val UNLOCK_HEAL = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                        "回復スキル: ヒール を覚えた!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "パッシブ効果: ブロックを破壊で最大体力の1%を回復!!\n" +
+                        "通常破壊時に自動的に発動!!\n"
+            }
+    ))
+
+    val UNLOCK_SWITCH = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                        "切り替えスキル: スイッチ を覚えた!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "アクティブ効果: 持ち物を入れ替える\n" +
+                        "\"f\" キー を押して発動!!\n"
+            }
+    ))
+
 
 }

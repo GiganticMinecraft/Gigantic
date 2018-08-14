@@ -58,8 +58,7 @@ object PlayerMessages {
 
     val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}" +
-                    "ブロックを壊そう!!\n" +
-                    "石以外のブロックを掘りたいときは、\"f\"キーを押してみよう!!\n"
+                    "ブロックを壊そう!!\n"
     ))
 
     val OBTAIN_WILL_APTITUDE = { will: Will ->

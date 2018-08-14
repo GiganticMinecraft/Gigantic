@@ -3,10 +3,10 @@ package click.seichi.gigantic.cache.key
 import click.seichi.gigantic.bag.Bag
 import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.belt.Belt
-import click.seichi.gigantic.belt.belts.MineBelt
 import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.database.dao.*
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.relic.Relic
@@ -221,7 +221,7 @@ object Keys {
             }
             .toMap()
 
-    val HAS_UNLOCKED_MAP: Map<LockedFunction, DatabaseKey<PlayerCache, Boolean>> = LockedFunction.values()
+    val LOCKED_FUNCTION_MAP: Map<LockedFunction, DatabaseKey<PlayerCache, Boolean>> = LockedFunction.values()
             .map {
                 it to object : DatabaseKey<PlayerCache, Boolean> {
                     override val default: Boolean
@@ -245,21 +245,55 @@ object Keys {
             }
             .toMap()
 
-    val BELT = object : Key<PlayerCache, Belt> {
-        override val default: Belt
-            get() = MineBelt
+    val BELT_MAP: Map<Belt, DatabaseKey<PlayerCache, Boolean>> = Belt.values()
+            .map {
+                it to object : DatabaseKey<PlayerCache, Boolean> {
+                    override val default: Boolean
+                        get() = false
 
-        override fun satisfyWith(value: Belt): Boolean {
-            return true
-        }
+                    override fun read(entity: Entity<*>): Boolean {
+                        val userBelt = entity as UserBelt
+                        return userBelt.canSwitch
+                    }
 
-    }
+                    override fun store(entity: Entity<*>, value: Boolean) {
+                        val userBelt = entity as UserBelt
+                        userBelt.canSwitch = value
+                    }
+
+                    override fun satisfyWith(value: Boolean): Boolean {
+                        return true
+                    }
+
+                }
+            }
+            .toMap()
 
     val BAG = object : Key<PlayerCache, Bag> {
         override val default: Bag
             get() = MainBag
 
         override fun satisfyWith(value: Bag): Boolean {
+            return true
+        }
+
+    }
+
+    val BELT = object : DatabaseKey<PlayerCache, Belt> {
+        override val default: Belt
+            get() = Belt.findById(Defaults.beltId)!!
+
+        override fun read(entity: Entity<*>): Belt {
+            val user = entity as User
+            return Belt.findById(user.beltId) ?: default
+        }
+
+        override fun store(entity: Entity<*>, value: Belt) {
+            val user = entity as User
+            user.beltId = value.id
+        }
+
+        override fun satisfyWith(value: Belt): Boolean {
             return true
         }
 

@@ -20,6 +20,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var health by UserTable.health
 
+    var beltId by UserTable.beltId
+
     var isFirstJoin by UserTable.isFirstJoin
 
     var createdDate by UserTable.createdAt
