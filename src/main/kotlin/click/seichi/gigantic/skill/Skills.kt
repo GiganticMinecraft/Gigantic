@@ -1,11 +1,15 @@
 package click.seichi.gigantic.skill
 
 import click.seichi.gigantic.animation.SkillAnimations
+import click.seichi.gigantic.belt.belts.CutBelt
+import click.seichi.gigantic.belt.belts.DigBelt
+import click.seichi.gigantic.belt.belts.MineBelt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.isSurface
 import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.sound.sounds.SkillSounds
@@ -31,20 +35,20 @@ object Skills {
             if (!LockedFunction.MINE_BURST.isUnlocked(player)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             if (!mineBurst.canStart()) return null
-            return Consumer { player ->
+            return Consumer { p ->
                 mineBurst.onStart {
-                    player.removePotionEffect(PotionEffectType.FAST_DIGGING)
-                    player.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
-                    SkillSounds.MINE_BURST_ON_FIRE.play(player.location)
-                    player.find(Keys.BELT)?.wear(player)
+                    p.removePotionEffect(PotionEffectType.FAST_DIGGING)
+                    p.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
+                    SkillSounds.MINE_BURST_ON_FIRE.play(p.location)
+                    p.find(Keys.BELT)?.wear(p)
                 }.onFire {
-                    player.find(Keys.BELT)?.wear(player, false)
+                    p.find(Keys.BELT)?.wear(p, false)
                 }.onCompleteFire {
-                    player.find(Keys.BELT)?.wear(player)
+                    p.find(Keys.BELT)?.wear(p)
                 }.onCooldown {
-                    player.find(Keys.BELT)?.wear(player, false)
+                    p.find(Keys.BELT)?.wear(p, false)
                 }.onCompleteCooldown {
-                    player.find(Keys.BELT)?.wear(player)
+                    p.find(Keys.BELT)?.wear(p)
                 }.start()
             }
         }
@@ -69,32 +73,32 @@ object Skills {
             if (!LockedFunction.FLASH.isUnlocked(player)) return null
             val flash = player.find(CatalogPlayerCache.FLASH) ?: return null
             if (!flash.canStart()) return null
-            return Consumer { player ->
+            return Consumer { p ->
                 flash.onStart {
-                    val tpLocation = player.getTargetBlock(transparentMaterialSet, maxDistance).let { block ->
+                    val tpLocation = p.getTargetBlock(transparentMaterialSet, maxDistance).let { block ->
                         if (block.type == Material.AIR) return@let null
                         var nextBlock = block ?: return@let null
                         while (!nextBlock.isSurface) {
                             nextBlock = nextBlock.getRelative(BlockFace.UP)
                         }
                         nextBlock.location.clone().add(0.0, 1.75, 0.0).apply {
-                            direction = player.location.direction
+                            direction = p.location.direction
                         }
                     }
                     if (tpLocation != null) {
-                        SkillAnimations.FLASH_BEFORE.start(player.location)
-                        player.teleport(tpLocation)
-                        SkillAnimations.FLASH_BEFORE.start(player.location)
-                        SkillSounds.FLASH_FIRE.play(player.location)
+                        SkillAnimations.FLASH_BEFORE.start(p.location)
+                        p.teleport(tpLocation)
+                        SkillAnimations.FLASH_BEFORE.start(p.location)
+                        SkillSounds.FLASH_FIRE.play(p.location)
                     } else {
-                        SkillSounds.FLASH_MISS.play(player.location)
+                        SkillSounds.FLASH_MISS.play(p.location)
                         flash.isCancelled = true
                     }
-                    player.find(Keys.BELT)?.wear(player)
+                    p.find(Keys.BELT)?.wear(p)
                 }.onCooldown {
-                    player.find(Keys.BELT)?.wear(player, false)
+                    p.find(Keys.BELT)?.wear(p, false)
                 }.onCompleteCooldown {
-                    player.find(Keys.BELT)?.wear(player)
+                    p.find(Keys.BELT)?.wear(p)
                 }.start()
             }
         }
@@ -107,11 +111,31 @@ object Skills {
             get() = 0L
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            return Consumer { player ->
-                player.manipulate(CatalogPlayerCache.HEALTH) {
+            return Consumer { p ->
+                p.manipulate(CatalogPlayerCache.HEALTH) {
                     it.increase(it.max.div(100L))
-                    PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+                    PlayerMessages.HEALTH_DISPLAY(it).sendTo(p)
                 }
+            }
+        }
+
+    }
+
+
+    val SWAP = object : Skill {
+
+        override val coolTime: Long
+            get() = 0L
+
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            return Consumer { p ->
+                val oldBelt = p.find(Keys.BELT) ?: return@Consumer
+                p.offer(Keys.BELT, when (oldBelt) {
+                    MineBelt -> DigBelt
+                    DigBelt -> CutBelt
+                    else -> MineBelt
+                }.apply { wear(p) })
+                SkillSounds.SWAP.playOnly(p)
             }
         }
 

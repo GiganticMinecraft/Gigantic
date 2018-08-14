@@ -5,6 +5,7 @@ import click.seichi.gigantic.schedule.Scheduler
 import io.reactivex.Observable
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.entity.Entity
 import java.util.concurrent.TimeUnit
 
 /**
@@ -12,6 +13,9 @@ import java.util.concurrent.TimeUnit
  *
  * @param ticks 継続時間(ticks)
  * @param rendering tick毎の処理
+ *
+ * check this command
+ * "/particle explode ~ ~ ~1 5 5 5 3 2000"
  *
  * @author tar0ss
  */
@@ -29,4 +33,25 @@ class Animation(
                     rendering(location, ticks)
                 }
     }
+
+    fun follow(entity: Entity,
+               meanX: Double = 0.0,
+               meanY: Double = 0.0,
+               meanZ: Double = 0.0
+    ) {
+        val uniqueId = entity.uniqueId ?: return
+        Observable.interval(50L, TimeUnit.MILLISECONDS)
+                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
+                .take(ticks)
+                .subscribe {
+                    val e = Bukkit.getEntity(uniqueId) ?: return@subscribe
+                    val ticks = it
+                    rendering(e.location.clone().add(
+                            meanX,
+                            meanY,
+                            meanZ
+                    ), ticks)
+                }
+    }
+
 }

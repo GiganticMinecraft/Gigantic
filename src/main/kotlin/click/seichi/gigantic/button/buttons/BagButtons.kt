@@ -1,5 +1,6 @@
 package click.seichi.gigantic.button.buttons
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -68,6 +69,8 @@ object BagButtons {
                     GameMode.SPECTATOR -> setDisplayName(
                             MenuMessages.BACK_FROM_REST.asSafety(player.wrappedLocale)
                     )
+                    else -> {
+                    }
                 }
             }
         }
@@ -78,12 +81,16 @@ object BagButtons {
                 GameMode.SURVIVAL -> {
                     player.gameMode = GameMode.SPECTATOR
                     afkLocation.saveLocation(player.location)
+                    // 見えなくなるバグのため
+                    player.showPlayer(Gigantic.PLUGIN, player)
                     player.find(Keys.BAG)?.carry(player)
                 }
                 GameMode.SPECTATOR -> {
                     player.gameMode = GameMode.SURVIVAL
                     player.teleport(afkLocation.getLocation())
                     player.find(Keys.BAG)?.carry(player)
+                }
+                else -> {
                 }
             }
         }

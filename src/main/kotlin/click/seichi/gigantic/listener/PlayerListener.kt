@@ -1,15 +1,16 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.belt.belts.CutBelt
-import click.seichi.gigantic.belt.belts.DigBelt
-import click.seichi.gigantic.belt.belts.MineBelt
+import click.seichi.gigantic.animation.PlayerAnimations
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
-import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.extension.central
+import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
@@ -17,6 +18,7 @@ import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.popup.PlayerPops
 import click.seichi.gigantic.raid.RaidManager
+import click.seichi.gigantic.skill.Skills
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
@@ -98,9 +100,9 @@ class PlayerListener : Listener {
 
         if (!player.isOp) player.gameMode = GameMode.SURVIVAL
 
-        player.manipulate(CatalogPlayerCache.LEVEL) {
-            it.calculate(ExpProducer.calcExp(player)) {}
-            PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
+        player.manipulate(CatalogPlayerCache.LEVEL) { level ->
+            level.calculate(ExpProducer.calcExp(player)) {}
+            PlayerMessages.EXP_BAR_DISPLAY(level).sendTo(player)
         }
 
         player.manipulate(CatalogPlayerCache.MANA) {
@@ -207,12 +209,7 @@ class PlayerListener : Listener {
 
     // TODO 自由に選択できるようにする
     fun switchBelt(player: Player) {
-        val oldBelt = player.find(Keys.BELT) ?: return
-        player.offer(Keys.BELT, when (oldBelt) {
-            MineBelt -> DigBelt
-            DigBelt -> CutBelt
-            else -> MineBelt
-        }.apply { wear(player) })
+        Skills.SWAP.tryInvoke(player)
     }
 
     @EventHandler
@@ -220,7 +217,9 @@ class PlayerListener : Listener {
         val player = event.player
 
         PlayerMessages.LEVEL_UP_LEVEL(event.level).sendTo(player)
-        PlayerPops.LEVEL_UP.pop(player.eyeLocation.clone().add(0.0, 2.0, 0.0))
+        PlayerPops.LEVEL_UP.follow(player, meanY = 3.7)
+        PlayerAnimations.LEVEL_UP.follow(player, meanY = 2.0)
+        PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
         PlayerSounds.LEVEL_UP.play(player.location)
 
         player.manipulate(CatalogPlayerCache.MANA) {
@@ -256,8 +255,8 @@ class PlayerListener : Listener {
 
     fun tryToSpawnNewWill(player: Player) {
         val level = player.find(CatalogPlayerCache.LEVEL) ?: return
-        player.manipulate(CatalogPlayerCache.APTITUDE) {
-            it.addIfNeeded().forEachIndexed { index, will ->
+        player.manipulate(CatalogPlayerCache.APTITUDE) { willAptitude ->
+            willAptitude.addIfNeeded().forEachIndexed { index, will ->
                 SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, player.eyeLocation
                         .clone()
                         .let {
@@ -340,9 +339,9 @@ class PlayerListener : Listener {
             if (penaltyMineBlock != 0L)
                 PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
         }
-        player.manipulate(CatalogPlayerCache.LEVEL) {
-            it.calculate(ExpProducer.calcExp(player)) {}
-            PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
+        player.manipulate(CatalogPlayerCache.LEVEL) { level ->
+            level.calculate(ExpProducer.calcExp(player)) {}
+            PlayerMessages.EXP_BAR_DISPLAY(level).sendTo(player)
         }
     }
 
@@ -371,6 +370,8 @@ class PlayerListener : Listener {
                 }
                 belt.wear(event.player)
                 event.player.find(Keys.BAG)?.carry(event.player)
+            }
+            else -> {
             }
         }
     }

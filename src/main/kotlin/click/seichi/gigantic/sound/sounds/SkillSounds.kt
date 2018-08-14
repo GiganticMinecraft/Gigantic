@@ -40,4 +40,11 @@ object SkillSounds {
             volume = 1.0F
     )
 
+    val SWAP = DetailedSound(
+            Sound.ITEM_ARMOR_EQUIP_DIAMOND,
+            SoundCategory.BLOCKS,
+            pitch = 1.4F,
+            volume = 1.0F
+    )
+
 }
