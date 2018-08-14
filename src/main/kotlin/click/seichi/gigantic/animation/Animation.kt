@@ -29,8 +29,8 @@ class Animation(
                 .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .take(ticks)
                 .subscribe {
-                    val ticks = it
-                    rendering(location, ticks)
+                    val elapsedTicks = it
+                    rendering(location, elapsedTicks)
                 }
     }
 
@@ -45,12 +45,12 @@ class Animation(
                 .take(ticks)
                 .subscribe {
                     val e = Bukkit.getEntity(uniqueId) ?: return@subscribe
-                    val ticks = it
+                    val elapsedTicks = it
                     rendering(e.location.clone().add(
                             meanX,
                             meanY,
                             meanZ
-                    ), ticks)
+                    ), elapsedTicks)
                 }
     }
 

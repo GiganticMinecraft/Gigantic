@@ -42,6 +42,9 @@ enum class LockedFunction(
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }, UnlockMessages.UNLOCK_EXPLOSION),
 
+    TERRA_DRAIN(6, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
+    }, UnlockMessages.UNLOCK_TERRA_DRAIN),
 
     ;
 

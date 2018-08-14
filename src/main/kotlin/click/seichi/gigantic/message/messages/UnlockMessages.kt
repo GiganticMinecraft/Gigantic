@@ -3,6 +3,7 @@ package click.seichi.gigantic.message.messages
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.skill.SkillParameters
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -17,7 +18,7 @@ object UnlockMessages {
                         "バフスキル: マインバースト を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "アクティブ効果: 少しの間だけ掘る速度が上昇!!\n" +
-                        "\"3\" キー を押して発動!!\n"
+                        "\"${SkillParameters.MINE_BURST_KEY}\" キー を押して発動!!\n"
             }
     ))
 
@@ -37,7 +38,7 @@ object UnlockMessages {
                         "移動スキル: フラッシュ を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "アクティブ効果: ブロックに向けて発動するとそのブロックの上にワープ!!\n" +
-                        "\"2\" キー を押して発動!!\n"
+                        "\"${SkillParameters.FLASH_KEY}\" キー を押して発動!!\n"
             }
     ))
 
@@ -46,7 +47,7 @@ object UnlockMessages {
                 it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
                         "回復スキル: ヒール を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: ブロックを破壊で最大体力の1%を回復!!\n" +
+                        "パッシブ効果: ブロックを破壊で最大体力の${SkillParameters.HEAL_PERCENT}%を回復!!\n" +
                         "通常破壊時に自動的に発動する\n"
             }
     ))
@@ -57,8 +58,8 @@ object UnlockMessages {
                         "切り替えスキル: スイッチ を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "アクティブ効果: 持ち物を入れ替える\n" +
-                        "\"f\" キー を押して発動!!\n" +
-                        "\"9\" キー を押して詳細設定を変更できる\n"
+                        "\"${SkillParameters.SWITCH_KEY}\" キー を押して発動!!\n" +
+                        "\"${SkillParameters.SWITCH_SETTING_KEY}\" キー を押して詳細設定を変更できる\n"
             }
     ))
 
@@ -69,8 +70,18 @@ object UnlockMessages {
                         "切り替えスキル: スイッチ を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "アクティブ効果: 持ち物を入れ替える\n" +
-                        "\"f\" キー を押して発動!!\n" +
-                        "\"9\" キー を押して詳細設定を変更できる\n"
+                        "\"${SkillParameters.SWITCH_KEY}\" キー を押して発動!!\n" +
+                        "\"${SkillParameters.SWITCH_SETTING_KEY}\" キー を押して詳細設定を変更できる\n"
+            }
+    ))
+
+    val UNLOCK_TERRA_DRAIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                        "回復スキル: テラドレイン を覚えた!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "パッシブ効果: 木を倒し、自身を回復する\n" +
+                        "原木を破壊して発動!!\n"
             }
     ))
 

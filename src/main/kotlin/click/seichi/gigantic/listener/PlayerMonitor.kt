@@ -47,7 +47,7 @@ class PlayerMonitor : Listener {
             SkillPops.MINE_COMBO(it).pop(event.block.centralLocation)
         }
 
-        Skills.HEAL.tryInvoke(player)
+        Skills.HEAL.tryInvoke(player, event.block)
 
         // raid battle process
         RaidManager.playBattle(player)

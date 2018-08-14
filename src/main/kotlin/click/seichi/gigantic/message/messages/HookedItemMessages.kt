@@ -1,8 +1,7 @@
 package click.seichi.gigantic.message.messages
 
-import click.seichi.gigantic.cache.manipulator.manipulators.Flash
-import click.seichi.gigantic.cache.manipulator.manipulators.MineBurst
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.skill.SkillParameters
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -35,25 +34,24 @@ object HookedItemMessages {
                     "マインバースト"
     )
 
-    val MINE_BURST_LORE = { mineburst: MineBurst ->
-        listOf(
+    val MINE_BURST_LORE = listOf(
                 LocalizedText(
                         Locale.JAPANESE to
                                 "${ChatColor.GRAY}" +
-                                "${mineburst.duration}秒間破壊速度上昇"
+                                "${SkillParameters.MINE_BURST_DURATION}秒間破壊速度上昇"
                 ),
                 LocalizedText(
                         Locale.JAPANESE to
                                 "${ChatColor.AQUA}" +
-                                "クールタイム : ${mineburst.coolTime}秒"
+                                "クールタイム : ${SkillParameters.MINE_BURST_COOLTIME}秒"
                 ),
                 LocalizedText(
                         Locale.JAPANESE to
                                 "${ChatColor.DARK_GRAY}" +
-                                "\"3\" キー を押して発動"
+                                "\"${SkillParameters.MINE_BURST_KEY}\" キー を押して発動"
                 )
         )
-    }
+
 
     val FLASH = LocalizedText(
             Locale.JAPANESE to
@@ -61,7 +59,7 @@ object HookedItemMessages {
                     "フラッシュ"
     )
 
-    val FLASH_LORE = { flash: Flash ->
+    val FLASH_LORE =
         listOf(
                 LocalizedText(
                         Locale.JAPANESE to
@@ -76,15 +74,15 @@ object HookedItemMessages {
                 LocalizedText(
                         Locale.JAPANESE to
                                 "${ChatColor.AQUA}" +
-                                "クールタイム : ${flash.coolTime}秒"
+                                "クールタイム : ${SkillParameters.FLASH_COOLTIME}秒"
                 ),
                 LocalizedText(
                         Locale.JAPANESE to
                                 "${ChatColor.DARK_GRAY}" +
-                                "\"2\" キー を押して発動"
+                                "\"${SkillParameters.FLASH_KEY}\" キー を押して発動"
                 )
         )
-    }
+
 
     val SWITCH = LocalizedText(
             Locale.JAPANESE to

@@ -8,7 +8,6 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
-import click.seichi.gigantic.extension.central
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.extension.transform
@@ -28,11 +27,7 @@ import click.seichi.gigantic.will.WillSize
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import org.bukkit.Bukkit
-import org.bukkit.Effect
 import org.bukkit.GameMode
-import org.bukkit.Material
-import org.bukkit.block.Block
-import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -383,23 +378,7 @@ class PlayerListener : Listener {
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
-        if (player.gameMode != GameMode.SURVIVAL) return
-        if (event.block.type != Material.LOG && event.block.type != Material.LOG_2) return
-        breakTree(event.block, event.block)
-    }
-
-    @Suppress("DEPRECATION")
-    private fun breakTree(tree: Block, baseBlock: Block) {
-        if (tree.type != Material.LOG && tree.type != Material.LOG_2 &&
-                tree.type != Material.LEAVES && tree.type != Material.LEAVES_2) return
-        if (Math.abs(tree.location.x - baseBlock.location.x) >= 5
-                || Math.abs(tree.location.z - baseBlock.location.z) >= 5) return
-        if (tree != baseBlock) {
-            tree.world.playEffect(tree.location.central, Effect.STEP_SOUND, tree.type.id)
-            tree.type = Material.AIR
-        }
-        for (face in BlockFace.values().subtract(listOf(BlockFace.SELF, BlockFace.DOWN)))
-            Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, { breakTree(tree.getRelative(face), baseBlock) }, 4L)
+        Skills.TERRA_DRAIN.tryInvoke(player, event.block)
     }
 
 }

@@ -36,6 +36,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
         register(CatalogPlayerCache.FLASH)
         register(CatalogPlayerCache.HEALTH)
         register(CatalogPlayerCache.BELT_SWITCHER)
+        register(CatalogPlayerCache.EXPLOSION)
     }
 
     override fun read() {

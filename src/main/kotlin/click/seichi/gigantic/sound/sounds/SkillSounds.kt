@@ -47,4 +47,11 @@ object SkillSounds {
             volume = 1.0F
     )
 
+    val TERRA_DRAIN = DetailedSound(
+            Sound.ITEM_HOE_TILL,
+            SoundCategory.BLOCKS,
+            pitch = (1.5 + Random.nextGaussian(variance = 0.4)).toFloat(),
+            volume = 0.2F
+    )
+
 }

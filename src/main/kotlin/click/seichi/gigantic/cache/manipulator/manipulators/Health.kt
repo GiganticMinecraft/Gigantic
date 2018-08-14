@@ -28,27 +28,34 @@ class Health : Manipulator<Health, PlayerCache> {
         return cache.offer(Keys.HEALTH, current)
     }
 
-    fun increase(other: Long) {
+    fun increase(other: Long): Long {
+        val prev = current
         val next = current + other
         when {
             other < 0 -> throw IllegalArgumentException("$other must be positive.")
-            current in next..max -> current = max // overflow
+            current in (next + 1)..max -> current = max // overflow
             next < current -> {
             } // overflow,current = current
             current < max -> current = next.coerceAtMost(max)
             else -> {
             } // current = current
         }
+
+        return current - prev
     }
 
-    fun decrease(other: Long) {
+    fun decrease(other: Long): Long {
+        val prev = current
         val next = current - other
         current = when {
             other < 0 -> throw IllegalArgumentException("$other must be positive.")
             next > current -> 0L
             else -> next.coerceAtLeast(0L)
         }
+        return prev - next
     }
+
+    fun isMaxHealth() = current == max
 
     fun updateMaxHealth() {
         max = HealthConfig.HEALTH_MAP[level.current] ?: 0L

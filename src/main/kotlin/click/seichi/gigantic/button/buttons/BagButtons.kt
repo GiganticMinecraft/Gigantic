@@ -12,6 +12,7 @@ import click.seichi.gigantic.menu.menus.ProfileMenu
 import click.seichi.gigantic.menu.menus.RaidBattleMenu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.player.LockedFunction
+import click.seichi.gigantic.raid.RaidManager
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -43,7 +44,7 @@ object BagButtons {
 
         override fun getItemStack(player: Player): ItemStack? {
             if (!LockedFunction.RAID_BATTLE.isUnlocked(player)) return null
-            return ItemStack(Material.EYE_OF_ENDER).apply {
+            return RaidManager.getBattleList().firstOrNull()?.boss?.head?.toItemStack()?.apply {
                 setDisplayName(
                         MenuMessages.RAID_BOSS.asSafety(player.wrappedLocale)
                 )

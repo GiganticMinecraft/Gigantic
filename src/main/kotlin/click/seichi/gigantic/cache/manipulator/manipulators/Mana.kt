@@ -35,12 +35,13 @@ class Mana : Manipulator<Mana, PlayerCache> {
         return cache.offer(Keys.MANA, current)
     }
 
-    fun increase(other: Long, ignoreMax: Boolean = false) {
+    fun increase(other: Long, ignoreMax: Boolean = false): Long {
+        val prev = current
         val next = current + other
         when {
             other < 0 -> throw IllegalArgumentException("$other must be positive.")
             next < current && ignoreMax -> current = Long.MAX_VALUE // overflow
-            current in next..max -> current = max // overflow
+            current in (next + 1)..max -> current = max // overflow
             next < current -> {
             } // overflow,current = current
             ignoreMax -> current = next
@@ -48,15 +49,18 @@ class Mana : Manipulator<Mana, PlayerCache> {
             else -> {
             } // current = current
         }
+        return current - prev
     }
 
-    fun decrease(other: Long) {
+    fun decrease(other: Long): Long {
+        val prev = current
         val next = current - other
         current = when {
             other < 0 -> throw IllegalArgumentException("$other must be positive.")
             next > current -> 0L
             else -> next.coerceAtLeast(0L)
         }
+        return prev - current
     }
 
     fun updateMaxMana() {

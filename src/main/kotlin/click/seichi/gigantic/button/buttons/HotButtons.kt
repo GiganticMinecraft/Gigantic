@@ -38,7 +38,7 @@ object HotButtons {
                 else -> ItemStack(Material.BLAZE_POWDER)
             }.apply {
                 setDisplayName(HookedItemMessages.MINE_BURST.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.MINE_BURST_LORE(mineBurst)
+                setLore(*HookedItemMessages.MINE_BURST_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
@@ -68,7 +68,7 @@ object HotButtons {
                 else -> ItemStack(Material.FEATHER)
             }.apply {
                 setDisplayName(HookedItemMessages.FLASH.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.FLASH_LORE(flash)
+                setLore(*HookedItemMessages.FLASH_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
