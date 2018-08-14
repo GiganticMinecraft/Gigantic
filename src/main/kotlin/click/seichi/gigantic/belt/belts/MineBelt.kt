@@ -10,7 +10,7 @@ import click.seichi.gigantic.button.buttons.HotButtons
 object MineBelt : Belt() {
     init {
         registerFixedButton(0, FixedButtons.PICKEL)
-        registerHotButton(1, HotButtons.MINE_BURST_BOOK)
-        registerHotButton(2, HotButtons.FLASH_BOOK)
+        registerHotButton(1, HotButtons.FLASH_BOOK)
+        registerHotButton(2, HotButtons.MINE_BURST_BOOK)
     }
 }
