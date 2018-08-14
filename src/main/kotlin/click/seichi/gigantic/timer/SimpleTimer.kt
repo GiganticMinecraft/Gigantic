@@ -1,41 +1,41 @@
-package click.seichi.gigantic.skill.timer
+package click.seichi.gigantic.timer
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.schedule.Scheduler
-import click.seichi.gigantic.skill.Skill
 import io.reactivex.Observable
 import org.bukkit.Bukkit
 import java.util.concurrent.TimeUnit
+import kotlin.properties.Delegates
 
 /**
  * @author tar0ss
  */
-open class SimpleSkillTimer(skill: Skill) : SkillTimer {
+open class SimpleTimer : Timer {
 
     var isCancelled = false
-
-    val coolTime: Long = skill.coolTime
 
     var remainTimeToFire: Long = 0L
         private set
 
+    var coolTime: Long by Delegates.notNull()
+
     private var onStart: () -> Unit = {}
 
-    fun onStart(starting: () -> Unit): SimpleSkillTimer {
+    fun onStart(starting: () -> Unit): SimpleTimer {
         onStart = starting
         return this
     }
 
     private var onCooldown: (Long) -> Unit = {}
 
-    fun onCooldown(cooling: (Long) -> Unit): SimpleSkillTimer {
+    fun onCooldown(cooling: (Long) -> Unit): SimpleTimer {
         onCooldown = cooling
         return this
     }
 
     private var onCompleteCooldown: () -> Unit = {}
 
-    fun onCompleteCooldown(completeCooling: () -> Unit): SimpleSkillTimer {
+    fun onCompleteCooldown(completeCooling: () -> Unit): SimpleTimer {
         onCompleteCooldown = completeCooling
         return this
     }
@@ -43,7 +43,6 @@ open class SimpleSkillTimer(skill: Skill) : SkillTimer {
     override fun duringCoolTime() = remainTimeToFire != 0L
 
     override fun canStart() = !duringCoolTime()
-
 
     override fun start() {
         remainTimeToFire = coolTime

@@ -38,6 +38,10 @@ enum class LockedFunction(
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 2
     }, UnlockMessages.UNLOCK_SWITCH),
 
+    EXPLOSION(6, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+    }, UnlockMessages.UNLOCK_EXPLOSION),
+
 
     ;
 

@@ -1,21 +1,22 @@
-package click.seichi.gigantic.skill.timer
+package click.seichi.gigantic.timer
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.schedule.Scheduler
-import click.seichi.gigantic.skill.LingeringSkill
 import io.reactivex.Observable
 import org.bukkit.Bukkit
 import java.util.concurrent.TimeUnit
+import kotlin.properties.Delegates
 
 /**
  * @author tar0ss
  */
-open class LingeringSkillTimer(skill: LingeringSkill) : SkillTimer {
+open class LingeringTimer : Timer {
 
     var isCancelled = false
 
-    val duration: Long = skill.duration
-    val coolTime: Long = skill.coolTime
+    var coolTime: Long by Delegates.notNull()
+
+    var duration: Long by Delegates.notNull()
 
     var remainTimeToFire: Long = 0L
         private set
@@ -24,35 +25,35 @@ open class LingeringSkillTimer(skill: LingeringSkill) : SkillTimer {
 
     private var onStart: () -> Unit = {}
 
-    fun onStart(starting: () -> Unit): LingeringSkillTimer {
+    fun onStart(starting: () -> Unit): LingeringTimer {
         onStart = starting
         return this
     }
 
     private var onFire: (Long) -> Unit = {}
 
-    fun onFire(firing: (Long) -> Unit): LingeringSkillTimer {
+    fun onFire(firing: (Long) -> Unit): LingeringTimer {
         onFire = firing
         return this
     }
 
     private var onCompleteFire: () -> Unit = {}
 
-    fun onCompleteFire(completeFiring: () -> Unit): LingeringSkillTimer {
+    fun onCompleteFire(completeFiring: () -> Unit): LingeringTimer {
         onCompleteFire = completeFiring
         return this
     }
 
     private var onCooldown: (Long) -> Unit = {}
 
-    fun onCooldown(cooling: (Long) -> Unit): LingeringSkillTimer {
+    fun onCooldown(cooling: (Long) -> Unit): LingeringTimer {
         onCooldown = cooling
         return this
     }
 
     private var onCompleteCooldown: () -> Unit = {}
 
-    fun onCompleteCooldown(completeCooling: () -> Unit): LingeringSkillTimer {
+    fun onCompleteCooldown(completeCooling: () -> Unit): LingeringTimer {
         onCompleteCooldown = completeCooling
         return this
     }

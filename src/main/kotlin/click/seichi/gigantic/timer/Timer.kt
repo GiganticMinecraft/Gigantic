@@ -1,9 +1,9 @@
-package click.seichi.gigantic.skill.timer
+package click.seichi.gigantic.timer
 
 /**
  * @author tar0ss
  */
-interface SkillTimer {
+interface Timer {
 
     fun start()
 

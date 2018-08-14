@@ -22,17 +22,18 @@ import java.util.function.Consumer
  */
 object Skills {
 
-    val MINE_BURST = object : LingeringSkill {
-        override val duration: Long
-            get() = 5L
-        override val coolTime: Long
-            get() = 60L
+    val MINE_BURST = object : Skill {
+
+        val duration = 5L
+        val coolTime = 60L
 
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.MINE_BURST.isUnlocked(player)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             if (!mineBurst.canStart()) return null
             return Consumer { p ->
+                mineBurst.coolTime = coolTime
+                mineBurst.duration = duration
                 mineBurst.onStart {
                     p.removePotionEffect(PotionEffectType.FAST_DIGGING)
                     p.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
@@ -63,14 +64,14 @@ object Skills {
 
         val maxDistance = 50
 
-        override val coolTime: Long
-            get() = 15L
+        val coolTime = 15L
 
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.FLASH.isUnlocked(player)) return null
             val flash = player.find(CatalogPlayerCache.FLASH) ?: return null
             if (!flash.canStart()) return null
             return Consumer { p ->
+                flash.coolTime = coolTime
                 flash.onStart {
                     val tpLocation = p.getTargetBlock(transparentMaterialSet, maxDistance).let { block ->
                         if (block.type == Material.AIR) return@let null
@@ -103,10 +104,6 @@ object Skills {
     }
 
     val HEAL = object : Skill {
-
-        override val coolTime: Long
-            get() = 0L
-
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.HEAL.isUnlocked(player)) return null
             return Consumer { p ->
@@ -120,10 +117,6 @@ object Skills {
     }
 
     val SWITCH = object : Skill {
-
-        override val coolTime: Long
-            get() = 0L
-
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.SWITCH.isUnlocked(player)) return null
             return Consumer { p ->
@@ -141,5 +134,15 @@ object Skills {
         }
 
     }
+
+//    val EXPLOSION = object : Skill{
+//
+//        val coolTime = 45
+//
+//        override fun findInvokable(player: Player): Consumer<Player>? {
+//            if (!LockedFunction.EXPLOSION.isUnlocked(player)) return null
+//        }
+//
+//    }
 
 }
