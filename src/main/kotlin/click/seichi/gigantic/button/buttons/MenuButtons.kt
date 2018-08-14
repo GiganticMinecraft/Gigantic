@@ -190,7 +190,6 @@ object MenuButtons {
                                     .map { it.asSafety(player.wrappedLocale) }
                                     .toTypedArray()
                     )
-
                 }
             }
 
