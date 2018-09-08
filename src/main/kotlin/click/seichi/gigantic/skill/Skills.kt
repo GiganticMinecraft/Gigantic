@@ -222,7 +222,6 @@ object Skills {
             if (!block.isCrust) return null
             return Consumer { p ->
                 breakBlock(p, p.location.blockY, p.isSneaking, block, block)
-//                SkillAnimations.TERRA_DRAIN_HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
             }
         }
 
@@ -269,10 +268,12 @@ object Skills {
                     BlockFace.WEST -> 5L
                     else -> 3L
                 }
-                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-                    breakBlock(player, minY, isSneaking, target.getRelative(face), base)
-                }, delay)
+//                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+                breakBlock(player, minY, isSneaking, target.getRelative(face), base)
+//                }, delay)
             }
         }
+
     }
+
 }

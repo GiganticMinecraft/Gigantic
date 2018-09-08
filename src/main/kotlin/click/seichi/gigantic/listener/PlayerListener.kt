@@ -2,7 +2,6 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.PlayerAnimations
-import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -113,13 +112,6 @@ class PlayerListener : Listener {
             PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
         }
 
-        player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
-            if (!LockedFunction.SWITCH.isUnlocked(player)) return@manipulate
-            it.setCanSwitch(Belt.DIG, true)
-            it.setCanSwitch(Belt.MINE, true)
-            it.setCanSwitch(Belt.CUT, true)
-        }
-
         player.find(Keys.BELT)?.wear(player)
         player.find(Keys.BAG)?.carry(player)
 
@@ -151,9 +143,16 @@ class PlayerListener : Listener {
 
     fun trySendingUnlockMessage(player: Player) {
         Keys.LOCKED_FUNCTION_MAP.forEach { func, key ->
-            if (!func.isUnlocked(player)) return@forEach
+            // すでに解除済みであれば終了
+            if (func.isUnlocked(player)) return@forEach
+            // 解除可能でなければ終了
+            if (!func.canUnlocked(player)) return@forEach
+            // 解除処理
             player.transform(key) { hasUnlocked ->
-                if (!hasUnlocked) func.unlockMessage?.sendTo(player)
+                if (!hasUnlocked) {
+                    func.unlockAction(player)
+                    func.unlockMessage?.sendTo(player)
+                }
                 true
             }
         }
@@ -202,7 +201,6 @@ class PlayerListener : Listener {
         if (player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
         Skills.SWITCH.tryInvoke(player)
-
     }
 
     @EventHandler
@@ -215,15 +213,11 @@ class PlayerListener : Listener {
         PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
         PlayerSounds.LEVEL_UP.play(player.location)
 
+        trySendingUnlockMessage(player)
+
         player.manipulate(CatalogPlayerCache.MANA) {
-            val prevMax = it.max
             it.updateMaxMana()
             it.increase(it.max, true)
-            if (prevMax == it.max) return@manipulate
-            if (LockedFunction.MANA.isUnlocked(player)) {
-                it.display()
-                PlayerMessages.LEVEL_UP_MANA(prevMax, it.max).sendTo(player)
-            }
         }
 
         player.manipulate(CatalogPlayerCache.HEALTH) {
@@ -235,19 +229,10 @@ class PlayerListener : Listener {
             PlayerMessages.LEVEL_UP_HEALTH(prevMax, it.max).sendTo(player)
         }
 
-        player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
-            if (!LockedFunction.SWITCH.isUnlocked(player)) return@manipulate
-            it.setCanSwitch(Belt.DIG, true)
-            it.setCanSwitch(Belt.MINE, true)
-            it.setCanSwitch(Belt.CUT, true)
-        }
-
         player.find(Keys.BELT)?.wear(player)
         player.find(Keys.BAG)?.carry(player)
 
         player.updateInventory()
-
-        trySendingUnlockMessage(player)
 
         // Update will aptitude
         tryToSpawnNewWill(player)
@@ -374,6 +359,8 @@ class PlayerListener : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
         Skills.TERRA_DRAIN.tryInvoke(player, event.block)
+        // TODO remove
+//        Skills.EXPLOSION.tryInvoke(player,event.block)
     }
 
 }

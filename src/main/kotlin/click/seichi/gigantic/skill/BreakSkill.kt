@@ -16,4 +16,5 @@ interface BreakSkill {
         invokable?.accept(player)
         return invokable != null
     }
+
 }
