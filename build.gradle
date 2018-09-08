@@ -3,14 +3,14 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript {
     ext {
-        kotlin_version = '1.2.51'
-        coroutines_version = '0.22.5'
+        kotlin_version = '1.2.61'
+        coroutines_version = '0.25.3'
         spigot_api_version = '1.12.2-R0.1-SNAPSHOT'
         protcollib_version = '4.4.0-SNAPSHOT'
         slf4j_version = '1.7.25'
-        exposed_version = '0.10.2'
-        rxjava_version = '2.1.12'
-        rxkotlin_version = '2.2.0'
+        exposed_version = '0.10.4'
+        rxjava_version = '2.2.2'
+        rxkotlin_version = '2.3.0'
     }
     repositories {
         mavenCentral()

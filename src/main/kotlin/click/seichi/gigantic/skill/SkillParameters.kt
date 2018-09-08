@@ -25,6 +25,6 @@ object SkillParameters {
 
     const val TERRA_DRAIN_LOG_HEAL_PERCENT = 3.0
 
-    const val TERRA_DRAIN_LEAVES_HEAL_PERCENT = 1.0
+    const val TERRA_DRAIN_LEAVES_HEAL_PERCENT = 0.3
 
 }

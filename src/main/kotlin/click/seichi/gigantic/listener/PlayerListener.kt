@@ -254,7 +254,6 @@ class PlayerListener : Listener {
     }
 
     fun tryToSpawnNewWill(player: Player) {
-        val level = player.find(CatalogPlayerCache.LEVEL) ?: return
         player.manipulate(CatalogPlayerCache.APTITUDE) { willAptitude ->
             willAptitude.addIfNeeded().forEachIndexed { index, will ->
                 SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, player.eyeLocation
@@ -266,11 +265,7 @@ class PlayerListener : Listener {
                                     it.direction.z * 2
                             )
                         }, will, player, WillSize.MEDIUM))
-                if (index == 0 && level.current == 1) {
-                    PlayerMessages.FIRST_OBTAIN_WILL_APTITUDE(will).sendTo(player)
-                } else {
                     PlayerMessages.OBTAIN_WILL_APTITUDE(will).sendTo(player)
-                }
             }
         }
     }

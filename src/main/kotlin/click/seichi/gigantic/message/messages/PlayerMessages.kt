@@ -67,21 +67,6 @@ object PlayerMessages {
         ))
     }
 
-    val FIRST_OBTAIN_WILL_APTITUDE = { will: Will ->
-        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-                Locale.JAPANESE.let {
-                    it to "${ChatColor.GRAY}" +
-                            "ブロックを破壊すると、稀に遺志が現れるぞ!!\n" +
-                            "遺志と交感することで記憶を獲得しよう\n" +
-                            "${ChatColor.AQUA}${ChatColor.BOLD}" +
-                            "${will.localizedName.asSafety(it)}の遺志と交感できるようになった\n" +
-                            "${ChatColor.GRAY}" +
-                            "遺志は${Will.values().size}種類存在する\n" +
-                            "レベルを上げてたくさんの遺志と交感しよう!!\n"
-                }
-        ))
-    }
-
     val LEVEL_UP_LEVEL = { level: Int ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.AQUA}" +

@@ -13,7 +13,7 @@ object PlayerLevelConfig : SimpleConfiguration("level", Gigantic.PLUGIN) {
     val MAX by lazy { getInt("max") }
 
     val LEVEL_MAP by lazy {
-        (1..MAX).map {
+        (1..(MAX + 1)).map {
             it to getLong("level_to_exp.$it")
         }.toMap()
     }
@@ -24,7 +24,7 @@ object PlayerLevelConfig : SimpleConfiguration("level", Gigantic.PLUGIN) {
         file.printWriter().use { out ->
             out.println("max: $defaultMaxLevel")
             out.println("level_to_exp:")
-            (1..defaultMaxLevel).forEach { out.println("  $it: ${pol.calculation(it)}") }
+            (1..(defaultMaxLevel + 1)).forEach { out.println("  $it: ${pol.calculation(it)}") }
         }
     }
 

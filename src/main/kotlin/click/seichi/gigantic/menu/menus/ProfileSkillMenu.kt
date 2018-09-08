@@ -19,11 +19,12 @@ object ProfileSkillMenu : Menu() {
     }
 
     init {
-        registerButton(0, MenuButtons.PROFILE_SKILL_SWITCH)
-        registerButton(1, MenuButtons.PROFILE_SKILL_HEAL)
-        registerButton(2, MenuButtons.PROFILE_SKILL_FLASH)
-        registerButton(3, MenuButtons.PROFILE_SKILL_MINEBURST)
-        registerButton(4, MenuButtons.PROFILE_SKILL_TERRA_DRAIN)
+        registerButton(0, MenuButtons.PROFILE_SKILL_WILL_O_THE_WISP)
+        registerButton(1, MenuButtons.PROFILE_SKILL_SWITCH)
+        registerButton(2, MenuButtons.PROFILE_SKILL_HEAL)
+        registerButton(3, MenuButtons.PROFILE_SKILL_FLASH)
+        registerButton(4, MenuButtons.PROFILE_SKILL_MINE_BURST)
+        registerButton(5, MenuButtons.PROFILE_SKILL_TERRA_DRAIN)
     }
 
 }

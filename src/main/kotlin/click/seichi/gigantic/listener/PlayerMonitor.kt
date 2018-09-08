@@ -1,6 +1,5 @@
 package click.seichi.gigantic.listener
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.SkillAnimations
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent
@@ -14,8 +13,6 @@ import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
-import org.bukkit.Material
-import org.bukkit.block.Block
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -32,7 +29,7 @@ class PlayerMonitor : Listener {
         if (event.player.gameMode != GameMode.SURVIVAL) return
 
         // Gravity process
-        fallUpperBlock(event.block)
+        event.block.fallUpper()
 
         // Player process
         val player = event.player ?: return
@@ -59,6 +56,7 @@ class PlayerMonitor : Listener {
             PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
         }
 
+
         val mineBurst = player.find(CatalogPlayerCache.MINE_BURST)
         if (mineBurst?.duringFire() == true)
             SkillAnimations.MINE_BURST_ON_BREAK.start(location)
@@ -70,26 +68,6 @@ class PlayerMonitor : Listener {
         }
     }
 
-    @Suppress("DEPRECATION")
-    private fun fallUpperBlock(block: Block?) {
-        var count = 0
 
-        val fallTask = object : Runnable {
-            override fun run() {
-                val target = block?.getRelative(0, count + 1, 0) ?: return
-                if (target.isCrust) {
-                    target.location.world.spawnFallingBlock(
-                            target.location.central.subtract(0.0, 0.5, 0.0),
-                            target.type,
-                            target.data
-                    )
-                    target.type = Material.AIR
-                    count++
-                    Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, this, 2L)
-                }
-            }
-        }
-        Bukkit.getScheduler().runTask(Gigantic.PLUGIN, fallTask)
-    }
 
 }

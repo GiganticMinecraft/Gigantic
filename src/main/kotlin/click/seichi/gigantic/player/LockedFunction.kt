@@ -46,6 +46,9 @@ enum class LockedFunction(
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
     }, UnlockMessages.UNLOCK_TERRA_DRAIN),
 
+    WILL_O_THE_WISP(7, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 1
+    }, UnlockMessages.UNLOCK_WILL_O_THE_WISP)
     ;
 
     fun isUnlocked(player: Player) = isUnlocking(player)

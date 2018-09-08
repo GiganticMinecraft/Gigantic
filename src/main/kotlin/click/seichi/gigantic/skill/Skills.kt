@@ -5,13 +5,14 @@ import click.seichi.gigantic.animation.SkillAnimations
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.find
-import click.seichi.gigantic.extension.isSurface
-import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.event.events.LevelUpEvent
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.popup.SkillPops
+import click.seichi.gigantic.raid.RaidManager
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import click.seichi.gigantic.util.Random
 import org.bukkit.Bukkit
@@ -147,94 +148,131 @@ object Skills {
     }
 
     val TERRA_DRAIN = object : BreakSkill {
+
+        val faceList = listOf(
+                BlockFace.UP,
+                BlockFace.DOWN,
+                BlockFace.NORTH,
+                BlockFace.WEST,
+                BlockFace.SOUTH,
+                BlockFace.EAST
+        )
+
+
         override fun findInvokable(player: Player, block: Block): Consumer<Player>? {
             if (player.gameMode != GameMode.SURVIVAL) return null
-            if (block.type != Material.LOG && block.type != Material.LOG_2) return null
+            if (!block.isTree) return null
             return Consumer { p ->
                 breakTree(p, block, block)
                 SkillAnimations.TERRA_DRAIN_HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
             }
         }
 
-        private fun breakTree(player: Player, tree: Block, baseBlock: Block) {
-            if (tree.type != Material.LOG && tree.type != Material.LOG_2 &&
-                    tree.type != Material.LEAVES && tree.type != Material.LEAVES_2) return
-            if (Math.abs(tree.location.x - baseBlock.location.x) >= 5
-                    || Math.abs(tree.location.z - baseBlock.location.z) >= 5) return
-            if (tree != baseBlock) {
-                SkillAnimations.TERRA_DRAIN_TREE.start(tree.location)
-                SkillSounds.TERRA_DRAIN.play(tree.location)
+        private fun breakTree(player: Player, target: Block, base: Block) {
+            if (!target.isTree) return
+            if (Math.abs(target.location.x - base.location.x) >= 5
+                    || Math.abs(target.location.z - base.location.z) >= 5) return
+            if (target != base) {
+                SkillAnimations.TERRA_DRAIN_TREE.start(target.location)
+                SkillSounds.TERRA_DRAIN.play(target.location)
                 player.manipulate(CatalogPlayerCache.HEALTH) {
                     if (it.isMaxHealth()) return@manipulate
-                    val percent = when (tree.type) {
-                        Material.LOG, Material.LOG_2 -> SkillParameters.TERRA_DRAIN_LOG_HEAL_PERCENT
-                        Material.LEAVES, Material.LEAVES_2 -> SkillParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
+                    val percent = when {
+                        target.isLog -> SkillParameters.TERRA_DRAIN_LOG_HEAL_PERCENT
+                        target.isLeaves -> SkillParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
                         else -> 0.0
                     }
                     val amount = it.increase(it.max.div(100.0).times(percent).toLong())
-                    SkillPops.HEAL(amount).pop(tree.centralLocation)
+                    SkillPops.HEAL(amount).pop(target.centralLocation)
                     PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
                 }
-                tree.type = Material.AIR
+                target.type = Material.AIR
             }
-            for (face in BlockFace.values().subtract(listOf(BlockFace.SELF, BlockFace.DOWN)))
-                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, { breakTree(player, tree.getRelative(face), baseBlock) }, 4L)
+            faceList.forEach { face ->
+                val delay = when (face) {
+                    BlockFace.UP -> 0L
+                    BlockFace.DOWN -> 1L
+                    BlockFace.NORTH -> 2L
+                    BlockFace.SOUTH -> 3L
+                    BlockFace.EAST -> 4L
+                    BlockFace.WEST -> 5L
+                    else -> 3L
+                }
+                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+                    breakTree(player, target.getRelative(face), base)
+                }, delay)
+            }
         }
     }
 
-//    val EXPLOSION = object : Skill{
-//
-//        val transparentMaterialSet = setOf(
-//                Material.AIR,
-//                Material.WATER,
-//                Material.STATIONARY_WATER,
-//                Material.LAVA,
-//                Material.STATIONARY_LAVA
-//        )
-//
-//        val maxDistance = 50
-//
-//        fun calcCoolTime(num:Long) =  (num.let { Math.pow(it.toDouble(), 0.25) - 1 } * 20).toLong().let { if (it < 20) 0 else it }
-//
-//        fun calcConsumeMana(num:Long) = num.let { (it / Math.pow(it.toDouble(), 0.2) - 1).toLong() }
-//
-//        override fun findInvokable(player: Player): Consumer<Player>? {
-//            if (!LockedFunction.EXPLOSION.isUnlocked(player)) return null
-//            val explosion = player.find(CatalogPlayerCache.EXPLOSION) ?: return null
-//            if (!explosion.canStart()) return null
-//
-//
-//
-//            return Consumer { p ->
-//                explosion.coolTime = coolTime
-//                explosion.onStart {
-//                    val tpLocation = p.getTargetBlock(transparentMaterialSet, maxDistance).let { block ->
-//                        if (block.type == Material.AIR) return@let null
-//                        var nextBlock = block ?: return@let null
-//                        while (!nextBlock.isSurface) {
-//                            nextBlock = nextBlock.getRelative(BlockFace.UP)
-//                        }
-//                        nextBlock.location.clone().add(0.0, 1.75, 0.0).apply {
-//                            direction = p.location.direction
-//                        }
-//                    }
-//                    if (tpLocation != null) {
-//                        SkillAnimations.FLASH_BEFORE.start(p.location)
-//                        p.teleport(tpLocation)
-//                        SkillAnimations.FLASH_BEFORE.start(p.location)
-//                        SkillSounds.FLASH_FIRE.play(p.location)
-//                    } else {
-//                        SkillSounds.FLASH_MISS.play(p.location)
-//                        explosion.isCancelled = true
-//                    }
-//                    p.find(Keys.BELT)?.wear(p)
-//                }.onCooldown {
-//                    p.find(Keys.BELT)?.wear(p, false)
-//                }.onCompleteCooldown {
-//                    p.find(Keys.BELT)?.wear(p)
-//                }.start()
-//            }
-//        }
-//    }
 
+    val EXPLOSION = object : BreakSkill {
+
+        val faceList = listOf(
+                BlockFace.UP,
+                BlockFace.DOWN,
+                BlockFace.NORTH,
+                BlockFace.WEST,
+                BlockFace.SOUTH,
+                BlockFace.EAST
+        )
+
+        override fun findInvokable(player: Player, block: Block): Consumer<Player>? {
+            if (player.gameMode != GameMode.SURVIVAL) return null
+            if (!block.isCrust) return null
+            return Consumer { p ->
+                breakBlock(p, p.location.blockY, p.isSneaking, block, block)
+//                SkillAnimations.TERRA_DRAIN_HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
+            }
+        }
+
+        private fun breakBlock(player: Player, minY: Int, isSneaking: Boolean, target: Block, base: Block) {
+            if (!target.isCrust) return
+            if (Math.abs(target.location.x - base.location.x) >= 7
+                    || Math.abs(target.location.z - base.location.z) >= 7
+                    || Math.abs(target.location.y - base.location.y) >= 1
+                    || (target.y < minY && !isSneaking)
+            ) return
+            if (target != base) {
+//                SkillAnimations.TERRA_DRAIN_TREE.start(target.location)
+//                SkillSounds.TERRA_DRAIN.play(target.location)
+                target.type = Material.AIR
+                // Gravity process
+                target.fallUpper()
+                // carry player cache
+                player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
+                    it.add(1L)
+                }
+                player.manipulate(CatalogPlayerCache.MINE_COMBO) {
+                    it.combo(1L)
+                    SkillPops.MINE_COMBO(it).pop(target.centralLocation)
+                }
+                // raid battle process
+                RaidManager.playBattle(player)
+
+                player.manipulate(CatalogPlayerCache.LEVEL) {
+                    it.calculate(ExpProducer.calcExp(player)) { current ->
+                        Bukkit.getPluginManager().callEvent(LevelUpEvent(current, player))
+                    }
+                    PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
+                }
+
+                PlayerSounds.OBTAIN_EXP.playOnly(player)
+            }
+            faceList.forEach { face ->
+                val delay = when (face) {
+                    BlockFace.UP -> 0L
+                    BlockFace.DOWN -> 1L
+                    BlockFace.NORTH -> 2L
+                    BlockFace.SOUTH -> 3L
+                    BlockFace.EAST -> 4L
+                    BlockFace.WEST -> 5L
+                    else -> 3L
+                }
+                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+                    breakBlock(player, minY, isSneaking, target.getRelative(face), base)
+                }, delay)
+            }
+        }
+    }
 }

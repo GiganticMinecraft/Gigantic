@@ -220,7 +220,7 @@ object MenuButtons {
 
     }
 
-    val PROFILE_SKILL_MINEBURST = object : Button {
+    val PROFILE_SKILL_MINE_BURST = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.BLAZE_POWDER).apply {
@@ -228,6 +228,7 @@ object MenuButtons {
                 setLore(*MenuMessages.MINE_BURST
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
+                setEnchanted(true)
             }
         }
 
@@ -244,6 +245,7 @@ object MenuButtons {
                 setLore(*MenuMessages.FLASH
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
+                setEnchanted(true)
             }
         }
 
@@ -260,6 +262,7 @@ object MenuButtons {
                 setLore(*MenuMessages.HEAL
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
+                setEnchanted(true)
             }
         }
 
@@ -276,6 +279,7 @@ object MenuButtons {
                 setLore(*MenuMessages.SWITCH
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
+                setEnchanted(true)
             }
         }
 
@@ -292,6 +296,24 @@ object MenuButtons {
                 setLore(*MenuMessages.TERRA_DRAIN
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
+                setEnchanted(true)
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
+    }
+
+    val PROFILE_SKILL_WILL_O_THE_WISP = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.IRON_NUGGET).apply {
+                setDisplayName(MenuMessages.WILL_O_THE_WISP_TITLE.asSafety(player.wrappedLocale))
+                setLore(*MenuMessages.WILL_O_THE_WISP
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray())
+                setEnchanted(true)
             }
         }
 

@@ -1,10 +1,10 @@
 package click.seichi.gigantic.extension
 
-import click.seichi.gigantic.util.CardinalDirection
+import click.seichi.gigantic.Gigantic
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
-import org.bukkit.util.Vector
 
 /**
  * @author unicroak
@@ -48,14 +48,45 @@ private val crustMaterialSet = setOf(
 val Block.isCrust
     get() = crustMaterialSet.contains(type)
 
+
+private val logs = listOf(Material.LOG, Material.LOG_2)
+
+private val leaves = listOf(Material.LEAVES, Material.LEAVES_2)
+
+private val trees = listOf(*logs.toTypedArray(), *leaves.toTypedArray())
+
+val Block.isLog
+    get() = logs.contains(type)
+
+val Block.isLeaves
+    get() = leaves.contains(type)
+
+val Block.isTree
+    get() = trees.contains(type)
+
 val Block.isSurface
     get() = (1..3).firstOrNull { getRelative(0, it, 0).type != Material.AIR }?.let { false } ?: true
 
 val Block.centralLocation: Location
     get() = location.clone().add(0.5, 0.5, 0.5)
 
-fun Block.getRelative(direction: CardinalDirection, vector: Vector): Block {
-    return vector.rotateXZ(direction.deg).let { this.getRelative(it.blockX, it.blockY, it.blockZ) }
+@Suppress("DEPRECATION")
+fun Block.fallUpper() {
+    var count = 0
+    val fallTask = object : Runnable {
+        override fun run() {
+            val target = getRelative(0, count + 1, 0) ?: return
+            if (target.isCrust) {
+                target.location.world.spawnFallingBlock(
+                        target.location.central.subtract(0.0, 0.5, 0.0),
+                        target.type,
+                        target.data
+                )
+                target.type = Material.AIR
+                count++
+                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, this, 2L)
+            }
+        }
+    }
+    Bukkit.getScheduler().runTask(Gigantic.PLUGIN, fallTask)
 }
-
-

@@ -339,4 +339,29 @@ object MenuMessages {
                     "回復スキル: テラドレイン"
     )
 
+    val WILL_O_THE_WISP =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "パッシブ効果: ブロックを破壊すると、稀に遺志が現れる"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "遺志と交感することで記憶を獲得"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "遺志は${Will.values().size}種類存在する"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "レベルを上げてたくさんの遺志と交感しよう"
+                    )
+            )
+
+    val WILL_O_THE_WISP_TITLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                    "スキル: ウィルオウィスプ"
+    )
+
 }
