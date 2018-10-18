@@ -62,7 +62,7 @@ object BagButtons {
     val AFK = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.RED_ROSE, 1, 8).apply {
+            return ItemStack(Material.DANDELION_YELLOW, 1, 8).apply {
                 when (player.gameMode) {
                     GameMode.SURVIVAL -> setDisplayName(
                             MenuMessages.REST.asSafety(player.wrappedLocale)
