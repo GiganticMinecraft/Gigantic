@@ -8,7 +8,7 @@ import org.bukkit.ChatColor
 object PlayerPops {
 
     val LEVEL_UP = PopUp(
-            "${ChatColor.AQUA}${ChatColor.BOLD} レベルアップ",
+            "${ChatColor.AQUA} レベルアップ",
             60L
     )
 

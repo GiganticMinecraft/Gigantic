@@ -40,7 +40,7 @@ enum class Head(
     ;
 
     private val baseItemStack: ItemStack by lazy {
-        val skull = ItemStack(Material.SKULL_ITEM, 1, 3)
+        val skull = ItemStack(Material.PLAYER_HEAD)
 
         skull.itemMeta = skull.itemMeta.apply {
             val profile = GameProfile(UUID.randomUUID(), null)

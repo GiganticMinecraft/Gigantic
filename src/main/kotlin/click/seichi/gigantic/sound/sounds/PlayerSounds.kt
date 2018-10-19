@@ -1,7 +1,6 @@
 package click.seichi.gigantic.sound.sounds
 
 import click.seichi.gigantic.sound.DetailedSound
-import click.seichi.gigantic.util.Random
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
 
@@ -9,13 +8,14 @@ import org.bukkit.SoundCategory
  * @author tar0ss
  */
 object PlayerSounds {
-    val OBTAIN_EXP
-        get() = DetailedSound(
+    val OBTAIN_EXP = { combo: Long ->
+        DetailedSound(
                 Sound.ENTITY_EXPERIENCE_ORB_PICKUP,
                 SoundCategory.PLAYERS,
-                pitch = Random.nextGaussian(1.0, 0.2).toFloat(),
+                pitchLevel = (combo % 25).toInt(),
                 volume = 0.2F
         )
+    }
 
     val LEVEL_UP = DetailedSound(
             Sound.ENTITY_PLAYER_LEVELUP,

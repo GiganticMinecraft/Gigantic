@@ -10,13 +10,14 @@ import org.bukkit.SoundCategory
  */
 object SkillSounds {
 
-    val MINE_BURST_ON_BREAK
-        get() = DetailedSound(
-                Sound.BLOCK_NOTE_CHIME,
+    val MINE_BURST_ON_BREAK = { combo: Long ->
+        DetailedSound(
+                Sound.BLOCK_NOTE_BLOCK_CHIME,
                 SoundCategory.BLOCKS,
-                pitch = Random.nextGaussian(1.0, 0.2).toFloat(),
+                pitchLevel = (combo % 25).toInt(),
                 volume = 0.3F
         )
+    }
 
 
     val MINE_BURST_ON_FIRE = DetailedSound(

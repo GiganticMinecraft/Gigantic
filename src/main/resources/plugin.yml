@@ -1,5 +1,6 @@
 name: @name@
 version: @version@
 main: click.seichi.gigantic.Gigantic
+api-version: 1.13
 
 depend: [ProtocolLib]

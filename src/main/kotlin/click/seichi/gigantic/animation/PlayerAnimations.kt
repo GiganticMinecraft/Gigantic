@@ -4,7 +4,6 @@ import click.seichi.gigantic.util.Random
 import org.bukkit.Color
 import org.bukkit.FireworkEffect
 import org.bukkit.Location
-import org.bukkit.Particle
 import org.bukkit.entity.Firework
 
 /**
@@ -13,13 +12,9 @@ import org.bukkit.entity.Firework
  */
 object PlayerAnimations {
 
-    val LEVEL_UP = Animation(60) { location, _ ->
-        location.world.spawnParticle(Particle.REDSTONE, location, 10,
-                Random.nextGaussian(0.0, 1.0),
-                Random.nextGaussian(0.0, 2.0),
-                Random.nextGaussian(0.0, 1.0)
-        )
-    }
+//    val LEVEL_UP = Animation(60) { location, _ ->
+//        location.world.spawnParticle(Particle.REDSTONE, location, 10, Particle.DustOptions(Random.nextColor(), 1.0F))
+//    }
 
     val LAUNCH_FIREWORK = Animation(1) { location, _ ->
         launchFireWorks(location)

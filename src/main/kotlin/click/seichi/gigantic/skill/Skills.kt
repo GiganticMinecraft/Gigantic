@@ -65,9 +65,7 @@ object Skills {
         val transparentMaterialSet = setOf(
                 Material.AIR,
                 Material.WATER,
-                Material.STATIONARY_WATER,
-                Material.LAVA,
-                Material.STATIONARY_LAVA
+                Material.LAVA
         )
 
         val maxDistance = 50
@@ -256,7 +254,9 @@ object Skills {
                     PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
                 }
 
-                PlayerSounds.OBTAIN_EXP.playOnly(player)
+                val currentCombo = player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0
+
+                PlayerSounds.OBTAIN_EXP(currentCombo).playOnly(player)
             }
             faceList.forEach { face ->
                 val delay = when (face) {

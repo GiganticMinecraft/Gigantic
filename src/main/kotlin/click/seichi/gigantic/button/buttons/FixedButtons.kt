@@ -41,8 +41,8 @@ object FixedButtons {
 
     val SPADE = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.DIAMOND_SPADE).apply {
-                setDisplayName(HookedItemMessages.SPADE.asSafety(player.wrappedLocale))
+            return ItemStack(Material.DIAMOND_SHOVEL).apply {
+                setDisplayName(HookedItemMessages.SHOVEL.asSafety(player.wrappedLocale))
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)

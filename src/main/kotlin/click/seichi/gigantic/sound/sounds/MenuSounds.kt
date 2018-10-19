@@ -28,13 +28,13 @@ object MenuSounds {
     )
 
     val BATTLE_MENU_OPEN = DetailedSound(
-            Sound.BLOCK_ENDERCHEST_OPEN,
+            Sound.BLOCK_ENDER_CHEST_OPEN,
             SoundCategory.BLOCKS,
             pitch = 0.3F
     )
 
     val BATTLE_MENU_CLOSE = DetailedSound(
-            Sound.BLOCK_ENDERCHEST_CLOSE,
+            Sound.BLOCK_ENDER_CHEST_CLOSE,
             SoundCategory.BLOCKS,
             pitch = 0.3F
     )

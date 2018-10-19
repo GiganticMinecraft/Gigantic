@@ -45,7 +45,7 @@ object MenuButtons {
 
     val PROFILE_RAID_BOSS = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.EYE_OF_ENDER).apply {
+            return ItemStack(Material.ENDER_EYE).apply {
                 setDisplayName(MenuMessages.PROFILE_RAID_BOSS.asSafety(player.wrappedLocale))
             }
         }
@@ -81,7 +81,7 @@ object MenuButtons {
                     else -> ChatColor.LIGHT_PURPLE
                 }
                 return when (defeatCount) {
-                    0L -> ItemStack(Material.STAINED_GLASS_PANE, 1, 15)
+                    0L -> ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1)
                     else -> boss.head.toItemStack()
                 }.apply {
                     setDisplayName("$color${boss.localizedName.asSafety(player.wrappedLocale)}")
@@ -105,10 +105,10 @@ object MenuButtons {
                     else -> ChatColor.LIGHT_PURPLE
                 }
                 return when {
-                    amount == 0L -> ItemStack(Material.STAINED_GLASS_PANE, 1, 15)
+                    amount == 0L -> ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1)
                     relic.rarity == RelicRarity.NORMAL -> Head.RUBY_JEWELLERY.toItemStack()
                     relic.rarity == RelicRarity.RARE -> Head.SAPPHIRE_JEWELLERY.toItemStack()
-                    else -> ItemStack(Material.STAINED_GLASS_PANE, 1, 15)
+                    else -> ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1)
                 }.apply {
                     setDisplayName("$color${relic.localizedName.asSafety(player.wrappedLocale)}")
                     setLore(*relic.description.map { "$color${it.asSafety(player.wrappedLocale)}" }.toTypedArray(),
@@ -291,7 +291,7 @@ object MenuButtons {
     val PROFILE_SKILL_TERRA_DRAIN = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.SEEDS).apply {
+            return ItemStack(Material.WHEAT_SEEDS).apply {
                 setDisplayName(MenuMessages.TERRA_DRAIN_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.TERRA_DRAIN
                         .map { it.asSafety(player.wrappedLocale) }

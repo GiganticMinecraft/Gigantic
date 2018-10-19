@@ -20,7 +20,7 @@ import java.util.*
  * @author tar0ss
  */
 
-fun Player.getHead() = ItemStack(Material.SKULL_ITEM, 1, 3).apply {
+fun Player.getHead() = ItemStack(Material.PLAYER_HEAD).apply {
     itemMeta = (itemMeta as SkullMeta).also { meta ->
         meta.owningPlayer = this@getHead
     }
@@ -56,10 +56,7 @@ fun Player.spawnColoredParticle(
             Particle.REDSTONE,
             location.noised(noiseData),
             0,
-            color.red.toDouble() / 255.0 + Float.MIN_VALUE,
-            color.green.toDouble() / 255.0,
-            color.blue.toDouble() / 255.0,
-            1.0
+            Particle.DustOptions(color, 1.0F)
     )
 }
 

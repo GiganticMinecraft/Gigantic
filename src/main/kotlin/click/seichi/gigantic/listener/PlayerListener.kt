@@ -209,7 +209,7 @@ class PlayerListener : Listener {
 
         PlayerMessages.LEVEL_UP_LEVEL(event.level).sendTo(player)
         PlayerPops.LEVEL_UP.follow(player, meanY = 3.7)
-        PlayerAnimations.LEVEL_UP.follow(player, meanY = 2.0)
+//        PlayerAnimations.LEVEL_UP.follow(player, meanY = 2.0)
         PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
         PlayerSounds.LEVEL_UP.play(player.location)
 

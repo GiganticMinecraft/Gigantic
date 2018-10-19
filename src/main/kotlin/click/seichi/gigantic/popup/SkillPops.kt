@@ -20,7 +20,7 @@ object SkillPops {
             else -> ChatColor.GOLD
         }
         PopUp(
-                "$color${ChatColor.BOLD}${combo.currentCombo} Combo",
+                "$color${combo.currentCombo} Combo",
                 10L
         )
     }

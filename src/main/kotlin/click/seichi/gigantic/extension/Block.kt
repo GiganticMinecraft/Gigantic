@@ -19,6 +19,25 @@ val Block.canFloat: Boolean
 
 private val crustMaterialSet = setOf(
         Material.STONE,
+//        Material.GRANITE,
+//        Material.MOSSY_COBBLESTONE,
+//        Material.MOSSY_COBBLESTONE_WALL,
+//        Material.MOSSY_STONE_BRICKS,
+//        Material.RED_SAND,
+//        Material.SANDSTONE,
+//        Material.CHISELED_RED_SANDSTONE,
+//        Material.CHISELED_SANDSTONE,
+//        Material.CUT_RED_SANDSTONE,
+//        Material.CUT_SANDSTONE,
+//        Material.SMOOTH_RED_SANDSTONE,
+//        Material.SMOOTH_SANDSTONE,
+//        Material.SANDSTONE,
+//        Material.OBSIDIAN,
+//        Material.DIORITE,
+//        Material.ANDESITE,
+//        Material.STONE_BRICKS,
+//        Material.CHISELED_STONE_BRICKS,
+//        Material.CRACKED_STONE_BRICKS,
         Material.DIRT,
         Material.WATER,
         Material.LAVA,
@@ -29,15 +48,15 @@ private val crustMaterialSet = setOf(
         Material.IRON_ORE,
         Material.DIAMOND_ORE,
         Material.COAL_ORE,
-        Material.GLOWING_REDSTONE_ORE,
-        Material.QUARTZ_ORE,
+        Material.REDSTONE_ORE,
+        Material.NETHER_QUARTZ_ORE,
         Material.NETHERRACK,
         Material.GRASS,
         Material.SAND,
         Material.GRAVEL,
         Material.MOSSY_COBBLESTONE,
-        Material.ENDER_STONE,
-        Material.HARD_CLAY,
+        Material.END_STONE,
+        Material.TERRACOTTA,
         Material.ICE,
         Material.FROSTED_ICE,
         Material.PURPUR_BLOCK,
@@ -49,9 +68,23 @@ val Block.isCrust
     get() = crustMaterialSet.contains(type)
 
 
-private val logs = listOf(Material.LOG, Material.LOG_2)
+private val logs = listOf(
+        Material.BIRCH_LOG,
+        Material.ACACIA_LOG,
+        Material.DARK_OAK_LOG,
+        Material.JUNGLE_LOG,
+        Material.OAK_LOG,
+        Material.SPRUCE_LOG
+)
 
-private val leaves = listOf(Material.LEAVES, Material.LEAVES_2)
+private val leaves = listOf(
+        Material.ACACIA_LEAVES,
+        Material.BIRCH_LEAVES,
+        Material.DARK_OAK_LEAVES,
+        Material.JUNGLE_LEAVES,
+        Material.OAK_LEAVES,
+        Material.SPRUCE_LEAVES
+)
 
 private val trees = listOf(*logs.toTypedArray(), *leaves.toTypedArray())
 

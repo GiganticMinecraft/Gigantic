@@ -61,13 +61,13 @@ class PlayerMonitor : Listener {
         if (mineBurst?.duringFire() == true)
             SkillAnimations.MINE_BURST_ON_BREAK.start(location)
 
+        val currentCombo = player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0
         // Sounds
         when {
-            mineBurst?.duringFire() == true -> SkillSounds.MINE_BURST_ON_BREAK.play(location)
-            else -> PlayerSounds.OBTAIN_EXP.playOnly(player)
+            mineBurst?.duringFire() == true -> SkillSounds.MINE_BURST_ON_BREAK(currentCombo).play(location)
+            else -> PlayerSounds.OBTAIN_EXP(currentCombo).playOnly(player)
         }
     }
-
 
 
 }

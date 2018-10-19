@@ -23,13 +23,13 @@ object WillSounds {
     )
 
     val SPAWN = DetailedSound(
-            Sound.ENTITY_ENDEREYE_DEATH,
+            Sound.ENTITY_ENDER_EYE_DEATH,
             SoundCategory.BLOCKS,
             pitch = 1.8F
     )
 
     val DEATH = DetailedSound(
-            Sound.ENTITY_ENDEREYE_LAUNCH,
+            Sound.ENTITY_ENDER_EYE_LAUNCH,
             SoundCategory.BLOCKS,
             pitch = 0.6F
     )

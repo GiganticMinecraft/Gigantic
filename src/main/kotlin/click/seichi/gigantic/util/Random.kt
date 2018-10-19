@@ -4,6 +4,7 @@ import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import click.seichi.gigantic.will.WillSize
+import org.bukkit.Color
 
 /**
  * @author unicroak
@@ -41,4 +42,6 @@ internal object Random {
             ?: nextWillSizeWithRegularity()
 
     fun nextBoss() = Boss.values().toList().shuffled().first()
+
+    fun nextColor() = Color.fromRGB(nextInt(255), nextInt(255), nextInt(255))!!
 }

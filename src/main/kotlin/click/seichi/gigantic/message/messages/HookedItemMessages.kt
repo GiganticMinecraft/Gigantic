@@ -16,7 +16,7 @@ object HookedItemMessages {
                     "ピッケル"
     )
 
-    val SPADE = LocalizedText(
+    val SHOVEL = LocalizedText(
             Locale.JAPANESE to
                     "${ChatColor.WHITE}" +
                     "シャベル"
