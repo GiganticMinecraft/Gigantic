@@ -58,6 +58,14 @@ repositories {
         name = 'dmulloy2-repo'
         url = 'http://repo.dmulloy2.net/nexus/repository/public/'
     }
+    maven {
+        name = 'elmaker-repo'
+        url = 'http://maven.elmakers.com/repository'
+    }
+    maven {
+        name = 'onarandombox-repo'
+        url = 'http://repo.onarandombox.com/content/groups/public'
+    }
 }
 
 configurations {
@@ -74,6 +82,7 @@ dependencies {
     embed group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_version
 
     compile group: 'com.comphenix.protocol', name: 'ProtocolLib', version: protcollib_version
+    compile group: 'com.onarandombox.multiversecore', name: 'Multiverse-Core', version: '2.6.0'
 
     embed group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: coroutines_version
     embed group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-rx2', version: coroutines_version
