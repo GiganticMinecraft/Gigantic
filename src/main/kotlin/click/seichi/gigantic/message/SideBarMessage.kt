@@ -30,10 +30,9 @@ class SideBarMessage(
         }
 
         val scoreboard = scoreboardManager.newScoreboard
-        val objective = scoreboard.registerNewObjective(objectiveName, "dummy")
+        val objective = scoreboard.registerNewObjective(objectiveName, "dummy", title.asSafety(player.wrappedLocale))
         player.scoreboard = scoreboard
 
-        objective.displayName = title.asSafety(player.wrappedLocale)
         objective.displaySlot = DisplaySlot.SIDEBAR
         messageMap.forEach { row, text -> objective.getScore(text.asSafety(player.wrappedLocale)).score = row.toInt }
     }

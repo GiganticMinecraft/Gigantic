@@ -27,7 +27,7 @@ object BossBars {
         }
         val progress = battle.raidBoss.health.div(boss.maxHealth.toDouble()).coerceIn(0.0, 1.0)
         TopBar(
-                "$color${ChatColor.BOLD}" +
+                "$color" +
                         "$bossName " +
                         "${battle.raidBoss.health}" +
                         " / " +

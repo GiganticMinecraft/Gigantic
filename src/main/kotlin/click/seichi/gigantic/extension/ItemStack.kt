@@ -46,6 +46,3 @@ fun ItemStack.setEnchanted(flag: Boolean) {
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
     }
 }
-
-fun ItemStack.canConsumeDurability(consumeDurability: Long) = consumeDurability < 0 ||
-        !(durability > type.maxDurability || type.maxDurability < durability + consumeDurability)

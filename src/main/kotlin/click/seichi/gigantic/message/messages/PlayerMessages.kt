@@ -15,7 +15,7 @@ object PlayerMessages {
 
     val MANA_BAR_TITLE = { mana: Mana ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}マナ ${mana.current} / ${mana.max}"
+                Locale.JAPANESE to "${ChatColor.AQUA}マナ ${mana.current} / ${mana.max}"
         )
     }
 
@@ -35,7 +35,7 @@ object PlayerMessages {
                                 it to "${ChatColor.GREEN}${ChatColor.BOLD}" +
                                         "${will.localizedName.asSafety(it)} : " +
                                         "${ChatColor.RESET}${ChatColor.WHITE}" +
-                                        "${willMap[will] ?: 0}個"
+                                        "${willMap[will] ?: 0}個${ChatColor.RESET}"
                             }
                     )
                 }.toMap()
