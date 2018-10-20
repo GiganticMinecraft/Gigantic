@@ -54,17 +54,30 @@ repositories {
         name = 'exposed-repo'
         url = 'https://dl.bintray.com/kotlin/exposed/'
     }
+    // ProtocolLib
     maven {
         name = 'dmulloy2-repo'
         url = 'http://repo.dmulloy2.net/nexus/repository/public/'
     }
+    // Multiverse-Core
     maven {
         name = 'elmaker-repo'
         url = 'http://maven.elmakers.com/repository'
     }
+    // Multiverse-Core
     maven {
         name = 'onarandombox-repo'
         url = 'http://repo.onarandombox.com/content/groups/public'
+    }
+    // perWorldInventory
+    maven {
+        name = 'codemc-releases'
+        url = 'https://repo.codemc.org/repository/maven-releases'
+    }
+    // perWorldInventory
+    maven {
+        name = 'aikar'
+        url = 'https://repo.aikar.co/content/groups/aikar/'
     }
 }
 
@@ -83,6 +96,9 @@ dependencies {
 
     compile group: 'com.comphenix.protocol', name: 'ProtocolLib', version: protcollib_version
     compile group: 'com.onarandombox.multiversecore', name: 'Multiverse-Core', version: '2.6.0'
+
+    embed group: 'co.aikar', name: 'acf-paper', version: '0.5.0-SNAPSHOT'
+    compile group: 'me.ebonjaeger', name: 'perworldinventory-kt', version: '2.1.0'
 
     embed group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: coroutines_version
     embed group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-rx2', version: coroutines_version
