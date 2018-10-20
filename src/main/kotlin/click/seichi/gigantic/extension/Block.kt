@@ -17,6 +17,7 @@ val Block.canFloat: Boolean
         else -> true
     }
 
+// 落下判定に使う。自然生成されるブロックのみ
 private val crustMaterialSet = setOf(
         Material.STONE,
         Material.GRANITE,
@@ -61,7 +62,38 @@ private val crustMaterialSet = setOf(
         Material.FROSTED_ICE,
         Material.PURPUR_BLOCK,
         Material.BONE_BLOCK,
-        Material.CLAY
+        Material.CLAY,
+        Material.COARSE_DIRT,
+        Material.PODZOL,
+        Material.OAK_PLANKS,
+        Material.SPRUCE_PLANKS,
+        Material.BIRCH_PLANKS,
+        Material.JUNGLE_PLANKS,
+        Material.ACACIA_PLANKS,
+        Material.DARK_OAK_PLANKS,
+        Material.SPONGE,
+        Material.WET_SPONGE,
+        Material.COBWEB,
+        Material.WHITE_TERRACOTTA,
+        Material.ORANGE_TERRACOTTA,
+        Material.MAGENTA_TERRACOTTA,
+        Material.LIGHT_BLUE_TERRACOTTA,
+        Material.YELLOW_TERRACOTTA,
+        Material.LIME_TERRACOTTA,
+        Material.PINK_TERRACOTTA,
+        Material.GRAY_TERRACOTTA,
+        Material.LIGHT_GRAY_TERRACOTTA,
+        Material.CYAN_TERRACOTTA,
+        Material.PURPLE_TERRACOTTA,
+        Material.BLUE_TERRACOTTA,
+        Material.BROWN_TERRACOTTA,
+        Material.GREEN_TERRACOTTA,
+        Material.RED_TERRACOTTA,
+        Material.BLACK_TERRACOTTA,
+        Material.TERRACOTTA,
+        Material.PRISMARINE,
+        Material.PRISMARINE_BRICKS,
+        Material.DARK_PRISMARINE
 )
 
 val Block.isCrust
