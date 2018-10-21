@@ -181,8 +181,10 @@ object Skills {
                         else -> 0.0
                     }
                     val amount = it.increase(it.max.div(100.0).times(percent).toLong())
-                    SkillPops.HEAL(amount).pop(target.centralLocation)
-                    PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+                    if (amount > 0) {
+                        SkillPops.HEAL(amount).pop(target.centralLocation)
+                        PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+                    }
                 }
                 target.type = Material.AIR
             }
