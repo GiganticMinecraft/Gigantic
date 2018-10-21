@@ -60,8 +60,10 @@ object RaidManager {
                     raidBoss.getTotalDamage(player).div(10.0).times(2.0)
                 else
                     0.0).toLong()
-                it.add(bonusMineBlock, MineBlockReason.RAID_BOSS)
-                BattleMessages.BONUS_EXP(bonusMineBlock).sendTo(player)
+                if (bonusMineBlock > 0) {
+                    it.add(bonusMineBlock, MineBlockReason.RAID_BOSS)
+                    BattleMessages.BONUS_EXP(bonusMineBlock).sendTo(player)
+                }
             }
             raidBattle.left(player)
         }
