@@ -22,23 +22,20 @@ class MenuListener : Listener {
         val holder = event.inventory.holder
         event.isCancelled = true
 
-        when (holder) {
-            is Menu -> {
-                when (event.clickedInventory) {
-                    event.view.topInventory -> when (holder) {
-                        is BookMenu -> holder.getButton(player, event.slot)?.onClick(player, event)
-                        else -> holder.getButton(event.slot)?.onClick(player, event)
-                    }
-                    event.view.bottomInventory -> {
-                        if (event.isBeltSlot) player.find(Keys.BELT)?.getButton(event.slot)?.onClick(player, event)
-                        else player.find(Keys.BAG)?.getButton(event.slot)?.onClick(player, event)
-                    }
-                }
-            }
-            player.inventory.holder -> {
+        when (event.clickedInventory) {
+            event.view.bottomInventory -> {
+                // Belt
                 if (event.isBeltSlot) player.find(Keys.BELT)?.getButton(event.slot)?.onClick(player, event)
+                // Bag
                 else player.find(Keys.BAG)?.getButton(event.slot)?.onClick(player, event)
+                return
             }
+        }
+
+        // Menu
+        when (holder) {
+            is BookMenu -> holder.getButton(player, event.slot)?.onClick(player, event)
+            is Menu -> holder.getButton(event.slot)?.onClick(player, event)
         }
     }
 
