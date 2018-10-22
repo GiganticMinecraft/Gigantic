@@ -62,6 +62,7 @@ class PlayerMonitor : Listener {
             SkillAnimations.MINE_BURST_ON_BREAK.start(location)
 
         val currentCombo = player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0
+
         // Sounds
         when {
             mineBurst?.duringFire() == true -> SkillSounds.MINE_BURST_ON_BREAK(currentCombo).play(location)

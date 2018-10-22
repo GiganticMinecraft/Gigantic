@@ -60,7 +60,8 @@ class Gigantic : JavaPlugin() {
                 PlayerListener(),
                 SpiritListener(),
                 PlayerMonitor(),
-                ItemListener()
+                ItemListener(),
+                BlockListener()
         )
 
         registerPacketListeners(

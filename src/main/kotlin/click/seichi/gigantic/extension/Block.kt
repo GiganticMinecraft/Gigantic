@@ -41,8 +41,6 @@ private val crustMaterialSet = setOf(
         Material.CRACKED_STONE_BRICKS,
         Material.DIRT,
         Material.GRASS_BLOCK,
-        Material.WATER,
-        Material.LAVA,
         Material.EMERALD_ORE,
         Material.REDSTONE_ORE,
         Material.LAPIS_ORE,
