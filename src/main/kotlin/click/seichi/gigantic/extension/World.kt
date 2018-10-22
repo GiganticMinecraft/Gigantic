@@ -8,7 +8,6 @@ import org.bukkit.World
 /**
  * @author unicroak
  */
-// TODO should spawn also SPELL_MOB and SPELL_MOB_AMBIENT.
 fun World.spawnColoredParticle(
         location: Location,
         color: Color,

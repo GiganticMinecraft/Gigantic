@@ -359,8 +359,6 @@ class PlayerListener : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
         Skills.TERRA_DRAIN.tryInvoke(player, event.block)
-        // TODO remove
-//        Skills.EXPLOSION.tryInvoke(player,event.block)
     }
 
 }

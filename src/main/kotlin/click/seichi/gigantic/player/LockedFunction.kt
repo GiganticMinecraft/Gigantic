@@ -58,11 +58,11 @@ enum class LockedFunction(
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }, unlockMessage = UnlockMessages.UNLOCK_EXPLOSION),
 
-    TERRA_DRAIN(6, {
+    TERRA_DRAIN(7, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
     }, unlockMessage = UnlockMessages.UNLOCK_TERRA_DRAIN),
 
-    WILL_O_THE_WISP(7, {
+    WILL_O_THE_WISP(8, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 1
     }, unlockMessage = UnlockMessages.UNLOCK_WILL_O_THE_WISP)
     ;
