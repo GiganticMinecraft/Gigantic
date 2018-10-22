@@ -10,6 +10,7 @@ import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.extension.transform
+import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
@@ -250,7 +251,7 @@ class PlayerListener : Listener {
                                     it.direction.z * 2
                             )
                         }, will, player, WillSize.MEDIUM))
-                    PlayerMessages.OBTAIN_WILL_APTITUDE(will).sendTo(player)
+                PlayerMessages.OBTAIN_WILL_APTITUDE(will).sendTo(player)
             }
         }
     }
@@ -277,7 +278,7 @@ class PlayerListener : Listener {
 
             it.decrease(wrappedDamage)
             // 遅延なしだと２回死んでしまう(体力が0.0になったあとにダメージを受けるため)
-            // ダメージを受けない（イベントをキャンセル）すればいいのだが、そうすると、各ダメージごとのEntityEffectが表示されない
+            // ダメージを受けな（イベントをキャンセル）ければいいのだが、そうすると、各ダメージごとのEntityEffectが表示されない
             Bukkit.getScheduler().runTaskLater(
                     Gigantic.PLUGIN,
                     { PlayerMessages.HEALTH_DISPLAY(it).sendTo(player) },
@@ -308,6 +309,10 @@ class PlayerListener : Listener {
         val player = event.entity ?: return
         event.keepInventory = true
         event.keepLevel = true
+        player.find(Keys.DEATH_MESSAGE)?.`as`(player.wrappedLocale)?.let { deathMessage ->
+            event.deathMessage = deathMessage
+        }
+
         player.manipulate(CatalogPlayerCache.LEVEL) { level ->
             player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
                 // 7 percent

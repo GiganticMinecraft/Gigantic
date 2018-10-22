@@ -23,6 +23,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
     init {
         registerKey(Keys.BAG)
         registerKey(Keys.MANA)
+        registerKey(Keys.DEATH_MESSAGE)
         register(CatalogPlayerCache.LEVEL)
         register(CatalogPlayerCache.MANA)
         register(CatalogPlayerCache.MEMORY)

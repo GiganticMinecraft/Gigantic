@@ -6,6 +6,7 @@ import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.database.dao.*
+import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.MineBlockReason
@@ -299,4 +300,13 @@ object Keys {
 
     }
 
+    val DEATH_MESSAGE = object : Key<PlayerCache, LocalizedText> {
+        override val default: LocalizedText
+            get() = LocalizedText()
+
+        override fun satisfyWith(value: LocalizedText): Boolean {
+            return true
+        }
+
+    }
 }
