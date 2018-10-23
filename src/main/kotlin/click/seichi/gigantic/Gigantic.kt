@@ -113,7 +113,7 @@ class Gigantic : JavaPlugin() {
                 player.gameMode = GameMode.SURVIVAL
             }
             PlayerCacheMemory.remove(player.uniqueId, false)
-            player.kickPlayer("Thank you for playing!!")
+            player.kickPlayer("Restarting...Please wait a few minutes.")
         }
         server.scheduler.cancelTasks(this)
         logger.info("Gigantic is disabled!!")

@@ -68,12 +68,9 @@ open class LingeringTimer : Timer {
     override fun start() {
         remainTimeToCool = duration
         onStart()
-        if (isCancelled) {
-            return
-        }
         Observable.interval(1, TimeUnit.SECONDS)
                 .takeWhile {
-                    it < duration && !isCancelled
+                    it < duration - 1 && !isCancelled
                 }.observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .subscribe({ elapsedSeconds ->
                     remainTimeToCool = duration.minus(elapsedSeconds + 1)
@@ -88,7 +85,7 @@ open class LingeringTimer : Timer {
                     }
                     Observable.interval(1, TimeUnit.SECONDS)
                             .takeWhile {
-                                it < coolTime && !isCancelled
+                                it < coolTime - 1 && !isCancelled
                             }.observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                             .subscribe({ elapsedSeconds ->
                                 remainTimeToFire = coolTime.minus(elapsedSeconds + 1)
