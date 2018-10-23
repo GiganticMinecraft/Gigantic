@@ -27,6 +27,8 @@ import java.util.function.Consumer
 
 /**
  * @author tar0ss
+ *
+ * TODO スキルレベルの概念を追加する
  */
 object Skills {
 
@@ -145,6 +147,7 @@ object Skills {
 
     }
 
+    // TODO 再帰的処理をEvent依存に変更
     val TERRA_DRAIN = object : BreakSkill {
 
         val faceList = listOf(
