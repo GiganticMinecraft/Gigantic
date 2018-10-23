@@ -4,6 +4,7 @@ import click.seichi.gigantic.animation.PlayerAnimations
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
@@ -38,6 +39,7 @@ import org.bukkit.event.player.*
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.concurrent.TimeUnit
+import kotlin.math.roundToLong
 
 
 /**
@@ -286,11 +288,13 @@ class PlayerListener : Listener {
 
         player.manipulate(CatalogPlayerCache.LEVEL) { level ->
             player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
-                // 7 percent
                 val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
                 val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1] ?: 0L
                 val maxPenalty = level.exp.minus(expToCurrentLevel)
-                val penaltyMineBlock = expToNextLevel.minus(expToCurrentLevel).div(100L).times(7L).coerceAtMost(maxPenalty)
+                val penaltyMineBlock = expToNextLevel.minus(expToCurrentLevel)
+                        .div(100L)
+                        .times(Config.DEATH_PENALTY.times(100).roundToLong())
+                        .coerceAtMost(maxPenalty)
                 it.add(penaltyMineBlock, MineBlockReason.DEATH_PENALTY)
                 if (penaltyMineBlock != 0L)
                     PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
