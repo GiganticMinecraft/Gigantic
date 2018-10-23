@@ -6,6 +6,7 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.message.messages.BattleMessages
+import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.schedule.Scheduler
 import click.seichi.gigantic.topbar.bars.BossBars
@@ -51,11 +52,15 @@ class RaidBattle(val boss: Boss) {
                     if ((elapsedSeconds + 1) % boss.attackInterval != 0L) return@subscribe
                     // attack
                     p.manipulate(CatalogPlayerCache.HEALTH) {
-                        it.decrease(boss.attackDamage)
+                        val wrappedDamage = it.decrease(boss.attackDamage)
                         if (it.current == 0L) {
                             drop(p)
                         }
-                        PlayerMessages.HEALTH_DISPLAY(it).sendTo(p)
+                        PlayerMessages.LOST_HEALTH_DISPLAY(
+                                it,
+                                wrappedDamage,
+                                DeathMessages.PLAYER_DEATH_RAID_BATTLE(boss)
+                        ).sendTo(p)
                         p.playEffect(EntityEffect.HURT)
                     }
                 }

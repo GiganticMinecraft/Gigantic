@@ -30,6 +30,9 @@ class Health : Manipulator<Health, PlayerCache> {
         return cache.offer(Keys.HEALTH, current)
     }
 
+    /**
+     * @return 実際に増えた値
+     */
     fun increase(other: Long): Long {
         val prev = current
         val next = current + other
@@ -46,6 +49,9 @@ class Health : Manipulator<Health, PlayerCache> {
         return current - prev
     }
 
+    /**
+     * @return 実際に減った値
+     */
     fun decrease(other: Long): Long {
         val prev = current
         val next = current - other

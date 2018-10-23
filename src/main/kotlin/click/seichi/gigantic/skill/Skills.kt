@@ -116,10 +116,10 @@ object Skills {
             return Consumer { p ->
                 p.manipulate(CatalogPlayerCache.HEALTH) {
                     if (it.isMaxHealth()) return@manipulate
-                    val amount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_PERCENT))
+                    val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_PERCENT))
                     SkillAnimations.HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
-                    SkillPops.HEAL(amount).pop(block.centralLocation.add(0.0, 0.3, 0.0))
-                    PlayerMessages.HEALTH_DISPLAY(it).sendTo(p)
+                    SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, 0.3, 0.0))
+                    PlayerMessages.REGAIN_HEALTH_DISPLAY(it, wrappedAmount).sendTo(p)
                 }
             }
         }
@@ -180,10 +180,10 @@ object Skills {
                         target.isLeaves -> SkillParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
                         else -> 0.0
                     }
-                    val amount = it.increase(it.max.div(100.0).times(percent).toLong())
-                    if (amount > 0) {
-                        SkillPops.HEAL(amount).pop(target.centralLocation)
-                        PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+                    val wrappedAmount = it.increase(it.max.div(100.0).times(percent).toLong())
+                    if (wrappedAmount > 0) {
+                        SkillPops.HEAL(wrappedAmount).pop(target.centralLocation)
+                        PlayerMessages.REGAIN_HEALTH_DISPLAY(it, wrappedAmount).sendTo(player)
                     }
                 }
                 target.type = Material.AIR

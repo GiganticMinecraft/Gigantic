@@ -1,17 +1,14 @@
 package click.seichi.gigantic.listener
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.PlayerAnimations
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
-import click.seichi.gigantic.extension.find
-import click.seichi.gigantic.extension.manipulate
-import click.seichi.gigantic.extension.transform
-import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
+import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.LockedFunction
@@ -26,7 +23,6 @@ import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.will.WillSize
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
-import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -223,8 +219,7 @@ class PlayerListener : Listener {
         player.manipulate(CatalogPlayerCache.HEALTH) {
             val prevMax = it.max
             it.updateMaxHealth()
-            it.increase(it.max)
-            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+            PlayerMessages.REGAIN_HEALTH_DISPLAY(it, it.increase(it.max)).sendTo(player)
             if (prevMax == it.max) return@manipulate
             PlayerMessages.LEVEL_UP_HEALTH(prevMax, it.max).sendTo(player)
         }
@@ -287,6 +282,7 @@ class PlayerListener : Listener {
         player.find(Keys.DEATH_MESSAGE)?.`as`(player.wrappedLocale)?.let { deathMessage ->
             event.deathMessage = deathMessage
         }
+        player.offer(Keys.DEATH_MESSAGE, LocalizedText())
 
         player.manipulate(CatalogPlayerCache.LEVEL) { level ->
             player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
@@ -308,14 +304,7 @@ class PlayerListener : Listener {
     fun onReSpawn(event: PlayerRespawnEvent) {
         val player = event.player ?: return
         player.manipulate(CatalogPlayerCache.HEALTH) {
-            // 30 percent
             it.increase(it.max.div(10.0).times(3.0).toLong())
-            // 遅延させないと反映されないため
-            Bukkit.getScheduler().runTaskLater(
-                    Gigantic.PLUGIN,
-                    { PlayerMessages.HEALTH_DISPLAY(it).sendTo(player) },
-                    1
-            )
         }
     }
 

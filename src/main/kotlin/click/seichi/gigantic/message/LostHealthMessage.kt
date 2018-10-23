@@ -12,7 +12,7 @@ class LostHealthMessage(
         private val deathMessage: LocalizedText
 ) : Message {
     override fun sendTo(player: Player) {
-        player.damage(damage)
         player.offer(Keys.DEATH_MESSAGE, deathMessage)
+        player.damage(damage)
     }
 }

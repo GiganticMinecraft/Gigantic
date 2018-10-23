@@ -56,6 +56,18 @@ object PlayerMessages {
         HealthMessage(healthAmount)
     }
 
+    val REGAIN_HEALTH_DISPLAY = { health: Health, wrappedAmount: Long ->
+        val interval = health.max.div(20.0)
+        val amount = wrappedAmount.div(interval)
+        RegainHealthMessage(amount)
+    }
+
+    val LOST_HEALTH_DISPLAY = { health: Health, wrappedDamage: Long, deathMessage: LocalizedText ->
+        val interval = health.max.div(20.0)
+        val damage = wrappedDamage.div(interval)
+        LostHealthMessage(damage, deathMessage)
+    }
+
     val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}" +
                     "ブロックを壊そう!!\n"
