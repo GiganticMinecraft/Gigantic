@@ -2,6 +2,8 @@ package click.seichi.gigantic.skill
 
 /**
  * @author tar0ss
+ *
+ * TODO skill.ymlに移動
  */
 object SkillParameters {
 

@@ -7,6 +7,9 @@ import click.seichi.gigantic.relic.Relic
 
 /**
  * @author tar0ss
+ *
+ * TODO ボスの難易度を分けて難易度別に出現割合を固定する
+ * TODO 全てboss.ymlで編集可能にする
  */
 enum class Boss(
         val id: Int,

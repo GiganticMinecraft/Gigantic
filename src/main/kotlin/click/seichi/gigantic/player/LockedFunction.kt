@@ -11,6 +11,8 @@ import org.bukkit.entity.Player
 
 /**
  * @author tar0ss
+ *
+ * TODO 解放レベルを全てfunction.ymlで調整可能にする
  */
 enum class LockedFunction(
         val id: Int,
