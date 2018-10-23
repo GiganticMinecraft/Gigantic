@@ -42,7 +42,6 @@ import org.bukkit.event.player.*
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.concurrent.TimeUnit
-import kotlin.math.roundToLong
 
 
 /**
@@ -268,24 +267,8 @@ class PlayerListener : Listener {
             event.isCancelled = true
             return
         }
-        // 5 times damage
-        var wrappedDamage = event.finalDamage.times(5).roundToLong()
-        event.damage = 0.0
-        player.manipulate(CatalogPlayerCache.HEALTH) {
-
-            if (event.cause == EntityDamageEvent.DamageCause.SUICIDE)
-                wrappedDamage = Long.MAX_VALUE
-
-            it.decrease(wrappedDamage)
-            // 遅延なしだと２回死んでしまう(体力が0.0になったあとにダメージを受けるため)
-            // ダメージを受けな（イベントをキャンセル）ければいいのだが、そうすると、各ダメージごとのEntityEffectが表示されない
-            Bukkit.getScheduler().runTaskLater(
-                    Gigantic.PLUGIN,
-                    { PlayerMessages.HEALTH_DISPLAY(it).sendTo(player) },
-                    1
-            )
-
-        }
+        if (event.cause == EntityDamageEvent.DamageCause.SUICIDE)
+            event.damage = Double.MAX_VALUE
     }
 
     @EventHandler
@@ -293,15 +276,7 @@ class PlayerListener : Listener {
         val player = event.entity as? Player ?: return
         if (event.regainReason == EntityRegainHealthEvent.RegainReason.SATIATED) {
             event.isCancelled = true
-            return
         }
-        player.manipulate(CatalogPlayerCache.HEALTH) {
-            // 5 times regain
-            val wrappedRegain = event.amount.times(5).roundToLong()
-            it.increase(wrappedRegain)
-            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
-        }
-        event.amount = 0.0
     }
 
     @EventHandler

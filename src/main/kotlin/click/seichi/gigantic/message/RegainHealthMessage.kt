@@ -18,7 +18,7 @@ class RegainHealthMessage(
                 event
         )
         if (event.isCancelled) return
-        player.health += amount
+        player.health += event.amount
     }
 
 }

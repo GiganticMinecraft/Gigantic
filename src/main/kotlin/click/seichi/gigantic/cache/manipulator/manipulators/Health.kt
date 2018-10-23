@@ -12,8 +12,10 @@ import kotlin.properties.Delegates
  * @author tar0ss
  */
 class Health : Manipulator<Health, PlayerCache> {
+    // wrapした体力
     var current: Long by Delegates.notNull()
         private set
+    // wrapした体力の最大値
     var max: Long by Delegates.notNull()
         private set
     private lateinit var level: Level

@@ -13,10 +13,14 @@ import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.EntityRegainHealthEvent
+import kotlin.math.roundToLong
 
 /**
  * @author tar0ss
@@ -70,5 +74,26 @@ class PlayerMonitor : Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.MONITOR)
+    fun onDamage(event: EntityDamageEvent) {
+        if (event.isCancelled) return
+        val player = event.entity as? Player ?: return
+        // 5 times damage
+        val wrappedDamage = event.finalDamage.times(5).roundToLong()
+        player.manipulate(CatalogPlayerCache.HEALTH) {
+            it.decrease(wrappedDamage)
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    fun onRegainHealth(event: EntityRegainHealthEvent) {
+        if (event.isCancelled) return
+        val player = event.entity as? Player ?: return
+        player.manipulate(CatalogPlayerCache.HEALTH) {
+            // 5 times regain
+            val wrappedRegain = event.amount.times(5).roundToLong()
+            it.increase(wrappedRegain)
+        }
+    }
 
 }
