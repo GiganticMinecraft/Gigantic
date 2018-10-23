@@ -78,21 +78,22 @@ class PlayerMonitor : Listener {
     fun onDamage(event: EntityDamageEvent) {
         if (event.isCancelled) return
         val player = event.entity as? Player ?: return
-        // 5 times damage
-        val wrappedDamage = event.finalDamage.times(5).roundToLong()
-        player.manipulate(CatalogPlayerCache.HEALTH) {
-            it.decrease(wrappedDamage)
+        player.manipulate(CatalogPlayerCache.HEALTH) { health ->
+            // 割合ダメージ
+            val wrappedDamage = event.finalDamage.times(health.max / 20.0).roundToLong()
+            health.decrease(wrappedDamage)
         }
+
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     fun onRegainHealth(event: EntityRegainHealthEvent) {
         if (event.isCancelled) return
         val player = event.entity as? Player ?: return
-        player.manipulate(CatalogPlayerCache.HEALTH) {
-            // 5 times regain
-            val wrappedRegain = event.amount.times(5).roundToLong()
-            it.increase(wrappedRegain)
+        player.manipulate(CatalogPlayerCache.HEALTH) { health ->
+            // 割合回復
+            val wrappedRegain = event.amount.times(health.max / 20.0).roundToLong()
+            health.increase(wrappedRegain)
         }
     }
 
