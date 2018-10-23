@@ -85,14 +85,14 @@ object Skills {
                         while (!nextBlock.isSurface) {
                             nextBlock = nextBlock.getRelative(BlockFace.UP)
                         }
-                        nextBlock.location.clone().add(0.0, 1.75, 0.0).apply {
+                        nextBlock.centralLocation.add(0.0, 1.75, 0.0).apply {
                             direction = p.location.direction
                         }
                     }
                     if (tpLocation != null) {
-                        SkillAnimations.FLASH_BEFORE.start(p.location)
+                        SkillAnimations.FLASH_FIRE.start(p.location)
                         p.teleport(tpLocation)
-                        SkillAnimations.FLASH_BEFORE.start(p.location)
+                        SkillAnimations.FLASH_FIRE.start(p.location)
                         SkillSounds.FLASH_FIRE.play(p.location)
                     } else {
                         SkillSounds.FLASH_MISS.play(p.location)

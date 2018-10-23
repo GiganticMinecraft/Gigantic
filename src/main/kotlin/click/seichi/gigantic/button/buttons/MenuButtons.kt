@@ -30,9 +30,11 @@ object MenuButtons {
                 setDisplayName(MenuMessages.PROFILE_PROFILE.asSafety(player.wrappedLocale))
                 val level = player.find(CatalogPlayerCache.LEVEL) ?: return@apply
                 val aptitude = player.find(CatalogPlayerCache.APTITUDE) ?: return@apply
+                val health = player.find(CatalogPlayerCache.HEALTH) ?: return@apply
                 setLore(
                         MenuMessages.PROFILE_LEVEL(level).asSafety(player.wrappedLocale),
                         MenuMessages.PROFILE_EXP(level).asSafety(player.wrappedLocale),
+                        MenuMessages.PROFILE_HEALTH(health).asSafety(player.wrappedLocale),
                         *MenuMessages.PROFILE_WILL_APTITUDE(aptitude).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
                 )
             }

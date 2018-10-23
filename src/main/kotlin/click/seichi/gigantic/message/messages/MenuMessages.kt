@@ -158,6 +158,12 @@ object MenuMessages {
         }
     }
 
+    val PROFILE_HEALTH = { health: Health ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GREEN}体力: ${ChatColor.WHITE}${health.current} / ${health.max}"
+        )
+    }
+
     val PROFILE_WILL_APTITUDE = { aptitude: WillAptitude ->
         arrayOf(
                 LocalizedText(
