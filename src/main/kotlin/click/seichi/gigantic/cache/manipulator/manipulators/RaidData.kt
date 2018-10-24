@@ -16,10 +16,10 @@ class RaidData : Manipulator<RaidData, PlayerCache> {
         bossMap.clear()
         relicMap.clear()
         Boss.values().forEach {
-            bossMap[it] = cache.find(Keys.BOSS_MAP[it] ?: return null) ?: return null
+            bossMap[it] = cache.getOrPut(Keys.BOSS_MAP[it] ?: return null)
         }
         Relic.values().forEach {
-            relicMap[it] = cache.find(Keys.RELIC_MAP[it] ?: return null) ?: return null
+            relicMap[it] = cache.getOrPut(Keys.RELIC_MAP[it] ?: return null)
         }
         return this
     }

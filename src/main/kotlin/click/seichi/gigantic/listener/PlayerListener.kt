@@ -110,8 +110,8 @@ class PlayerListener : Listener {
             PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
         }
 
-        player.find(Keys.BELT)?.wear(player)
-        player.find(Keys.BAG)?.carry(player)
+        player.getOrPut(Keys.BELT).wear(player)
+        player.getOrPut(Keys.BAG).carry(player)
 
         player.updateInventory()
         player.saturation = Float.MAX_VALUE
@@ -187,7 +187,7 @@ class PlayerListener : Listener {
     fun onPlayerItemHeld(event: PlayerItemHeldEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
-        val belt = player.find(Keys.BELT) ?: return
+        val belt = player.getOrPut(Keys.BELT)
         belt.getHotButton(event.newSlot)?.onItemHeld(player, event)
         if (belt.hasFixedSlot() && !belt.isFixed(event.newSlot))
             event.isCancelled = true
@@ -226,8 +226,8 @@ class PlayerListener : Listener {
             PlayerMessages.LEVEL_UP_HEALTH(prevMax, it.max).sendTo(player)
         }
 
-        player.find(Keys.BELT)?.wear(player)
-        player.find(Keys.BAG)?.carry(player)
+        player.getOrPut(Keys.BELT).wear(player)
+        player.getOrPut(Keys.BAG).carry(player)
 
         player.updateInventory()
 
@@ -259,7 +259,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onDamage(event: EntityDamageEvent) {
-        val player = event.entity as? Player ?: return
+        event.entity as? Player ?: return
         if (event.cause == EntityDamageEvent.DamageCause.STARVATION) {
             event.isCancelled = true
             return
@@ -270,7 +270,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onRegainHealth(event: EntityRegainHealthEvent) {
-        val player = event.entity as? Player ?: return
+        event.entity as? Player ?: return
         if (event.regainReason == EntityRegainHealthEvent.RegainReason.SATIATED) {
             event.isCancelled = true
         }
@@ -281,7 +281,7 @@ class PlayerListener : Listener {
         val player = event.entity ?: return
         event.keepInventory = true
         event.keepLevel = true
-        player.find(Keys.DEATH_MESSAGE)?.`as`(player.wrappedLocale)?.let { deathMessage ->
+        player.getOrPut(Keys.DEATH_MESSAGE).`as`(player.wrappedLocale)?.let { deathMessage ->
             event.deathMessage = deathMessage
         }
         player.offer(Keys.DEATH_MESSAGE, LocalizedText())
@@ -316,12 +316,12 @@ class PlayerListener : Listener {
     fun onChangeGameMode(event: PlayerGameModeChangeEvent) {
         when (event.newGameMode) {
             GameMode.SURVIVAL -> {
-                val belt = event.player.find(Keys.BELT) ?: return
+                val belt = event.player.getOrPut(Keys.BELT)
                 belt.getFixedSlot()?.let {
                     event.player.inventory.heldItemSlot = it
                 }
                 belt.wear(event.player)
-                event.player.find(Keys.BAG)?.carry(event.player)
+                event.player.getOrPut(Keys.BAG).carry(event.player)
             }
             else -> {
             }
@@ -331,7 +331,7 @@ class PlayerListener : Listener {
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
-        Skills.TERRA_DRAIN.tryInvoke(player, event.block)
+        Skills.TERRA_DRAIN.tryInvoke(player)
     }
 
 }

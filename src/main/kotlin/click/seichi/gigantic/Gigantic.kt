@@ -53,7 +53,7 @@ class Gigantic : JavaPlugin() {
         PROTOCOL_MG = ProtocolLibrary.getProtocolManager()
 
         // Remove all armor stands
-        server.worlds.forEach { it.getEntitiesByClass(ArmorStand::class.java).forEach { it.remove() } }
+        server.worlds.forEach { world -> world.getEntitiesByClass(ArmorStand::class.java).forEach { it.remove() } }
 
         registerListeners(
                 MenuListener(),
@@ -107,7 +107,7 @@ class Gigantic : JavaPlugin() {
     override fun onDisable() {
         Bukkit.getOnlinePlayers().filterNotNull().forEach { player ->
             if (player.gameMode == GameMode.SPECTATOR) {
-                player.find(CatalogPlayerCache.AFK_LOCATION)?.let {
+                player.find(CatalogPlayerCache.AFK_LOCATION)?.let { it ->
                     player.teleport(it.getLocation())
                 }
                 player.gameMode = GameMode.SURVIVAL

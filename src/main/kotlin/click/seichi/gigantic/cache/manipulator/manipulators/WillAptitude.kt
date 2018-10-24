@@ -19,8 +19,8 @@ class WillAptitude : Manipulator<WillAptitude, PlayerCache> {
 
     override fun from(cache: Cache<PlayerCache>): WillAptitude? {
         set.clear()
-        Will.values().mapNotNull { it to cache.find(Keys.APTITUDE_MAP[it] ?: return null) }
-                .filter { it.second == true }
+        Will.values().map { it to cache.getOrPut(Keys.APTITUDE_MAP[it] ?: return null) }
+                .filter { it.second }
                 .forEach { add(it.first) }
         level = cache.find(CatalogPlayerCache.LEVEL) ?: return null
         return this
@@ -42,7 +42,7 @@ class WillAptitude : Manipulator<WillAptitude, PlayerCache> {
     fun addIfNeeded(): Set<Will> {
         val newWillSet = mutableSetOf<Will>()
         WillGrade.values().forEach { grade ->
-            (0 until calcMissingAptitude(grade)).forEach {
+            (0 until calcMissingAptitude(grade)).forEach { _ ->
                 Will.values().toList().filter {
                     it.grade == grade
                 }.filterNot {

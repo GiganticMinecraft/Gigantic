@@ -13,7 +13,7 @@ class MineBlock : Manipulator<MineBlock, PlayerCache> {
     override fun from(cache: Cache<PlayerCache>): MineBlock? {
         map.clear()
         MineBlockReason.values()
-                .map { add(cache.find(Keys.MINEBLOCK_MAP[it] ?: return null) ?: return null, it) }
+                .map { add(cache.getOrPut(Keys.MINEBLOCK_MAP[it] ?: return null), it) }
         return this
     }
 

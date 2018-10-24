@@ -200,7 +200,7 @@ object MenuButtons {
                         SkillSounds.SWITCH.playOnly(player)
                     }
                 }
-                player.find(Keys.BELT)?.wear(player)
+                player.getOrPut(Keys.BELT).wear(player)
                 BeltSwitchSettingMenu.reopen(player)
             }
 

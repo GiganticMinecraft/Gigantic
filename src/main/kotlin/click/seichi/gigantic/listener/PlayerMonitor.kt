@@ -1,6 +1,7 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.animation.SkillAnimations
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
@@ -32,12 +33,11 @@ class PlayerMonitor : Listener {
         if (event.isCancelled) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
 
-        // Gravity process
-        event.block.fallUpper()
-
-        // Player process
         val player = event.player ?: return
-        val location = event.block.location.central
+        val block = event.block ?: return
+
+        // Gravity process
+        block.fallUpper()
 
         // carry player cache
         player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
@@ -45,10 +45,11 @@ class PlayerMonitor : Listener {
         }
         player.manipulate(CatalogPlayerCache.MINE_COMBO) {
             it.combo(1L)
-            SkillPops.MINE_COMBO(it).pop(event.block.centralLocation)
+            SkillPops.MINE_COMBO(it).pop(block.centralLocation)
         }
 
-        Skills.HEAL.tryInvoke(player, event.block)
+        player.offer(Keys.HEAL_SKILL_BLOCK, block)
+        Skills.HEAL.tryInvoke(player)
 
         // raid battle process
         RaidManager.playBattle(player)
@@ -63,13 +64,13 @@ class PlayerMonitor : Listener {
 
         val mineBurst = player.find(CatalogPlayerCache.MINE_BURST)
         if (mineBurst?.duringFire() == true)
-            SkillAnimations.MINE_BURST_ON_BREAK.start(location)
+            SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
 
         val currentCombo = player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0
 
         // Sounds
         when {
-            mineBurst?.duringFire() == true -> SkillSounds.MINE_BURST_ON_BREAK(currentCombo).play(location)
+            mineBurst?.duringFire() == true -> SkillSounds.MINE_BURST_ON_BREAK(currentCombo).play(block.centralLocation)
             else -> PlayerSounds.OBTAIN_EXP(currentCombo).playOnly(player)
         }
     }

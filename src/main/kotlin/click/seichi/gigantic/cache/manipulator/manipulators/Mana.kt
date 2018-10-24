@@ -25,9 +25,9 @@ class Mana : Manipulator<Mana, PlayerCache> {
     private lateinit var bar: BossBar
 
     override fun from(cache: Cache<PlayerCache>): Mana? {
-        current = cache.find(Keys.MANA) ?: return null
+        current = cache.getOrPut(Keys.MANA)
         level = cache.find(CatalogPlayerCache.LEVEL) ?: return null
-        locale = cache.find(Keys.LOCALE) ?: return null
+        locale = cache.getOrPut(Keys.LOCALE)
         return this
     }
 

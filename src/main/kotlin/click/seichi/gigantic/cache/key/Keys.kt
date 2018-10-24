@@ -12,6 +12,7 @@ import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
+import org.bukkit.block.Block
 import org.jetbrains.exposed.dao.Entity
 import java.util.*
 
@@ -309,4 +310,35 @@ object Keys {
         }
 
     }
+
+    val HEAL_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
+        override val default: Block?
+            get() = null
+
+        override fun satisfyWith(value: Block?): Boolean {
+            return true
+        }
+
+    }
+
+    val TERRA_DRAIN_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
+        override val default: Block?
+            get() = null
+
+        override fun satisfyWith(value: Block?): Boolean {
+            return true
+        }
+
+    }
+
+    val EXPLOSION_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
+        override val default: Block?
+            get() = null
+
+        override fun satisfyWith(value: Block?): Boolean {
+            return true
+        }
+
+    }
+
 }

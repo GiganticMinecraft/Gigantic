@@ -48,15 +48,15 @@ object Skills {
                     p.removePotionEffect(PotionEffectType.FAST_DIGGING)
                     p.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
                     SkillSounds.MINE_BURST_ON_FIRE.play(p.location)
-                    p.find(Keys.BELT)?.wear(p)
+                    p.getOrPut(Keys.BELT).wear(p)
                 }.onFire {
-                    p.find(Keys.BELT)?.wear(p, false)
+                    p.getOrPut(Keys.BELT).wear(p, false)
                 }.onCompleteFire {
-                    p.find(Keys.BELT)?.wear(p)
+                    p.getOrPut(Keys.BELT).wear(p)
                 }.onCooldown {
-                    p.find(Keys.BELT)?.wear(p, false)
+                    p.getOrPut(Keys.BELT).wear(p, false)
                 }.onCompleteCooldown {
-                    p.find(Keys.BELT)?.wear(p)
+                    p.getOrPut(Keys.BELT).wear(p)
                 }.start()
             }
         }
@@ -102,19 +102,20 @@ object Skills {
                         SkillSounds.FLASH_MISS.play(p.location)
                         flash.isCancelled = true
                     }
-                    p.find(Keys.BELT)?.wear(p)
+                    p.getOrPut(Keys.BELT).wear(p)
                 }.onCooldown {
-                    p.find(Keys.BELT)?.wear(p, false)
+                    p.getOrPut(Keys.BELT).wear(p, false)
                 }.onCompleteCooldown {
-                    p.find(Keys.BELT)?.wear(p)
+                    p.getOrPut(Keys.BELT).wear(p)
                 }.start()
             }
         }
 
     }
 
-    val HEAL = object : BreakSkill {
-        override fun findInvokable(player: Player, block: Block): Consumer<Player>? {
+    val HEAL = object : Skill {
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            val block = player.remove(Keys.HEAL_SKILL_BLOCK) ?: return null
             if (!LockedFunction.HEAL.isUnlocked(player)) return null
             if (SkillParameters.HEAL_PROBABILITY < Random.nextDouble()) return null
             return Consumer { p ->
@@ -139,7 +140,7 @@ object Skills {
                     current = it.current
                     it.switch()
                 }
-                val nextBelt = p.find(Keys.BELT) ?: return@Consumer
+                val nextBelt = p.getOrPut(Keys.BELT)
                 if (current == nextBelt) return@Consumer
                 nextBelt.wear(p)
                 SkillSounds.SWITCH.playOnly(p)
@@ -150,7 +151,7 @@ object Skills {
     }
 
     // TODO 再帰的処理をEvent依存に変更
-    val TERRA_DRAIN = object : BreakSkill {
+    val TERRA_DRAIN = object : Skill {
 
         val faceList = listOf(
                 BlockFace.UP,
@@ -162,7 +163,8 @@ object Skills {
         )
 
 
-        override fun findInvokable(player: Player, block: Block): Consumer<Player>? {
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            val block = player.remove(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return null
             if (player.gameMode != GameMode.SURVIVAL) return null
             if (!block.isTree) return null
             return Consumer { p ->
@@ -211,7 +213,7 @@ object Skills {
     }
 
 
-    val EXPLOSION = object : BreakSkill {
+    val EXPLOSION = object : Skill {
 
         val faceList = listOf(
                 BlockFace.UP,
@@ -222,7 +224,8 @@ object Skills {
                 BlockFace.EAST
         )
 
-        override fun findInvokable(player: Player, block: Block): Consumer<Player>? {
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            val block = player.remove(Keys.EXPLOSION_SKILL_BLOCK) ?: return null
             if (player.gameMode != GameMode.SURVIVAL) return null
             if (!block.isCrust) return null
             return Consumer { p ->

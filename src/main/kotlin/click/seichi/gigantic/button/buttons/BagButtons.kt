@@ -4,10 +4,7 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.find
-import click.seichi.gigantic.extension.getHead
-import click.seichi.gigantic.extension.setDisplayName
-import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.menus.ProfileMenu
 import click.seichi.gigantic.menu.menus.RaidBattleMenu
 import click.seichi.gigantic.message.messages.MenuMessages
@@ -84,12 +81,12 @@ object BagButtons {
                     afkLocation.saveLocation(player.location)
                     // 見えなくなるバグのため
                     player.showPlayer(Gigantic.PLUGIN, player)
-                    player.find(Keys.BAG)?.carry(player)
+                    player.getOrPut(Keys.BAG).carry(player)
                 }
                 GameMode.SPECTATOR -> {
                     player.gameMode = GameMode.SURVIVAL
                     player.teleport(afkLocation.getLocation())
-                    player.find(Keys.BAG)?.carry(player)
+                    player.getOrPut(Keys.BAG).carry(player)
                 }
                 else -> {
                 }

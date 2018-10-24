@@ -1,7 +1,7 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.isBeltSlot
 import click.seichi.gigantic.menu.BookMenu
 import click.seichi.gigantic.menu.Menu
@@ -25,9 +25,9 @@ class MenuListener : Listener {
         when (event.clickedInventory) {
             event.view.bottomInventory -> {
                 // Belt
-                if (event.isBeltSlot) player.find(Keys.BELT)?.getButton(event.slot)?.onClick(player, event)
+                if (event.isBeltSlot) player.getOrPut(Keys.BELT).getButton(event.slot)?.onClick(player, event)
                 // Bag
-                else player.find(Keys.BAG)?.getButton(event.slot)?.onClick(player, event)
+                else player.getOrPut(Keys.BAG).getButton(event.slot)?.onClick(player, event)
                 return
             }
         }

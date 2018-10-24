@@ -21,9 +21,9 @@ class BeltSwitcher : Manipulator<BeltSwitcher, PlayerCache> {
     }
 
     override fun from(cache: Cache<PlayerCache>): BeltSwitcher? {
-        current = cache.find(Keys.BELT) ?: return null
+        current = cache.getOrPut(Keys.BELT)
         map.clear()
-        Belt.values().forEach { map[it] = cache.find(Keys.BELT_MAP[it] ?: return null) ?: return null }
+        Belt.values().forEach { map[it] = cache.getOrPut(Keys.BELT_MAP[it] ?: return null) }
         return this
     }
 

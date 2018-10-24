@@ -3,7 +3,6 @@ package click.seichi.gigantic.cache.cache
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.player.LockedFunction
@@ -20,64 +19,44 @@ import java.util.*
  */
 class PlayerCache(private val uniqueId: UUID, private val playerName: String) : Cache<PlayerCache>() {
 
-    init {
-        registerKey(Keys.BAG)
-        registerKey(Keys.MANA)
-        registerKey(Keys.DEATH_MESSAGE)
-        register(CatalogPlayerCache.LEVEL)
-        register(CatalogPlayerCache.MANA)
-        register(CatalogPlayerCache.MEMORY)
-        register(CatalogPlayerCache.APTITUDE)
-        register(CatalogPlayerCache.MINE_BURST)
-        register(CatalogPlayerCache.MINE_BLOCK)
-        register(CatalogPlayerCache.MINE_COMBO)
-        register(CatalogPlayerCache.RAID_DATA)
-        register(CatalogPlayerCache.AFK_LOCATION)
-        register(CatalogPlayerCache.MENU_DATA)
-        register(CatalogPlayerCache.FLASH)
-        register(CatalogPlayerCache.HEALTH)
-        register(CatalogPlayerCache.BELT_SWITCHER)
-        register(CatalogPlayerCache.EXPLOSION)
-    }
-
     override fun read() {
         transaction {
             UserEntityData(uniqueId, playerName).run {
                 Keys.IS_FIRST_JOIN.let {
-                    registerKey(it, it.read(user))
+                    offer(it, it.read(user))
                 }
                 Keys.LOCALE.let {
-                    registerKey(it, it.read(user))
+                    offer(it, it.read(user))
                 }
                 Keys.MANA.let {
-                    registerKey(it, it.read(user))
+                    offer(it, it.read(user))
                 }
                 Keys.HEALTH.let {
-                    registerKey(it, it.read(user))
+                    offer(it, it.read(user))
                 }
                 Keys.BELT.let {
-                    registerKey(it, it.read(user))
+                    offer(it, it.read(user))
                 }
                 Keys.MINEBLOCK_MAP.forEach { reason, key ->
-                    registerKey(key, key.read(userMineBlockMap[reason] ?: return@forEach))
+                    offer(key, key.read(userMineBlockMap[reason] ?: return@forEach))
                 }
                 Keys.MEMORY_MAP.forEach { will, key ->
-                    registerKey(key, key.read(userWillMap[will] ?: return@forEach))
+                    offer(key, key.read(userWillMap[will] ?: return@forEach))
                 }
                 Keys.APTITUDE_MAP.forEach { will, key ->
-                    registerKey(key, key.read(userWillMap[will] ?: return@forEach))
+                    offer(key, key.read(userWillMap[will] ?: return@forEach))
                 }
                 Keys.BOSS_MAP.forEach { boss, key ->
-                    registerKey(key, key.read(userBossMap[boss] ?: return@forEach))
+                    offer(key, key.read(userBossMap[boss] ?: return@forEach))
                 }
                 Keys.RELIC_MAP.forEach { relic, key ->
-                    registerKey(key, key.read(userRelicMap[relic] ?: return@forEach))
+                    offer(key, key.read(userRelicMap[relic] ?: return@forEach))
                 }
                 Keys.LOCKED_FUNCTION_MAP.forEach { func, key ->
-                    registerKey(key, key.read(userLockedMap[func] ?: return@forEach))
+                    offer(key, key.read(userLockedMap[func] ?: return@forEach))
                 }
                 Keys.BELT_MAP.forEach { belt, key ->
-                    registerKey(key, key.read(userBeltMap[belt] ?: return@forEach))
+                    offer(key, key.read(userBeltMap[belt] ?: return@forEach))
                 }
             }
         }

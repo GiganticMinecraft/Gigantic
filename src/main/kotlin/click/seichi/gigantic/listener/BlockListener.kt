@@ -11,7 +11,7 @@ class BlockListener : Listener {
 
     @EventHandler
     fun onBlockFromTo(event: BlockFromToEvent) {
-        val block = event.block ?: return
+        event.block ?: return
         event.isCancelled = true
     }
 

@@ -36,7 +36,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
             },
             RandomSummonCase(0.08, EntityDeathEvent::class.java) { event ->
                 val player = event.entity.killer ?: return@RandomSummonCase
-                val aptitudeSet = player.find(click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache.APTITUDE)?.copySet()
+                val aptitudeSet = player.find(CatalogPlayerCache.APTITUDE)?.copySet()
                         ?: return@RandomSummonCase
                 val will = aptitudeSet.shuffled().firstOrNull() ?: return@RandomSummonCase
                 spawn(WillSpirit(WillSpawnReason.AWAKE, event.entity.eyeLocation, will, player))

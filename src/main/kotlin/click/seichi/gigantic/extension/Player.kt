@@ -26,11 +26,16 @@ fun Player.getHead() = ItemStack(Material.PLAYER_HEAD).apply {
     }
 }
 
-fun <V : Any> Player.find(key: Key<PlayerCache, out V>) = PlayerCacheMemory.get(uniqueId).find(key)
 
-fun <V : Any> Player.offer(key: Key<PlayerCache, V>, value: V) = PlayerCacheMemory.get(uniqueId).offer(key, value)
+fun <V : Any?> Player.getOrPut(key: Key<PlayerCache, V>, value: V = key.default) = PlayerCacheMemory.get(uniqueId).getOrPut(key, value)
 
-fun <V : Any> Player.transform(key: Key<PlayerCache, V>, transforming: (V) -> V) = PlayerCacheMemory.get(uniqueId).transform(key, transforming)
+fun <V : Any?> Player.remove(key: Key<PlayerCache, V>) = PlayerCacheMemory.get(uniqueId).remove(key)
+
+fun <V : Any?> Player.offer(key: Key<PlayerCache, V>, value: V) = PlayerCacheMemory.get(uniqueId).offer(key, value)
+
+fun <V : Any?> Player.replace(key: Key<PlayerCache, V>, value: V) = PlayerCacheMemory.get(uniqueId).replace(key, value)
+
+fun <V : Any?> Player.transform(key: Key<PlayerCache, V>, transforming: (V) -> V) = PlayerCacheMemory.get(uniqueId).transform(key, transforming)
 
 fun <M : Manipulator<M, PlayerCache>> Player.find(clazz: Class<M>) = PlayerCacheMemory.get(uniqueId).find(clazz)
 
@@ -39,7 +44,7 @@ fun <M : Manipulator<M, PlayerCache>> Player.offer(manipulator: M) = PlayerCache
 fun <M : Manipulator<M, PlayerCache>> Player.manipulate(clazz: Class<M>, transforming: (M) -> Unit) = PlayerCacheMemory.get(uniqueId).manipulate(clazz, transforming)
 
 val Player.wrappedLocale: Locale
-    get() = find(Keys.LOCALE) ?: Locale.JAPANESE
+    get() = getOrPut(Keys.LOCALE)
 
 val Player.cardinalDirection
     get() = CardinalDirection.getCardinalDirection(this)
