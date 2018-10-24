@@ -10,12 +10,6 @@ import org.bukkit.block.Block
  * @author unicroak
  * @author tar0ss
  */
-// 浮けるかどうか
-val Block.canFloat: Boolean
-    get() = when (type) {
-        Material.AIR -> false
-        else -> true
-    }
 
 // 落下判定に使う。自然生成されるブロックのみ
 private val crustMaterialSet = setOf(
@@ -116,6 +110,12 @@ private val leaves = listOf(
         Material.SPRUCE_LEAVES
 )
 
+private val airs = listOf(
+        Material.AIR,
+        Material.CAVE_AIR,
+        Material.VOID_AIR
+)
+
 private val trees = listOf(*logs.toTypedArray(), *leaves.toTypedArray())
 
 val Block.isLog
@@ -128,7 +128,7 @@ val Block.isTree
     get() = trees.contains(type)
 
 val Block.isSurface
-    get() = (1..3).firstOrNull { getRelative(0, it, 0).type != Material.AIR }?.let { false } ?: true
+    get() = (1..3).firstOrNull { !airs.contains(getRelative(0, it, 0).type) }?.let { false } ?: true
 
 val Block.centralLocation: Location
     get() = location.clone().add(0.5, 0.5, 0.5)

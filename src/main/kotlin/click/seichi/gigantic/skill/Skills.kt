@@ -66,6 +66,8 @@ object Skills {
 
         val transparentMaterialSet = setOf(
                 Material.AIR,
+                Material.CAVE_AIR,
+                Material.VOID_AIR,
                 Material.WATER,
                 Material.LAVA
         )
