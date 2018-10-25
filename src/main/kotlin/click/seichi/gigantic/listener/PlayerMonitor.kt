@@ -3,6 +3,7 @@ package click.seichi.gigantic.listener
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.SkillAnimations
 import click.seichi.gigantic.belt.Belt
+import click.seichi.gigantic.button.buttons.FixedButtons
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent
@@ -128,9 +129,7 @@ class PlayerMonitor : Listener {
             Gigantic.PLUGIN.server.pluginManager.callEvent(scoopEvent)
             if (scoopEvent.isCancelled) return
             breakBlock(player, block)
-            itemStack.apply {
-                type = Material.BUCKET
-            }
+            event.itemStack = FixedButtons.BUCKET.getItemStack(player)
         }
     }
 
