@@ -33,6 +33,4 @@ object CatalogPlayerCache {
 
     val BELT_SWITCHER = BeltSwitcher::class.java
 
-    val EXPLOSION = Explosion::class.java
-
 }

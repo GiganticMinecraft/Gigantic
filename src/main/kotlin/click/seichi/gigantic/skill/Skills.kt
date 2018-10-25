@@ -5,21 +5,15 @@ import click.seichi.gigantic.animation.SkillAnimations
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SkillPops
-import click.seichi.gigantic.raid.RaidManager
-import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import click.seichi.gigantic.util.Random
-import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
-import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
@@ -188,80 +182,6 @@ object Skills {
                 SkillAnimations.TERRA_DRAIN_HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
             }
         }
-    }
-
-
-    val EXPLOSION = object : Skill {
-
-        val faceList = listOf(
-                BlockFace.UP,
-                BlockFace.DOWN,
-                BlockFace.NORTH,
-                BlockFace.WEST,
-                BlockFace.SOUTH,
-                BlockFace.EAST
-        )
-
-        override fun findInvokable(player: Player): Consumer<Player>? {
-            val block = player.remove(Keys.EXPLOSION_SKILL_BLOCK) ?: return null
-            if (player.gameMode != GameMode.SURVIVAL) return null
-            if (!block.isCrust) return null
-            return Consumer { p ->
-                breakBlock(p, p.location.blockY, p.isSneaking, block, block)
-            }
-        }
-
-        private fun breakBlock(player: Player, minY: Int, isSneaking: Boolean, target: Block, base: Block) {
-            if (!target.isCrust) return
-            if (Math.abs(target.location.x - base.location.x) >= 7
-                    || Math.abs(target.location.z - base.location.z) >= 7
-                    || Math.abs(target.location.y - base.location.y) >= 1
-                    || (target.y < minY && !isSneaking)
-            ) return
-            if (target != base) {
-//                SkillAnimations.TERRA_DRAIN_TREE.start(target.location)
-//                SkillSounds.TERRA_DRAIN.play(target.location)
-                target.type = Material.AIR
-                // Gravity process
-                target.fallUpper()
-                // carry player cache
-                player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
-                    it.add(1L)
-                }
-                player.manipulate(CatalogPlayerCache.MINE_COMBO) {
-                    it.combo(1L)
-                    SkillPops.MINE_COMBO(it).pop(target.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
-                }
-                // raid battle process
-                RaidManager.playBattle(player, target.centralLocation)
-
-                player.manipulate(CatalogPlayerCache.LEVEL) {
-                    it.calculate(ExpProducer.calcExp(player)) { current ->
-                        Bukkit.getPluginManager().callEvent(LevelUpEvent(current, player))
-                    }
-                    PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
-                }
-
-                val currentCombo = player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0
-
-                PlayerSounds.OBTAIN_EXP(currentCombo).playOnly(player)
-            }
-            faceList.forEach { face ->
-                val delay = when (face) {
-                    BlockFace.UP -> 0L
-                    BlockFace.DOWN -> 1L
-                    BlockFace.NORTH -> 2L
-                    BlockFace.SOUTH -> 3L
-                    BlockFace.EAST -> 4L
-                    BlockFace.WEST -> 5L
-                    else -> 3L
-                }
-//                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-                breakBlock(player, minY, isSneaking, target.getRelative(face), base)
-//                }, delay)
-            }
-        }
-
     }
 
 }

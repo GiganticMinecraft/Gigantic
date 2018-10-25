@@ -64,18 +64,6 @@ object UnlockMessages {
             }
     ))
 
-    // TODO
-    val UNLOCK_EXPLOSION = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
-                        "切り替えスキル: スイッチ を覚えた!!\n" +
-                        "${ChatColor.GRAY}" +
-                        "アクティブ効果: 持ち物を入れ替える\n" +
-                        "\"${SkillParameters.SWITCH_KEY}\" キー を押して発動!!\n" +
-                        "\"${SkillParameters.SWITCH_SETTING_KEY}\" キー を押して詳細設定を変更できる\n"
-            }
-    ))
-
     val UNLOCK_TERRA_DRAIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
