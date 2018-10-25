@@ -75,10 +75,16 @@ object MenuMessages {
         val bossDrop = raidBattle.boss.dropRelicSet
         mutableListOf<LocalizedText>().apply {
             if (afterHealth == 0L) {
-                add(
+                addAll(
+                        listOf(
                         LocalizedText(
-                                Locale.JAPANESE to "${ChatColor.RED}${ChatColor.BOLD}" +
+                                Locale.JAPANESE to "${ChatColor.RED}" +
                                         "非推奨!!一撃で死亡!!"
+                        ),
+                                LocalizedText(
+                                        Locale.JAPANESE to "${ChatColor.RED}" +
+                                                "(現在の体力:${health.current}/${health.max})"
+                                )
                         )
                 )
             }
