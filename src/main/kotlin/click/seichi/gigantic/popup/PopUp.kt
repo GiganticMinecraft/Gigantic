@@ -1,6 +1,7 @@
 package click.seichi.gigantic.popup
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.popup.PopUp.PopPattern
 import click.seichi.gigantic.schedule.Scheduler
 import click.seichi.gigantic.util.Random
 import io.reactivex.Observable
@@ -16,8 +17,12 @@ import java.util.concurrent.TimeUnit
  */
 class PopUp(
         private val text: String,
-        private val duration: Long,
-        private val popPattern: PopPattern = PopPattern.STILL
+
+        private val popPattern: PopPattern = PopPattern.STILL,
+        /**
+         * この値は[PopPattern]がSTILLの時のみ使用されます
+         */
+        private val duration: Long = 5L
 ) {
     enum class PopPattern {
         // 静止
@@ -59,7 +64,12 @@ class PopUp(
         }.run {
             Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
                 remove()
-            }, duration)
+            }, when (popPattern) {
+                PopUp.PopPattern.STILL -> duration
+                PopUp.PopPattern.POP -> 5L
+            }
+            )
+
         }
     }
 

@@ -21,7 +21,6 @@ object SkillPops {
         }
         PopUp(
                 "$color${combo.currentCombo} Combo",
-                5L,
                 PopUp.PopPattern.POP
         )
     }
@@ -29,7 +28,6 @@ object SkillPops {
     val HEAL = { amount: Long ->
         PopUp(
                 "${ChatColor.LIGHT_PURPLE}$amount 回復",
-                10L,
                 PopUp.PopPattern.POP
         )
     }

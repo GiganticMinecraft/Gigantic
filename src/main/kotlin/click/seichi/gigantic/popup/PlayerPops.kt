@@ -9,7 +9,8 @@ object PlayerPops {
 
     val LEVEL_UP = PopUp(
             "${ChatColor.AQUA} レベルアップ",
-            60L
+            popPattern = PopUp.PopPattern.STILL,
+            duration = 60L
     )
 
 }
