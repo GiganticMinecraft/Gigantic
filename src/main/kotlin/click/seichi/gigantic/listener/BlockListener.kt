@@ -2,6 +2,7 @@ package click.seichi.gigantic.listener
 
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.block.BlockFormEvent
 import org.bukkit.event.block.BlockFromToEvent
 
 /**
@@ -15,6 +16,12 @@ class BlockListener : Listener {
         event.isCancelled = true
     }
 
-    //TODO 自然にブロックが落下するようにする //BlockPhisicsEvent
+    // 砂等の標準で落下するブロックをキャンセル（落下処理は別で一括管理）
+    @EventHandler
+    fun onBlockForm(event: BlockFormEvent) {
+        if (event.newState.isPlaced) {
+            event.isCancelled = true
+        }
+    }
 
 }
