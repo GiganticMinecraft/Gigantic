@@ -1,6 +1,7 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.animation.PlayerAnimations
+import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -25,6 +26,7 @@ import click.seichi.gigantic.will.WillSize
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import org.bukkit.GameMode
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -337,6 +339,19 @@ class PlayerListener : Listener {
         val block = event.block ?: return
         player.offer(Keys.TERRA_DRAIN_SKILL_BLOCK, block)
         Skills.TERRA_DRAIN.tryInvoke(player)
+    }
+
+    @EventHandler
+    fun onBucketFill(event: PlayerBucketFillEvent) {
+        val bucket = event.bucket ?: return
+        val itemStack = event.itemStack ?: return
+        val player = event.player ?: return
+        val belt = player.getOrPut(Keys.BELT)
+        if (belt == Belt.SCOOP && bucket == Material.BUCKET && itemStack.type != Material.BUCKET) {
+            event.itemStack.apply {
+                type = Material.BUCKET
+            }
+        }
     }
 
 }
