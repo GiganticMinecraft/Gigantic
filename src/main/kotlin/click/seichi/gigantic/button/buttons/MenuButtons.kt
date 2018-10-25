@@ -31,10 +31,12 @@ object MenuButtons {
                 val level = player.find(CatalogPlayerCache.LEVEL) ?: return@apply
                 val aptitude = player.find(CatalogPlayerCache.APTITUDE) ?: return@apply
                 val health = player.find(CatalogPlayerCache.HEALTH) ?: return@apply
+                val mineCombo = player.find(CatalogPlayerCache.MINE_COMBO) ?: return@apply
                 setLore(
                         MenuMessages.PROFILE_LEVEL(level).asSafety(player.wrappedLocale),
                         MenuMessages.PROFILE_EXP(level).asSafety(player.wrappedLocale),
                         MenuMessages.PROFILE_HEALTH(health).asSafety(player.wrappedLocale),
+                        MenuMessages.PROFILE_MAX_COMBO(mineCombo).asSafety(player.wrappedLocale),
                         *MenuMessages.PROFILE_WILL_APTITUDE(aptitude).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
                 )
             }

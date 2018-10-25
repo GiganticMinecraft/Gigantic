@@ -3,6 +3,7 @@ package click.seichi.gigantic.message.messages
 import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.manipulator.manipulators.Health
 import click.seichi.gigantic.cache.manipulator.manipulators.Level
+import click.seichi.gigantic.cache.manipulator.manipulators.MineCombo
 import click.seichi.gigantic.cache.manipulator.manipulators.WillAptitude
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.LocalizedText
@@ -77,10 +78,10 @@ object MenuMessages {
             if (afterHealth == 0L) {
                 addAll(
                         listOf(
-                        LocalizedText(
-                                Locale.JAPANESE to "${ChatColor.RED}" +
-                                        "非推奨!!一撃で死亡!!"
-                        ),
+                                LocalizedText(
+                                        Locale.JAPANESE to "${ChatColor.RED}" +
+                                                "非推奨!!一撃で死亡!!"
+                                ),
                                 LocalizedText(
                                         Locale.JAPANESE to "${ChatColor.RED}" +
                                                 "(現在の体力:${health.current}/${health.max})"
@@ -167,6 +168,12 @@ object MenuMessages {
     val PROFILE_HEALTH = { health: Health ->
         LocalizedText(
                 Locale.JAPANESE to "${ChatColor.GREEN}体力: ${ChatColor.WHITE}${health.current} / ${health.max}"
+        )
+    }
+
+    val PROFILE_MAX_COMBO = { mineCombo: MineCombo ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GREEN}最大コンボ数: ${ChatColor.WHITE}${mineCombo.maxCombo}　combo"
         )
     }
 
