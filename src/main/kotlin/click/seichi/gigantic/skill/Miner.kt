@@ -18,12 +18,12 @@ class Miner(
         private val breaker: Player,
         private val materialSet: Set<Material>,
         private val relationalFaceSet: Set<BlockFace>,
-        private val mineType: MineType,
+        private val constructionType: ConstructionType,
         private val maxDepth: Int = 0,
         private val maxRadius: Int = 0,
         private val nextBreakDelay: Long = 1
 ) {
-    enum class MineType {
+    enum class ConstructionType {
         DEPTH,
         RADIUS,
         ;
@@ -32,22 +32,22 @@ class Miner(
     lateinit var action: (Block) -> Unit
 
     init {
-        check(when (mineType) {
-            Miner.MineType.DEPTH -> maxDepth != 0
-            Miner.MineType.RADIUS -> maxRadius != 0
+        check(when (constructionType) {
+            Miner.ConstructionType.DEPTH -> maxDepth != 0
+            Miner.ConstructionType.RADIUS -> maxRadius != 0
         }) {
-            when (mineType) {
-                Miner.MineType.DEPTH -> "maxDepth is must not be zero"
-                Miner.MineType.RADIUS -> "maxRadius is must not be zero"
+            when (constructionType) {
+                Miner.ConstructionType.DEPTH -> "maxDepth is must not be zero"
+                Miner.ConstructionType.RADIUS -> "maxRadius is must not be zero"
             }
         }
     }
 
     fun mineRelations(action: (Block) -> (Unit)) {
         this.action = action
-        when (mineType) {
-            Miner.MineType.DEPTH -> mineRelationsUnderDepth(broken, materialSet.toSet(), relationalFaceSet.toSet(), 0)
-            Miner.MineType.RADIUS -> mineRelationsUnderRadius(broken, materialSet.toSet(), relationalFaceSet.toSet())
+        when (constructionType) {
+            Miner.ConstructionType.DEPTH -> mineRelationsUnderDepth(broken, materialSet.toSet(), relationalFaceSet.toSet(), 0)
+            Miner.ConstructionType.RADIUS -> mineRelationsUnderRadius(broken, materialSet.toSet(), relationalFaceSet.toSet())
         }
 
     }
@@ -58,7 +58,7 @@ class Miner(
         if (!materialSet.contains(target.type)) return
         if (maxDepth <= depth) return
 
-        val event = RelationalBlockBreakEvent(target, breaker, mineType, depth = depth)
+        val event = RelationalBlockBreakEvent(target, breaker, constructionType, depth = depth)
         Gigantic.PLUGIN.server.pluginManager.callEvent(event)
         if (event.isCancelled) return
         action(target)
@@ -83,7 +83,7 @@ class Miner(
         if (Math.abs(target.location.x - broken.location.x) >= maxRadius
                 || Math.abs(target.location.z - broken.location.z) >= maxRadius) return
 
-        val event = RelationalBlockBreakEvent(target, breaker, mineType)
+        val event = RelationalBlockBreakEvent(target, breaker, constructionType)
         Gigantic.PLUGIN.server.pluginManager.callEvent(event)
         if (event.isCancelled) return
         action(target)

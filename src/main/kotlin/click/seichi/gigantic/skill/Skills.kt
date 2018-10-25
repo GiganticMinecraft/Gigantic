@@ -163,7 +163,7 @@ object Skills {
                         p,
                         Gigantic.TREES,
                         SkillParameters.TERRA_DRAIN_FACE_SET,
-                        Miner.MineType.RADIUS,
+                        Miner.ConstructionType.RADIUS,
                         maxRadius = SkillParameters.TERRA_DRAIN_MAX_RADIUS,
                         nextBreakDelay = SkillParameters.TERRA_DRAIN_DELAY
                 )

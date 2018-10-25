@@ -12,6 +12,6 @@ import org.bukkit.event.block.BlockBreakEvent
 class RelationalBlockBreakEvent(
         broken: Block,
         player: Player,
-        val mineType: Miner.MineType,
+        val constructionType: Miner.ConstructionType,
         val depth: Int = 0
 ) : BlockBreakEvent(broken, player)

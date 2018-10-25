@@ -68,7 +68,7 @@ class PlayerListener : Listener {
             return
         }
 
-        RaidManager.getBattleList().firstOrNull { it.isJoined(player) }?.left(player)
+        RaidManager.getBattleList().firstOrNull { it.isJoined(player) }?.drop(player)
 
         if (player.gameMode == GameMode.SPECTATOR) {
             player.find(CatalogPlayerCache.AFK_LOCATION)?.getLocation()?.let {

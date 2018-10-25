@@ -8,6 +8,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Entity
+import org.bukkit.util.Vector
 import java.util.concurrent.TimeUnit
 
 /**
@@ -15,8 +16,16 @@ import java.util.concurrent.TimeUnit
  */
 class PopUp(
         private val text: String,
-        private val duration: Long
+        private val duration: Long,
+        private val popPattern: PopPattern = PopPattern.STILL
 ) {
+    enum class PopPattern {
+        // 静止
+        STILL,
+        // 飛び出る
+        POP,
+        ;
+    }
 
     fun pop(location: Location, diffX: Double = 0.0, diffY: Double = 0.0, diffZ: Double = 0.0) {
         location.world.spawn(location.clone().add(
@@ -31,9 +40,21 @@ class PopUp(
                 isMarker = true
                 isInvulnerable = true
                 canPickupItems = false
-                setGravity(false)
+                setGravity(true)
                 isCustomNameVisible = true
                 customName = text
+                isSmall = true
+                when (popPattern) {
+                    PopUp.PopPattern.STILL -> {
+                        setGravity(false)
+                    }
+                    PopUp.PopPattern.POP ->
+                        velocity = Vector(
+                                Random.nextGaussian(variance = 0.03),
+                                0.24,
+                                Random.nextGaussian(variance = 0.03)
+                        )
+                }
             }
         }.run {
             Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
