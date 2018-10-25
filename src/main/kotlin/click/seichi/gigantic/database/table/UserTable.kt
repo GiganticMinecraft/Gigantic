@@ -24,6 +24,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val isFirstJoin = bool("isFirstJoin").default(true)
 
+    val maxCombo = long("max_combo").default(0L)
+
     val createdAt = datetime("created_at").default(DateTime.now())
 
     val updatedAt = datetime("updated_at").default(DateTime.now())

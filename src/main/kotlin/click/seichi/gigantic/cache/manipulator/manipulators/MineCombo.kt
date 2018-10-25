@@ -2,17 +2,25 @@ package click.seichi.gigantic.cache.manipulator.manipulators
 
 import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
+import kotlin.properties.Delegates
 
 /**
  * @author tar0ss
  */
 class MineCombo : Manipulator<MineCombo, PlayerCache> {
+
+    var maxCombo: Long by Delegates.notNull()
+        private set
+
     override fun from(cache: Cache<PlayerCache>): MineCombo? {
+        maxCombo = cache.getOrPut(Keys.MAX_COMBO)
         return this
     }
 
     override fun set(cache: Cache<PlayerCache>): Boolean {
+        cache.offer(Keys.MAX_COMBO, maxCombo)
         return true
     }
 
@@ -28,6 +36,9 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
     fun combo(count: Long): Long {
         if (canContinue()) {
             currentCombo += count
+            if (currentCombo > maxCombo) {
+                maxCombo = currentCombo
+            }
         } else {
             currentCombo = count
         }

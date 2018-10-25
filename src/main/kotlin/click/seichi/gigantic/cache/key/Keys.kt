@@ -41,6 +41,26 @@ object Keys {
 
     }
 
+    val MAX_COMBO = object : DatabaseKey<PlayerCache, Long> {
+        override val default: Long
+            get() = 0L
+
+        override fun read(entity: Entity<*>): Long {
+            val user = entity as User
+            return user.maxCombo
+        }
+
+        override fun store(entity: Entity<*>, value: Long) {
+            val user = entity as User
+            user.maxCombo = value
+        }
+
+        override fun satisfyWith(value: Long): Boolean {
+            return value >= 0L
+        }
+
+    }
+
     val LOCALE = object : DatabaseKey<PlayerCache, Locale> {
         override val default
             get() = Locale.JAPANESE

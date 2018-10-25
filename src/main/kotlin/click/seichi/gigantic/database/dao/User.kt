@@ -24,6 +24,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var isFirstJoin by UserTable.isFirstJoin
 
+    var maxCombo by UserTable.maxCombo
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt
