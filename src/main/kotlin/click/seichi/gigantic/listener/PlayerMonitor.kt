@@ -131,8 +131,8 @@ class PlayerMonitor : Listener {
                 Material.WATER_BUCKET -> {
                     val scoopEvent = ScoopEvent(player, block)
                     Gigantic.PLUGIN.server.pluginManager.callEvent(scoopEvent)
-                    if (scoopEvent.isCancelled) return
-                    breakBlock(player, block)
+                    if (!scoopEvent.isCancelled)
+                        breakBlock(player, block)
                 }
                 else -> {
                 }
