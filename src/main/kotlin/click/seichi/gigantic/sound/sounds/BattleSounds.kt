@@ -16,4 +16,11 @@ object BattleSounds {
             volume = 0.5F
     )
 
+    val START = DetailedSound(
+            Sound.ENTITY_WITHER_SPAWN,
+            SoundCategory.HOSTILE,
+            pitch = 1.4F,
+            volume = 0.5F
+    )
+
 }

@@ -9,6 +9,7 @@ import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.schedule.Scheduler
+import click.seichi.gigantic.sound.sounds.BattleSounds
 import click.seichi.gigantic.topbar.bars.BossBars
 import io.reactivex.Observable
 import org.bukkit.Bukkit
@@ -36,6 +37,7 @@ class RaidBattle(val boss: Boss) {
         joinedPlayerSet.add(player.uniqueId)
         bossBar.addPlayer(player)
         display()
+        BattleSounds.START.playOnly(player)
         BattleMessages.BATTLE_INFO(this, player.find(CatalogPlayerCache.HEALTH)
                 ?: return, boss.attackInterval, true).sendTo(player)
         val uniqueId = player.uniqueId

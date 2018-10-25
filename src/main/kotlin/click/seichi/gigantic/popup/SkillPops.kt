@@ -27,7 +27,7 @@ object SkillPops {
 
     val HEAL = { amount: Long ->
         PopUp(
-                "${ChatColor.LIGHT_PURPLE}$amount 回復",
+                "${ChatColor.LIGHT_PURPLE}$amount HP",
                 PopUp.PopPattern.POP
         )
     }

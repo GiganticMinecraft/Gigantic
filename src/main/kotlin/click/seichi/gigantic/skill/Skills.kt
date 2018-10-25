@@ -10,6 +10,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.LockedFunction
+import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SkillPops
 import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.sound.sounds.PlayerSounds
@@ -123,7 +124,7 @@ object Skills {
                     if (it.isMaxHealth()) return@manipulate
                     val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_AMOUNT_PERCENT))
                     SkillAnimations.HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
-                    SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, 0.3, 0.0))
+                    SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
                     PlayerMessages.REGAIN_HEALTH_DISPLAY(it, wrappedAmount).sendTo(p)
                 }
             }
@@ -229,10 +230,10 @@ object Skills {
                 }
                 player.manipulate(CatalogPlayerCache.MINE_COMBO) {
                     it.combo(1L)
-                    SkillPops.MINE_COMBO(it).pop(target.centralLocation)
+                    SkillPops.MINE_COMBO(it).pop(target.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
                 }
                 // raid battle process
-                RaidManager.playBattle(player)
+                RaidManager.playBattle(player, target.centralLocation)
 
                 player.manipulate(CatalogPlayerCache.LEVEL) {
                     it.calculate(ExpProducer.calcExp(player)) { current ->

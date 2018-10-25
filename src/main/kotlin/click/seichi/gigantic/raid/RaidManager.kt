@@ -6,8 +6,11 @@ import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.player.MineBlockReason
+import click.seichi.gigantic.popup.PopUpParameters
+import click.seichi.gigantic.popup.RaidBattlePops
 import click.seichi.gigantic.sound.sounds.BattleSounds
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.entity.Player
 
 /**
@@ -39,8 +42,8 @@ object RaidManager {
     fun getBattleList() = battleList.toList()
 
     private fun endBattle(raidBattle: RaidBattle) {
-        raidBattle.getJoinedPlayerSet().forEach {
-            val player = Bukkit.getPlayer(it) ?: return@forEach
+        raidBattle.getJoinedPlayerSet().forEach { uuid ->
+            val player = Bukkit.getPlayer(uuid) ?: return@forEach
             BattleSounds.WIN.playOnly(player)
             val raidBoss = raidBattle.raidBoss
             val boss = raidBattle.boss
@@ -70,7 +73,7 @@ object RaidManager {
         battleList.remove(raidBattle)
     }
 
-    fun playBattle(player: Player, baseDamage: Long = 1) {
+    fun playBattle(player: Player, location: Location, baseDamage: Long = 1) {
         getBattleList()
                 .firstOrNull { it.isJoined(player) }
                 ?.run {
@@ -89,6 +92,9 @@ object RaidManager {
                             }
                     )
                     raidBoss.damage(player, attackDamage)
+                    RaidBattlePops.BATTLE_DAMAGE(attackDamage).pop(
+                            location.clone().add(0.0, PopUpParameters.RAID_BATTLE_DAMAGE_DIFF, 0.0)
+                    )
                     if (raidBoss.isDead()) {
                         RaidManager.endBattle(this)
                         RaidManager.newBattle()

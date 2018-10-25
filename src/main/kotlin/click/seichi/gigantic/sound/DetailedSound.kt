@@ -8,6 +8,11 @@ import org.bukkit.entity.Player
 /**
  * @author tar0ss
  * @author unicroak
+ *
+ * check this command
+ *
+ * /playsound minecraft:ambient.cave master @p
+ *
  */
 class DetailedSound(
         private val sound: Sound,

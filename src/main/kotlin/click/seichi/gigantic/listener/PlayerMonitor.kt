@@ -8,6 +8,7 @@ import click.seichi.gigantic.event.events.RelationalBlockBreakEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
+import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SkillPops
 import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.skill.Skills
@@ -47,14 +48,14 @@ class PlayerMonitor : Listener {
         }
         player.manipulate(CatalogPlayerCache.MINE_COMBO) {
             it.combo(1L)
-            SkillPops.MINE_COMBO(it).pop(block.centralLocation)
+            SkillPops.MINE_COMBO(it).pop(block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
         }
 
         player.offer(Keys.HEAL_SKILL_BLOCK, block)
         Skills.HEAL.tryInvoke(player)
 
         // raid battle process
-        RaidManager.playBattle(player)
+        RaidManager.playBattle(player, block.centralLocation.clone())
 
         player.manipulate(CatalogPlayerCache.LEVEL) {
             it.calculate(ExpProducer.calcExp(player)) { current ->

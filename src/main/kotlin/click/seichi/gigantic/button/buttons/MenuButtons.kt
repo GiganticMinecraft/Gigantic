@@ -170,6 +170,7 @@ object MenuButtons {
                     isJoinedOtherRaid -> return
                     else -> {
                         battle.join(player)
+                        player.closeInventory()
                     }
                 }
                 RaidBattleMenu.reopen(player)
