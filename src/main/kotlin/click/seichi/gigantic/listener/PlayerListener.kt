@@ -310,7 +310,7 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         player.manipulate(CatalogPlayerCache.HEALTH) {
             it.increase(it.max.div(10.0).times(3.0).toLong())
-            PlayerMessages.HEALTH_DISPLAY(it)
+            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
         }
     }
 
