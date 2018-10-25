@@ -13,7 +13,7 @@ object DeathMessages {
 
     val PLAYER_DEATH_RAID_BATTLE = { player: Player, boss: Boss ->
         LocalizedText(
-                Locale.JAPANESE.let { it to "${ChatColor.GRAY}${player.name}は${boss.localizedName.asSafety(it)}に倒された..." }
+                Locale.JAPANESE.let { it to "${ChatColor.WHITE}${player.name}は${boss.localizedName.asSafety(it)}に倒された..." }
         )
     }
 
