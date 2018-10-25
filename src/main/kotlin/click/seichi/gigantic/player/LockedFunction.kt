@@ -18,6 +18,7 @@ import org.bukkit.entity.Player
 enum class LockedFunction(
         val id: Int,
         private val canUnlocking: (Player) -> Boolean,
+        // 毎Login時に実行される
         val unlockAction: (Player) -> Unit = {},
         val unlockMessage: ChatMessage? = null
 ) {
@@ -50,9 +51,10 @@ enum class LockedFunction(
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 1
     }, unlockAction = { player ->
         player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
-            it.setCanSwitch(Belt.DIG, true)
-            it.setCanSwitch(Belt.MINE, true)
-            it.setCanSwitch(Belt.CUT, true)
+            it.unlock(Belt.DIG)
+            it.unlock(Belt.MINE)
+            it.unlock(Belt.CUT)
+            it.unlock(Belt.SCOOP)
         }
     }, unlockMessage = UnlockMessages.UNLOCK_SWITCH),
 

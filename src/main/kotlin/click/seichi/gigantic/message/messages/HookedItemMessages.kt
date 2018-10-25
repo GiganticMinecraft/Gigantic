@@ -78,6 +78,29 @@ object HookedItemMessages {
         }.toList()
     }
 
+
+    val BUCKET = LocalizedText(
+            Locale.JAPANESE to
+                    "${ChatColor.WHITE}" +
+                    "不思議なバケツ"
+    )
+
+    val BUCKET_LORE = { player: Player ->
+        mutableListOf(
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                "どんなにすくっても溜まらない"
+                )
+        ).apply {
+            if (LockedFunction.SWITCH.isUnlocked(player)) {
+                add(LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
+                ))
+            }
+        }.toList()
+    }
+
     val MINE_BURST = LocalizedText(
             Locale.JAPANESE to
                     "${ChatColor.BLUE}" +

@@ -13,7 +13,6 @@ import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
-import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.popup.PlayerPops
 import click.seichi.gigantic.raid.RaidManager
@@ -102,8 +101,6 @@ class PlayerListener : Listener {
         player.manipulate(CatalogPlayerCache.MANA) {
             it.updateMaxMana()
             it.createBar()
-            if (LockedFunction.MANA.isUnlocked(player))
-                it.display()
         }
 
         player.manipulate(CatalogPlayerCache.HEALTH) {
@@ -143,7 +140,10 @@ class PlayerListener : Listener {
     fun trySendingUnlockMessage(player: Player) {
         Keys.LOCKED_FUNCTION_MAP.forEach { func, key ->
             // すでに解除済みであれば終了
-            if (func.isUnlocked(player)) return@forEach
+            if (func.isUnlocked(player)) {
+                func.unlockAction(player)
+                return@forEach
+            }
             // 解除可能でなければ終了
             if (!func.canUnlocked(player)) return@forEach
             // 解除処理

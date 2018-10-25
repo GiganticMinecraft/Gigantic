@@ -55,7 +55,10 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.LOCKED_FUNCTION_MAP.forEach { func, key ->
                     offer(key, key.read(userLockedMap[func] ?: return@forEach))
                 }
-                Keys.BELT_MAP.forEach { belt, key ->
+                Keys.BELT_TOGGLE_MAP.forEach { belt, key ->
+                    offer(key, key.read(userBeltMap[belt] ?: return@forEach))
+                }
+                Keys.BELT_UNLOCK_MAP.forEach { belt, key ->
                     offer(key, key.read(userBeltMap[belt] ?: return@forEach))
                 }
             }
@@ -100,7 +103,10 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.LOCKED_FUNCTION_MAP.forEach { func, key ->
                     key.store(userLockedMap[func] ?: return@forEach, getOrDefault(key))
                 }
-                Keys.BELT_MAP.forEach { belt, key ->
+                Keys.BELT_TOGGLE_MAP.forEach { belt, key ->
+                    key.store(userBeltMap[belt] ?: return@forEach, getOrDefault(key))
+                }
+                Keys.BELT_UNLOCK_MAP.forEach { belt, key ->
                     key.store(userBeltMap[belt] ?: return@forEach, getOrDefault(key))
                 }
             }

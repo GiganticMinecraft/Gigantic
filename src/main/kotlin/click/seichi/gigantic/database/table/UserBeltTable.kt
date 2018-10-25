@@ -11,6 +11,8 @@ object UserBeltTable : IntIdTable("users_belts") {
 
     val beltId = integer("belt_id").primaryKey()
 
-    val canSwitch = bool("can_switch").default(false)
+    val canSwitch = bool("can_switch").default(true)
+
+    val isUnlocked = bool("is_unlocked").default(false)
 
 }

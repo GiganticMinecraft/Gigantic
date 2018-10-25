@@ -21,4 +21,8 @@ object BeltMessages {
             Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}樵ベルト"
     )
 
+    val SCOOP = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}バケツベルト"
+    )
+
 }

@@ -95,4 +95,30 @@ object FixedButtons {
     }
 
 
+    val BUCKET = object : Button {
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.BUCKET).apply {
+                setDisplayName(HookedItemMessages.BUCKET.asSafety(player.wrappedLocale))
+                setLore(*HookedItemMessages.BUCKET_LORE(player)
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
+                itemMeta = itemMeta.apply {
+                    isUnbreakable = true
+                    addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                    addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
+                }
+                val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return@apply
+                if (mineBurst.duringFire()) {
+                    addEnchantment(Enchantment.DIG_SPEED, 5)
+                }
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+    }
+
+
 }

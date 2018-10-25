@@ -17,4 +17,6 @@ class UserBelt(id: EntityID<Int>) : IntEntity(id) {
 
     var canSwitch by UserBeltTable.canSwitch
 
+    var isUnlocked by UserBeltTable.isUnlocked
+
 }

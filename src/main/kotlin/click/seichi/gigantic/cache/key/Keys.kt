@@ -247,7 +247,7 @@ object Keys {
             }
             .toMap()
 
-    val BELT_MAP: Map<Belt, DatabaseKey<PlayerCache, Boolean>> = Belt.values()
+    val BELT_TOGGLE_MAP: Map<Belt, DatabaseKey<PlayerCache, Boolean>> = Belt.values()
             .map {
                 it to object : DatabaseKey<PlayerCache, Boolean> {
                     override val default: Boolean
@@ -261,6 +261,30 @@ object Keys {
                     override fun store(entity: Entity<*>, value: Boolean) {
                         val userBelt = entity as UserBelt
                         userBelt.canSwitch = value
+                    }
+
+                    override fun satisfyWith(value: Boolean): Boolean {
+                        return true
+                    }
+
+                }
+            }
+            .toMap()
+
+    val BELT_UNLOCK_MAP: Map<Belt, DatabaseKey<PlayerCache, Boolean>> = Belt.values()
+            .map {
+                it to object : DatabaseKey<PlayerCache, Boolean> {
+                    override val default: Boolean
+                        get() = false
+
+                    override fun read(entity: Entity<*>): Boolean {
+                        val userBelt = entity as UserBelt
+                        return userBelt.isUnlocked
+                    }
+
+                    override fun store(entity: Entity<*>, value: Boolean) {
+                        val userBelt = entity as UserBelt
+                        userBelt.isUnlocked = value
                     }
 
                     override fun satisfyWith(value: Boolean): Boolean {
