@@ -109,10 +109,6 @@ object FixedButtons {
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
                 }
-                val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return@apply
-                if (mineBurst.duringFire()) {
-                    addEnchantment(Enchantment.DIG_SPEED, 5)
-                }
             }
         }
 

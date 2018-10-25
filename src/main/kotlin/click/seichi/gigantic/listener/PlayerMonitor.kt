@@ -1,10 +1,13 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.SkillAnimations
+import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.event.events.RelationalBlockBreakEvent
+import click.seichi.gigantic.event.events.ScoopEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
@@ -16,6 +19,8 @@ import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
+import org.bukkit.Material
+import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -23,6 +28,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
+import org.bukkit.event.player.PlayerBucketFillEvent
 import kotlin.math.roundToLong
 
 /**
@@ -30,14 +36,8 @@ import kotlin.math.roundToLong
  */
 class PlayerMonitor : Listener {
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    fun onBlockBreak(event: BlockBreakEvent) {
-        if (event.isCancelled) return
-        if (event.player.gameMode != GameMode.SURVIVAL) return
-        if (event is RelationalBlockBreakEvent) return
 
-        val player = event.player ?: return
-        val block = event.block ?: return
+    private fun breakBlock(player: Player, block: Block) {
 
         // Gravity process
         block.fallUpper()
@@ -79,6 +79,18 @@ class PlayerMonitor : Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
+    fun onBlockBreak(event: BlockBreakEvent) {
+        if (event.isCancelled) return
+        if (event.player.gameMode != GameMode.SURVIVAL) return
+        if (event is RelationalBlockBreakEvent) return
+
+        val player = event.player ?: return
+        val block = event.block ?: return
+
+        breakBlock(player, block)
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
     fun onDamage(event: EntityDamageEvent) {
         if (event.isCancelled) return
         val player = event.entity as? Player ?: return
@@ -98,6 +110,27 @@ class PlayerMonitor : Listener {
             // 割合回復
             val wrappedRegain = event.amount.times(health.max / 20.0).roundToLong()
             health.increase(wrappedRegain)
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    fun onBucketFill(event: PlayerBucketFillEvent) {
+        if (event.isCancelled) return
+        if (event.player.gameMode != GameMode.SURVIVAL) return
+        val bucket = event.bucket ?: return
+        val itemStack = event.itemStack ?: return
+        val player = event.player ?: return
+        val belt = player.getOrPut(Keys.BELT)
+        val block = event.blockClicked ?: return
+
+        if (belt == Belt.SCOOP && bucket == Material.BUCKET && itemStack.type != Material.BUCKET) {
+            val scoopEvent = ScoopEvent(player, block)
+            Gigantic.PLUGIN.server.pluginManager.callEvent(scoopEvent)
+            if (scoopEvent.isCancelled) return
+            breakBlock(player, block)
+            itemStack.apply {
+                type = Material.BUCKET
+            }
         }
     }
 
