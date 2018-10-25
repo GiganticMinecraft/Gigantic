@@ -10,6 +10,8 @@ import org.bukkit.entity.Player
 
 
 /**
+ * TODO ここまでめんどくさい仕様にするつもりはなかったので簡素化させる。
+ *
  * @author BlackBracken
  * @author tar0ss
  */
