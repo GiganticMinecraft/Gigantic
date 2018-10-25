@@ -35,10 +35,8 @@ enum class LockedFunction(
     }, unlockAction = { player ->
         player.manipulate(CatalogPlayerCache.MANA) {
             it.display()
-            // TODO make massage (unlockMessage)
-//            PlayerMessages.LEVEL_UP_MANA(prevMax, it.max).sendTo(player)
         }
-    }),
+    }, unlockMessage = UnlockMessages.UNLOCK_MANA),
 
     FLASH(3, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 4

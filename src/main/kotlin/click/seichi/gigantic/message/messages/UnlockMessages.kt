@@ -88,7 +88,15 @@ object UnlockMessages {
             }
     ))
 
-
-
+    // TODO implements
+    val UNLOCK_MANA = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.RED}${ChatColor.BOLD}" +
+                        "レイドバトル解禁!!敵を倒してレアアイテムをゲット!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "インベントリから敵を選択しよう\n" +
+                        "ブロックを破壊することで敵を攻撃!!\n"
+            }
+    ))
 
 }
