@@ -61,7 +61,7 @@ class RaidBattle(val boss: Boss) {
                         PlayerMessages.LOST_HEALTH_DISPLAY(
                                 it,
                                 wrappedDamage,
-                                DeathMessages.PLAYER_DEATH_RAID_BATTLE(boss)
+                                DeathMessages.PLAYER_DEATH_RAID_BATTLE(p, boss)
                         ).sendTo(p)
                         p.playEffect(EntityEffect.HURT)
                     }
