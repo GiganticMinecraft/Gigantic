@@ -125,7 +125,7 @@ object Skills {
                     val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_AMOUNT_PERCENT))
                     SkillAnimations.HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
                     SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
-                    PlayerMessages.REGAIN_HEALTH_DISPLAY(it, wrappedAmount).sendTo(p)
+                    PlayerMessages.HEALTH_DISPLAY(it).sendTo(p)
                 }
             }
         }
@@ -181,7 +181,7 @@ object Skills {
                         val wrappedAmount = it.increase(it.max.div(100.0).times(percent).toLong())
                         if (wrappedAmount > 0) {
                             SkillPops.HEAL(wrappedAmount).pop(target.centralLocation)
-                            PlayerMessages.REGAIN_HEALTH_DISPLAY(it, wrappedAmount).sendTo(player)
+                            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
                         }
                     }
                 }

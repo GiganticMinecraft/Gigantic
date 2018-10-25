@@ -1,5 +1,6 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.PlayerAnimations
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.button.buttons.FixedButtons
@@ -26,6 +27,7 @@ import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.will.WillSize
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
+import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.entity.Cow
 import org.bukkit.entity.Fish
@@ -226,7 +228,8 @@ class PlayerListener : Listener {
         player.manipulate(CatalogPlayerCache.HEALTH) {
             val prevMax = it.max
             it.updateMaxHealth()
-            PlayerMessages.REGAIN_HEALTH_DISPLAY(it, it.increase(it.max)).sendTo(player)
+            it.increase(it.max)
+            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
             if (prevMax == it.max) return@manipulate
             PlayerMessages.LEVEL_UP_HEALTH(prevMax, it.max).sendTo(player)
         }
@@ -291,6 +294,8 @@ class PlayerListener : Listener {
         }
         player.offer(Keys.DEATH_MESSAGE, LocalizedText())
 
+        RaidManager.getBattleList().firstOrNull { it.isJoined(player) }?.drop(player)
+
         player.manipulate(CatalogPlayerCache.LEVEL) { level ->
             player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
                 val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
@@ -312,10 +317,14 @@ class PlayerListener : Listener {
     @EventHandler
     fun onReSpawn(event: PlayerRespawnEvent) {
         val player = event.player ?: return
-        player.manipulate(CatalogPlayerCache.HEALTH) {
-            it.increase(it.max.div(10.0).times(3.0).toLong())
-            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
-        }
+        Bukkit.getServer().scheduler.runTaskLater(Gigantic.PLUGIN, {
+            player.manipulate(CatalogPlayerCache.HEALTH) {
+                it.increase(it.max.div(10.0).times(3.0).toLong())
+            }
+            PlayerMessages.HEALTH_DISPLAY(player.find(CatalogPlayerCache.HEALTH) ?: return@runTaskLater
+            ).sendTo(player)
+        }, 1L)
+
     }
 
     @EventHandler

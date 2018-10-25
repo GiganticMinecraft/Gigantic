@@ -2,9 +2,12 @@ package click.seichi.gigantic.raid
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.boss.Boss
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
@@ -54,17 +57,15 @@ class RaidBattle(val boss: Boss) {
                     if ((elapsedSeconds + 1) % boss.attackInterval != 0L) return@subscribe
                     // attack
                     p.manipulate(CatalogPlayerCache.HEALTH) {
-                        val wrappedDamage = it.decrease(boss.attackDamage)
+                        it.decrease(boss.attackDamage)
                         if (it.current == 0L) {
                             drop(p)
                         }
-                        PlayerMessages.LOST_HEALTH_DISPLAY(
-                                it,
-                                wrappedDamage,
-                                DeathMessages.PLAYER_DEATH_RAID_BATTLE(p, boss)
-                        ).sendTo(p)
-                        p.playEffect(EntityEffect.HURT)
                     }
+                    p.offer(Keys.DEATH_MESSAGE, DeathMessages.PLAYER_DEATH_RAID_BATTLE(p, boss))
+                    PlayerMessages.HEALTH_DISPLAY(p.find(CatalogPlayerCache.HEALTH) ?: return@subscribe
+                    ).sendTo(p)
+                    p.playEffect(EntityEffect.HURT)
                 }
     }
 
@@ -76,6 +77,8 @@ class RaidBattle(val boss: Boss) {
             raidBoss.fullHealth()
         }
         display()
+
+        player.offer(Keys.DEATH_MESSAGE, LocalizedText())
 
         PlayerMessages.MEMORY_SIDEBAR(
                 player.find(CatalogPlayerCache.MEMORY) ?: return,
