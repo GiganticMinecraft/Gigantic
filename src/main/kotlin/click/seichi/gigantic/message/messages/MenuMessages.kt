@@ -173,7 +173,7 @@ object MenuMessages {
 
     val PROFILE_MAX_COMBO = { mineCombo: MineCombo ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}最大コンボ数: ${ChatColor.WHITE}${mineCombo.maxCombo}　combo"
+                Locale.JAPANESE to "${ChatColor.GREEN}最大コンボ数: ${ChatColor.WHITE}${mineCombo.maxCombo} combo"
         )
     }
 
