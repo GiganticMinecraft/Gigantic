@@ -4,6 +4,7 @@ import click.seichi.gigantic.animation.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent
+import click.seichi.gigantic.event.events.RelationalBlockBreakEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
@@ -32,6 +33,7 @@ class PlayerMonitor : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         if (event.isCancelled) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
+        if (event is RelationalBlockBreakEvent) return
 
         val player = event.player ?: return
         val block = event.block ?: return

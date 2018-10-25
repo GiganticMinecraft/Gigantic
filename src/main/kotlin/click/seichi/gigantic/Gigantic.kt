@@ -15,6 +15,7 @@ import com.comphenix.protocol.ProtocolManager
 import com.comphenix.protocol.events.PacketListener
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
+import org.bukkit.Material
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.boss.BossBar
@@ -46,6 +47,109 @@ class Gigantic : JavaPlugin() {
         ).apply {
             isVisible = false
         }
+
+        // 落下判定に使う。自然生成されるブロックのみ
+        val CRUSTS = setOf(
+                Material.STONE,
+                Material.GRANITE,
+                Material.MOSSY_COBBLESTONE,
+                Material.MOSSY_COBBLESTONE_WALL,
+                Material.MOSSY_STONE_BRICKS,
+                Material.RED_SAND,
+                Material.SANDSTONE,
+                Material.CHISELED_RED_SANDSTONE,
+                Material.CHISELED_SANDSTONE,
+                Material.CUT_RED_SANDSTONE,
+                Material.CUT_SANDSTONE,
+                Material.SMOOTH_RED_SANDSTONE,
+                Material.SMOOTH_SANDSTONE,
+                Material.SANDSTONE,
+                Material.OBSIDIAN,
+                Material.DIORITE,
+                Material.ANDESITE,
+                Material.STONE_BRICKS,
+                Material.CHISELED_STONE_BRICKS,
+                Material.CRACKED_STONE_BRICKS,
+                Material.DIRT,
+                Material.GRASS_BLOCK,
+                Material.EMERALD_ORE,
+                Material.REDSTONE_ORE,
+                Material.LAPIS_ORE,
+                Material.GOLD_ORE,
+                Material.IRON_ORE,
+                Material.DIAMOND_ORE,
+                Material.COAL_ORE,
+                Material.REDSTONE_ORE,
+                Material.NETHER_QUARTZ_ORE,
+                Material.NETHERRACK,
+                Material.SAND,
+                Material.GRAVEL,
+                Material.MOSSY_COBBLESTONE,
+                Material.END_STONE,
+                Material.TERRACOTTA,
+                Material.ICE,
+                Material.FROSTED_ICE,
+                Material.PURPUR_BLOCK,
+                Material.BONE_BLOCK,
+                Material.CLAY,
+                Material.COARSE_DIRT,
+                Material.PODZOL,
+                Material.OAK_PLANKS,
+                Material.SPRUCE_PLANKS,
+                Material.BIRCH_PLANKS,
+                Material.JUNGLE_PLANKS,
+                Material.ACACIA_PLANKS,
+                Material.DARK_OAK_PLANKS,
+                Material.SPONGE,
+                Material.WET_SPONGE,
+                Material.COBWEB,
+                Material.WHITE_TERRACOTTA,
+                Material.ORANGE_TERRACOTTA,
+                Material.MAGENTA_TERRACOTTA,
+                Material.LIGHT_BLUE_TERRACOTTA,
+                Material.YELLOW_TERRACOTTA,
+                Material.LIME_TERRACOTTA,
+                Material.PINK_TERRACOTTA,
+                Material.GRAY_TERRACOTTA,
+                Material.LIGHT_GRAY_TERRACOTTA,
+                Material.CYAN_TERRACOTTA,
+                Material.PURPLE_TERRACOTTA,
+                Material.BLUE_TERRACOTTA,
+                Material.BROWN_TERRACOTTA,
+                Material.GREEN_TERRACOTTA,
+                Material.RED_TERRACOTTA,
+                Material.BLACK_TERRACOTTA,
+                Material.TERRACOTTA,
+                Material.PRISMARINE,
+                Material.PRISMARINE_BRICKS,
+                Material.DARK_PRISMARINE
+        )
+
+        val LOGS = setOf(
+                Material.BIRCH_LOG,
+                Material.ACACIA_LOG,
+                Material.DARK_OAK_LOG,
+                Material.JUNGLE_LOG,
+                Material.OAK_LOG,
+                Material.SPRUCE_LOG
+        )
+
+        val LEAVES = setOf(
+                Material.ACACIA_LEAVES,
+                Material.BIRCH_LEAVES,
+                Material.DARK_OAK_LEAVES,
+                Material.JUNGLE_LEAVES,
+                Material.OAK_LEAVES,
+                Material.SPRUCE_LEAVES
+        )
+
+        val AIRS = setOf(
+                Material.AIR,
+                Material.CAVE_AIR,
+                Material.VOID_AIR
+        )
+
+        val TREES = setOf(*LOGS.toTypedArray(), *LEAVES.toTypedArray())
     }
 
     override fun onEnable() {

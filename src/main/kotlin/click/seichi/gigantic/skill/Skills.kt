@@ -150,64 +150,41 @@ object Skills {
 
     }
 
-    // TODO 再帰的処理をEvent依存に変更
+
     val TERRA_DRAIN = object : Skill {
-
-        val faceList = listOf(
-                BlockFace.UP,
-                BlockFace.DOWN,
-                BlockFace.NORTH,
-                BlockFace.WEST,
-                BlockFace.SOUTH,
-                BlockFace.EAST
-        )
-
 
         override fun findInvokable(player: Player): Consumer<Player>? {
             val block = player.remove(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return null
             if (player.gameMode != GameMode.SURVIVAL) return null
-            if (!block.isTree) return null
+            if (!Gigantic.TREES.contains(block.type)) return null
             return Consumer { p ->
-                breakTree(p, block, block)
+                val miner = Miner(
+                        block,
+                        p,
+                        Gigantic.TREES,
+                        SkillParameters.TERRA_DRAIN_FACE_SET,
+                        Miner.MineType.RADIUS,
+                        maxRadius = SkillParameters.TERRA_DRAIN_MAX_RADIUS,
+                        nextBreakDelay = SkillParameters.TERRA_DRAIN_DELAY
+                )
+                miner.mineRelations { target ->
+                    SkillAnimations.TERRA_DRAIN_TREE.start(target.centralLocation)
+                    SkillSounds.TERRA_DRAIN.play(target.centralLocation)
+                    player.manipulate(CatalogPlayerCache.HEALTH) {
+                        if (it.isMaxHealth()) return@manipulate
+                        val percent = when {
+                            target.isLog -> SkillParameters.TERRA_DRAIN_LOG_HEAL_PERCENT
+                            target.isLeaves -> SkillParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
+                            else -> 0.0
+                        }
+                        val wrappedAmount = it.increase(it.max.div(100.0).times(percent).toLong())
+                        if (wrappedAmount > 0) {
+                            SkillPops.HEAL(wrappedAmount).pop(target.centralLocation)
+                            PlayerMessages.REGAIN_HEALTH_DISPLAY(it, wrappedAmount).sendTo(player)
+                        }
+                    }
+                }
                 SkillAnimations.TERRA_DRAIN_HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
-            }
-        }
-
-        private fun breakTree(player: Player, target: Block, base: Block) {
-            if (!target.isTree) return
-            if (Math.abs(target.location.x - base.location.x) >= 5
-                    || Math.abs(target.location.z - base.location.z) >= 5) return
-            if (target != base) {
-                SkillAnimations.TERRA_DRAIN_TREE.start(target.location)
-                SkillSounds.TERRA_DRAIN.play(target.location)
-                player.manipulate(CatalogPlayerCache.HEALTH) {
-                    if (it.isMaxHealth()) return@manipulate
-                    val percent = when {
-                        target.isLog -> SkillParameters.TERRA_DRAIN_LOG_HEAL_PERCENT
-                        target.isLeaves -> SkillParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
-                        else -> 0.0
-                    }
-                    val wrappedAmount = it.increase(it.max.div(100.0).times(percent).toLong())
-                    if (wrappedAmount > 0) {
-                        SkillPops.HEAL(wrappedAmount).pop(target.centralLocation)
-                        PlayerMessages.REGAIN_HEALTH_DISPLAY(it, wrappedAmount).sendTo(player)
-                    }
-                }
-                target.type = Material.AIR
-            }
-            faceList.forEach { face ->
-                val delay = when (face) {
-                    BlockFace.UP -> 0L
-                    BlockFace.DOWN -> 1L
-                    BlockFace.NORTH -> 2L
-                    BlockFace.SOUTH -> 3L
-                    BlockFace.EAST -> 4L
-                    BlockFace.WEST -> 5L
-                    else -> 3L
-                }
-                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-                    breakTree(player, target.getRelative(face), base)
-                }, delay)
             }
         }
     }

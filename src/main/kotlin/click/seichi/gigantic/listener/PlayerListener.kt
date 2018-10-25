@@ -7,6 +7,7 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
+import click.seichi.gigantic.event.events.RelationalBlockBreakEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.LocalizedText
@@ -309,6 +310,7 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         player.manipulate(CatalogPlayerCache.HEALTH) {
             it.increase(it.max.div(10.0).times(3.0).toLong())
+            PlayerMessages.HEALTH_DISPLAY(it)
         }
     }
 
@@ -330,7 +332,10 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
+        if (event is RelationalBlockBreakEvent) return
         val player = event.player ?: return
+        val block = event.block ?: return
+        player.offer(Keys.TERRA_DRAIN_SKILL_BLOCK, block)
         Skills.TERRA_DRAIN.tryInvoke(player)
     }
 

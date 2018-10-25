@@ -1,11 +1,26 @@
 package click.seichi.gigantic.skill
 
+import org.bukkit.block.BlockFace
+
 /**
  * @author tar0ss
  *
  * TODO skill.ymlに移動
  */
 object SkillParameters {
+
+    const val TERRA_DRAIN_MAX_RADIUS = 5
+
+    val TERRA_DRAIN_FACE_SET = setOf(
+            BlockFace.UP,
+            BlockFace.DOWN,
+            BlockFace.NORTH,
+            BlockFace.WEST,
+            BlockFace.SOUTH,
+            BlockFace.EAST
+    )
+
+    const val TERRA_DRAIN_DELAY = 3L
 
     const val MINE_BURST_DURATION = 5L
 
