@@ -124,11 +124,19 @@ class PlayerMonitor : Listener {
         val belt = player.getOrPut(Keys.BELT)
         val block = event.blockClicked ?: return
 
+
         if (belt == Belt.SCOOP && bucket == Material.BUCKET && itemStack.type != Material.BUCKET) {
-            val scoopEvent = ScoopEvent(player, block)
-            Gigantic.PLUGIN.server.pluginManager.callEvent(scoopEvent)
-            if (scoopEvent.isCancelled) return
-            breakBlock(player, block)
+            when (itemStack.type) {
+                Material.LAVA_BUCKET,
+                Material.WATER_BUCKET -> {
+                    val scoopEvent = ScoopEvent(player, block)
+                    Gigantic.PLUGIN.server.pluginManager.callEvent(scoopEvent)
+                    if (scoopEvent.isCancelled) return
+                    breakBlock(player, block)
+                }
+                else -> {
+                }
+            }
             event.itemStack = FixedButtons.BUCKET.getItemStack(player)
         }
     }
