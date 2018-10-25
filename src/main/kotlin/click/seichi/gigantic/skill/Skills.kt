@@ -117,11 +117,11 @@ object Skills {
         override fun findInvokable(player: Player): Consumer<Player>? {
             val block = player.remove(Keys.HEAL_SKILL_BLOCK) ?: return null
             if (!LockedFunction.HEAL.isUnlocked(player)) return null
-            if (SkillParameters.HEAL_PROBABILITY < Random.nextDouble()) return null
+            if (SkillParameters.HEAL_PROBABILITY_PERCENT < Random.nextInt(100)) return null
             return Consumer { p ->
                 p.manipulate(CatalogPlayerCache.HEALTH) {
                     if (it.isMaxHealth()) return@manipulate
-                    val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_PERCENT))
+                    val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_AMOUNT_PERCENT))
                     SkillAnimations.HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
                     SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, 0.3, 0.0))
                     PlayerMessages.REGAIN_HEALTH_DISPLAY(it, wrappedAmount).sendTo(p)

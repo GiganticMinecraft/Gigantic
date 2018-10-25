@@ -17,7 +17,7 @@ enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair
     DIG(
             1,
             BeltMessages.DIG,
-            0 to FixedButtons.SPADE,
+            0 to FixedButtons.SHOVEL,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
             8 to HotButtons.BELT_SWITCHER_SETTING

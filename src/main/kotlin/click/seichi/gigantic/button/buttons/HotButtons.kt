@@ -91,8 +91,11 @@ object HotButtons {
             val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
             val nextBelt = switcher.nextBelt()
             return nextBelt.getFixedButton().getItemStack(player)?.apply {
-                setDisplayName(HookedItemMessages.SWITCH.asSafety(player.wrappedLocale))
-                clearLore()
+                setDisplayName(HookedItemMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
+                setLore(*HookedItemMessages.SWITCH_DETAIL_LORE
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
             }
         }
 

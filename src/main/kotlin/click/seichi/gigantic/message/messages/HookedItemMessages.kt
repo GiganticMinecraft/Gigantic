@@ -1,8 +1,10 @@
 package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.skill.SkillParameters
 import org.bukkit.ChatColor
+import org.bukkit.entity.Player
 import java.util.*
 
 /**
@@ -13,20 +15,68 @@ object HookedItemMessages {
     val PICKEL = LocalizedText(
             Locale.JAPANESE to
                     "${ChatColor.WHITE}" +
-                    "ピッケル"
+                    "不思議なピッケル"
     )
+
+    val PICKEL_LORE = { player: Player ->
+        mutableListOf(
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                "どんなに使っても折れない"
+                )
+        ).apply {
+            if (LockedFunction.SWITCH.isUnlocked(player)) {
+                add(LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
+                ))
+            }
+        }.toList()
+    }
 
     val SHOVEL = LocalizedText(
             Locale.JAPANESE to
                     "${ChatColor.WHITE}" +
-                    "シャベル"
+                    "不思議なシャベル"
     )
+
+    val SHOVEL_LORE = { player: Player ->
+        mutableListOf(
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                "どんなに使っても折れない"
+                )
+        ).apply {
+            if (LockedFunction.SWITCH.isUnlocked(player)) {
+                add(LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
+                ))
+            }
+        }.toList()
+    }
 
     val AXE = LocalizedText(
             Locale.JAPANESE to
                     "${ChatColor.WHITE}" +
-                    "斧"
+                    "不思議な斧"
     )
+
+    val AXE_LORE = { player: Player ->
+        mutableListOf(
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                "どんなに使っても折れない"
+                )
+        ).apply {
+            if (LockedFunction.SWITCH.isUnlocked(player)) {
+                add(LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
+                ))
+            }
+        }.toList()
+    }
 
     val MINE_BURST = LocalizedText(
             Locale.JAPANESE to
@@ -35,22 +85,23 @@ object HookedItemMessages {
     )
 
     val MINE_BURST_LORE = listOf(
-                LocalizedText(
-                        Locale.JAPANESE to
-                                "${ChatColor.GRAY}" +
-                                "${SkillParameters.MINE_BURST_DURATION}秒間破壊速度上昇"
-                ),
-                LocalizedText(
-                        Locale.JAPANESE to
-                                "${ChatColor.AQUA}" +
-                                "クールタイム : ${SkillParameters.MINE_BURST_COOLTIME}秒"
-                ),
-                LocalizedText(
-                        Locale.JAPANESE to
-                                "${ChatColor.DARK_GRAY}" +
-                                "\"${SkillParameters.MINE_BURST_KEY}\" キー を押して発動"
-                )
-        )
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "少しの間だけ掘る速度が上昇"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.AQUA}" +
+                            "持続時間: ${SkillParameters.MINE_BURST_DURATION}秒"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.AQUA}" +
+                            "クールタイム: ${SkillParameters.MINE_BURST_COOLTIME}秒"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                            "\"${SkillParameters.MINE_BURST_KEY}\" キー を押して発動"
+            )
+    )
 
 
     val FLASH = LocalizedText(
@@ -60,35 +111,35 @@ object HookedItemMessages {
     )
 
     val FLASH_LORE =
-        listOf(
-                LocalizedText(
-                        Locale.JAPANESE to
-                                "${ChatColor.GRAY}" +
-                                "ブロックに向けて発動すると"
-                ),
-                LocalizedText(
-                        Locale.JAPANESE to
-                                "${ChatColor.GRAY}" +
-                                "そのブロックに向けてテレポート"
-                ),
-                LocalizedText(
-                        Locale.JAPANESE to
-                                "${ChatColor.AQUA}" +
-                                "クールタイム : ${SkillParameters.FLASH_COOLTIME}秒"
-                ),
-                LocalizedText(
-                        Locale.JAPANESE to
-                                "${ChatColor.DARK_GRAY}" +
-                                "\"${SkillParameters.FLASH_KEY}\" キー を押して発動"
-                )
-        )
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "視点方向にワープ"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "クールタイム: ${SkillParameters.FLASH_COOLTIME}秒"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    "\"${SkillParameters.FLASH_KEY}\" キー を押して発動"
+                    )
+            )
 
 
-    val SWITCH = LocalizedText(
+    val SWITCH_DETAIL = LocalizedText(
             Locale.JAPANESE to
                     "${ChatColor.BLUE}${ChatColor.BOLD}" +
                     "スイッチ詳細設定"
     )
+
+    val SWITCH_DETAIL_LORE =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    "\"${SkillParameters.SWITCH_SETTING_KEY}\" キー を押して開く"
+                    )
+            )
 
 
 }

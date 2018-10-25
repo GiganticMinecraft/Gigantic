@@ -9,18 +9,7 @@ import org.bukkit.block.BlockFace
  */
 object SkillParameters {
 
-    const val TERRA_DRAIN_MAX_RADIUS = 5
 
-    val TERRA_DRAIN_FACE_SET = setOf(
-            BlockFace.UP,
-            BlockFace.DOWN,
-            BlockFace.NORTH,
-            BlockFace.WEST,
-            BlockFace.SOUTH,
-            BlockFace.EAST
-    )
-
-    const val TERRA_DRAIN_DELAY = 3L
 
     const val MINE_BURST_DURATION = 5L
 
@@ -36,12 +25,24 @@ object SkillParameters {
 
     const val SWITCH_SETTING_KEY = "9"
 
-    const val HEAL_PERCENT = 5
+    const val HEAL_AMOUNT_PERCENT = 5
 
-    const val HEAL_PROBABILITY = 0.2
+    const val HEAL_PROBABILITY_PERCENT = 20
 
     const val TERRA_DRAIN_LOG_HEAL_PERCENT = 3.0
 
     const val TERRA_DRAIN_LEAVES_HEAL_PERCENT = 0.3
 
+    const val TERRA_DRAIN_MAX_RADIUS = 5
+
+    val TERRA_DRAIN_FACE_SET = setOf(
+            BlockFace.UP,
+            BlockFace.DOWN,
+            BlockFace.NORTH,
+            BlockFace.WEST,
+            BlockFace.SOUTH,
+            BlockFace.EAST
+    )
+
+    const val TERRA_DRAIN_DELAY = 3L
 }

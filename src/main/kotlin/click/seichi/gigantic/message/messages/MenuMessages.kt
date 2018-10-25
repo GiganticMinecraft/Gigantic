@@ -255,7 +255,15 @@ object MenuMessages {
                                     "アクティブ効果: 少しの間だけ掘る速度が上昇"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "持続時間: ${SkillParameters.MINE_BURST_DURATION}秒"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "クールタイム: ${SkillParameters.MINE_BURST_COOLTIME}秒"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                                     "\"${SkillParameters.MINE_BURST_KEY}\" キー を押して発動"
                     )
             )
@@ -269,14 +277,14 @@ object MenuMessages {
             listOf(
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "アクティブ効果: ブロックに向けて発動すると"
+                                    "アクティブ効果: 視点方向にワープ"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "そのブロックの上にワープ"
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "クールタイム: ${SkillParameters.FLASH_COOLTIME}秒"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                                     "\"${SkillParameters.FLASH_KEY}\" キー を押して発動"
                     )
             )
@@ -290,15 +298,19 @@ object MenuMessages {
             listOf(
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "パッシブ効果: ブロックを破壊で"
+                                    "パッシブ効果: ブロックを破壊して回復"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "最大体力の${SkillParameters.HEAL_PERCENT}%を回復"
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "発動確率: ${SkillParameters.HEAL_PROBABILITY_PERCENT} %"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "通常破壊時に一定確率で発動する"
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "回復量: 最大体力の${SkillParameters.HEAL_AMOUNT_PERCENT} %"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    "全ての通常破壊で発動"
                     )
             )
 
@@ -314,12 +326,12 @@ object MenuMessages {
                                     "アクティブ効果: 持ち物を入れ替える"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                                     "\"${SkillParameters.SWITCH_KEY}\" キー を押して発動"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "\"${SkillParameters.SWITCH_SETTING_KEY}\" キー を押して詳細設定を変更できる"
+                            Locale.JAPANESE to "${ChatColor.BLUE}" +
+                                    "---\"${SkillParameters.SWITCH_SETTING_KEY}\" キー を押して詳細設定を開く"
                     )
             )
 
@@ -335,7 +347,15 @@ object MenuMessages {
                                     "パッシブ効果: 木を倒し、自身を回復する"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "回復量(原木): 最大体力の %.1f ".format(SkillParameters.TERRA_DRAIN_LOG_HEAL_PERCENT).plus("%")
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "回復量(葉): 最大体力の %.1f ".format(SkillParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT).plus("%")
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                                     "原木を破壊して発動"
                     )
             )
@@ -352,15 +372,15 @@ object MenuMessages {
                                     "パッシブ効果: ブロックを破壊すると、稀に遺志が現れる"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "遺志と交感することで記憶を獲得"
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    "遺志と交感すると記憶を獲得"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "遺志は${Will.values().size}種類存在する"
+                            Locale.JAPANESE to "${ChatColor.BLUE}" +
+                                    "---遺志は${Will.values().size}種類存在する"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
                                     "レベルを上げてたくさんの遺志と交感しよう"
                     )
             )

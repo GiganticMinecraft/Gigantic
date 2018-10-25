@@ -4,6 +4,7 @@ import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.setDisplayName
+import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.HookedItemMessages
 import org.bukkit.Material
@@ -22,6 +23,10 @@ object FixedButtons {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
                 setDisplayName(HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
+                setLore(*HookedItemMessages.PICKEL_LORE(player)
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -39,10 +44,14 @@ object FixedButtons {
         }
     }
 
-    val SPADE = object : Button {
+    val SHOVEL = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_SHOVEL).apply {
                 setDisplayName(HookedItemMessages.SHOVEL.asSafety(player.wrappedLocale))
+                setLore(*HookedItemMessages.SHOVEL_LORE(player)
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -64,6 +73,10 @@ object FixedButtons {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_AXE).apply {
                 setDisplayName(HookedItemMessages.AXE.asSafety(player.wrappedLocale))
+                setLore(*HookedItemMessages.AXE_LORE(player)
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)

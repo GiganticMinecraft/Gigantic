@@ -46,9 +46,8 @@ enum class LockedFunction(
     HEAL(4, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
     }, unlockMessage = UnlockMessages.UNLOCK_HEAL),
-
     SWITCH(5, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 2
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 1
     }, unlockAction = { player ->
         player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
             it.setCanSwitch(Belt.DIG, true)
@@ -66,7 +65,7 @@ enum class LockedFunction(
     }, unlockMessage = UnlockMessages.UNLOCK_TERRA_DRAIN),
 
     WILL_O_THE_WISP(8, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 1
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 2
     }, unlockMessage = UnlockMessages.UNLOCK_WILL_O_THE_WISP)
     ;
 

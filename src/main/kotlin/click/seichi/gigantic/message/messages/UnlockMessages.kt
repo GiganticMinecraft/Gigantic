@@ -48,7 +48,7 @@ object UnlockMessages {
                 it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
                         "回復スキル: ヒール を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: ブロックを破壊で最大体力の${SkillParameters.HEAL_PERCENT}%を回復!!\n" +
+                        "パッシブ効果: ブロックを破壊で最大体力の${SkillParameters.HEAL_AMOUNT_PERCENT}%を回復!!\n" +
                         "通常破壊時に一定確率で発動する\n"
             }
     ))
