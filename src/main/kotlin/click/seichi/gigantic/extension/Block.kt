@@ -32,12 +32,12 @@ val Block.centralLocation: Location
     get() = location.clone().add(0.5, 0.5, 0.5)
 
 @Suppress("DEPRECATION")
-fun Block.fallUpper() {
+fun Block.fallUpperCrustBlock() {
     var count = 0
     val fallTask = object : Runnable {
         override fun run() {
             val target = getRelative(0, count + 1, 0) ?: return
-            if (target.isCrust || target.isLiquid) {
+            if (target.isCrust) {
                 target.location.world.spawnFallingBlock(
                         target.location.central.subtract(0.0, 0.5, 0.0),
                         target.type,

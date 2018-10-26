@@ -41,7 +41,7 @@ class PlayerMonitor : Listener {
     private fun breakBlock(player: Player, block: Block) {
 
         // Gravity process
-        block.fallUpper()
+        block.fallUpperCrustBlock()
 
         // carry player cache
         player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
