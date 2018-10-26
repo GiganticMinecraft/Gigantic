@@ -1,4 +1,4 @@
-package click.seichi.gigantic.skill
+package click.seichi.gigantic.player
 
 import org.bukkit.entity.Player
 import java.util.function.Consumer
@@ -8,7 +8,7 @@ import java.util.function.Consumer
  *
  * @author tar0ss
  */
-interface Skill {
+interface Invokable {
 
     fun findInvokable(player: Player): Consumer<Player>?
 

@@ -1,6 +1,6 @@
 package click.seichi.gigantic.event.events
 
-import click.seichi.gigantic.skill.Miner
+import click.seichi.gigantic.player.Miner
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.event.block.BlockBreakEvent

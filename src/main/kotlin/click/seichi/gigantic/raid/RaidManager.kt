@@ -1,11 +1,11 @@
 package click.seichi.gigantic.raid
 
 import click.seichi.gigantic.boss.Boss
+import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.message.messages.BattleMessages
-import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.RaidBattlePops
 import click.seichi.gigantic.sound.sounds.BattleSounds

@@ -1,4 +1,4 @@
-package click.seichi.gigantic.skill
+package click.seichi.gigantic.player
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.event.events.RelationalBlockBreakEvent
@@ -35,12 +35,12 @@ class Miner(
 
     init {
         check(when (constructionType) {
-            Miner.ConstructionType.DEPTH -> maxDepth != 0
-            Miner.ConstructionType.RADIUS -> maxRadius != 0
+            ConstructionType.DEPTH -> maxDepth != 0
+            ConstructionType.RADIUS -> maxRadius != 0
         }) {
             when (constructionType) {
-                Miner.ConstructionType.DEPTH -> "maxDepth is must not be zero"
-                Miner.ConstructionType.RADIUS -> "maxRadius is must not be zero"
+                ConstructionType.DEPTH -> "maxDepth is must not be zero"
+                ConstructionType.RADIUS -> "maxRadius is must not be zero"
             }
         }
     }
@@ -48,8 +48,8 @@ class Miner(
     fun mineRelations(action: (Block) -> (Unit)) {
         this.action = action
         when (constructionType) {
-            Miner.ConstructionType.DEPTH -> mineRelationsUnderDepth(broken, materialSet.toSet(), relationalFaceSet.toSet(), 0)
-            Miner.ConstructionType.RADIUS -> mineRelationsUnderRadius(broken, materialSet.toSet(), relationalFaceSet.toSet())
+            ConstructionType.DEPTH -> mineRelationsUnderDepth(broken, materialSet.toSet(), relationalFaceSet.toSet(), 0)
+            ConstructionType.RADIUS -> mineRelationsUnderRadius(broken, materialSet.toSet(), relationalFaceSet.toSet())
         }
 
     }

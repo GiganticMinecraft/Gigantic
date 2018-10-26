@@ -6,6 +6,7 @@ import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.button.buttons.FixedButtons
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.PlayerLevelConfig
@@ -15,10 +16,9 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
-import click.seichi.gigantic.player.MineBlockReason
+import click.seichi.gigantic.player.skill.Skills
 import click.seichi.gigantic.popup.PlayerPops
 import click.seichi.gigantic.raid.RaidManager
-import click.seichi.gigantic.skill.Skills
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
@@ -200,7 +200,6 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
         val player = event.player ?: return
-        if (player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
         Skills.SWITCH.tryInvoke(player)
     }

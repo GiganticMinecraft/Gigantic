@@ -7,9 +7,9 @@ import click.seichi.gigantic.cache.manipulator.manipulators.MineCombo
 import click.seichi.gigantic.cache.manipulator.manipulators.WillAptitude
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.player.skill.SkillParameters
 import click.seichi.gigantic.raid.RaidBattle
 import click.seichi.gigantic.relic.RelicRarity
-import click.seichi.gigantic.skill.SkillParameters
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor

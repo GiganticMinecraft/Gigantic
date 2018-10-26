@@ -1,4 +1,4 @@
-package click.seichi.gigantic.skill
+package click.seichi.gigantic.player.skill
 
 import org.bukkit.block.BlockFace
 
@@ -8,8 +8,6 @@ import org.bukkit.block.BlockFace
  * TODO skill.ymlに移動
  */
 object SkillParameters {
-
-
 
     const val MINE_BURST_DURATION = 5L
 

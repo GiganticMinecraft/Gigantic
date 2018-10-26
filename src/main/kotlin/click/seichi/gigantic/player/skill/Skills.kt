@@ -1,4 +1,4 @@
-package click.seichi.gigantic.skill
+package click.seichi.gigantic.player.skill
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.SkillAnimations
@@ -7,7 +7,9 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.Invokable
 import click.seichi.gigantic.player.LockedFunction
+import click.seichi.gigantic.player.Miner
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SkillPops
 import click.seichi.gigantic.sound.sounds.SkillSounds
@@ -27,7 +29,7 @@ import java.util.function.Consumer
  */
 object Skills {
 
-    val MINE_BURST = object : Skill {
+    val MINE_BURST = object : Invokable {
 
         val duration = SkillParameters.MINE_BURST_DURATION
         val coolTime = SkillParameters.MINE_BURST_COOLTIME
@@ -57,7 +59,7 @@ object Skills {
         }
     }
 
-    val FLASH = object : Skill {
+    val FLASH = object : Invokable {
 
         val transparentMaterialSet = setOf(
                 Material.AIR,
@@ -108,7 +110,7 @@ object Skills {
 
     }
 
-    val HEAL = object : Skill {
+    val HEAL = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
             val block = player.remove(Keys.HEAL_SKILL_BLOCK) ?: return null
             if (!LockedFunction.HEAL.isUnlocked(player)) return null
@@ -126,8 +128,9 @@ object Skills {
 
     }
 
-    val SWITCH = object : Skill {
+    val SWITCH = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
+            if (player.gameMode != GameMode.SURVIVAL) return null
             if (!LockedFunction.SWITCH.isUnlocked(player)) return null
             return Consumer { p ->
                 var current: Belt? = null
@@ -146,11 +149,12 @@ object Skills {
     }
 
 
-    val TERRA_DRAIN = object : Skill {
+    val TERRA_DRAIN = object : Invokable {
 
         override fun findInvokable(player: Player): Consumer<Player>? {
             val block = player.remove(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return null
             if (player.gameMode != GameMode.SURVIVAL) return null
+            if (!LockedFunction.TERRA_DRAIN.isUnlocked(player)) return null
             if (!Gigantic.TREES.contains(block.type)) return null
             return Consumer { p ->
                 val miner = Miner(

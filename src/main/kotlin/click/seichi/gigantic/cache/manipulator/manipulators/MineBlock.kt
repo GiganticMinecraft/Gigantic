@@ -4,7 +4,7 @@ import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
-import click.seichi.gigantic.player.MineBlockReason
+import click.seichi.gigantic.cache.manipulator.MineBlockReason
 
 class MineBlock : Manipulator<MineBlock, PlayerCache> {
 

@@ -5,11 +5,11 @@ import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.cache.PlayerCache
+import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.LockedFunction
-import click.seichi.gigantic.player.MineBlockReason
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
 import org.bukkit.block.Block

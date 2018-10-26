@@ -3,7 +3,7 @@ package click.seichi.gigantic.message.messages
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.skill.SkillParameters
+import click.seichi.gigantic.player.skill.SkillParameters
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.util.*

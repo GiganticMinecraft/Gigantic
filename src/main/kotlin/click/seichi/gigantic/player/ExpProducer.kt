@@ -1,5 +1,6 @@
 package click.seichi.gigantic.player
 
+import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import org.bukkit.entity.Player
