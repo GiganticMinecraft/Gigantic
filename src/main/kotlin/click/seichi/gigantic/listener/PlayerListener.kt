@@ -106,18 +106,12 @@ class PlayerListener : Listener {
 
         player.manipulate(CatalogPlayerCache.MANA) {
             it.updateMaxMana()
-            it.createBar()
         }
 
         player.manipulate(CatalogPlayerCache.HEALTH) {
             it.updateMaxHealth()
             PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
         }
-
-        player.getOrPut(Keys.BELT).wear(player)
-        player.getOrPut(Keys.BAG).carry(player)
-
-        player.updateInventory()
         player.saturation = Float.MAX_VALUE
         player.foodLevel = 20
         // 4秒間無敵付与
@@ -135,6 +129,11 @@ class PlayerListener : Listener {
         }
 
         trySendingUnlockMessage(player)
+
+        player.getOrPut(Keys.BELT).wear(player)
+        player.getOrPut(Keys.BAG).carry(player)
+
+        player.updateInventory()
 
         PlayerMessages.MEMORY_SIDEBAR(
                 player.find(CatalogPlayerCache.MEMORY) ?: return,

@@ -1,14 +1,11 @@
 package click.seichi.gigantic.cache.manipulator.manipulators
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.ManaConfig
-import click.seichi.gigantic.topbar.bars.PlayerBars
-import org.bukkit.boss.BossBar
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -22,7 +19,6 @@ class Mana : Manipulator<Mana, PlayerCache> {
         private set
     private lateinit var level: Level
     private lateinit var locale: Locale
-    private lateinit var bar: BossBar
 
     override fun from(cache: Cache<PlayerCache>): Mana? {
         current = cache.getOrPut(Keys.MANA)
@@ -65,14 +61,6 @@ class Mana : Manipulator<Mana, PlayerCache> {
 
     fun updateMaxMana() {
         max = ManaConfig.MANA_MAP[level.current] ?: 0L
-    }
-
-    fun createBar() {
-        bar = Gigantic.createInvisibleBossBar()
-    }
-
-    fun display() {
-        PlayerBars.MANA(this, locale).show(bar)
     }
 
 }
