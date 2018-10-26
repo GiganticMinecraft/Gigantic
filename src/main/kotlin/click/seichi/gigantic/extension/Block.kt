@@ -37,7 +37,7 @@ fun Block.fallUpper() {
     val fallTask = object : Runnable {
         override fun run() {
             val target = getRelative(0, count + 1, 0) ?: return
-            if (target.isCrust) {
+            if (target.isCrust || target.isLiquid) {
                 target.location.world.spawnFallingBlock(
                         target.location.central.subtract(0.0, 0.5, 0.0),
                         target.type,
