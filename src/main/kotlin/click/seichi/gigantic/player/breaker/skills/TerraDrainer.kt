@@ -3,15 +3,20 @@ package click.seichi.gigantic.player.breaker.skills
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.SkillAnimations
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.breaker.Cutter
 import click.seichi.gigantic.player.breaker.RelationalBreaker
 import click.seichi.gigantic.player.skill.SkillParameters
+import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SkillPops
+import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit
 import org.bukkit.block.Block
+import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 
 /**
@@ -24,25 +29,44 @@ class TerraDrainer : Cutter(), RelationalBreaker {
     override fun breakRelations(player: Player, block: Block) {
         if (!block.isLog) return
         SkillAnimations.TERRA_DRAIN_HEAL.start(player.location.clone().add(0.0, 1.7, 0.0))
-        relationalFaceSet.map { block.getRelative(it) }.forEach { breakRelationalBlock(player, it) }
+        breakRelationalBlock(player, block)
     }
 
     private fun breakRelationalBlock(player: Player, target: Block) {
         if (!target.isTree) return
-
         onBreakBlock(player, target)
-
         // 原木でなければ処理しない
         if (target.isLog) {
-            Bukkit.getScheduler().runTaskLater(
-                    Gigantic.PLUGIN,
-                    {
-                        relationalFaceSet.map { target.getRelative(it) }.forEach { breakRelationalBlock(player, it) }
-                    },
-                    SkillParameters.TERRA_DRAIN_DELAY
-            )
+            relationalFaceSet.map {
+                Bukkit.getScheduler().runTaskLater(
+                        Gigantic.PLUGIN,
+                        {
+                            breakRelationalBlock(player, target.getRelative(it))
+                        },
+                        when (it) {
+                            BlockFace.NORTH,
+                            BlockFace.EAST,
+                            BlockFace.SOUTH,
+                            BlockFace.WEST,
+                            BlockFace.UP,
+                            BlockFace.DOWN -> 10L
+                            BlockFace.NORTH_EAST,
+                            BlockFace.NORTH_WEST,
+                            BlockFace.SOUTH_EAST,
+                            BlockFace.SOUTH_WEST,
+                            BlockFace.WEST_NORTH_WEST,
+                            BlockFace.NORTH_NORTH_WEST,
+                            BlockFace.NORTH_NORTH_EAST,
+                            BlockFace.EAST_NORTH_EAST,
+                            BlockFace.EAST_SOUTH_EAST,
+                            BlockFace.SOUTH_SOUTH_EAST,
+                            BlockFace.SOUTH_SOUTH_WEST,
+                            BlockFace.WEST_SOUTH_WEST,
+                            BlockFace.SELF -> 20L
+                        }
+                )
+            }
         }
-
         breakBlock(player, target, false, false)
     }
 
@@ -61,6 +85,25 @@ class TerraDrainer : Cutter(), RelationalBreaker {
                 SkillPops.HEAL(wrappedAmount).pop(block.centralLocation)
                 PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
             }
+        }
+
+        // carry player cache
+        player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
+            it.add(1L)
+        }
+        player.manipulate(CatalogPlayerCache.MINE_COMBO) {
+            it.combo(1L)
+            SkillPops.MINE_COMBO(it).pop(block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
+        }
+
+        // raid battle process
+        RaidManager.playBattle(player, block.centralLocation.clone())
+
+        player.manipulate(CatalogPlayerCache.LEVEL) {
+            it.calculate(ExpProducer.calcExp(player)) { current ->
+                Bukkit.getPluginManager().callEvent(LevelUpEvent(current, player))
+            }
+            PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
         }
     }
 }
