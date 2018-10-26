@@ -68,7 +68,7 @@ class BeltSwitcher : Manipulator<BeltSwitcher, PlayerCache> {
             index > currentIndex && canSwitch(belt)
         }.firstOrNull() ?: beltList.firstOrNull { belt ->
             canSwitch(belt)
-        } ?: Belt.findById(Defaults.beltId)!!
+        } ?: Belt.findById(Defaults.BELT_ID)!!
     }
 
 }

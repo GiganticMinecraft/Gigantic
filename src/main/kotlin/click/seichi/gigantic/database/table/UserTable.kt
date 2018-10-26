@@ -16,11 +16,11 @@ object UserTable : IdTable<UUID>("users") {
 
     val localeString = varchar("localeString", 2).default(Locale.JAPANESE.toString())
 
-    val mana = long("mana").default(Defaults.mana)
+    val mana = long("mana").default(Defaults.MANA)
 
-    val health = long("health").default(Defaults.health)
+    val health = long("health").default(Defaults.HEALTH)
 
-    val beltId = integer("belt_id").default(Defaults.beltId)
+    val beltId = integer("belt_id").default(Defaults.BELT_ID)
 
     val isFirstJoin = bool("isFirstJoin").default(true)
 

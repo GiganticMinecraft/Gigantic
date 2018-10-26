@@ -7,7 +7,6 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.extension.offer
-import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
@@ -78,7 +77,7 @@ class RaidBattle(val boss: Boss) {
         }
         display()
 
-        player.offer(Keys.DEATH_MESSAGE, LocalizedText())
+        player.offer(Keys.DEATH_MESSAGE, null)
 
         PlayerMessages.MEMORY_SIDEBAR(
                 player.find(CatalogPlayerCache.MEMORY) ?: return,

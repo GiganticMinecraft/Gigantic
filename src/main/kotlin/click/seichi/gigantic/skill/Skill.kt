@@ -4,6 +4,8 @@ import org.bukkit.entity.Player
 import java.util.function.Consumer
 
 /**
+ * マナを必要としないスキル（能力）
+ *
  * @author tar0ss
  */
 interface Skill {

@@ -216,6 +216,7 @@ class Gigantic : JavaPlugin() {
                 }
                 player.gameMode = GameMode.SURVIVAL
             }
+            RaidManager.getBattleList().firstOrNull { it.isJoined(player) }?.drop(player)
             PlayerCacheMemory.remove(player.uniqueId, false)
             player.kickPlayer("Restarting...Please wait a few minutes.")
         }

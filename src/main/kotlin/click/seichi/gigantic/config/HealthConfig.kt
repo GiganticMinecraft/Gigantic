@@ -22,7 +22,7 @@ object HealthConfig : SimpleConfiguration("health", Gigantic.PLUGIN) {
 
         file.printWriter().use { out ->
             out.println("level_to_health:")
-            (0..6).forEach { out.println("  $it: ${Defaults.health}") }
+            (0..6).forEach { out.println("  $it: ${Defaults.HEALTH}") }
             (7..PlayerLevelConfig.MAX).forEach { out.println("  $it: ${pol.calculation(it)}") }
         }
     }

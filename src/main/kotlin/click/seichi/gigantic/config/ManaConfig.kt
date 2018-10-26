@@ -23,7 +23,7 @@ object ManaConfig : SimpleConfiguration("mana", Gigantic.PLUGIN) {
 
         file.printWriter().use { out ->
             out.println("level_to_mana:")
-            (0..9).forEach { out.println("  $it: ${Defaults.mana}") }
+            (0..9).forEach { out.println("  $it: ${Defaults.MANA}") }
             (10..MAX).forEach { out.println("  $it: ${pol.calculation(it)}") }
         }
     }

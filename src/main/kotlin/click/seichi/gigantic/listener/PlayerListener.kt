@@ -13,7 +13,6 @@ import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.event.events.RelationalBlockBreakEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
-import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.MineBlockReason
@@ -132,7 +131,6 @@ class PlayerListener : Listener {
 
         player.getOrPut(Keys.BELT).wear(player)
         player.getOrPut(Keys.BAG).carry(player)
-
         player.updateInventory()
 
         PlayerMessages.MEMORY_SIDEBAR(
@@ -288,10 +286,11 @@ class PlayerListener : Listener {
         val player = event.entity ?: return
         event.keepInventory = true
         event.keepLevel = true
-        player.getOrPut(Keys.DEATH_MESSAGE).`as`(player.wrappedLocale)?.let { deathMessage ->
+        // asSafetyを使うとnullの除外ができないのでこのまま
+        player.getOrPut(Keys.DEATH_MESSAGE)?.asSafety(player.wrappedLocale)?.let { deathMessage ->
             event.deathMessage = deathMessage
         }
-        player.offer(Keys.DEATH_MESSAGE, LocalizedText())
+        player.offer(Keys.DEATH_MESSAGE, null)
 
         RaidManager.getBattleList().firstOrNull { it.isJoined(player) }?.drop(player)
 

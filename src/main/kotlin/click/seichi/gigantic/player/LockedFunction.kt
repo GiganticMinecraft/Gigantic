@@ -32,9 +32,6 @@ enum class LockedFunction(
 
     MANA(2, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
-    }, unlockAction = { player ->
-        player.manipulate(CatalogPlayerCache.MANA) {
-        }
     }, unlockMessage = UnlockMessages.UNLOCK_MANA),
 
     FLASH(3, {

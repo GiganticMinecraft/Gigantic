@@ -327,7 +327,7 @@ object Keys {
 
     val BELT = object : DatabaseKey<PlayerCache, Belt> {
         override val default: Belt
-            get() = Belt.findById(Defaults.beltId)!!
+            get() = Belt.findById(Defaults.BELT_ID)!!
 
         override fun read(entity: Entity<*>): Belt {
             val user = entity as User
@@ -345,11 +345,11 @@ object Keys {
 
     }
 
-    val DEATH_MESSAGE = object : Key<PlayerCache, LocalizedText> {
-        override val default: LocalizedText
-            get() = LocalizedText()
+    val DEATH_MESSAGE = object : Key<PlayerCache, LocalizedText?> {
+        override val default: LocalizedText?
+            get() = null
 
-        override fun satisfyWith(value: LocalizedText): Boolean {
+        override fun satisfyWith(value: LocalizedText?): Boolean {
             return true
         }
 
@@ -370,6 +370,16 @@ object Keys {
             get() = null
 
         override fun satisfyWith(value: Block?): Boolean {
+            return true
+        }
+
+    }
+
+    val TITLE = object : Key<PlayerCache, String> {
+        override val default: String
+            get() = ""
+
+        override fun satisfyWith(value: String): Boolean {
             return true
         }
 

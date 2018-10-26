@@ -3,6 +3,7 @@ package click.seichi.gigantic.message.messages
 import click.seichi.gigantic.cache.manipulator.manipulators.*
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.*
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
@@ -94,5 +95,13 @@ object PlayerMessages {
                         "経験値を$penaltyMineBlock 失った..."
         ))
     }
+
+
+    val MANA_DISPLAY = { mana: Mana ->
+        val interval = mana.max.div(Defaults.MANA_BAR_NUM.toDouble())
+        val amount = mana.current.div(interval)
+        ManaMessage(mana, amount)
+    }
+
 
 }
