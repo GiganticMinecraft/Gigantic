@@ -3,16 +3,12 @@ package click.seichi.gigantic.player.breaker.skills
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.SkillAnimations
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.breaker.Cutter
 import click.seichi.gigantic.player.breaker.RelationalBreaker
 import click.seichi.gigantic.player.skill.SkillParameters
-import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SkillPops
-import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit
 import org.bukkit.block.Block
@@ -67,6 +63,7 @@ class TerraDrainer : Cutter(), RelationalBreaker {
                 )
             }
         }
+
         breakBlock(player, target, false, false)
     }
 
@@ -85,25 +82,6 @@ class TerraDrainer : Cutter(), RelationalBreaker {
                 SkillPops.HEAL(wrappedAmount).pop(block.centralLocation)
                 PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
             }
-        }
-
-        // carry player cache
-        player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
-            it.add(1L)
-        }
-        player.manipulate(CatalogPlayerCache.MINE_COMBO) {
-            it.combo(1L)
-            SkillPops.MINE_COMBO(it).pop(block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
-        }
-
-        // raid battle process
-        RaidManager.playBattle(player, block.centralLocation.clone())
-
-        player.manipulate(CatalogPlayerCache.LEVEL) {
-            it.calculate(ExpProducer.calcExp(player)) { current ->
-                Bukkit.getPluginManager().callEvent(LevelUpEvent(current, player))
-            }
-            PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
         }
     }
 }
