@@ -12,7 +12,7 @@ import org.bukkit.block.Block
  */
 
 
-
+// Not contain log blocks
 val Block.isCrust
     get() = Gigantic.CRUSTS.contains(type)
 

@@ -1,6 +1,5 @@
 package click.seichi.gigantic.player.skill
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.SkillAnimations
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
@@ -9,7 +8,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Invokable
 import click.seichi.gigantic.player.LockedFunction
-import click.seichi.gigantic.player.Miner
+import click.seichi.gigantic.player.breaker.skills.TerraDrainer
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SkillPops
 import click.seichi.gigantic.sound.sounds.SkillSounds
@@ -112,10 +111,10 @@ object Skills {
 
     val HEAL = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
-            val block = player.remove(Keys.HEAL_SKILL_BLOCK) ?: return null
             if (!LockedFunction.HEAL.isUnlocked(player)) return null
             if (SkillParameters.HEAL_PROBABILITY_PERCENT < Random.nextInt(100)) return null
             return Consumer { p ->
+                val block = player.remove(Keys.HEAL_SKILL_BLOCK) ?: return@Consumer
                 p.manipulate(CatalogPlayerCache.HEALTH) {
                     if (it.isMaxHealth()) return@manipulate
                     val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_AMOUNT_PERCENT))
@@ -152,38 +151,11 @@ object Skills {
     val TERRA_DRAIN = object : Invokable {
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            val block = player.remove(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return null
             if (player.gameMode != GameMode.SURVIVAL) return null
             if (!LockedFunction.TERRA_DRAIN.isUnlocked(player)) return null
-            if (!Gigantic.TREES.contains(block.type)) return null
             return Consumer { p ->
-                val miner = Miner(
-                        block,
-                        p,
-                        Gigantic.TREES,
-                        SkillParameters.TERRA_DRAIN_FACE_SET,
-                        Miner.ConstructionType.RADIUS,
-                        maxRadius = SkillParameters.TERRA_DRAIN_MAX_RADIUS,
-                        nextBreakDelay = SkillParameters.TERRA_DRAIN_DELAY
-                )
-                miner.mineRelations { target ->
-                    SkillAnimations.TERRA_DRAIN_TREE.start(target.centralLocation)
-                    SkillSounds.TERRA_DRAIN.play(target.centralLocation)
-                    player.manipulate(CatalogPlayerCache.HEALTH) {
-                        if (it.isMaxHealth()) return@manipulate
-                        val percent = when {
-                            target.isLog -> SkillParameters.TERRA_DRAIN_LOG_HEAL_PERCENT
-                            target.isLeaves -> SkillParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
-                            else -> 0.0
-                        }
-                        val wrappedAmount = it.increase(it.max.div(100.0).times(percent).toLong())
-                        if (wrappedAmount > 0) {
-                            SkillPops.HEAL(wrappedAmount).pop(target.centralLocation)
-                            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
-                        }
-                    }
-                }
-                SkillAnimations.TERRA_DRAIN_HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
+                val b = player.remove(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return@Consumer
+                TerraDrainer().breakRelations(p, b)
             }
         }
     }

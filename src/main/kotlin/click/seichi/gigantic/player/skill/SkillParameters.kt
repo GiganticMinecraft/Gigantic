@@ -31,16 +31,7 @@ object SkillParameters {
 
     const val TERRA_DRAIN_LEAVES_HEAL_PERCENT = 0.3
 
-    const val TERRA_DRAIN_MAX_RADIUS = 5
-
-    val TERRA_DRAIN_FACE_SET = setOf(
-            BlockFace.UP,
-            BlockFace.DOWN,
-            BlockFace.NORTH,
-            BlockFace.WEST,
-            BlockFace.SOUTH,
-            BlockFace.EAST
-    )
+    val TERRA_DRAIN_FACE_SET = BlockFace.values().toSet().minus(BlockFace.SELF)
 
     const val TERRA_DRAIN_DELAY = 3L
 }

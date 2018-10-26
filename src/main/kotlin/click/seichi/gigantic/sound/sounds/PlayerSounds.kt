@@ -24,4 +24,14 @@ object PlayerSounds {
             volume = 1.0F
     )
 
+    val SCOOP_WATER = DetailedSound(
+            Sound.ITEM_BUCKET_FILL,
+            SoundCategory.BLOCKS
+    )
+
+    val SCOOP_LAVA = DetailedSound(
+            Sound.ITEM_BUCKET_FILL_LAVA,
+            SoundCategory.BLOCKS
+    )
+
 }
