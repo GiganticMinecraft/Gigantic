@@ -159,4 +159,34 @@ object RelicMessages {
             )
     )
 
+    val BISMARCK_IRON_KNUCKLE_NAME = LocalizedText(
+            Locale.JAPANESE to "鉄血の拳"
+    )
+
+    val BISMARCK_IRON_KNUCKLE_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "幾多もの鉄血制裁を下してきた拳"
+            )
+    )
+
+    val COBBLE_STONE_NAME = LocalizedText(
+            Locale.JAPANESE to "丸石"
+    )
+
+    val COBBLE_STONE_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "とても希少な石"
+            )
+    )
+
+    val LOVE_OF_MOTHER_NAME = LocalizedText(
+            Locale.JAPANESE to "母の愛"
+    )
+
+    val LOVE_OF_MOTHER_DESCRIPTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "まさか本当にやってしまうとは..."
+            )
+    )
+
 }

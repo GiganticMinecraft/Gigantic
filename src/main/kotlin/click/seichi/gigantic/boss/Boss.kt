@@ -39,6 +39,10 @@ enum class Boss(
     MERMAID(10, Head.MERMAID, BossMessages.MERMAID_NAME, 136000L, 80000, 6, DropRelic(Relic.MERMAID_TEARS, 0.33)),
     MERMAN(11, Head.MERMAN, BossMessages.MERMAN_NAME, 182000L, 140000, 8, DropRelic(Relic.MERMAN_SCALES, 0.88)),
     TRITON(12, Head.TRITON, BossMessages.TRITON_NAME, 132000000L, 100000000, 10, DropRelic(Relic.TRITON_TRIDENT, 0.42)),
+    BISMARCK(13, Head.BISMARCK, BossMessages.BISMARCK_NAME, 4800L, 1000, 11, DropRelic(Relic.BISMARCK_IRON_KNUCKLE, 0.75)),
+    STONE(14, Head.STONE, BossMessages.STONE_NAME, 140L, 80, 4, DropRelic(Relic.COBBLE_STONE, 0.3)),
+    MOTHER(15, Head.MOTHER, BossMessages.MOTHER_NAME, 80000L, 1, 30, DropRelic(Relic.LOVE_OF_MOTHER, 1.00)),
+
     ;
 
     val dropRelicSet = dropRelic.toSet()

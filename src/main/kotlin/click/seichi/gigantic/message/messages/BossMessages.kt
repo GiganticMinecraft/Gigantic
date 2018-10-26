@@ -47,5 +47,14 @@ object BossMessages {
     val TRITON_NAME = LocalizedText(
             Locale.JAPANESE to "深淵より来たりし使者 トリトン"
     )
+    val BISMARCK_NAME = LocalizedText(
+            Locale.JAPANESE to "ビスマルク"
+    )
+    val STONE_NAME = LocalizedText(
+            Locale.JAPANESE to "石"
+    )
+    val MOTHER_NAME = LocalizedText(
+            Locale.JAPANESE to "ママ"
+    )
 
 }

@@ -28,6 +28,9 @@ enum class Head(
     MERMAID("http://textures.minecraft.net/texture/52eb6f41adb8803f2b6a3ce1d7df253cb73131607216a9ff3161cf4af619636"),
     MERMAN("http://textures.minecraft.net/texture/7f44e58c2794f4ab8599dfc671b649bf775402a4dcbf26fe780f954963797b"),
     TRITON("http://textures.minecraft.net/texture/a158ab215a93f5c456378935e6a9fe4aeb1f92ffe41a2739e51e8742c1d"),
+    BISMARCK("http://textures.minecraft.net/texture/6d8a76ac45b84f50b6660ed1d6756f3f82e6662e073a569ee2507f35ba25b914"),
+    STONE("http://textures.minecraft.net/texture/41269584f629227713107b4e0a02dd65ddfe780e7c7118cb1ec2275c514cc95d"),
+    MOTHER("http://textures.minecraft.net/texture/b58677cf4429696d34e0fb790821091e5f58acf2698f7d57ee03b75491c264b6"),
     // menu heads
     LEFT("http://textures.minecraft.net/texture/3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
     PUMPKIN_RIGHT_ARROW("http://textures.minecraft.net/texture/c9895d58a04626d5cce18769d54198d0355fd770683bdfb7176d08c7547de"),
