@@ -129,7 +129,7 @@ object MenuMessages {
     )
 
     val BATTLE_BUTTON_LEFT = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.UNDERLINE}クリックで離脱"
+            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.UNDERLINE}クリックで離脱(※復帰できません)"
     )
 
     val BATTLE_BUTTON_DROPPED = LocalizedText(
