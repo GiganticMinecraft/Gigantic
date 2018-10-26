@@ -21,7 +21,7 @@ object BattleMessages {
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE.let {
                     it to
-                            "${ChatColor.RED}${ChatColor.BOLD}" +
+                            "${ChatColor.RED}" +
                             "${boss.localizedName.asSafety(it)}を倒した!!"
                 }
         ))
@@ -31,7 +31,7 @@ object BattleMessages {
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE.let {
                     it to
-                            "${ChatColor.RED}${ChatColor.BOLD}" +
+                            "${ChatColor.RED}" +
                             "${relic.localizedName.asSafety(it)}を手に入れた!!"
                 }
         ))
@@ -39,7 +39,7 @@ object BattleMessages {
 
     val BONUS_EXP = { bonus: Long ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-                Locale.JAPANESE to "${ChatColor.RED}${ChatColor.BOLD}" +
+                Locale.JAPANESE to "${ChatColor.RED}" +
                         "${bonus}のボーナス経験値を得た!!"
 
         ))
@@ -67,7 +67,7 @@ object BattleMessages {
                     if (afterHealth == 0L) {
                         put(SideBarRow.FOUR,
                                 LocalizedText(
-                                        Locale.JAPANESE to "${ChatColor.RED}${ChatColor.BOLD}" +
+                                        Locale.JAPANESE to "${ChatColor.RED}" +
                                                 "警告!!次の攻撃で死亡!!"
                                 )
                         )

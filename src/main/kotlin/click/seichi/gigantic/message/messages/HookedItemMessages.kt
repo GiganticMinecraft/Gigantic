@@ -152,7 +152,7 @@ object HookedItemMessages {
 
     val SWITCH_DETAIL = LocalizedText(
             Locale.JAPANESE to
-                    "${ChatColor.BLUE}${ChatColor.BOLD}" +
+                    "${ChatColor.BLUE}" +
                     "スイッチ詳細設定"
     )
 

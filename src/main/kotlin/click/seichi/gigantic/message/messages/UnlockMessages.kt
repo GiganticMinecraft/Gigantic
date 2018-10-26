@@ -15,7 +15,7 @@ object UnlockMessages {
 
     val UNLOCK_MINE_BURST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                it to "${ChatColor.YELLOW}" +
                         "バフスキル: マインバースト を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "アクティブ効果: 少しの間だけ掘る速度が上昇!!\n" +
@@ -25,7 +25,7 @@ object UnlockMessages {
 
     val UNLOCK_RAID_BATTLE = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
-                it to "${ChatColor.RED}${ChatColor.BOLD}" +
+                it to "${ChatColor.RED}" +
                         "レイドバトル解禁!!敵を倒してレアアイテムをゲット!!\n" +
                         "${ChatColor.GRAY}" +
                         "インベントリから敵を選択しよう\n" +
@@ -35,7 +35,7 @@ object UnlockMessages {
 
     val UNLOCK_FLASH = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                it to "${ChatColor.YELLOW}" +
                         "移動スキル: フラッシュ を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "アクティブ効果: ブロックに向けて発動するとそのブロックの上にワープ!!\n" +
@@ -45,7 +45,7 @@ object UnlockMessages {
 
     val UNLOCK_HEAL = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                it to "${ChatColor.YELLOW}" +
                         "回復スキル: ヒール を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: ブロックを破壊で最大体力の${SkillParameters.HEAL_AMOUNT_PERCENT}%を回復!!\n" +
@@ -55,7 +55,7 @@ object UnlockMessages {
 
     val UNLOCK_SWITCH = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                it to "${ChatColor.YELLOW}" +
                         "切り替えスキル: スイッチ を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "アクティブ効果: 持ち物を入れ替える\n" +
@@ -66,7 +66,7 @@ object UnlockMessages {
 
     val UNLOCK_TERRA_DRAIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                it to "${ChatColor.YELLOW}" +
                         "回復スキル: テラドレイン を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: 木を倒し、自身を回復する\n" +
@@ -77,7 +77,7 @@ object UnlockMessages {
 
     val UNLOCK_WILL_O_THE_WISP = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                it to "${ChatColor.YELLOW}" +
                         "スキル: ウィルオウィスプ を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: ブロックを破壊すると、稀に遺志が現れるぞ!!\n" +
@@ -91,7 +91,7 @@ object UnlockMessages {
     // TODO implements
     val UNLOCK_MANA = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
-                it to "${ChatColor.RED}${ChatColor.BOLD}" +
+                it to "${ChatColor.AQUA}" +
                         "レイドバトル解禁!!敵を倒してレアアイテムをゲット!!\n" +
                         "${ChatColor.GRAY}" +
                         "インベントリから敵を選択しよう\n" +

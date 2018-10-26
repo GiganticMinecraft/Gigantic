@@ -26,13 +26,13 @@ object PlayerMessages {
         SideBarMessage(
                 "memory",
                 LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.DARK_GREEN}${ChatColor.BOLD}" +
+                        Locale.JAPANESE to "${ChatColor.DARK_GREEN}" +
                                 "遺志の記憶"
                 ),
                 willMap.keys.map { will ->
                     SideBarRow.getRowById(will.id) to LocalizedText(
                             Locale.JAPANESE.let {
-                                it to "${ChatColor.GREEN}${ChatColor.BOLD}" +
+                                it to "${ChatColor.GREEN}" +
                                         "${will.localizedName.asSafety(it)} : " +
                                         "${ChatColor.RESET}${ChatColor.WHITE}" +
                                         "${willMap[will] ?: 0}個${ChatColor.RESET}"
@@ -57,13 +57,13 @@ object PlayerMessages {
     }
 
     val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}" +
+            Locale.JAPANESE to "${ChatColor.AQUA}" +
                     "ブロックを壊そう!!\n"
     ))
 
     val OBTAIN_WILL_APTITUDE = { will: Will ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-                Locale.JAPANESE.let { it to "${ChatColor.AQUA}${ChatColor.BOLD}新しく${will.localizedName.asSafety(it)}の遺志と交感できるようになった" }
+                Locale.JAPANESE.let { it to "${ChatColor.AQUA}新しく${will.localizedName.asSafety(it)}の遺志と交感できるようになった" }
         ))
     }
 

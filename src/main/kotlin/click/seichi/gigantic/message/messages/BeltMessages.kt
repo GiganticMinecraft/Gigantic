@@ -10,19 +10,19 @@ import java.util.*
 object BeltMessages {
 
     val DIG = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.GOLD}${ChatColor.BOLD}掘削ベルト"
+            Locale.JAPANESE to "${ChatColor.GOLD}掘削ベルト"
     )
 
     val MINE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.GRAY}${ChatColor.BOLD}採掘ベルト"
+            Locale.JAPANESE to "${ChatColor.GRAY}採掘ベルト"
     )
 
     val CUT = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}樵ベルト"
+            Locale.JAPANESE to "${ChatColor.YELLOW}樵ベルト"
     )
 
     val SCOOP = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}バケツベルト"
+            Locale.JAPANESE to "${ChatColor.AQUA}バケツベルト"
     )
 
 }

@@ -23,23 +23,23 @@ object MenuMessages {
     val LINE = (1..23).joinToString("") { "-" }
 
     val PROFILE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}${ChatColor.UNDERLINE}プロフィールを見る"
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.UNDERLINE}プロフィールを見る"
     )
 
     val PROFILE_PROFILE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}プロフィール"
+            Locale.JAPANESE to "${ChatColor.AQUA}プロフィール"
     )
 
     val RAID_BOSS = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.DARK_RED}${ChatColor.BOLD}${ChatColor.UNDERLINE}レイドボスと戦う"
+            Locale.JAPANESE to "${ChatColor.DARK_RED}${ChatColor.UNDERLINE}レイドボスと戦う"
     )
 
     val REST = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.BOLD}${ChatColor.UNDERLINE}休憩する"
+            Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.UNDERLINE}休憩する"
     )
 
     val BACK_FROM_REST = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}${ChatColor.UNDERLINE}戻る"
+            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.UNDERLINE}戻る"
     )
 
     val BACK_BUTTON = { menuTitle: String ->
@@ -66,7 +66,7 @@ object MenuMessages {
         }
         LocalizedText(
                 Locale.JAPANESE.let {
-                    it to "$color${ChatColor.BOLD}${boss.localizedName.asSafety(it)}"
+                    it to "$color${boss.localizedName.asSafety(it)}"
                 }
         )
     }
@@ -92,7 +92,7 @@ object MenuMessages {
             addAll(
                     mutableListOf(
                             LocalizedText(
-                                    Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.BOLD}戦闘中 : ${raidBattle.getJoinedPlayerSet().size}人"
+                                    Locale.JAPANESE to "${ChatColor.WHITE}戦闘中 : ${raidBattle.getJoinedPlayerSet().size}人"
                             ),
                             LocalizedText(
                                     Locale.JAPANESE to "${ChatColor.GRAY}残りHP : ${raidBattle.raidBoss.health}"
@@ -125,11 +125,11 @@ object MenuMessages {
     }
 
     val BATTLE_BUTTON_JOIN = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.BOLD}${ChatColor.UNDERLINE}クリックで参加"
+            Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.UNDERLINE}クリックで参加"
     )
 
     val BATTLE_BUTTON_LEFT = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}${ChatColor.UNDERLINE}クリックで離脱"
+            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.UNDERLINE}クリックで離脱"
     )
 
     val BATTLE_BUTTON_DROPPED = LocalizedText(
@@ -141,7 +141,7 @@ object MenuMessages {
     )
 
     val PROFILE_TITLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}${ChatColor.UNDERLINE}プロフィール"
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.UNDERLINE}プロフィール"
     )
 
     val PROFILE_LEVEL = { level: Level ->
@@ -211,15 +211,15 @@ object MenuMessages {
     }
 
     val PROFILE_RAID_BOSS = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}倒したレイドボス"
+            Locale.JAPANESE to "${ChatColor.AQUA}倒したレイドボス"
     )
 
     val PROFILE_RAID_RELIC = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}手に入れたレリック"
+            Locale.JAPANESE to "${ChatColor.AQUA}手に入れたレリック"
     )
 
     val PROFILE_SKILL = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}覚えたスキル"
+            Locale.JAPANESE to "${ChatColor.AQUA}覚えたスキル"
     )
 
     val PROFILE_RAID_BOSS_DEFEATED = { defeatCount: Long ->
@@ -235,7 +235,7 @@ object MenuMessages {
     }
 
     val BELT_SWITCHER_SETTING = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}${ChatColor.UNDERLINE}スイッチ詳細設定"
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.UNDERLINE}スイッチ詳細設定"
     )
 
     val BELT_SWITCHER_SETTING_BUTTON_LORE = { canSwitch: Boolean ->
@@ -282,7 +282,7 @@ object MenuMessages {
             )
 
     val MINE_BURST_TITLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "バフスキル: マインバースト"
     )
 
@@ -303,7 +303,7 @@ object MenuMessages {
             )
 
     val FLASH_TITLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "移動スキル: フラッシュ"
     )
 
@@ -328,7 +328,7 @@ object MenuMessages {
             )
 
     val HEAL_TITLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "回復スキル: ヒール"
     )
 
@@ -349,7 +349,7 @@ object MenuMessages {
             )
 
     val SWITCH_TITLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "切り替えスキル: スイッチ"
     )
 
@@ -374,7 +374,7 @@ object MenuMessages {
             )
 
     val TERRA_DRAIN_TITLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "回復スキル: テラドレイン"
     )
 
@@ -399,7 +399,7 @@ object MenuMessages {
             )
 
     val WILL_O_THE_WISP_TITLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "スキル: ウィルオウィスプ"
     )
 
