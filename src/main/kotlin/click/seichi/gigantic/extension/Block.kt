@@ -16,8 +16,6 @@ import org.bukkit.block.Block
 val Block.isCrust
     get() = Gigantic.CRUSTS.contains(type)
 
-
-
 val Block.isLog
     get() = Gigantic.LOGS.contains(type)
 
