@@ -71,7 +71,7 @@ open class Miner : Breaker {
 
         // Sounds
         when {
-            mineBurst?.duringFire() == true -> SkillSounds.MINE_BURST_ON_BREAK(currentCombo).play(block.centralLocation)
+            mineBurst?.duringFire() == true -> SkillSounds.MINE_BURST_ON_BREAK(currentCombo).playOnly(player)
             else -> PlayerSounds.OBTAIN_EXP(currentCombo).playOnly(player)
         }
     }

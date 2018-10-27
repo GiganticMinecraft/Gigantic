@@ -42,7 +42,7 @@ object Skills {
                 mineBurst.onStart {
                     p.removePotionEffect(PotionEffectType.FAST_DIGGING)
                     p.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
-                    SkillSounds.MINE_BURST_ON_FIRE.play(p.location)
+                    SkillSounds.MINE_BURST_ON_FIRE.play(player.eyeLocation)
                     p.getOrPut(Keys.BELT).wear(p)
                 }.onFire {
                     p.getOrPut(Keys.BELT).wear(p, false)

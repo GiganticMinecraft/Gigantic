@@ -17,4 +17,11 @@ object SpellSounds {
             volume = 0.2F
     )
 
+    val STELLA_CLAIR = DetailedSound(
+            Sound.BLOCK_CONDUIT_ACTIVATE,
+            SoundCategory.BLOCKS,
+            pitch = (1.5 + Random.nextGaussian(variance = 0.4)).toFloat(),
+            volume = 0.4F
+    )
+
 }

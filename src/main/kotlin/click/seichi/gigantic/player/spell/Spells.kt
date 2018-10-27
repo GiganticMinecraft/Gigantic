@@ -10,6 +10,7 @@ import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.breaker.skills.TerraDrain
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SpellPops
+import click.seichi.gigantic.sound.sounds.SpellSounds
 import click.seichi.gigantic.util.Random
 import org.bukkit.entity.Player
 import java.util.function.Consumer
@@ -33,6 +34,7 @@ object Spells {
                     SpellAnimations.STELLA_CLAIR.absorb(p, block.centralLocation)
                     SpellPops.STELLA_CLAIR(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.STELLA_CLAIR_SKILL_DIFF, 0.0))
                     PlayerMessages.MANA_DISPLAY(it).sendTo(p)
+                    SpellSounds.STELLA_CLAIR.play(block.centralLocation)
                 }
             }
         }

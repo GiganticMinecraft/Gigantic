@@ -65,7 +65,7 @@ class Mana : Manipulator<Mana, PlayerCache> {
         max = ManaConfig.MANA_MAP[level.current] ?: 0L
     }
 
-    fun isMaxMana() = max >= current
+    fun isMaxMana() = current >= max
 
     fun hasMana(other: Long) = current >= other
 
