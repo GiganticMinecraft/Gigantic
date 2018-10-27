@@ -241,6 +241,7 @@ class Gigantic : JavaPlugin() {
     }
 
     override fun onDisable() {
+        server.scheduler.cancelTasks(this)
         Bukkit.getOnlinePlayers().filterNotNull().forEach { player ->
             if (player.gameMode == GameMode.SPECTATOR) {
                 player.find(CatalogPlayerCache.AFK_LOCATION)?.let { it ->
@@ -252,7 +253,6 @@ class Gigantic : JavaPlugin() {
             PlayerCacheMemory.remove(player.uniqueId, false)
             player.kickPlayer("Restarting...Please wait a few minutes.")
         }
-        server.scheduler.cancelTasks(this)
         logger.info("Gigantic is disabled!!")
     }
 
