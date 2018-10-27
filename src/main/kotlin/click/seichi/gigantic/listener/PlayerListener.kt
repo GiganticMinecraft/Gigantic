@@ -126,7 +126,7 @@ class PlayerListener : Listener {
             false
         }
 
-        trySendingUnlockMessage(player)
+        LockedFunction.update(player, true)
 
         player.getOrPut(Keys.BELT).wear(player)
         player.getOrPut(Keys.BAG).carry(player)
@@ -137,26 +137,6 @@ class PlayerListener : Listener {
                 player.find(CatalogPlayerCache.APTITUDE) ?: return,
                 true
         ).sendTo(player)
-    }
-
-    fun trySendingUnlockMessage(player: Player) {
-        Keys.LOCKED_FUNCTION_MAP.forEach { func, key ->
-            // すでに解除済みであれば終了
-            if (func.isUnlocked(player)) {
-                func.unlockAction(player)
-                return@forEach
-            }
-            // 解除可能でなければ終了
-            if (!func.canUnlocked(player)) return@forEach
-            // 解除処理
-            player.transform(key) { hasUnlocked ->
-                if (!hasUnlocked) {
-                    func.unlockAction(player)
-                    func.unlockMessage?.sendTo(player)
-                }
-                true
-            }
-        }
     }
 
     // プレイヤーのメニュー以外のインベントリーオープンをキャンセル
@@ -212,7 +192,7 @@ class PlayerListener : Listener {
         PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
         PlayerSounds.LEVEL_UP.play(player.location)
 
-        trySendingUnlockMessage(player)
+        LockedFunction.update(player)
 
         if (LockedFunction.MANA.isUnlocked(player)) {
             player.manipulate(CatalogPlayerCache.MANA) {

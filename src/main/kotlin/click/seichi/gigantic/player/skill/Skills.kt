@@ -149,7 +149,6 @@ object Skills {
     }
 
 
-    // 強すぎるのでレベル制限を調整
     val TERRA_DRAIN = object : Invokable {
 
         override fun findInvokable(player: Player): Consumer<Player>? {

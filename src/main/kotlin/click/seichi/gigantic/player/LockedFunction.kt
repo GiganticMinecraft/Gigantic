@@ -6,6 +6,7 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.UnlockMessages
 import org.bukkit.entity.Player
@@ -18,7 +19,7 @@ import org.bukkit.entity.Player
 enum class LockedFunction(
         val id: Int,
         private val canUnlocking: (Player) -> Boolean,
-        // 毎Login時に実行される
+        // 毎Login時とアンロック時に処理される
         val unlockAction: (Player) -> Unit = {},
         val unlockMessage: ChatMessage? = null
 ) {
@@ -64,6 +65,47 @@ enum class LockedFunction(
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }, unlockMessage = UnlockMessages.UNLOCK_STELLA_CLAIR),
     ;
+
+    companion object {
+        fun update(player: Player, isAction: Boolean = false) {
+            Keys.LOCKED_FUNCTION_MAP.forEach { func, _ ->
+                if (func.canUnlocked(player)) {
+                    if (func.isUnlocked(player)) {
+                        // 現在も解除可能で既に解除済みの時
+                        if (isAction) {
+                            func.unlockAction
+                        }
+                    } else {
+                        // 現在も解除可能で解除していない時
+                        func.unlock(player)
+                    }
+                } else {
+                    if (func.isUnlocked(player)) {
+                        // 現在解除できないがすでに解除しているとき
+                        func.lock(player)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun unlock(player: Player) {
+        // 解除処理
+        player.transform(Keys.LOCKED_FUNCTION_MAP[this] ?: return) { hasUnlocked ->
+            if (!hasUnlocked) {
+                unlockAction(player)
+                unlockMessage?.sendTo(player)
+            }
+            true
+        }
+    }
+
+    private fun lock(player: Player) {
+        // ロック処理
+        player.transform(Keys.LOCKED_FUNCTION_MAP[this] ?: return) { hasUnlocked ->
+            false
+        }
+    }
 
     fun canUnlocked(player: Player) = canUnlocking(player)
 
