@@ -33,7 +33,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
-import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
@@ -337,18 +336,6 @@ class PlayerListener : Listener {
             else -> {
             }
         }
-    }
-
-    @EventHandler
-    fun onBlockBreak(event: BlockBreakEvent) {
-        val player = event.player ?: return
-        val block = event.block ?: return
-
-        player.offer(Keys.TERRA_DRAIN_SKILL_BLOCK, block)
-        if (Skills.TERRA_DRAIN.tryInvoke(player)) return
-
-        player.offer(Keys.HEAL_SKILL_BLOCK, block)
-        if (Skills.HEAL.tryInvoke(player)) return
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

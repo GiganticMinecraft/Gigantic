@@ -18,7 +18,7 @@ import org.bukkit.entity.Player
 /**
  * @author tar0ss
  */
-class TerraDrainer : Cutter(), RelationalBreaker {
+class TerraDrain : Cutter(), RelationalBreaker {
 
     private val relationalFaceSet = setOf(
             BlockFace.NORTH,
@@ -32,7 +32,6 @@ class TerraDrainer : Cutter(), RelationalBreaker {
     )
 
     override fun breakRelations(player: Player, block: Block) {
-        if (!block.isLog) return
         SkillAnimations.TERRA_DRAIN_HEAL.start(player.location.clone().add(0.0, 1.7, 0.0))
         breakRelationalBlock(player, block, true)
     }

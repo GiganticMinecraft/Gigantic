@@ -8,7 +8,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Invokable
 import click.seichi.gigantic.player.LockedFunction
-import click.seichi.gigantic.player.breaker.skills.TerraDrainer
+import click.seichi.gigantic.player.breaker.skills.TerraDrain
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SkillPops
 import click.seichi.gigantic.sound.sounds.SkillSounds
@@ -148,16 +148,17 @@ object Skills {
     }
 
 
+    // 強すぎるのでレベル制限を調整
     val TERRA_DRAIN = object : Invokable {
 
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (player.gameMode != GameMode.SURVIVAL) return null
             if (!LockedFunction.TERRA_DRAIN.isUnlocked(player)) return null
             val block = player.getOrPut(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return null
-            if (!block.isTree) return null
+            if (!block.isLog) return null
             return Consumer { p ->
                 val b = player.remove(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return@Consumer
-                TerraDrainer().breakRelations(p, b)
+                TerraDrain().breakRelations(p, b)
             }
         }
     }

@@ -10,6 +10,8 @@ import java.util.*
 import kotlin.properties.Delegates
 
 /**
+ * マナは大気中や物質の中に存在するもの
+ *
  * @author tar0ss
  */
 class Mana : Manipulator<Mana, PlayerCache> {
