@@ -25,49 +25,51 @@ class TerraDrainer : Cutter(), RelationalBreaker {
     override fun breakRelations(player: Player, block: Block) {
         if (!block.isLog) return
         SkillAnimations.TERRA_DRAIN_HEAL.start(player.location.clone().add(0.0, 1.7, 0.0))
-        breakRelationalBlock(player, block, block)
+        breakRelationalBlock(player, block, true)
     }
 
-    private fun breakRelationalBlock(player: Player, base: Block, target: Block) {
+    private fun breakRelationalBlock(player: Player, target: Block, isBaseBlock: Boolean) {
         if (!target.isTree) return
-        onBreakBlock(player, target)
+        player.server.consoleSender.sendMessage("${target.type} ${target.x} ${target.y} ${target.z} ")
+
         // 原木でなければ処理しない
         if (target.isLog) {
             relationalFaceSet.map {
                 Bukkit.getScheduler().runTaskLater(
                         Gigantic.PLUGIN,
                         {
-                            breakRelationalBlock(player, base, target.getRelative(it))
+                            breakRelationalBlock(player, target.getRelative(it), false)
                         },
                         when (it) {
-                            BlockFace.NORTH,
-                            BlockFace.EAST,
-                            BlockFace.SOUTH,
-                            BlockFace.WEST,
-                            BlockFace.UP,
-                            BlockFace.DOWN -> 10L
-                            BlockFace.NORTH_EAST,
-                            BlockFace.NORTH_WEST,
-                            BlockFace.SOUTH_EAST,
-                            BlockFace.SOUTH_WEST,
-                            BlockFace.WEST_NORTH_WEST,
-                            BlockFace.NORTH_NORTH_WEST,
-                            BlockFace.NORTH_NORTH_EAST,
-                            BlockFace.EAST_NORTH_EAST,
-                            BlockFace.EAST_SOUTH_EAST,
-                            BlockFace.SOUTH_SOUTH_EAST,
-                            BlockFace.SOUTH_SOUTH_WEST,
-                            BlockFace.WEST_SOUTH_WEST,
-                            BlockFace.SELF -> 20L
+                            BlockFace.NORTH -> 2L
+                            BlockFace.EAST -> 4L
+                            BlockFace.SOUTH -> 6L
+                            BlockFace.WEST -> 8L
+                            BlockFace.UP -> 10L
+                            BlockFace.DOWN -> 12L
+                            BlockFace.NORTH_EAST -> 14L
+                            BlockFace.NORTH_WEST -> 16L
+                            BlockFace.SOUTH_EAST -> 18L
+                            BlockFace.SOUTH_WEST -> 20L
+                            BlockFace.WEST_NORTH_WEST -> 22L
+                            BlockFace.NORTH_NORTH_WEST -> 24L
+                            BlockFace.NORTH_NORTH_EAST -> 26L
+                            BlockFace.EAST_NORTH_EAST -> 28L
+                            BlockFace.EAST_SOUTH_EAST -> 30L
+                            BlockFace.SOUTH_SOUTH_EAST -> 32L
+                            BlockFace.SOUTH_SOUTH_WEST -> 34L
+                            BlockFace.WEST_SOUTH_WEST -> 36L
+                            BlockFace.SELF -> 0L
                         }
                 )
             }
         }
-
-        breakBlock(player, target, base == target, false)
+        onSkillBreak(player, target)
+        if (!isBaseBlock)
+            breakBlock(player, target, false, false)
     }
 
-    override fun onBreakBlock(player: Player, block: Block) {
+    private fun onSkillBreak(player: Player, block: Block) {
         SkillAnimations.TERRA_DRAIN_TREE.start(block.centralLocation)
         SkillSounds.TERRA_DRAIN.play(block.centralLocation)
         player.manipulate(CatalogPlayerCache.HEALTH) {
@@ -84,4 +86,5 @@ class TerraDrainer : Cutter(), RelationalBreaker {
             }
         }
     }
+
 }

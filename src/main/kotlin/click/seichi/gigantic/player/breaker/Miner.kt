@@ -38,7 +38,8 @@ open class Miner : Breaker {
     }
 
 
-    protected open fun onBreakBlock(player: Player, block: Block) {
+    private fun onBreakBlock(player: Player, block: Block) {
+
         // Gravity process
         block.fallUpperCrustBlock()
 
