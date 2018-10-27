@@ -24,8 +24,6 @@ object ProfileSkillMenu : Menu() {
         registerButton(2, MenuButtons.PROFILE_SKILL_HEAL)
         registerButton(3, MenuButtons.PROFILE_SKILL_FLASH)
         registerButton(4, MenuButtons.PROFILE_SKILL_MINE_BURST)
-        registerButton(5, MenuButtons.PROFILE_SKILL_TERRA_DRAIN)
-        registerButton(6, MenuButtons.PROFILE_SKILL_STELLA_CLAIR)
     }
 
 }

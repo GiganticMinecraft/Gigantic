@@ -372,4 +372,19 @@ object MenuButtons {
 
     }
 
+    val PROFILE_SPELL = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.LAPIS_LAZULI).apply {
+                setDisplayName(MenuMessages.PROFILE_SPELL.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (event.inventory.holder === ProfileSpellMenu) return
+            ProfileSpellMenu.open(player)
+        }
+
+    }
+
 }

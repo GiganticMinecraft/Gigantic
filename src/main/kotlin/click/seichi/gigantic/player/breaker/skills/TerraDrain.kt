@@ -1,15 +1,15 @@
 package click.seichi.gigantic.player.breaker.skills
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.animation.SkillAnimations
+import click.seichi.gigantic.animation.SpellAnimations
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.breaker.Cutter
 import click.seichi.gigantic.player.breaker.RelationalBreaker
-import click.seichi.gigantic.player.skill.SkillParameters
-import click.seichi.gigantic.popup.SkillPops
-import click.seichi.gigantic.sound.sounds.SkillSounds
+import click.seichi.gigantic.player.spell.SpellParameters
+import click.seichi.gigantic.popup.SpellPops
+import click.seichi.gigantic.sound.sounds.SpellSounds
 import org.bukkit.Bukkit
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
@@ -32,7 +32,7 @@ class TerraDrain : Cutter(), RelationalBreaker {
     )
 
     override fun breakRelations(player: Player, block: Block) {
-        SkillAnimations.TERRA_DRAIN_HEAL.start(player.location.clone().add(0.0, 1.7, 0.0))
+        SpellAnimations.TERRA_DRAIN_HEAL.start(player.location.clone().add(0.0, 1.7, 0.0))
         breakRelationalBlock(player, block, true)
     }
 
@@ -116,24 +116,24 @@ class TerraDrain : Cutter(), RelationalBreaker {
                     9L
             )
         }
-        onSkillBreak(player, target)
+        onSpellBreak(player, target)
         if (!isBaseBlock)
             breakBlock(player, target, false, false)
     }
 
-    private fun onSkillBreak(player: Player, block: Block) {
-        SkillAnimations.TERRA_DRAIN_TREE.start(block.centralLocation)
-        SkillSounds.TERRA_DRAIN.play(block.centralLocation)
+    private fun onSpellBreak(player: Player, block: Block) {
+        SpellAnimations.TERRA_DRAIN_TREE.start(block.centralLocation)
+        SpellSounds.TERRA_DRAIN.play(block.centralLocation)
         player.manipulate(CatalogPlayerCache.HEALTH) {
             if (it.isMaxHealth()) return@manipulate
             val percent = when {
-                block.isLog -> SkillParameters.TERRA_DRAIN_LOG_HEAL_PERCENT
-                block.isLeaves -> SkillParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
+                block.isLog -> SpellParameters.TERRA_DRAIN_LOG_HEAL_PERCENT
+                block.isLeaves -> SpellParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
                 else -> 0.0
             }
             val wrappedAmount = it.increase(it.max.div(100.0).times(percent).toLong())
             if (wrappedAmount > 0) {
-                SkillPops.HEAL(wrappedAmount).pop(block.centralLocation)
+                SpellPops.HEAL(wrappedAmount).pop(block.centralLocation)
                 PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
             }
         }

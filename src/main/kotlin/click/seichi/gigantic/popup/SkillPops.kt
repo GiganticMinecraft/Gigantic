@@ -32,11 +32,5 @@ object SkillPops {
         )
     }
 
-    val STELLA_CLAIR = { amount: Long ->
-        PopUp(
-                "${ChatColor.AQUA}$amount Mana",
-                PopUp.PopPattern.POP
-        )
-    }
 
 }

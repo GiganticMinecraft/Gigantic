@@ -5,6 +5,7 @@ import click.seichi.gigantic.cache.manipulator.manipulators.*
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.skill.SkillParameters
+import click.seichi.gigantic.player.spell.SpellParameters
 import click.seichi.gigantic.raid.RaidBattle
 import click.seichi.gigantic.relic.RelicRarity
 import click.seichi.gigantic.will.Will
@@ -224,6 +225,10 @@ object MenuMessages {
             Locale.JAPANESE to "${ChatColor.AQUA}覚えたスキル"
     )
 
+    val PROFILE_SPELL = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}覚えた魔法"
+    )
+
     val PROFILE_RAID_BOSS_DEFEATED = { defeatCount: Long ->
         LocalizedText(
                 Locale.JAPANESE to "討伐数: $defeatCount"
@@ -363,15 +368,19 @@ object MenuMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "回復量(原木): 最大体力の %.1f ".format(SkillParameters.TERRA_DRAIN_LOG_HEAL_PERCENT).plus("%")
+                                    "回復量(原木): 最大体力の %.1f ".format(SpellParameters.TERRA_DRAIN_LOG_HEAL_PERCENT).plus("%")
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "回復量(葉): 最大体力の %.1f ".format(SkillParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT).plus("%")
+                                    "回復量(葉): 最大体力の %.1f ".format(SpellParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT).plus("%")
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                                     "原木を破壊して発動"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.BLUE}" +
+                                    "---スニークしながら原木を破壊すると発動しない"
                     )
             )
 
@@ -414,11 +423,11 @@ object MenuMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "発動確率: ${SkillParameters.STELLA_CLAIR_PROBABILITY_PERCENT} %"
+                                    "発動確率: ${SpellParameters.STELLA_CLAIR_PROBABILITY_PERCENT} %"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "回復量: 最大マナの${SkillParameters.STELLA_CLAIR_AMOUNT_PERCENT} %"
+                                    "回復量: 最大マナの${SpellParameters.STELLA_CLAIR_AMOUNT_PERCENT} %"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +

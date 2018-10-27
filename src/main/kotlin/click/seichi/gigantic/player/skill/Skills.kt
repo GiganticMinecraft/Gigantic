@@ -8,7 +8,6 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Invokable
 import click.seichi.gigantic.player.LockedFunction
-import click.seichi.gigantic.player.breaker.skills.TerraDrain
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SkillPops
 import click.seichi.gigantic.sound.sounds.SkillSounds
@@ -148,38 +147,5 @@ object Skills {
 
     }
 
-
-    val TERRA_DRAIN = object : Invokable {
-
-        override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!LockedFunction.TERRA_DRAIN.isUnlocked(player)) return null
-            val block = player.getOrPut(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return null
-            if (!block.isLog) return null
-            return Consumer { p ->
-                val b = player.remove(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return@Consumer
-                TerraDrain().breakRelations(p, b)
-            }
-        }
-    }
-
-    // 読み:ステラクレア
-    val STELLA_CLAIR = object : Invokable {
-        override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!LockedFunction.STELLA_CLAIR.isUnlocked(player)) return null
-            if (SkillParameters.STELLA_CLAIR_PROBABILITY_PERCENT < Random.nextInt(100)) return null
-            val mana = player.find(CatalogPlayerCache.MANA) ?: return null
-            if (mana.isMaxMana()) return null
-            return Consumer { p ->
-                val block = player.remove(Keys.STELLA_CLAIR_SKILL_BLOCK) ?: return@Consumer
-                p.manipulate(CatalogPlayerCache.MANA) {
-                    val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.STELLA_CLAIR_AMOUNT_PERCENT))
-                    SkillAnimations.STELLA_CLAIR.absorb(p, block.centralLocation)
-                    SkillPops.STELLA_CLAIR(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.STELLA_CLAIR_SKILL_DIFF, 0.0))
-                    PlayerMessages.MANA_DISPLAY(it).sendTo(p)
-                }
-            }
-        }
-
-    }
 
 }

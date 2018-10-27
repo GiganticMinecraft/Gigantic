@@ -54,7 +54,7 @@ enum class LockedFunction(
     }, unlockMessage = UnlockMessages.UNLOCK_SWITCH),
 
     TERRA_DRAIN(7, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }, unlockMessage = UnlockMessages.UNLOCK_TERRA_DRAIN),
 
     WILL_O_THE_WISP(8, {
@@ -102,7 +102,7 @@ enum class LockedFunction(
 
     private fun lock(player: Player) {
         // ロック処理
-        player.transform(Keys.LOCKED_FUNCTION_MAP[this] ?: return) { hasUnlocked ->
+        player.transform(Keys.LOCKED_FUNCTION_MAP[this] ?: return) {
             false
         }
     }

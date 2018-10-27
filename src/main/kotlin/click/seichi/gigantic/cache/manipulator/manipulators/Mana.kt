@@ -67,4 +67,6 @@ class Mana : Manipulator<Mana, PlayerCache> {
 
     fun isMaxMana() = max >= current
 
+    fun hasMana(other: Long) = current >= other
+
 }

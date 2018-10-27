@@ -166,7 +166,7 @@ class Gigantic : JavaPlugin() {
                 PlayerMonitor(),
                 ItemListener(),
                 BlockListener(),
-                SkillListener()
+                SkillSpellListener()
         )
 
         registerPacketListeners(

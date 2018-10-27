@@ -24,13 +24,22 @@ class ManaMessage(
         else -> amount.roundToInt()
     }
 
+    private val ratio = nextNum.div(maxNum.toDouble())
+
     private val remainNumString = (1..nextNum).joinToString(
-            prefix = "${ChatColor.AQUA}",
+            prefix = when (ratio) {
+                1.00 -> ChatColor.WHITE
+                in 0.99..1.00 -> ChatColor.DARK_PURPLE
+                in 0.10..0.99 -> ChatColor.BLUE
+                in 0.01..0.10 -> ChatColor.LIGHT_PURPLE
+                in 0.00..0.01 -> ChatColor.RED
+                else -> ChatColor.DARK_RED
+            }.toString(),
             separator = ""
     ) { Defaults.MANA_CHAR }
 
     private val lostNumString = (1..(maxNum - nextNum)).joinToString(
-            prefix = "${ChatColor.GRAY}",
+            prefix = if (ratio == 0.0) "${ChatColor.RED}" else "${ChatColor.GRAY}",
             separator = ""
     ) { Defaults.MANA_LOST_CHAR }
 
