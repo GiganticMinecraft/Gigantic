@@ -1,7 +1,5 @@
 package click.seichi.gigantic.player.skill
 
-import org.bukkit.block.BlockFace
-
 /**
  * @author tar0ss
  *
@@ -30,6 +28,4 @@ object SkillParameters {
     const val TERRA_DRAIN_LOG_HEAL_PERCENT = 3.0
 
     const val TERRA_DRAIN_LEAVES_HEAL_PERCENT = 0.3
-
-    val TERRA_DRAIN_FACE_SET = BlockFace.values().toSet().minus(BlockFace.SELF)
 }
