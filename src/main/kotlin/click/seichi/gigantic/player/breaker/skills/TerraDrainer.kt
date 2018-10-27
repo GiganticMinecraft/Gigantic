@@ -25,10 +25,10 @@ class TerraDrainer : Cutter(), RelationalBreaker {
     override fun breakRelations(player: Player, block: Block) {
         if (!block.isLog) return
         SkillAnimations.TERRA_DRAIN_HEAL.start(player.location.clone().add(0.0, 1.7, 0.0))
-        breakRelationalBlock(player, block)
+        breakRelationalBlock(player, block, block)
     }
 
-    private fun breakRelationalBlock(player: Player, target: Block) {
+    private fun breakRelationalBlock(player: Player, base: Block, target: Block) {
         if (!target.isTree) return
         onBreakBlock(player, target)
         // 原木でなければ処理しない
@@ -37,7 +37,7 @@ class TerraDrainer : Cutter(), RelationalBreaker {
                 Bukkit.getScheduler().runTaskLater(
                         Gigantic.PLUGIN,
                         {
-                            breakRelationalBlock(player, target.getRelative(it))
+                            breakRelationalBlock(player, base, target.getRelative(it))
                         },
                         when (it) {
                             BlockFace.NORTH,
@@ -64,7 +64,7 @@ class TerraDrainer : Cutter(), RelationalBreaker {
             }
         }
 
-        breakBlock(player, target, false, false)
+        breakBlock(player, target, base == target, false)
     }
 
     override fun onBreakBlock(player: Player, block: Block) {
