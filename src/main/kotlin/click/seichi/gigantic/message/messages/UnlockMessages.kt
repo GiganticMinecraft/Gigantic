@@ -88,14 +88,20 @@ object UnlockMessages {
             }
     ))
 
-    // TODO implements
     val UNLOCK_MANA = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.AQUA}" +
-                        "レイドバトル解禁!!敵を倒してレアアイテムをゲット!!\n" +
+                        "マナを使えるようになった!!"
+            }
+    ))
+
+    val UNLOCK_STELLA_CLAIR = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "回復スキル: ステラクレア を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "インベントリから敵を選択しよう\n" +
-                        "ブロックを破壊することで敵を攻撃!!\n"
+                        "パッシブ効果: ブロックを破壊で最大マナの${SkillParameters.HEAL_AMOUNT_PERCENT}% を回復!!\n" +
+                        "通常破壊時に一定確率で発動する\n"
             }
     ))
 

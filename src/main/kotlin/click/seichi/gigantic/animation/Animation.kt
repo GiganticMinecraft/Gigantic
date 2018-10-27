@@ -54,4 +54,23 @@ class Animation(
                 }
     }
 
+    /**
+     * 吸収する
+     * @param entity 吸収するエンティティ
+     * @param startLocation 開始位置
+     */
+    fun absorb(entity: Entity, startLocation: Location) {
+        val uniqueId = entity.uniqueId ?: return
+        Observable.interval(50L, TimeUnit.MILLISECONDS)
+                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
+                .take(ticks)
+                .subscribe {
+                    val e = Bukkit.getEntity(uniqueId) ?: return@subscribe
+                    val elapsedTicks = it
+                    val diff = e.location.toVector().subtract(startLocation.toVector()).multiply(elapsedTicks.div(ticks.toDouble()))
+                    val spawnLocation = startLocation.clone().add(diff)
+                    rendering(spawnLocation, elapsedTicks)
+                }
+    }
+
 }

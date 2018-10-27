@@ -113,10 +113,11 @@ object Skills {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.HEAL.isUnlocked(player)) return null
             if (SkillParameters.HEAL_PROBABILITY_PERCENT < Random.nextInt(100)) return null
+            val health = player.find(CatalogPlayerCache.HEALTH) ?: return null
+            if (health.isMaxHealth()) return null
             return Consumer { p ->
                 val block = player.remove(Keys.HEAL_SKILL_BLOCK) ?: return@Consumer
                 p.manipulate(CatalogPlayerCache.HEALTH) {
-                    if (it.isMaxHealth()) return@manipulate
                     val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_AMOUNT_PERCENT))
                     SkillAnimations.HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
                     SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
@@ -152,7 +153,6 @@ object Skills {
     val TERRA_DRAIN = object : Invokable {
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (player.gameMode != GameMode.SURVIVAL) return null
             if (!LockedFunction.TERRA_DRAIN.isUnlocked(player)) return null
             val block = player.getOrPut(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return null
             if (!block.isLog) return null
@@ -161,6 +161,26 @@ object Skills {
                 TerraDrain().breakRelations(p, b)
             }
         }
+    }
+
+    // 読み:ステラクレア
+    val STELLA_CLAIR = object : Invokable {
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            if (!LockedFunction.STELLA_CLAIR.isUnlocked(player)) return null
+            if (SkillParameters.STELLA_CLAIR_PROBABILITY_PERCENT < Random.nextInt(100)) return null
+            val mana = player.find(CatalogPlayerCache.MANA) ?: return null
+            if (mana.isMaxMana()) return null
+            return Consumer { p ->
+                val block = player.remove(Keys.STELLA_CLAIR_SKILL_BLOCK) ?: return@Consumer
+                p.manipulate(CatalogPlayerCache.MANA) {
+                    val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.STELLA_CLAIR_AMOUNT_PERCENT))
+                    SkillAnimations.STELLA_CLAIR.absorb(p, block.centralLocation)
+                    SkillPops.STELLA_CLAIR(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.STELLA_CLAIR_SKILL_DIFF, 0.0))
+                    PlayerMessages.MANA_DISPLAY(it).sendTo(p)
+                }
+            }
+        }
+
     }
 
 }

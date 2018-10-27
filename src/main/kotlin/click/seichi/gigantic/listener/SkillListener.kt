@@ -26,6 +26,9 @@ class SkillListener : Listener {
 
         player.offer(Keys.HEAL_SKILL_BLOCK, block)
         if (Skills.HEAL.tryInvoke(player)) return
+
+        player.offer(Keys.STELLA_CLAIR_SKILL_BLOCK, block)
+        if (Skills.STELLA_CLAIR.tryInvoke(player)) return
     }
 
 }

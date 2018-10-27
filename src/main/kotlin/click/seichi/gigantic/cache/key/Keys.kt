@@ -375,11 +375,11 @@ object Keys {
 
     }
 
-    val TITLE = object : Key<PlayerCache, String> {
-        override val default: String
-            get() = ""
+    val STELLA_CLAIR_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
+        override val default: Block?
+            get() = null
 
-        override fun satisfyWith(value: String): Boolean {
+        override fun satisfyWith(value: Block?): Boolean {
             return true
         }
 

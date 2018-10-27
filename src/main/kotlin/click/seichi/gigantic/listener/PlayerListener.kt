@@ -15,6 +15,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
+import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.skill.Skills
 import click.seichi.gigantic.popup.PlayerPops
 import click.seichi.gigantic.raid.RaidManager
@@ -208,15 +209,20 @@ class PlayerListener : Listener {
 
         PlayerMessages.LEVEL_UP_LEVEL(event.level).sendTo(player)
         PlayerPops.LEVEL_UP.follow(player, meanY = 3.7)
-//        PlayerAnimations.LEVEL_UP.follow(player, meanY = 2.0)
         PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
         PlayerSounds.LEVEL_UP.play(player.location)
 
         trySendingUnlockMessage(player)
 
-        player.manipulate(CatalogPlayerCache.MANA) {
-            it.updateMaxMana()
-            it.increase(it.max, true)
+        if (LockedFunction.MANA.isUnlocked(player)) {
+            player.manipulate(CatalogPlayerCache.MANA) {
+                val prevMax = it.max
+                it.updateMaxMana()
+                it.increase(it.max, true)
+                PlayerMessages.MANA_DISPLAY(it).sendTo(player)
+                if (prevMax == it.max) return@manipulate
+                PlayerMessages.LEVEL_UP_MANA(prevMax, it.max).sendTo(player)
+            }
         }
 
         player.manipulate(CatalogPlayerCache.HEALTH) {

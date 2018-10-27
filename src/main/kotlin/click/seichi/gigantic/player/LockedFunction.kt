@@ -58,7 +58,11 @@ enum class LockedFunction(
 
     WILL_O_THE_WISP(8, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 2
-    }, unlockMessage = UnlockMessages.UNLOCK_WILL_O_THE_WISP)
+    }, unlockMessage = UnlockMessages.UNLOCK_WILL_O_THE_WISP),
+
+    STELLA_CLAIR(9, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+    }, unlockMessage = UnlockMessages.UNLOCK_STELLA_CLAIR),
     ;
 
     fun canUnlocked(player: Player) = canUnlocking(player)

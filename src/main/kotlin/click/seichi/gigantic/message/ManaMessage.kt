@@ -34,7 +34,7 @@ class ManaMessage(
             separator = ""
     ) { Defaults.MANA_LOST_CHAR }
 
-    private val spaceString = (1..(63 - maxNum)).joinToString(separator = "") { " " }
+    private val spaceString = (1..(50 - maxNum)).joinToString(separator = "") { " " }
 
     override fun sendTo(player: Player) {
         player.sendTitle(
