@@ -9,6 +9,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.MenuMessages
+import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.relic.RelicRarity
@@ -32,13 +33,22 @@ object MenuButtons {
                 val aptitude = player.find(CatalogPlayerCache.APTITUDE) ?: return@apply
                 val health = player.find(CatalogPlayerCache.HEALTH) ?: return@apply
                 val mineCombo = player.find(CatalogPlayerCache.MINE_COMBO) ?: return@apply
-                setLore(
+                val mana = player.find(CatalogPlayerCache.MANA) ?: return@apply
+                val lore = mutableListOf(
                         MenuMessages.PROFILE_LEVEL(level).asSafety(player.wrappedLocale),
                         MenuMessages.PROFILE_EXP(level).asSafety(player.wrappedLocale),
-                        MenuMessages.PROFILE_HEALTH(health).asSafety(player.wrappedLocale),
-                        MenuMessages.PROFILE_MAX_COMBO(mineCombo).asSafety(player.wrappedLocale),
-                        *MenuMessages.PROFILE_WILL_APTITUDE(aptitude).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
+                        MenuMessages.PROFILE_HEALTH(health).asSafety(player.wrappedLocale)
                 )
+                if (LockedFunction.MANA.isUnlocked(player)) {
+                    lore.add(MenuMessages.PROFILE_MANA(mana).asSafety(player.wrappedLocale))
+                }
+
+                lore.addAll(listOf(
+                        MenuMessages.PROFILE_MAX_COMBO(mineCombo).asSafety(player.wrappedLocale),
+                        *MenuMessages.PROFILE_WILL_APTITUDE(aptitude).map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                )
+
+                setLore(*lore.toTypedArray())
             }
         }
 
@@ -49,6 +59,8 @@ object MenuButtons {
 
     val PROFILE_RAID_BOSS = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.RAID_BATTLE.isUnlocked(player)) return null
+
             return ItemStack(Material.ENDER_EYE).apply {
                 setDisplayName(MenuMessages.PROFILE_RAID_BOSS.asSafety(player.wrappedLocale))
             }
@@ -56,6 +68,8 @@ object MenuButtons {
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
             if (event.inventory.holder === ProfileBossMenu) return
+            if (!LockedFunction.RAID_BATTLE.isUnlocked(player)) return
+
             ProfileBossMenu.open(player)
         }
 
@@ -64,6 +78,8 @@ object MenuButtons {
     val PROFILE_RELIC = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.RAID_BATTLE.isUnlocked(player)) return null
+
             return Head.JEWELLERY_BOX.toItemStack().apply {
                 setDisplayName(MenuMessages.PROFILE_RAID_RELIC.asSafety(player.wrappedLocale))
             }
@@ -71,6 +87,8 @@ object MenuButtons {
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
             if (event.inventory.holder === ProfileRelicMenu) return
+            if (!LockedFunction.RAID_BATTLE.isUnlocked(player)) return
+
             ProfileRelicMenu.open(player)
         }
     }
@@ -184,6 +202,7 @@ object MenuButtons {
     val BELT_SWITCHER_SETTING: (Belt) -> Button = { belt ->
         object : Button {
             override fun getItemStack(player: Player): ItemStack? {
+                if (!LockedFunction.SWITCH.isUnlocked(player)) return null
                 val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
                 return belt.getFixedButton().getItemStack(player)?.apply {
                     setDisplayName(belt.localizedName.asSafety(player.wrappedLocale))
@@ -196,6 +215,7 @@ object MenuButtons {
             }
 
             override fun onClick(player: Player, event: InventoryClickEvent) {
+                if (!LockedFunction.SWITCH.isUnlocked(player)) return
                 player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
                     it.setCanSwitch(belt, !it.canSwitch(belt))
                     if (!it.canSwitch(belt)) {
@@ -228,6 +248,7 @@ object MenuButtons {
     val PROFILE_SKILL_MINE_BURST = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.MINE_BURST.isUnlocked(player)) return null
             return ItemStack(Material.BLAZE_POWDER).apply {
                 setDisplayName(MenuMessages.MINE_BURST_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.MINE_BURST
@@ -245,6 +266,7 @@ object MenuButtons {
     val PROFILE_SKILL_FLASH = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.FLASH.isUnlocked(player)) return null
             return ItemStack(Material.FEATHER).apply {
                 setDisplayName(MenuMessages.FLASH_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.FLASH
@@ -262,6 +284,7 @@ object MenuButtons {
     val PROFILE_SKILL_HEAL = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.HEAL.isUnlocked(player)) return null
             return ItemStack(Material.APPLE).apply {
                 setDisplayName(MenuMessages.HEAL_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.HEAL
@@ -279,6 +302,7 @@ object MenuButtons {
     val PROFILE_SKILL_SWITCH = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.SWITCH.isUnlocked(player)) return null
             return ItemStack(Material.LEVER).apply {
                 setDisplayName(MenuMessages.SWITCH_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.SWITCH
@@ -296,6 +320,7 @@ object MenuButtons {
     val PROFILE_SKILL_TERRA_DRAIN = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.TERRA_DRAIN.isUnlocked(player)) return null
             return ItemStack(Material.WHEAT_SEEDS).apply {
                 setDisplayName(MenuMessages.TERRA_DRAIN_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.TERRA_DRAIN
@@ -313,9 +338,29 @@ object MenuButtons {
     val PROFILE_SKILL_WILL_O_THE_WISP = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.WILL_O_THE_WISP.isUnlocked(player)) return null
             return ItemStack(Material.IRON_NUGGET).apply {
                 setDisplayName(MenuMessages.WILL_O_THE_WISP_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.WILL_O_THE_WISP
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray())
+                setEnchanted(true)
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
+    }
+
+
+    val PROFILE_SKILL_STELLA_CLAIR = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.STELLA_CLAIR.isUnlocked(player)) return null
+            return ItemStack(Material.LAPIS_LAZULI).apply {
+                setDisplayName(MenuMessages.STELLA_CLAIR_TITLE.asSafety(player.wrappedLocale))
+                setLore(*MenuMessages.STELLA_CLAIR
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
                 setEnchanted(true)

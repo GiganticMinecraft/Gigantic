@@ -1,10 +1,7 @@
 package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.boss.Boss
-import click.seichi.gigantic.cache.manipulator.manipulators.Health
-import click.seichi.gigantic.cache.manipulator.manipulators.Level
-import click.seichi.gigantic.cache.manipulator.manipulators.MineCombo
-import click.seichi.gigantic.cache.manipulator.manipulators.WillAptitude
+import click.seichi.gigantic.cache.manipulator.manipulators.*
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.skill.SkillParameters
@@ -170,6 +167,11 @@ object MenuMessages {
                 Locale.JAPANESE to "${ChatColor.GREEN}体力: ${ChatColor.WHITE}${health.current} / ${health.max}"
         )
     }
+    val PROFILE_MANA = { mana: Mana ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GREEN}マナ: ${ChatColor.WHITE}${mana.current} / ${mana.max}"
+        )
+    }
 
     val PROFILE_MAX_COMBO = { mineCombo: MineCombo ->
         LocalizedText(
@@ -311,7 +313,7 @@ object MenuMessages {
             listOf(
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "パッシブ効果: ブロックを破壊して回復"
+                                    "パッシブ効果: ブロックを破壊して体力を回復"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
@@ -357,7 +359,7 @@ object MenuMessages {
             listOf(
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "パッシブ効果: 木を倒し、自身を回復する"
+                                    "パッシブ効果: 木を倒し、自身の体力を回復する"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
@@ -401,6 +403,32 @@ object MenuMessages {
     val WILL_O_THE_WISP_TITLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "スキル: ウィルオウィスプ"
+    )
+
+
+    val STELLA_CLAIR =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "パッシブ効果: ブロックを破壊してマナを回復"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "発動確率: ${SkillParameters.STELLA_CLAIR_PROBABILITY_PERCENT} %"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "回復量: 最大マナの${SkillParameters.STELLA_CLAIR_AMOUNT_PERCENT} %"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    "全ての通常破壊で発動"
+                    )
+            )
+
+    val STELLA_CLAIR_TITLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
+                    "回復スキル: ステラクレア"
     )
 
 }

@@ -100,36 +100,12 @@ object HotButtons {
         }
 
         override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
+            if (!LockedFunction.SWITCH.isUnlocked(player)) return
             BeltSwitchSettingMenu.open(player)
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            BeltSwitchSettingMenu.open(player)
-        }
-
-    }
-
-    // TODO implements
-    val BELT_MANA = object : HotButton {
-
-        override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.SWITCH.isUnlocked(player)) return null
-            val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
-            val nextBelt = switcher.nextBelt()
-            return nextBelt.getFixedButton().getItemStack(player)?.apply {
-                setDisplayName(HookedItemMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.SWITCH_DETAIL_LORE
-                        .map { it.asSafety(player.wrappedLocale) }
-                        .toTypedArray()
-                )
-            }
-        }
-
-        override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
-            BeltSwitchSettingMenu.open(player)
-        }
-
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (!LockedFunction.SWITCH.isUnlocked(player)) return
             BeltSwitchSettingMenu.open(player)
         }
 

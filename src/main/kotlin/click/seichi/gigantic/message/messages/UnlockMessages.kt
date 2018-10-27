@@ -69,7 +69,7 @@ object UnlockMessages {
                 it to "${ChatColor.YELLOW}" +
                         "回復スキル: テラドレイン を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: 木を倒し、自身を回復する\n" +
+                        "パッシブ効果: 木を倒し、自身の体力を回復する\n" +
                         "原木を破壊して発動!!\n"
             }
     ))
