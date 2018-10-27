@@ -50,6 +50,7 @@ class IgnisVolcano : Miner(), RelationalBreaker {
                 Bukkit.getScheduler().runTaskLater(
                         Gigantic.PLUGIN,
                         {
+                            if (!player.isValid) return@runTaskLater
                             breakRelationalBlock(player, base, target.getRelative(it), false)
                         },
                         when (it) {
@@ -70,6 +71,7 @@ class IgnisVolcano : Miner(), RelationalBreaker {
                 Bukkit.getScheduler().runTaskLater(
                         Gigantic.PLUGIN,
                         {
+                            if (!player.isValid) return@runTaskLater
                             breakRelationalBlock(player, base, upperBlock.getRelative(it), false)
                         },
                         when (it) {
@@ -88,6 +90,7 @@ class IgnisVolcano : Miner(), RelationalBreaker {
             Bukkit.getScheduler().runTaskLater(
                     Gigantic.PLUGIN,
                     {
+                        if (!player.isValid) return@runTaskLater
                         breakRelationalBlock(player, base, upperBlock, false)
                     },
                     9L
@@ -97,6 +100,7 @@ class IgnisVolcano : Miner(), RelationalBreaker {
                 Bukkit.getScheduler().runTaskLater(
                         Gigantic.PLUGIN,
                         {
+                            if (!player.isValid) return@runTaskLater
                             breakRelationalBlock(player, base, underBlock.getRelative(it), false)
                         },
                         when (it) {
@@ -115,6 +119,7 @@ class IgnisVolcano : Miner(), RelationalBreaker {
             Bukkit.getScheduler().runTaskLater(
                     Gigantic.PLUGIN,
                     {
+                        if (!player.isValid) return@runTaskLater
                         breakRelationalBlock(player, base, underBlock, false)
                     },
                     9L

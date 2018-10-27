@@ -42,29 +42,26 @@ class RaidBattle(val boss: Boss) {
         BattleSounds.START.playOnly(player)
         BattleMessages.BATTLE_INFO(this, player.find(CatalogPlayerCache.HEALTH)
                 ?: return, boss.attackInterval, true).sendTo(player)
-        val uniqueId = player.uniqueId
         Observable.interval(1, TimeUnit.SECONDS)
                 .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .takeWhile {
-                    val p = Bukkit.getPlayer(uniqueId) ?: return@takeWhile false
-                    isJoined(p)
+                    player.isValid && isJoined(player)
                 }.subscribe { elapsedSeconds ->
-                    val p = Bukkit.getPlayer(uniqueId) ?: return@subscribe
                     val remainTimeToAttack = boss.attackInterval - ((elapsedSeconds + 1) % boss.attackInterval)
-                    BattleMessages.BATTLE_INFO(this, p.find(CatalogPlayerCache.HEALTH)
-                            ?: return@subscribe, remainTimeToAttack, false).sendTo(p)
+                    BattleMessages.BATTLE_INFO(this, player.find(CatalogPlayerCache.HEALTH)
+                            ?: return@subscribe, remainTimeToAttack, false).sendTo(player)
                     if ((elapsedSeconds + 1) % boss.attackInterval != 0L) return@subscribe
                     // attack
-                    p.manipulate(CatalogPlayerCache.HEALTH) {
+                    player.manipulate(CatalogPlayerCache.HEALTH) {
                         it.decrease(boss.attackDamage)
                         if (it.current == 0L) {
-                            drop(p)
+                            drop(player)
                         }
                     }
-                    p.offer(Keys.DEATH_MESSAGE, DeathMessages.PLAYER_DEATH_RAID_BATTLE(p, boss))
-                    PlayerMessages.HEALTH_DISPLAY(p.find(CatalogPlayerCache.HEALTH) ?: return@subscribe
-                    ).sendTo(p)
-                    p.playEffect(EntityEffect.HURT)
+                    player.offer(Keys.DEATH_MESSAGE, DeathMessages.PLAYER_DEATH_RAID_BATTLE(player, boss))
+                    PlayerMessages.HEALTH_DISPLAY(player.find(CatalogPlayerCache.HEALTH) ?: return@subscribe
+                    ).sendTo(player)
+                    player.playEffect(EntityEffect.HURT)
                 }
     }
 

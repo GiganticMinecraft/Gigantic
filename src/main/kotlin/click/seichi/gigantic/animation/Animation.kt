@@ -39,14 +39,13 @@ class Animation(
                meanY: Double = 0.0,
                meanZ: Double = 0.0
     ) {
-        val uniqueId = entity.uniqueId ?: return
         Observable.interval(50L, TimeUnit.MILLISECONDS)
                 .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .take(ticks)
                 .subscribe {
-                    val e = Bukkit.getEntity(uniqueId) ?: return@subscribe
+                    if (!entity.isValid) return@subscribe
                     val elapsedTicks = it
-                    rendering(e.location.clone().add(
+                    rendering(entity.location.clone().add(
                             meanX,
                             meanY,
                             meanZ
@@ -60,14 +59,13 @@ class Animation(
      * @param startLocation 開始位置
      */
     fun absorb(entity: Entity, startLocation: Location) {
-        val uniqueId = entity.uniqueId ?: return
         Observable.interval(50L, TimeUnit.MILLISECONDS)
                 .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .take(ticks)
                 .subscribe {
-                    val e = Bukkit.getEntity(uniqueId) ?: return@subscribe
+                    if (!entity.isValid) return@subscribe
                     val elapsedTicks = it
-                    val diff = e.location.toVector().subtract(startLocation.toVector()).multiply(elapsedTicks.div(ticks.toDouble()))
+                    val diff = entity.location.toVector().subtract(startLocation.toVector()).multiply(elapsedTicks.div(ticks.toDouble()))
                     val spawnLocation = startLocation.clone().add(diff)
                     rendering(spawnLocation, elapsedTicks)
                 }

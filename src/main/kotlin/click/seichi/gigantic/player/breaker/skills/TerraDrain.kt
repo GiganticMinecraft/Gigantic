@@ -47,6 +47,7 @@ class TerraDrain : Cutter(), RelationalBreaker {
                 Bukkit.getScheduler().runTaskLater(
                         Gigantic.PLUGIN,
                         {
+                            if (!player.isValid) return@runTaskLater
                             breakRelationalBlock(player, target.getRelative(it), false)
                         },
                         when (it) {
@@ -67,6 +68,7 @@ class TerraDrain : Cutter(), RelationalBreaker {
                 Bukkit.getScheduler().runTaskLater(
                         Gigantic.PLUGIN,
                         {
+                            if (!player.isValid) return@runTaskLater
                             breakRelationalBlock(player, upperBlock.getRelative(it), false)
                         },
                         when (it) {
@@ -85,6 +87,7 @@ class TerraDrain : Cutter(), RelationalBreaker {
             Bukkit.getScheduler().runTaskLater(
                     Gigantic.PLUGIN,
                     {
+                        if (!player.isValid) return@runTaskLater
                         breakRelationalBlock(player, upperBlock, false)
                     },
                     9L
@@ -94,6 +97,7 @@ class TerraDrain : Cutter(), RelationalBreaker {
                 Bukkit.getScheduler().runTaskLater(
                         Gigantic.PLUGIN,
                         {
+                            if (!player.isValid) return@runTaskLater
                             breakRelationalBlock(player, underBlock.getRelative(it), false)
                         },
                         when (it) {
@@ -112,6 +116,7 @@ class TerraDrain : Cutter(), RelationalBreaker {
             Bukkit.getScheduler().runTaskLater(
                     Gigantic.PLUGIN,
                     {
+                        if (!player.isValid) return@runTaskLater
                         breakRelationalBlock(player, underBlock, false)
                     },
                     9L

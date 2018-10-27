@@ -299,6 +299,7 @@ class PlayerListener : Listener {
     fun onReSpawn(event: PlayerRespawnEvent) {
         val player = event.player ?: return
         Bukkit.getServer().scheduler.runTaskLater(Gigantic.PLUGIN, {
+            if (!player.isValid) return@runTaskLater
             player.manipulate(CatalogPlayerCache.HEALTH) {
                 it.increase(it.max.div(10.0).times(3.0).toLong())
             }

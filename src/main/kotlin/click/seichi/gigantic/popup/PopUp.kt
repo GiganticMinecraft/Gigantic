@@ -63,6 +63,7 @@ class PopUp(
             }
         }.run {
             Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+                if (!isValid) return@runTaskLater
                 remove()
             }, when (popPattern) {
                 PopUp.PopPattern.STILL -> duration
@@ -81,7 +82,6 @@ class PopUp(
                diffY: Double = 0.0,
                diffZ: Double = 0.0
     ) {
-        val uniqueId = entity.uniqueId ?: return
         entity.world.spawn(entity.location.clone().add(
                 meanX + Random.nextDouble() * diffX,
                 meanY + Random.nextDouble() * diffY,
@@ -103,9 +103,9 @@ class PopUp(
                     .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                     .take(duration)
                     .subscribe({
-                        val e = Bukkit.getEntity(uniqueId) ?: return@subscribe
+                        if (!entity.isValid) return@subscribe
                         teleport(
-                                e.location.clone().add(
+                                entity.location.clone().add(
                                         meanX + Random.nextDouble() * diffX,
                                         meanY + Random.nextDouble() * diffY,
                                         meanZ + Random.nextDouble() * diffZ

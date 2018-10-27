@@ -26,7 +26,7 @@ class LinedChatMessage(
             .forEach {
                 Bukkit.getScheduler().runTaskLater(
                         instance,
-                        { if (player.isOnline) protocol.sendTo(player, it.first) },
+                        { if (player.isValid) protocol.sendTo(player, it.first) },
                         it.second
                 )
             }
