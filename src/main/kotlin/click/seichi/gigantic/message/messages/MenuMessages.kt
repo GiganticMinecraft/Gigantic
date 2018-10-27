@@ -142,6 +142,10 @@ object MenuMessages {
             Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.UNDERLINE}プロフィール"
     )
 
+    val SPECIAL_THANKS_TITLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.UNDERLINE}Special Thanks"
+    )
+
     val PROFILE_LEVEL = { level: Level ->
         LocalizedText(
                 Locale.JAPANESE to "${ChatColor.GREEN}整地レベル: ${ChatColor.WHITE}${level.current}"

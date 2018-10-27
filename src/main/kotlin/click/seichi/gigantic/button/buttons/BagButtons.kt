@@ -7,6 +7,7 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.menus.ProfileMenu
 import click.seichi.gigantic.menu.menus.RaidBattleMenu
+import click.seichi.gigantic.menu.menus.SpecialThanksMenu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.raid.RaidManager
@@ -14,6 +15,7 @@ import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
 /**
@@ -92,6 +94,27 @@ object BagButtons {
                 }
             }
         }
+    }
+
+    val SPECIAL_THANKS = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.MUSIC_DISC_13).apply {
+                setDisplayName(MenuMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale))
+                clearLore()
+                itemMeta = itemMeta.apply {
+                    addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                    addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
+                }
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (event.inventory.holder === SpecialThanksMenu) return
+            SpecialThanksMenu.open(player)
+        }
+
     }
 
 }

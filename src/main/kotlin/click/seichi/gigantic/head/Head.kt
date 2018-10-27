@@ -2,8 +2,11 @@ package click.seichi.gigantic.head
 
 import com.mojang.authlib.GameProfile
 import com.mojang.authlib.properties.Property
+import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
 
 
@@ -41,6 +44,18 @@ enum class Head(
     EMERALD_JEWELLERY("http://textures.minecraft.net/texture/84ab77eefad0b0cdbdf3261a7a4729d5504d6f96d3c162832197443ebe346e6"),
     SAPPHIRE_JEWELLERY("http://textures.minecraft.net/texture/6183c88db98426c64c37e6d789d4ec1e3de43efaafe4be161961ef943dbe83"),
     ;
+
+    companion object {
+        fun getPlayerHead(uuid: UUID): ItemStack {
+            val offlinePlayer = Bukkit.getOfflinePlayer(uuid)
+            val itemStack = ItemStack(Material.PLAYER_HEAD, 1)
+            val skullMeta = itemStack.itemMeta as SkullMeta
+            skullMeta.owningPlayer = offlinePlayer
+            skullMeta.displayName = "${ChatColor.YELLOW}${ChatColor.BOLD}${offlinePlayer.name}"
+            itemStack.itemMeta = skullMeta
+            return itemStack
+        }
+    }
 
     private val baseItemStack: ItemStack by lazy {
         val skull = ItemStack(Material.PLAYER_HEAD)

@@ -11,6 +11,7 @@ object MainBag : Bag() {
         registerButton(9, BagButtons.PROFILE)
         registerButton(19, BagButtons.RAID_BATTLE)
         registerButton(25, BagButtons.AFK)
+        registerButton(32, BagButtons.SPECIAL_THANKS)
     }
 
 }

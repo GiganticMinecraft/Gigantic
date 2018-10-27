@@ -34,7 +34,7 @@ val Block.isSurface
 val Block.centralLocation: Location
     get() = location.clone().add(0.5, 0.5, 0.5)
 
-@Suppress("DEPRECATION")
+
 fun Block.fallUpperCrustBlock() {
     var count = 0
     val fallTask = object : Runnable {
@@ -43,8 +43,7 @@ fun Block.fallUpperCrustBlock() {
             if (target.isCrust) {
                 target.location.world.spawnFallingBlock(
                         target.location.central.subtract(0.0, 0.5, 0.0),
-                        target.type,
-                        target.data
+                        target.blockData
                 )
                 target.type = Material.AIR
                 count++

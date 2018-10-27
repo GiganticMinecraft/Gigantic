@@ -3,6 +3,7 @@ package click.seichi.gigantic.button.buttons
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.button.Button
+import click.seichi.gigantic.button.PlayerHeadButton
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
@@ -19,11 +20,16 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
+import java.util.*
 
 /**
  * @author tar0ss
  */
 object MenuButtons {
+
+    val PLAYER_HEAD = { uuid: UUID ->
+        PlayerHeadButton(uuid)
+    }
 
     val PROFILE_PROFILE = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
