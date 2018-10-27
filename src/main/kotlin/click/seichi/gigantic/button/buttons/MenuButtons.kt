@@ -317,24 +317,6 @@ object MenuButtons {
 
     }
 
-    val PROFILE_SKILL_TERRA_DRAIN = object : Button {
-
-        override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.TERRA_DRAIN.isUnlocked(player)) return null
-            return ItemStack(Material.WHEAT_SEEDS).apply {
-                setDisplayName(MenuMessages.TERRA_DRAIN_TITLE.asSafety(player.wrappedLocale))
-                setLore(*MenuMessages.TERRA_DRAIN
-                        .map { it.asSafety(player.wrappedLocale) }
-                        .toTypedArray())
-                setEnchanted(true)
-            }
-        }
-
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-        }
-
-    }
-
     val PROFILE_SKILL_WILL_O_THE_WISP = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
@@ -354,13 +336,49 @@ object MenuButtons {
     }
 
 
-    val PROFILE_SKILL_STELLA_CLAIR = object : Button {
+    val PROFILE_SPELL_STELLA_CLAIR = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
             if (!LockedFunction.STELLA_CLAIR.isUnlocked(player)) return null
             return ItemStack(Material.LAPIS_LAZULI).apply {
                 setDisplayName(MenuMessages.STELLA_CLAIR_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.STELLA_CLAIR
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray())
+                setEnchanted(true)
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
+    }
+
+    val PROFILE_SPELL_TERRA_DRAIN = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.TERRA_DRAIN.isUnlocked(player)) return null
+            return ItemStack(Material.WHEAT_SEEDS).apply {
+                setDisplayName(MenuMessages.TERRA_DRAIN_TITLE.asSafety(player.wrappedLocale))
+                setLore(*MenuMessages.TERRA_DRAIN
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray())
+                setEnchanted(true)
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
+    }
+
+    val PROFILE_SPELL_IGNIS_VOLCANO = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.IGNIS_VOLCANO.isUnlocked(player)) return null
+            return ItemStack(Material.MAGMA_CREAM).apply {
+                setDisplayName(MenuMessages.IGNIS_VOLCANO_TITLE.asSafety(player.wrappedLocale))
+                setLore(*MenuMessages.IGNIS_VOLCANO
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
                 setEnchanted(true)

@@ -368,6 +368,10 @@ object MenuMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "マナ消費量 ${SpellParameters.TERRA_DRAIN_MANA}"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
                                     "回復量(原木): 最大体力の %.1f ".format(SpellParameters.TERRA_DRAIN_LOG_HEAL_PERCENT).plus("%")
                     ),
                     LocalizedText(
@@ -380,7 +384,7 @@ object MenuMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.BLUE}" +
-                                    "---スニークしながら原木を破壊すると発動しない"
+                                    "---スニークで通常破壊"
                     )
             )
 
@@ -438,6 +442,31 @@ object MenuMessages {
     val STELLA_CLAIR_TITLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "回復スキル: ステラクレア"
+    )
+
+    val IGNIS_VOLCANO =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "パッシブ効果: 地表が焦土と化す"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "マナ消費量 ${SpellParameters.IGNIS_VOLCANO_MANA}"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    "芝生又はキノコブロックを破壊時に発動"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.BLUE}" +
+                                    "---スニークで通常破壊"
+                    )
+            )
+
+    val IGNIS_VOLCANO_TITLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
+                    "破壊スキル: イグニス・ヴォルケーノ"
     )
 
 }

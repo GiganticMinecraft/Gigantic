@@ -149,6 +149,37 @@ class Gigantic : JavaPlugin() {
                 Material.VOID_AIR
         )
 
+        val GRASSES = setOf(
+                Material.GRASS_BLOCK,
+                Material.GRASS_PATH,
+                Material.GRASS,
+                Material.TALL_GRASS,
+                Material.TALL_SEAGRASS,
+                Material.FERN,
+                Material.SEA_PICKLE,
+                Material.DANDELION,
+                Material.POPPY,
+                Material.BLUE_ORCHID,
+                Material.ALLIUM,
+                Material.AZURE_BLUET,
+                Material.RED_TULIP,
+                Material.ORANGE_TULIP,
+                Material.WHITE_TULIP,
+                Material.PINK_TULIP,
+                Material.OXEYE_DAISY,
+                Material.BROWN_MUSHROOM_BLOCK,
+                Material.RED_MUSHROOM_BLOCK,
+                Material.BROWN_MUSHROOM,
+                Material.RED_MUSHROOM,
+                Material.MUSHROOM_STEM,
+                Material.CACTUS,
+                Material.SUNFLOWER,
+                Material.LILAC,
+                Material.ROSE_BUSH,
+                Material.PEONY,
+                Material.LARGE_FERN
+        )
+
         val TREES = setOf(*LOGS.toTypedArray(), *LEAVES.toTypedArray())
     }
 

@@ -11,7 +11,7 @@ import org.bukkit.Particle
 object SpellAnimations {
 
 
-    val TERRA_DRAIN_TREE = Animation(1) { location, _ ->
+    val TERRA_DRAIN_ON_BREAK = Animation(1) { location, _ ->
         location.world.spawnParticle(Particle.VILLAGER_HAPPY, location, 1,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
@@ -19,7 +19,7 @@ object SpellAnimations {
         )
     }
 
-    val TERRA_DRAIN_HEAL = Animation(1) { location, _ ->
+    val TERRA_DRAIN_ON_FIRE = Animation(1) { location, _ ->
         location.world.spawnParticle(Particle.HEART, location, 10,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
@@ -35,5 +35,23 @@ object SpellAnimations {
         )
         location.world.spawnColoredParticle(location, Color.fromRGB(51, 103, 217), 1)
     }
+
+    val IGNIS_VOLCANO_ON_BREAK = Animation(1) { location, _ ->
+        location.world.spawnParticle(Particle.FLAME, location, 1,
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3)
+        )
+    }
+
+    val IGNIS_VOLCANO_ON_FIRE = Animation(1) { location, _ ->
+        location.world.spawnParticle(Particle.LAVA, location, 10,
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3)
+        )
+    }
+
+
 
 }

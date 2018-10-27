@@ -19,8 +19,9 @@ object ProfileSpellMenu : Menu() {
     }
 
     init {
-        registerButton(0, MenuButtons.PROFILE_SKILL_STELLA_CLAIR)
-        registerButton(1, MenuButtons.PROFILE_SKILL_TERRA_DRAIN)
+        registerButton(0, MenuButtons.PROFILE_SPELL_STELLA_CLAIR)
+        registerButton(1, MenuButtons.PROFILE_SPELL_TERRA_DRAIN)
+        registerButton(2, MenuButtons.PROFILE_SPELL_IGNIS_VOLCANO)
     }
 
 }

@@ -64,6 +64,10 @@ enum class LockedFunction(
     STELLA_CLAIR(9, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }, unlockMessage = UnlockMessages.UNLOCK_STELLA_CLAIR),
+
+    IGNIS_VOLCANO(10, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 16
+    }, unlockMessage = UnlockMessages.UNLOCK_IGNIS_VOLCANO),
     ;
 
     companion object {

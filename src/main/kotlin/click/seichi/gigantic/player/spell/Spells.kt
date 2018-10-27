@@ -7,6 +7,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Invokable
 import click.seichi.gigantic.player.LockedFunction
+import click.seichi.gigantic.player.breaker.skills.IgnisVolcano
 import click.seichi.gigantic.player.breaker.skills.TerraDrain
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SpellPops
@@ -68,4 +69,30 @@ object Spells {
 
     }
 
+    val IGNIS_VOLCANO = object : Invokable {
+
+        val consumeMana = SpellParameters.IGNIS_VOLCANO_MANA
+
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            if (!LockedFunction.IGNIS_VOLCANO.isUnlocked(player)) return null
+            if (player.isSneaking) return null
+            val block = player.getOrPut(Keys.IGNIS_VOLCANO_SKILL_BLOCK) ?: return null
+            if (!SpellParameters.IGNIS_VOLCANO_RELATIONAL_BLOCKS.contains(block.type)) return null
+            var canSpell = true
+            player.manipulate(CatalogPlayerCache.MANA) {
+                if (!it.hasMana(consumeMana)) {
+                    canSpell = false
+                } else {
+                    it.decrease(consumeMana)
+                }
+                PlayerMessages.MANA_DISPLAY(it).sendTo(player)
+            }
+            if (!canSpell) return null
+            return Consumer { p ->
+                val b = player.remove(Keys.IGNIS_VOLCANO_SKILL_BLOCK) ?: return@Consumer
+                IgnisVolcano().breakRelations(p, b)
+            }
+        }
+
+    }
 }

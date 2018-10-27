@@ -1,5 +1,7 @@
 package click.seichi.gigantic.player.spell
 
+import org.bukkit.Material
+
 /**
  * @author tar0ss
  */
@@ -14,4 +16,16 @@ object SpellParameters {
     const val TERRA_DRAIN_LEAVES_HEAL_PERCENT = 0.3
 
     const val TERRA_DRAIN_MANA = 8L
+
+    const val IGNIS_VOLCANO_MAX_RADIUS = 7
+
+    const val IGNIS_VOLCANO_MANA = 28L
+
+    val IGNIS_VOLCANO_RELATIONAL_BLOCKS = setOf(
+            Material.GRASS_BLOCK,
+            Material.BROWN_MUSHROOM_BLOCK,
+            Material.RED_MUSHROOM_BLOCK,
+            Material.MUSHROOM_STEM
+    )
+
 }

@@ -70,7 +70,9 @@ object UnlockMessages {
                         "回復魔法: テラドレイン を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: 木を倒し、自身の体力を回復する\n" +
-                        "原木を破壊して発動!!\n"
+                        "原木を破壊して発動!!\n" +
+                        "${ChatColor.BLUE}" +
+                        "---スニークで通常破壊"
             }
     ))
 
@@ -102,6 +104,18 @@ object UnlockMessages {
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: ブロックを破壊で最大マナの${SkillParameters.HEAL_AMOUNT_PERCENT}% を回復!!\n" +
                         "通常破壊時に一定確率で発動する\n"
+            }
+    ))
+
+    val UNLOCK_IGNIS_VOLCANO = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "破壊魔法: イグニス・ヴォルケーノ を覚えた!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "パッシブ効果: 地表が焦土と化す\n" +
+                        "芝生又はキノコブロックを通常破壊時に発動\n" +
+                        "${ChatColor.BLUE}" +
+                        "---スニークで通常破壊"
             }
     ))
 

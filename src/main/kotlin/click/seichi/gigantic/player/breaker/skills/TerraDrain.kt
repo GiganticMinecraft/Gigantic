@@ -32,7 +32,8 @@ class TerraDrain : Cutter(), RelationalBreaker {
     )
 
     override fun breakRelations(player: Player, block: Block) {
-        SpellAnimations.TERRA_DRAIN_HEAL.start(player.location.clone().add(0.0, 1.7, 0.0))
+        SpellAnimations.TERRA_DRAIN_ON_FIRE.start(block.centralLocation)
+        SpellSounds.TERRA_DRAIN_ON_FIRE.play(player.location)
         breakRelationalBlock(player, block, true)
     }
 
@@ -122,8 +123,8 @@ class TerraDrain : Cutter(), RelationalBreaker {
     }
 
     private fun onSpellBreak(player: Player, block: Block) {
-        SpellAnimations.TERRA_DRAIN_TREE.start(block.centralLocation)
-        SpellSounds.TERRA_DRAIN.play(block.centralLocation)
+        SpellAnimations.TERRA_DRAIN_ON_BREAK.start(block.centralLocation)
+        SpellSounds.TERRA_DRAIN_ON_BREAK.play(block.centralLocation)
         player.manipulate(CatalogPlayerCache.HEALTH) {
             if (it.isMaxHealth()) return@manipulate
             val percent = when {
