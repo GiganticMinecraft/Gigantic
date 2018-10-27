@@ -153,6 +153,8 @@ object Skills {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (player.gameMode != GameMode.SURVIVAL) return null
             if (!LockedFunction.TERRA_DRAIN.isUnlocked(player)) return null
+            val block = player.getOrPut(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return null
+            if (!block.isTree) return null
             return Consumer { p ->
                 val b = player.remove(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return@Consumer
                 TerraDrainer().breakRelations(p, b)
