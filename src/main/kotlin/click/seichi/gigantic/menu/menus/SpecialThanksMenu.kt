@@ -21,14 +21,16 @@ object SpecialThanksMenu : Menu() {
 
     private val playerMap: Map<String, String> = mapOf(
             "kamikami46" to "6b076b43-c186-4a37-b8b5-46c84abbf46c",
-            "Inubeco" to "a164535e-8597-4f55-9e34-1712fa69b831"
+            "Inubeco" to "a164535e-8597-4f55-9e34-1712fa69b831",
+            "yuki_256" to "4ca99a6c-6c80-452f-a3a3-01b6aba7fccf"
     )
 
     init {
-        val index = 0
+        var index = 0
         playerMap.values.forEach { uuidString ->
             val uuid = UUID.fromString(uuidString) ?: return@forEach
             registerButton(index, MenuButtons.PLAYER_HEAD(uuid))
+            index++
         }
     }
 
