@@ -12,7 +12,7 @@ import java.util.*
 class PlayerHeadButton(private val uuid: UUID) : Button {
 
     override fun getItemStack(player: Player): ItemStack? {
-        return Head.getPlayerHead(uuid).clone()
+        return Head.getPlayerHead(uuid)?.clone()
     }
 
     override fun onClick(player: Player, event: InventoryClickEvent) {

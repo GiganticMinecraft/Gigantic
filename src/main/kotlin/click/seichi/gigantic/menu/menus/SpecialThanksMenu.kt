@@ -25,8 +25,9 @@ object SpecialThanksMenu : Menu() {
     )
 
     init {
-        playerMap.values.forEachIndexed { index, uuidString ->
-            val uuid = UUID.fromString(uuidString) ?: return@forEachIndexed
+        val index = 0
+        playerMap.values.forEach { uuidString ->
+            val uuid = UUID.fromString(uuidString) ?: return@forEach
             registerButton(index, MenuButtons.PLAYER_HEAD(uuid))
         }
     }

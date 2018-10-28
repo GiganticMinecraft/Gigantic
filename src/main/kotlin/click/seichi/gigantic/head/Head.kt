@@ -46,8 +46,11 @@ enum class Head(
     ;
 
     companion object {
-        fun getPlayerHead(uuid: UUID): ItemStack {
+        fun getPlayerHead(uuid: UUID): ItemStack? {
             val offlinePlayer = Bukkit.getOfflinePlayer(uuid)
+            if (offlinePlayer.name == "null") {
+                return null
+            }
             val itemStack = ItemStack(Material.PLAYER_HEAD, 1)
             val skullMeta = itemStack.itemMeta as SkullMeta
             skullMeta.owningPlayer = offlinePlayer
