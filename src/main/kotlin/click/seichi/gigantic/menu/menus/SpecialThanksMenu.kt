@@ -22,7 +22,8 @@ object SpecialThanksMenu : Menu() {
     private val playerMap: Map<String, String> = mapOf(
             "kamikami46" to "6b076b43-c186-4a37-b8b5-46c84abbf46c",
             "Inubeco" to "a164535e-8597-4f55-9e34-1712fa69b831",
-            "yuki_256" to "4ca99a6c-6c80-452f-a3a3-01b6aba7fccf"
+            "yuki_256" to "4ca99a6c-6c80-452f-a3a3-01b6aba7fccf",
+            "Rukure2017" to "f90b2eb7-c1b5-41fc-81de-f68537c497c9"
     )
 
     init {
