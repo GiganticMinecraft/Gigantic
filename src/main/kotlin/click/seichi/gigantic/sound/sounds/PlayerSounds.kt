@@ -14,7 +14,7 @@ object PlayerSounds {
                 Sound.ENTITY_EXPERIENCE_ORB_PICKUP,
                 SoundCategory.PLAYERS,
                 pitchLevel = (combo % 25).toInt(),
-                volume = 0.2F
+                volume = 0.1F
         )
     }
 
