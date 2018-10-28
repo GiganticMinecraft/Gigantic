@@ -110,12 +110,12 @@ object UnlockMessages {
             }
     ))
 
-    val UNLOCK_IGNIS_VOLCANO = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_GRAND_NATURA = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "破壊魔法: イグニス・ヴォルケーノ を覚えた!!\n" +
+                        "破壊魔法: グランド・ナトラ を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: 地表が焦土と化す\n" +
+                        "パッシブ効果: 植物を吸収する\n" +
                         "芝生又はキノコブロックを通常破壊時に発動\n" +
                         "${ChatColor.BLUE}" +
                         "---スニークで通常破壊"

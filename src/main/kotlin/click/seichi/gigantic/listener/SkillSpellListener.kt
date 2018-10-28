@@ -53,8 +53,8 @@ class SkillSpellListener : Listener {
         player.offer(Keys.TERRA_DRAIN_SKILL_BLOCK, block)
         if (Spells.TERRA_DRAIN.tryInvoke(player)) return true
 
-        player.offer(Keys.IGNIS_VOLCANO_SKILL_BLOCK, block)
-        if (Spells.IGNIS_VOLCANO.tryInvoke(player)) return true
+        player.offer(Keys.GRAND_NATURA_SKILL_BLOCK, block)
+        if (Spells.GRAND_NATURA.tryInvoke(player)) return true
 
         player.offer(Keys.AQUA_LINEA_SKILL_BLOCK, block)
         if (Spells.AQUA_LINEA.tryInvoke(player)) return true

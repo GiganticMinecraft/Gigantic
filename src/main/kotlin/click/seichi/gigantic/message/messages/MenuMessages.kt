@@ -448,15 +448,15 @@ object MenuMessages {
                     "回復魔法: ステラ・クレア"
     )
 
-    val IGNIS_VOLCANO =
+    val GRAND_NATURA =
             listOf(
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "パッシブ効果: 地表が焦土と化す"
+                                    "パッシブ効果: 植物を吸収する"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "マナ消費量 ${SpellParameters.IGNIS_VOLCANO_MANA_PER_BLOCK} / ブロック"
+                                    "マナ消費量 ${SpellParameters.GRAND_NATURA_MANA_PER_BLOCK} / ブロック"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
@@ -468,9 +468,9 @@ object MenuMessages {
                     )
             )
 
-    val IGNIS_VOLCANO_TITLE = LocalizedText(
+    val GRAND_NATURA_TITLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
-                    "破壊魔法: イグニス・ヴォルケーノ"
+                    "破壊魔法: グランド・ナトラ"
     )
 
 

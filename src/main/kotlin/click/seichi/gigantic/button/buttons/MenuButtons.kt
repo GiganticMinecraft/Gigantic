@@ -378,13 +378,13 @@ object MenuButtons {
 
     }
 
-    val PROFILE_SPELL_IGNIS_VOLCANO = object : Button {
+    val PROFILE_SPELL_GRAND_NATURA = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.IGNIS_VOLCANO.isUnlocked(player)) return null
-            return ItemStack(Material.MAGMA_CREAM).apply {
-                setDisplayName(MenuMessages.IGNIS_VOLCANO_TITLE.asSafety(player.wrappedLocale))
-                setLore(*MenuMessages.IGNIS_VOLCANO
+            if (!LockedFunction.GRAND_NATURA.isUnlocked(player)) return null
+            return ItemStack(Material.SEA_PICKLE).apply {
+                setDisplayName(MenuMessages.GRAND_NATURA_TITLE.asSafety(player.wrappedLocale))
+                setLore(*MenuMessages.GRAND_NATURA
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
                 setEnchanted(true)

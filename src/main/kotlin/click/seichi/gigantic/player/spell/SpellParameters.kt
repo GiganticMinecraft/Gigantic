@@ -19,9 +19,9 @@ object SpellParameters {
 
     const val IGNIS_VOLCANO_MAX_RADIUS = 7
 
-    const val IGNIS_VOLCANO_MANA_PER_BLOCK = 0.4
+    const val GRAND_NATURA_MANA_PER_BLOCK = 0.4
 
-    val IGNIS_VOLCANO_RELATIONAL_BLOCKS = setOf(
+    val GRAND_NATURA_RELATIONAL_BLOCKS = setOf(
             Material.GRASS_BLOCK,
             Material.BROWN_MUSHROOM_BLOCK,
             Material.RED_MUSHROOM_BLOCK,

@@ -8,7 +8,7 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Invokable
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.breaker.spells.AquaLinea
-import click.seichi.gigantic.player.breaker.spells.IgnisVolcano
+import click.seichi.gigantic.player.breaker.spells.GrandNatura
 import click.seichi.gigantic.player.breaker.spells.TerraDrain
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SpellPops
@@ -65,16 +65,16 @@ object Spells {
         }
 
     }
-
-    val IGNIS_VOLCANO = object : Invokable {
+    //　グランド・ナトラ
+    val GRAND_NATURA = object : Invokable {
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!LockedFunction.IGNIS_VOLCANO.isUnlocked(player)) return null
+            if (!LockedFunction.GRAND_NATURA.isUnlocked(player)) return null
             if (player.isSneaking) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             if (mineBurst.duringFire()) return null
-            val block = player.getOrPut(Keys.IGNIS_VOLCANO_SKILL_BLOCK) ?: return null
-            if (!SpellParameters.IGNIS_VOLCANO_RELATIONAL_BLOCKS.contains(block.type)) return null
+            val block = player.getOrPut(Keys.GRAND_NATURA_SKILL_BLOCK) ?: return null
+            if (!SpellParameters.GRAND_NATURA_RELATIONAL_BLOCKS.contains(block.type)) return null
             var canSpell = true
             player.manipulate(CatalogPlayerCache.MANA) {
                 if (it.current <= 0.toBigDecimal()) {
@@ -84,8 +84,8 @@ object Spells {
             }
             if (!canSpell) return null
             return Consumer { p ->
-                val b = player.remove(Keys.IGNIS_VOLCANO_SKILL_BLOCK) ?: return@Consumer
-                IgnisVolcano().cast(p, b)
+                val b = player.remove(Keys.GRAND_NATURA_SKILL_BLOCK) ?: return@Consumer
+                GrandNatura().cast(p, b)
             }
         }
 

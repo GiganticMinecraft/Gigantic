@@ -18,7 +18,7 @@ import java.math.BigDecimal
  *
  * @author tar0ss
  */
-class IgnisVolcano : Miner(), SpellCaster {
+class GrandNatura : Miner(), SpellCaster {
 
     private val relationalFaceSet = setOf(
             BlockFace.NORTH,
@@ -32,18 +32,18 @@ class IgnisVolcano : Miner(), SpellCaster {
     )
 
     override fun cast(player: Player, base: Block) {
-        SpellAnimations.IGNIS_VOLCANO_ON_FIRE.start(base.centralLocation)
-        SpellSounds.IGNIS_VOLCANO_ON_FIRE.play(player.location)
+        SpellAnimations.GRAND_NATURA_ON_FIRE.start(base.centralLocation)
+        SpellSounds.GRAND_NATURA_ON_FIRE.play(player.location)
         breakRelationalBlock(player, base, base, true)
     }
 
     override fun calcConsumeMana(player: Player, block: Block): BigDecimal {
-        return SpellParameters.IGNIS_VOLCANO_MANA_PER_BLOCK.toBigDecimal()
+        return SpellParameters.GRAND_NATURA_MANA_PER_BLOCK.toBigDecimal()
     }
 
     override fun onCastToBlock(player: Player, block: Block) {
-        SpellAnimations.IGNIS_VOLCANO_ON_BREAK.start(block.centralLocation)
-        SpellSounds.IGNIS_VOLCANO_ON_BREAK.play(block.centralLocation)
+        SpellAnimations.GRAND_NATURA_ON_BREAK.start(block.centralLocation)
+        SpellSounds.GRAND_NATURA_ON_BREAK.play(block.centralLocation)
     }
 
     private fun canBreakRelations(block: Block) = relationalMaterials.contains(block.type)
@@ -142,7 +142,7 @@ class IgnisVolcano : Miner(), SpellCaster {
 
     companion object {
 
-        val relationalMaterials = SpellParameters.IGNIS_VOLCANO_RELATIONAL_BLOCKS
+        val relationalMaterials = SpellParameters.GRAND_NATURA_RELATIONAL_BLOCKS
 
         const val maxRadius = SpellParameters.IGNIS_VOLCANO_MAX_RADIUS
     }

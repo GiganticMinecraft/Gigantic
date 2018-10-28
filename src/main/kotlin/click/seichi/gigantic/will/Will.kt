@@ -13,6 +13,7 @@ enum class Will(val id: Int, val color: Color, val grade: WillGrade, val localiz
     AER(1, Color.fromRGB(240, 248, 255), WillGrade.BASIC, WillMessages.AER),
     AQUA(2, Color.fromRGB(0, 0, 128), WillGrade.BASIC, WillMessages.AQUA),
     IGNIS(3, Color.fromRGB(255, 69, 0), WillGrade.BASIC, WillMessages.IGNIS),
+    // ナトゥーラ
     NATURA(4, Color.fromRGB(0, 255, 0), WillGrade.BASIC, WillMessages.NATURA),
     TERRA(5, Color.fromRGB(124, 83, 53), WillGrade.BASIC, WillMessages.TERRA),
     GLACIES(6, Color.fromRGB(127, 255, 255), WillGrade.ADVANCED, WillMessages.GLACIES),

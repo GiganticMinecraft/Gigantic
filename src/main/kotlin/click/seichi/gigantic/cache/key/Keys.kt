@@ -386,7 +386,7 @@ object Keys {
 
     }
 
-    val IGNIS_VOLCANO_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
+    val GRAND_NATURA_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
         override val default: Block?
             get() = null
 
