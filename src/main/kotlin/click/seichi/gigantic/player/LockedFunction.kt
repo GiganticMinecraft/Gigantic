@@ -24,11 +24,11 @@ enum class LockedFunction(
         val unlockMessage: ChatMessage? = null
 ) {
     MINE_BURST(0, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
     }, unlockMessage = UnlockMessages.UNLOCK_MINE_BURST),
 
     RAID_BATTLE(1, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 6
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 8
     }, unlockMessage = UnlockMessages.UNLOCK_RAID_BATTLE),
 
     MANA(2, {
@@ -36,11 +36,11 @@ enum class LockedFunction(
     }, unlockMessage = UnlockMessages.UNLOCK_MANA),
 
     FLASH(3, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 4
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 6
     }, unlockMessage = UnlockMessages.UNLOCK_FLASH),
 
     HEAL(4, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
     }, unlockMessage = UnlockMessages.UNLOCK_HEAL),
     SWITCH(5, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 1
@@ -58,7 +58,7 @@ enum class LockedFunction(
     }, unlockMessage = UnlockMessages.UNLOCK_TERRA_DRAIN),
 
     WILL_O_THE_WISP(8, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 2
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
     }, unlockMessage = UnlockMessages.UNLOCK_WILL_O_THE_WISP),
 
     STELLA_CLAIR(9, {

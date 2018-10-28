@@ -30,7 +30,7 @@ enum class Boss(
     MOLE(1, Head.MOLE, BossMessages.MOLE_NAME, 12000L, 6000, 5, DropRelic(Relic.MOLE_FUR, 0.8)),
     FROG(2, Head.FROG, BossMessages.FROG_NAME, 12000L, 12000, 12, DropRelic(Relic.FROG_OIL, 0.8)),
     THE_EARTH(3, Head.THE_EARTH, BossMessages.THE_EARTH_NAME, 7000000000L, 100000000, 10, DropRelic(Relic.EARTH_CORE, 0.4)),
-    STEEL(4, Head.STEEL, BossMessages.STEEL_NAME, 100000L, 100000, 10, DropRelic(Relic.STEEL_INGOT, 0.8)),
+    STEEL(4, Head.STEEL, BossMessages.STEEL_NAME, 10000L, 10000, 10, DropRelic(Relic.STEEL_INGOT, 0.8)),
     BIRD(5, Head.BIRD, BossMessages.BIRD_NAME, 50L, 70, 20, DropRelic(Relic.FEATHERS, 1.0)),
     GUARDIAN_OF_THE_FOREST(6, Head.GUARDIAN_OF_THE_FOREST, BossMessages.GUARDIAN_OF_THE_FOREST_NAME, 4000L, 10000, 30, DropRelic(Relic.BEAR_HAND, 0.3)),
     TURKEY(7, Head.TURKEY, BossMessages.TURKEY_NAME, 450L, 100, 3, DropRelic(Relic.GRILLED_TURKEY, 0.6)),
