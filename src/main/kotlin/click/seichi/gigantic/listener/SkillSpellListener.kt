@@ -1,6 +1,7 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.ScoopEvent
@@ -91,6 +92,8 @@ class SkillSpellListener : Listener {
     fun onInteract(event: PlayerInteractEvent) {
         val player = event.player ?: return
         val action = event.action ?: return
+        val belt = player.getOrPut(Keys.BELT)
+        if (belt == Belt.SCOOP) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
         if (!LockedFunction.MANA.isUnlocked(player)) return
         if (action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) return
