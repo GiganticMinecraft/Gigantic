@@ -46,14 +46,14 @@ object SpellSounds {
     )
 
     val GRAND_NATURA_ON_FIRE = DetailedSound(
-            Sound.ENTITY_BLAZE_SHOOT,
+            Sound.ENTITY_ILLUSIONER_MIRROR_MOVE,
             SoundCategory.BLOCKS,
             pitch = (1.5 + Random.nextGaussian(variance = 0.4)).toFloat(),
             volume = 0.2F
     )
 
     val GRAND_NATURA_ON_BREAK = DetailedSound(
-            Sound.BLOCK_LAVA_EXTINGUISH,
+            Sound.ENTITY_ILLUSIONER_CAST_SPELL,
             SoundCategory.BLOCKS,
             pitch = (1.5 + Random.nextGaussian(variance = 0.4)).toFloat(),
             volume = 0.2F

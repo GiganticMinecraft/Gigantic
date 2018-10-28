@@ -3,7 +3,9 @@ package click.seichi.gigantic.animation
 import click.seichi.gigantic.extension.spawnColoredParticle
 import click.seichi.gigantic.util.Random
 import org.bukkit.Color
+import org.bukkit.Material
 import org.bukkit.Particle
+import org.bukkit.inventory.ItemStack
 
 /**
  * @author tar0ss
@@ -36,16 +38,17 @@ object SpellAnimations {
         location.world.spawnColoredParticle(location, Color.fromRGB(51, 103, 217), 1)
     }
 
-    val GRAND_NATURA_ON_BREAK = Animation(1) { location, _ ->
-        location.world.spawnParticle(Particle.FLAME, location, 1,
+    val GRAND_NATURA_ON_BREAK = Animation(3) { location, _ ->
+        location.world.spawnParticle(Particle.ITEM_CRACK, location, 3,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
-                Random.nextGaussian(0.0, 0.3)
+                Random.nextGaussian(0.0, 0.3),
+                ItemStack(Material.GREEN_WOOL)
         )
     }
 
     val GRAND_NATURA_ON_FIRE = Animation(1) { location, _ ->
-        location.world.spawnParticle(Particle.LAVA, location, 10,
+        location.world.spawnParticle(Particle.TOTEM, location, 4,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3)
