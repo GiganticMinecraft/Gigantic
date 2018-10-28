@@ -29,6 +29,8 @@ class PopUp(
         STILL,
         // 飛び出る
         POP,
+        // 飛び出る（長く残る
+        POP_LONG,
         ;
     }
 
@@ -59,15 +61,28 @@ class PopUp(
                                 0.24,
                                 Random.nextGaussian(variance = 0.03)
                         )
+                    PopUp.PopPattern.POP_LONG ->
+                        velocity = Vector(
+                                Random.nextGaussian(variance = 0.03),
+                                0.24,
+                                Random.nextGaussian(variance = 0.03)
+                        )
                 }
             }
         }.run {
+            if (popPattern == PopPattern.POP_LONG) {
+                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+                    setGravity(false)
+                }, 5L)
+            }
+
             Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
                 if (!isValid) return@runTaskLater
                 remove()
             }, when (popPattern) {
                 PopUp.PopPattern.STILL -> duration
                 PopUp.PopPattern.POP -> 5L
+                PopUp.PopPattern.POP_LONG -> 15L
             }
             )
 
