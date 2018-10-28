@@ -6,7 +6,7 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.breaker.Cutter
-import click.seichi.gigantic.player.breaker.RelationalBreaker
+import click.seichi.gigantic.player.breaker.SpellCaster
 import click.seichi.gigantic.player.spell.SpellParameters
 import click.seichi.gigantic.popup.SpellPops
 import click.seichi.gigantic.sound.sounds.SpellSounds
@@ -14,11 +14,12 @@ import org.bukkit.Bukkit
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
+import java.math.BigDecimal
 
 /**
  * @author tar0ss
  */
-class TerraDrain : Cutter(), RelationalBreaker {
+class TerraDrain : Cutter(), SpellCaster {
 
     private val relationalFaceSet = setOf(
             BlockFace.NORTH,
@@ -31,10 +32,33 @@ class TerraDrain : Cutter(), RelationalBreaker {
             BlockFace.NORTH_WEST
     )
 
-    override fun breakRelations(player: Player, block: Block) {
-        SpellAnimations.TERRA_DRAIN_ON_FIRE.start(block.centralLocation)
+    override fun cast(player: Player, base: Block) {
+        SpellAnimations.TERRA_DRAIN_ON_FIRE.start(base.centralLocation)
         SpellSounds.TERRA_DRAIN_ON_FIRE.play(player.location)
-        breakRelationalBlock(player, block, true)
+        breakRelationalBlock(player, base, true)
+    }
+
+    override fun calcConsumeMana(player: Player, block: Block): BigDecimal {
+        return SpellParameters.TERRA_DRAIN_MANA_PER_BLOCK.toBigDecimal()
+    }
+
+    override fun onCastToBlock(player: Player, block: Block) {
+
+        SpellAnimations.TERRA_DRAIN_ON_BREAK.start(block.centralLocation)
+        SpellSounds.TERRA_DRAIN_ON_BREAK.play(block.centralLocation)
+        player.manipulate(CatalogPlayerCache.HEALTH) {
+            if (it.isMaxHealth()) return@manipulate
+            val percent = when {
+                block.isLog -> SpellParameters.TERRA_DRAIN_LOG_HEAL_PERCENT
+                block.isLeaves -> SpellParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
+                else -> 0.0
+            }
+            val wrappedAmount = it.increase(it.max.div(100.0).times(percent).toLong())
+            if (wrappedAmount > 0) {
+                SpellPops.HEAL(wrappedAmount).pop(block.centralLocation)
+                PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+            }
+        }
     }
 
     private fun breakRelationalBlock(player: Player, target: Block, isBaseBlock: Boolean) {
@@ -122,27 +146,9 @@ class TerraDrain : Cutter(), RelationalBreaker {
                     9L
             )
         }
-        onSpellBreak(player, target)
+        castToBlock(player, target)
         if (!isBaseBlock)
             breakBlock(player, target, false, false)
-    }
-
-    private fun onSpellBreak(player: Player, block: Block) {
-        SpellAnimations.TERRA_DRAIN_ON_BREAK.start(block.centralLocation)
-        SpellSounds.TERRA_DRAIN_ON_BREAK.play(block.centralLocation)
-        player.manipulate(CatalogPlayerCache.HEALTH) {
-            if (it.isMaxHealth()) return@manipulate
-            val percent = when {
-                block.isLog -> SpellParameters.TERRA_DRAIN_LOG_HEAL_PERCENT
-                block.isLeaves -> SpellParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
-                else -> 0.0
-            }
-            val wrappedAmount = it.increase(it.max.div(100.0).times(percent).toLong())
-            if (wrappedAmount > 0) {
-                SpellPops.HEAL(wrappedAmount).pop(block.centralLocation)
-                PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
-            }
-        }
     }
 
 }

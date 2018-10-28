@@ -14,7 +14,7 @@ object ManaConfig : SimpleConfiguration("mana", Gigantic.PLUGIN) {
 
     val MANA_MAP by lazy {
         (1..MAX).map {
-            it to getLong("level_to_mana.$it")
+            it to getLong("level_to_mana.$it").toBigDecimal()
         }.toMap()
     }
 

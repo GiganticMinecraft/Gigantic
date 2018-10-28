@@ -7,6 +7,7 @@ import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
+import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -75,10 +76,10 @@ object PlayerMessages {
         ))
     }
 
-    val LEVEL_UP_MANA = { prevMax: Long, nextMax: Long ->
+    val LEVEL_UP_MANA = { prevMax: BigDecimal, nextMax: BigDecimal ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.AQUA}" +
-                        "マナの最大値が上がった ( $prevMax → $nextMax )"
+                        "マナの最大値が上がった ( ${prevMax.toLong()} → ${nextMax.toLong()} )"
         ))
     }
 
@@ -98,9 +99,9 @@ object PlayerMessages {
 
 
     val MANA_DISPLAY = { mana: Mana ->
-        val interval = mana.max.div(Defaults.MANA_BAR_NUM.toDouble())
+        val interval = mana.max.div(Defaults.MANA_BAR_NUM.toBigDecimal())
         val amount = mana.current.div(interval)
-        ManaMessage(mana, amount)
+        ManaMessage(mana, amount.toDouble())
     }
 
 

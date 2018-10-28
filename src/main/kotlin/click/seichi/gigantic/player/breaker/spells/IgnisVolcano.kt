@@ -5,19 +5,20 @@ import click.seichi.gigantic.animation.SpellAnimations
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.isGrass
 import click.seichi.gigantic.player.breaker.Miner
-import click.seichi.gigantic.player.breaker.RelationalBreaker
+import click.seichi.gigantic.player.breaker.SpellCaster
 import click.seichi.gigantic.player.spell.SpellParameters
 import click.seichi.gigantic.sound.sounds.SpellSounds
 import org.bukkit.Bukkit
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
+import java.math.BigDecimal
 
 /**
  *
  * @author tar0ss
  */
-class IgnisVolcano : Miner(), RelationalBreaker {
+class IgnisVolcano : Miner(), SpellCaster {
 
     private val relationalFaceSet = setOf(
             BlockFace.NORTH,
@@ -30,13 +31,22 @@ class IgnisVolcano : Miner(), RelationalBreaker {
             BlockFace.NORTH_WEST
     )
 
-    private fun canBreakRelations(block: Block) = relationalMaterials.contains(block.type)
-
-    override fun breakRelations(player: Player, block: Block) {
-        SpellAnimations.IGNIS_VOLCANO_ON_FIRE.start(block.centralLocation)
+    override fun cast(player: Player, base: Block) {
+        SpellAnimations.IGNIS_VOLCANO_ON_FIRE.start(base.centralLocation)
         SpellSounds.IGNIS_VOLCANO_ON_FIRE.play(player.location)
-        breakRelationalBlock(player, block, block, true)
+        breakRelationalBlock(player, base, base, true)
     }
+
+    override fun calcConsumeMana(player: Player, block: Block): BigDecimal {
+        return SpellParameters.IGNIS_VOLCANO_MANA_PER_BLOCK.toBigDecimal()
+    }
+
+    override fun onCastToBlock(player: Player, block: Block) {
+        SpellAnimations.IGNIS_VOLCANO_ON_BREAK.start(block.centralLocation)
+        SpellSounds.IGNIS_VOLCANO_ON_BREAK.play(block.centralLocation)
+    }
+
+    private fun canBreakRelations(block: Block) = relationalMaterials.contains(block.type)
 
     private fun breakRelationalBlock(player: Player, base: Block, target: Block, isBaseBlock: Boolean) {
 //        player.server.consoleSender.sendMessage("${target.type} ${target.x} ${target.y} ${target.z} ")
@@ -125,14 +135,9 @@ class IgnisVolcano : Miner(), RelationalBreaker {
                     9L
             )
         }
-        onSpellBreak(target)
+        castToBlock(player, target)
         if (!isBaseBlock)
             breakBlock(player, target, false, false)
-    }
-
-    private fun onSpellBreak(block: Block) {
-        SpellAnimations.IGNIS_VOLCANO_ON_BREAK.start(block.centralLocation)
-        SpellSounds.IGNIS_VOLCANO_ON_BREAK.play(block.centralLocation)
     }
 
     companion object {

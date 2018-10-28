@@ -16,7 +16,7 @@ object UserTable : IdTable<UUID>("users") {
 
     val localeString = varchar("localeString", 2).default(Locale.JAPANESE.toString())
 
-    val mana = long("mana").default(Defaults.MANA)
+    val mana = decimal("mana", 30, 6).default(Defaults.MANA.toBigDecimal())
 
     val health = long("health").default(Defaults.HEALTH)
 

@@ -67,7 +67,7 @@ object UnlockMessages {
     val UNLOCK_TERRA_DRAIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "回復魔法: テラドレイン を覚えた!!\n" +
+                        "回復魔法: テラ・ドレイン を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: 木を倒し、自身の体力を回復する\n" +
                         "原木を破壊して発動!!\n" +
@@ -100,7 +100,7 @@ object UnlockMessages {
     val UNLOCK_STELLA_CLAIR = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "回復魔法: ステラクレア を覚えた!!\n" +
+                        "回復魔法: ステラ・クレア を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: ブロックを破壊で最大マナの${SkillParameters.HEAL_AMOUNT_PERCENT}% を回復!!\n" +
                         "通常破壊時に一定確率で発動する\n"

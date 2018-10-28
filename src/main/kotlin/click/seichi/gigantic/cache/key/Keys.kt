@@ -14,6 +14,7 @@ import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
 import org.bukkit.block.Block
 import org.jetbrains.exposed.dao.Entity
+import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -81,22 +82,22 @@ object Keys {
 
     }
 
-    val MANA = object : DatabaseKey<PlayerCache, Long> {
-        override val default: Long
-            get() = 0L
+    val MANA = object : DatabaseKey<PlayerCache, BigDecimal> {
+        override val default: BigDecimal
+            get() = Defaults.MANA.toBigDecimal()
 
-        override fun read(entity: Entity<*>): Long {
+        override fun read(entity: Entity<*>): BigDecimal {
             val user = entity as User
             return user.mana
         }
 
-        override fun store(entity: Entity<*>, value: Long) {
+        override fun store(entity: Entity<*>, value: BigDecimal) {
             val user = entity as User
             user.mana = value
         }
 
-        override fun satisfyWith(value: Long): Boolean {
-            return value >= 0L
+        override fun satisfyWith(value: BigDecimal): Boolean {
+            return true
         }
 
     }

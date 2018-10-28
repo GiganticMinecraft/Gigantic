@@ -20,15 +20,15 @@ class ManaMessage(
     private val nextNum = when {
         amount > maxNum - 1 && maxNum > amount -> maxNum - 1
         amount > maxNum -> maxNum
-        else -> amount.roundToInt()
+        else -> amount.coerceAtLeast(0.00).roundToInt()
     }
 
-    private val ratio = mana.current.div(mana.max.toDouble())
+    private val ratio = mana.current.div(mana.max).toDouble()
 
     private val remainNumString = (1..nextNum).joinToString(
             prefix = when (ratio) {
-                in 0.00..0.10 -> ChatColor.RED
-                in 0.10..0.20 -> ChatColor.DARK_BLUE
+                0.00 -> ChatColor.RED
+                in 0.00..0.20 -> ChatColor.DARK_BLUE
                 in 0.20..0.80 -> ChatColor.BLUE
                 in 0.80..0.99 -> ChatColor.LIGHT_PURPLE
                 else -> ChatColor.WHITE
@@ -37,7 +37,7 @@ class ManaMessage(
     ) { Defaults.MANA_CHAR }
 
     private val lostNumString = (1..(maxNum - nextNum)).joinToString(
-            prefix = if (ratio in 0.00..0.10) "${ChatColor.RED}" else "${ChatColor.GRAY}",
+            prefix = if (ratio == 0.00) "${ChatColor.RED}" else "${ChatColor.GRAY}",
             separator = ""
     ) { Defaults.MANA_LOST_CHAR }
 

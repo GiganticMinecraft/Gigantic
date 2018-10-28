@@ -22,7 +22,7 @@ import java.util.function.Consumer
  */
 object Spells {
 
-    // 読み:ステラクレア
+    // 読み:ステラ・クレア
     val STELLA_CLAIR = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.STELLA_CLAIR.isUnlocked(player)) return null
@@ -32,7 +32,7 @@ object Spells {
             return Consumer { p ->
                 val block = player.remove(Keys.STELLA_CLAIR_SKILL_BLOCK) ?: return@Consumer
                 p.manipulate(CatalogPlayerCache.MANA) {
-                    val wrappedAmount = it.increase(it.max.div(100L).times(SpellParameters.STELLA_CLAIR_AMOUNT_PERCENT))
+                    val wrappedAmount = it.increase(it.max.div(100.toBigDecimal()).times(SpellParameters.STELLA_CLAIR_AMOUNT_PERCENT.toBigDecimal()))
                     SpellAnimations.STELLA_CLAIR.absorb(p, block.centralLocation)
                     SpellPops.STELLA_CLAIR(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.STELLA_CLAIR_SKILL_DIFF, 0.0))
                     PlayerMessages.MANA_DISPLAY(it).sendTo(p)
@@ -45,8 +45,6 @@ object Spells {
 
     val TERRA_DRAIN = object : Invokable {
 
-        val consumeMana = SpellParameters.TERRA_DRAIN_MANA
-
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.TERRA_DRAIN.isUnlocked(player)) return null
             if (player.isSneaking) return null
@@ -54,25 +52,21 @@ object Spells {
             if (!block.isLog) return null
             var canSpell = true
             player.manipulate(CatalogPlayerCache.MANA) {
-                if (!it.hasMana(consumeMana)) {
+                if (it.current <= 0.toBigDecimal()) {
                     canSpell = false
-                } else {
-                    it.decrease(consumeMana)
+                    PlayerMessages.MANA_DISPLAY(it).sendTo(player)
                 }
-                PlayerMessages.MANA_DISPLAY(it).sendTo(player)
             }
             if (!canSpell) return null
             return Consumer { p ->
                 val b = player.remove(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return@Consumer
-                TerraDrain().breakRelations(p, b)
+                TerraDrain().cast(p, b)
             }
         }
 
     }
 
     val IGNIS_VOLCANO = object : Invokable {
-
-        val consumeMana = SpellParameters.IGNIS_VOLCANO_MANA
 
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.IGNIS_VOLCANO.isUnlocked(player)) return null
@@ -81,17 +75,15 @@ object Spells {
             if (!SpellParameters.IGNIS_VOLCANO_RELATIONAL_BLOCKS.contains(block.type)) return null
             var canSpell = true
             player.manipulate(CatalogPlayerCache.MANA) {
-                if (!it.hasMana(consumeMana)) {
+                if (it.current <= 0.toBigDecimal()) {
                     canSpell = false
-                } else {
-                    it.decrease(consumeMana)
+                    PlayerMessages.MANA_DISPLAY(it).sendTo(player)
                 }
-                PlayerMessages.MANA_DISPLAY(it).sendTo(player)
             }
             if (!canSpell) return null
             return Consumer { p ->
                 val b = player.remove(Keys.IGNIS_VOLCANO_SKILL_BLOCK) ?: return@Consumer
-                IgnisVolcano().breakRelations(p, b)
+                IgnisVolcano().cast(p, b)
             }
         }
 
@@ -101,8 +93,6 @@ object Spells {
     // アクアリネーア
     val AQUA_LINEA = object : Invokable {
 
-        val consumeMana = SpellParameters.AQUA_LINEA_MANA
-
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.AQUA_LINEA.isUnlocked(player)) return null
             if (player.isSneaking) return null
@@ -110,17 +100,15 @@ object Spells {
             if (!block.isCrust) return null
             var canSpell = true
             player.manipulate(CatalogPlayerCache.MANA) {
-                if (!it.hasMana(consumeMana)) {
+                if (it.current <= 0.toBigDecimal()) {
                     canSpell = false
-                } else {
-                    it.decrease(consumeMana)
+                    PlayerMessages.MANA_DISPLAY(it).sendTo(player)
                 }
-                PlayerMessages.MANA_DISPLAY(it).sendTo(player)
             }
             if (!canSpell) return null
             return Consumer { p ->
                 val b = player.remove(Keys.AQUA_LINEA_SKILL_BLOCK) ?: return@Consumer
-                AquaLinea().breakRelations(p, b)
+                AquaLinea().cast(p, b)
             }
         }
 

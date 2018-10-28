@@ -372,7 +372,7 @@ object MenuMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "マナ消費量 ${SpellParameters.TERRA_DRAIN_MANA}"
+                                    "マナ消費量 ${SpellParameters.TERRA_DRAIN_MANA_PER_BLOCK} / ブロック"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
@@ -394,7 +394,7 @@ object MenuMessages {
 
     val TERRA_DRAIN_TITLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
-                    "回復スキル: テラドレイン"
+                    "回復スキル: テラ・ドレイン"
     )
 
     val WILL_O_THE_WISP =
@@ -445,7 +445,7 @@ object MenuMessages {
 
     val STELLA_CLAIR_TITLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
-                    "回復スキル: ステラクレア"
+                    "回復スキル: ステラ・クレア"
     )
 
     val IGNIS_VOLCANO =
@@ -456,7 +456,7 @@ object MenuMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "マナ消費量 ${SpellParameters.IGNIS_VOLCANO_MANA}"
+                                    "マナ消費量 ${SpellParameters.IGNIS_VOLCANO_MANA_PER_BLOCK} / ブロック"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
@@ -482,7 +482,7 @@ object MenuMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "マナ消費量 ${SpellParameters.AQUA_LINEA_MANA}"
+                                    "マナ消費量 ${SpellParameters.AQUA_LINEA_MANA_PER_BLOCK} / ブロック"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
