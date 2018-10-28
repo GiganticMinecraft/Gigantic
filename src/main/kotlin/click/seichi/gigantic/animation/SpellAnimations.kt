@@ -52,6 +52,27 @@ object SpellAnimations {
         )
     }
 
+    val AQUA_LINEA_ON_BREAK = Animation(1) { location, _ ->
+        location.world.spawnParticle(Particle.WATER_WAKE, location, 5,
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3)
+        )
+        location.world.spawnParticle(Particle.BUBBLE_POP, location, 2,
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3)
+        )
+    }
+
+    val AQUA_LINEA_ON_FIRE = Animation(1) { location, _ ->
+        location.world.spawnParticle(Particle.WATER_SPLASH, location, 10,
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3)
+        )
+    }
+
 
 
 }

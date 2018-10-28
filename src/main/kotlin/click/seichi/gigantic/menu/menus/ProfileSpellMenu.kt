@@ -22,6 +22,7 @@ object ProfileSpellMenu : Menu() {
         registerButton(0, MenuButtons.PROFILE_SPELL_STELLA_CLAIR)
         registerButton(1, MenuButtons.PROFILE_SPELL_TERRA_DRAIN)
         registerButton(2, MenuButtons.PROFILE_SPELL_IGNIS_VOLCANO)
+        registerButton(3, MenuButtons.PROFILE_SPELL_AQUA_LINEA)
     }
 
 }

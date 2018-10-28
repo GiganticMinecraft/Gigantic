@@ -15,7 +15,7 @@ object SpellParameters {
 
     const val TERRA_DRAIN_LEAVES_HEAL_PERCENT = 0.3
 
-    const val TERRA_DRAIN_MANA = 8L
+    const val TERRA_DRAIN_MANA = 20L
 
     const val IGNIS_VOLCANO_MAX_RADIUS = 7
 
@@ -27,5 +27,18 @@ object SpellParameters {
             Material.RED_MUSHROOM_BLOCK,
             Material.MUSHROOM_STEM
     )
+
+    // 破壊の初期点の探索範囲
+    const val AQUA_LINEA_MAX_DEPTH = 2
+
+    const val AQUA_LINEA_MAX_COUNT = 5
+
+    const val AQUA_LINEA_MAX_DISTANCE = 5
+
+    const val AQUA_LINEA_MANA = 20L
+
+    const val AQUA_LINEA_LINED_BREAK_INTERVAL = 5L
+
+    const val AQUA_LINEA_RESTART_BREAK_INTERVAL = 25L
 
 }

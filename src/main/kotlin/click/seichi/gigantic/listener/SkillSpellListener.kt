@@ -28,6 +28,9 @@ class SkillSpellListener : Listener {
         player.offer(Keys.IGNIS_VOLCANO_SKILL_BLOCK, block)
         if (Spells.IGNIS_VOLCANO.tryInvoke(player)) return
 
+        player.offer(Keys.AQUA_LINEA_SKILL_BLOCK, block)
+        if (Spells.AQUA_LINEA.tryInvoke(player)) return
+
         player.offer(Keys.HEAL_SKILL_BLOCK, block)
         if (Skills.HEAL.tryInvoke(player)) return
 

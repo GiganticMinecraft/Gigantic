@@ -395,4 +395,14 @@ object Keys {
 
     }
 
+    val AQUA_LINEA_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
+        override val default: Block?
+            get() = null
+
+        override fun satisfyWith(value: Block?): Boolean {
+            return true
+        }
+
+    }
+
 }

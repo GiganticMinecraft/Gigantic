@@ -35,11 +35,25 @@ object SpellSounds {
             Sound.ENTITY_BLAZE_SHOOT,
             SoundCategory.BLOCKS,
             pitch = (1.5 + Random.nextGaussian(variance = 0.4)).toFloat(),
-            volume = 0.1F
+            volume = 0.2F
     )
 
     val IGNIS_VOLCANO_ON_BREAK = DetailedSound(
             Sound.BLOCK_LAVA_EXTINGUISH,
+            SoundCategory.BLOCKS,
+            pitch = (1.5 + Random.nextGaussian(variance = 0.4)).toFloat(),
+            volume = 0.2F
+    )
+
+    val AQUA_LINER_ON_FIRE = DetailedSound(
+            Sound.ITEM_TRIDENT_RIPTIDE_1,
+            SoundCategory.BLOCKS,
+            pitch = (1.5 + Random.nextGaussian(variance = 0.4)).toFloat(),
+            volume = 0.2F
+    )
+
+    val AQUA_LINER_ON_BREAK = DetailedSound(
+            Sound.ENTITY_HUSK_CONVERTED_TO_ZOMBIE,
             SoundCategory.BLOCKS,
             pitch = (1.5 + Random.nextGaussian(variance = 0.4)).toFloat(),
             volume = 0.2F

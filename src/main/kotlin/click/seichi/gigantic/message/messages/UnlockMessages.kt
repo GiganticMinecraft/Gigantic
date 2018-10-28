@@ -119,4 +119,15 @@ object UnlockMessages {
             }
     ))
 
+    val UNLOCK_AQUA_LINEA = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "破壊魔法: アクア・リネーア を覚えた!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "パッシブ効果: ブロックが泡となって消える\n" +
+                        "通常破壊時に発動\n" +
+                        "${ChatColor.BLUE}" +
+                        "---スニークで通常破壊"
+            }
+    ))
 }

@@ -473,4 +473,30 @@ object MenuMessages {
                     "破壊スキル: イグニス・ヴォルケーノ"
     )
 
+
+    val AQUA_LINEA =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "パッシブ効果: ブロックが泡となって消える"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "マナ消費量 ${SpellParameters.AQUA_LINEA_MANA}"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    "破壊時に発動"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.BLUE}" +
+                                    "---スニークで通常破壊"
+                    )
+            )
+
+    val AQUA_LINEA_TITLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
+                    "破壊スキル: アクア・リネーア"
+    )
+
 }

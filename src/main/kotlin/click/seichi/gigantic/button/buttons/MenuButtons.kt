@@ -396,6 +396,24 @@ object MenuButtons {
 
     }
 
+    val PROFILE_SPELL_AQUA_LINEA = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.AQUA_LINEA.isUnlocked(player)) return null
+            return ItemStack(Material.PRISMARINE_CRYSTALS).apply {
+                setDisplayName(MenuMessages.AQUA_LINEA_TITLE.asSafety(player.wrappedLocale))
+                setLore(*MenuMessages.AQUA_LINEA
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray())
+                setEnchanted(true)
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+        }
+
+    }
+
     val PROFILE_SPELL = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
