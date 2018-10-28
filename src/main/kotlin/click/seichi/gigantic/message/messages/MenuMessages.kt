@@ -29,7 +29,7 @@ object MenuMessages {
     )
 
     val RAID_BOSS = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.DARK_RED}${ChatColor.UNDERLINE}レイドボスと戦う"
+            Locale.JAPANESE to "${ChatColor.DARK_RED}レイドボスと戦う"
     )
 
     val REST = LocalizedText(
@@ -139,11 +139,11 @@ object MenuMessages {
     )
 
     val PROFILE_TITLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.UNDERLINE}プロフィール"
+            Locale.JAPANESE to "${ChatColor.BLACK}プロフィール"
     )
 
     val SPECIAL_THANKS_TITLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.UNDERLINE}Special Thanks"
+            Locale.JAPANESE to "${ChatColor.BLACK}Special Thanks"
     )
 
     val PROFILE_LEVEL = { level: Level ->
@@ -218,19 +218,19 @@ object MenuMessages {
     }
 
     val PROFILE_RAID_BOSS = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}倒したレイドボス"
+            Locale.JAPANESE to "${ChatColor.BLACK}倒したレイドボス"
     )
 
     val PROFILE_RAID_RELIC = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}手に入れたレリック"
+            Locale.JAPANESE to "${ChatColor.BLACK}手に入れたレリック"
     )
 
     val PROFILE_SKILL = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}覚えたスキル"
+            Locale.JAPANESE to "${ChatColor.BLACK}覚えたスキル"
     )
 
     val PROFILE_SPELL = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}覚えた魔法"
+            Locale.JAPANESE to "${ChatColor.BLACK}覚えた魔法"
     )
 
     val PROFILE_RAID_BOSS_DEFEATED = { defeatCount: Long ->
@@ -246,7 +246,7 @@ object MenuMessages {
     }
 
     val BELT_SWITCHER_SETTING = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.UNDERLINE}スイッチ詳細設定"
+            Locale.JAPANESE to "${ChatColor.BLACK}スイッチ詳細設定"
     )
 
     val BELT_SWITCHER_SETTING_BUTTON_LORE = { canSwitch: Boolean ->
