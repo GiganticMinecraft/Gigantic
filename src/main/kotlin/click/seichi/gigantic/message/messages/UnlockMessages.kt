@@ -93,7 +93,10 @@ object UnlockMessages {
     val UNLOCK_MANA = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.AQUA}" +
-                        "マナを使えるようになった!!"
+                        "マナストーンを見つけた!!魔法を使えるようになった!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "マナストーンを持った状態で魔法が使える!!\n" +
+                        "右クリックで切り替えよう!!"
             }
     ))
 

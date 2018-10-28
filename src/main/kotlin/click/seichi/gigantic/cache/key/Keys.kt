@@ -406,4 +406,25 @@ object Keys {
 
     }
 
+
+    val SPELL_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
+        override val default: Boolean
+            get() = false
+
+        override fun read(entity: Entity<*>): Boolean {
+            val user = entity as User
+            return user.spellToggle
+        }
+
+        override fun store(entity: Entity<*>, value: Boolean) {
+            val user = entity as User
+            user.spellToggle = value
+        }
+
+        override fun satisfyWith(value: Boolean): Boolean {
+            return true
+        }
+
+    }
+
 }

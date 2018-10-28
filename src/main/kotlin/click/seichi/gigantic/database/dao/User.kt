@@ -26,6 +26,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var maxCombo by UserTable.maxCombo
 
+    var spellToggle by UserTable.spellToggle
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt

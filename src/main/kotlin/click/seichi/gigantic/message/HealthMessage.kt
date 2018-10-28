@@ -16,6 +16,6 @@ class HealthMessage(
     }
 
     override fun sendTo(player: Player) {
-        player.health = nextHealth
+        player.health = nextHealth.coerceIn(0.0, 20.0)
     }
 }

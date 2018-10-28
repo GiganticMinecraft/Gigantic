@@ -394,7 +394,7 @@ object MenuMessages {
 
     val TERRA_DRAIN_TITLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
-                    "回復スキル: テラ・ドレイン"
+                    "回復魔法: テラ・ドレイン"
     )
 
     val WILL_O_THE_WISP =
@@ -445,7 +445,7 @@ object MenuMessages {
 
     val STELLA_CLAIR_TITLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
-                    "回復スキル: ステラ・クレア"
+                    "回復魔法: ステラ・クレア"
     )
 
     val IGNIS_VOLCANO =
@@ -470,7 +470,7 @@ object MenuMessages {
 
     val IGNIS_VOLCANO_TITLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
-                    "破壊スキル: イグニス・ヴォルケーノ"
+                    "破壊魔法: イグニス・ヴォルケーノ"
     )
 
 
@@ -496,7 +496,7 @@ object MenuMessages {
 
     val AQUA_LINEA_TITLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
-                    "破壊スキル: アクア・リネーア"
+                    "破壊魔法: アクア・リネーア"
     )
 
 }

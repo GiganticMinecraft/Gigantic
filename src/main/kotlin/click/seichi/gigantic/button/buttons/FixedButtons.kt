@@ -62,6 +62,7 @@ object FixedButtons {
                 if (mineBurst.duringFire()) {
                     addEnchantment(Enchantment.DIG_SPEED, 5)
                 }
+
             }
         }
 

@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory
  * @author tar0ss
  */
 object PlayerSounds {
+
     val OBTAIN_EXP = { combo: Long ->
         DetailedSound(
                 Sound.ENTITY_EXPERIENCE_ORB_PICKUP,

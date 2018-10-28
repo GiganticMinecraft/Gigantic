@@ -164,5 +164,26 @@ object HookedItemMessages {
                     )
             )
 
+    val MANA_STONE = LocalizedText(
+            Locale.JAPANESE to
+                    "${ChatColor.AQUA}" +
+                    "マナストーン"
+    )
+
+    val MANA_STONE_LORE = mutableListOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "輝くひし形の石"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "これを持っていると魔法が使える"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                            "右クリックでしまう"
+            )
+    )
+
 
 }

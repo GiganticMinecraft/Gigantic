@@ -40,7 +40,7 @@ fun ItemStack.addLore(vararg lore: String) {
 fun ItemStack.setEnchanted(flag: Boolean) {
     itemMeta = itemMeta.also { meta ->
         when (flag) {
-            true -> if (!meta.hasEnchants()) meta.addEnchant(Enchantment.DIG_SPEED, 1, true)
+            true -> if (!meta.hasEnchants()) meta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 1, true)
             false -> if (meta.hasEnchants()) meta.enchants.map { it.key }.forEach { meta.removeEnchant(it) }
         }
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS)

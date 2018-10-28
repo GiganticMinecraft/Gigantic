@@ -32,7 +32,6 @@ fun Location.launchFireWorks() {
     // 花火の設定情報オブジェクトを取り出す
     val meta = firework.fireworkMeta
     val effect = FireworkEffect.builder()
-
     // 形状をランダムに決める
     effect.with(types[Random.nextInt(types.size)])
 
@@ -51,7 +50,6 @@ fun Location.launchFireWorks() {
     // 打ち上げ高さを1以上4以内でランダムに決める
     // （5以上は公式の不具合でクライアントの負荷が増大する）
     meta.power = 1 + Random.nextInt(4)
-
     // 花火の設定情報を花火に設定
     meta.addEffect(effect.build())
     firework.fireworkMeta = meta

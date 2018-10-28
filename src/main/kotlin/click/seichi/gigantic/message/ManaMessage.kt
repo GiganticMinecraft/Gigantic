@@ -23,7 +23,7 @@ class ManaMessage(
         else -> amount.coerceAtLeast(0.00).roundToInt()
     }
 
-    private val ratio = mana.current.div(mana.max).toDouble()
+    private val ratio = mana.current.div(mana.max).toDouble().coerceAtLeast(0.00)
 
     private val remainNumString = (1..nextNum).joinToString(
             prefix = when (ratio) {

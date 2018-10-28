@@ -15,12 +15,6 @@ import java.util.*
  */
 object PlayerMessages {
 
-    val MANA_BAR_TITLE = { mana: Mana ->
-        LocalizedText(
-                Locale.JAPANESE to "${ChatColor.AQUA}マナ ${mana.current} / ${mana.max}"
-        )
-    }
-
     val MEMORY_SIDEBAR = { memory: Memory, aptitude: WillAptitude, isForced: Boolean ->
         val willMap = Will.values()
                 .filter { aptitude.has(it) }

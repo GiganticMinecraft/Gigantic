@@ -71,6 +71,8 @@ object Spells {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.IGNIS_VOLCANO.isUnlocked(player)) return null
             if (player.isSneaking) return null
+            val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
+            if (mineBurst.duringFire()) return null
             val block = player.getOrPut(Keys.IGNIS_VOLCANO_SKILL_BLOCK) ?: return null
             if (!SpellParameters.IGNIS_VOLCANO_RELATIONAL_BLOCKS.contains(block.type)) return null
             var canSpell = true
@@ -96,6 +98,8 @@ object Spells {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.AQUA_LINEA.isUnlocked(player)) return null
             if (player.isSneaking) return null
+            val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
+            if (mineBurst.duringFire()) return null
             val block = player.getOrPut(Keys.AQUA_LINEA_SKILL_BLOCK) ?: return null
             if (!block.isCrust) return null
             var canSpell = true

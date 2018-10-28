@@ -14,7 +14,7 @@ object UserTable : IdTable<UUID>("users") {
 
     val name = varchar("name", 50)
 
-    val localeString = varchar("localeString", 2).default(Locale.JAPANESE.toString())
+    val localeString = varchar("locale", 2).default(Locale.JAPANESE.toString())
 
     val mana = decimal("mana", 30, 6).default(Defaults.MANA.toBigDecimal())
 
@@ -22,9 +22,11 @@ object UserTable : IdTable<UUID>("users") {
 
     val beltId = integer("belt_id").default(Defaults.BELT_ID)
 
-    val isFirstJoin = bool("isFirstJoin").default(true)
+    val isFirstJoin = bool("is_first_join").default(true)
 
     val maxCombo = long("max_combo").default(0L)
+
+    val spellToggle = bool("spell_toggle")
 
     val createdAt = datetime("created_at").default(DateTime.now())
 

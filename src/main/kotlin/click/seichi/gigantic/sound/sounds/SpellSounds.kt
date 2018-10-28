@@ -10,6 +10,20 @@ import org.bukkit.SoundCategory
  */
 object SpellSounds {
 
+    val TOGGLE_ON = DetailedSound(
+            Sound.ITEM_TRIDENT_RETURN,
+            SoundCategory.BLOCKS,
+            pitch = (1.5 + Random.nextGaussian(variance = 0.4)).toFloat(),
+            volume = 0.3F
+    )
+
+    val TOGGLE_OFF = DetailedSound(
+            Sound.ITEM_TRIDENT_THROW,
+            SoundCategory.BLOCKS,
+            pitch = (1.5 + Random.nextGaussian(variance = 0.4)).toFloat(),
+            volume = 0.3F
+    )
+
     val TERRA_DRAIN_ON_FIRE = DetailedSound(
             Sound.ITEM_TRIDENT_THROW,
             SoundCategory.BLOCKS,
