@@ -27,7 +27,8 @@ object SpecialThanksMenu : Menu() {
             "Inubeco" to "a164535e-8597-4f55-9e34-1712fa69b831",
             "yuki_256" to "4ca99a6c-6c80-452f-a3a3-01b6aba7fccf",
             "Rukure2017" to "f90b2eb7-c1b5-41fc-81de-f68537c497c9",
-            "taaa150" to "9599901c-fa82-4943-b748-b46e183c53f4"
+            "taaa150" to "9599901c-fa82-4943-b748-b46e183c53f4",
+            "Neko_emon" to "2b4791d3-b71f-4e73-9891-33aeaa3a5ae4"
     )
 
     init {
