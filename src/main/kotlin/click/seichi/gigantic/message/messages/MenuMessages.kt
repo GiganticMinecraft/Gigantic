@@ -102,7 +102,7 @@ object MenuMessages {
                                     Locale.JAPANESE to "${ChatColor.GRAY}攻撃間隔 : ${raidBattle.boss.attackInterval}秒"
                             ),
                             LocalizedText(
-                                    Locale.JAPANESE to "${ChatColor.GRAY}落とすもの : "
+                                    Locale.JAPANESE to "${ChatColor.GRAY}落とすレリック : "
                             )
                     )
             )
