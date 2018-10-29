@@ -5,6 +5,7 @@ import click.seichi.gigantic.button.buttons.MenuButtons
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 
 /**
@@ -16,7 +17,8 @@ object BeltSwitchSettingMenu : Menu() {
         get() = 9
 
     override fun getTitle(player: Player): String {
-        return MenuMessages.BELT_SWITCHER_SETTING.asSafety(player.wrappedLocale)
+        return "${ChatColor.BLACK}" +
+                MenuMessages.BELT_SWITCHER_SETTING.asSafety(player.wrappedLocale)
     }
 
     init {

@@ -4,6 +4,7 @@ import click.seichi.gigantic.button.buttons.MenuButtons
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 
 /**
@@ -15,7 +16,8 @@ object ProfileSkillMenu : Menu() {
         get() = 9
 
     override fun getTitle(player: Player): String {
-        return MenuMessages.PROFILE_SKILL.asSafety(player.wrappedLocale)
+        return "${ChatColor.BLACK}" +
+                MenuMessages.PROFILE_SKILL.asSafety(player.wrappedLocale)
     }
 
     init {

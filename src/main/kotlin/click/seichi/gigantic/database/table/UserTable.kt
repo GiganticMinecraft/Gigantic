@@ -26,7 +26,7 @@ object UserTable : IdTable<UUID>("users") {
 
     val maxCombo = long("max_combo").default(0L)
 
-    val spellToggle = bool("spell_toggle")
+    val spellToggle = bool("spell_toggle").default(false)
 
     val createdAt = datetime("created_at").default(DateTime.now())
 

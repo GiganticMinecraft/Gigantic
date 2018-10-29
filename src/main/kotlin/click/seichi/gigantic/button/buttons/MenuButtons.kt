@@ -34,7 +34,7 @@ object MenuButtons {
     val PROFILE_PROFILE = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
             return player.getHead().apply {
-                setDisplayName(MenuMessages.PROFILE_PROFILE.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}" + MenuMessages.PROFILE_PROFILE.asSafety(player.wrappedLocale))
                 val level = player.find(CatalogPlayerCache.LEVEL) ?: return@apply
                 val aptitude = player.find(CatalogPlayerCache.APTITUDE) ?: return@apply
                 val health = player.find(CatalogPlayerCache.HEALTH) ?: return@apply
@@ -68,7 +68,7 @@ object MenuButtons {
             if (!LockedFunction.RAID_BATTLE.isUnlocked(player)) return null
 
             return ItemStack(Material.ENDER_EYE).apply {
-                setDisplayName(MenuMessages.PROFILE_RAID_BOSS.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}" + MenuMessages.PROFILE_RAID_BOSS.asSafety(player.wrappedLocale))
             }
         }
 
@@ -87,7 +87,7 @@ object MenuButtons {
             if (!LockedFunction.RAID_BATTLE.isUnlocked(player)) return null
 
             return Head.JEWELLERY_BOX.toItemStack().apply {
-                setDisplayName(MenuMessages.PROFILE_RAID_RELIC.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}" + MenuMessages.PROFILE_RAID_RELIC.asSafety(player.wrappedLocale))
             }
         }
 
@@ -240,7 +240,7 @@ object MenuButtons {
 
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.BLAZE_POWDER).apply {
-                setDisplayName(MenuMessages.PROFILE_SKILL.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}" + MenuMessages.PROFILE_SKILL.asSafety(player.wrappedLocale))
             }
         }
 
@@ -418,7 +418,7 @@ object MenuButtons {
 
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.LAPIS_LAZULI).apply {
-                setDisplayName(MenuMessages.PROFILE_SPELL.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}" + MenuMessages.PROFILE_SPELL.asSafety(player.wrappedLocale))
             }
         }
 

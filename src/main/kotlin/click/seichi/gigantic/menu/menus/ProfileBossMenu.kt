@@ -10,6 +10,7 @@ import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.BookMenu
 import click.seichi.gigantic.message.messages.MenuMessages
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 
@@ -47,7 +48,8 @@ object ProfileBossMenu : BookMenu() {
     }
 
     override fun getTitle(player: Player, page: Int): String {
-        return "${MenuMessages.PROFILE_RAID_BOSS.asSafety(player.wrappedLocale)} $page/$maxPage"
+        return "${ChatColor.BLACK}" +
+                "${MenuMessages.PROFILE_RAID_BOSS.asSafety(player.wrappedLocale)} $page/$maxPage"
     }
 
     override fun getButton(page: Int, slot: Int): Button? {

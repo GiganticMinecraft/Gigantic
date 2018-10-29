@@ -12,6 +12,10 @@ import java.util.*
 class PlayerHeadButton(private val uuid: UUID) : Button {
 
     override fun getItemStack(player: Player): ItemStack? {
+        return getItemStack()
+    }
+
+    fun getItemStack(): ItemStack? {
         return Head.getPlayerHead(uuid)?.clone()
     }
 

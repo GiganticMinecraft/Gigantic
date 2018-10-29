@@ -11,6 +11,7 @@ import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.BookMenu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.relic.Relic
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 
@@ -48,7 +49,8 @@ object ProfileRelicMenu : BookMenu() {
     }
 
     override fun getTitle(player: Player, page: Int): String {
-        return "${MenuMessages.PROFILE_RAID_RELIC.asSafety(player.wrappedLocale)} $page/$maxPage"
+        return "${ChatColor.BLACK}" +
+                "${MenuMessages.PROFILE_RAID_RELIC.asSafety(player.wrappedLocale)} $page/$maxPage"
     }
 
     override fun getButton(page: Int, slot: Int): Button? {
