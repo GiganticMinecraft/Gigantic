@@ -17,9 +17,9 @@ object SpellParameters {
 
     const val TERRA_DRAIN_MANA_PER_BLOCK = 0.7
 
-    const val IGNIS_VOLCANO_MAX_RADIUS = 7
+    const val GRAND_NATURA_MAX_RADIUS = 5
 
-    const val GRAND_NATURA_MANA_PER_BLOCK = 0.4
+    const val GRAND_NATURA_MANA_PER_BLOCK = 3.0
 
     val GRAND_NATURA_RELATIONAL_BLOCKS = setOf(
             Material.GRASS_BLOCK,
@@ -35,7 +35,7 @@ object SpellParameters {
 
     const val AQUA_LINEA_MAX_DISTANCE = 5
 
-    const val AQUA_LINEA_MANA_PER_BLOCK = 0.2
+    const val AQUA_LINEA_MANA_PER_BLOCK = 3.6
 
     const val AQUA_LINEA_LINED_BREAK_INTERVAL = 5L
 

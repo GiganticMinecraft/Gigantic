@@ -144,7 +144,7 @@ class GrandNatura : Miner(), SpellCaster {
 
         val relationalMaterials = SpellParameters.GRAND_NATURA_RELATIONAL_BLOCKS
 
-        const val maxRadius = SpellParameters.IGNIS_VOLCANO_MAX_RADIUS
+        const val maxRadius = SpellParameters.GRAND_NATURA_MAX_RADIUS
     }
 
 
