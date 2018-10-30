@@ -98,5 +98,10 @@ object PlayerMessages {
         ManaMessage(mana, amount.toDouble())
     }
 
+    val SPAWN_PROTECT = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "スポーン地点に近いため、保護されています"
+    ))
+
 
 }

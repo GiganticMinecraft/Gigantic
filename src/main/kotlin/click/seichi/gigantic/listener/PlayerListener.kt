@@ -34,6 +34,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
@@ -50,6 +51,17 @@ import kotlin.math.roundToLong
  * @author tar0ss
  */
 class PlayerListener : Listener {
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    fun onSpawnAreaBlockBreak(event: BlockBreakEvent) {
+        val player = event.player ?: return
+        val block = event.block ?: return
+        val spawnLocation = block.world.spawnLocation
+        val spawnRadius = Gigantic.PLUGIN.server.spawnRadius
+        if (block.location.distance(spawnLocation).toInt() > spawnRadius) return
+        PlayerMessages.SPAWN_PROTECT.sendTo(player)
+        event.isCancelled = true
+    }
 
     @EventHandler
     fun onPlayerPreLoginAsync(event: AsyncPlayerPreLoginEvent) {

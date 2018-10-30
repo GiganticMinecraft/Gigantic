@@ -40,7 +40,6 @@ object Spells {
                 }
             }
         }
-
     }
 
     val TERRA_DRAIN = object : Invokable {
