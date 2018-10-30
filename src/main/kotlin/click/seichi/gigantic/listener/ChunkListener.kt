@@ -26,7 +26,7 @@ class ChunkListener : Listener {
 //    }
 
     @EventHandler
-    fun onPopulate(event: ChunkLoadEvent) {
+    fun onLoad(event: ChunkLoadEvent) {
         event.chunk.entities.filter { it.type == EntityType.ARMOR_STAND }.forEach { it.remove() }
     }
 
