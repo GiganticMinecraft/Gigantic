@@ -24,7 +24,7 @@ enum class LockedFunction(
         val unlockMessage: ChatMessage? = null,
         private val priority: UnlockPriority = UnlockPriority.NORMAL
 ) {
-    MINE_BURST(0, {
+    SKILL_MINE_BURST(0, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
     }, unlockMessage = UnlockMessages.UNLOCK_MINE_BURST),
 
@@ -34,16 +34,17 @@ enum class LockedFunction(
 
     MANA_STONE(2, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
-    }, unlockMessage = UnlockMessages.UNLOCK_MANA_STONE),
+    }, unlockMessage = UnlockMessages.UNLOCK_MANA_STONE,
+            priority = UnlockPriority.HIGHEST),
 
-    FLASH(3, {
+    SKILL_FLASH(3, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 6
     }, unlockMessage = UnlockMessages.UNLOCK_FLASH),
 
-    HEAL(4, {
+    SKILL_HEAL(4, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
     }, unlockMessage = UnlockMessages.UNLOCK_HEAL),
-    SWITCH(5, {
+    SKILL_SWITCH(5, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 1
     }, unlockAction = { player ->
         player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
@@ -54,26 +55,26 @@ enum class LockedFunction(
         }
     }, unlockMessage = UnlockMessages.UNLOCK_SWITCH),
 
-    TERRA_DRAIN(7, {
+    SPELL_TERRA_DRAIN(7, {
         MANA_STONE.isUnlocked(it) &&
                 it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }, unlockMessage = UnlockMessages.UNLOCK_TERRA_DRAIN),
 
-    WILL_O_THE_WISP(8, {
+    SKILL_WILL_O_THE_WISP(8, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
     }, unlockMessage = UnlockMessages.UNLOCK_WILL_O_THE_WISP),
 
-    STELLA_CLAIR(9, {
+    SPELL_STELLA_CLAIR(9, {
         MANA_STONE.isUnlocked(it) &&
                 it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }, unlockMessage = UnlockMessages.UNLOCK_STELLA_CLAIR),
 
-    GRAND_NATURA(10, {
+    SPELL_GRAND_NATURA(10, {
         MANA_STONE.isUnlocked(it) &&
                 it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 14
     }, unlockMessage = UnlockMessages.UNLOCK_GRAND_NATURA),
 
-    AQUA_LINEA(11, {
+    SPELL_AQUA_LINEA(11, {
         MANA_STONE.isUnlocked(it) &&
                 it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 18
     }, unlockMessage = UnlockMessages.UNLOCK_AQUA_LINEA),

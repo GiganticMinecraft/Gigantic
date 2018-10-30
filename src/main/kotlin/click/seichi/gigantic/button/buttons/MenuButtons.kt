@@ -208,7 +208,7 @@ object MenuButtons {
     val BELT_SWITCHER_SETTING: (Belt) -> Button = { belt ->
         object : Button {
             override fun getItemStack(player: Player): ItemStack? {
-                if (!LockedFunction.SWITCH.isUnlocked(player)) return null
+                if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return null
                 val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
                 return belt.getFixedButton().getItemStack(player)?.apply {
                     setDisplayName(belt.localizedName.asSafety(player.wrappedLocale))
@@ -221,7 +221,7 @@ object MenuButtons {
             }
 
             override fun onClick(player: Player, event: InventoryClickEvent) {
-                if (!LockedFunction.SWITCH.isUnlocked(player)) return
+                if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return
                 player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
                     it.setCanSwitch(belt, !it.canSwitch(belt))
                     if (!it.canSwitch(belt)) {
@@ -254,7 +254,7 @@ object MenuButtons {
     val PROFILE_SKILL_MINE_BURST = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.MINE_BURST.isUnlocked(player)) return null
+            if (!LockedFunction.SKILL_MINE_BURST.isUnlocked(player)) return null
             return ItemStack(Material.BLAZE_POWDER).apply {
                 setDisplayName(MenuMessages.MINE_BURST_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.MINE_BURST
@@ -272,7 +272,7 @@ object MenuButtons {
     val PROFILE_SKILL_FLASH = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.FLASH.isUnlocked(player)) return null
+            if (!LockedFunction.SKILL_FLASH.isUnlocked(player)) return null
             return ItemStack(Material.FEATHER).apply {
                 setDisplayName(MenuMessages.FLASH_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.FLASH
@@ -290,7 +290,7 @@ object MenuButtons {
     val PROFILE_SKILL_HEAL = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.HEAL.isUnlocked(player)) return null
+            if (!LockedFunction.SKILL_HEAL.isUnlocked(player)) return null
             return ItemStack(Material.APPLE).apply {
                 setDisplayName(MenuMessages.HEAL_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.HEAL
@@ -308,7 +308,7 @@ object MenuButtons {
     val PROFILE_SKILL_SWITCH = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.SWITCH.isUnlocked(player)) return null
+            if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return null
             return ItemStack(Material.LEVER).apply {
                 setDisplayName(MenuMessages.SWITCH_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.SWITCH
@@ -326,7 +326,7 @@ object MenuButtons {
     val PROFILE_SKILL_WILL_O_THE_WISP = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.WILL_O_THE_WISP.isUnlocked(player)) return null
+            if (!LockedFunction.SKILL_WILL_O_THE_WISP.isUnlocked(player)) return null
             return ItemStack(Material.IRON_NUGGET).apply {
                 setDisplayName(MenuMessages.WILL_O_THE_WISP_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.WILL_O_THE_WISP
@@ -345,7 +345,7 @@ object MenuButtons {
     val PROFILE_SPELL_STELLA_CLAIR = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.STELLA_CLAIR.isUnlocked(player)) return null
+            if (!LockedFunction.SPELL_STELLA_CLAIR.isUnlocked(player)) return null
             return ItemStack(Material.LAPIS_LAZULI).apply {
                 setDisplayName(MenuMessages.STELLA_CLAIR_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.STELLA_CLAIR
@@ -363,7 +363,7 @@ object MenuButtons {
     val PROFILE_SPELL_TERRA_DRAIN = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.TERRA_DRAIN.isUnlocked(player)) return null
+            if (!LockedFunction.SPELL_TERRA_DRAIN.isUnlocked(player)) return null
             return ItemStack(Material.WHEAT_SEEDS).apply {
                 setDisplayName(MenuMessages.TERRA_DRAIN_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.TERRA_DRAIN
@@ -381,7 +381,7 @@ object MenuButtons {
     val PROFILE_SPELL_GRAND_NATURA = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.GRAND_NATURA.isUnlocked(player)) return null
+            if (!LockedFunction.SPELL_GRAND_NATURA.isUnlocked(player)) return null
             return ItemStack(Material.SEA_PICKLE).apply {
                 setDisplayName(MenuMessages.GRAND_NATURA_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.GRAND_NATURA
@@ -399,7 +399,7 @@ object MenuButtons {
     val PROFILE_SPELL_AQUA_LINEA = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.AQUA_LINEA.isUnlocked(player)) return null
+            if (!LockedFunction.SPELL_AQUA_LINEA.isUnlocked(player)) return null
             return ItemStack(Material.PRISMARINE_CRYSTALS).apply {
                 setDisplayName(MenuMessages.AQUA_LINEA_TITLE.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.AQUA_LINEA

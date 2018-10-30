@@ -25,7 +25,7 @@ object HookedItemMessages {
                                 "どんなに使っても折れない"
                 )
         ).apply {
-            if (LockedFunction.SWITCH.isUnlocked(player)) {
+            if (LockedFunction.SKILL_SWITCH.isUnlocked(player)) {
                 add(LocalizedText(
                         Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                                 "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
@@ -47,7 +47,7 @@ object HookedItemMessages {
                                 "どんなに使っても折れない"
                 )
         ).apply {
-            if (LockedFunction.SWITCH.isUnlocked(player)) {
+            if (LockedFunction.SKILL_SWITCH.isUnlocked(player)) {
                 add(LocalizedText(
                         Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                                 "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
@@ -69,7 +69,7 @@ object HookedItemMessages {
                                 "どんなに使っても折れない"
                 )
         ).apply {
-            if (LockedFunction.SWITCH.isUnlocked(player)) {
+            if (LockedFunction.SKILL_SWITCH.isUnlocked(player)) {
                 add(LocalizedText(
                         Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                                 "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
@@ -92,7 +92,7 @@ object HookedItemMessages {
                                 "どんなにすくっても溜まらない"
                 )
         ).apply {
-            if (LockedFunction.SWITCH.isUnlocked(player)) {
+            if (LockedFunction.SKILL_SWITCH.isUnlocked(player)) {
                 add(LocalizedText(
                         Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                                 "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"

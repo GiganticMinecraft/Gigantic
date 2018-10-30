@@ -21,7 +21,7 @@ object HotButtons {
     val MINE_BURST = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.MINE_BURST.isUnlocked(player)) return null
+            if (!LockedFunction.SKILL_MINE_BURST.isUnlocked(player)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             return when {
                 mineBurst.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
@@ -57,7 +57,7 @@ object HotButtons {
     val FLASH = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.FLASH.isUnlocked(player)) return null
+            if (!LockedFunction.SKILL_FLASH.isUnlocked(player)) return null
             val flash = player.find(CatalogPlayerCache.FLASH) ?: return null
             return when {
                 flash.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
@@ -87,7 +87,7 @@ object HotButtons {
     val BELT_SWITCHER_SETTING = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.SWITCH.isUnlocked(player)) return null
+            if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return null
             val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
             val nextBelt = switcher.nextBelt()
             return nextBelt.getFixedButton().getItemStack(player)?.apply {
@@ -100,12 +100,12 @@ object HotButtons {
         }
 
         override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
-            if (!LockedFunction.SWITCH.isUnlocked(player)) return
+            if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return
             BeltSwitchSettingMenu.open(player)
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!LockedFunction.SWITCH.isUnlocked(player)) return
+            if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return
             BeltSwitchSettingMenu.open(player)
         }
 

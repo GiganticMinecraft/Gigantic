@@ -20,7 +20,7 @@ class SpiritListener : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
-        if (!LockedFunction.WILL_O_THE_WISP.isUnlocked(player)) return
+        if (!LockedFunction.SKILL_WILL_O_THE_WISP.isUnlocked(player)) return
         event.summonSpirit()
     }
 
@@ -28,7 +28,7 @@ class SpiritListener : Listener {
     fun onEntityDeath(event: EntityDeathEvent) {
         val player = event.entity.killer ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
-        if (!LockedFunction.WILL_O_THE_WISP.isUnlocked(player)) return
+        if (!LockedFunction.SKILL_WILL_O_THE_WISP.isUnlocked(player)) return
         event.summonSpirit()
     }
 
@@ -36,7 +36,7 @@ class SpiritListener : Listener {
     fun onScoop(event: ScoopEvent) {
         val player = event.player
         if (player.gameMode != GameMode.SURVIVAL) return
-        if (!LockedFunction.WILL_O_THE_WISP.isUnlocked(player)) return
+        if (!LockedFunction.SKILL_WILL_O_THE_WISP.isUnlocked(player)) return
         event.summonSpirit()
     }
 
