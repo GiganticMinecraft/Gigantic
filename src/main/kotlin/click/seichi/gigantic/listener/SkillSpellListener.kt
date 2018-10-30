@@ -95,7 +95,7 @@ class SkillSpellListener : Listener {
         val belt = player.getOrPut(Keys.BELT)
         if (belt == Belt.SCOOP) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
-        if (!LockedFunction.MANA.isUnlocked(player)) return
+        if (!LockedFunction.MANA_STONE.isUnlocked(player)) return
         if (action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) return
         if (toggleCoolTime) return
 

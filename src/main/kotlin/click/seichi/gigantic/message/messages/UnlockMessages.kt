@@ -90,7 +90,7 @@ object UnlockMessages {
             }
     ))
 
-    val UNLOCK_MANA = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_MANA_STONE = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.AQUA}" +
                         "マナストーンを見つけた!!魔法を使えるようになった!!\n" +

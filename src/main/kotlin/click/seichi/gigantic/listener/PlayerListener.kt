@@ -194,7 +194,7 @@ class PlayerListener : Listener {
 
         LockedFunction.update(player)
 
-        if (LockedFunction.MANA.isUnlocked(player)) {
+        if (LockedFunction.MANA_STONE.isUnlocked(player)) {
             player.manipulate(CatalogPlayerCache.MANA) {
                 val prevMax = it.max
                 it.updateMaxMana()

@@ -45,7 +45,7 @@ object MenuButtons {
                         MenuMessages.PROFILE_EXP(level).asSafety(player.wrappedLocale),
                         MenuMessages.PROFILE_HEALTH(health).asSafety(player.wrappedLocale)
                 )
-                if (LockedFunction.MANA.isUnlocked(player)) {
+                if (LockedFunction.MANA_STONE.isUnlocked(player)) {
                     lore.add(MenuMessages.PROFILE_MANA(mana).asSafety(player.wrappedLocale))
                 }
 

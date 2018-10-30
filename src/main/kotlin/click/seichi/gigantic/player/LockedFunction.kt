@@ -14,14 +14,15 @@ import org.bukkit.entity.Player
 /**
  * @author tar0ss
  *
- * TODO 解放レベルを全てfunction.ymlで調整可能にする
+ *
  */
 enum class LockedFunction(
         val id: Int,
         private val canUnlocking: (Player) -> Boolean,
         // 毎Login時とアンロック時に処理される
         val unlockAction: (Player) -> Unit = {},
-        val unlockMessage: ChatMessage? = null
+        val unlockMessage: ChatMessage? = null,
+        private val priority: UnlockPriority = UnlockPriority.NORMAL
 ) {
     MINE_BURST(0, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
@@ -31,9 +32,9 @@ enum class LockedFunction(
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 8
     }, unlockMessage = UnlockMessages.UNLOCK_RAID_BATTLE),
 
-    MANA(2, {
+    MANA_STONE(2, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
-    }, unlockMessage = UnlockMessages.UNLOCK_MANA),
+    }, unlockMessage = UnlockMessages.UNLOCK_MANA_STONE),
 
     FLASH(3, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 6
@@ -54,7 +55,8 @@ enum class LockedFunction(
     }, unlockMessage = UnlockMessages.UNLOCK_SWITCH),
 
     TERRA_DRAIN(7, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+        MANA_STONE.isUnlocked(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }, unlockMessage = UnlockMessages.UNLOCK_TERRA_DRAIN),
 
     WILL_O_THE_WISP(8, {
@@ -62,37 +64,51 @@ enum class LockedFunction(
     }, unlockMessage = UnlockMessages.UNLOCK_WILL_O_THE_WISP),
 
     STELLA_CLAIR(9, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+        MANA_STONE.isUnlocked(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }, unlockMessage = UnlockMessages.UNLOCK_STELLA_CLAIR),
 
     GRAND_NATURA(10, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 14
+        MANA_STONE.isUnlocked(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 14
     }, unlockMessage = UnlockMessages.UNLOCK_GRAND_NATURA),
 
     AQUA_LINEA(11, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 18
+        MANA_STONE.isUnlocked(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 18
     }, unlockMessage = UnlockMessages.UNLOCK_AQUA_LINEA),
     ;
 
+    /**1から順に [update] される**/
+    enum class UnlockPriority(val amount: Int) {
+        HIGHEST(1), HIGH(2), NORMAL(3), LOW(4), LOWEST(5)
+    }
+
     companion object {
         fun update(player: Player, isAction: Boolean = false) {
-            Keys.LOCKED_FUNCTION_MAP.forEach { func, _ ->
-                if (func.canUnlocked(player)) {
-                    if (func.isUnlocked(player)) {
-                        // 現在も解除可能で既に解除済みの時
-                        if (isAction) {
-                            func.unlockAction
-                        }
-                    } else {
-                        // 現在も解除可能で解除していない時
-                        func.unlock(player)
+            values().sortedByDescending { it -> it.priority.amount }
+                    .forEach {
+                        it.update(player, isAction)
                     }
-                } else {
-                    if (func.isUnlocked(player)) {
-                        // 現在解除できないがすでに解除しているとき
-                        func.lock(player)
-                    }
+        }
+    }
+
+
+    private fun update(player: Player, isAction: Boolean) {
+        if (canUnlocked(player)) {
+            if (isUnlocked(player)) {
+                // 現在も解除可能で既に解除済みの時
+                if (isAction) {
+                    unlockAction
                 }
+            } else {
+                // 現在も解除可能で解除していない時
+                unlock(player)
+            }
+        } else {
+            if (isUnlocked(player)) {
+                // 現在解除できないがすでに解除しているとき
+                lock(player)
             }
         }
     }
@@ -115,7 +131,7 @@ enum class LockedFunction(
         }
     }
 
-    fun canUnlocked(player: Player) = canUnlocking(player)
+    private fun canUnlocked(player: Player) = canUnlocking(player)
 
-    fun isUnlocked(player: Player) = player.getOrPut(Keys.LOCKED_FUNCTION_MAP[this]!!)
+    fun isUnlocked(player: Player) = canUnlocked(player) && player.getOrPut(Keys.LOCKED_FUNCTION_MAP[this]!!)
 }
