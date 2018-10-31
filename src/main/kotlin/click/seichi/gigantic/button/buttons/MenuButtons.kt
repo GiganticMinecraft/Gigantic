@@ -150,12 +150,10 @@ object MenuButtons {
         }
     }
 
-    val RAID_BATTLE_BOSS: (Int) -> Button = { slot: Int ->
+    val RAID_BATTLE_BOSS: (Int) -> Button = { rank: Int ->
         object : Button {
             override fun getItemStack(player: Player): ItemStack? {
-                val battle = RaidManager
-                        .getBattleList()
-                        .getOrNull(slot) ?: return ItemStack(Material.AIR)
+                val battle = RaidManager.getBattle(rank) ?: return ItemStack(Material.AIR)
                 val boss = battle.boss
                 val isJoinedOtherRaid = RaidManager
                         .getBattleList()
@@ -182,9 +180,7 @@ object MenuButtons {
             }
 
             override fun onClick(player: Player, event: InventoryClickEvent) {
-                val battle = RaidManager
-                        .getBattleList()
-                        .getOrNull(slot) ?: return
+                val battle = RaidManager.getBattle(rank) ?: return
                 val isJoinedOtherRaid = RaidManager
                         .getBattleList()
                         .firstOrNull { it.isJoined(player) } != null

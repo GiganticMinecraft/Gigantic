@@ -9,7 +9,7 @@ import click.seichi.gigantic.relic.Relic
 /**
  * @author tar0ss
  *
- * TODO ボスの難易度を分けて難易度別に出現割合を固定する
+ *
  *
  */
 enum class Boss(
@@ -68,7 +68,7 @@ enum class Boss(
             3,
             Head.THE_EARTH,
             BossMessages.THE_EARTH_NAME,
-            8,
+            9,
             7000000000L,
             100000000,
             10,
@@ -158,7 +158,7 @@ enum class Boss(
             12,
             Head.TRITON,
             BossMessages.TRITON_NAME,
-            8,
+            9,
             132000000L,
             100000000,
             10,
@@ -198,7 +198,7 @@ enum class Boss(
     ;
 
     companion object {
-        const val MAX_RANK = 8
+        const val MAX_RANK = 9
     }
 
     val dropRelicSet = dropRelic.toSet()

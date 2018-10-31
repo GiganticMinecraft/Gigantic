@@ -1,10 +1,12 @@
 package click.seichi.gigantic.raid
 
+import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.menu.menus.RaidBattleMenu
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.RaidBattlePops
@@ -22,8 +24,6 @@ object RaidManager {
         Bukkit.getScheduler()
     }
 
-    private val battleList = mutableListOf<RaidBattle>()
-
     private val battleMap: MutableMap<Int, RaidBattle> = mutableMapOf()
 
 
@@ -34,10 +34,12 @@ object RaidManager {
         }
     }
 
-    fun newBattle(rank: Int): RaidBattle? {
+    private fun newBattle(rank: Int): RaidBattle? {
         val bossSet = Boss.values().filter { it.rank == rank }.toSet()
         val newBoss = bossSet.shuffled().firstOrNull() ?: return null
-        return RaidBattle(newBoss)
+        val raidBattle = RaidBattle(newBoss)
+        battleMap[rank] = raidBattle
+        return raidBattle
     }
 
     fun getBattleList() = battleMap.values.toList()
@@ -73,7 +75,7 @@ object RaidManager {
             }
             raidBattle.left(player)
         }
-        battleList.remove(raidBattle)
+        battleMap.remove(raidBattle.boss.rank)
     }
 
     fun playBattle(player: Player, location: Location, baseDamage: Long = 1) {
@@ -103,7 +105,17 @@ object RaidManager {
                         RaidManager.newBattle(boss.rank)
                     }
                     display()
+                    updateAllPlayersMenu()
                 }
+    }
+
+    private fun updateAllPlayersMenu() {
+        Bukkit.getOnlinePlayers().filter {
+            it.openInventory.topInventory.holder is RaidBattleMenu
+        }.forEach {
+            RaidBattleMenu.reopen(it)
+            MainBag.carry(it)
+        }
     }
 
 }

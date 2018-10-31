@@ -33,7 +33,7 @@ object RaidBattleMenu : Menu() {
 
     init {
         (0..Boss.MAX_RANK).forEach { slot ->
-            registerButton(slot, MenuButtons.RAID_BATTLE_BOSS(slot))
+            registerButton(slot, MenuButtons.RAID_BATTLE_BOSS(slot + 1))
         }
     }
 
