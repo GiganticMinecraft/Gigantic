@@ -26,9 +26,9 @@ object UnlockMessages {
     val UNLOCK_RAID_BATTLE = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.RED}" +
-                        "レイドバトル解禁!!敵を倒してレアアイテムをゲット!!\n" +
+                        "レイドバトル解禁!!ソウルモンスターを倒してレアアイテムをゲット!!\n" +
                         "${ChatColor.GRAY}" +
-                        "インベントリから敵を選択しよう\n" +
+                        "インベントリから敵を選択!!\n" +
                         "ブロックを破壊することで敵を攻撃!!\n"
             }
     ))

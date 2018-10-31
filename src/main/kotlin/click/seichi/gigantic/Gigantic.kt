@@ -217,8 +217,7 @@ class Gigantic : JavaPlugin() {
         Head.values().forEach { it.toItemStack() }
 
         // add new battle
-        (1..RaidManager.maxBattle).forEach { _ -> RaidManager.newBattle() }
-
+        RaidManager.newBattles()
 
         logger.info("Gigantic is enabled!!")
     }

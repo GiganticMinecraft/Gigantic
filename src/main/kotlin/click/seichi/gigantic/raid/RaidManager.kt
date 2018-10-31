@@ -22,24 +22,27 @@ object RaidManager {
         Bukkit.getScheduler()
     }
 
-    const val maxBattle = 9
-
     private val battleList = mutableListOf<RaidBattle>()
 
-    fun newBattle(): RaidBattle? {
-        if (battleList.size >= maxBattle) return null
+    private val battleMap: MutableMap<Int, RaidBattle> = mutableMapOf()
 
-        val selectedBossSet = battleList.map { it.boss }.toSet()
-        val newBoss = Boss.values()
-                .filterNot { selectedBossSet.contains(it) }
-                .shuffled()
-                .firstOrNull() ?: return null
-        val newBattle = RaidBattle(newBoss)
-        battleList.add(newBattle)
-        return newBattle
+
+    // run only onEnabled this plugin
+    fun newBattles() {
+        (1..Boss.MAX_RANK).forEach { rank ->
+            newBattle(rank)?.let { battleMap[rank] = it }
+        }
     }
 
-    fun getBattleList() = battleList.toList()
+    fun newBattle(rank: Int): RaidBattle? {
+        val bossSet = Boss.values().filter { it.rank == rank }.toSet()
+        val newBoss = bossSet.shuffled().firstOrNull() ?: return null
+        return RaidBattle(newBoss)
+    }
+
+    fun getBattleList() = battleMap.values.toList()
+
+    fun getBattle(rank: Int) = battleMap[rank]
 
     private fun endBattle(raidBattle: RaidBattle) {
         raidBattle.getJoinedPlayerSet().forEach { uuid ->
@@ -97,7 +100,7 @@ object RaidManager {
                     )
                     if (raidBoss.isDead()) {
                         RaidManager.endBattle(this)
-                        RaidManager.newBattle()
+                        RaidManager.newBattle(boss.rank)
                     }
                     display()
                 }

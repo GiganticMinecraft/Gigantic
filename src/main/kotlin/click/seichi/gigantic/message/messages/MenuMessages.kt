@@ -56,15 +56,15 @@ object MenuMessages {
 
 
     val BATTLE_BUTTON_TITLE = { boss: Boss ->
-        val color = when (boss.maxHealth) {
-            in 0L..9999L -> ChatColor.GOLD
-            in 10000L..99999L -> ChatColor.RED
-            in 100000L..999999L -> ChatColor.LIGHT_PURPLE
+        val color = when (boss.rank) {
+            1 -> ChatColor.GOLD
+            2 -> ChatColor.RED
+            3 -> ChatColor.LIGHT_PURPLE
             else -> ChatColor.DARK_PURPLE
         }
         LocalizedText(
                 Locale.JAPANESE.let {
-                    it to "$color${boss.localizedName.asSafety(it)}"
+                    it to "${color}Rank${boss.rank} ${ChatColor.BOLD}${boss.localizedName.asSafety(it)}"
                 }
         )
     }
