@@ -2,8 +2,6 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.PlayerAnimations
-import click.seichi.gigantic.belt.Belt
-import click.seichi.gigantic.button.buttons.FixedButtons
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.MineBlockReason
@@ -28,8 +26,6 @@ import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
-import org.bukkit.entity.Cow
-import org.bukkit.entity.Fish
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -335,17 +331,6 @@ class PlayerListener : Listener {
             else -> {
             }
         }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    fun onScoopAnimal(event: PlayerInteractEntityEvent) {
-        val entity = event.rightClicked ?: return
-        val player = event.player ?: return
-        val belt = player.getOrPut(Keys.BELT)
-        if (entity !is Cow && entity is Fish) return
-        if (belt != Belt.SCOOP) return
-        player.inventory.itemInMainHand = FixedButtons.BUCKET.getItemStack(player)
-
     }
 
 }

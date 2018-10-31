@@ -12,6 +12,8 @@ import click.seichi.gigantic.player.breaker.Miner
 import click.seichi.gigantic.player.breaker.Scooper
 import org.bukkit.GameMode
 import org.bukkit.Material
+import org.bukkit.entity.Cow
+import org.bukkit.entity.Fish
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -20,6 +22,7 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
 import org.bukkit.event.player.PlayerBucketFillEvent
+import org.bukkit.event.player.PlayerInteractEntityEvent
 import kotlin.math.roundToLong
 
 /**
@@ -84,6 +87,16 @@ class PlayerMonitor : Listener {
             }
             event.itemStack = FixedButtons.BUCKET.getItemStack(player)
         }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    fun onScoopAnimal(event: PlayerInteractEntityEvent) {
+        val entity = event.rightClicked ?: return
+        val player = event.player ?: return
+        val belt = player.getOrPut(Keys.BELT)
+        if (entity !is Cow && entity is Fish) return
+        if (belt != Belt.SCOOP) return
+        player.inventory.itemInMainHand = FixedButtons.BUCKET.getItemStack(player)
     }
 
 }
