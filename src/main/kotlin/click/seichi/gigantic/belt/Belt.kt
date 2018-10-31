@@ -43,7 +43,6 @@ enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair
             BeltMessages.SCOOP,
             0 to FixedButtons.BUCKET,
             1 to HotButtons.FLASH,
-            2 to HotButtons.MINE_BURST,
             8 to HotButtons.BELT_SWITCHER_SETTING
     ),
     ;
