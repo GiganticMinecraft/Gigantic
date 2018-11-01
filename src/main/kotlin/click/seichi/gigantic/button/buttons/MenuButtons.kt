@@ -378,7 +378,13 @@ object MenuButtons {
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
             if (!LockedFunction.SPELL_TERRA_DRAIN.isUnlocked(player)) return
-            player.transform(Keys.TERRA_DRAIN_TOGGLE) { !it }
+            player.transform(Keys.TERRA_DRAIN_TOGGLE) {
+                if (it)
+                    PlayerSounds.SPELL_TOGGLE_OFF.playOnly(player)
+                else
+                    PlayerSounds.SPELL_TOGGLE_ON.playOnly(player)
+                !it
+            }
             ProfileSpellMenu.reopen(player)
         }
 
@@ -404,7 +410,13 @@ object MenuButtons {
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
             if (!LockedFunction.SPELL_GRAND_NATURA.isUnlocked(player)) return
-            player.transform(Keys.GRAND_NATURA_TOGGLE) { !it }
+            player.transform(Keys.GRAND_NATURA_TOGGLE) {
+                if (it)
+                    PlayerSounds.SPELL_TOGGLE_OFF.playOnly(player)
+                else
+                    PlayerSounds.SPELL_TOGGLE_ON.playOnly(player)
+                !it
+            }
             ProfileSpellMenu.reopen(player)
         }
 
@@ -430,7 +442,14 @@ object MenuButtons {
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
             if (!LockedFunction.SPELL_AQUA_LINEA.isUnlocked(player)) return
-            player.transform(Keys.AQUA_LINEA_TOGGLE) { !it }
+            player.transform(Keys.AQUA_LINEA_TOGGLE) {
+                if (it)
+                    PlayerSounds.SPELL_TOGGLE_OFF.playOnly(player)
+                else
+                    PlayerSounds.SPELL_TOGGLE_ON.playOnly(player)
+
+                !it
+            }
             ProfileSpellMenu.reopen(player)
         }
 
