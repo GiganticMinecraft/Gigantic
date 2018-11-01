@@ -68,6 +68,7 @@ object UnlockMessages {
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "回復魔法: テラ・ドレイン を覚えた!!\n" +
+                        "\"覚えたスキル\"メニューで有効化しよう!!" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: 木を倒し、自身の体力を回復する\n" +
                         "原木を破壊して発動!!\n" +
@@ -93,10 +94,10 @@ object UnlockMessages {
     val UNLOCK_MANA_STONE = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.AQUA}" +
-                        "マナストーンを見つけた!!魔法を使えるようになった!!\n" +
+                        "マナストーンを見つけた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "マナストーンを持った状態で魔法が使える!!\n" +
-                        "右クリックで切り替えよう!!"
+                        "マナストーンを持った状態で魔法が使えるようになった!!\n" +
+                        "右クリックでマナストーンを持ってみよう!!"
             }
     ))
 
@@ -114,6 +115,7 @@ object UnlockMessages {
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "破壊魔法: グランド・ナトラ を覚えた!!\n" +
+                        "\"覚えたスキル\"メニューで有効化しよう!!" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: 植物を吸収する\n" +
                         "芝生又はキノコブロックを通常破壊時に発動\n" +
@@ -126,6 +128,7 @@ object UnlockMessages {
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "破壊魔法: アクア・リネーア を覚えた!!\n" +
+                        "\"覚えたスキル\"メニューで有効化しよう!!" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: ブロックが泡となって消える\n" +
                         "通常破壊時に発動\n" +
