@@ -59,19 +59,19 @@ object BagButtons {
     }
 
     val AFK = object : Button {
-
         override fun getItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.DANDELION_YELLOW, 1).apply {
-                when (player.gameMode) {
-                    GameMode.SURVIVAL -> setDisplayName(
+            return when (player.gameMode) {
+                GameMode.SURVIVAL -> ItemStack(Material.DANDELION, 1).apply {
+                    setDisplayName(
                             MenuMessages.REST.asSafety(player.wrappedLocale)
                     )
-                    GameMode.SPECTATOR -> setDisplayName(
+                }
+                GameMode.SPECTATOR -> ItemStack(Material.POPPY, 1).apply {
+                    setDisplayName(
                             MenuMessages.BACK_FROM_REST.asSafety(player.wrappedLocale)
                     )
-                    else -> {
-                    }
                 }
+                else -> null
             }
         }
 
@@ -94,6 +94,7 @@ object BagButtons {
                 }
             }
         }
+
     }
 
     val SPECIAL_THANKS = object : Button {
