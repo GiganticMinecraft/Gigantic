@@ -47,6 +47,7 @@ object Spells {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.SPELL_TERRA_DRAIN.isUnlocked(player)) return null
             if (player.isSneaking) return null
+            if (!player.getOrPut(Keys.TERRA_DRAIN_TOGGLE)) return null
             val block = player.getOrPut(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return null
             if (!block.isLog) return null
             var canSpell = true
@@ -70,6 +71,7 @@ object Spells {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.SPELL_GRAND_NATURA.isUnlocked(player)) return null
             if (player.isSneaking) return null
+            if (!player.getOrPut(Keys.GRAND_NATURA_TOGGLE)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             if (mineBurst.duringFire()) return null
             val block = player.getOrPut(Keys.GRAND_NATURA_SKILL_BLOCK) ?: return null
@@ -97,6 +99,7 @@ object Spells {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!LockedFunction.SPELL_AQUA_LINEA.isUnlocked(player)) return null
             if (player.isSneaking) return null
+            if (!player.getOrPut(Keys.AQUA_LINEA_TOGGLE)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             if (mineBurst.duringFire()) return null
             val block = player.getOrPut(Keys.AQUA_LINEA_SKILL_BLOCK) ?: return null
