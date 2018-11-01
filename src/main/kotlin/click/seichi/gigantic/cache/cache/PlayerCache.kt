@@ -43,6 +43,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.SPELL_TOGGLE.let {
                     offer(it, it.read(user))
                 }
+                Keys.TELEPORT_TOGGLE.let {
+                    offer(it, it.read(user))
+                }
                 Keys.MINEBLOCK_MAP.forEach { reason, key ->
                     offer(key, key.read(userMineBlockMap[reason] ?: return@forEach))
                 }
@@ -95,6 +98,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                     it.store(user, getOrDefault(it))
                 }
                 Keys.SPELL_TOGGLE.let {
+                    it.store(user, getOrDefault(it))
+                }
+                Keys.TELEPORT_TOGGLE.let {
                     it.store(user, getOrDefault(it))
                 }
                 Keys.MINEBLOCK_MAP.forEach { reason, key ->

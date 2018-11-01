@@ -1,10 +1,11 @@
 package click.seichi.gigantic.raid
 
-import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.boss.Boss
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.menu.menus.RaidBattleMenu
 import click.seichi.gigantic.message.messages.BattleMessages
@@ -114,7 +115,8 @@ object RaidManager {
             it.openInventory.topInventory.holder is RaidBattleMenu
         }.forEach {
             RaidBattleMenu.reopen(it)
-            MainBag.carry(it)
+            val bag = it.getOrPut(Keys.BAG)
+            bag.carry(it)
         }
     }
 

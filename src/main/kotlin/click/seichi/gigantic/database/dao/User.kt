@@ -28,6 +28,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var spellToggle by UserTable.spellToggle
 
+    var teleportToggle by UserTable.teleportToggle
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt

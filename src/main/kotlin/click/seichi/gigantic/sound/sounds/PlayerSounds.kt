@@ -42,4 +42,11 @@ object PlayerSounds {
             volume = 1.0F
     )
 
+    val TOGGLE = DetailedSound(
+            Sound.BLOCK_LEVER_CLICK,
+            SoundCategory.BLOCKS,
+            pitch = 1.4F,
+            volume = 1.0F
+    )
+
 }

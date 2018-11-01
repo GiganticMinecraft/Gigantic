@@ -1,0 +1,67 @@
+package click.seichi.gigantic.menu.menus
+
+import click.seichi.gigantic.button.Button
+import click.seichi.gigantic.button.buttons.MenuButtons
+import click.seichi.gigantic.button.buttons.NextButton
+import click.seichi.gigantic.button.buttons.PrevButton
+import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.menu.BookMenu
+import click.seichi.gigantic.message.messages.MenuMessages
+import org.bukkit.Bukkit
+import org.bukkit.ChatColor
+import org.bukkit.entity.Player
+import org.bukkit.inventory.Inventory
+
+/**
+ * @author tar0ss
+ */
+object TeleportToPlayerMenu : BookMenu() {
+
+    override val size: Int
+        get() = 54
+
+    private const val numOfPlayerPerPage = 45
+
+    override val maxPage: Int
+        get() = Bukkit.getOnlinePlayers().size.div(numOfPlayerPerPage).plus(1)
+
+    private val nextButton = NextButton(this)
+    private val prevButton = PrevButton(this)
+
+    private fun getTeleportPlayerList(player: Player): List<Player> {
+        return Bukkit.getOnlinePlayers().toMutableList().apply {
+            remove(player)
+        }
+    }
+
+    override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {
+        val playerList = getTeleportPlayerList(player)
+        val start = (page - 1) * numOfPlayerPerPage
+        val end = page * numOfPlayerPerPage
+        (start until end)
+                .filter { playerList.getOrNull(it) != null }
+                .map { it % numOfPlayerPerPage to playerList[it] }
+                .toMap()
+                .forEach { index, to ->
+                    inventory.setItem(index, MenuButtons.TELEPORT_PLAYER(to).getItemStack(player))
+                }
+        inventory.setItem(numOfPlayerPerPage + 3, prevButton.getItemStack(player))
+        inventory.setItem(numOfPlayerPerPage + 5, nextButton.getItemStack(player))
+
+        return inventory
+    }
+
+    override fun getTitle(player: Player, page: Int): String {
+        return "${ChatColor.BLACK}" +
+                "${MenuMessages.TELEPORT_TO_PLAYER_TITLE.asSafety(player.wrappedLocale)} $page/$maxPage"
+    }
+
+    override fun getButton(page: Int, slot: Int): Button? {
+        return when (slot) {
+            numOfPlayerPerPage + 3 -> prevButton
+            numOfPlayerPerPage + 5 -> nextButton
+            else -> null
+        }
+    }
+
+}

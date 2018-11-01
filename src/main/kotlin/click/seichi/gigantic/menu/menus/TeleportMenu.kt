@@ -1,5 +1,6 @@
 package click.seichi.gigantic.menu.menus
 
+import click.seichi.gigantic.button.buttons.MenuButtons
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
@@ -16,7 +17,12 @@ object TeleportMenu : Menu() {
 
     override fun getTitle(player: Player): String {
         return "${ChatColor.BLACK}" +
-                MenuMessages.TELEPORT.asSafety(player.wrappedLocale)
+                MenuMessages.TELEPORT_TITLE.asSafety(player.wrappedLocale)
+    }
+
+    init {
+        registerButton(0, MenuButtons.TELEPORT_TO_PLAYER)
+        registerButton(8, MenuButtons.TELEPORT_TOGGLE)
     }
 
 }

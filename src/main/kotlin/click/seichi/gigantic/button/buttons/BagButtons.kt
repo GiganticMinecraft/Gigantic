@@ -62,17 +62,16 @@ object BagButtons {
     val AFK = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
             return when (player.gameMode) {
-                GameMode.SURVIVAL -> ItemStack(Material.DANDELION, 1).apply {
-                    setDisplayName(
-                            MenuMessages.REST.asSafety(player.wrappedLocale)
-                    )
-                }
                 GameMode.SPECTATOR -> ItemStack(Material.POPPY, 1).apply {
                     setDisplayName(
                             MenuMessages.BACK_FROM_REST.asSafety(player.wrappedLocale)
                     )
                 }
-                else -> null
+                else -> ItemStack(Material.DANDELION, 1).apply {
+                    setDisplayName(
+                            MenuMessages.REST.asSafety(player.wrappedLocale)
+                    )
+                }
             }
         }
 

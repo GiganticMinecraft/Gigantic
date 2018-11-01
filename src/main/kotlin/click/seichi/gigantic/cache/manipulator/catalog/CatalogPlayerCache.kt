@@ -33,4 +33,5 @@ object CatalogPlayerCache {
 
     val BELT_SWITCHER = BeltSwitcher::class.java
 
+    val TELEPORTER = Teleporter::class.java
 }

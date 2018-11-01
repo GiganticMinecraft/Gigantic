@@ -28,6 +28,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val spellToggle = bool("spell_toggle").default(false)
 
+    val teleportToggle = bool("teleport_toggle").default(false)
+
     val createdAt = datetime("created_at").default(DateTime.now())
 
     val updatedAt = datetime("updated_at").default(DateTime.now())

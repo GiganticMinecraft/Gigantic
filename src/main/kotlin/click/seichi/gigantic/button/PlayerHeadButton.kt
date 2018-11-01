@@ -16,7 +16,7 @@ class PlayerHeadButton(private val uuid: UUID) : Button {
     }
 
     fun getItemStack(): ItemStack? {
-        return Head.getPlayerHead(uuid)?.clone()
+        return Head.getOfflinePlayerHead(uuid)?.clone()
     }
 
     override fun onClick(player: Player, event: InventoryClickEvent) {

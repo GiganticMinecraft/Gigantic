@@ -36,7 +36,7 @@ object ProfileBossMenu : BookMenu() {
             val end = page * numOfBossInAPage
             (start until end)
                     .filter { bossList.getOrNull(it) != null }
-                    .map { it % 9 to bossList[it] }
+                    .map { it % numOfBossInAPage to bossList[it] }
                     .toMap()
                     .forEach { index, boss ->
                         inventory.setItem(index, MenuButtons.PROFILE_RAID_BOSS_INFO(boss, it.getDefeatCount(boss)).getItemStack(player))
