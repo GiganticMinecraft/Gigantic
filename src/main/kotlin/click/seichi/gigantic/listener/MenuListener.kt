@@ -8,6 +8,7 @@ import click.seichi.gigantic.menu.Menu
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
 
 /**
@@ -15,12 +16,21 @@ import org.bukkit.event.inventory.InventoryClickEvent
  */
 class MenuListener : Listener {
 
+    val menuActionSet = setOf(
+            InventoryAction.PICKUP_ALL,
+            InventoryAction.PICKUP_SOME,
+            InventoryAction.PICKUP_HALF,
+            InventoryAction.PICKUP_ONE
+    )
+
     @EventHandler
     fun onInventoryClick(event: InventoryClickEvent) {
         val player = event.whoClicked as? org.bukkit.entity.Player ?: return
         if (player.gameMode != GameMode.SURVIVAL && player.gameMode != GameMode.SPECTATOR) return
-        val holder = event.inventory.holder
         event.isCancelled = true
+        if (!menuActionSet.contains(event.action)) return
+        val holder = event.inventory.holder
+
 
         when (event.clickedInventory) {
             event.view.bottomInventory -> {
