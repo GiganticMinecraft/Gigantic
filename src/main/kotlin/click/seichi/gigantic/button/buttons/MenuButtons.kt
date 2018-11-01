@@ -362,16 +362,24 @@ object MenuButtons {
 
         override fun getItemStack(player: Player): ItemStack? {
             if (!LockedFunction.SPELL_TERRA_DRAIN.isUnlocked(player)) return null
+            val toggle = player.getOrPut(Keys.TERRA_DRAIN_TOGGLE)
             return ItemStack(Material.WHEAT_SEEDS).apply {
-                setDisplayName(MenuMessages.TERRA_DRAIN_TITLE.asSafety(player.wrappedLocale))
+                if (toggle)
+                    setDisplayName(MenuMessages.TERRA_DRAIN_TITLE_ON.asSafety(player.wrappedLocale))
+                else
+                    setDisplayName(MenuMessages.TERRA_DRAIN_TITLE_OFF.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.TERRA_DRAIN
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
-                setEnchanted(true)
+                if (toggle)
+                    setEnchanted(true)
             }
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (!LockedFunction.SPELL_TERRA_DRAIN.isUnlocked(player)) return
+            player.transform(Keys.TERRA_DRAIN_TOGGLE) { !it }
+            ProfileSpellMenu.reopen(player)
         }
 
     }
@@ -380,16 +388,24 @@ object MenuButtons {
 
         override fun getItemStack(player: Player): ItemStack? {
             if (!LockedFunction.SPELL_GRAND_NATURA.isUnlocked(player)) return null
+            val toggle = player.getOrPut(Keys.GRAND_NATURA_TOGGLE)
             return ItemStack(Material.SEA_PICKLE).apply {
-                setDisplayName(MenuMessages.GRAND_NATURA_TITLE.asSafety(player.wrappedLocale))
+                if (toggle)
+                    setDisplayName(MenuMessages.GRAND_NATURA_TITLE_ON.asSafety(player.wrappedLocale))
+                else
+                    setDisplayName(MenuMessages.GRAND_NATURA_TITLE_OFF.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.GRAND_NATURA
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
-                setEnchanted(true)
+                if (toggle)
+                    setEnchanted(true)
             }
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (!LockedFunction.SPELL_GRAND_NATURA.isUnlocked(player)) return
+            player.transform(Keys.GRAND_NATURA_TOGGLE) { !it }
+            ProfileSpellMenu.reopen(player)
         }
 
     }
@@ -398,16 +414,24 @@ object MenuButtons {
 
         override fun getItemStack(player: Player): ItemStack? {
             if (!LockedFunction.SPELL_AQUA_LINEA.isUnlocked(player)) return null
+            val toggle = player.getOrPut(Keys.AQUA_LINEA_TOGGLE)
             return ItemStack(Material.PRISMARINE_CRYSTALS).apply {
-                setDisplayName(MenuMessages.AQUA_LINEA_TITLE.asSafety(player.wrappedLocale))
+                if (toggle)
+                    setDisplayName(MenuMessages.AQUA_LINEA_TITLE_ON.asSafety(player.wrappedLocale))
+                else
+                    setDisplayName(MenuMessages.AQUA_LINEA_TITLE_OFF.asSafety(player.wrappedLocale))
                 setLore(*MenuMessages.AQUA_LINEA
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
-                setEnchanted(true)
+                if (toggle)
+                    setEnchanted(true)
             }
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (!LockedFunction.SPELL_AQUA_LINEA.isUnlocked(player)) return
+            player.transform(Keys.AQUA_LINEA_TOGGLE) { !it }
+            ProfileSpellMenu.reopen(player)
         }
 
     }

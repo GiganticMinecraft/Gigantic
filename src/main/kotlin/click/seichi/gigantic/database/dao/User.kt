@@ -30,6 +30,12 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var teleportToggle by UserTable.teleportToggle
 
+    var terraDrainToggle by UserTable.terraDrainToggle
+
+    var grandNaturaToggle by UserTable.grandNaturaToggle
+
+    var aquaLineaToggle by UserTable.aquaLineaToggle
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt

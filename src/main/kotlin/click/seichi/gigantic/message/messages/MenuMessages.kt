@@ -31,7 +31,7 @@ object MenuMessages {
     )
 
     val RAID_BOSS = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.DARK_RED}レイドボスと戦う"
+            Locale.JAPANESE to "レイドボスと戦う"
     )
 
     val REST = LocalizedText(
@@ -258,7 +258,10 @@ object MenuMessages {
                             Locale.JAPANESE to "${ChatColor.GREEN}選択済"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "クリックで切り替え"
+                            Locale.JAPANESE to "${ChatColor.WHITE}----------------"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.UNDERLINE}クリックで切り替え"
                     )
             )
 
@@ -268,7 +271,10 @@ object MenuMessages {
                             Locale.JAPANESE to "${ChatColor.RED}未選択"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "クリックで切り替え"
+                            Locale.JAPANESE to "${ChatColor.WHITE}----------------"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.UNDERLINE}クリックで切り替え"
                     )
             )
         }
@@ -391,12 +397,23 @@ object MenuMessages {
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.BLUE}" +
                                     "---スニークで通常破壊"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.WHITE}----------------"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.UNDERLINE}クリックで切り替え"
                     )
             )
 
-    val TERRA_DRAIN_TITLE = LocalizedText(
+    val TERRA_DRAIN_TITLE_ON = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "回復魔法: テラ・ドレイン"
+    )
+
+    val TERRA_DRAIN_TITLE_OFF = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                    "回復魔法: テラ・ドレイン -封印-"
     )
 
     val WILL_O_THE_WISP =
@@ -467,12 +484,23 @@ object MenuMessages {
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.BLUE}" +
                                     "---スニークで通常破壊"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.WHITE}----------------"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.UNDERLINE}クリックで切り替え"
                     )
             )
 
-    val GRAND_NATURA_TITLE = LocalizedText(
+    val GRAND_NATURA_TITLE_ON = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "破壊魔法: グランド・ナトラ"
+    )
+
+    val GRAND_NATURA_TITLE_OFF = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                    "破壊魔法: グランド・ナトラ -封印-"
     )
 
 
@@ -493,12 +521,23 @@ object MenuMessages {
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.BLUE}" +
                                     "---スニークで通常破壊"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.WHITE}----------------"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.UNDERLINE}クリックで切り替え"
                     )
             )
 
-    val AQUA_LINEA_TITLE = LocalizedText(
+    val AQUA_LINEA_TITLE_ON = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "破壊魔法: アクア・リネーア"
+    )
+
+    val AQUA_LINEA_TITLE_OFF = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                    "破壊魔法: アクア・リネーア -封印-"
     )
 
     val TELEPORT_TITLE = LocalizedText(
@@ -565,7 +604,10 @@ object MenuMessages {
 
     val TELEPORT_TOGGLE_LORE = listOf(
             LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.GRAY}クリックで切り替え"
+                    Locale.JAPANESE to "${ChatColor.WHITE}----------------"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.UNDERLINE}クリックで切り替え"
             )
     )
 

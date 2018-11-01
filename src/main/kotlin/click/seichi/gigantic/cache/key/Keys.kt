@@ -447,4 +447,64 @@ object Keys {
 
     }
 
+    val TERRA_DRAIN_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
+        override val default: Boolean
+            get() = false
+
+        override fun read(entity: Entity<*>): Boolean {
+            val user = entity as User
+            return user.terraDrainToggle
+        }
+
+        override fun store(entity: Entity<*>, value: Boolean) {
+            val user = entity as User
+            user.terraDrainToggle = value
+        }
+
+        override fun satisfyWith(value: Boolean): Boolean {
+            return true
+        }
+
+    }
+
+    val GRAND_NATURA_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
+        override val default: Boolean
+            get() = false
+
+        override fun read(entity: Entity<*>): Boolean {
+            val user = entity as User
+            return user.grandNaturaToggle
+        }
+
+        override fun store(entity: Entity<*>, value: Boolean) {
+            val user = entity as User
+            user.grandNaturaToggle = value
+        }
+
+        override fun satisfyWith(value: Boolean): Boolean {
+            return true
+        }
+
+    }
+
+    val AQUA_LINEA_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
+        override val default: Boolean
+            get() = false
+
+        override fun read(entity: Entity<*>): Boolean {
+            val user = entity as User
+            return user.aquaLineaToggle
+        }
+
+        override fun store(entity: Entity<*>, value: Boolean) {
+            val user = entity as User
+            user.aquaLineaToggle = value
+        }
+
+        override fun satisfyWith(value: Boolean): Boolean {
+            return true
+        }
+
+    }
+
 }

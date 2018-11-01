@@ -30,6 +30,12 @@ object UserTable : IdTable<UUID>("users") {
 
     val teleportToggle = bool("teleport_toggle").default(false)
 
+    val terraDrainToggle = bool("terra_drain_toggle").default(false)
+
+    val grandNaturaToggle = bool("grand_natura_toggle").default(false)
+
+    val aquaLineaToggle = bool("aqua_linea_toggle").default(false)
+
     val createdAt = datetime("created_at").default(DateTime.now())
 
     val updatedAt = datetime("updated_at").default(DateTime.now())

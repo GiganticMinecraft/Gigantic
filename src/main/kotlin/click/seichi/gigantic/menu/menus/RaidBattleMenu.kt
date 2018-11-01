@@ -7,6 +7,7 @@ import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.sound.DetailedSound
 import click.seichi.gigantic.sound.sounds.MenuSounds
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryType
 
@@ -28,7 +29,7 @@ object RaidBattleMenu : Menu() {
         get() = MenuSounds.BATTLE_MENU_CLOSE
 
     override fun getTitle(player: Player): String {
-        return MenuMessages.RAID_BOSS.asSafety(player.wrappedLocale)
+        return "${ChatColor.DARK_RED}" + MenuMessages.RAID_BOSS.asSafety(player.wrappedLocale)
     }
 
     init {

@@ -12,6 +12,7 @@ import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import org.bukkit.ChatColor
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -46,7 +47,7 @@ object BagButtons {
             if (!LockedFunction.RAID_BATTLE.isUnlocked(player)) return null
             return RaidManager.getBattleList().firstOrNull()?.boss?.head?.toItemStack()?.apply {
                 setDisplayName(
-                        MenuMessages.RAID_BOSS.asSafety(player.wrappedLocale)
+                        "${ChatColor.DARK_RED}${ChatColor.UNDERLINE}" + MenuMessages.RAID_BOSS.asSafety(player.wrappedLocale)
                 )
             }
         }
@@ -102,7 +103,8 @@ object BagButtons {
 
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.MUSIC_DISC_13).apply {
-                setDisplayName(MenuMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + MenuMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale))
                 clearLore()
                 itemMeta = itemMeta.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
