@@ -3,10 +3,7 @@ package click.seichi.gigantic.player.breaker
 import click.seichi.gigantic.animation.SkillAnimations
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent
-import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.fallUpperCrustBlock
-import click.seichi.gigantic.extension.find
-import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.popup.PopUpParameters
@@ -42,6 +39,9 @@ open class Miner : Breaker {
 
         // Gravity process
         block.fallUpperCrustBlock()
+
+        // bedrock process
+        block.changeRelativeBedrock()
 
         // carry player cache
         player.manipulate(CatalogPlayerCache.MINE_BLOCK) {

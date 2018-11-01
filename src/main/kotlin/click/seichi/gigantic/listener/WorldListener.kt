@@ -20,9 +20,10 @@ class WorldListener : Listener {
 //        val chunk = event.chunk ?: return
 //        (0..15).forEach { x ->
 //            (0..15).forEach { z ->
-//                (0..1).forEach loopY@{ y ->
+//                (1..4).forEach loopY@{ y ->
 //                    val block = chunk.getBlock(x, y, z) ?: return@loopY
-//                    block.type = Material.BEDROCK
+//                    if(block.type == Material.BEDROCK)
+//                        block.type = Material.STONE
 //                }
 //            }
 //        }

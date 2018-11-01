@@ -11,6 +11,7 @@ import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
+import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.player.LockedFunction
@@ -27,6 +28,7 @@ import kotlinx.coroutines.experimental.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.GameRule
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -40,6 +42,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
+import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.concurrent.TimeUnit
@@ -144,6 +147,18 @@ class PlayerListener : Listener {
 
         player.getOrPut(Keys.BELT).wear(player)
         player.getOrPut(Keys.BAG).carry(player)
+        if (LockedFunction.MANA_STONE.isUnlocked(player)) {
+            val spellToggle = player.getOrPut(Keys.SPELL_TOGGLE)
+            player.inventory.itemInOffHand =
+                    if (spellToggle) ItemStack(Material.NETHER_STAR).apply {
+                        setDisplayName(HookedItemMessages.MANA_STONE.asSafety(player.wrappedLocale))
+                        setLore(*HookedItemMessages.MANA_STONE_LORE
+                                .map { it.asSafety(player.wrappedLocale) }
+                                .toTypedArray())
+                    }
+                    else ItemStack(Material.AIR)
+        }
+
         player.updateInventory()
 
         PlayerMessages.MEMORY_SIDEBAR(

@@ -5,6 +5,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
+import org.bukkit.block.BlockFace
 
 /**
  * @author unicroak
@@ -45,6 +46,36 @@ fun Block.fallUpperCrustBlock() {
                         target.location.central.subtract(0.0, 0.5, 0.0),
                         target.blockData
                 )
+                target.type = Material.AIR
+                count++
+                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, this, 2L)
+            }
+        }
+    }
+    Bukkit.getScheduler().runTask(Gigantic.PLUGIN, fallTask)
+}
+
+private val bedrockFaceSet = setOf(
+        BlockFace.NORTH,
+        BlockFace.EAST,
+        BlockFace.SOUTH,
+        BlockFace.WEST,
+        BlockFace.UP,
+        BlockFace.DOWN
+)
+
+fun Block.changeRelativeBedrock() {
+    bedrockFaceSet.map { getRelative(it) }
+            .filter { it.type == Material.BEDROCK && it.y != 0 }
+            .forEach { it.type = Material.STONE }
+}
+
+fun Block.removeUpperLiquidBlock() {
+    var count = 0
+    val fallTask = object : Runnable {
+        override fun run() {
+            val target = getRelative(0, count + 1, 0) ?: return
+            if (target.isLiquid) {
                 target.type = Material.AIR
                 count++
                 Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, this, 2L)
