@@ -45,6 +45,10 @@ class WorldListener : Listener {
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false)
         world.setGameRule(GameRule.DO_WEATHER_CYCLE, false)
         world.setGameRule(GameRule.SPECTATORS_GENERATE_CHUNKS, false)
+        world.setGameRule(GameRule.DO_MOB_SPAWNING, false)
+        world.setGameRule(GameRule.DISABLE_ELYTRA_MOVEMENT_CHECK, false)
+        world.setGameRule(GameRule.DO_FIRE_TICK, false)
+        world.setGameRule(GameRule.DO_LIMITED_CRAFTING, false)
         world.setGameRule(GameRule.SPAWN_RADIUS, 40)
     }
 
