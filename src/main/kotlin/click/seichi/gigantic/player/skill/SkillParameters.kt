@@ -24,4 +24,6 @@ object SkillParameters {
     const val HEAL_AMOUNT_PERCENT = 5
 
     const val HEAL_PROBABILITY_PERCENT = 20
+
+    const val TELEPORT_KEY = "8"
 }

@@ -499,4 +499,8 @@ object MenuMessages {
                     "破壊魔法: アクア・リネーア"
     )
 
+    val TELEPORT = LocalizedText(
+            Locale.JAPANESE to "テレポート"
+    )
+
 }

@@ -20,6 +20,7 @@ enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair
             0 to FixedButtons.SHOVEL,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
+            7 to HotButtons.TELEPORT_DOOR,
             8 to HotButtons.BELT_SWITCHER_SETTING
     ),
     MINE(
@@ -28,6 +29,7 @@ enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair
             0 to FixedButtons.PICKEL,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
+            7 to HotButtons.TELEPORT_DOOR,
             8 to HotButtons.BELT_SWITCHER_SETTING
     ),
     CUT(
@@ -36,6 +38,7 @@ enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair
             0 to FixedButtons.AXE,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
+            7 to HotButtons.TELEPORT_DOOR,
             8 to HotButtons.BELT_SWITCHER_SETTING
     ),
     SCOOP(
@@ -43,6 +46,7 @@ enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair
             BeltMessages.SCOOP,
             0 to FixedButtons.BUCKET,
             1 to HotButtons.FLASH,
+            7 to HotButtons.TELEPORT_DOOR,
             8 to HotButtons.BELT_SWITCHER_SETTING
     ),
     ;

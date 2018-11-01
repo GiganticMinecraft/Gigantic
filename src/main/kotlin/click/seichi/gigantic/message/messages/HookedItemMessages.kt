@@ -185,5 +185,18 @@ object HookedItemMessages {
             )
     )
 
+    val TELEPORT = LocalizedText(
+            Locale.JAPANESE to
+                    "${ChatColor.BLUE}" +
+                    "テレポート"
+    )
+
+    val TELEPORT_LORE =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    "ショートカット \"${SkillParameters.TELEPORT_KEY}\" キー"
+                    )
+            )
 
 }

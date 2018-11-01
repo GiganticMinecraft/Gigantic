@@ -133,4 +133,14 @@ object UnlockMessages {
                         "---スニークで通常破壊"
             }
     ))
+
+    val UNLOCK_TELEPORT = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "スキル: テレポート を覚えた!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "アクティブ効果: 任意の場所やプレイヤーにテレポートする\n" +
+                        "\"${SkillParameters.SWITCH_SETTING_KEY}\" キー を押してテレポート先を選択!!\n"
+            }
+    ))
 }

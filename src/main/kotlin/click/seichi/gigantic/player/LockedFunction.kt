@@ -78,6 +78,10 @@ enum class LockedFunction(
         MANA_STONE.isUnlocked(it) &&
                 it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 18
     }, unlockMessage = UnlockMessages.UNLOCK_AQUA_LINEA),
+
+    SKILL_TELEPORT(12, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 15
+    }, unlockMessage = UnlockMessages.UNLOCK_TELEPORT),
     ;
 
     /**1から順に [update] される**/

@@ -4,6 +4,7 @@ import click.seichi.gigantic.button.HotButton
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.menus.BeltSwitchSettingMenu
+import click.seichi.gigantic.menu.menus.TeleportMenu
 import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.skill.Skills
@@ -107,6 +108,31 @@ object HotButtons {
         override fun onClick(player: Player, event: InventoryClickEvent) {
             if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return
             BeltSwitchSettingMenu.open(player)
+        }
+
+    }
+
+    val TELEPORT_DOOR = object : HotButton {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            if (!LockedFunction.SKILL_TELEPORT.isUnlocked(player)) return null
+            return ItemStack(Material.DARK_OAK_DOOR).apply {
+                setDisplayName(HookedItemMessages.TELEPORT.asSafety(player.wrappedLocale))
+                setLore(*HookedItemMessages.TELEPORT_LORE
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
+            }
+        }
+
+        override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
+            if (!LockedFunction.SKILL_TELEPORT.isUnlocked(player)) return
+            TeleportMenu.open(player)
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (!LockedFunction.SKILL_TELEPORT.isUnlocked(player)) return
+            TeleportMenu.open(player)
         }
 
     }
