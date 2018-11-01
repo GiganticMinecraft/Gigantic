@@ -72,6 +72,7 @@ class Gigantic : JavaPlugin() {
                 Material.CRACKED_STONE_BRICKS,
                 Material.DIRT,
                 Material.GRASS_BLOCK,
+                Material.GRASS_PATH,
                 Material.EMERALD_ORE,
                 Material.REDSTONE_ORE,
                 Material.LAPIS_ORE,
@@ -193,8 +194,11 @@ class Gigantic : JavaPlugin() {
         PLUGIN = this
         PROTOCOL_MG = ProtocolLibrary.getProtocolManager()
 
-        // Remove all armor stands
-        server.worlds.forEach { world -> world.getEntitiesByClass(ArmorStand::class.java).forEach { it.remove() } }
+
+        server.worlds.forEach { world ->
+            // Remove all armor stands
+            world.getEntitiesByClass(ArmorStand::class.java).forEach { it.remove() }
+        }
 
         registerListeners(
                 MenuListener(),
@@ -204,7 +208,7 @@ class Gigantic : JavaPlugin() {
                 ItemListener(),
                 BlockListener(),
                 SkillSpellListener(),
-                ChunkListener()
+                WorldListener()
         )
 
         registerPacketListeners(

@@ -33,7 +33,8 @@ class ManaMessage(
                 ratio in 0.00..0.20 -> ChatColor.DARK_BLUE
                 ratio in 0.20..0.80 -> ChatColor.BLUE
                 ratio in 0.80..0.99 -> ChatColor.LIGHT_PURPLE
-                else -> ChatColor.WHITE
+                ratio in 1.00..Double.MAX_VALUE -> ChatColor.WHITE
+                else -> ChatColor.YELLOW
             }.toString(),
             separator = ""
     ) { Defaults.MANA_CHAR }

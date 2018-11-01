@@ -52,7 +52,7 @@ object ProfileBossMenu : BookMenu() {
                 "${MenuMessages.PROFILE_RAID_BOSS.asSafety(player.wrappedLocale)} $page/$maxPage"
     }
 
-    override fun getButton(page: Int, slot: Int): Button? {
+    override fun getButton(player: Player, page: Int, slot: Int): Button? {
         return when (slot) {
             numOfBossInAPage + 3 -> prevButton
             numOfBossInAPage + 5 -> nextButton

@@ -56,11 +56,14 @@ object TeleportToPlayerMenu : BookMenu() {
                 "${MenuMessages.TELEPORT_TO_PLAYER_TITLE.asSafety(player.wrappedLocale)} $page/$maxPage"
     }
 
-    override fun getButton(page: Int, slot: Int): Button? {
+    override fun getButton(player: Player, page: Int, slot: Int): Button? {
+        val playerList = getTeleportPlayerList(player)
+        val index = (page - 1) * numOfPlayerPerPage + slot
+        val to = playerList.getOrNull(index) ?: return null
         return when (slot) {
             numOfPlayerPerPage + 3 -> prevButton
             numOfPlayerPerPage + 5 -> nextButton
-            else -> null
+            else -> MenuButtons.TELEPORT_PLAYER(to)
         }
     }
 

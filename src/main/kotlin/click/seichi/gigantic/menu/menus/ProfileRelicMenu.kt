@@ -53,7 +53,7 @@ object ProfileRelicMenu : BookMenu() {
                 "${MenuMessages.PROFILE_RAID_RELIC.asSafety(player.wrappedLocale)} $page/$maxPage"
     }
 
-    override fun getButton(page: Int, slot: Int): Button? {
+    override fun getButton(player: Player, page: Int, slot: Int): Button? {
         return when (slot) {
             numOfRelicInAPage + 3 -> prevButton
             numOfRelicInAPage + 5 -> nextButton

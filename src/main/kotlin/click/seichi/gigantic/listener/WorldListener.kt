@@ -1,14 +1,17 @@
 package click.seichi.gigantic.listener
 
+import org.bukkit.Difficulty
+import org.bukkit.GameRule
 import org.bukkit.entity.EntityType
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.world.ChunkLoadEvent
+import org.bukkit.event.world.WorldInitEvent
 
 /**
  * @author tar0ss
  */
-class ChunkListener : Listener {
+class WorldListener : Listener {
 
 // not working 原因不明
 //    @EventHandler
@@ -28,6 +31,20 @@ class ChunkListener : Listener {
     @EventHandler
     fun onLoad(event: ChunkLoadEvent) {
         event.chunk.entities.filter { it.type == EntityType.ARMOR_STAND }.forEach { it.remove() }
+    }
+
+    @EventHandler
+    fun onWorldInit(event: WorldInitEvent) {
+        val world = event.world ?: return
+        world.setSpawnFlags(false, false)
+        world.pvp = false
+        world.difficulty = Difficulty.NORMAL
+        world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false)
+        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false)
+        world.setGameRule(GameRule.DO_WEATHER_CYCLE, false)
+        world.setGameRule(GameRule.SPECTATORS_GENERATE_CHUNKS, false)
+        world.setGameRule(GameRule.SPAWN_RADIUS, 40)
+        world.time = 12000
     }
 
 }

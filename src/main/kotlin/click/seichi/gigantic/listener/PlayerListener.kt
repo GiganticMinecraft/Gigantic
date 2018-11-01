@@ -42,6 +42,7 @@ import org.bukkit.event.player.*
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.concurrent.TimeUnit
+import kotlin.math.abs
 import kotlin.math.roundToLong
 
 
@@ -56,7 +57,9 @@ class PlayerListener : Listener {
         val block = event.block ?: return
         val spawnLocation = block.world.spawnLocation
         val spawnRadius = Gigantic.PLUGIN.server.spawnRadius
-        if (block.location.distance(spawnLocation).toInt() > spawnRadius) return
+        if (player.gameMode == GameMode.CREATIVE) return
+        if (abs(block.x - spawnLocation.x) >= spawnRadius ||
+                abs(block.z - spawnLocation.z) >= spawnRadius) return
         PlayerMessages.SPAWN_PROTECT.sendTo(player)
         event.isCancelled = true
     }

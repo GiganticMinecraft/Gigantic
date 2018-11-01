@@ -88,9 +88,9 @@ abstract class BookMenu : Menu() {
     abstract fun getTitle(player: Player, page: Int): String
 
     fun getButton(player: Player, slot: Int): Button? {
-        return getButton(player.find(CatalogPlayerCache.MENU_DATA)?.page ?: 1, slot)
+        return getButton(player, player.find(CatalogPlayerCache.MENU_DATA)?.page ?: 1, slot)
     }
 
-    protected abstract fun getButton(page: Int, slot: Int): Button?
+    protected abstract fun getButton(player: Player, page: Int, slot: Int): Button?
 
 }

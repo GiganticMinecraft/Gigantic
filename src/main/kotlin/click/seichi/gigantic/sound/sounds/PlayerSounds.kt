@@ -63,4 +63,11 @@ object PlayerSounds {
             volume = 1.0F
     )
 
+    val TELEPORT = DetailedSound(
+            Sound.ENTITY_SHULKER_TELEPORT,
+            SoundCategory.BLOCKS,
+            pitch = 1.4F,
+            volume = 1.0F
+    )
+
 }

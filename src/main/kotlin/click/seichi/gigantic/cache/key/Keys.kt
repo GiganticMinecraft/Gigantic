@@ -507,4 +507,16 @@ object Keys {
 
     }
 
+
+    val MANA_STONE_CAN_TOGGLE = object : Key<PlayerCache, Boolean> {
+
+        override val default: Boolean
+            get() = true
+
+        override fun satisfyWith(value: Boolean): Boolean {
+            return true
+        }
+
+    }
+
 }

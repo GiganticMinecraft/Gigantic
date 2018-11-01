@@ -86,25 +86,26 @@ class SkillSpellListener : Listener {
         if (tryHeal(player, block)) return
     }
 
-    var toggleCoolTime = false
 
     @EventHandler(priority = EventPriority.MONITOR)
     fun onInteract(event: PlayerInteractEvent) {
         val player = event.player ?: return
         val action = event.action ?: return
+        val toggle = player.getOrPut(Keys.MANA_STONE_CAN_TOGGLE)
         val belt = player.getOrPut(Keys.BELT)
         if (belt == Belt.SCOOP) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
         if (!LockedFunction.MANA_STONE.isUnlocked(player)) return
-        if (action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) return
-        if (toggleCoolTime) return
+        if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return
+        if (!toggle) return
 
-        toggleCoolTime = true
+        player.offer(Keys.MANA_STONE_CAN_TOGGLE, false)
         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-            toggleCoolTime = false
+            if (!player.isValid) return@runTaskLater
+            player.offer(Keys.MANA_STONE_CAN_TOGGLE, true)
         }, 5L)
-        player.transform(Keys.SPELL_TOGGLE) { toggle ->
-            val next = !toggle
+        player.transform(Keys.SPELL_TOGGLE) { spellToggle ->
+            val next = !spellToggle
             player.inventory.itemInOffHand =
                     if (next) ItemStack(Material.NETHER_STAR).apply {
                         setDisplayName(HookedItemMessages.MANA_STONE.asSafety(player.wrappedLocale))

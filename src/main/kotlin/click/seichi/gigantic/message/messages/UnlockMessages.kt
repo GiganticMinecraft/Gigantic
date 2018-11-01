@@ -143,7 +143,7 @@ object UnlockMessages {
                         "スキル: テレポート を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "アクティブ効果: 任意の場所やプレイヤーにテレポートする\n" +
-                        "\"${SkillParameters.SWITCH_SETTING_KEY}\" キー を押してテレポート先を選択!!\n"
+                        "\"${SkillParameters.TELEPORT_KEY}\" キー を押してテレポート先を選択!!\n"
             }
     ))
 }
