@@ -11,6 +11,7 @@ import click.seichi.gigantic.menu.menus.SpecialThanksMenu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.raid.RaidManager
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -89,6 +90,7 @@ object BagButtons {
                     player.gameMode = GameMode.SURVIVAL
                     player.teleport(afkLocation.getLocation())
                     player.getOrPut(Keys.BAG).carry(player)
+                    PlayerSounds.TELEPORT_AFK.play(player.location)
                 }
                 else -> {
                 }

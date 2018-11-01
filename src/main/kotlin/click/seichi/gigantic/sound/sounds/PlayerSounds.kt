@@ -35,4 +35,11 @@ object PlayerSounds {
             SoundCategory.BLOCKS
     )
 
+    val TELEPORT_AFK = DetailedSound(
+            Sound.ITEM_CHORUS_FRUIT_TELEPORT,
+            SoundCategory.BLOCKS,
+            pitch = 1.4F,
+            volume = 1.0F
+    )
+
 }
