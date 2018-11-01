@@ -566,6 +566,7 @@ object MenuButtons {
                 if (to.world != player.world) return
                 if (to.isFlying) return
                 player.teleport(to)
+                PlayerSounds.TELEPORT.play(to.location)
             }
 
         }
