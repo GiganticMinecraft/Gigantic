@@ -31,6 +31,8 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.block.BlockMultiPlaceEvent
+import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
@@ -331,6 +333,20 @@ class PlayerListener : Listener {
             else -> {
             }
         }
+    }
+
+    @EventHandler
+    fun onPlaceBlock(event: BlockPlaceEvent) {
+        val player = event.player ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
+        event.isCancelled = true
+    }
+
+    @EventHandler
+    fun onMultiPlaceBlock(event: BlockMultiPlaceEvent) {
+        val player = event.player ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
+        event.isCancelled = true
     }
 
 }
