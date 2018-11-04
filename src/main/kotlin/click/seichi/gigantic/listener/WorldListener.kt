@@ -3,8 +3,10 @@ package click.seichi.gigantic.listener
 import org.bukkit.Difficulty
 import org.bukkit.GameRule
 import org.bukkit.entity.EntityType
+import org.bukkit.entity.Mob
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntitySpawnEvent
 import org.bukkit.event.world.ChunkLoadEvent
 import org.bukkit.event.world.WorldInitEvent
 
@@ -50,6 +52,12 @@ class WorldListener : Listener {
         world.setGameRule(GameRule.DO_FIRE_TICK, false)
         world.setGameRule(GameRule.DO_LIMITED_CRAFTING, false)
         world.setGameRule(GameRule.SPAWN_RADIUS, 40)
+    }
+
+    @EventHandler
+    fun onSpawnEntity(event: EntitySpawnEvent) {
+        if (event.entity !is Mob) return
+        event.isCancelled = true
     }
 
 }
