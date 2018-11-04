@@ -23,8 +23,8 @@ import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.will.WillSize
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.GameRule
@@ -76,7 +76,7 @@ class PlayerListener : Listener {
              * データが消失するので，ある程度余裕を持って３秒delay．
              * このためだけのcolumn用意するべきかも
              */
-            delay(3L, TimeUnit.SECONDS)
+            delay(TimeUnit.SECONDS.convert(3L, TimeUnit.MILLISECONDS))
             PlayerCacheMemory.add(event.uniqueId, event.name)
         }
     }
