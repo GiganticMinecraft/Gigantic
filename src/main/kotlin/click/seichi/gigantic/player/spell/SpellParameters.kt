@@ -19,7 +19,7 @@ object SpellParameters {
 
     const val GRAND_NATURA_MAX_RADIUS = 5
 
-    const val GRAND_NATURA_MANA_PER_BLOCK = 3.0
+    const val GRAND_NATURA_MANA_PER_BLOCK = 2.0
 
     val GRAND_NATURA_RELATIONAL_BLOCKS = setOf(
             Material.GRASS_BLOCK,
@@ -35,7 +35,7 @@ object SpellParameters {
 
     const val AQUA_LINEA_MAX_DISTANCE = 5
 
-    const val AQUA_LINEA_MANA_PER_BLOCK = 3.6
+    const val AQUA_LINEA_MANA_PER_BLOCK = 3.0
 
     const val AQUA_LINEA_LINED_BREAK_INTERVAL = 5L
 

@@ -39,7 +39,8 @@ open class Miner : Breaker {
 
         // Gravity process
         block.fallUpperCrustBlock()
-
+        // Remove Liquid process
+        block.removeUpperLiquidBlock()
         // bedrock process
         block.changeRelativeBedrock()
 
