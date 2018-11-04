@@ -56,21 +56,6 @@ fun Block.fallUpperCrustBlock() {
     Bukkit.getScheduler().runTask(Gigantic.PLUGIN, fallTask)
 }
 
-private val bedrockFaceSet = setOf(
-        BlockFace.NORTH,
-        BlockFace.EAST,
-        BlockFace.SOUTH,
-        BlockFace.WEST,
-        BlockFace.UP,
-        BlockFace.DOWN
-)
-
-fun Block.changeRelativeBedrock() {
-    bedrockFaceSet.map { getRelative(it) }
-            .filter { it.type == Material.BEDROCK && it.y != 0 }
-            .forEach { it.type = Material.STONE }
-}
-
 fun Block.removeUpperLiquidBlock() {
     var count = 0
     val fallTask = object : Runnable {
@@ -86,3 +71,19 @@ fun Block.removeUpperLiquidBlock() {
     }
     Bukkit.getScheduler().runTask(Gigantic.PLUGIN, fallTask)
 }
+
+private val bedrockFaceSet = setOf(
+        BlockFace.NORTH,
+        BlockFace.EAST,
+        BlockFace.SOUTH,
+        BlockFace.WEST,
+        BlockFace.UP,
+        BlockFace.DOWN
+)
+
+fun Block.changeRelativeBedrock() {
+    bedrockFaceSet.map { getRelative(it) }
+            .filter { it.type == Material.BEDROCK && it.y != 0 }
+            .forEach { it.type = Material.STONE }
+}
+
