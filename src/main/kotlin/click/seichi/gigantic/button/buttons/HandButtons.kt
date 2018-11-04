@@ -132,6 +132,7 @@ object HandButtons {
 
         override fun onInteract(player: Player, event: PlayerInteractEvent) {
         }
+
     }
 
     val MANA_STONE = object : HandButton {

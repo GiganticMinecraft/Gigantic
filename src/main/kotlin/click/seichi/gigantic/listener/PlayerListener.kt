@@ -41,7 +41,6 @@ import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
-import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.concurrent.TimeUnit
@@ -160,7 +159,7 @@ class PlayerListener : Listener {
     // プレイヤーのメニュー以外のインベントリーオープンをキャンセル
     @EventHandler
     fun onInventoryOpen(event: InventoryOpenEvent) {
-        event.player as? Player ?: return
+        if (event.player !is Player) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
         if (event.inventory.holder is Menu) return
         event.isCancelled = true
@@ -200,11 +199,8 @@ class PlayerListener : Listener {
         if (player.gameMode != GameMode.SURVIVAL) return
         val belt = player.getOrPut(Keys.BELT)
         if (event.action == Action.PHYSICAL) return
-        when (event.hand) {
-            EquipmentSlot.HAND -> belt.findFixedButton()?.onInteract(player, event)
-            EquipmentSlot.OFF_HAND -> belt.offHandButton?.onInteract(player, event)
-            else -> return
-        }
+        belt.findFixedButton()?.onInteract(player, event)
+        belt.offHandButton?.onInteract(player, event)
     }
 
     @EventHandler

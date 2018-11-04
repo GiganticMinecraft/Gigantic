@@ -94,7 +94,7 @@ class PlayerMonitor : Listener {
         val entity = event.rightClicked ?: return
         val player = event.player ?: return
         val belt = player.getOrPut(Keys.BELT)
-        if (entity !is Cow && entity is Fish) return
+        if (entity !is Cow && entity !is Fish) return
         if (belt != Belt.SCOOP) return
         player.inventory.itemInMainHand = HandButtons.BUCKET.getItemStack(player)
     }

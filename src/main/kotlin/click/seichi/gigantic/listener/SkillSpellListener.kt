@@ -1,28 +1,20 @@
 package click.seichi.gigantic.listener
 
-import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.ScoopEvent
-import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.message.messages.HookedItemMessages
-import click.seichi.gigantic.player.LockedFunction
+import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.player.skill.Skills
 import click.seichi.gigantic.player.spell.Spells
-import click.seichi.gigantic.sound.sounds.SpellSounds
-import org.bukkit.Bukkit
 import org.bukkit.GameMode
-import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
-import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
-import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.inventory.ItemStack
 
 /**
  * @author tar0ss
@@ -84,41 +76,6 @@ class SkillSpellListener : Listener {
         if (trySkill(player, block)) return
         if (trySpell(player, block)) return
         if (tryHeal(player, block)) return
-    }
-
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    fun onInteract(event: PlayerInteractEvent) {
-        val player = event.player ?: return
-        val action = event.action ?: return
-        val toggle = player.getOrPut(Keys.MANA_STONE_CAN_TOGGLE)
-        val belt = player.getOrPut(Keys.BELT)
-        if (belt == Belt.SCOOP) return
-        if (event.player.gameMode != GameMode.SURVIVAL) return
-        if (!LockedFunction.MANA_STONE.isUnlocked(player)) return
-        if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return
-        if (!toggle) return
-
-        player.offer(Keys.MANA_STONE_CAN_TOGGLE, false)
-        Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-            if (!player.isValid) return@runTaskLater
-            player.offer(Keys.MANA_STONE_CAN_TOGGLE, true)
-        }, 5L)
-        player.transform(Keys.SPELL_TOGGLE) { spellToggle ->
-            val next = !spellToggle
-            player.inventory.itemInOffHand =
-                    if (next) ItemStack(Material.NETHER_STAR).apply {
-                        setDisplayName(HookedItemMessages.MANA_STONE.asSafety(player.wrappedLocale))
-                        setLore(*HookedItemMessages.MANA_STONE_LORE
-                                .map { it.asSafety(player.wrappedLocale) }
-                                .toTypedArray())
-                    }
-                    else ItemStack(Material.AIR)
-            if (next) SpellSounds.TOGGLE_ON.playOnly(player)
-            else SpellSounds.TOGGLE_OFF.playOnly(player)
-            next
-        }
-
     }
 
 }
