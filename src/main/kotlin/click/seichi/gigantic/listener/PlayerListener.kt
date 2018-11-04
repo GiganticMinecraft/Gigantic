@@ -22,8 +22,6 @@ import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.will.WillSize
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.GameRule
@@ -251,6 +249,7 @@ class PlayerListener : Listener {
     }
 
     fun tryToSpawnNewWill(player: Player) {
+        if (!LockedFunction.SKILL_WILL_O_THE_WISP.isUnlocked(player)) return
         player.manipulate(CatalogPlayerCache.APTITUDE) { willAptitude ->
             willAptitude.addIfNeeded().forEachIndexed { index, will ->
                 SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, player.eyeLocation
