@@ -208,7 +208,7 @@ object MenuButtons {
             override fun getItemStack(player: Player): ItemStack? {
                 if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return null
                 val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
-                return belt.getFixedButton().getItemStack(player)?.apply {
+                return belt.findFixedButton()?.getItemStack(player)?.apply {
                     setDisplayName(belt.localizedName.asSafety(player.wrappedLocale))
                     setLore(
                             *MenuMessages.BELT_SWITCHER_SETTING_BUTTON_LORE(switcher.canSwitch(belt))

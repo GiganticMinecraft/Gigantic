@@ -2,7 +2,7 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.belt.Belt
-import click.seichi.gigantic.button.buttons.FixedButtons
+import click.seichi.gigantic.button.buttons.HandButtons
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.ScoopEvent
@@ -85,7 +85,7 @@ class PlayerMonitor : Listener {
                 else -> {
                 }
             }
-            event.itemStack = FixedButtons.BUCKET.getItemStack(player)
+            event.itemStack = HandButtons.BUCKET.getItemStack(player)
         }
     }
 
@@ -96,7 +96,7 @@ class PlayerMonitor : Listener {
         val belt = player.getOrPut(Keys.BELT)
         if (entity !is Cow && entity is Fish) return
         if (belt != Belt.SCOOP) return
-        player.inventory.itemInMainHand = FixedButtons.BUCKET.getItemStack(player)
+        player.inventory.itemInMainHand = HandButtons.BUCKET.getItemStack(player)
     }
 
 }

@@ -91,7 +91,7 @@ object HotButtons {
             if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return null
             val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
             val nextBelt = switcher.nextBelt()
-            return nextBelt.getFixedButton().getItemStack(player)?.apply {
+            return nextBelt.findFixedButton()?.getItemStack(player)?.apply {
                 setDisplayName(HookedItemMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
                 setLore(*HookedItemMessages.SWITCH_DETAIL_LORE
                         .map { it.asSafety(player.wrappedLocale) }

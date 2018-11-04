@@ -1,8 +1,9 @@
 package click.seichi.gigantic.belt
 
 import click.seichi.gigantic.button.Button
+import click.seichi.gigantic.button.HandButton
 import click.seichi.gigantic.button.HotButton
-import click.seichi.gigantic.button.buttons.FixedButtons
+import click.seichi.gigantic.button.buttons.HandButtons
 import click.seichi.gigantic.button.buttons.HotButtons
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.BeltMessages
@@ -13,11 +14,18 @@ import org.bukkit.inventory.ItemStack
 /**
  * @author tar0ss
  */
-enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair<Int, Button>, vararg hotButtons: Pair<Int, HotButton>) {
+enum class Belt(
+        val id: Int,
+        val localizedName: LocalizedText,
+        fixedButton: Pair<Int, HandButton>,
+        val offHandButton: HandButton?,
+        vararg hotButtons: Pair<Int, HotButton>
+) {
     DIG(
             1,
             BeltMessages.DIG,
-            0 to FixedButtons.SHOVEL,
+            0 to HandButtons.SHOVEL,
+            HandButtons.MANA_STONE,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
             7 to HotButtons.TELEPORT_DOOR,
@@ -26,7 +34,8 @@ enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair
     MINE(
             2,
             BeltMessages.MINE,
-            0 to FixedButtons.PICKEL,
+            0 to HandButtons.PICKEL,
+            HandButtons.MANA_STONE,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
             7 to HotButtons.TELEPORT_DOOR,
@@ -35,7 +44,8 @@ enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair
     CUT(
             3,
             BeltMessages.CUT,
-            0 to FixedButtons.AXE,
+            0 to HandButtons.AXE,
+            HandButtons.MANA_STONE,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
             7 to HotButtons.TELEPORT_DOOR,
@@ -44,7 +54,8 @@ enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair
     SCOOP(
             4,
             BeltMessages.SCOOP,
-            0 to FixedButtons.BUCKET,
+            0 to HandButtons.BUCKET,
+            null,
             1 to HotButtons.FLASH,
             7 to HotButtons.TELEPORT_DOOR,
             8 to HotButtons.BELT_SWITCHER_SETTING
@@ -67,19 +78,22 @@ enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair
     /**
      * ベルトを身に着ける
      *
-     * @param applyFixed 固定しているアイテムも更新するかどうか
+     * @param applyFixedItem 固定しているアイテムも更新するかどうか
+     * @param applyOffHandItem オフハンドも更新するかどうか
      */
-    fun wear(player: Player, applyFixed: Boolean = true) {
+    fun wear(player: Player, applyFixedItem: Boolean = true, applyOffHandItem: Boolean = true) {
         player.inventory?.run {
             heldItemSlot = fixedSlot
             (0..8).forEach { slot ->
-                if (!applyFixed && slot == fixedSlot) return@forEach
+                if (!applyFixedItem && slot == fixedSlot) return@forEach
                 setItem(slot,
                         buttonMap[slot]?.getItemStack(player) ?: ItemStack(Material.AIR)
                 )
             }
+            if (!applyOffHandItem) return@run
+            itemInOffHand = offHandButton?.getItemStack(player) ?: ItemStack(Material.AIR)
         }
-        if (applyFixed)
+        if (applyFixedItem)
             player.updateInventory()
     }
 
@@ -88,12 +102,12 @@ enum class Belt(val id: Int, val localizedName: LocalizedText, fixedButton: Pair
         return buttonMap[slot] as HotButton?
     }
 
-    fun getFixedButton(): Button {
-        return buttonMap[fixedSlot]!!
+    fun findFixedButton(): HandButton? {
+        return buttonMap[fixedSlot] as HandButton?
     }
 
     fun getButton(slot: Int): Button? {
-        return if (isFixed(slot)) getFixedButton()
+        return if (isFixed(slot)) findFixedButton()
         else getHotButton(slot)
     }
 
