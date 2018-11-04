@@ -89,5 +89,3 @@ dependencies {
 jar {
     from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
 }
-
-kotlin { experimental { coroutines 'enable' } }

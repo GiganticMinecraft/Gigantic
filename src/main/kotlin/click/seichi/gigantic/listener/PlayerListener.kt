@@ -22,6 +22,8 @@ import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.will.WillSize
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.GameRule
