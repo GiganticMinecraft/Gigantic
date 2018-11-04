@@ -1,7 +1,6 @@
 package click.seichi.gigantic.raid
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
@@ -10,6 +9,7 @@ import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.raid.boss.Boss
 import click.seichi.gigantic.schedule.Scheduler
 import click.seichi.gigantic.sound.sounds.BattleSounds
 import click.seichi.gigantic.topbar.bars.BossBars

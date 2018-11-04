@@ -1,12 +1,12 @@
 package click.seichi.gigantic.message.messages
 
-import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.manipulator.manipulators.Health
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.SideBarMessage
 import click.seichi.gigantic.raid.RaidBattle
+import click.seichi.gigantic.raid.boss.Boss
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.util.SideBarRow
 import org.bukkit.ChatColor

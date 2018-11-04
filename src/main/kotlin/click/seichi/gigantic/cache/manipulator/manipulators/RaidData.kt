@@ -1,10 +1,10 @@
 package click.seichi.gigantic.cache.manipulator.manipulators
 
-import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
+import click.seichi.gigantic.raid.boss.Boss
 import click.seichi.gigantic.relic.Relic
 
 class RaidData : Manipulator<RaidData, PlayerCache> {

@@ -1,12 +1,12 @@
 package click.seichi.gigantic.cache.cache
 
 import click.seichi.gigantic.belt.Belt
-import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.player.LockedFunction
+import click.seichi.gigantic.raid.boss.Boss
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
 import org.jetbrains.exposed.sql.and

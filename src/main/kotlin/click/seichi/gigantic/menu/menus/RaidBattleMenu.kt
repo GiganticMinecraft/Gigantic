@@ -1,10 +1,10 @@
 package click.seichi.gigantic.menu.menus
 
-import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.button.buttons.MenuButtons
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
+import click.seichi.gigantic.raid.boss.Boss
 import click.seichi.gigantic.sound.DetailedSound
 import click.seichi.gigantic.sound.sounds.MenuSounds
 import org.bukkit.ChatColor

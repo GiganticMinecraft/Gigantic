@@ -1,6 +1,5 @@
 package click.seichi.gigantic.raid
 
-import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -11,6 +10,7 @@ import click.seichi.gigantic.menu.menus.RaidBattleMenu
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.RaidBattlePops
+import click.seichi.gigantic.raid.boss.Boss
 import click.seichi.gigantic.sound.sounds.BattleSounds
 import org.bukkit.Bukkit
 import org.bukkit.Location

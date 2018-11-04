@@ -1,9 +1,9 @@
-package click.seichi.gigantic.boss
+package click.seichi.gigantic.raid.boss
 
-import click.seichi.gigantic.boss.Boss.Companion.MAX_RANK
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.BossMessages
+import click.seichi.gigantic.raid.boss.Boss.Companion.MAX_RANK
 import click.seichi.gigantic.relic.Relic
 
 /**

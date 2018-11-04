@@ -1,6 +1,6 @@
 package click.seichi.gigantic.raid
 
-import click.seichi.gigantic.boss.Boss
+import click.seichi.gigantic.raid.boss.Boss
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.util.Random
 import org.bukkit.entity.Player

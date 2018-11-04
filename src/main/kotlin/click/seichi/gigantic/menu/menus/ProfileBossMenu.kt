@@ -1,6 +1,5 @@
 package click.seichi.gigantic.menu.menus
 
-import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.button.buttons.MenuButtons
 import click.seichi.gigantic.button.buttons.NextButton
@@ -10,6 +9,7 @@ import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.BookMenu
 import click.seichi.gigantic.message.messages.MenuMessages
+import click.seichi.gigantic.raid.boss.Boss
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
