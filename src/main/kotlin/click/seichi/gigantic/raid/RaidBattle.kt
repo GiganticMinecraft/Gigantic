@@ -39,9 +39,12 @@ class RaidBattle(val boss: Boss) {
         joinedPlayerSet.add(player.uniqueId)
         bossBar.addPlayer(player)
         display()
+        // sounds
         BattleSounds.START.playOnly(player)
+        // show sidebar
         BattleMessages.BATTLE_INFO(this, player.find(CatalogPlayerCache.HEALTH)
                 ?: return, boss.attackInterval, true).sendTo(player)
+
         Observable.interval(1, TimeUnit.SECONDS)
                 .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .takeWhile {

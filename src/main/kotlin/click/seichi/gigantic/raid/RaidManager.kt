@@ -31,11 +31,11 @@ object RaidManager {
     // run only onEnabled this plugin
     fun newBattles() {
         (1..Boss.MAX_RANK).forEach { rank ->
-            newBattle(rank)?.let { battleMap[rank] = it }
+            randomBattle(rank)?.let { battleMap[rank] = it }
         }
     }
 
-    private fun newBattle(rank: Int): RaidBattle? {
+    private fun randomBattle(rank: Int): RaidBattle? {
         val bossSet = Boss.values().filter { it.rank == rank }.toSet()
         val newBoss = bossSet.shuffled().firstOrNull() ?: return null
         val raidBattle = RaidBattle(newBoss)
@@ -103,7 +103,7 @@ object RaidManager {
                     )
                     if (raidBoss.isDead()) {
                         RaidManager.endBattle(this)
-                        RaidManager.newBattle(boss.rank)
+                        RaidManager.randomBattle(boss.rank)
                     }
                     display()
                     updateAllPlayersMenu()

@@ -44,6 +44,13 @@ class RaidBoss(private val boss: Boss) {
         return totalDamage >= boss.maxHealth.div(10.0).times(1.0)
     }
 
+    // if player hurts only if 1 damage to this -> true
+    fun isAttack(player: Player): Boolean {
+        val totalDamage = getTotalDamage(player)
+        return totalDamage != 0L
+    }
+
+
     fun isDead() = health <= 0L
 
 

@@ -189,7 +189,10 @@ object MenuButtons {
                 when {
                     battle.isDropped(player) -> return
                     battle.isJoined(player) -> {
-                        battle.drop(player)
+                        if (battle.raidBoss.isAttack(player))
+                            battle.drop(player)
+                        else
+                            battle.left(player)
                     }
                     isJoinedOtherRaid -> return
                     else -> {
