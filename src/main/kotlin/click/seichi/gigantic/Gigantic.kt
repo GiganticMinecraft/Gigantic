@@ -266,6 +266,7 @@ class Gigantic : JavaPlugin() {
             player.kickPlayer("Restarting...Please wait a few minutes.")
         }
         logger.info("Gigantic is disabled!!")
+        Bukkit.getPluginManager().disablePlugin(this)
     }
 
 }

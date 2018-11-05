@@ -22,6 +22,13 @@ object PlayerCacheMemory {
         playerCacheMap[uniqueId] = newCache
     }
 
+    fun write(uniqueId: UUID, isAsync: Boolean) {
+        playerCacheMap[uniqueId]?.run {
+            if (isAsync) writeAsync()
+            else write()
+        }
+    }
+
     fun remove(uniqueId: UUID, isAsync: Boolean) {
         playerCacheMap.remove(uniqueId)?.run {
             if (isAsync) writeAsync()

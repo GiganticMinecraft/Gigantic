@@ -1,11 +1,15 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.config.Config
+import org.bukkit.Bukkit
 import org.bukkit.Difficulty
 import org.bukkit.GameRule
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.world.WorldInitEvent
+import org.bukkit.event.world.WorldSaveEvent
 
 /**
  * @author tar0ss
@@ -39,5 +43,13 @@ class WorldListener : Listener {
         world.worldBorder.warningTime = 0
     }
 
+    @EventHandler
+    fun onWorldSave(event: WorldSaveEvent) {
+        Bukkit.getScheduler().runTask(Gigantic.PLUGIN) {
+            Bukkit.getOnlinePlayers().forEach {
+                PlayerCacheMemory.write(it.uniqueId, false)
+            }
+        }
+    }
 
 }
