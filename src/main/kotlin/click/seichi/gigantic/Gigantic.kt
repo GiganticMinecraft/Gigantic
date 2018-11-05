@@ -208,7 +208,9 @@ class Gigantic : JavaPlugin() {
                 ItemListener(),
                 BlockListener(),
                 SkillSpellListener(),
-                WorldListener()
+                WorldListener(),
+                EntityListener(),
+                ChunkListener()
         )
 
         registerPacketListeners(
