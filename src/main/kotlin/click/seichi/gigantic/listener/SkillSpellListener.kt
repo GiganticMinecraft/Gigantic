@@ -1,9 +1,6 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.event.events.ScoopEvent
-import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.player.skill.Skills
@@ -60,19 +57,6 @@ class SkillSpellListener : Listener {
         val player = event.player ?: return
         val block = event.block ?: return
         if (event.player.gameMode != GameMode.SURVIVAL) return
-        if (trySkill(player, block)) return
-        if (trySpell(player, block)) return
-        if (tryHeal(player, block)) return
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    fun onScoop(event: ScoopEvent) {
-        if (event.isCancelled) return
-        val player = event.player
-        val block = event.block
-        if (event.player.gameMode != GameMode.SURVIVAL) return
-        val mineBurst = event.player.find(CatalogPlayerCache.MINE_BURST) ?: return
-        if (mineBurst.duringFire()) return
         if (trySkill(player, block)) return
         if (trySpell(player, block)) return
         if (tryHeal(player, block)) return

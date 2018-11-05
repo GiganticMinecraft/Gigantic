@@ -51,11 +51,9 @@ enum class LockedFunction(
             it.unlock(Belt.DIG)
             it.unlock(Belt.MINE)
             it.unlock(Belt.CUT)
-            it.unlock(Belt.SCOOP)
             it.setCanSwitch(Belt.DIG, true)
             it.setCanSwitch(Belt.MINE, true)
             it.setCanSwitch(Belt.CUT, true)
-            it.setCanSwitch(Belt.SCOOP, true)
         }
     }, unlockMessage = UnlockMessages.UNLOCK_SWITCH),
 

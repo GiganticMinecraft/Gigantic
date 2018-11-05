@@ -51,15 +51,6 @@ enum class Belt(
             7 to HotButtons.TELEPORT_DOOR,
             8 to HotButtons.BELT_SWITCHER_SETTING
     ),
-    SCOOP(
-            4,
-            BeltMessages.SCOOP,
-            0 to HandButtons.BUCKET,
-            null,
-            1 to HotButtons.FLASH,
-            7 to HotButtons.TELEPORT_DOOR,
-            8 to HotButtons.BELT_SWITCHER_SETTING
-    ),
     ;
 
     companion object {

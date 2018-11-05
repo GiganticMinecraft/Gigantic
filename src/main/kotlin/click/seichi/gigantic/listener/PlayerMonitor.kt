@@ -1,19 +1,9 @@
 package click.seichi.gigantic.listener
 
-import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.belt.Belt
-import click.seichi.gigantic.button.buttons.HandButtons
-import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.event.events.ScoopEvent
-import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.player.breaker.Miner
-import click.seichi.gigantic.player.breaker.Scooper
 import org.bukkit.GameMode
-import org.bukkit.Material
-import org.bukkit.entity.Cow
-import org.bukkit.entity.Fish
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -21,8 +11,6 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
-import org.bukkit.event.player.PlayerBucketFillEvent
-import org.bukkit.event.player.PlayerInteractEntityEvent
 import kotlin.math.roundToLong
 
 /**
@@ -61,42 +49,6 @@ class PlayerMonitor : Listener {
             val wrappedRegain = event.amount.times(health.max / 20.0).roundToLong()
             health.increase(wrappedRegain)
         }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    fun onBucketFill(event: PlayerBucketFillEvent) {
-        if (event.isCancelled) return
-        if (event.player.gameMode != GameMode.SURVIVAL) return
-        val bucket = event.bucket ?: return
-        val itemStack = event.itemStack ?: return
-        val player = event.player ?: return
-        val belt = player.getOrPut(Keys.BELT)
-        val block = event.blockClicked ?: return
-
-        if (belt == Belt.SCOOP && bucket == Material.BUCKET && itemStack.type != Material.BUCKET) {
-            when (itemStack.type) {
-                Material.LAVA_BUCKET,
-                Material.WATER_BUCKET -> {
-                    val scoopEvent = ScoopEvent(player, block)
-                    Gigantic.PLUGIN.server.pluginManager.callEvent(scoopEvent)
-                    if (!scoopEvent.isCancelled)
-                        Scooper().breakBlock(player, block)
-                }
-                else -> {
-                }
-            }
-            event.itemStack = HandButtons.BUCKET.getItemStack(player)
-        }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    fun onScoopAnimal(event: PlayerInteractEntityEvent) {
-        val entity = event.rightClicked ?: return
-        val player = event.player ?: return
-        val belt = player.getOrPut(Keys.BELT)
-        if (entity !is Cow && entity !is Fish) return
-        if (belt != Belt.SCOOP) return
-        player.inventory.itemInMainHand = HandButtons.BUCKET.getItemStack(player)
     }
 
 }

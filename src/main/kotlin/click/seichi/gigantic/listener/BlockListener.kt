@@ -11,6 +11,7 @@ import org.bukkit.event.entity.EntityChangeBlockEvent
  */
 class BlockListener : Listener {
 
+    // 液体の流れを止める
     @EventHandler
     fun onBlockFromTo(event: BlockFromToEvent) {
         event.block ?: return

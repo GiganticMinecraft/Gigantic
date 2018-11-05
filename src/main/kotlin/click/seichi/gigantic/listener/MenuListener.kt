@@ -23,6 +23,7 @@ class MenuListener : Listener {
             InventoryAction.PICKUP_ONE
     )
 
+    // メニュー、ベルト、バッグに使用
     @EventHandler
     fun onInventoryClick(event: InventoryClickEvent) {
         val player = event.whoClicked as? org.bukkit.entity.Player ?: return

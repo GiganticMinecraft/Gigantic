@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntitySpawnEvent
  */
 class EntityListener : Listener {
 
+    // モブのスポーンをキャンセル
     @EventHandler
     fun onSpawnEntity(event: EntitySpawnEvent) {
         if (event.entity !is Mob) return

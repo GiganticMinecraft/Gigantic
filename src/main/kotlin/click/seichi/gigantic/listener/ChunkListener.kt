@@ -10,6 +10,7 @@ import org.bukkit.event.world.ChunkLoadEvent
  */
 class ChunkListener : Listener {
 
+    // 残ったコンボ表示を消す
     @EventHandler
     fun onLoad(event: ChunkLoadEvent) {
         event.chunk.entities.filter { it.type == EntityType.ARMOR_STAND }.forEach { it.remove() }

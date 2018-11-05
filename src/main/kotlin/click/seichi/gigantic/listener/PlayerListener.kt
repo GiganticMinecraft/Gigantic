@@ -53,6 +53,7 @@ import kotlin.math.roundToLong
  */
 class PlayerListener : Listener {
 
+    // スポーン付近を破壊した場合問答無用でキャンセル
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onSpawnAreaBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
@@ -66,6 +67,7 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
+    // プレイヤーデータのロード
     @EventHandler
     fun onPlayerPreLoginAsync(event: AsyncPlayerPreLoginEvent) {
         runBlocking {
@@ -275,7 +277,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onDamage(event: EntityDamageEvent) {
-        event.entity as? Player ?: return
+        if (event.entity !is Player) return
         if (event.cause == EntityDamageEvent.DamageCause.STARVATION) {
             event.isCancelled = true
             return
@@ -286,7 +288,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onRegainHealth(event: EntityRegainHealthEvent) {
-        event.entity as? Player ?: return
+        if (event.entity !is Player) return
         if (event.regainReason == EntityRegainHealthEvent.RegainReason.SATIATED) {
             event.isCancelled = true
         }
