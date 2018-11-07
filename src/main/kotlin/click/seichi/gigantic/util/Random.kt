@@ -1,6 +1,6 @@
 package click.seichi.gigantic.util
 
-import click.seichi.gigantic.raid.boss.Boss
+import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import click.seichi.gigantic.will.WillSize

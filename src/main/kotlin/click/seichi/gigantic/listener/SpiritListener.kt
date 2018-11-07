@@ -1,7 +1,6 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.extension.summonSpirit
-import click.seichi.gigantic.player.LockedFunction
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority

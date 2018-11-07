@@ -1,7 +1,6 @@
 package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.skill.SkillParameters
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player

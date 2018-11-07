@@ -6,7 +6,6 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.HookedItemMessages
-import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.sound.sounds.SpellSounds
 import org.bukkit.Bukkit
 import org.bukkit.Material

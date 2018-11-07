@@ -9,8 +9,6 @@ import click.seichi.gigantic.menu.menus.ProfileMenu
 import click.seichi.gigantic.menu.menus.RaidBattleMenu
 import click.seichi.gigantic.menu.menus.SpecialThanksMenu
 import click.seichi.gigantic.message.messages.MenuMessages
-import click.seichi.gigantic.player.LockedFunction
-import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.ChatColor
 import org.bukkit.GameMode

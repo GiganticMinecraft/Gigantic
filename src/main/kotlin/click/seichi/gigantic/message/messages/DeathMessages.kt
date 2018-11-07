@@ -1,7 +1,7 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.raid.boss.Boss
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import java.util.*

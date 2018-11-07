@@ -6,7 +6,6 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Invokable
-import click.seichi.gigantic.player.LockedFunction
 import click.seichi.gigantic.player.breaker.spells.AquaLinea
 import click.seichi.gigantic.player.breaker.spells.GrandNatura
 import click.seichi.gigantic.player.breaker.spells.TerraDrain
