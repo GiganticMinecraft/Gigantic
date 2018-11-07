@@ -1,12 +1,8 @@
 package click.seichi.gigantic.message.messages
 
-import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.manipulator.manipulators.*
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.player.skill.SkillParameters
-import click.seichi.gigantic.player.spell.SpellParameters
-import click.seichi.gigantic.relic.RelicRarity
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor

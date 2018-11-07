@@ -1,7 +1,6 @@
 package click.seichi.gigantic.button.buttons
 
 import click.seichi.gigantic.belt.Belt
-import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.button.PlayerHeadButton
 import click.seichi.gigantic.cache.key.Keys
@@ -11,7 +10,6 @@ import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.relic.Relic
-import click.seichi.gigantic.relic.RelicRarity
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.ChatColor

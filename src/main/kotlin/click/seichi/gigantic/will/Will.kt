@@ -10,11 +10,11 @@ import org.bukkit.Color
  */
 enum class Will(val id: Int, val color: Color, val grade: WillGrade, val localizedName: LocalizedText) {
 
-    AER(1, Color.fromRGB(240, 248, 255), WillGrade.BASIC, WillMessages.AER),
-    AQUA(2, Color.fromRGB(0, 0, 128), WillGrade.BASIC, WillMessages.AQUA),
-    IGNIS(3, Color.fromRGB(255, 69, 0), WillGrade.BASIC, WillMessages.IGNIS),
-    NATURA(4, Color.fromRGB(0, 255, 0), WillGrade.BASIC, WillMessages.NATURA),
-    TERRA(5, Color.fromRGB(124, 83, 53), WillGrade.BASIC, WillMessages.TERRA),
+    AQUA(1, Color.fromRGB(0, 0, 128), WillGrade.BASIC, WillMessages.AQUA),
+    IGNIS(2, Color.fromRGB(255, 69, 0), WillGrade.BASIC, WillMessages.IGNIS),
+    AER(3, Color.fromRGB(240, 248, 255), WillGrade.BASIC, WillMessages.AER),
+    TERRA(4, Color.fromRGB(124, 83, 53), WillGrade.BASIC, WillMessages.TERRA),
+    NATURA(5, Color.fromRGB(0, 255, 0), WillGrade.BASIC, WillMessages.NATURA),
     GLACIES(6, Color.fromRGB(127, 255, 255), WillGrade.ADVANCED, WillMessages.GLACIES),
     LUX(7, Color.fromRGB(255, 255, 77), WillGrade.ADVANCED, WillMessages.LUX),
     SOLUM(8, Color.fromRGB(105, 105, 105), WillGrade.ADVANCED, WillMessages.SOLUM),

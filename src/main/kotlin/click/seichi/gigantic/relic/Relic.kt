@@ -1,17 +1,97 @@
 package click.seichi.gigantic.relic
 
+import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
+import org.bukkit.inventory.ItemStack
+import java.util.*
 
 /**
  * @author tar0ss
  */
 enum class Relic(
         val id: Int,
-        val rarity: RelicRarity,
-        val category: RelicCategory,
         val localizedName: LocalizedText,
-        val description: List<LocalizedText>
+        val maxAmount: Int = Int.MAX_VALUE,
+        val icon: ItemStack = Head.RUBY_JEWELLERY.toItemStack()
 ) {
+    SPELL_BOOK_EXPLOSION(
+            100,
+            LocalizedText(
+                    Locale.JAPANESE to "魔導書-エクスプロージョン-"
+            ),
+            1
+    ),
+    GOLDEN_APPLE(
+            150,
+            LocalizedText(
+                    Locale.JAPANESE to "黄金の林檎"
+            )
+    ),
+    SPELL_BOOK_AQUA_LINEA(
+            200,
+            LocalizedText(
+                    Locale.JAPANESE to "水の魔導書-アクア・リネア-"
+            ),
+            1
+    ),
+    WILL_CRYSTAL_SAPPHIRE(
+            250,
+            LocalizedText(
+                    Locale.JAPANESE to "水の意志結晶-サファイア-"
+            )
+    ),
+    SPELL_BOOK_IGNIS_VOLCANO(
+            300,
+            LocalizedText(
+                    Locale.JAPANESE to "火の魔導書-イグニス・ヴォルケーノ-"
+            ),
+            1
+    ),
+    WILL_CRYSTAL_RUBY(
+            350,
+            LocalizedText(
+                    Locale.JAPANESE to "火の意志結晶-ルビー-"
+            )
+    ),
+    SPELL_BOOK_AER_SLASH(
+            400,
+            LocalizedText(
+                    Locale.JAPANESE to "空の魔導書-エアル・スラッシュ-"
+            ),
+            1
+    ),
+    WILL_CRYSTAL_FLUORITE(
+            450,
+            LocalizedText(
+                    Locale.JAPANESE to "空の意志結晶-フローライト-"
+            )
+    ),
+    SPELL_BOOK_TERRA_DRAIN(
+            500,
+            LocalizedText(
+                    Locale.JAPANESE to "土の魔導書-テラ・ドレイン-"
+            ),
+            1
+    ),
+    WILL_CRYSTAL_ANDALUSITE(
+            550,
+            LocalizedText(
+                    Locale.JAPANESE to "土の意志結晶-アンダルサイト-"
+            )
+    ),
+    SPELL_BOOK_GRAND_NATURA(
+            600,
+            LocalizedText(
+                    Locale.JAPANESE to "自然の魔導書-グランド・ナトラ-"
+            ),
+            1
+    ),
+    WILL_CRYSTAL_JADE(
+            650,
+            LocalizedText(
+                    Locale.JAPANESE to "自然の意志結晶-ヒスイ-"
+            )
+    ),
 //    // デバッグ用 1000番
 //    SHELLS(1000, RelicRarity.NORMAL, RelicCategory.NONE, RelicMessages.SHELLS_NAME, RelicMessages.SHELLS_DESCRIPTION),
 //    // ボスレリック用 1001番~1999番
