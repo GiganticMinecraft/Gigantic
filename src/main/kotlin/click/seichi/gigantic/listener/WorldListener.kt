@@ -23,10 +23,6 @@ class WorldListener : Listener {
         world.pvp = false
         world.difficulty = Difficulty.NORMAL
         world.time = 6000
-        world.ambientSpawnLimit = 0
-        world.monsterSpawnLimit = 0
-        world.animalSpawnLimit = 0
-        world.waterAnimalSpawnLimit = 0
         world.isAutoSave = true
         world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false)
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false)
