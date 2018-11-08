@@ -1,15 +1,16 @@
 package click.seichi.gigantic.cache.key
 
+import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.bag.Bag
 import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.belt.Belt
-import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.relic.Relic
+import click.seichi.gigantic.soul.SoulMonster
 import click.seichi.gigantic.will.Will
 import org.bukkit.block.Block
 import org.jetbrains.exposed.dao.Entity
@@ -195,20 +196,20 @@ object Keys {
             }
             .toMap()
 
-    val BOSS_MAP: Map<Boss, DatabaseKey<PlayerCache, Long>> = Boss.values()
+    val SOUL_MONSTER: Map<SoulMonster, DatabaseKey<PlayerCache, Long>> = SoulMonster.values()
             .map {
                 it to object : DatabaseKey<PlayerCache, Long> {
                     override val default: Long
                         get() = 0L
 
                     override fun read(entity: Entity<*>): Long {
-                        val userBoss = entity as UserBoss
-                        return userBoss.defeat
+                        val userMonster = entity as UserMonster
+                        return userMonster.defeat
                     }
 
                     override fun store(entity: Entity<*>, value: Long) {
-                        val userBoss = entity as UserBoss
-                        userBoss.defeat = value
+                        val userMonster = entity as UserMonster
+                        userMonster.defeat = value
                     }
 
                     override fun satisfyWith(value: Long): Boolean {
@@ -243,20 +244,20 @@ object Keys {
             }
             .toMap()
 
-    val LOCKED_FUNCTION_MAP: Map<LockedFunction, DatabaseKey<PlayerCache, Boolean>> = LockedFunction.values()
+    val ACHIEVEMENT_MAP: Map<Achievement, DatabaseKey<PlayerCache, Boolean>> = Achievement.values()
             .map {
                 it to object : DatabaseKey<PlayerCache, Boolean> {
                     override val default: Boolean
                         get() = false
 
                     override fun read(entity: Entity<*>): Boolean {
-                        val userLocked = entity as UserLocked
-                        return userLocked.hasUnlocked
+                        val userAchievement = entity as UserAchievement
+                        return userAchievement.hasUnlocked
                     }
 
                     override fun store(entity: Entity<*>, value: Boolean) {
-                        val userLocked = entity as UserLocked
-                        userLocked.hasUnlocked = value
+                        val userAchievement = entity as UserAchievement
+                        userAchievement.hasUnlocked = value
                     }
 
                     override fun satisfyWith(value: Boolean): Boolean {

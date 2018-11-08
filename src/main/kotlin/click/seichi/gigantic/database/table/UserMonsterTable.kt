@@ -5,12 +5,12 @@ import org.jetbrains.exposed.dao.IntIdTable
 /**
  * @author tar0ss
  */
-object UserLockedTable : IntIdTable("users_locked") {
+object UserMonsterTable : IntIdTable("users_monsters") {
 
     val userId = reference("unique_id", UserTable).primaryKey()
 
-    val lockedId = integer("locked_id").primaryKey()
+    val monsterId = integer("monster_id").primaryKey()
 
-    val hasUnlocked = bool("has_unlocked").default(false)
+    val defeat = long("defeat").default(0L)
 
 }

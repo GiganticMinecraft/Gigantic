@@ -21,8 +21,6 @@ object CatalogPlayerCache {
 
     val MINE_COMBO = MineCombo::class.java
 
-    val RAID_DATA = RaidData::class.java
-
     val AFK_LOCATION = AfkLocation::class.java
 
     val MENU_DATA = MenuData::class.java

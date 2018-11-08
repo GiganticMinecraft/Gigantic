@@ -1,6 +1,7 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.PlayerAnimations
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
@@ -13,7 +14,6 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
-import click.seichi.gigantic.player.skill.Skills
 import click.seichi.gigantic.popup.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.spirit.SpiritManager
@@ -86,7 +86,6 @@ class PlayerListener : Listener {
             return
         }
 
-        RaidManager.getBattleList().firstOrNull { it.isJoined(player) }?.drop(player)
 
         if (player.gameMode == GameMode.SPECTATOR) {
             player.find(CatalogPlayerCache.AFK_LOCATION)?.getLocation()?.let {
@@ -141,7 +140,7 @@ class PlayerListener : Listener {
             false
         }
 
-        LockedFunction.update(player, true)
+        Achievement.update(player, true)
 
         player.getOrPut(Keys.BELT).wear(player)
         player.getOrPut(Keys.BAG).carry(player)
@@ -219,9 +218,9 @@ class PlayerListener : Listener {
         PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
         PlayerSounds.LEVEL_UP.play(player.location)
 
-        LockedFunction.update(player)
+        Achievement.update(player)
 
-        if (LockedFunction.MANA_STONE.isUnlocked(player)) {
+        if (Achievement.MANA_STONE.isUnlocked(player)) {
             player.manipulate(CatalogPlayerCache.MANA) {
                 val prevMax = it.max
                 it.updateMaxMana()
@@ -251,7 +250,7 @@ class PlayerListener : Listener {
     }
 
     fun tryToSpawnNewWill(player: Player) {
-        if (!LockedFunction.SKILL_WILL_O_THE_WISP.isUnlocked(player)) return
+        if (!Achievement.WILL_O_THE_WISP.isUnlocked(player)) return
         player.manipulate(CatalogPlayerCache.APTITUDE) { willAptitude ->
             willAptitude.addIfNeeded().forEachIndexed { index, will ->
                 SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, player.eyeLocation
@@ -303,8 +302,6 @@ class PlayerListener : Listener {
         }
         player.offer(Keys.DEATH_MESSAGE, null)
 
-        RaidManager.getBattleList().firstOrNull { it.isJoined(player) }?.drop(player)
-
         player.manipulate(CatalogPlayerCache.LEVEL) { level ->
             player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
                 val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
@@ -312,7 +309,7 @@ class PlayerListener : Listener {
                 val maxPenalty = level.exp.minus(expToCurrentLevel)
                 val penaltyMineBlock = expToNextLevel.minus(expToCurrentLevel)
                         .div(100L)
-                        .times(Config.DEATH_PENALTY.times(100).roundToLong())
+                        .times(Config.PLAYER_DEATH_PENALTY.times(100).roundToLong())
                         .coerceAtMost(maxPenalty)
                 it.add(penaltyMineBlock, MineBlockReason.DEATH_PENALTY)
                 if (penaltyMineBlock != 0L)

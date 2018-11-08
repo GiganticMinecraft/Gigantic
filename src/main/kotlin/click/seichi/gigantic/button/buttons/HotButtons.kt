@@ -1,12 +1,12 @@
 package click.seichi.gigantic.button.buttons
 
+import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.button.HotButton
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.menus.BeltSwitchSettingMenu
 import click.seichi.gigantic.menu.menus.TeleportMenu
 import click.seichi.gigantic.message.messages.HookedItemMessages
-import click.seichi.gigantic.player.skill.Skills
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -21,7 +21,7 @@ object HotButtons {
     val MINE_BURST = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.SKILL_MINE_BURST.isUnlocked(player)) return null
+            if (!Achievement.SKILL_MINE_BURST.isUnlocked(player)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             return when {
                 mineBurst.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
@@ -57,7 +57,7 @@ object HotButtons {
     val FLASH = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.SKILL_FLASH.isUnlocked(player)) return null
+            if (!Achievement.SKILL_FLASH.isUnlocked(player)) return null
             val flash = player.find(CatalogPlayerCache.FLASH) ?: return null
             return when {
                 flash.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
@@ -87,7 +87,7 @@ object HotButtons {
     val BELT_SWITCHER_SETTING = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return null
+            if (!Achievement.SWITCH.isUnlocked(player)) return null
             val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
             val nextBelt = switcher.nextBelt()
             return nextBelt.findFixedButton()?.getItemStack(player)?.apply {
@@ -100,12 +100,12 @@ object HotButtons {
         }
 
         override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
-            if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return
+            if (!Achievement.SWITCH.isUnlocked(player)) return
             BeltSwitchSettingMenu.open(player)
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!LockedFunction.SKILL_SWITCH.isUnlocked(player)) return
+            if (!Achievement.SWITCH.isUnlocked(player)) return
             BeltSwitchSettingMenu.open(player)
         }
 
@@ -114,7 +114,7 @@ object HotButtons {
     val TELEPORT_DOOR = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.SKILL_TELEPORT.isUnlocked(player)) return null
+            if (!Achievement.TELEPORT.isUnlocked(player)) return null
             return ItemStack(Material.DARK_OAK_DOOR).apply {
                 setDisplayName(HookedItemMessages.TELEPORT.asSafety(player.wrappedLocale))
                 setLore(*HookedItemMessages.TELEPORT_LORE
@@ -125,12 +125,12 @@ object HotButtons {
         }
 
         override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
-            if (!LockedFunction.SKILL_TELEPORT.isUnlocked(player)) return
+            if (!Achievement.TELEPORT.isUnlocked(player)) return
             TeleportMenu.open(player)
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!LockedFunction.SKILL_TELEPORT.isUnlocked(player)) return
+            if (!Achievement.TELEPORT.isUnlocked(player)) return
             TeleportMenu.open(player)
         }
 

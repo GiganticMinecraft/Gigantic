@@ -9,7 +9,6 @@ import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
-import click.seichi.gigantic.raid.RaidManager
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
 import com.comphenix.protocol.events.PacketListener
@@ -244,9 +243,9 @@ class Gigantic : JavaPlugin() {
                     UserTable,
                     UserWillTable,
                     UserMineBlockTable,
-                    UserBossTable,
+                    UserMonsterTable,
                     UserRelicTable,
-                    UserLockedTable,
+                    UserAchievementTable,
                     UserBeltTable
             )
         }

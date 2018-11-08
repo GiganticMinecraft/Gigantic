@@ -1,6 +1,7 @@
 package click.seichi.gigantic.button.buttons
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.button.HandButton
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -136,7 +137,7 @@ object HandButtons {
 
     val MANA_STONE = object : HandButton {
         override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.MANA_STONE.isUnlocked(player)) return null
+            if (!Achievement.MANA_STONE.isUnlocked(player)) return null
             val spellToggle = player.getOrPut(Keys.SPELL_TOGGLE)
             return if (spellToggle) ItemStack(Material.NETHER_STAR).apply {
                 setDisplayName(HookedItemMessages.MANA_STONE.asSafety(player.wrappedLocale))
@@ -151,7 +152,7 @@ object HandButtons {
         }
 
         override fun onInteract(player: Player, event: PlayerInteractEvent) {
-            if (!LockedFunction.MANA_STONE.isUnlocked(player)) return
+            if (!Achievement.MANA_STONE.isUnlocked(player)) return
             val action = event.action ?: return
             if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return
             val coolTime = !player.getOrPut(Keys.MANA_STONE_CAN_TOGGLE)

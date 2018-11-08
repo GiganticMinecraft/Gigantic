@@ -1,5 +1,6 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.extension.summonSpirit
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
@@ -18,7 +19,7 @@ class SpiritListener : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
-        if (!LockedFunction.SKILL_WILL_O_THE_WISP.isUnlocked(player)) return
+        if (!Achievement.WILL_O_THE_WISP.isUnlocked(player)) return
         event.summonSpirit()
     }
 
@@ -26,7 +27,7 @@ class SpiritListener : Listener {
     fun onEntityDeath(event: EntityDeathEvent) {
         val player = event.entity.killer ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
-        if (!LockedFunction.SKILL_WILL_O_THE_WISP.isUnlocked(player)) return
+        if (!Achievement.WILL_O_THE_WISP.isUnlocked(player)) return
         event.summonSpirit()
     }
 

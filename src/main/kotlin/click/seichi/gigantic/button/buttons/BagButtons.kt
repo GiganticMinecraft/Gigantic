@@ -6,7 +6,6 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.menus.ProfileMenu
-import click.seichi.gigantic.menu.menus.RaidBattleMenu
 import click.seichi.gigantic.menu.menus.SpecialThanksMenu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.sound.sounds.PlayerSounds
@@ -35,25 +34,6 @@ object BagButtons {
         override fun onClick(player: Player, event: InventoryClickEvent) {
             if (event.inventory.holder === ProfileMenu) return
             ProfileMenu.open(player)
-        }
-
-    }
-
-    val RAID_BATTLE = object : Button {
-
-        override fun getItemStack(player: Player): ItemStack? {
-            if (!LockedFunction.RAID_BATTLE.isUnlocked(player)) return null
-            return RaidManager.getBattleList().firstOrNull()?.boss?.head?.toItemStack()?.apply {
-                setDisplayName(
-                        "${ChatColor.DARK_RED}${ChatColor.UNDERLINE}" + MenuMessages.RAID_BOSS.asSafety(player.wrappedLocale)
-                )
-            }
-        }
-
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!LockedFunction.RAID_BATTLE.isUnlocked(player)) return
-            if (event.inventory.holder === RaidBattleMenu) return
-            RaidBattleMenu.open(player)
         }
 
     }

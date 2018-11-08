@@ -8,7 +8,6 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.popup.PopUpParameters
 import click.seichi.gigantic.popup.SkillPops
-import click.seichi.gigantic.raid.RaidManager
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit
@@ -52,9 +51,6 @@ open class Miner : Breaker {
             it.combo(1L)
             SkillPops.MINE_COMBO(it).pop(block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
         }
-
-        // raid battle process
-        RaidManager.playBattle(player, block.centralLocation.clone())
 
         player.manipulate(CatalogPlayerCache.LEVEL) {
             it.calculate(ExpProducer.calcExp(player)) { current ->

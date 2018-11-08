@@ -7,7 +7,7 @@ import click.seichi.gigantic.Gigantic
  */
 object Config : SimpleConfiguration("config", Gigantic.PLUGIN) {
 
-    val DEATH_PENALTY = getDouble("death_penalty")
+    val PLAYER_DEATH_PENALTY = getDouble("player.death_penalty")
 
     val WORLD_SIDE_LENGTH = getDouble("world.side_length")
 }
