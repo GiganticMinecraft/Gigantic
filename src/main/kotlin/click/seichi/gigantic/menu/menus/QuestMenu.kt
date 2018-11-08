@@ -7,7 +7,7 @@ import org.bukkit.entity.Player
 /**
  * @author tar0ss
  */
-object QuestSelectMenu : Menu() {
+object QuestMenu : Menu() {
 
     override val size: Int
         get() = 9
@@ -15,7 +15,7 @@ object QuestSelectMenu : Menu() {
     override fun getTitle(player: Player): String {
         // TODO implements
         return "${ChatColor.BLACK}" +
-                "[クエストを選択]"
+                "[ここにクエスト名]"
     }
 
     init {

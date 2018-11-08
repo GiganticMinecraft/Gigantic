@@ -16,23 +16,23 @@ import org.bukkit.inventory.Inventory
  */
 abstract class BookMenu : Menu() {
 
-    abstract val maxPage: Int
-
     open val pageChangeSound = MenuSounds.PAGE_CHANGE
+
+    abstract fun getMaxPage(player: Player): Int
 
     override fun open(player: Player, playSound: Boolean) {
         open(player, 1, true, playSound)
     }
 
     fun changePage(player: Player, page: Int, playSound: Boolean = true) {
-        if (page !in 1..maxPage) return
+        if (page !in 1..getMaxPage(player)) return
         open(player, page, false, playSound)
     }
 
     fun nextPage(player: Player, playSound: Boolean = true) {
         val current = player.getOrPut(Keys.MENU_PAGE)
         val nextPage = current + 1
-        if (nextPage !in 1..maxPage) return
+        if (nextPage !in 1..getMaxPage(player)) return
         player.offer(Keys.MENU_PAGE, nextPage)
         open(player, nextPage, false, playSound)
     }
@@ -40,7 +40,7 @@ abstract class BookMenu : Menu() {
     fun prevPage(player: Player, playSound: Boolean = true) {
         val current = player.getOrPut(Keys.MENU_PAGE)
         val prevPage = current - 1
-        if (prevPage !in 1..maxPage) return
+        if (prevPage !in 1..getMaxPage(player)) return
         player.offer(Keys.MENU_PAGE, prevPage)
         open(player, prevPage, false, playSound)
     }
@@ -48,13 +48,13 @@ abstract class BookMenu : Menu() {
     fun hasNextPage(player: Player): Boolean {
         val current = player.getOrPut(Keys.MENU_PAGE)
         val nextPage = current + 1
-        return nextPage in 1..maxPage
+        return nextPage in 1..getMaxPage(player)
     }
 
     fun hasPrevPage(player: Player): Boolean {
         val current = player.getOrPut(Keys.MENU_PAGE)
         val prevPage = current - 1
-        return prevPage in 1..maxPage
+        return prevPage in 1..getMaxPage(player)
     }
 
     private fun open(player: Player, page: Int, isFirstOpen: Boolean, playSound: Boolean) {

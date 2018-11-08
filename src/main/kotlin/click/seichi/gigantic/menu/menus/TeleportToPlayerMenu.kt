@@ -22,8 +22,6 @@ object TeleportToPlayerMenu : BookMenu() {
 
     private const val numOfPlayerPerPage = 45
 
-    override val maxPage: Int
-        get() = Bukkit.getOnlinePlayers().size.div(numOfPlayerPerPage).plus(1)
 
     private val nextButton = NextButton(this)
     private val prevButton = PrevButton(this)
@@ -32,6 +30,10 @@ object TeleportToPlayerMenu : BookMenu() {
         return Bukkit.getOnlinePlayers().toMutableList().apply {
             remove(player)
         }
+    }
+
+    override fun getMaxPage(player: Player): Int {
+        return Bukkit.getOnlinePlayers().size.div(numOfPlayerPerPage).plus(1)
     }
 
     override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {
@@ -53,7 +55,7 @@ object TeleportToPlayerMenu : BookMenu() {
 
     override fun getTitle(player: Player, page: Int): String {
         return "${ChatColor.BLACK}" +
-                "${TeleportMessages.TELEPORT_TO_PLAYER_TITLE.asSafety(player.wrappedLocale)} $page/$maxPage"
+                "${TeleportMessages.TELEPORT_TO_PLAYER_TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
