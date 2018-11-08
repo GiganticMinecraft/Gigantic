@@ -6,7 +6,6 @@ import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.menu.menus.ProfileMenu
 import click.seichi.gigantic.menu.menus.SkillMenu
 import click.seichi.gigantic.menu.menus.SpecialThanksMenu
 import click.seichi.gigantic.menu.menus.SpellMenu
@@ -31,15 +30,42 @@ object BagButtons {
     val PROFILE = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
             return player.getHead().apply {
-                setDisplayName(
-                        ProfileMessages.PROFILE.asSafety(player.wrappedLocale)
-                )
+                setDisplayName("${ChatColor.AQUA}" + ProfileMessages.PROFILE.asSafety(player.wrappedLocale))
+                val level = player.find(CatalogPlayerCache.LEVEL) ?: return@apply
+                val aptitude = player.find(CatalogPlayerCache.APTITUDE) ?: return@apply
+                val health = player.find(CatalogPlayerCache.HEALTH) ?: return@apply
+                val mineCombo = player.find(CatalogPlayerCache.MINE_COMBO) ?: return@apply
+                val mana = player.find(CatalogPlayerCache.MANA) ?: return@apply
+                val isUpdate = player.getOrPut(Keys.IS_UPDATE_PROFILE)
+                val lore = mutableListOf<String>()
+                if (isUpdate) {
+                    lore.add(ProfileMessages.NEED_UPDATE.asSafety(player.wrappedLocale))
+                } else {
+                    lore.addAll(listOf(
+                            ProfileMessages.PROFILE_LEVEL(level).asSafety(player.wrappedLocale),
+                            ProfileMessages.PROFILE_EXP(level).asSafety(player.wrappedLocale),
+                            ProfileMessages.PROFILE_HEALTH(health).asSafety(player.wrappedLocale)
+                    )
+                    )
+                    if (Achievement.MANA_STONE.isGranted(player)) {
+                        lore.add(ProfileMessages.PROFILE_MANA(mana).asSafety(player.wrappedLocale))
+                    }
+
+                    lore.addAll(listOf(
+                            ProfileMessages.PROFILE_MAX_COMBO(mineCombo).asSafety(player.wrappedLocale),
+                            *ProfileMessages.PROFILE_WILL_APTITUDE(aptitude).map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                    )
+                }
+                setLore(*lore.toTypedArray())
             }
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (event.inventory.holder === ProfileMenu) return
-            ProfileMenu.open(player)
+            val isUpdate = player.getOrPut(Keys.IS_UPDATE_PROFILE)
+            if (!isUpdate) return
+            player.offer(Keys.IS_UPDATE_PROFILE, false)
+            PlayerSounds.TOGGLE.playOnly(player)
+            player.getOrPut(Keys.BAG).carry(player)
         }
 
     }

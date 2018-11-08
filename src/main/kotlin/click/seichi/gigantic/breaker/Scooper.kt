@@ -1,5 +1,6 @@
 package click.seichi.gigantic.breaker
 
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
@@ -46,6 +47,8 @@ class Scooper : Breaker {
             it.combo(1L)
             SkillPops.MINE_COMBO(it).pop(block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
         }
+        player.offer(Keys.IS_UPDATE_PROFILE, true)
+        player.getOrPut(Keys.BAG).carry(player)
 
         player.manipulate(CatalogPlayerCache.LEVEL) {
             it.calculate(ExpProducer.calcExp(player)) { current ->

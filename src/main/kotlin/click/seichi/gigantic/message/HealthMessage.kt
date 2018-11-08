@@ -1,5 +1,8 @@
 package click.seichi.gigantic.message
 
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.offer
 import org.bukkit.entity.Player
 
 /**
@@ -16,6 +19,8 @@ class HealthMessage(
     }
 
     override fun sendTo(player: Player) {
+        player.offer(Keys.IS_UPDATE_PROFILE, true)
+        player.getOrPut(Keys.BAG).carry(player)
         player.health = nextHealth.coerceIn(0.0, 20.0)
     }
 }
