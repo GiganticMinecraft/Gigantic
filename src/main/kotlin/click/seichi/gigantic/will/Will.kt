@@ -22,6 +22,7 @@ enum class Will(val id: Int, val color: Color, val grade: WillGrade, val localiz
     VENTUS(10, Color.fromRGB(123, 104, 238), WillGrade.ADVANCED, WillMessages.VENTUS)
     ;
 
+
     override fun toString(): String = name.toLowerCase()
 
     companion object {
