@@ -8,6 +8,8 @@ import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
+import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.will.WillGrade
 import org.bukkit.entity.Player
 
 /**
@@ -46,9 +48,18 @@ enum class Achievement(
     TELEPORT(101, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 15
     }, grantMessage = AchievementMessages.UNLOCK_TELEPORT),
-    WILL_O_THE_WISP(102, {
+
+
+    // wills
+    WILL_BASIC_1(150, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 14
-    }, grantMessage = AchievementMessages.UNLOCK_WILL_O_THE_WISP),
+    }, action = { player ->
+        player.manipulate(CatalogPlayerCache.APTITUDE) { willAptitude ->
+            willAptitude.addRandomIfNeeded(WillGrade.BASIC, 1)?.let {
+                PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(player)
+            }
+        }
+    }, grantMessage = AchievementMessages.UNLOCK_WILL_BASIC_1),
 
     // skills
     SKILL_FLASH(200, {
@@ -76,7 +87,6 @@ enum class Achievement(
         MANA_STONE.isGranted(it) &&
                 it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 18
     }, grantMessage = AchievementMessages.UNLOCK_AQUA_LINEA),
-
 
     ;
 

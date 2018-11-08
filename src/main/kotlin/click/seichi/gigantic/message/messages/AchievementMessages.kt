@@ -4,7 +4,6 @@ import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.skill.SkillParameters
-import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -72,16 +71,13 @@ object AchievementMessages {
     ))
 
 
-    val UNLOCK_WILL_O_THE_WISP = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_WILL_BASIC_1 = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "スキル: ウィルオウィスプ を覚えた!!\n" +
+                        "意志と交感できるようになった!!\n" +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: ブロックを破壊すると、稀に遺志が現れるぞ!!\n" +
-                        "遺志と交感することで記憶を獲得しよう\n" +
-                        "${ChatColor.GRAY}" +
-                        "遺志は${Will.values().size}種類存在する\n" +
-                        "レベルを上げてたくさんの遺志と交感しよう!!\n"
+                        "ブロックを破壊すると、稀に遺志が現れるぞ!!\n" +
+                        "遺志と交感することで記憶を獲得しよう\n"
             }
     ))
 

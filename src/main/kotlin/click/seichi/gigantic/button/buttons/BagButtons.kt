@@ -6,6 +6,7 @@ import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.menu.menus.QuestSelectMenu
 import click.seichi.gigantic.menu.menus.SkillMenu
 import click.seichi.gigantic.menu.menus.SpecialThanksMenu
 import click.seichi.gigantic.menu.menus.SpellMenu
@@ -182,8 +183,8 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (event.inventory.holder === SpecialThanksMenu) return
-            SpecialThanksMenu.open(player)
+            if (event.inventory.holder === QuestSelectMenu) return
+            QuestSelectMenu.open(player)
         }
 
     }

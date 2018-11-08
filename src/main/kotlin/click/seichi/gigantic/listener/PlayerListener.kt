@@ -18,10 +18,6 @@ import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.popup.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
-import click.seichi.gigantic.spirit.SpiritManager
-import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
-import click.seichi.gigantic.spirit.spirits.WillSpirit
-import click.seichi.gigantic.will.WillSize
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
@@ -248,27 +244,6 @@ class PlayerListener : Listener {
         player.getOrPut(Keys.BAG).carry(player)
 
         player.updateInventory()
-
-        // Update will aptitude
-        tryToSpawnNewWill(player)
-    }
-
-    fun tryToSpawnNewWill(player: Player) {
-        if (!Achievement.WILL_O_THE_WISP.isGranted(player)) return
-        player.manipulate(CatalogPlayerCache.APTITUDE) { willAptitude ->
-            willAptitude.addIfNeeded().forEachIndexed { index, will ->
-                SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, player.eyeLocation
-                        .clone()
-                        .let {
-                            it.add(
-                                    it.direction.x * 2,
-                                    index.toDouble(),
-                                    it.direction.z * 2
-                            )
-                        }, will, player, WillSize.MEDIUM))
-                PlayerMessages.OBTAIN_WILL_APTITUDE(will).sendTo(player)
-            }
-        }
     }
 
     @EventHandler

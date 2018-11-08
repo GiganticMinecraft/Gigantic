@@ -37,53 +37,19 @@ class WillAptitude : Manipulator<WillAptitude, PlayerCache> {
 
     private fun add(will: Will) = set.add(will)
 
-    // 前はレベルで判定していたが、エラーで適正が正しく付与されなかったときに、
-    // 直す術がないので、毎レベルごとに、正しい個数の適性があるか判定する。
-    fun addIfNeeded(): Set<Will> {
-        val newWillSet = mutableSetOf<Will>()
-        WillGrade.values().forEach { grade ->
-            (0 until calcMissingAptitude(grade)).forEach { _ ->
-                Will.values().toList().filter {
-                    it.grade == grade
-                }.filterNot {
-                    has(it)
-                }.shuffled().firstOrNull()?.run {
-                    newWillSet.add(this)
-                    add(this)
+    fun addRandomIfNeeded(willGrade: WillGrade, maxNum: Int): Will? {
+        if (count(willGrade) >= maxNum) return null
+        return Will.values()
+                .filter { !has(it) && it.grade == willGrade }
+                .shuffled()
+                .firstOrNull()?.also {
+                    add(it)
                 }
-            }
-        }
-        return newWillSet
     }
 
     private fun count(grade: WillGrade): Int {
         return Will.values()
                 .filter { it.grade == grade }
                 .count { has(it) }
-    }
-
-    private fun needAptitude(grade: WillGrade): Int {
-        return when (grade) {
-            WillGrade.BASIC -> when (level.current) {
-                0 -> 0
-                in 1..20 -> 1
-                in 21..40 -> 2
-                in 41..60 -> 3
-                in 61..80 -> 4
-                else -> 5
-            }
-            WillGrade.ADVANCED -> when (level.current) {
-                in 0..100 -> 0
-                in 101..120 -> 1
-                in 121..140 -> 2
-                in 141..160 -> 3
-                in 161..180 -> 4
-                else -> 5
-            }
-        }
-    }
-
-    private fun calcMissingAptitude(grade: WillGrade): Int {
-        return needAptitude(grade).minus(count(grade)).coerceAtLeast(0)
     }
 }
