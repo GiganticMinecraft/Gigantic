@@ -1,6 +1,5 @@
 package click.seichi.gigantic.acheivement
 
-import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
@@ -8,7 +7,7 @@ import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.ChatMessage
-import click.seichi.gigantic.message.messages.UnlockMessages
+import click.seichi.gigantic.message.messages.AchievementMessages
 import org.bukkit.entity.Player
 
 /**
@@ -18,77 +17,71 @@ import org.bukkit.entity.Player
  */
 enum class Achievement(
         val id: Int,
-        private val canUnlocking: (Player) -> Boolean,
+        private val canGranting: (Player) -> Boolean,
         // 毎Login時とアンロック時に処理される
-        val unlockAction: (Player) -> Unit = {},
-        val unlockMessage: ChatMessage? = null,
-        private val priority: UnlockPriority = UnlockPriority.NORMAL
+        val action: (Player) -> Unit = {},
+        val grantMessage: ChatMessage? = null,
+        private val priority: UpdatePriority = UpdatePriority.NORMAL
 ) {
-    SKILL_MINE_BURST(0, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
-    }, unlockMessage = UnlockMessages.UNLOCK_MINE_BURST),
-
-    // TODO implements
-    RAID_BATTLE(1, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 8
-    }, unlockMessage = UnlockMessages.UNLOCK_RAID_BATTLE),
-
-    MANA_STONE(2, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
-    }, unlockMessage = UnlockMessages.UNLOCK_MANA_STONE,
-            priority = UnlockPriority.HIGHEST),
-
-    SKILL_FLASH(3, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 6
-    }, unlockMessage = UnlockMessages.UNLOCK_FLASH),
-
-    SKILL_HEAL(4, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
-    }, unlockMessage = UnlockMessages.UNLOCK_HEAL),
-    SWITCH(5, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 1
-    }, unlockAction = { player ->
+    // messages
+    JOIN_SERVER(0, { true }, action = { player ->
         player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
-            it.unlock(Belt.DIG)
-            it.unlock(Belt.MINE)
-            it.unlock(Belt.CUT)
-            it.setCanSwitch(Belt.DIG, true)
-            it.setCanSwitch(Belt.MINE, true)
-            it.setCanSwitch(Belt.CUT, true)
+            it.unlock(click.seichi.gigantic.belt.Belt.DIG)
+            it.unlock(click.seichi.gigantic.belt.Belt.MINE)
+            it.unlock(click.seichi.gigantic.belt.Belt.CUT)
+            it.setCanSwitch(click.seichi.gigantic.belt.Belt.DIG, true)
+            it.setCanSwitch(click.seichi.gigantic.belt.Belt.MINE, true)
+            it.setCanSwitch(click.seichi.gigantic.belt.Belt.CUT, true)
         }
-    }, unlockMessage = UnlockMessages.UNLOCK_SWITCH),
+    }, grantMessage = AchievementMessages.FIRST_JOIN),
+    FIRST_LEVEL_UP(1, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 1
+    }, grantMessage = AchievementMessages.FIRST_LEVEL_UP),
 
-    SPELL_TERRA_DRAIN(7, {
-        MANA_STONE.isUnlocked(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
-    }, unlockMessage = UnlockMessages.UNLOCK_TERRA_DRAIN),
-
-    WILL_O_THE_WISP(8, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
-    }, unlockMessage = UnlockMessages.UNLOCK_WILL_O_THE_WISP),
-
-    SPELL_STELLA_CLAIR(9, {
-        MANA_STONE.isUnlocked(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
-    }, unlockMessage = UnlockMessages.UNLOCK_STELLA_CLAIR),
-
-    SPELL_GRAND_NATURA(10, {
-        MANA_STONE.isUnlocked(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 14
-    }, unlockMessage = UnlockMessages.UNLOCK_GRAND_NATURA),
-
-    SPELL_AQUA_LINEA(11, {
-        MANA_STONE.isUnlocked(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 18
-    }, unlockMessage = UnlockMessages.UNLOCK_AQUA_LINEA),
-
-    TELEPORT(12, {
+    // systems
+    MANA_STONE(100, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+    }, grantMessage = AchievementMessages.UNLOCK_MANA_STONE,
+            priority = UpdatePriority.HIGHEST),
+    TELEPORT(101, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 15
-    }, unlockMessage = UnlockMessages.UNLOCK_TELEPORT),
+    }, grantMessage = AchievementMessages.UNLOCK_TELEPORT),
+    WILL_O_THE_WISP(102, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 14
+    }, grantMessage = AchievementMessages.UNLOCK_WILL_O_THE_WISP),
+
+    // skills
+    SKILL_FLASH(200, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
+    }, grantMessage = AchievementMessages.UNLOCK_FLASH),
+    SKILL_MINE_BURST(201, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
+    }, grantMessage = AchievementMessages.SKILL_MINE_BURST),
+
+    // spells
+    SPELL_STELLA_CLAIR(300, {
+        MANA_STONE.isGranted(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+    }, grantMessage = AchievementMessages.UNLOCK_STELLA_CLAIR),
+    SPELL_TERRA_DRAIN(301, {
+        MANA_STONE.isGranted(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+    }, grantMessage = AchievementMessages.UNLOCK_TERRA_DRAIN),
+    SPELL_GRAND_NATURA(302, {
+        MANA_STONE.isGranted(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 14
+    }, grantMessage = AchievementMessages.UNLOCK_GRAND_NATURA),
+
+    SPELL_AQUA_LINEA(303, {
+        MANA_STONE.isGranted(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 18
+    }, grantMessage = AchievementMessages.UNLOCK_AQUA_LINEA),
+
+
     ;
 
     /**1から順に [update] される**/
-    enum class UnlockPriority(val amount: Int) {
+    enum class UpdatePriority(val amount: Int) {
         HIGHEST(1), HIGH(2), NORMAL(3), LOW(4), LOWEST(5)
     }
 
@@ -103,43 +96,45 @@ enum class Achievement(
 
 
     private fun update(player: Player, isAction: Boolean) {
-        if (canUnlocked(player)) {
-            if (isUnlocked(player)) {
+        if (canGrant(player)) {
+            if (isGranted(player)) {
                 // 現在も解除可能で既に解除済みの時
                 if (isAction) {
-                    unlockAction
+                    action
                 }
             } else {
                 // 現在も解除可能で解除していない時
-                unlock(player)
+                grant(player)
             }
         } else {
-            if (isUnlocked(player)) {
+            if (isGranted(player)) {
                 // 現在解除できないがすでに解除しているとき
-                lock(player)
+                revoke(player)
             }
         }
     }
 
-    private fun unlock(player: Player) {
+    // 与える
+    private fun grant(player: Player) {
         // 解除処理
         player.transform(Keys.ACHIEVEMENT_MAP[this] ?: return) { hasUnlocked ->
             if (!hasUnlocked) {
-                unlockAction(player)
-                unlockMessage?.sendTo(player)
+                action(player)
+                grantMessage?.sendTo(player)
             }
             true
         }
     }
 
-    private fun lock(player: Player) {
+    // はく奪する
+    private fun revoke(player: Player) {
         // ロック処理
         player.transform(Keys.ACHIEVEMENT_MAP[this] ?: return) {
             false
         }
     }
 
-    private fun canUnlocked(player: Player) = canUnlocking(player)
+    private fun canGrant(player: Player) = canGranting(player)
 
-    fun isUnlocked(player: Player) = canUnlocked(player) && player.getOrPut(Keys.ACHIEVEMENT_MAP[this]!!)
+    fun isGranted(player: Player) = canGrant(player) && player.getOrPut(Keys.ACHIEVEMENT_MAP[this]!!)
 }

@@ -22,9 +22,6 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
     override fun read() {
         transaction {
             UserEntityData(uniqueId, playerName).run {
-                Keys.IS_FIRST_JOIN.let {
-                    offer(it, it.read(user))
-                }
                 Keys.MAX_COMBO.let {
                     offer(it, it.read(user))
                 }
@@ -88,9 +85,6 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             UserEntityData(uniqueId, playerName).run {
                 // 更新時間を記録
                 user.updatedDate = DateTime.now()
-                Keys.IS_FIRST_JOIN.let {
-                    it.store(user, getOrDefault(it))
-                }
                 Keys.MAX_COMBO.let {
                     it.store(user, getOrDefault(it))
                 }

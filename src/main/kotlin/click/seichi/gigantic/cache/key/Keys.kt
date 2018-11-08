@@ -22,26 +22,6 @@ import java.util.*
  */
 object Keys {
 
-    val IS_FIRST_JOIN = object : DatabaseKey<PlayerCache, Boolean> {
-        override val default: Boolean
-            get() = false
-
-        override fun read(entity: Entity<*>): Boolean {
-            val user = entity as User
-            return user.isFirstJoin
-        }
-
-        override fun store(entity: Entity<*>, value: Boolean) {
-            val user = entity as User
-            user.isFirstJoin = value
-        }
-
-        override fun satisfyWith(value: Boolean): Boolean {
-            return true
-        }
-
-    }
-
     val MAX_COMBO = object : DatabaseKey<PlayerCache, Long> {
         override val default: Long
             get() = 0L
@@ -429,7 +409,7 @@ object Keys {
 
     val TELEPORT_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
         override val default: Boolean
-            get() = false
+            get() = true
 
         override fun read(entity: Entity<*>): Boolean {
             val user = entity as User

@@ -29,7 +29,7 @@ object Skills {
         val coolTime = SkillParameters.MINE_BURST_COOLTIME
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SKILL_MINE_BURST.isUnlocked(player)) return null
+            if (!Achievement.SKILL_MINE_BURST.isGranted(player)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             if (!mineBurst.canStart()) return null
             return Consumer { p ->
@@ -68,7 +68,7 @@ object Skills {
         val coolTime = SkillParameters.FLASH_COOLTIME
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SKILL_FLASH.isUnlocked(player)) return null
+            if (!Achievement.SKILL_FLASH.isGranted(player)) return null
             val flash = player.find(CatalogPlayerCache.FLASH) ?: return null
             if (!flash.canStart()) return null
             return Consumer { p ->
@@ -106,7 +106,6 @@ object Skills {
 
     val HEAL = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SKILL_HEAL.isUnlocked(player)) return null
             if (SkillParameters.HEAL_PROBABILITY_PERCENT < Random.nextInt(100)) return null
             val health = player.find(CatalogPlayerCache.HEALTH) ?: return null
             if (health.isMaxHealth()) return null
@@ -122,25 +121,5 @@ object Skills {
         }
 
     }
-//
-//    val SWITCH = object : Invokable {
-//        override fun findInvokable(player: Player): Consumer<Player>? {
-//            if (!Achievement.SKILL_SWITCH.isUnlocked(player)) return null
-//            return Consumer { p ->
-//                var current: Belt? = null
-//                p.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
-//                    current = it.current
-//                    it.switch()
-//                }
-//                val nextBelt = p.getOrPut(Keys.BELT)
-//                if (current == nextBelt) return@Consumer
-//                nextBelt.wear(p)
-//                SkillSounds.SWITCH.playOnly(p)
-//
-//            }
-//        }
-//
-//    }
-
 
 }

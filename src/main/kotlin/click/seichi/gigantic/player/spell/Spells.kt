@@ -25,7 +25,7 @@ object Spells {
     // 読み:ステラ・クレア
     val STELLA_CLAIR = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SPELL_STELLA_CLAIR.isUnlocked(player)) return null
+            if (!Achievement.SPELL_STELLA_CLAIR.isGranted(player)) return null
             if (SpellParameters.STELLA_CLAIR_PROBABILITY_PERCENT < Random.nextInt(100)) return null
             val mana = player.find(CatalogPlayerCache.MANA) ?: return null
             if (mana.isMaxMana()) return null
@@ -45,7 +45,7 @@ object Spells {
     val TERRA_DRAIN = object : Invokable {
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SPELL_TERRA_DRAIN.isUnlocked(player)) return null
+            if (!Achievement.SPELL_TERRA_DRAIN.isGranted(player)) return null
             if (player.isSneaking) return null
             if (!player.getOrPut(Keys.TERRA_DRAIN_TOGGLE)) return null
             val block = player.getOrPut(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return null
@@ -69,7 +69,7 @@ object Spells {
     val GRAND_NATURA = object : Invokable {
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SPELL_GRAND_NATURA.isUnlocked(player)) return null
+            if (!Achievement.SPELL_GRAND_NATURA.isGranted(player)) return null
             if (player.isSneaking) return null
             if (!player.getOrPut(Keys.GRAND_NATURA_TOGGLE)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
@@ -97,7 +97,7 @@ object Spells {
     val AQUA_LINEA = object : Invokable {
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SPELL_AQUA_LINEA.isUnlocked(player)) return null
+            if (!Achievement.SPELL_AQUA_LINEA.isGranted(player)) return null
             if (player.isSneaking) return null
             if (!player.getOrPut(Keys.AQUA_LINEA_TOGGLE)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null

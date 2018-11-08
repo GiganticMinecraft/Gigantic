@@ -1,12 +1,12 @@
 package click.seichi.gigantic.menu.menus
 
 import click.seichi.gigantic.button.Button
-import click.seichi.gigantic.button.buttons.MenuButtons
-import click.seichi.gigantic.button.buttons.NextButton
-import click.seichi.gigantic.button.buttons.PrevButton
+import click.seichi.gigantic.button.buttons.menu.NextButton
+import click.seichi.gigantic.button.buttons.menu.PrevButton
+import click.seichi.gigantic.button.buttons.menu.TeleportButtons
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.BookMenu
-import click.seichi.gigantic.message.messages.MenuMessages
+import click.seichi.gigantic.message.messages.menu.TeleportMessages
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
@@ -43,7 +43,7 @@ object TeleportToPlayerMenu : BookMenu() {
                 .map { it % numOfPlayerPerPage to playerList[it] }
                 .toMap()
                 .forEach { index, to ->
-                    inventory.setItem(index, MenuButtons.TELEPORT_PLAYER(to).getItemStack(player))
+                    inventory.setItem(index, TeleportButtons.TELEPORT_PLAYER(to).getItemStack(player))
                 }
         inventory.setItem(numOfPlayerPerPage + 3, prevButton.getItemStack(player))
         inventory.setItem(numOfPlayerPerPage + 5, nextButton.getItemStack(player))
@@ -53,7 +53,7 @@ object TeleportToPlayerMenu : BookMenu() {
 
     override fun getTitle(player: Player, page: Int): String {
         return "${ChatColor.BLACK}" +
-                "${MenuMessages.TELEPORT_TO_PLAYER_TITLE.asSafety(player.wrappedLocale)} $page/$maxPage"
+                "${TeleportMessages.TELEPORT_TO_PLAYER_TITLE.asSafety(player.wrappedLocale)} $page/$maxPage"
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
@@ -63,7 +63,7 @@ object TeleportToPlayerMenu : BookMenu() {
         return when (slot) {
             numOfPlayerPerPage + 3 -> prevButton
             numOfPlayerPerPage + 5 -> nextButton
-            else -> MenuButtons.TELEPORT_PLAYER(to)
+            else -> TeleportButtons.TELEPORT_PLAYER(to)
         }
     }
 

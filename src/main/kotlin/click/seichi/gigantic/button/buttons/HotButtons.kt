@@ -22,7 +22,7 @@ object HotButtons {
     val MINE_BURST = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!Achievement.SKILL_MINE_BURST.isUnlocked(player)) return null
+            if (!Achievement.SKILL_MINE_BURST.isGranted(player)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             return when {
                 mineBurst.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
@@ -58,7 +58,7 @@ object HotButtons {
     val FLASH = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!Achievement.SKILL_FLASH.isUnlocked(player)) return null
+            if (!Achievement.SKILL_FLASH.isGranted(player)) return null
             val flash = player.find(CatalogPlayerCache.FLASH) ?: return null
             return when {
                 flash.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
@@ -88,7 +88,6 @@ object HotButtons {
     val BELT_SWITCHER_SETTING = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!Achievement.SWITCH.isUnlocked(player)) return null
             val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
             val nextBelt = switcher.nextBelt()
             return nextBelt.findFixedButton()?.getItemStack(player)?.apply {
@@ -101,12 +100,10 @@ object HotButtons {
         }
 
         override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
-            if (!Achievement.SWITCH.isUnlocked(player)) return
             BeltSwitchSettingMenu.open(player)
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!Achievement.SWITCH.isUnlocked(player)) return
             BeltSwitchSettingMenu.open(player)
         }
 
@@ -115,7 +112,7 @@ object HotButtons {
     val TELEPORT_DOOR = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!Achievement.TELEPORT.isUnlocked(player)) return null
+            if (!Achievement.TELEPORT.isGranted(player)) return null
             return ItemStack(Material.DARK_OAK_DOOR).apply {
                 setDisplayName(HookedItemMessages.TELEPORT.asSafety(player.wrappedLocale))
                 setLore(*HookedItemMessages.TELEPORT_LORE
@@ -126,12 +123,12 @@ object HotButtons {
         }
 
         override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
-            if (!Achievement.TELEPORT.isUnlocked(player)) return
+            if (!Achievement.TELEPORT.isGranted(player)) return
             TeleportMenu.open(player)
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!Achievement.TELEPORT.isUnlocked(player)) return
+            if (!Achievement.TELEPORT.isGranted(player)) return
             TeleportMenu.open(player)
         }
 

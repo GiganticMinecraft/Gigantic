@@ -28,7 +28,7 @@ object HandButtons {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
                 setDisplayName(HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.PICKEL_LORE(player)
+                setLore(*HookedItemMessages.PICKEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
@@ -56,7 +56,7 @@ object HandButtons {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_SHOVEL).apply {
                 setDisplayName(HookedItemMessages.SHOVEL.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.SHOVEL_LORE(player)
+                setLore(*HookedItemMessages.SHOVEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
@@ -85,7 +85,7 @@ object HandButtons {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_AXE).apply {
                 setDisplayName(HookedItemMessages.AXE.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.AXE_LORE(player)
+                setLore(*HookedItemMessages.AXE_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
@@ -114,7 +114,7 @@ object HandButtons {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.BUCKET).apply {
                 setDisplayName(HookedItemMessages.BUCKET.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.BUCKET_LORE(player)
+                setLore(*HookedItemMessages.BUCKET_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
@@ -137,7 +137,7 @@ object HandButtons {
 
     val MANA_STONE = object : HandButton {
         override fun getItemStack(player: Player): ItemStack? {
-            if (!Achievement.MANA_STONE.isUnlocked(player)) return null
+            if (!Achievement.MANA_STONE.isGranted(player)) return null
             val spellToggle = player.getOrPut(Keys.SPELL_TOGGLE)
             return if (spellToggle) ItemStack(Material.NETHER_STAR).apply {
                 setDisplayName(HookedItemMessages.MANA_STONE.asSafety(player.wrappedLocale))
@@ -152,7 +152,7 @@ object HandButtons {
         }
 
         override fun onInteract(player: Player, event: PlayerInteractEvent) {
-            if (!Achievement.MANA_STONE.isUnlocked(player)) return
+            if (!Achievement.MANA_STONE.isGranted(player)) return
             val action = event.action ?: return
             if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return
             val coolTime = !player.getOrPut(Keys.MANA_STONE_CAN_TOGGLE)

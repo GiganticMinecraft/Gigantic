@@ -1,10 +1,10 @@
-package click.seichi.gigantic.button.buttons
+package click.seichi.gigantic.button.buttons.menu
 
 import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.head.Head
-import click.seichi.gigantic.menu.BookMenu
+import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -13,17 +13,19 @@ import org.bukkit.inventory.ItemStack
 /**
  * @author tar0ss
  */
-class NextButton(private val menu: BookMenu) : Button {
+class BackButton(private val currentMenu: Menu, private val menu: Menu) : Button {
+
     override fun getItemStack(player: Player): ItemStack? {
-        if (!menu.hasNextPage(player)) return null
-        return Head.PUMPKIN_RIGHT_ARROW.toItemStack().apply {
+        return Head.LEFT.toItemStack().apply {
+            val title = menu.getTitle(player)
             setDisplayName(
-                    MenuMessages.NEXT_BUTTON.asSafety(player.wrappedLocale)
+                    MenuMessages.BACK_BUTTON(title).asSafety(player.wrappedLocale)
             )
         }
     }
 
     override fun onClick(player: Player, event: InventoryClickEvent) {
-        menu.nextPage(player)
+        currentMenu.back(menu, player)
     }
+
 }

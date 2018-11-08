@@ -25,4 +25,8 @@ object BeltMessages {
             Locale.JAPANESE to "${ChatColor.AQUA}バケツベルト"
     )
 
+    val BELT_SWITCHER_SETTING = LocalizedText(
+            Locale.JAPANESE to "ツール切り替え詳細設定"
+    )
+
 }

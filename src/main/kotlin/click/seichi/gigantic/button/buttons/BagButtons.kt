@@ -1,13 +1,19 @@
 package click.seichi.gigantic.button.buttons
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.menus.ProfileMenu
+import click.seichi.gigantic.menu.menus.SkillMenu
 import click.seichi.gigantic.menu.menus.SpecialThanksMenu
-import click.seichi.gigantic.message.messages.MenuMessages
+import click.seichi.gigantic.menu.menus.SpellMenu
+import click.seichi.gigantic.message.messages.BagMessages
+import click.seichi.gigantic.message.messages.menu.ProfileMessages
+import click.seichi.gigantic.message.messages.menu.SkillMenuMessages
+import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.ChatColor
 import org.bukkit.GameMode
@@ -26,7 +32,7 @@ object BagButtons {
         override fun getItemStack(player: Player): ItemStack? {
             return player.getHead().apply {
                 setDisplayName(
-                        MenuMessages.PROFILE.asSafety(player.wrappedLocale)
+                        ProfileMessages.PROFILE.asSafety(player.wrappedLocale)
                 )
             }
         }
@@ -38,17 +44,49 @@ object BagButtons {
 
     }
 
+    val SKILL = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.BLAZE_POWDER).apply {
+                setDisplayName("${ChatColor.AQUA}" + SkillMenuMessages.TITLE.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (event.inventory.holder === SkillMenu) return
+            SkillMenu.open(player)
+        }
+
+    }
+
+    val SPELL = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            if (!Achievement.MANA_STONE.isGranted(player)) return null
+            return ItemStack(Material.LAPIS_LAZULI).apply {
+                setDisplayName("${ChatColor.AQUA}" + SpellMenuMessages.TITLE.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (!Achievement.MANA_STONE.isGranted(player)) return
+            if (event.inventory.holder === SpellMenu) return
+            SpellMenu.open(player)
+        }
+
+    }
+
     val AFK = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
             return when (player.gameMode) {
                 GameMode.SPECTATOR -> ItemStack(Material.POPPY, 1).apply {
                     setDisplayName(
-                            MenuMessages.BACK_FROM_REST.asSafety(player.wrappedLocale)
+                            BagMessages.BACK_FROM_REST.asSafety(player.wrappedLocale)
                     )
                 }
                 else -> ItemStack(Material.DANDELION, 1).apply {
                     setDisplayName(
-                            MenuMessages.REST.asSafety(player.wrappedLocale)
+                            BagMessages.REST.asSafety(player.wrappedLocale)
                     )
                 }
             }
@@ -82,7 +120,7 @@ object BagButtons {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.MUSIC_DISC_13).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
-                        + MenuMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale))
+                        + BagMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale))
                 clearLore()
                 itemMeta = itemMeta.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)

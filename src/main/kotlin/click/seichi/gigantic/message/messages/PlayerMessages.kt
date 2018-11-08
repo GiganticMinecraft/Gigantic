@@ -52,10 +52,6 @@ object PlayerMessages {
         HealthMessage(healthAmount)
     }
 
-    val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}" +
-                    "ブロックを壊そう!!\n"
-    ))
 
     val OBTAIN_WILL_APTITUDE = { will: Will ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
@@ -66,8 +62,22 @@ object PlayerMessages {
     val LEVEL_UP_LEVEL = { level: Int ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.AQUA}" +
-                        "レベルアップ!! ( ${level - 1} → $level )"
+                        "おめでとう!!レベルが上がった!! ( ${level - 1} → $level )"
         ))
+    }
+
+    val LEVEL_UP_TITLE = { level: Int ->
+        TitleMessage(
+                title = LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.AQUA}レベルアップ!!"
+                ),
+                subTitle = LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.WHITE}${level - 1} → $level"
+                ),
+                fadeIn = 10,
+                stay = 120,
+                fadeOut = 10
+        )
     }
 
     val LEVEL_UP_MANA = { prevMax: BigDecimal, nextMax: BigDecimal ->

@@ -22,8 +22,6 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var beltId by UserTable.beltId
 
-    var isFirstJoin by UserTable.isFirstJoin
-
     var maxCombo by UserTable.maxCombo
 
     var spellToggle by UserTable.spellToggle

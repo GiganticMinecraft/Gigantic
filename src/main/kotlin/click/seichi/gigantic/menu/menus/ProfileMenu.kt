@@ -1,9 +1,9 @@
 package click.seichi.gigantic.menu.menus
 
-import click.seichi.gigantic.button.buttons.MenuButtons
+import click.seichi.gigantic.button.buttons.menu.ProfileButtons
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.Menu
-import click.seichi.gigantic.message.messages.MenuMessages
+import click.seichi.gigantic.message.messages.menu.ProfileMessages
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 
@@ -17,13 +17,11 @@ object ProfileMenu : Menu() {
 
     override fun getTitle(player: Player): String {
         return "${ChatColor.BLACK}" +
-                MenuMessages.PROFILE_TITLE.asSafety(player.wrappedLocale)
+                ProfileMessages.TITLE.asSafety(player.wrappedLocale)
     }
 
     init {
-        registerButton(0, MenuButtons.PROFILE_PROFILE)
-        registerButton(3, MenuButtons.PROFILE_SKILL)
-        registerButton(4, MenuButtons.PROFILE_SPELL)
+        registerButton(0, ProfileButtons.PROFILE)
     }
 
 }

@@ -6,6 +6,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.HealthConfig
+import click.seichi.gigantic.player.Defaults
 import kotlin.properties.Delegates
 
 /**
@@ -66,7 +67,7 @@ class Health : Manipulator<Health, PlayerCache> {
     fun isMaxHealth() = current == max
 
     fun updateMaxHealth() {
-        max = HealthConfig.HEALTH_MAP[level.current] ?: 0L
+        max = HealthConfig.HEALTH_MAP[level.current] ?: Defaults.MAX_MANA
     }
 
 }

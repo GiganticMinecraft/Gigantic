@@ -22,13 +22,11 @@ object UserTable : IdTable<UUID>("users") {
 
     val beltId = integer("belt_id").default(Defaults.BELT_ID)
 
-    val isFirstJoin = bool("is_first_join").default(true)
-
     val maxCombo = long("max_combo").default(0L)
 
     val spellToggle = bool("spell_toggle").default(false)
 
-    val teleportToggle = bool("teleport_toggle").default(false)
+    val teleportToggle = bool("teleport_toggle").default(true)
 
     val terraDrainToggle = bool("terra_drain_toggle").default(false)
 

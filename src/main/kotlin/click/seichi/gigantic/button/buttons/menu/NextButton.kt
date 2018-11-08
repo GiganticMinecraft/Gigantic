@@ -1,4 +1,4 @@
-package click.seichi.gigantic.button.buttons
+package click.seichi.gigantic.button.buttons.menu
 
 import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.extension.setDisplayName
@@ -13,17 +13,17 @@ import org.bukkit.inventory.ItemStack
 /**
  * @author tar0ss
  */
-class PrevButton(private val menu: BookMenu) : Button {
+class NextButton(private val menu: BookMenu) : Button {
     override fun getItemStack(player: Player): ItemStack? {
-        if (!menu.hasPrevPage(player)) return null
-        return Head.PUMPKIN_LEFT_ARROW.toItemStack().apply {
+        if (!menu.hasNextPage(player)) return null
+        return Head.PUMPKIN_RIGHT_ARROW.toItemStack().apply {
             setDisplayName(
-                    MenuMessages.PREV_BUTTON.asSafety(player.wrappedLocale)
+                    MenuMessages.NEXT_BUTTON.asSafety(player.wrappedLocale)
             )
         }
     }
 
     override fun onClick(player: Player, event: InventoryClickEvent) {
-        menu.prevPage(player)
+        menu.nextPage(player)
     }
 }

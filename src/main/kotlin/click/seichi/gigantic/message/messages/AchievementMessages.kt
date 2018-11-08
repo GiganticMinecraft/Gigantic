@@ -11,25 +11,29 @@ import java.util.*
 /**
  * @author tar0ss
  */
-object UnlockMessages {
+object AchievementMessages {
 
-    val UNLOCK_MINE_BURST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                    "ブロックを壊そう!!\n"
+    ))
+
+    val FIRST_LEVEL_UP = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "\"${SkillParameters.SWITCH_KEY}\" キー を押してみよう\n" +
+                        "${ChatColor.GRAY}" +
+                        "ツールを入れ替えられたかな？スクロールは効かないので注意！！\n"
+            }
+    ))
+
+    val SKILL_MINE_BURST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "バフスキル: マインバースト を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "アクティブ効果: 少しの間だけ掘る速度が上昇!!\n" +
                         "\"${SkillParameters.MINE_BURST_KEY}\" キー を押して発動!!\n"
-            }
-    ))
-
-    val UNLOCK_RAID_BATTLE = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE.let {
-                it to "${ChatColor.RED}" +
-                        "レイドバトル解禁!!ソウルモンスターを倒してレアアイテムをゲット!!\n" +
-                        "${ChatColor.GRAY}" +
-                        "インベントリから敵を選択!!\n" +
-                        "ブロックを破壊することで敵を攻撃!!\n"
             }
     ))
 
@@ -53,22 +57,12 @@ object UnlockMessages {
             }
     ))
 
-    val UNLOCK_SWITCH = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}" +
-                        "切り替えスキル: スイッチ を覚えた!!\n" +
-                        "${ChatColor.GRAY}" +
-                        "アクティブ効果: 持ち物を入れ替える\n" +
-                        "\"${SkillParameters.SWITCH_KEY}\" キー を押して発動!!\n" +
-                        "\"${SkillParameters.SWITCH_SETTING_KEY}\" キー を押して詳細設定を変更できる\n"
-            }
-    ))
 
     val UNLOCK_TERRA_DRAIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "回復魔法: テラ・ドレイン を覚えた!!\n" +
-                        "\"覚えたスキル\"メニューで有効化しよう!!" +
+                        "\"スキル\"メニューで有効化しよう!!" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: 木を倒し、自身の体力を回復する\n" +
                         "原木を破壊して発動!!\n" +
@@ -115,7 +109,7 @@ object UnlockMessages {
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "破壊魔法: グランド・ナトラ を覚えた!!\n" +
-                        "\"覚えたスキル\"メニューで有効化しよう!!" +
+                        "\"スキル\"メニューで有効化しよう!!" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: 植物を吸収する\n" +
                         "芝生又はキノコブロックを通常破壊時に発動\n" +
@@ -128,7 +122,7 @@ object UnlockMessages {
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "破壊魔法: アクア・リネーア を覚えた!!\n" +
-                        "\"覚えたスキル\"メニューで有効化しよう!!" +
+                        "\"スキル\"メニューで有効化しよう!!" +
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: ブロックが泡となって消える\n" +
                         "通常破壊時に発動\n" +

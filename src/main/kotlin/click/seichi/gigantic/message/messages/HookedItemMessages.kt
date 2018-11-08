@@ -1,10 +1,8 @@
 package click.seichi.gigantic.message.messages
 
-import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.skill.SkillParameters
 import org.bukkit.ChatColor
-import org.bukkit.entity.Player
 import java.util.*
 
 /**
@@ -18,21 +16,17 @@ object HookedItemMessages {
                     "不思議なピッケル"
     )
 
-    val PICKEL_LORE = { player: Player ->
-        mutableListOf(
-                LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                "どんなに使っても折れない"
-                )
-        ).apply {
-            if (Achievement.SWITCH.isUnlocked(player)) {
-                add(LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
-                ))
-            }
-        }.toList()
-    }
+    val PICKEL_LORE = mutableListOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "どんなに使っても折れない"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                            "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
+            )
+    ).toList()
+
 
     val SHOVEL = LocalizedText(
             Locale.JAPANESE to
@@ -40,21 +34,17 @@ object HookedItemMessages {
                     "不思議なシャベル"
     )
 
-    val SHOVEL_LORE = { player: Player ->
-        mutableListOf(
-                LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                "どんなに使っても折れない"
-                )
-        ).apply {
-            if (Achievement.SWITCH.isUnlocked(player)) {
-                add(LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
-                ))
-            }
-        }.toList()
-    }
+    val SHOVEL_LORE = mutableListOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "どんなに使っても折れない"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                            "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
+            )
+    ).toList()
+
 
     val AXE = LocalizedText(
             Locale.JAPANESE to
@@ -62,21 +52,16 @@ object HookedItemMessages {
                     "不思議な斧"
     )
 
-    val AXE_LORE = { player: Player ->
-        mutableListOf(
-                LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                "どんなに使っても折れない"
-                )
-        ).apply {
-            if (Achievement.SWITCH.isUnlocked(player)) {
-                add(LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
-                ))
-            }
-        }.toList()
-    }
+    val AXE_LORE = mutableListOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "どんなに使っても折れない"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                            "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
+            )
+    ).toList()
 
 
     val BUCKET = LocalizedText(
@@ -85,21 +70,18 @@ object HookedItemMessages {
                     "不思議なバケツ"
     )
 
-    val BUCKET_LORE = { player: Player ->
-        mutableListOf(
-                LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                "どんなにすくっても溜まらない"
-                )
-        ).apply {
-            if (Achievement.SWITCH.isUnlocked(player)) {
-                add(LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
-                ))
-            }
-        }.toList()
-    }
+    val BUCKET_LORE =
+            mutableListOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "どんなにすくっても溜まらない"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
+                    )
+            ).toList()
+
 
     val MINE_BURST = LocalizedText(
             Locale.JAPANESE to
@@ -153,7 +135,7 @@ object HookedItemMessages {
     val SWITCH_DETAIL = LocalizedText(
             Locale.JAPANESE to
                     "${ChatColor.BLUE}" +
-                    "スイッチ詳細設定"
+                    "ツール切り替え詳細設定"
     )
 
     val SWITCH_DETAIL_LORE =

@@ -102,7 +102,6 @@ class PlayerListener : Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
-
         /**
          * この処理がないと、cacheがロードされずに参加できてしまう
          */
@@ -135,12 +134,6 @@ class PlayerListener : Listener {
                 false,
                 false
         ))
-
-        // Messages
-        player.transform(Keys.IS_FIRST_JOIN) {
-            if (it) PlayerMessages.FIRST_JOIN.sendTo(player)
-            false
-        }
 
         Achievement.update(player, true)
 
@@ -208,7 +201,6 @@ class PlayerListener : Listener {
     fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
         val player = event.player ?: return
         event.isCancelled = true
-        if (!Achievement.SWITCH.isUnlocked(player)) return
         var current: Belt? = null
         player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
             current = it.current
@@ -225,13 +217,14 @@ class PlayerListener : Listener {
         val player = event.player
 
         PlayerMessages.LEVEL_UP_LEVEL(event.level).sendTo(player)
+        PlayerMessages.LEVEL_UP_TITLE(event.level).sendTo(player)
         PlayerPops.LEVEL_UP.follow(player, meanY = 3.7)
         PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
         PlayerSounds.LEVEL_UP.play(player.location)
 
         Achievement.update(player)
 
-        if (Achievement.MANA_STONE.isUnlocked(player)) {
+        if (Achievement.MANA_STONE.isGranted(player)) {
             player.manipulate(CatalogPlayerCache.MANA) {
                 val prevMax = it.max
                 it.updateMaxMana()
@@ -261,7 +254,7 @@ class PlayerListener : Listener {
     }
 
     fun tryToSpawnNewWill(player: Player) {
-        if (!Achievement.WILL_O_THE_WISP.isUnlocked(player)) return
+        if (!Achievement.WILL_O_THE_WISP.isGranted(player)) return
         player.manipulate(CatalogPlayerCache.APTITUDE) { willAptitude ->
             willAptitude.addIfNeeded().forEachIndexed { index, will ->
                 SpiritManager.spawn(WillSpirit(WillSpawnReason.AWAKE, player.eyeLocation
