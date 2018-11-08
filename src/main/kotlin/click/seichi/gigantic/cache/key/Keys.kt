@@ -511,4 +511,14 @@ object Keys {
 
     }
 
+    val MENU_PAGE = object : Key<PlayerCache, Int> {
+        override val default: Int
+            get() = 1
+
+        override fun satisfyWith(value: Int): Boolean {
+            return value > 0
+        }
+
+    }
+
 }

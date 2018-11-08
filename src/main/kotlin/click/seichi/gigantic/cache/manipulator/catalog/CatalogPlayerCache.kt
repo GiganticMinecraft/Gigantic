@@ -23,8 +23,6 @@ object CatalogPlayerCache {
 
     val AFK_LOCATION = AfkLocation::class.java
 
-    val MENU_DATA = MenuData::class.java
-
     val FLASH = Flash::class.java
 
     val HEALTH = Health::class.java

@@ -1,10 +1,10 @@
 package click.seichi.gigantic.menu
 
 import click.seichi.gigantic.button.Button
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.NOT_AVAILABLE
-import click.seichi.gigantic.extension.find
-import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.sound.sounds.MenuSounds
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -30,31 +30,35 @@ abstract class BookMenu : Menu() {
     }
 
     fun nextPage(player: Player, playSound: Boolean = true) {
-        val nextPage = player.find(CatalogPlayerCache.MENU_DATA)?.page?.plus(1) ?: return
+        val current = player.getOrPut(Keys.MENU_PAGE)
+        val nextPage = current + 1
         if (nextPage !in 1..maxPage) return
+        player.offer(Keys.MENU_PAGE, nextPage)
         open(player, nextPage, false, playSound)
     }
 
     fun prevPage(player: Player, playSound: Boolean = true) {
-        val prevPage = player.find(CatalogPlayerCache.MENU_DATA)?.page?.minus(1) ?: return
+        val current = player.getOrPut(Keys.MENU_PAGE)
+        val prevPage = current - 1
         if (prevPage !in 1..maxPage) return
+        player.offer(Keys.MENU_PAGE, prevPage)
         open(player, prevPage, false, playSound)
     }
 
     fun hasNextPage(player: Player): Boolean {
-        val nextPage = player.find(CatalogPlayerCache.MENU_DATA)?.page?.plus(1) ?: return false
+        val current = player.getOrPut(Keys.MENU_PAGE)
+        val nextPage = current + 1
         return nextPage in 1..maxPage
     }
 
     fun hasPrevPage(player: Player): Boolean {
-        val prevPage = player.find(CatalogPlayerCache.MENU_DATA)?.page?.minus(1) ?: return false
+        val current = player.getOrPut(Keys.MENU_PAGE)
+        val prevPage = current - 1
         return prevPage in 1..maxPage
     }
 
     private fun open(player: Player, page: Int, isFirstOpen: Boolean, playSound: Boolean) {
-        player.manipulate(CatalogPlayerCache.MENU_DATA) {
-            it.page = page
-        }
+        player.offer(Keys.MENU_PAGE, page)
         player.openInventory(createInventory(player))
         if (playSound) {
             if (isFirstOpen)
@@ -65,7 +69,7 @@ abstract class BookMenu : Menu() {
     }
 
     override fun createInventory(player: Player): Inventory {
-        val page = player.find(CatalogPlayerCache.MENU_DATA)?.page ?: 0
+        val page = player.getOrPut(Keys.MENU_PAGE)
         val title = getTitle(player, page)
         val inventory = when (type) {
             InventoryType.CHEST -> {
@@ -88,7 +92,7 @@ abstract class BookMenu : Menu() {
     abstract fun getTitle(player: Player, page: Int): String
 
     fun getButton(player: Player, slot: Int): Button? {
-        return getButton(player, player.find(CatalogPlayerCache.MENU_DATA)?.page ?: 1, slot)
+        return getButton(player, player.getOrPut(Keys.MENU_PAGE), slot)
     }
 
     protected abstract fun getButton(player: Player, page: Int, slot: Int): Button?
