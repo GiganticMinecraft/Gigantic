@@ -1,4 +1,4 @@
-package click.seichi.gigantic.skill
+package click.seichi.gigantic.player.skill
 
 /**
  * @author tar0ss

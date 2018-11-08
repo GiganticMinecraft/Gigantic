@@ -1,4 +1,4 @@
-package click.seichi.gigantic.skill
+package click.seichi.gigantic.player.skill
 
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.SkillMessages

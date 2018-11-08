@@ -221,9 +221,6 @@ class Gigantic : JavaPlugin() {
         // reflectionを使うので先に生成
         Head.values().forEach { it.toItemStack() }
 
-        // add new battle
-        RaidManager.newBattles()
-
         logger.info("Gigantic is enabled!!")
     }
 
@@ -260,7 +257,6 @@ class Gigantic : JavaPlugin() {
                 }
                 player.gameMode = GameMode.SURVIVAL
             }
-            RaidManager.getBattleList().firstOrNull { it.isJoined(player) }?.drop(player)
             PlayerCacheMemory.remove(player.uniqueId, false)
             player.kickPlayer("Restarting...Please wait a few minutes.")
         }

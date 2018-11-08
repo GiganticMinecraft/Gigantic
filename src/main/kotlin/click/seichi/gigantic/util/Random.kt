@@ -1,6 +1,5 @@
 package click.seichi.gigantic.util
 
-import click.seichi.gigantic.boss.Boss
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import click.seichi.gigantic.will.WillSize
@@ -40,8 +39,6 @@ internal object Random {
             .firstOrNull { Random.nextDouble() < it.probability }
             ?.let { it }
             ?: nextWillSizeWithRegularity()
-
-    fun nextBoss() = Boss.values().toList().shuffled().first()
 
     fun nextColor() = Color.fromRGB(nextInt(255), nextInt(255), nextInt(255))!!
 }

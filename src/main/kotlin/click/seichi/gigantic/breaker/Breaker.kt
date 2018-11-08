@@ -1,4 +1,4 @@
-package click.seichi.gigantic.player.breaker
+package click.seichi.gigantic.breaker
 
 import org.bukkit.block.Block
 import org.bukkit.entity.Player

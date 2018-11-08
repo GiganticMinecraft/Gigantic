@@ -1,4 +1,4 @@
-package click.seichi.gigantic.spell
+package click.seichi.gigantic.player.spell
 
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.SpellMessages

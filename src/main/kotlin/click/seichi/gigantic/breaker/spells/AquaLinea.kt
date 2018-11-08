@@ -1,12 +1,12 @@
-package click.seichi.gigantic.player.breaker.spells
+package click.seichi.gigantic.breaker.spells
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.SpellAnimations
+import click.seichi.gigantic.breaker.Miner
+import click.seichi.gigantic.breaker.SpellCaster
 import click.seichi.gigantic.extension.cardinalDirection
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.isCrust
-import click.seichi.gigantic.player.breaker.Miner
-import click.seichi.gigantic.player.breaker.SpellCaster
 import click.seichi.gigantic.player.spell.SpellParameters
 import click.seichi.gigantic.sound.sounds.SpellSounds
 import click.seichi.gigantic.util.CardinalDirection

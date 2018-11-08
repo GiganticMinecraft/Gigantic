@@ -1,4 +1,4 @@
-package click.seichi.gigantic.player.breaker
+package click.seichi.gigantic.breaker
 
 /**
  * 通常の伐採処理

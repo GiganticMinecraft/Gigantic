@@ -1,8 +1,8 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.breaker.Miner
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.manipulate
-import click.seichi.gigantic.player.breaker.Miner
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler

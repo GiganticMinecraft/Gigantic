@@ -3,6 +3,7 @@ package click.seichi.gigantic.listener
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.PlayerAnimations
+import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.MineBlockReason
@@ -16,6 +17,7 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.popup.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import click.seichi.gigantic.sound.sounds.SkillSounds
 import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.WillSpirit
@@ -206,7 +208,16 @@ class PlayerListener : Listener {
     fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
         val player = event.player ?: return
         event.isCancelled = true
-        Skills.SWITCH.tryInvoke(player)
+        if (!Achievement.SWITCH.isUnlocked(player)) return
+        var current: Belt? = null
+        player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
+            current = it.current
+            it.switch()
+        }
+        val nextBelt = player.getOrPut(Keys.BELT)
+        if (current == nextBelt) return
+        nextBelt.wear(player)
+        SkillSounds.SWITCH.playOnly(player)
     }
 
     @EventHandler

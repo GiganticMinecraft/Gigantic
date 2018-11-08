@@ -1,4 +1,4 @@
-package click.seichi.gigantic.player.breaker
+package click.seichi.gigantic.breaker
 
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent

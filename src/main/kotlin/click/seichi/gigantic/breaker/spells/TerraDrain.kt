@@ -1,12 +1,14 @@
-package click.seichi.gigantic.player.breaker.spells
+package click.seichi.gigantic.breaker.spells
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.SpellAnimations
-import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.isGrass
-import click.seichi.gigantic.player.breaker.Miner
-import click.seichi.gigantic.player.breaker.SpellCaster
+import click.seichi.gigantic.breaker.Cutter
+import click.seichi.gigantic.breaker.SpellCaster
+import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.spell.SpellParameters
+import click.seichi.gigantic.popup.SpellPops
 import click.seichi.gigantic.sound.sounds.SpellSounds
 import org.bukkit.Bukkit
 import org.bukkit.block.Block
@@ -15,10 +17,9 @@ import org.bukkit.entity.Player
 import java.math.BigDecimal
 
 /**
- *
  * @author tar0ss
  */
-class GrandNatura : Miner(), SpellCaster {
+class TerraDrain : Cutter(), SpellCaster {
 
     private val relationalFaceSet = setOf(
             BlockFace.NORTH,
@@ -32,36 +33,46 @@ class GrandNatura : Miner(), SpellCaster {
     )
 
     override fun cast(player: Player, base: Block) {
-        SpellAnimations.GRAND_NATURA_ON_FIRE.start(base.centralLocation)
-        SpellSounds.GRAND_NATURA_ON_FIRE.play(player.location)
-        breakRelationalBlock(player, base, base, true)
+        SpellAnimations.TERRA_DRAIN_ON_FIRE.start(base.centralLocation)
+        SpellSounds.TERRA_DRAIN_ON_FIRE.play(player.location)
+        breakRelationalBlock(player, base, true)
     }
 
     override fun calcConsumeMana(player: Player, block: Block): BigDecimal {
-        return SpellParameters.GRAND_NATURA_MANA_PER_BLOCK.toBigDecimal()
+        return SpellParameters.TERRA_DRAIN_MANA_PER_BLOCK.toBigDecimal()
     }
 
     override fun onCastToBlock(player: Player, block: Block) {
-        SpellAnimations.GRAND_NATURA_ON_BREAK.start(block.centralLocation)
-        SpellSounds.GRAND_NATURA_ON_BREAK.play(block.centralLocation)
+
+        SpellAnimations.TERRA_DRAIN_ON_BREAK.start(block.centralLocation)
+        SpellSounds.TERRA_DRAIN_ON_BREAK.play(block.centralLocation)
+        player.manipulate(CatalogPlayerCache.HEALTH) {
+            if (it.isMaxHealth()) return@manipulate
+            val percent = when {
+                block.isLog -> SpellParameters.TERRA_DRAIN_LOG_HEAL_PERCENT
+                block.isLeaves -> SpellParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
+                else -> 0.0
+            }
+            val wrappedAmount = it.increase(it.max.div(100.0).times(percent).toLong())
+            if (wrappedAmount > 0) {
+                SpellPops.HEAL(wrappedAmount).pop(block.centralLocation)
+                PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+            }
+        }
     }
 
-    private fun canBreakRelations(block: Block) = relationalMaterials.contains(block.type)
-
-    private fun breakRelationalBlock(player: Player, base: Block, target: Block, isBaseBlock: Boolean) {
+    private fun breakRelationalBlock(player: Player, target: Block, isBaseBlock: Boolean) {
 //        player.server.consoleSender.sendMessage("${target.type} ${target.x} ${target.y} ${target.z} ")
-        if (!target.isGrass) return
-        if (Math.abs(target.location.x - base.location.x) >= maxRadius
-                || Math.abs(target.location.z - base.location.z) >= maxRadius) return
+        if (!target.isTree) return
 
-        // 芝生でなければ処理しない
-        if (canBreakRelations(target)) {
+        // 原木でなければ処理しない
+        if (target.isLog) {
             relationalFaceSet.map {
                 Bukkit.getScheduler().runTaskLater(
                         Gigantic.PLUGIN,
                         {
                             if (!player.isValid) return@runTaskLater
-                            breakRelationalBlock(player, base, target.getRelative(it), false)
+                            breakRelationalBlock(player, target.getRelative(it), false)
                         },
                         when (it) {
                             BlockFace.NORTH -> 1L
@@ -82,7 +93,7 @@ class GrandNatura : Miner(), SpellCaster {
                         Gigantic.PLUGIN,
                         {
                             if (!player.isValid) return@runTaskLater
-                            breakRelationalBlock(player, base, upperBlock.getRelative(it), false)
+                            breakRelationalBlock(player, upperBlock.getRelative(it), false)
                         },
                         when (it) {
                             BlockFace.NORTH -> 1L + 9L
@@ -101,7 +112,7 @@ class GrandNatura : Miner(), SpellCaster {
                     Gigantic.PLUGIN,
                     {
                         if (!player.isValid) return@runTaskLater
-                        breakRelationalBlock(player, base, upperBlock, false)
+                        breakRelationalBlock(player, upperBlock, false)
                     },
                     9L
             )
@@ -111,7 +122,7 @@ class GrandNatura : Miner(), SpellCaster {
                         Gigantic.PLUGIN,
                         {
                             if (!player.isValid) return@runTaskLater
-                            breakRelationalBlock(player, base, underBlock.getRelative(it), false)
+                            breakRelationalBlock(player, underBlock.getRelative(it), false)
                         },
                         when (it) {
                             BlockFace.NORTH -> 1L + 9L
@@ -130,7 +141,7 @@ class GrandNatura : Miner(), SpellCaster {
                     Gigantic.PLUGIN,
                     {
                         if (!player.isValid) return@runTaskLater
-                        breakRelationalBlock(player, base, underBlock, false)
+                        breakRelationalBlock(player, underBlock, false)
                     },
                     9L
             )
@@ -139,13 +150,5 @@ class GrandNatura : Miner(), SpellCaster {
         if (!isBaseBlock)
             breakBlock(player, target, false, false)
     }
-
-    companion object {
-
-        val relationalMaterials = SpellParameters.GRAND_NATURA_RELATIONAL_BLOCKS
-
-        const val maxRadius = SpellParameters.GRAND_NATURA_MAX_RADIUS
-    }
-
 
 }
