@@ -170,6 +170,7 @@ object BagButtons {
     val QUEST = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
+            if (!Achievement.QUEST.isGranted(player)) return null
             return ItemStack(Material.WRITABLE_BOOK).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.QUEST.asSafety(player.wrappedLocale))

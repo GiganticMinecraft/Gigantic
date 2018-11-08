@@ -43,11 +43,14 @@ enum class Achievement(
     // systems
     MANA_STONE(100, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
-    }, grantMessage = AchievementMessages.UNLOCK_MANA_STONE,
+    }, grantMessage = AchievementMessages.MANA_STONE,
             priority = UpdatePriority.HIGHEST),
     TELEPORT(101, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 15
-    }, grantMessage = AchievementMessages.UNLOCK_TELEPORT),
+    }, grantMessage = AchievementMessages.TELEPORT),
+    QUEST(102, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
+    }, grantMessage = AchievementMessages.QUEST),
 
 
     // wills

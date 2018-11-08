@@ -81,7 +81,7 @@ object AchievementMessages {
             }
     ))
 
-    val UNLOCK_MANA_STONE = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val MANA_STONE = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.AQUA}" +
                         "マナストーンを見つけた!!\n" +
@@ -127,13 +127,22 @@ object AchievementMessages {
             }
     ))
 
-    val UNLOCK_TELEPORT = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val TELEPORT = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "スキル: テレポート を覚えた!!\n" +
+                        "テレポートができるようになった!!\n" +
                         "${ChatColor.GRAY}" +
-                        "アクティブ効果: 任意の場所やプレイヤーにテレポートする\n" +
+                        "任意の場所やプレイヤーにテレポートする\n" +
                         "\"${SkillParameters.TELEPORT_KEY}\" キー を押してテレポート先を選択!!\n"
+            }
+    ))
+
+    val QUEST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "クエストが受けられるようになった!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "メニューからクエストを選択!\n"
             }
     ))
 }
