@@ -350,6 +350,8 @@ class PlayerListener : Listener {
                 event.player.getOrPut(Keys.BAG).carry(event.player)
             }
             else -> {
+                event.player.inventory.clear()
+                event.player.updateInventory()
             }
         }
     }
