@@ -349,9 +349,11 @@ class PlayerListener : Listener {
                 belt.wear(event.player)
                 event.player.getOrPut(Keys.BAG).carry(event.player)
             }
-            else -> {
+            GameMode.CREATIVE -> {
                 event.player.inventory.clear()
                 event.player.updateInventory()
+            }
+            else -> {
             }
         }
     }

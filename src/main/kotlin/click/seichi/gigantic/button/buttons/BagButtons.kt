@@ -30,7 +30,7 @@ object BagButtons {
     val PROFILE = object : Button {
         override fun getItemStack(player: Player): ItemStack? {
             return player.getHead().apply {
-                setDisplayName("${ChatColor.AQUA}" + ProfileMessages.PROFILE.asSafety(player.wrappedLocale))
+                setDisplayName(BagMessages.PROFILE.asSafety(player.wrappedLocale))
                 val level = player.find(CatalogPlayerCache.LEVEL) ?: return@apply
                 val aptitude = player.find(CatalogPlayerCache.APTITUDE) ?: return@apply
                 val health = player.find(CatalogPlayerCache.HEALTH) ?: return@apply
@@ -74,7 +74,8 @@ object BagButtons {
 
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.BLAZE_POWDER).apply {
-                setDisplayName("${ChatColor.AQUA}" + SkillMenuMessages.TITLE.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}" +
+                        SkillMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
         }
 
@@ -90,7 +91,8 @@ object BagButtons {
         override fun getItemStack(player: Player): ItemStack? {
             if (!Achievement.MANA_STONE.isGranted(player)) return null
             return ItemStack(Material.LAPIS_LAZULI).apply {
-                setDisplayName("${ChatColor.AQUA}" + SpellMenuMessages.TITLE.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + SpellMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
         }
 
@@ -107,6 +109,7 @@ object BagButtons {
             return when (player.gameMode) {
                 GameMode.SPECTATOR -> ItemStack(Material.POPPY, 1).apply {
                     setDisplayName(
+
                             BagMessages.BACK_FROM_REST.asSafety(player.wrappedLocale)
                     )
                 }
@@ -147,6 +150,28 @@ object BagButtons {
             return ItemStack(Material.MUSIC_DISC_13).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale))
+                clearLore()
+                itemMeta = itemMeta.apply {
+                    addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                    addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
+                }
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (event.inventory.holder === SpecialThanksMenu) return
+            SpecialThanksMenu.open(player)
+        }
+
+    }
+
+    val QUEST = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.WRITABLE_BOOK).apply {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.QUEST.asSafety(player.wrappedLocale))
                 clearLore()
                 itemMeta = itemMeta.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)

@@ -10,7 +10,7 @@ import java.util.*
 object BagMessages {
 
     val PROFILE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.UNDERLINE}プロフィールを見る"
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.UNDERLINE}プロフィール"
     )
 
     val REST = LocalizedText(
@@ -25,5 +25,8 @@ object BagMessages {
             Locale.JAPANESE to "Special Thanks"
     )
 
+    val QUEST = LocalizedText(
+            Locale.JAPANESE to "クエスト"
+    )
 
 }
