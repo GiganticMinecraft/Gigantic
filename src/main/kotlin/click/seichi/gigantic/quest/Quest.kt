@@ -26,8 +26,6 @@ enum class Quest(
     LOA(600, QuestMessages.LOA, null, SoulMonster.LOA),
     ;
 
-    val monsterList = monsters.toList()
-
     companion object {
         val COLOR = ChatColor.LIGHT_PURPLE
 
@@ -37,6 +35,8 @@ enum class Quest(
         fun getOrderedClientList(player: Player) =
                 getClientList(player).filter { it.isOrdered }
     }
+
+    val monsterList = monsters.toList()
 
     // クエスト発注
     fun order(player: Player) {

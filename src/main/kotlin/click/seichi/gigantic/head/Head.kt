@@ -17,7 +17,12 @@ enum class Head(
         private val urlString: String
 ) {
     // soul monster heads
-
+    LADON("http://textures.minecraft.net/texture/f7cba5b68ee7ac9b93dc4f684c528c5efd7e78c6ac77cefd1111bae6cdc84f"),
+    UNDINE("http://textures.minecraft.net/texture/20014da813f52b384ad631e6811ee88c3d832f821319f60f7b21360d402f5bba"),
+    SALAMANDRA("http://textures.minecraft.net/texture/125522e5f235011d71bce3832ac1560d94b346e773dae187e2b3d4a0b5561a"),
+    SYLPHID("http://textures.minecraft.net/texture/0158d4889105f6a63cd7d3b16433f683d21329f771af69859c363206ff84332"),
+    NOMOS("http://textures.minecraft.net/texture/c92c157083adcd2c94d4bfbea2e4cee7f47bf7c9a525674bce9923df0e751"),
+    LOA("http://textures.minecraft.net/texture/d8da68d4d692ce36e9d2a151f6d3fa9c8a2a533169647a818d8c643d7030ed"),
     // raid boss heads
     /* PIG("http://textures.minecraft.net/texture/621668ef7cb79dd9c22ce3d1f3f4cb6e2559893b6df4a469514e667c16aa4"),
      MOLE("http://textures.minecraft.net/texture/7d2e9feca25c973ef63c982dcc37d3cf7671ceca521034db6923d9f018ff7fa8"),
