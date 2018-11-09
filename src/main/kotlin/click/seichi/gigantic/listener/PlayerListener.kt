@@ -22,7 +22,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
-import org.bukkit.GameRule
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -40,7 +39,6 @@ import org.bukkit.event.player.*
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.concurrent.TimeUnit
-import kotlin.math.abs
 import kotlin.math.roundToLong
 
 
@@ -54,11 +52,8 @@ class PlayerListener : Listener {
     fun onSpawnAreaBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
         val block = event.block ?: return
-        val spawnLocation = block.world.spawnLocation
-        val spawnRadius = block.world.getGameRuleValue(GameRule.SPAWN_RADIUS) ?: 32
         if (player.gameMode == GameMode.CREATIVE) return
-        if (abs(block.x - spawnLocation.x) >= spawnRadius ||
-                abs(block.z - spawnLocation.z) >= spawnRadius) return
+        if (!block.isSpawnArea) return
         PlayerMessages.SPAWN_PROTECT.sendTo(player)
         event.isCancelled = true
     }

@@ -2,10 +2,12 @@ package click.seichi.gigantic.extension
 
 import click.seichi.gigantic.Gigantic
 import org.bukkit.Bukkit
+import org.bukkit.GameRule
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
+import kotlin.math.abs
 
 /**
  * @author unicroak
@@ -86,4 +88,8 @@ fun Block.changeRelativeBedrock() {
             .filter { it.type == Material.BEDROCK && it.y != 0 }
             .forEach { it.type = Material.STONE }
 }
+
+val Block.isSpawnArea: Boolean
+    get() = abs(x - world.spawnLocation.x) < world.getGameRuleValue(GameRule.SPAWN_RADIUS) ?: 32 &&
+            abs(z - world.spawnLocation.z) < world.getGameRuleValue(GameRule.SPAWN_RADIUS) ?: 32
 

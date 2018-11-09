@@ -5,7 +5,7 @@ import org.joda.time.DateTime
 /**
  * @author tar0ss
  */
-data class QuestData(
+data class QuestClient(
         val quest: Quest,
         var isOrdered: Boolean,
         var orderedAt: DateTime,
