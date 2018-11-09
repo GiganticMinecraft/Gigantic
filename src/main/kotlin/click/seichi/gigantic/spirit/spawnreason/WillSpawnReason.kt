@@ -5,8 +5,6 @@ package click.seichi.gigantic.spirit.spawnreason
  */
 enum class WillSpawnReason : SpawnReason {
 
-    AWAKE,
-
-    RELEASE;
+    AWAKE;
 
 }

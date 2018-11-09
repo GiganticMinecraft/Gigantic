@@ -74,7 +74,7 @@ class WillSpirit(
 
 
     override val lifespan = when (spawnReason) {
-        WillSpawnReason.AWAKE, WillSpawnReason.RELEASE -> Sensor.DURATION + 1
+        WillSpawnReason.AWAKE -> Sensor.DURATION + 1
         else -> throw IllegalStateException()
     }
 
