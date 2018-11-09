@@ -10,7 +10,7 @@ import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.quest.Quest
-import click.seichi.gigantic.quest.QuestPlayer
+import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.soul.SoulMonster
 import click.seichi.gigantic.will.Will
@@ -524,15 +524,15 @@ object Keys {
     }
 
 
-    val QUEST_MAP: Map<Quest, DatabaseKey<PlayerCache, QuestPlayer?>> = Quest.values()
+    val QUEST_MAP: Map<Quest, DatabaseKey<PlayerCache, QuestClient?>> = Quest.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, QuestPlayer?> {
-                    override val default: QuestPlayer?
+                it to object : DatabaseKey<PlayerCache, QuestClient?> {
+                    override val default: QuestClient?
                         get() = null
 
-                    override fun read(entity: Entity<*>): QuestPlayer? {
+                    override fun read(entity: Entity<*>): QuestClient? {
                         val userQuest = entity as UserQuest
-                        return QuestPlayer(
+                        return QuestClient(
                                 it,
                                 userQuest.isOrdered,
                                 userQuest.orderedAt,
@@ -542,7 +542,7 @@ object Keys {
 
                     }
 
-                    override fun store(entity: Entity<*>, value: QuestPlayer?) {
+                    override fun store(entity: Entity<*>, value: QuestClient?) {
                         value ?: return
                         val userQuest = entity as UserQuest
                         userQuest.isOrdered = value.isOrdered
@@ -551,7 +551,7 @@ object Keys {
                         userQuest.processedDegree = value.processedDegree
                     }
 
-                    override fun satisfyWith(value: QuestPlayer?): Boolean {
+                    override fun satisfyWith(value: QuestClient?): Boolean {
                         return true
                     }
 

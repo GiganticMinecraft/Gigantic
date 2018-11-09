@@ -9,6 +9,8 @@ import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.quest.Quest
+import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.entity.Player
 
@@ -62,7 +64,8 @@ enum class Achievement(
                 PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(player)
             }
         }
-    }, grantMessage = AchievementMessages.UNLOCK_WILL_BASIC_1),
+    }, grantMessage = AchievementMessages.UNLOCK_WILL_BASIC_1,
+            priority = UpdatePriority.HIGHEST),
 
     // skills
     SKILL_FLASH(200, {
@@ -91,13 +94,42 @@ enum class Achievement(
                 it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 18
     }, grantMessage = AchievementMessages.UNLOCK_AQUA_LINEA),
 
-    // quest issues
-    QUEST_LADON_ISSUE(401, {
+    // quest order
+    QUEST_LADON_ORDER(400, {
         MANA_STONE.isGranted(it)
-    }/*,action = {
-       Quest.LADON.issue(it)
-    },grantMessage = AchievementMessages.QUEST_LADON_ISSUE*/
-    )
+    }, action = {
+        Quest.LADON.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_UNDINE_ORDER(401, {
+        MANA_STONE.isGranted(it) &&
+                Will.AQUA.isAptitude(it)
+    }, action = {
+        Quest.UNDINE.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_SALAMANDRA_ORDER(402, {
+        MANA_STONE.isGranted(it) &&
+                Will.IGNIS.isAptitude(it)
+    }, action = {
+        Quest.SALAMANDRA.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_SYLPHID_ORDER(403, {
+        MANA_STONE.isGranted(it) &&
+                Will.AER.isAptitude(it)
+    }, action = {
+        Quest.SYLPHID.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_NOMOS_ORDER(404, {
+        MANA_STONE.isGranted(it) &&
+                Will.TERRA.isAptitude(it)
+    }, action = {
+        Quest.NOMOS.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_LOA_ORDER(405, {
+        MANA_STONE.isGranted(it) &&
+                Will.NATURA.isAptitude(it)
+    }, action = {
+        Quest.LOA.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
     ;
 
     /**1から順に [update] される**/

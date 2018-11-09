@@ -4,6 +4,7 @@ import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.skill.SkillParameters
+import click.seichi.gigantic.quest.Quest
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -143,6 +144,12 @@ object AchievementMessages {
                         "クエストが受けられるようになった!!\n" +
                         "${ChatColor.GRAY}" +
                         "メニューからクエストを選択!\n"
+            }
+    ))
+    val QUEST_ORDER = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${Quest.COLOR}" +
+                        "新しいクエストが発生しました。\n"
             }
     ))
 }
