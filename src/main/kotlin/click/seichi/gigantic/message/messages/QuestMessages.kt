@@ -32,4 +32,8 @@ object QuestMessages {
             Locale.JAPANESE to "自然を操りしもの"
     )
 
+    val PIG = LocalizedText(
+            Locale.JAPANESE to "飛ばねぇ豚はただの豚だ"
+    )
+
 }

@@ -55,4 +55,8 @@ object RelicMessages {
     val WILL_CRYSTAL_JADE = LocalizedText(
             Locale.JAPANESE to "自然の意志結晶-ヒスイ-"
     )
+
+    val PIGS_FEATHER = LocalizedText(
+            Locale.JAPANESE to "豚の羽根"
+    )
 }

@@ -17,6 +17,9 @@ enum class Head(
         private val urlString: String
 ) {
     // soul monster heads
+    PIG("http://textures.minecraft.net/texture/621668ef7cb79dd9c22ce3d1f3f4cb6e2559893b6df4a469514e667c16aa4"),
+    PIG_WARRIOR("http://textures.minecraft.net/texture/c343b0f771dbbe4a53a3b8fe323ec0a3fef35da3ddaccda56b706a6f5491d796"),
+    MR_PIG("http://textures.minecraft.net/texture/a1a15a9e301c3dd18ff1464bbd10972ab9e9df164533c33822de79898ae2cd"),
     LADON("http://textures.minecraft.net/texture/f7cba5b68ee7ac9b93dc4f684c528c5efd7e78c6ac77cefd1111bae6cdc84f"),
     UNDINE("http://textures.minecraft.net/texture/20014da813f52b384ad631e6811ee88c3d832f821319f60f7b21360d402f5bba"),
     SALAMANDRA("http://textures.minecraft.net/texture/125522e5f235011d71bce3832ac1560d94b346e773dae187e2b3d4a0b5561a"),
@@ -24,7 +27,6 @@ enum class Head(
     NOMOS("http://textures.minecraft.net/texture/c92c157083adcd2c94d4bfbea2e4cee7f47bf7c9a525674bce9923df0e751"),
     LOA("http://textures.minecraft.net/texture/d8da68d4d692ce36e9d2a151f6d3fa9c8a2a533169647a818d8c643d7030ed"),
     // raid boss heads
-    /* PIG("http://textures.minecraft.net/texture/621668ef7cb79dd9c22ce3d1f3f4cb6e2559893b6df4a469514e667c16aa4"),
      MOLE("http://textures.minecraft.net/texture/7d2e9feca25c973ef63c982dcc37d3cf7671ceca521034db6923d9f018ff7fa8"),
      RESET_SAN("http://textures.minecraft.net/texture/b19f3d688a64af5ce837f74e73cd98838fa819c017fce49f57498c6e4dae7ac"),
      FROG("http://textures.minecraft.net/texture/d1ef9f1ae4d2bcbbdf77845f9cb3d355cdcadd4dfbbe9e7cc3b5298de26da6f"),
@@ -40,7 +42,7 @@ enum class Head(
      TRITON("http://textures.minecraft.net/texture/a158ab215a93f5c456378935e6a9fe4aeb1f92ffe41a2739e51e8742c1d"),
      BISMARCK("http://textures.minecraft.net/texture/6d8a76ac45b84f50b6660ed1d6756f3f82e6662e073a569ee2507f35ba25b914"),
      STONE("http://textures.minecraft.net/texture/41269584f629227713107b4e0a02dd65ddfe780e7c7118cb1ec2275c514cc95d"),
-     MOTHER("http://textures.minecraft.net/texture/b58677cf4429696d34e0fb790821091e5f58acf2698f7d57ee03b75491c264b6"),*/
+    MOTHER("http://textures.minecraft.net/texture/b58677cf4429696d34e0fb790821091e5f58acf2698f7d57ee03b75491c264b6"),
     // menu heads
     LEFT("http://textures.minecraft.net/texture/3ebf907494a935e955bfcadab81beafb90fb9be49c7026ba97d798d5f1a23"),
     PUMPKIN_RIGHT_ARROW("http://textures.minecraft.net/texture/c9895d58a04626d5cce18769d54198d0355fd770683bdfb7176d08c7547de"),

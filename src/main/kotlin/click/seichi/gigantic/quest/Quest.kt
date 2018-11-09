@@ -18,6 +18,7 @@ enum class Quest(
         val localizedLore: List<LocalizedText>?,
         vararg monsters: SoulMonster
 ) {
+    PIG_CROWD(0, QuestMessages.PIG, null, SoulMonster.PIG, SoulMonster.PIG_WARRIOR, SoulMonster.MR_PIG),
     LADON(100, QuestMessages.LADON, null, SoulMonster.LADON),
     UNDINE(200, QuestMessages.UNDINE, null, SoulMonster.UNDINE),
     SALAMANDRA(300, QuestMessages.SALAMANDRA, null, SoulMonster.SALAMANDRA),
