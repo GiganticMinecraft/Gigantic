@@ -10,7 +10,10 @@ import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.chat.ComponentSerializer
-import org.bukkit.*
+import org.bukkit.Color
+import org.bukkit.Location
+import org.bukkit.Material
+import org.bukkit.Particle
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
@@ -70,7 +73,3 @@ fun Player.spawnColoredParticleSpherically(
         count: Int = 1,
         radius: Double
 ) = spawnColoredParticle(location, color, count, NoiseData(radius, { Random.nextGaussian(variance = it / 2) }))
-
-fun Player.colorizePlayerListName(color: ChatColor) {
-    playerListName = "$color$name"
-}
