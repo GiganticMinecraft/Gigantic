@@ -26,19 +26,20 @@ object QuestSelectMenu : BookMenu() {
     private val prevButton = PrevButton(this)
 
     override fun getMaxPage(player: Player): Int {
-        return Quest.getOrderedClientList(player).size
+        return Quest.getOrderedList(player).size
     }
 
     override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {
-        val clientList = Quest.getOrderedClientList(player)
+        val quest = Quest.getOrderedList(player)
         val start = (page - 1) * numOfContentsPerPage
         val end = page * numOfContentsPerPage
         (start until end)
-                .filter { clientList.getOrNull(it) != null }
-                .map { it % numOfContentsPerPage to clientList[it] }
+                .filter { quest.getOrNull(it) != null }
+                .map { it % numOfContentsPerPage to quest[it] }
                 .toMap()
-                .forEach { index, client ->
-                    inventory.setItem(index, QuestButtons.QUEST(client).getItemStack(player))
+                .forEach { index, quest ->
+                    inventory.setItem(index, QuestButtons.QUEST(quest.getClient(player)
+                            ?: return@forEach).getItemStack(player))
                 }
         inventory.setItem(numOfContentsPerPage + 3, prevButton.getItemStack(player))
         inventory.setItem(numOfContentsPerPage + 5, nextButton.getItemStack(player))
@@ -52,13 +53,13 @@ object QuestSelectMenu : BookMenu() {
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
-        val clientList = Quest.getOrderedClientList(player)
+        val questList = Quest.getOrderedList(player)
         val index = (page - 1) * numOfContentsPerPage + slot
-        val client = clientList.getOrNull(index) ?: return null
+        val quest = questList.getOrNull(index) ?: return null
         return when (slot) {
             numOfContentsPerPage + 3 -> prevButton
             numOfContentsPerPage + 5 -> nextButton
-            else -> QuestButtons.QUEST(client)
+            else -> QuestButtons.QUEST(quest.getClient(player) ?: return null)
         }
     }
 

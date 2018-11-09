@@ -17,6 +17,7 @@ class MonsterSpirit(
         targetPlayer: Player? = null
 ) : Spirit(spawnReason, location) {
 
+    // TODO implements
 
     override val lifespan = 20 * 60
     override val spiritType = SpiritType.MONSTER

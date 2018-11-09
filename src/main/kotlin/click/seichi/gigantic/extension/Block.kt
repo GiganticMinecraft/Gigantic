@@ -93,3 +93,4 @@ val Block.isSpawnArea: Boolean
     get() = abs(x - world.spawnLocation.x) < world.getGameRuleValue(GameRule.SPAWN_RADIUS) ?: 32 &&
             abs(z - world.spawnLocation.z) < world.getGameRuleValue(GameRule.SPAWN_RADIUS) ?: 32
 
+

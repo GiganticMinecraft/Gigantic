@@ -30,18 +30,15 @@ enum class Quest(
     companion object {
         val COLOR = ChatColor.LIGHT_PURPLE
 
-        fun getClientList(player: Player) =
-                values().mapNotNull { player.getOrPut(Keys.QUEST_MAP[it] ?: return@mapNotNull null) }
-
-        fun getOrderedClientList(player: Player) =
-                getClientList(player).filter { it.isOrdered }
+        fun getOrderedList(player: Player) =
+                values().filter { it.isOrdered(player) }
     }
 
     val monsterList = monsters.toList()
 
     // クエスト発注
     fun order(player: Player) {
-        player.getOrPut(Keys.QUEST_MAP[this] ?: return)?.run {
+        getClient(player)?.run {
             if (isOrdered) return
             isOrdered = true
             orderedAt = DateTime.now()
@@ -49,13 +46,12 @@ enum class Quest(
     }
 
     fun isOrdered(player: Player): Boolean {
-        val questKey = Keys.QUEST_MAP[this] ?: return false
-        return player.getOrPut(questKey)?.isOrdered ?: false
+        return getClient(player)?.isOrdered ?: false
     }
 
     // クエスト進行
     fun process(player: Player, degree: Int) {
-        player.getOrPut(Keys.QUEST_MAP[this] ?: return)?.run {
+        getClient(player)?.run {
             isProcessed = true
             processedDegree = degree
         }
@@ -63,10 +59,15 @@ enum class Quest(
 
     // クエスト完了
     fun complete(player: Player) {
-        player.getOrPut(Keys.QUEST_MAP[this] ?: return)?.run {
+        getClient(player)?.run {
             isOrdered = false
             isProcessed = false
             processedDegree = 0
         }
+    }
+
+    fun getClient(player: Player): QuestClient? {
+        val questKey = Keys.QUEST_MAP[this] ?: return null
+        return player.getOrPut(questKey)
     }
 }

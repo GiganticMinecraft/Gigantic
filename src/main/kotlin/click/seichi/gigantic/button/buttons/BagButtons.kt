@@ -173,7 +173,7 @@ object BagButtons {
         override fun getItemStack(player: Player): ItemStack? {
             if (!Achievement.QUEST.isGranted(player)) return null
             return ItemStack(Material.WRITABLE_BOOK).apply {
-                if (Quest.getOrderedClientList(player).isEmpty()) {
+                if (Quest.getOrderedList(player).isEmpty()) {
                     setDisplayName("${ChatColor.GRAY}${ChatColor.UNDERLINE}"
                             + BagMessages.NO_QUEST.asSafety(player.wrappedLocale))
                 } else {
@@ -190,7 +190,7 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (Quest.getOrderedClientList(player).isEmpty()) return
+            if (Quest.getOrderedList(player).isEmpty()) return
             if (event.inventory.holder === QuestSelectMenu) return
             QuestSelectMenu.open(player)
         }
