@@ -4,6 +4,7 @@ import click.seichi.gigantic.button.buttons.menu.SkillButtons
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.menu.SkillMenuMessages
+import click.seichi.gigantic.player.skill.Skill
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 
@@ -21,9 +22,9 @@ object SkillMenu : Menu() {
     }
 
     init {
-        registerButton(0, SkillButtons.HEAL)
-        registerButton(1, SkillButtons.FLASH)
-        registerButton(2, SkillButtons.MINE_BURST)
+        Skill.values().forEach { skill ->
+            registerButton(skill.slot, SkillButtons.SKILL(skill))
+        }
     }
 
 }

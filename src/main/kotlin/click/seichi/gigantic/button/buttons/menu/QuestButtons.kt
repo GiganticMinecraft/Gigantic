@@ -4,7 +4,7 @@ import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.QuestMenuMessages
-import click.seichi.gigantic.quest.QuestClient
+import click.seichi.gigantic.quest.QuestData
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack
  */
 object QuestButtons {
 
-    val QUEST: (QuestClient) -> Button = { client ->
+    val QUEST: (QuestData) -> Button = { client ->
         object : Button {
             override fun getItemStack(player: Player): ItemStack? {
                 return ItemStack(Material.ENCHANTED_BOOK).apply {

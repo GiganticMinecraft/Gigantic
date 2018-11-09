@@ -7,7 +7,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.menus.BeltSwitchSettingMenu
 import click.seichi.gigantic.menu.menus.TeleportMenu
 import click.seichi.gigantic.message.messages.HookedItemMessages
-import click.seichi.gigantic.player.skill.Skills
+import click.seichi.gigantic.player.skill.Skill
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -47,7 +47,7 @@ object HotButtons {
         }
 
         override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
-            Skills.MINE_BURST.tryInvoke(player)
+            Skill.MINE_BURST.tryCast(player)
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
@@ -77,7 +77,7 @@ object HotButtons {
         }
 
         override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
-            Skills.FLASH.tryInvoke(player)
+            Skill.FLASH.tryCast(player)
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {

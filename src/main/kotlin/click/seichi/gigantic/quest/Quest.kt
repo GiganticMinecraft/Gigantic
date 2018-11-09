@@ -7,6 +7,7 @@ import click.seichi.gigantic.message.messages.QuestMessages
 import click.seichi.gigantic.soul.SoulMonster
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
+import org.joda.time.DateTime
 
 /**
  * @author tar0ss
@@ -37,9 +38,13 @@ enum class Quest(
                 getClientList(player).filter { it.isOrdered }
     }
 
-
+    // クエスト発注
     fun order(player: Player) {
-        player.getOrPut(Keys.QUEST_MAP[this] ?: return)?.order()
+        player.getOrPut(Keys.QUEST_MAP[this] ?: return)?.run {
+            if (isOrdered) return
+            isOrdered = true
+            orderedAt = DateTime.now()
+        }
     }
 
     fun isOrdered(player: Player): Boolean {
@@ -47,4 +52,20 @@ enum class Quest(
         return player.getOrPut(questKey)?.isOrdered ?: false
     }
 
+    // クエスト進行
+    fun process(player: Player, degree: Int) {
+        player.getOrPut(Keys.QUEST_MAP[this] ?: return)?.run {
+            isProcessed = true
+            processedDegree = degree
+        }
+    }
+
+    // クエスト完了
+    fun complete(player: Player) {
+        player.getOrPut(Keys.QUEST_MAP[this] ?: return)?.run {
+            isOrdered = false
+            isProcessed = false
+            processedDegree = 0
+        }
+    }
 }

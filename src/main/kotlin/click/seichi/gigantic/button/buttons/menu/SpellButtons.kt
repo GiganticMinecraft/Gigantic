@@ -1,13 +1,11 @@
 package click.seichi.gigantic.button.buttons.menu
 
-import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.button.Button
-import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.menu.menus.SpellMenu
-import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
-import click.seichi.gigantic.sound.sounds.PlayerSounds
-import org.bukkit.Material
+import click.seichi.gigantic.extension.setDisplayName
+import click.seichi.gigantic.extension.setEnchanted
+import click.seichi.gigantic.extension.setLore
+import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.player.spell.Spell
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
@@ -17,23 +15,26 @@ import org.bukkit.inventory.ItemStack
  */
 object SpellButtons {
 
-    val STELLA_CLAIR = object : Button {
+    val SPELL: (Spell) -> Button = { spell: Spell ->
+        object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
-            if (!Achievement.SPELL_STELLA_CLAIR.isGranted(player)) return null
-            return ItemStack(Material.LAPIS_LAZULI).apply {
-                setDisplayName(SpellMenuMessages.STELLA_CLAIR_TITLE.asSafety(player.wrappedLocale))
-                setLore(*SpellMenuMessages.STELLA_CLAIR
-                        .map { it.asSafety(player.wrappedLocale) }
-                        .toTypedArray())
-                setEnchanted(true)
+            override fun getItemStack(player: Player): ItemStack? {
+                if (!spell.isGranted(player)) return null
+                return spell.getIcon(player).apply {
+                    setDisplayName(spell.getName(player.wrappedLocale))
+                    spell.getLore(player.wrappedLocale)?.let {
+                        setLore(*it.toTypedArray())
+                    }
+                    setEnchanted(true)
+                }
             }
-        }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-        }
+            override fun onClick(player: Player, event: InventoryClickEvent) {
+            }
 
+        }
     }
+/*
 
     val TERRA_DRAIN = object : Button {
 
@@ -131,5 +132,6 @@ object SpellButtons {
         }
 
     }
+*/
 
 }

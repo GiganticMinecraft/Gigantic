@@ -3,7 +3,8 @@ package click.seichi.gigantic.listener
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
-import click.seichi.gigantic.player.skill.Skills
+import click.seichi.gigantic.player.skill.Skill
+import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.player.spell.Spells
 import org.bukkit.GameMode
 import org.bukkit.block.Block
@@ -26,10 +27,10 @@ class SkillSpellListener : Listener {
     private fun tryHeal(player: Player, block: Block): Boolean {
 
         player.offer(Keys.HEAL_SKILL_BLOCK, block)
-        if (Skills.HEAL.tryInvoke(player)) return true
+        if (Skill.HEAL.tryCast(player)) return true
 
         player.offer(Keys.STELLA_CLAIR_SKILL_BLOCK, block)
-        if (Spells.STELLA_CLAIR.tryInvoke(player)) return true
+        if (Spell.STELLA_CLAIR.tryCast(player)) return true
 
         return false
     }

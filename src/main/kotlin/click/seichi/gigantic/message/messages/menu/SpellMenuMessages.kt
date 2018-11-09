@@ -58,25 +58,6 @@ object SpellMenuMessages {
                     "回復魔法: テラ・ドレイン -封印-"
     )
 
-    val STELLA_CLAIR =
-            listOf(
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "パッシブ効果: ブロックを破壊してマナを回復"
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "発動確率: ${SpellParameters.STELLA_CLAIR_PROBABILITY_PERCENT} %"
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "回復量: 最大マナの${SpellParameters.STELLA_CLAIR_AMOUNT_PERCENT} %"
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                    "全ての通常破壊で発動"
-                    )
-            )
 
     val STELLA_CLAIR_TITLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +

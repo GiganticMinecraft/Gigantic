@@ -4,6 +4,7 @@ import click.seichi.gigantic.button.buttons.menu.SpellButtons
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
+import click.seichi.gigantic.player.spell.Spell
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 
@@ -21,10 +22,9 @@ object SpellMenu : Menu() {
     }
 
     init {
-        registerButton(0, SpellButtons.STELLA_CLAIR)
-        registerButton(1, SpellButtons.TERRA_DRAIN)
-        registerButton(2, SpellButtons.GRAND_NATURA)
-        registerButton(3, SpellButtons.AQUA_LINEA)
+        Spell.values().forEach { spell ->
+            registerButton(spell.slot, SpellButtons.SPELL(spell))
+        }
     }
 
 }
