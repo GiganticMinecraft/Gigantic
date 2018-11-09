@@ -9,6 +9,8 @@ import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.quest.Quest
+import click.seichi.gigantic.quest.QuestPlayer
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.soul.SoulMonster
 import click.seichi.gigantic.will.Will
@@ -520,5 +522,41 @@ object Keys {
         }
 
     }
+
+
+    val QUEST_MAP: Map<Quest, DatabaseKey<PlayerCache, QuestPlayer?>> = Quest.values()
+            .map {
+                it to object : DatabaseKey<PlayerCache, QuestPlayer?> {
+                    override val default: QuestPlayer?
+                        get() = null
+
+                    override fun read(entity: Entity<*>): QuestPlayer? {
+                        val userQuest = entity as UserQuest
+                        return QuestPlayer(
+                                it,
+                                userQuest.isOrdered,
+                                userQuest.orderedAt,
+                                userQuest.isProcessed,
+                                userQuest.processedDegree
+                        )
+
+                    }
+
+                    override fun store(entity: Entity<*>, value: QuestPlayer?) {
+                        value ?: return
+                        val userQuest = entity as UserQuest
+                        userQuest.isOrdered = value.isOrdered
+                        userQuest.orderedAt = value.orderedAt
+                        userQuest.isProcessed = value.isProcessed
+                        userQuest.processedDegree = value.processedDegree
+                    }
+
+                    override fun satisfyWith(value: QuestPlayer?): Boolean {
+                        return true
+                    }
+
+                }
+            }
+            .toMap()
 
 }

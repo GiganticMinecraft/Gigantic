@@ -77,6 +77,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.BELT_UNLOCK_MAP.forEach { belt, key ->
                     offer(key, key.read(userBeltMap[belt] ?: return@forEach))
                 }
+                Keys.QUEST_MAP.forEach { quest, key ->
+                    offer(key, key.read(userQuestMap[quest] ?: return@forEach))
+                }
             }
         }
     }
@@ -139,6 +142,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 }
                 Keys.BELT_UNLOCK_MAP.forEach { belt, key ->
                     key.store(userBeltMap[belt] ?: return@forEach, getOrDefault(key))
+                }
+                Keys.QUEST_MAP.forEach { quest, key ->
+                    key.store(userQuestMap[quest] ?: return@forEach, getOrDefault(key))
                 }
             }
         }
