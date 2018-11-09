@@ -14,6 +14,7 @@ import click.seichi.gigantic.message.messages.BagMessages
 import click.seichi.gigantic.message.messages.menu.ProfileMessages
 import click.seichi.gigantic.message.messages.menu.SkillMenuMessages
 import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
+import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.ChatColor
 import org.bukkit.GameMode
@@ -172,8 +173,13 @@ object BagButtons {
         override fun getItemStack(player: Player): ItemStack? {
             if (!Achievement.QUEST.isGranted(player)) return null
             return ItemStack(Material.WRITABLE_BOOK).apply {
-                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
-                        + BagMessages.QUEST.asSafety(player.wrappedLocale))
+                if (Quest.getOrderedClientList(player).isEmpty()) {
+                    setDisplayName("${ChatColor.GRAY}${ChatColor.UNDERLINE}"
+                            + BagMessages.NO_QUEST.asSafety(player.wrappedLocale))
+                } else {
+                    setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                            + BagMessages.QUEST.asSafety(player.wrappedLocale))
+                }
                 clearLore()
                 itemMeta = itemMeta.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -184,6 +190,7 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (Quest.getOrderedClientList(player).isEmpty()) return
             if (event.inventory.holder === QuestSelectMenu) return
             QuestSelectMenu.open(player)
         }

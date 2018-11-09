@@ -25,15 +25,26 @@ enum class Quest(
     LOA(600, QuestMessages.LOA, null, SoulMonster.LOA),
     ;
 
-    val monsterSet = monsters.toSet()
+    val monsterList = monsters.toList()
 
     companion object {
         val COLOR = ChatColor.LIGHT_PURPLE
+
+        fun getClientList(player: Player) =
+                values().mapNotNull { player.getOrPut(Keys.QUEST_MAP[it] ?: return@mapNotNull null) }
+
+        fun getOrderedClientList(player: Player) =
+                getClientList(player).filter { it.isOrdered }
     }
 
 
     fun order(player: Player) {
         player.getOrPut(Keys.QUEST_MAP[this] ?: return)?.order()
+    }
+
+    fun isOrdered(player: Player): Boolean {
+        val questKey = Keys.QUEST_MAP[this] ?: return false
+        return player.getOrPut(questKey)?.isOrdered ?: false
     }
 
 }

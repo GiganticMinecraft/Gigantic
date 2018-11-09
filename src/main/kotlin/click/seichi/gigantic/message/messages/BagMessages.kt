@@ -29,4 +29,8 @@ object BagMessages {
             Locale.JAPANESE to "クエスト"
     )
 
+    val NO_QUEST = LocalizedText(
+            Locale.JAPANESE to "クエストがありません"
+    )
+
 }

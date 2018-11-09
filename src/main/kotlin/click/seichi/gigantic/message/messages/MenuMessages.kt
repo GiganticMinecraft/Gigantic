@@ -8,6 +8,10 @@ import java.util.*
  * @author tar0ss
  */
 object MenuMessages {
+
+    val LINE = (1..23).joinToString(separator = "-") { "" }
+
+
     val BACK_BUTTON = { menuTitle: String ->
         LocalizedText(
                 Locale.JAPANESE to "$menuTitle${ChatColor.RESET}${ChatColor.WHITE}に戻る"

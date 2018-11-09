@@ -5,7 +5,6 @@ import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Key
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
-import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.util.CardinalDirection
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
@@ -74,9 +73,4 @@ fun Player.spawnColoredParticleSpherically(
 
 fun Player.colorizePlayerListName(color: ChatColor) {
     playerListName = "$color$name"
-}
-
-// プレイヤーがそのレリックを持っているかどうか
-fun Player.hasRelic(relic: Relic): Boolean {
-    return getOrPut(Keys.RELIC_MAP[relic] ?: return false) > 0
 }

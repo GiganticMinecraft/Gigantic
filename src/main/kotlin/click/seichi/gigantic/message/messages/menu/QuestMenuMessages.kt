@@ -12,4 +12,8 @@ object QuestMenuMessages {
             Locale.JAPANESE to "クエスト一覧"
     )
 
+    val MONSTER_LIST = LocalizedText(
+            Locale.JAPANESE to "出現モンスター"
+    )
+
 }
