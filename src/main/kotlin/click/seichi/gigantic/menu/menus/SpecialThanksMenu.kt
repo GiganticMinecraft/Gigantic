@@ -28,7 +28,10 @@ object SpecialThanksMenu : Menu() {
             "yuki_256" to "4ca99a6c-6c80-452f-a3a3-01b6aba7fccf",
             "Rukure2017" to "f90b2eb7-c1b5-41fc-81de-f68537c497c9",
             "taaa150" to "9599901c-fa82-4943-b748-b46e183c53f4",
-            "Neko_emon" to "2b4791d3-b71f-4e73-9891-33aeaa3a5ae4"
+            "Neko_emon" to "2b4791d3-b71f-4e73-9891-33aeaa3a5ae4",
+            "unicroak" to "0c578f76-d354-4727-a881-281edf77e186",
+            "Mon_chi" to "4d84f609-0287-4db1-84e5-89e62e68396d",
+            "unchama" to "b66cc3f6-a045-42ad-b4b8-320f20caf140"
     )
 
     init {
