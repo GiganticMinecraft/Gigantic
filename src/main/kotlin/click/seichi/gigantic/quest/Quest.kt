@@ -4,7 +4,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.QuestMessages
-import click.seichi.gigantic.soul.SoulMonster
+import click.seichi.gigantic.monster.SoulMonster
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.joda.time.DateTime

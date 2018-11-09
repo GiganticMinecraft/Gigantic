@@ -1,4 +1,4 @@
-package click.seichi.gigantic.soul
+package click.seichi.gigantic.monster
 
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.head.Head

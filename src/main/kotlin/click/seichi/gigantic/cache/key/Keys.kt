@@ -8,11 +8,11 @@ import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestData
 import click.seichi.gigantic.relic.Relic
-import click.seichi.gigantic.soul.SoulMonster
 import click.seichi.gigantic.will.Will
 import org.bukkit.block.Block
 import org.jetbrains.exposed.dao.Entity

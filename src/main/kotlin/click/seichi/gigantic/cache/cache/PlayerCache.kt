@@ -6,9 +6,9 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.database.table.*
+import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
-import click.seichi.gigantic.soul.SoulMonster
 import click.seichi.gigantic.will.Will
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
