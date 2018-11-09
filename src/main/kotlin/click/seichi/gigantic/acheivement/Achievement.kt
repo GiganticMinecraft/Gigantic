@@ -91,6 +91,13 @@ enum class Achievement(
                 it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 18
     }, grantMessage = AchievementMessages.UNLOCK_AQUA_LINEA),
 
+    // quest issues
+    QUEST_LADON_ISSUE(401, {
+        MANA_STONE.isGranted(it)
+    }/*,action = {
+       Quest.LADON.issue(it)
+    },grantMessage = AchievementMessages.QUEST_LADON_ISSUE*/
+    )
     ;
 
     /**1から順に [update] される**/

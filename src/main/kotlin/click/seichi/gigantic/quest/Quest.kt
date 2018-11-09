@@ -22,4 +22,6 @@ enum class Quest(
     ;
 
     val monsterSet = monsters.toSet()
+
+
 }

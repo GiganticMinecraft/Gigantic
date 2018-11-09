@@ -6,6 +6,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.MineBlockReason
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.database.table.*
+import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.soul.SoulMonster
 import click.seichi.gigantic.will.Will
@@ -209,6 +210,16 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 beltId = belt.id
             })
         }.toMap()
+
+        val userQuestMap = Quest.values().map { quest ->
+            quest to (UserQuest
+                    .find { (UserQuestTable.userId eq uniqueId) and (UserQuestTable.questId eq quest.id) }
+                    .firstOrNull() ?: UserQuest.new {
+                user = this@UserEntityData.user
+                questId = quest.id
+            })
+        }.toMap()
+
     }
 
 }

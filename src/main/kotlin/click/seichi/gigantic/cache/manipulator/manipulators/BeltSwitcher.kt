@@ -28,7 +28,6 @@ class BeltSwitcher : Manipulator<BeltSwitcher, PlayerCache> {
         Belt.values().forEach {
             map[it] = cache.getOrPut(Keys.BELT_TOGGLE_MAP[it] ?: return null)
             unlockMap[it] = cache.getOrPut(Keys.BELT_UNLOCK_MAP[it] ?: return null)
-
             if (unlockMap[it] == false && map[it] == true)
                 map[it] = false
         }
