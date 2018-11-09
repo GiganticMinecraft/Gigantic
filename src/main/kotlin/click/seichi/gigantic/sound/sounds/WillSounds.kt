@@ -28,10 +28,4 @@ object WillSounds {
             pitch = 1.8F
     )
 
-    val DEATH = DetailedSound(
-            Sound.ENTITY_ENDER_EYE_LAUNCH,
-            SoundCategory.BLOCKS,
-            pitch = 0.6F
-    )
-
 }

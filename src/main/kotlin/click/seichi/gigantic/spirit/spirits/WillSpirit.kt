@@ -11,7 +11,6 @@ import click.seichi.gigantic.sound.sounds.WillSounds
 import click.seichi.gigantic.spirit.Spirit
 import click.seichi.gigantic.spirit.SpiritType
 import click.seichi.gigantic.spirit.spawnreason.SpawnReason
-import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Sensor
@@ -69,14 +68,11 @@ class WillSpirit(
                         player.find(CatalogPlayerCache.APTITUDE) ?: return@Sensor,
                         false
                 ).sendTo(player)
+                remove()
             }
     )
 
-
-    override val lifespan = when (spawnReason) {
-        WillSpawnReason.AWAKE -> Sensor.DURATION + 1
-        else -> throw IllegalStateException()
-    }
+    override val lifespan = -1
 
     override val spiritType: SpiritType = SpiritType.WILL
 
@@ -98,10 +94,6 @@ class WillSpirit(
 
     override fun onSpawn() {
         WillSounds.SPAWN.play(location)
-    }
-
-    override fun onRemove() {
-        WillSounds.DEATH.play(location)
     }
 
 }

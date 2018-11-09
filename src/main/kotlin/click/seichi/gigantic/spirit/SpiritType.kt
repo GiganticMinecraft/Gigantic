@@ -34,6 +34,9 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
                 val will = aptitudeSet.shuffled().firstOrNull() ?: return@RandomSummonCase
                 spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, player))
             }
+    ),
+    MONSTER(
+
     )
     ;
 

@@ -6,19 +6,23 @@ import org.bukkit.Location
 /**
  * @author unicroak
  */
-abstract class Spirit(val spawnReason: SpawnReason, var location: Location) {
+abstract class Spirit(val spawnReason: SpawnReason, val location: Location) {
 
     val lifeExpectancy
         get() = lifespan - count
 
     val isAlive
-        get() = !isSummoned || 0 < lifeExpectancy
+        get() = isSummoned && 0 < lifeExpectancy
 
     var isSummoned = false
         private set
 
     private var count = 0
 
+    /**
+     *  ticks
+     *  if lifespan = -1 infinity
+     **/
     abstract val lifespan: Int
     abstract val spiritType: SpiritType
 
@@ -41,7 +45,11 @@ abstract class Spirit(val spawnReason: SpawnReason, var location: Location) {
         isSummoned = true
     }
 
-    fun remove() = onRemove()
+    fun remove() {
+        onRemove()
+
+        isSummoned = false
+    }
 
     open fun onRender() {}
 
