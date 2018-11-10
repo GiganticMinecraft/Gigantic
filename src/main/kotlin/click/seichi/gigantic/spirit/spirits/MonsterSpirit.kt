@@ -19,6 +19,7 @@ class MonsterSpirit(
 
     // TODO implements
 
+    // 60秒
     override val lifespan = 20 * 60
     override val spiritType = SpiritType.MONSTER
 

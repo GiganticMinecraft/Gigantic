@@ -2,14 +2,12 @@ package click.seichi.gigantic.acheivement
 
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.find
-import click.seichi.gigantic.extension.getOrPut
-import click.seichi.gigantic.extension.manipulate
-import click.seichi.gigantic.extension.transform
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.quest.Quest
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.entity.Player
@@ -70,7 +68,7 @@ enum class Achievement(
 
     // skills
     SKILL_FLASH(200, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
+        it.hasRelic(Relic.PIGS_FEATHER)
     }, grantMessage = AchievementMessages.UNLOCK_FLASH),
     SKILL_MINE_BURST(201, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
