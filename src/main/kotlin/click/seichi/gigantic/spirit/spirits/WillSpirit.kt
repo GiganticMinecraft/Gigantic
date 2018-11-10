@@ -7,11 +7,11 @@ import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.WillMessages
 import click.seichi.gigantic.sound.sounds.WillSpiritSounds
+import click.seichi.gigantic.spirit.Sensor
 import click.seichi.gigantic.spirit.Spirit
 import click.seichi.gigantic.spirit.SpiritType
 import click.seichi.gigantic.spirit.spawnreason.SpawnReason
 import click.seichi.gigantic.util.Random
-import click.seichi.gigantic.will.Sensor
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillSize
 import org.bukkit.Location
@@ -26,7 +26,7 @@ class WillSpirit(
         spawnReason: SpawnReason,
         val location: Location,
         val will: Will,
-        targetPlayer: Player? = null,
+        val targetPlayer: Player? = null,
         val willSize: WillSize = Random.nextWillSizeWithRegularity()
 ) : Spirit(spawnReason, location.chunk) {
 
@@ -74,7 +74,8 @@ class WillSpirit(
     }
 
     override fun onSpawn() {
-        WillSpiritSounds.SPAWN.play(location)
+        targetPlayer ?: return
+        WillSpiritSounds.SPAWN.playOnly(targetPlayer)
     }
 
 }

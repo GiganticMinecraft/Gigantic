@@ -1,4 +1,4 @@
-package click.seichi.gigantic.popup
+package click.seichi.gigantic.popup.pops
 
 /**
  * @author tar0ss

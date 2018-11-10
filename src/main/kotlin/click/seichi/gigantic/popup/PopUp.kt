@@ -16,13 +16,14 @@ import java.util.concurrent.TimeUnit
  * @author tar0ss
  */
 class PopUp(
-        private val text: String,
+        private val text: String? = null,
 
         private val popPattern: PopPattern = PopPattern.STILL,
         /**
          * この値は[PopPattern]がSTILLの時のみ使用されます
          */
-        private val duration: Long = 5L
+        private val duration: Long = 5L,
+        private val popping: (ArmorStand) -> Unit = {}
 ) {
     enum class PopPattern {
         // 静止
@@ -34,8 +35,8 @@ class PopUp(
         ;
     }
 
-    fun pop(location: Location, diffX: Double = 0.0, diffY: Double = 0.0, diffZ: Double = 0.0) {
-        location.world.spawn(location.clone().add(
+    fun pop(location: Location, diffX: Double = 0.0, diffY: Double = 0.0, diffZ: Double = 0.0): ArmorStand {
+        return location.world.spawn(location.clone().add(
                 Random.nextDouble() * diffX,
                 Random.nextDouble() * diffY,
                 Random.nextDouble() * diffZ
@@ -48,8 +49,12 @@ class PopUp(
                 isInvulnerable = true
                 canPickupItems = false
                 setGravity(true)
-                isCustomNameVisible = true
-                customName = text
+                if (text != null) {
+                    isCustomNameVisible = true
+                    customName = text
+                } else {
+                    isCustomNameVisible = false
+                }
                 isSmall = true
                 when (popPattern) {
                     PopUp.PopPattern.STILL -> {
@@ -68,8 +73,9 @@ class PopUp(
                                 Random.nextGaussian(variance = 0.03)
                         )
                 }
+                popping(this)
             }
-        }.run {
+        }.apply {
             if (popPattern == PopPattern.POP_LONG) {
                 Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
                     setGravity(false)
@@ -85,7 +91,6 @@ class PopUp(
                 PopUp.PopPattern.POP_LONG -> 15L
             }
             )
-
         }
     }
 
@@ -96,8 +101,8 @@ class PopUp(
                diffX: Double = 0.0,
                diffY: Double = 0.0,
                diffZ: Double = 0.0
-    ) {
-        entity.world.spawn(entity.location.clone().add(
+    ): ArmorStand {
+        return entity.world.spawn(entity.location.clone().add(
                 meanX + Random.nextDouble() * diffX,
                 meanY + Random.nextDouble() * diffY,
                 meanZ + Random.nextDouble() * diffZ
@@ -110,10 +115,15 @@ class PopUp(
                 isInvulnerable = true
                 canPickupItems = false
                 setGravity(false)
-                isCustomNameVisible = true
-                customName = text
+                if (text != null) {
+                    isCustomNameVisible = true
+                    customName = text
+                } else {
+                    isCustomNameVisible = false
+                }
+                popping(this)
             }
-        }.run {
+        }.apply {
             Observable.interval(50L, TimeUnit.MILLISECONDS)
                     .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                     .take(duration)

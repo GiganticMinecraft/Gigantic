@@ -10,10 +10,10 @@ import org.bukkit.SoundCategory
 object MonsterSpiritSounds {
 
     val SPAWN = DetailedSound(
-            Sound.ENTITY_WITHER_SPAWN,
+            Sound.ENTITY_WITHER_AMBIENT,
             SoundCategory.HOSTILE,
-            pitch = 1.4F,
-            volume = 0.5F
+            pitch = 1.7F,
+            volume = 0.4F
     )
 
 }

@@ -8,7 +8,7 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.spell.SpellParameters
-import click.seichi.gigantic.popup.SpellPops
+import click.seichi.gigantic.popup.pops.SpellPops
 import click.seichi.gigantic.sound.sounds.SpellSounds
 import org.bukkit.Bukkit
 import org.bukkit.block.Block

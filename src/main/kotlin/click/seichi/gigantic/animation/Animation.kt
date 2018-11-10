@@ -118,4 +118,32 @@ class Animation(
                 }
     }
 
+    /**
+     * 吸収される
+     * @param entity 吸収されるエンティティ
+     * @param startLocation 終点
+     * @param meanX 相対距離
+     * @param meanY 相対距離
+     * @param meanZ 相対距離
+     */
+    fun exhaust(
+            entity: Entity,
+            startLocation: Location,
+            meanX: Double = 0.0,
+            meanY: Double = 0.0,
+            meanZ: Double = 0.0
+    ) {
+        Observable.interval(50L, TimeUnit.MILLISECONDS)
+                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
+                .take(ticks)
+                .subscribe {
+                    if (!entity.isValid) return@subscribe
+                    val elapsedTicks = it
+                    val entityLocation = entity.location.clone().add(meanX, meanY, meanZ)
+                    val diff = entityLocation.toVector().subtract(startLocation.toVector()).multiply(1 - elapsedTicks.div(ticks.toDouble()))
+                    val spawnLocation = startLocation.clone().add(diff)
+                    rendering(spawnLocation, elapsedTicks)
+                }
+    }
+
 }

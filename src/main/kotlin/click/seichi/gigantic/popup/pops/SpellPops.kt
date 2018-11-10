@@ -1,5 +1,6 @@
-package click.seichi.gigantic.popup
+package click.seichi.gigantic.popup.pops
 
+import click.seichi.gigantic.popup.PopUp
 import org.bukkit.ChatColor
 import java.math.BigDecimal
 

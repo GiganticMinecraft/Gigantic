@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
  *
  * check this command
  *
- * /playsound minecraft:ambient.cave master @p
+ * /playsound minecraft:ambient.cave master @p ~0 ~0 ~0 0.5 1.4
  *
  */
 class DetailedSound(

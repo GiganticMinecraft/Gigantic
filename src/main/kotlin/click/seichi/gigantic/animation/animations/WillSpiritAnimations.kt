@@ -13,7 +13,7 @@ import org.bukkit.Color
 object WillSpiritAnimations {
 
     val RENDER = { renderingData: WillRenderingData, color: Color, lifeExpectancy: Int ->
-        Animation(1) { location, _ ->
+        Animation(1) { location, ticks ->
             location.world.spawnColoredParticleSpherically(
                     location,
                     color,
@@ -35,6 +35,7 @@ object WillSpiritAnimations {
                     noiseData = NoiseData(0.01)
             )
         }
+
     }
 
 }

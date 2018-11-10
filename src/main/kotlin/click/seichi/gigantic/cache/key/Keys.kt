@@ -13,6 +13,7 @@ import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
+import click.seichi.gigantic.spirit.spirits.MonsterSpirit
 import click.seichi.gigantic.will.Will
 import org.bukkit.block.Block
 import org.jetbrains.exposed.dao.Entity
@@ -558,5 +559,15 @@ object Keys {
                 }
             }
             .toMap()
+
+    val MONSTER_SPIRIT = object : Key<PlayerCache, MonsterSpirit?> {
+        override val default: MonsterSpirit?
+            get() = null
+
+        override fun satisfyWith(value: MonsterSpirit?): Boolean {
+            return true
+        }
+
+    }
 
 }

@@ -7,8 +7,8 @@ import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
-import click.seichi.gigantic.popup.PopUpParameters
-import click.seichi.gigantic.popup.SkillPops
+import click.seichi.gigantic.popup.pops.PopUpParameters
+import click.seichi.gigantic.popup.pops.SkillPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit

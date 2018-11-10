@@ -6,8 +6,8 @@ import kotlin.math.roundToInt
 /**
  * @author tar0ss
  */
-enum class CardinalDirection(val deg: Int) {
-    NORTH(180), EAST(270), SOUTH(0), WEST(90);
+enum class CardinalDirection(val yaw: Float) {
+    NORTH(180.0F), EAST(270.0F), SOUTH(0.0F), WEST(90.0F);
 
     //degは南向きを正とした時の角度
 
