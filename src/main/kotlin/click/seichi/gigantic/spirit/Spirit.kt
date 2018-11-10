@@ -1,12 +1,12 @@
 package click.seichi.gigantic.spirit
 
 import click.seichi.gigantic.spirit.spawnreason.SpawnReason
-import org.bukkit.Location
+import org.bukkit.Chunk
 
 /**
  * @author unicroak
  */
-abstract class Spirit(val spawnReason: SpawnReason, val location: Location) {
+abstract class Spirit(val spawnReason: SpawnReason, val spawnChunk: Chunk) {
 
     val lifeExpectancy
         get() = lifespan - count
@@ -31,10 +31,8 @@ abstract class Spirit(val spawnReason: SpawnReason, val location: Location) {
             remove()
             return
         }
-
-        if (location.chunk.isLoaded) {
+        if (spawnChunk.isLoaded)
             onRender()
-        }
 
         count++
     }

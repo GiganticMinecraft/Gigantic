@@ -15,7 +15,7 @@ class MonsterSpirit(
         location: Location,
         val monster: SoulMonster,
         targetPlayer: Player? = null
-) : Spirit(spawnReason, location) {
+) : Spirit(spawnReason, location.chunk) {
 
     // TODO implements
 

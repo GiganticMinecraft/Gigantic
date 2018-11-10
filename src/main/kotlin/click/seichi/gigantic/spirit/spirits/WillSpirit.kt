@@ -26,11 +26,11 @@ import org.bukkit.entity.Player
  */
 class WillSpirit(
         spawnReason: SpawnReason,
-        location: Location,
+        val location: Location,
         val will: Will,
         targetPlayer: Player? = null,
         val willSize: WillSize = Random.nextWillSizeWithRegularity()
-) : Spirit(spawnReason, location) {
+) : Spirit(spawnReason, location.chunk) {
 
     private val sensor = Sensor(
             location,
