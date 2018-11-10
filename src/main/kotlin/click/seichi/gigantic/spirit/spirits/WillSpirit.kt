@@ -61,7 +61,11 @@ class WillSpirit(
                         false
                 ).sendTo(player)
                 remove()
-            }
+            },
+            {
+
+            },
+            60
     )
 
     override val lifespan = -1

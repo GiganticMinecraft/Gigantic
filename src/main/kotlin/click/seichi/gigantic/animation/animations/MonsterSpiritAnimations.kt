@@ -5,6 +5,7 @@ import click.seichi.gigantic.extension.spawnColoredParticle
 import click.seichi.gigantic.extension.spawnColoredParticleSpherically
 import click.seichi.gigantic.util.NoiseData
 import org.bukkit.Color
+import org.bukkit.Particle
 
 /**
  * @author tar0ss
@@ -32,5 +33,12 @@ object MonsterSpiritAnimations {
         }
     }
 
+    val WAKE = Animation(1) { location, _ ->
+        location.world.spawnParticle(
+                Particle.SMOKE_NORMAL,
+                location,
+                2
+        )
+    }
 
 }

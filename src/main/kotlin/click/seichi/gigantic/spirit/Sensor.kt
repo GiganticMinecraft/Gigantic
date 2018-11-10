@@ -14,7 +14,8 @@ class Sensor(
         private val meetingConditions: (Player?) -> Boolean,
         private val inProgress: (Player?, Int) -> Unit,
         private val sense: (Player?) -> Unit,
-        private val duration: Int = 60
+        private val inSenseCancelling: (Player?) -> Unit,
+        private val duration: Int
 ) {
 
     private val senseProgressMap = mutableMapOf<UUID, Int>()
@@ -29,7 +30,10 @@ class Sensor(
         senseProgressMap
                 .toMap()
                 .filterNot { rangedPlayerSet.contains(Bukkit.getPlayer(it.key)) }
-                .forEach { senseProgressMap.remove(it.key) }
+                .forEach {
+                    inSenseCancelling(Bukkit.getPlayer(it.key))
+                    senseProgressMap.remove(it.key)
+                }
 
         rangedPlayerSet.forEach { senseProgressMap.compute(it.uniqueId) { uuid, count -> count?.plus(1) ?: 0 } }
 
