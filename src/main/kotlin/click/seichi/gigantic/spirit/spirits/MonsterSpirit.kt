@@ -1,20 +1,14 @@
 package click.seichi.gigantic.spirit.spirits
 
-import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
-import click.seichi.gigantic.extension.wrappedLocale
-import click.seichi.gigantic.message.messages.MonsterSpiritMessages
+import click.seichi.gigantic.battle.Battle
 import click.seichi.gigantic.monster.SoulMonster
-import click.seichi.gigantic.popup.pops.MonsterSpiritPops
+import click.seichi.gigantic.monster.SoulMonsterState
 import click.seichi.gigantic.sound.sounds.MonsterSpiritSounds
 import click.seichi.gigantic.spirit.Sensor
 import click.seichi.gigantic.spirit.Spirit
 import click.seichi.gigantic.spirit.SpiritType
 import click.seichi.gigantic.spirit.spawnreason.SpawnReason
 import org.bukkit.Location
-import org.bukkit.boss.BarColor
-import org.bukkit.boss.BarStyle
-import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
 
 /**
@@ -22,39 +16,14 @@ import org.bukkit.entity.Player
  */
 class MonsterSpirit(
         spawnReason: SpawnReason,
-        private val location: Location,
+        location: Location,
         val monster: SoulMonster,
-        val targetPlayer: Player? = null
+        val targetPlayer: Player
 ) : Spirit(spawnReason, location.chunk) {
-    enum class MonsterState {
-        // 待機
-        WAIT,
-        // 目覚め
-        WAKE,
-        // 消滅
-        DISAPPEAR,
-        // 移動
-        MOVE,
-        // 攻撃
-        ATTACK,
-        // 死亡
-        DEATH;
-    }
 
-    private lateinit var monsterHeadEntity: ArmorStand
-
-    private var monsterState = MonsterState.WAIT
+    private val battle = Battle(monster, targetPlayer, location)
 
     private val senseDuration = 60
-
-    private val senseBar = Gigantic.createInvisibleBossBar().apply {
-        targetPlayer ?: return@apply
-        isVisible = true
-        style = BarStyle.SOLID
-        title = MonsterSpiritMessages.SPIRIT_SEALED(monster.getName(targetPlayer)).asSafety(targetPlayer.wrappedLocale)
-        color = BarColor.RED
-        progress = 0.0
-    }
 
     private val sensor = Sensor(
             location,
@@ -62,37 +31,25 @@ class MonsterSpirit(
                 player ?: return@Sensor false
                 when {
                     player.location.distance(location) > 2.5 -> false
-                    targetPlayer == null -> true
                     player.uniqueId == targetPlayer.uniqueId -> true
                     else -> false
                 }
             },
             { player, count ->
                 player ?: return@Sensor
-                monsterState = MonsterState.WAKE
-                senseBar.apply {
-                    val prev = progress
-                    val next = count.div(senseDuration.toDouble())
-                    if (next > prev)
-                        progress = next
-                    addPlayer(player)
-                }
+                if (!battle.isJoin(player))
+                    battle.join(player)
+                battle.wake(count.div(senseDuration.toDouble()))
                 if (count % 10 == 0)
                     MonsterSpiritSounds.SENSE_SUB.playOnly(player)
             },
             { player ->
                 player ?: return@Sensor
-                player.sendMessage("sensed!!!")
+                battle.start()
             },
             { player ->
                 player ?: return@Sensor
-                senseBar.apply {
-                    removePlayer(player)
-                    if (players.isEmpty()) {
-                        progress = 0.0
-                        monsterState = MonsterState.WAIT
-                    }
-                }
+                battle.leave(player)
             },
             senseDuration
     )
@@ -100,64 +57,29 @@ class MonsterSpirit(
     override val lifespan = -1
     override val spiritType = SpiritType.MONSTER
 
-    private val fixedLocation: Location?
-        get() =
-            if (targetPlayer == null) null
-            else {
-                val eyeLocation = targetPlayer.eyeLocation.clone()
-                val entityLocation = location.clone()
-                location.clone().apply {
-                    this.direction = eyeLocation.subtract(entityLocation).toVector().normalize()
-                }.subtract(0.0, 0.5, 0.0)
-            }
-
-
     override fun onSpawn() {
-        targetPlayer ?: return
-        MonsterSpiritSounds.SPAWN.play(location)
-        monsterHeadEntity = MonsterSpiritPops.SPAWN(
-                monster.getIcon(targetPlayer)
-        ).pop(fixedLocation ?: return)
+        battle.spawn()
     }
 
-    private var ticks: Long = 0L
-
     private fun disappearCondition(): Boolean {
-        targetPlayer ?: return true
-        return targetPlayer.location.distance(location) > 30.0 &&
-                monsterState == MonsterState.WAIT
+        targetPlayer
+        return targetPlayer.location.distance(battle.enemy.location) > 30.0 &&
+                battle.enemy.state == SoulMonsterState.SEAL
     }
 
     override fun onRender() {
         if (disappearCondition()) {
-            monsterState = MonsterState.DISAPPEAR
+            battle.end()
             remove()
         }
 
-        monsterHeadEntity.teleport(fixedLocation)
-        MonsterSpiritAnimations.AMBIENT(monster.color).start(fixedLocation?.clone()?.add(0.0, 0.7, 0.0) ?: return)
-        // in waiting
-        when (monsterState) {
-            MonsterState.WAIT -> {
-                if (ticks % 8L == 0L)
-                    MonsterSpiritAnimations.AMBIENT_EXHAUST(monster.color).exhaust(
-                            targetPlayer ?: return,
-                            fixedLocation?.clone()?.add(0.0, 0.9, 0.0) ?: return,
-                            meanY = 0.9
-                    )
-                sensor.update()
-            }
-            MonsterState.WAKE -> {
-                MonsterSpiritAnimations.WAKE.start(fixedLocation?.clone()?.add(0.0, 0.9, 0.0) ?: return)
-                sensor.update()
-            }
-        }
-        ticks++
+        sensor.update()
+        battle.update()
     }
 
     override fun onRemove() {
-        when (monsterState) {
-            MonsterState.DISAPPEAR -> MonsterSpiritSounds.DISAPPEAR.play(location)
+        when (battle.enemy.state) {
+            SoulMonsterState.DISAPPEAR -> MonsterSpiritSounds.DISAPPEAR.play(battle.enemy.location)
         }
     }
 

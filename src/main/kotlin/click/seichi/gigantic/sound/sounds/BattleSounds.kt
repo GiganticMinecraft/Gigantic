@@ -12,15 +12,15 @@ object BattleSounds {
     val WIN = DetailedSound(
             Sound.ENTITY_WITHER_DEATH,
             SoundCategory.HOSTILE,
-            pitch = 1.4F,
-            volume = 0.5F
+            pitch = 2.0F,
+            volume = 0.2F
     )
 
     val START = DetailedSound(
             Sound.ENTITY_WITHER_SPAWN,
             SoundCategory.HOSTILE,
-            pitch = 1.4F,
-            volume = 0.5F
+            pitch = 2.0F,
+            volume = 0.2F
     )
 
 }

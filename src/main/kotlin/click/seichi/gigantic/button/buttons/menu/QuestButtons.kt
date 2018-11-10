@@ -37,7 +37,7 @@ object QuestButtons {
                             "${ChatColor.WHITE}" + QuestMenuMessages.MONSTER_LIST.asSafety(player.wrappedLocale)
                     )
                     client.quest.monsterList.forEach { monster: SoulMonster ->
-                        addLore("${ChatColor.WHITE}" + monster.getName(player))
+                        addLore("${ChatColor.WHITE}" + monster.getName(player.wrappedLocale))
                     }
                 }
             }

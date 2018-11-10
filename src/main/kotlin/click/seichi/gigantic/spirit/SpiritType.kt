@@ -62,7 +62,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
                 while (distance <= 3.0 && count < 10) {
                     count++
                     spawnLocation = chunk.getBlock(Random.nextInt(15), 0, Random.nextInt(15)).let { block ->
-                        chunk.world.getHighestBlockAt(block.location).centralLocation
+                        chunk.world.getHighestBlockAt(block.location).centralLocation.add(0.0, -0.5, 0.0)
                     }
                     distance = breakLocation.distance(spawnLocation)
                 }

@@ -30,6 +30,4 @@ object MonsterSpiritSounds {
             volume = 0.5F
     )
 
-
-
 }
