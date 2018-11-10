@@ -7,7 +7,7 @@ import org.bukkit.SoundCategory
 /**
  * @author tar0ss
  */
-object WillSounds {
+object WillSpiritSounds {
 
     val SENSE_SUB = DetailedSound(
             Sound.ENTITY_VEX_AMBIENT,

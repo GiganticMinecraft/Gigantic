@@ -2,6 +2,7 @@ package click.seichi.gigantic.animation
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.schedule.Scheduler
+import click.seichi.gigantic.util.Random
 import io.reactivex.Observable
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -34,6 +35,14 @@ class Animation(
                 }
     }
 
+    /**
+     * 追従
+     * @param entity 追従するエンティティ
+     * @param meanX 相対距離
+     * @param meanY 相対距離
+     * @param meanZ 相対距離
+     *
+     */
     fun follow(entity: Entity,
                meanX: Double = 0.0,
                meanY: Double = 0.0,
@@ -57,15 +66,53 @@ class Animation(
      * 吸収する
      * @param entity 吸収するエンティティ
      * @param startLocation 開始位置
+     * @param meanX 相対距離
+     * @param meanY 相対距離
+     * @param meanZ 相対距離
      */
-    fun absorb(entity: Entity, startLocation: Location) {
+    fun absorb(
+            entity: Entity,
+            startLocation: Location,
+            meanX: Double = 0.0,
+            meanY: Double = 0.0,
+            meanZ: Double = 0.0
+    ) {
         Observable.interval(50L, TimeUnit.MILLISECONDS)
                 .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .take(ticks)
                 .subscribe {
                     if (!entity.isValid) return@subscribe
                     val elapsedTicks = it
-                    val diff = entity.location.toVector().subtract(startLocation.toVector()).multiply(elapsedTicks.div(ticks.toDouble()))
+                    val entityLocation = entity.location.clone().add(meanX, meanY, meanZ)
+                    val diff = entityLocation.toVector().subtract(startLocation.toVector()).multiply(elapsedTicks.div(ticks.toDouble()))
+                    val spawnLocation = startLocation.clone().add(diff)
+                    rendering(spawnLocation, elapsedTicks)
+                }
+    }
+
+    /**
+     * 繋がる
+     * @param entity 吸収するエンティティ
+     * @param startLocation 開始位置
+     * @param meanX 相対距離
+     * @param meanY 相対距離
+     * @param meanZ 相対距離
+     */
+    fun link(
+            entity: Entity,
+            startLocation: Location,
+            meanX: Double = 0.0,
+            meanY: Double = 0.0,
+            meanZ: Double = 0.0
+    ) {
+        Observable.interval(50L, TimeUnit.MILLISECONDS)
+                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
+                .take(ticks)
+                .subscribe {
+                    if (!entity.isValid) return@subscribe
+                    val elapsedTicks = it
+                    val entityLocation = entity.location.clone().add(meanX, meanY, meanZ)
+                    val diff = entityLocation.toVector().subtract(startLocation.toVector()).multiply(Random.nextDouble())
                     val spawnLocation = startLocation.clone().add(diff)
                     rendering(spawnLocation, elapsedTicks)
                 }

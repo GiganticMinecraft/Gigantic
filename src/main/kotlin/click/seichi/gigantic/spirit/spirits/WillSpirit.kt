@@ -1,17 +1,15 @@
 package click.seichi.gigantic.spirit.spirits
 
+import click.seichi.gigantic.animation.animations.WillSpiritAnimations
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.manipulate
-import click.seichi.gigantic.extension.spawnColoredParticle
-import click.seichi.gigantic.extension.spawnColoredParticleSpherically
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.WillMessages
-import click.seichi.gigantic.sound.sounds.WillSounds
+import click.seichi.gigantic.sound.sounds.WillSpiritSounds
 import click.seichi.gigantic.spirit.Spirit
 import click.seichi.gigantic.spirit.SpiritType
 import click.seichi.gigantic.spirit.spawnreason.SpawnReason
-import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Sensor
 import click.seichi.gigantic.will.Will
@@ -45,21 +43,15 @@ class WillSpirit(
             },
             { player, count ->
                 player ?: return@Sensor
-                player.world.spawnColoredParticle(
-                        player.location.clone().add(0.0, 0.9, 0.0).let { playerLocation ->
-                            playerLocation.add(location.clone().subtract(playerLocation).multiply(Random.nextDouble()))
-                        },
-                        will.color,
-                        noiseData = NoiseData(0.05)
-                )
+                WillSpiritAnimations.SENSE(will.color).link(player, location, meanY = 0.9)
                 if (count % 10 == 0) {
-                    WillSounds.SENSE_SUB.playOnly(player)
+                    WillSpiritSounds.SENSE_SUB.playOnly(player)
                 }
             },
             { player ->
                 player ?: return@Sensor
                 WillMessages.SENSED_WILL(this).sendTo(player)
-                WillSounds.SENSED.playOnly(player)
+                WillSpiritSounds.SENSED.playOnly(player)
                 player.manipulate(CatalogPlayerCache.MEMORY) {
                     it.add(will, willSize.memory.toLong())
                 }
@@ -78,22 +70,11 @@ class WillSpirit(
 
     override fun onRender() {
         sensor.update()
-
-        val renderingData = willSize.renderingData
-        location.world.spawnColoredParticleSpherically(
-                location,
-                will.color,
-                if (lifeExpectancy < 10 * 20 && (renderingData.beatTiming == 0 || lifeExpectancy % renderingData.beatTiming == 0)) {
-                    renderingData.min
-                } else {
-                    renderingData.max
-                },
-                renderingData.radius
-        )
+        WillSpiritAnimations.RENDER(willSize.renderingData, will.color, lifeExpectancy).start(location)
     }
 
     override fun onSpawn() {
-        WillSounds.SPAWN.play(location)
+        WillSpiritSounds.SPAWN.play(location)
     }
 
 }

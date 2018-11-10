@@ -1,7 +1,7 @@
 package click.seichi.gigantic.breaker.spells
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.animation.SpellAnimations
+import click.seichi.gigantic.animation.animations.SpellAnimations
 import click.seichi.gigantic.breaker.Cutter
 import click.seichi.gigantic.breaker.SpellCaster
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache

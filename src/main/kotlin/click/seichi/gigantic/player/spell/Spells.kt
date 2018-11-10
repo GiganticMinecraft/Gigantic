@@ -1,7 +1,7 @@
 package click.seichi.gigantic.player.spell
 
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.animation.SpellAnimations
+import click.seichi.gigantic.animation.animations.SpellAnimations
 import click.seichi.gigantic.breaker.spells.AquaLinea
 import click.seichi.gigantic.breaker.spells.GrandNatura
 import click.seichi.gigantic.breaker.spells.TerraDrain

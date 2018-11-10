@@ -1,5 +1,6 @@
-package click.seichi.gigantic.animation
+package click.seichi.gigantic.animation.animations
 
+import click.seichi.gigantic.animation.Animation
 import click.seichi.gigantic.extension.launchFireWorks
 
 /**

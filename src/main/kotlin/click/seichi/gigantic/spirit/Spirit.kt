@@ -9,7 +9,7 @@ import org.bukkit.Chunk
 abstract class Spirit(val spawnReason: SpawnReason, val spawnChunk: Chunk) {
 
     val lifeExpectancy
-        get() = lifespan - count
+        get() = if (lifespan == -1) Int.MAX_VALUE else lifespan - count
 
     val isAlive
         get() = isSummoned && 0 < lifeExpectancy

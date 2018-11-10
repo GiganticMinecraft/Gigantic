@@ -1,6 +1,6 @@
 package click.seichi.gigantic.breaker
 
-import click.seichi.gigantic.animation.SkillAnimations
+import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent

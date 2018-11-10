@@ -1,7 +1,7 @@
 package click.seichi.gigantic.player.skill
 
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.animation.SkillAnimations
+import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
