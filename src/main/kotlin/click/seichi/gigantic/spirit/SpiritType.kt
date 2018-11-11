@@ -7,6 +7,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.spirit.SpiritManager.spawn
@@ -43,10 +44,10 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
     ),
     MONSTER(
             // TODO rebase to 0.02
-            RandomSummonCase(0.00, BlockBreakEvent::class.java) { event ->
+            RandomSummonCase(1.00, BlockBreakEvent::class.java) { event ->
                 val player = event.player ?: return@RandomSummonCase
                 if (!Achievement.QUEST.isGranted(player)) return@RandomSummonCase
-//                if (player.getOrPut(Keys.MONSTER_SPIRIT) != null) return@RandomSummonCase
+                if (player.getOrPut(Keys.MONSTER_SPIRIT) != null) return@RandomSummonCase
                 val quest = Quest.getOrderedList(player)
                         .filter { it.monsterList.isNotEmpty() }
                         .shuffled()

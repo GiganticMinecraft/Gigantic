@@ -1,10 +1,21 @@
 package click.seichi.gigantic.battle
 
+import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.SoulMonsterState
+import click.seichi.gigantic.sound.sounds.MonsterSpiritSounds
 import click.seichi.gigantic.util.Random
+import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.Material
+import org.bukkit.Particle
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
 
@@ -53,7 +64,7 @@ class BattleMonster(
 
     var health = monster.parameter.health
 
-    val attackDamage = monster.parameter.attack
+    val attackDamage = monster.parameter.attackDamage
 
     val speed = monster.parameter.speed
 
@@ -108,10 +119,46 @@ class BattleMonster(
     }
 
     fun move() {
-        val speed = ai.getMovementSpeed(location, targetLocation)
+        val speed = monster.parameter.speed
         val diff = targetLocation.clone().subtract(location).toVector().normalize().multiply(speed)
         updateLocation(location.add(diff))
         if (targetLocation.distance(location) >= 0.1) return
+        state = SoulMonsterState.ATTACK
+    }
+
+    fun attack() {
+        val attackPlayer = target
+        monster.ai.getAttackBlockSet(chunk, target, monster.parameter.attackTimes)
+                .forEachIndexed { index, block ->
+                    Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+                        if (!entity.isValid || !attackPlayer.isValid) return@runTaskLater
+                        val attackBlockData = Bukkit.createBlockData(monster.parameter.attackMaterial)
+                        // send attack ready particle
+                        MonsterSpiritSounds.ATTACK_READY.play(entity.eyeLocation)
+                        MonsterSpiritAnimations.ATTACK_READY(monster.color).exhaust(entity, block.centralLocation, meanY = 1.5)
+                        Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+                            if (!entity.isValid || !attackPlayer.isValid) return@runTaskLater
+                            if (block.isEmpty) return@runTaskLater
+                            attackPlayer.sendBlockChange(block.location, attackBlockData)
+                            attackPlayer.getOrPut(Keys.ATTACK_BLOCK_SET).add(block)
+                        }, 20L)
+
+                        // attack
+                        Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+                            if (!entity.isValid || !attackPlayer.isValid) return@runTaskLater
+                            attackPlayer.getOrPut(Keys.ATTACK_BLOCK_SET).remove(block)
+                            if (block.isEmpty) return@runTaskLater
+                            attackPlayer.manipulate(CatalogPlayerCache.HEALTH) { health ->
+                                health.decrease(monster.parameter.attackDamage)
+                                PlayerMessages.HEALTH_DISPLAY(health).sendTo(attackPlayer)
+                            }
+                            MonsterSpiritSounds.ATTACK.play(block.centralLocation)
+                            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation, 1, attackBlockData)
+                            block.type = Material.AIR
+                        }, 20L + monster.parameter.tickToAttack)
+
+                    }, index * 10L)
+                }
         state = SoulMonsterState.WAIT
     }
 

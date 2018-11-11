@@ -4,6 +4,7 @@ import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.util.Random
 import org.bukkit.Chunk
 import org.bukkit.Location
+import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 
@@ -21,7 +22,6 @@ interface SoulMonsterAI {
         }
     }
 
-    // distance per 1tick
-    fun getMovementSpeed(currentLocation: Location, nextLocation: Location): Double
+    fun getAttackBlockSet(chunk: Chunk, target: Player, attackTimes: Int): Set<Block>
 
 }

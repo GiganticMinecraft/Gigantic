@@ -30,4 +30,32 @@ object MonsterSpiritSounds {
             volume = 0.5F
     )
 
+    val ATTACK_READY = DetailedSound(
+            Sound.ENTITY_ZOMBIE_INFECT,
+            SoundCategory.HOSTILE,
+            pitch = 0.6F,
+            volume = 1.0F
+    )
+
+    val ATTACK_READY_SUB = DetailedSound(
+            Sound.ENTITY_HORSE_AMBIENT,
+            SoundCategory.HOSTILE,
+            pitch = 0.1F,
+            volume = 0.5F
+    )
+
+    val ATTACK = DetailedSound(
+            Sound.ENTITY_EVOKER_CAST_SPELL,
+            SoundCategory.HOSTILE,
+            pitch = 0.6F,
+            volume = 0.5F
+    )
+
+    val DEFENCE = DetailedSound(
+            Sound.ENTITY_VEX_HURT,
+            SoundCategory.HOSTILE,
+            pitch = 0.5F,
+            volume = 0.5F
+    )
+
 }

@@ -48,7 +48,7 @@ class Animation(
         object : BukkitRunnable() {
             var t = 0L
             override fun run() {
-                if (entity.isValid) {
+                if (!entity.isValid) {
                     cancel()
                     return
                 }
@@ -80,7 +80,7 @@ class Animation(
         object : BukkitRunnable() {
             var t = 0L
             override fun run() {
-                if (entity.isValid) {
+                if (!entity.isValid) {
                     cancel()
                     return
                 }
@@ -112,7 +112,7 @@ class Animation(
         object : BukkitRunnable() {
             var t = 0L
             override fun run() {
-                if (entity.isValid) {
+                if (!entity.isValid) {
                     cancel()
                     return
                 }
@@ -144,16 +144,15 @@ class Animation(
         object : BukkitRunnable() {
             var t = 0L
             override fun run() {
-                if (entity.isValid) {
+                if (!entity.isValid) {
                     cancel()
                     return
                 }
                 val entityLocation = entity.location.clone().add(meanX, meanY, meanZ)
-                val diff = entityLocation.toVector().subtract(startLocation.toVector()).multiply(1 - t.div(ticks.toDouble()))
+                val diff = entityLocation.toVector().subtract(startLocation.toVector()).multiply(1.0 - t.div(ticks.toDouble()))
                 val spawnLocation = startLocation.clone().add(diff)
                 rendering(spawnLocation, t)
-                t++
-                if (t > ticks) cancel()
+                if (t++ > ticks) cancel()
             }
         }.runTaskTimer(Gigantic.PLUGIN, 0L, 1L)
     }

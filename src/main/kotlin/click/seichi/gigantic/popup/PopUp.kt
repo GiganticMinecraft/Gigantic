@@ -125,7 +125,7 @@ class PopUp(
             object : BukkitRunnable() {
                 var t = 0L
                 override fun run() {
-                    if (isValid) {
+                    if (!isValid) {
                         remove()
                         cancel()
                         return

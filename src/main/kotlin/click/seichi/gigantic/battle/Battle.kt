@@ -135,7 +135,9 @@ class Battle(
             SoulMonsterState.MOVE -> {
                 enemy.move()
             }
-            SoulMonsterState.ATTACK -> TODO()
+            SoulMonsterState.ATTACK -> {
+                enemy.attack()
+            }
             SoulMonsterState.DEATH -> TODO()
         }
         elapsedTick++

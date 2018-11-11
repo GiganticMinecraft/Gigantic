@@ -570,4 +570,14 @@ object Keys {
 
     }
 
+    val ATTACK_BLOCK_SET = object : Key<PlayerCache, MutableSet<Block>> {
+        override val default: MutableSet<Block>
+            get() = mutableSetOf()
+
+        override fun satisfyWith(value: MutableSet<Block>): Boolean {
+            return true
+        }
+
+    }
+
 }

@@ -17,7 +17,7 @@ object RaidBattlePops {
             else -> ChatColor.LIGHT_PURPLE
         }
         PopUp(
-                "$color$damage attack",
+                "$color$damage attackDamage",
                 PopUp.PopPattern.POP
         )
     }
