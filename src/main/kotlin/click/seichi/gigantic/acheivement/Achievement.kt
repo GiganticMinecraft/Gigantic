@@ -7,6 +7,7 @@ import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.quest.Quest
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.entity.Player
