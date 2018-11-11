@@ -8,9 +8,15 @@ import java.util.*
  */
 object MonsterSpiritMessages {
 
-    val SPIRIT_SEALED = { monsterName: String ->
+    val SEAL = { monsterName: String ->
         LocalizedText(
                 Locale.JAPANESE to "封印されし$monsterName"
+        )
+    }
+
+    val START = { monsterName: String ->
+        LocalizedText(
+                Locale.JAPANESE to "$monsterName"
         )
     }
 

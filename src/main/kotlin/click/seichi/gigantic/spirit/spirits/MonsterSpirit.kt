@@ -1,38 +1,30 @@
 package click.seichi.gigantic.spirit.spirits
 
 import click.seichi.gigantic.battle.Battle
-import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.SoulMonsterState
 import click.seichi.gigantic.sound.sounds.MonsterSpiritSounds
 import click.seichi.gigantic.spirit.Sensor
 import click.seichi.gigantic.spirit.Spirit
 import click.seichi.gigantic.spirit.SpiritType
 import click.seichi.gigantic.spirit.spawnreason.SpawnReason
-import org.bukkit.Location
-import org.bukkit.entity.Player
 
 /**
  * @author tar0ss
  */
 class MonsterSpirit(
         spawnReason: SpawnReason,
-        location: Location,
-        val monster: SoulMonster,
-        val targetPlayer: Player
-) : Spirit(spawnReason, location.chunk) {
-
-    private val battle = Battle(monster, targetPlayer, location)
+        val battle: Battle
+) : Spirit(spawnReason, battle.chunk) {
 
     private val senseDuration = 60
 
     private val sensor = Sensor(
-            location,
+            battle.enemy.location,
             { player ->
                 player ?: return@Sensor false
                 when {
-                    player.location.distance(location) > 2.5 -> false
-                    player.uniqueId == targetPlayer.uniqueId -> true
-                    else -> false
+                    player.location.distance(battle.enemy.location) > 2.5 -> false
+                    else -> true
                 }
             },
             { player, count ->
@@ -62,18 +54,24 @@ class MonsterSpirit(
     }
 
     private fun disappearCondition(): Boolean {
-        targetPlayer
-        return targetPlayer.location.distance(battle.enemy.location) > 30.0 &&
-                battle.enemy.state == SoulMonsterState.SEAL
+        val spawner = battle.getSpawner() ?: return true
+        when {
+            spawner.location.distance(battle.enemy.location) > 30.0 && !battle.isStarted -> return true
+            battle.getJoinedPlayers().isEmpty() && battle.isStarted -> return true
+        }
+        return false
     }
 
     override fun onRender() {
+        battle.getJoinedPlayers().filter { !it.isValid }
+                .forEach { battle.leave(it) }
         if (disappearCondition()) {
             battle.end()
             remove()
         }
-
-        sensor.update()
+        if (!battle.isStarted) {
+            sensor.update()
+        }
         battle.update()
     }
 

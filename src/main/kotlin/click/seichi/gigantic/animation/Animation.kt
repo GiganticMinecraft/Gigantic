@@ -27,12 +27,12 @@ class Animation(
 
     fun start(location: Location) {
         Observable.interval(50L, TimeUnit.MILLISECONDS)
-                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .take(ticks)
-                .subscribe {
+                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
+                .subscribe({
                     val elapsedTicks = it
                     rendering(location, elapsedTicks)
-                }
+                }, {}, {})
     }
 
     /**
@@ -49,9 +49,9 @@ class Animation(
                meanZ: Double = 0.0
     ) {
         Observable.interval(50L, TimeUnit.MILLISECONDS)
-                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .take(ticks)
-                .subscribe {
+                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
+                .subscribe({
                     if (!entity.isValid) return@subscribe
                     val elapsedTicks = it
                     rendering(entity.location.clone().add(
@@ -59,7 +59,7 @@ class Animation(
                             meanY,
                             meanZ
                     ), elapsedTicks)
-                }
+                }, {}, {})
     }
 
     /**
@@ -78,16 +78,16 @@ class Animation(
             meanZ: Double = 0.0
     ) {
         Observable.interval(50L, TimeUnit.MILLISECONDS)
-                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .take(ticks)
-                .subscribe {
+                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
+                .subscribe({
                     if (!entity.isValid) return@subscribe
                     val elapsedTicks = it
                     val entityLocation = entity.location.clone().add(meanX, meanY, meanZ)
                     val diff = entityLocation.toVector().subtract(startLocation.toVector()).multiply(elapsedTicks.div(ticks.toDouble()))
                     val spawnLocation = startLocation.clone().add(diff)
                     rendering(spawnLocation, elapsedTicks)
-                }
+                }, {}, {})
     }
 
     /**
@@ -106,16 +106,16 @@ class Animation(
             meanZ: Double = 0.0
     ) {
         Observable.interval(50L, TimeUnit.MILLISECONDS)
-                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .take(ticks)
-                .subscribe {
+                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
+                .subscribe({
                     if (!entity.isValid) return@subscribe
                     val elapsedTicks = it
                     val entityLocation = entity.location.clone().add(meanX, meanY, meanZ)
                     val diff = entityLocation.toVector().subtract(startLocation.toVector()).multiply(Random.nextDouble())
                     val spawnLocation = startLocation.clone().add(diff)
                     rendering(spawnLocation, elapsedTicks)
-                }
+                }, {}, {})
     }
 
     /**
@@ -134,16 +134,16 @@ class Animation(
             meanZ: Double = 0.0
     ) {
         Observable.interval(50L, TimeUnit.MILLISECONDS)
-                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
                 .take(ticks)
-                .subscribe {
+                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
+                .subscribe({
                     if (!entity.isValid) return@subscribe
                     val elapsedTicks = it
                     val entityLocation = entity.location.clone().add(meanX, meanY, meanZ)
                     val diff = entityLocation.toVector().subtract(startLocation.toVector()).multiply(1 - elapsedTicks.div(ticks.toDouble()))
                     val spawnLocation = startLocation.clone().add(diff)
                     rendering(spawnLocation, elapsedTicks)
-                }
+                }, {}, {})
     }
 
 }

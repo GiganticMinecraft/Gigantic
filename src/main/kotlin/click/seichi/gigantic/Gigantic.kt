@@ -9,6 +9,7 @@ import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
+import click.seichi.gigantic.spirit.SpiritManager
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
 import com.comphenix.protocol.events.PacketListener
@@ -250,6 +251,7 @@ class Gigantic : JavaPlugin() {
     }
 
     override fun onDisable() {
+        SpiritManager.getSpiritSet().forEach { it.remove() }
         server.scheduler.cancelTasks(this)
         Bukkit.getOnlinePlayers().filterNotNull().forEach { player ->
             if (player.gameMode == GameMode.SPECTATOR) {

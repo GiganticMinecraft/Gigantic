@@ -1,7 +1,7 @@
 package click.seichi.gigantic.spirit
 
 import click.seichi.gigantic.Gigantic
-import org.bukkit.scheduler.BukkitRunnable
+import org.bukkit.Bukkit
 
 /**
  * @author unicroak
@@ -12,9 +12,9 @@ object SpiritManager {
     private val spiritSet: MutableSet<Spirit> = mutableSetOf()
 
     init {
-        object : BukkitRunnable() {
-            override fun run() = render()
-        }.runTaskTimer(Gigantic.PLUGIN, 0, 1)
+        Bukkit.getScheduler().runTaskTimer(Gigantic.PLUGIN, {
+            render()
+        }, 0, 1)
     }
 
     fun spawn(spirit: Spirit) {

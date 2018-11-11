@@ -1,7 +1,9 @@
 package click.seichi.gigantic.battle
 
+import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.SoulMonsterState
+import click.seichi.gigantic.util.Random
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
@@ -11,9 +13,20 @@ import org.bukkit.entity.Player
  */
 class BattleMonster(
         private val monster: SoulMonster,
-        spawner: Player,
-        spawnLocation: Location
+        spawner: Player
 ) {
+
+    private var spawnLocation: Location
+
+    val chunk = spawner.location.chunk
+
+    init {
+        do {
+            spawnLocation = chunk.getBlock(Random.nextInt(15), 0, Random.nextInt(15)).let { block ->
+                chunk.world.getHighestBlockAt(block.location).centralLocation.add(0.0, -0.5, 0.0)
+            }
+        } while (spawner.location.distance(spawnLocation) <= 3.0)
+    }
 
     private val entity = spawnLocation.world.spawn(spawnLocation, ArmorStand::class.java) {
         it.run {
@@ -29,11 +42,14 @@ class BattleMonster(
         }
     }
 
+    private val ai = monster.ai
+
     val location: Location
         get() = entity.location
 
     val eyeLocation: Location
         get() = entity.eyeLocation
+
 
     var health = monster.parameter.health
 
@@ -45,6 +61,9 @@ class BattleMonster(
         private set
 
     var target: Player = spawner
+        private set
+
+    var targetLocation = spawnLocation
 
     fun spawn() {
         entity.apply {
@@ -58,19 +77,16 @@ class BattleMonster(
         entity.remove()
     }
 
-    fun update() {
-        updateLocation()
-    }
-
-    private fun updateLocation() {
-        val nextLocation = entity.location.clone().apply {
+    fun updateLocation(loc: Location? = null) {
+        val nextLocation = loc ?: entity.location
+        val fixedLocation = nextLocation.clone().apply {
             if (target.isValid) {
                 val eyeLocation = target.eyeLocation.clone()
-                val entityLocation = entity.location.clone()
+                val entityLocation = nextLocation.clone()
                 this.direction = eyeLocation.subtract(entityLocation).toVector().normalize()
             }
         }
-        entity.teleport(nextLocation)
+        entity.teleport(fixedLocation)
     }
 
     fun wake() {
@@ -81,7 +97,21 @@ class BattleMonster(
         state = SoulMonsterState.SEAL
     }
 
-    fun awake() {
+    fun setTargetPlayer(player: Player) {
+        target = player
+        updateLocation()
+    }
+
+    fun setNextLocation() {
+        state = SoulMonsterState.MOVE
+        targetLocation = ai.searchNextTargetLocation(chunk, target)
+    }
+
+    fun move() {
+        val speed = ai.getMovementSpeed(location, targetLocation)
+        val diff = targetLocation.clone().subtract(location).toVector().normalize().multiply(speed)
+        updateLocation(location.add(diff))
+        if (targetLocation.distance(location) >= 0.1) return
         state = SoulMonsterState.WAIT
     }
 

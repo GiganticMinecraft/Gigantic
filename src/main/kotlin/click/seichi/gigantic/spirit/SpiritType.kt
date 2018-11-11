@@ -2,6 +2,7 @@ package click.seichi.gigantic.spirit
 
 
 import click.seichi.gigantic.acheivement.Achievement
+import click.seichi.gigantic.battle.Battle
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.centralLocation
@@ -15,8 +16,6 @@ import click.seichi.gigantic.spirit.spirits.MonsterSpirit
 import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.spirit.summoncase.RandomSummonCase
 import click.seichi.gigantic.spirit.summoncase.SummonCase
-import click.seichi.gigantic.util.Random
-import org.bukkit.Location
 import org.bukkit.event.Event
 import org.bukkit.event.block.BlockBreakEvent
 
@@ -54,21 +53,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
                         .firstOrNull() ?: return@RandomSummonCase
                 val client = quest.getClient(player) ?: return@RandomSummonCase
                 val monster = quest.monsterList.getOrNull(client.processedDegree) ?: return@RandomSummonCase
-                val breakLocation = event.block.centralLocation
-                val chunk = breakLocation.chunk
-                var count = 0
-                var spawnLocation: Location? = null
-                var distance = 0.0
-                while (distance <= 3.0 && count < 10) {
-                    count++
-                    spawnLocation = chunk.getBlock(Random.nextInt(15), 0, Random.nextInt(15)).let { block ->
-                        chunk.world.getHighestBlockAt(block.location).centralLocation.add(0.0, -0.5, 0.0)
-                    }
-                    distance = breakLocation.distance(spawnLocation)
-                }
-                if (distance <= 3.0) return@RandomSummonCase
-                val spirit = MonsterSpirit(MonsterSpawnReason.AWAKE, spawnLocation
-                        ?: return@RandomSummonCase, monster, player)
+                val spirit = MonsterSpirit(MonsterSpawnReason.AWAKE, Battle(monster, player))
                 player.offer(Keys.MONSTER_SPIRIT, spirit)
                 spawn(spirit)
             }

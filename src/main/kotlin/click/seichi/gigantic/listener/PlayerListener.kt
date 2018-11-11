@@ -78,8 +78,6 @@ class PlayerListener : Listener {
         if (!PlayerCacheMemory.contains(player.uniqueId)) {
             return
         }
-
-
         if (player.gameMode == GameMode.SPECTATOR) {
             player.find(CatalogPlayerCache.AFK_LOCATION)?.getLocation()?.let {
                 player.teleport(it)
