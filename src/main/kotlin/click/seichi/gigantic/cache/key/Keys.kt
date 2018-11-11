@@ -15,6 +15,7 @@ import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.spirit.spirits.MonsterSpirit
 import click.seichi.gigantic.will.Will
+import org.bukkit.Location
 import org.bukkit.block.Block
 import org.jetbrains.exposed.dao.Entity
 import java.math.BigDecimal
@@ -570,11 +571,11 @@ object Keys {
 
     }
 
-    val ATTACK_BLOCK_SET = object : Key<PlayerCache, MutableSet<Block>> {
-        override val default: MutableSet<Block>
+    val ATTACKED_LOCATION_SET = object : Key<PlayerCache, MutableSet<Location>> {
+        override val default: MutableSet<Location>
             get() = mutableSetOf()
 
-        override fun satisfyWith(value: MutableSet<Block>): Boolean {
+        override fun satisfyWith(value: MutableSet<Location>): Boolean {
             return true
         }
 

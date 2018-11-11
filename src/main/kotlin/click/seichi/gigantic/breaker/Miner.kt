@@ -9,12 +9,10 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.popup.pops.SkillPops
-import click.seichi.gigantic.sound.sounds.MonsterSpiritSounds
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit
 import org.bukkit.Effect
-import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
@@ -33,7 +31,7 @@ open class Miner : Breaker {
             block.world.playEffect(block.centralLocation, Effect.STEP_SOUND, block.type)
         }
         if (isBroken) return
-        block.type = Material.AIR
+        block.breakNaturally(player.inventory.itemInMainHand)
     }
 
 
@@ -71,11 +69,8 @@ open class Miner : Breaker {
 
         val currentCombo = player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0
 
-        val isDefence = player.getOrPut(Keys.ATTACK_BLOCK_SET).contains(block)
-
         // Sounds
         when {
-            isDefence -> MonsterSpiritSounds.DEFENCE.play(block.centralLocation)
             mineBurst?.duringFire() == true -> SkillSounds.MINE_BURST_ON_BREAK(currentCombo).playOnly(player)
             else -> PlayerSounds.OBTAIN_EXP(currentCombo).playOnly(player)
         }

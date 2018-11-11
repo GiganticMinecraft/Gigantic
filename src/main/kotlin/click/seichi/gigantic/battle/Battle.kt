@@ -121,7 +121,8 @@ class Battle(
                 if (elapsedTick % 8L == 0L)
                     MonsterSpiritAnimations.AMBIENT_EXHAUST(monster.color).exhaust(
                             spawner,
-                            enemy.eyeLocation
+                            enemy.eyeLocation.clone().add(0.0, 0.9, 0.0),
+                            meanY = 0.9
                     )
             }
             SoulMonsterState.WAKE -> {

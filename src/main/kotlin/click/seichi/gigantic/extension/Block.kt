@@ -32,7 +32,12 @@ val Block.isGrass
     get() = Gigantic.GRASSES.contains(type)
 
 val Block.isSurface
-    get() = (1..3).firstOrNull { !Gigantic.AIRS.contains(getRelative(0, it, 0).type) }?.let { false } ?: true
+    get() = (1..3)
+            .firstOrNull {
+                val block = getRelative(0, it, 0)
+                !Gigantic.AIRS.contains(block.type) && !block.isPassable
+            }
+            ?.let { false } ?: true
 
 val Block.centralLocation: Location
     get() = location.clone().add(0.5, 0.5, 0.5)

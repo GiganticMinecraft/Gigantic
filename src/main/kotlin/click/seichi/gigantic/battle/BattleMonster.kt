@@ -139,21 +139,21 @@ class BattleMonster(
                         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
                             if (!entity.isValid || !attackPlayer.isValid) return@runTaskLater
                             if (block.isEmpty) return@runTaskLater
+                            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation.add(0.0, 0.5, 0.0), 20, attackBlockData)
                             attackPlayer.sendBlockChange(block.location, attackBlockData)
-                            attackPlayer.getOrPut(Keys.ATTACK_BLOCK_SET).add(block)
+                            attackPlayer.getOrPut(Keys.ATTACKED_LOCATION_SET).add(block.location)
                         }, 20L)
 
                         // attack
                         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
                             if (!entity.isValid || !attackPlayer.isValid) return@runTaskLater
-                            attackPlayer.getOrPut(Keys.ATTACK_BLOCK_SET).remove(block)
-                            if (block.isEmpty) return@runTaskLater
+                            if (!attackPlayer.getOrPut(Keys.ATTACKED_LOCATION_SET).remove(block.location)) return@runTaskLater
                             attackPlayer.manipulate(CatalogPlayerCache.HEALTH) { health ->
                                 health.decrease(monster.parameter.attackDamage)
                                 PlayerMessages.HEALTH_DISPLAY(health).sendTo(attackPlayer)
                             }
                             MonsterSpiritSounds.ATTACK.play(block.centralLocation)
-                            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation, 1, attackBlockData)
+                            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation, 20, attackBlockData)
                             block.type = Material.AIR
                         }, 20L + monster.parameter.tickToAttack)
 

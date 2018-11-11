@@ -55,7 +55,7 @@ object MonsterSpiritSounds {
             Sound.ENTITY_VEX_HURT,
             SoundCategory.HOSTILE,
             pitch = 0.5F,
-            volume = 0.5F
+            volume = 1.5F
     )
 
 }
