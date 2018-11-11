@@ -2,10 +2,7 @@ package click.seichi.gigantic.acheivement
 
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.find
-import click.seichi.gigantic.extension.getOrPut
-import click.seichi.gigantic.extension.manipulate
-import click.seichi.gigantic.extension.transform
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
@@ -70,13 +67,10 @@ enum class Achievement(
 
     // skills
     SKILL_FLASH(200, {
-        // TODO revase to this
-//        it.hasRelic(Relic.PIGS_FEATHER)
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
-
+        it.hasRelic(Relic.PIGS_FEATHER)
     }, grantMessage = AchievementMessages.UNLOCK_FLASH),
     SKILL_MINE_BURST(201, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
     }, grantMessage = AchievementMessages.SKILL_MINE_BURST),
 
     // spells
