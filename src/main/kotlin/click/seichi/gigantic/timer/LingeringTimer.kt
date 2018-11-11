@@ -1,10 +1,7 @@
 package click.seichi.gigantic.timer
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.schedule.Scheduler
-import io.reactivex.Observable
-import org.bukkit.Bukkit
-import java.util.concurrent.TimeUnit
+import org.bukkit.scheduler.BukkitRunnable
 import kotlin.properties.Delegates
 
 /**
@@ -68,32 +65,33 @@ open class LingeringTimer : Timer {
     override fun start() {
         remainTimeToCool = duration
         onStart()
-        Observable.interval(1, TimeUnit.SECONDS)
-                .takeWhile {
-                    it < duration - 1 && !isCancelled
-                }.observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
-                .subscribe({ elapsedSeconds ->
-                    remainTimeToCool = duration.minus(elapsedSeconds + 1)
-                    onFire(remainTimeToCool)
-                }, {}, {
-                    remainTimeToCool = 0L
-                    remainTimeToFire = coolTime
-                    onCompleteFire()
-                    if (isCancelled) {
+        object : BukkitRunnable() {
+            var elapsedSeconds = 0L
+            override fun run() {
+                remainTimeToCool = duration.minus(elapsedSeconds)
+                onFire(remainTimeToCool)
+                elapsedSeconds++
+
+                if (elapsedSeconds <= duration && !isCancelled) return
+                cancel()
+
+                remainTimeToCool = 0L
+                remainTimeToFire = coolTime
+                onCompleteFire()
+
+                object : BukkitRunnable() {
+                    var elapsedSeconds = 0L
+                    override fun run() {
+                        remainTimeToFire = coolTime.minus(elapsedSeconds)
+                        onCooldown(remainTimeToFire)
+                        elapsedSeconds++
+                        if (elapsedSeconds <= coolTime && !isCancelled) return
+                        cancel()
                         end()
-                        return@subscribe
                     }
-                    Observable.interval(1, TimeUnit.SECONDS)
-                            .takeWhile {
-                                it < coolTime - 1 && !isCancelled
-                            }.observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
-                            .subscribe({ elapsedSeconds ->
-                                remainTimeToFire = coolTime.minus(elapsedSeconds + 1)
-                                onCooldown(remainTimeToFire)
-                            }, {}, {
-                                end()
-                            })
-                })
+                }.runTaskTimer(Gigantic.PLUGIN, 0L, 20L)
+            }
+        }.runTaskTimer(Gigantic.PLUGIN, 0L, 20L)
     }
 
     private fun end() {

@@ -2,15 +2,13 @@ package click.seichi.gigantic.popup
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.popup.PopUp.PopPattern
-import click.seichi.gigantic.schedule.Scheduler
 import click.seichi.gigantic.util.Random
-import io.reactivex.Observable
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Entity
+import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
-import java.util.concurrent.TimeUnit
 
 /**
  * @author tar0ss
@@ -124,21 +122,28 @@ class PopUp(
                 popping(this)
             }
         }.apply {
-            Observable.interval(50L, TimeUnit.MILLISECONDS)
-                    .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
-                    .take(duration)
-                    .subscribe({
-                        if (!entity.isValid) return@subscribe
-                        teleport(
-                                entity.location.clone().add(
-                                        meanX + Random.nextDouble() * diffX,
-                                        meanY + Random.nextDouble() * diffY,
-                                        meanZ + Random.nextDouble() * diffZ
-                                )
-                        )
-                    }, {}, {
+            object : BukkitRunnable() {
+                var t = 0L
+                override fun run() {
+                    if (isValid) {
                         remove()
-                    })
+                        cancel()
+                        return
+                    }
+                    teleport(
+                            entity.location.clone().add(
+                                    meanX + Random.nextDouble() * diffX,
+                                    meanY + Random.nextDouble() * diffY,
+                                    meanZ + Random.nextDouble() * diffZ
+                            )
+                    )
+                    t++
+                    if (t > duration) {
+                        remove()
+                        cancel()
+                    }
+                }
+            }.runTaskTimer(Gigantic.PLUGIN, 0L, 1L)
         }
     }
 

@@ -9,8 +9,6 @@ buildscript {
         protcollib_version = '4.4.0-SNAPSHOT'
         slf4j_version = '1.7.25'
         exposed_version = '0.11.2'
-        rxjava_version = '2.2.3'
-        rxkotlin_version = '2.3.0'
     }
     repositories {
         mavenCentral()
@@ -80,8 +78,6 @@ dependencies {
     embed group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-rx2', version: coroutines_version
     embed group: "org.slf4j", name: "slf4j-log4j12", version: slf4j_version
     embed group: "org.jetbrains.exposed", name: "exposed", version: exposed_version
-    embed group: "io.reactivex.rxjava2", name: "rxjava", version: rxjava_version
-    embed group: "io.reactivex.rxjava2", name: "rxkotlin", version: rxkotlin_version
 
     compile fileTree(dir: "libs", include: "*.jar")
 }

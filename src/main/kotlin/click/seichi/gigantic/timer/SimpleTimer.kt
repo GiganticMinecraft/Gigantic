@@ -1,10 +1,7 @@
 package click.seichi.gigantic.timer
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.schedule.Scheduler
-import io.reactivex.Observable
-import org.bukkit.Bukkit
-import java.util.concurrent.TimeUnit
+import org.bukkit.scheduler.BukkitRunnable
 import kotlin.properties.Delegates
 
 /**
@@ -47,21 +44,19 @@ open class SimpleTimer : Timer {
     override fun start() {
         remainTimeToFire = coolTime
         onStart()
-        if (isCancelled) {
-            end()
-            return
-        }
-        Observable.interval(1, TimeUnit.SECONDS)
-                .takeWhile {
-                    it < coolTime && !isCancelled
-                }.take(coolTime, TimeUnit.SECONDS)
-                .observeOn(Scheduler(Gigantic.PLUGIN, Bukkit.getScheduler()))
-                .subscribe({ elapsedSeconds ->
-                    remainTimeToFire = coolTime.minus(elapsedSeconds + 1)
-                    onCooldown(remainTimeToFire)
-                }, {}, {
-                    end()
-                })
+
+        object : BukkitRunnable() {
+            var elapsedSeconds = 0L
+            override fun run() {
+                remainTimeToFire = coolTime.minus(elapsedSeconds)
+                onCooldown(remainTimeToFire)
+                elapsedSeconds++
+
+                if (elapsedSeconds <= coolTime && !isCancelled) return
+                cancel()
+                end()
+            }
+        }.runTaskTimer(Gigantic.PLUGIN, 0L, 20L)
     }
 
     private fun end() {

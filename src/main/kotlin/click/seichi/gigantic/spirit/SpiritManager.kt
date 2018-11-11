@@ -11,7 +11,7 @@ object SpiritManager {
 
     private val spiritSet: MutableSet<Spirit> = mutableSetOf()
 
-    init {
+    fun onEnabled() {
         Bukkit.getScheduler().runTaskTimer(Gigantic.PLUGIN, {
             render()
         }, 0, 1)

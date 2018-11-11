@@ -43,7 +43,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
     ),
     MONSTER(
             // TODO rebase to 0.02
-            RandomSummonCase(1.00, BlockBreakEvent::class.java) { event ->
+            RandomSummonCase(0.00, BlockBreakEvent::class.java) { event ->
                 val player = event.player ?: return@RandomSummonCase
                 if (!Achievement.QUEST.isGranted(player)) return@RandomSummonCase
 //                if (player.getOrPut(Keys.MONSTER_SPIRIT) != null) return@RandomSummonCase

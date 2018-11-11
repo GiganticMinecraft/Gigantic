@@ -194,7 +194,6 @@ class Gigantic : JavaPlugin() {
         PLUGIN = this
         PROTOCOL_MG = ProtocolLibrary.getProtocolManager()
 
-
         server.worlds.forEach { world ->
             // Remove all armor stands
             world.getEntitiesByClass(ArmorStand::class.java).forEach { it.remove() }
@@ -221,6 +220,8 @@ class Gigantic : JavaPlugin() {
 
         // reflectionを使うので先に生成
         Head.values().forEach { it.toItemStack() }
+
+        SpiritManager.onEnabled()
 
         logger.info("Gigantic is enabled!!")
     }
