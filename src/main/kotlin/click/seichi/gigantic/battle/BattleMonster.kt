@@ -11,11 +11,13 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.SoulMonsterState
 import click.seichi.gigantic.sound.sounds.MonsterSpiritSounds
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.util.Random
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Particle
+import org.bukkit.block.Block
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
 
@@ -64,10 +66,6 @@ class BattleMonster(
 
     var health = monster.parameter.health
 
-    val attackDamage = monster.parameter.attackDamage
-
-    val speed = monster.parameter.speed
-
     var state = SoulMonsterState.SEAL
         private set
 
@@ -115,7 +113,7 @@ class BattleMonster(
 
     fun setNextLocation() {
         state = SoulMonsterState.MOVE
-        targetLocation = ai.searchNextTargetLocation(chunk, target)
+        targetLocation = ai.searchNextTargetLocation(chunk, target, location)
     }
 
     fun move() {
@@ -127,39 +125,58 @@ class BattleMonster(
     }
 
     fun attack() {
-        val attackPlayer = target
+        val targetPlayer = target
         monster.ai.getAttackBlockSet(chunk, target, monster.parameter.attackTimes)
                 .forEachIndexed { index, block ->
                     Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-                        if (!entity.isValid || !attackPlayer.isValid) return@runTaskLater
-                        val attackBlockData = Bukkit.createBlockData(monster.parameter.attackMaterial)
-                        // send attack ready particle
-                        MonsterSpiritSounds.ATTACK_READY.play(entity.eyeLocation)
-                        MonsterSpiritAnimations.ATTACK_READY(monster.color).exhaust(entity, block.centralLocation, meanY = 1.5)
-                        Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-                            if (!entity.isValid || !attackPlayer.isValid) return@runTaskLater
-                            if (block.isEmpty) return@runTaskLater
-                            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation.add(0.0, 0.5, 0.0), 20, attackBlockData)
-                            attackPlayer.sendBlockChange(block.location, attackBlockData)
-                            attackPlayer.getOrPut(Keys.ATTACKED_LOCATION_SET).add(block.location)
-                        }, 20L)
-
-                        // attack
-                        Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-                            if (!entity.isValid || !attackPlayer.isValid) return@runTaskLater
-                            if (!attackPlayer.getOrPut(Keys.ATTACKED_LOCATION_SET).remove(block.location)) return@runTaskLater
-                            attackPlayer.manipulate(CatalogPlayerCache.HEALTH) { health ->
-                                health.decrease(monster.parameter.attackDamage)
-                                PlayerMessages.HEALTH_DISPLAY(health).sendTo(attackPlayer)
-                            }
-                            MonsterSpiritSounds.ATTACK.play(block.centralLocation)
-                            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation, 20, attackBlockData)
-                            block.type = Material.AIR
-                        }, 20L + monster.parameter.tickToAttack)
-
+                        attack(block, targetPlayer)
                     }, index * 10L)
                 }
         state = SoulMonsterState.WAIT
+    }
+
+    private fun attack(block: Block, targetPlayer: Player) {
+        if (!entity.isValid || !targetPlayer.isValid) return
+        val attackBlockData = Bukkit.createBlockData(monster.parameter.attackMaterial)
+        // send attack ready particle
+
+        // effects
+        MonsterSpiritSounds.ATTACK_READY.play(entity.eyeLocation)
+        MonsterSpiritAnimations.ATTACK_READY(monster.color).exhaust(entity, block.centralLocation, meanY = 1.5)
+
+        targetPlayer.getOrPut(Keys.ATTACK_WAIT_LOCATION_SET).add(block.location)
+
+        Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+            if (!entity.isValid || !targetPlayer.isValid) return@runTaskLater
+
+            if (block.isEmpty) return@runTaskLater
+
+            // effects
+            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation.add(0.0, 0.5, 0.0), 20, attackBlockData)
+            targetPlayer.sendBlockChange(block.location, attackBlockData)
+
+        }, 20L)
+
+        // attack
+        Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+            if (!entity.isValid || !targetPlayer.isValid) return@runTaskLater
+
+            if (!targetPlayer.getOrPut(Keys.ATTACK_WAIT_LOCATION_SET).remove(block.location)) return@runTaskLater
+            if (block.isEmpty) return@runTaskLater
+
+            // health
+            targetPlayer.manipulate(CatalogPlayerCache.HEALTH) { health ->
+                health.decrease(monster.parameter.attackDamage)
+                PlayerMessages.HEALTH_DISPLAY(health).sendTo(targetPlayer)
+            }
+            // effects
+            MonsterSpiritSounds.ATTACK.play(block.centralLocation)
+            PlayerSounds.INJURED.play(target.location)
+            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation, 20, attackBlockData)
+
+            block.type = Material.AIR
+        }, 20L + monster.parameter.tickToAttack)
+
     }
 
 }

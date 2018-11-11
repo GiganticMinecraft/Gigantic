@@ -571,7 +571,7 @@ object Keys {
 
     }
 
-    val ATTACKED_LOCATION_SET = object : Key<PlayerCache, MutableSet<Location>> {
+    val ATTACK_WAIT_LOCATION_SET = object : Key<PlayerCache, MutableSet<Location>> {
         override val default: MutableSet<Location>
             get() = mutableSetOf()
 

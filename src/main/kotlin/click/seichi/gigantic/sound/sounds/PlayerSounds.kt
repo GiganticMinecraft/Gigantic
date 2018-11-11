@@ -70,4 +70,12 @@ object PlayerSounds {
             volume = 1.0F
     )
 
+    val INJURED = DetailedSound(
+            Sound.ENTITY_PLAYER_HURT,
+            SoundCategory.BLOCKS,
+            pitch = 1.0F,
+            volume = 1.0F
+    )
+
+
 }

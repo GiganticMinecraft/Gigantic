@@ -15,14 +15,11 @@ class BattleListener : Listener {
 
     @EventHandler
     fun onInteract(event: PlayerInteractEvent) {
-        val block = event.clickedBlock
-        val player = event.player
-        val locations = player.getOrPut(Keys.ATTACKED_LOCATION_SET)
+        val block = event.clickedBlock ?: return
+        val player = event.player ?: return
+        val locations = player.getOrPut(Keys.ATTACK_WAIT_LOCATION_SET)
         if (locations.remove(block.location)) {
             MonsterSpiritSounds.DEFENCE.play(block.centralLocation)
-            // TODO
-//            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation.add(0.0,0.5,0.0), 20, attackBlockData)
-
         }
 
     }
