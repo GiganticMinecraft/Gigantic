@@ -9,6 +9,7 @@ import click.seichi.gigantic.monster.SoulMonsterState
 import click.seichi.gigantic.sound.sounds.BattleSounds
 import click.seichi.gigantic.sound.sounds.MonsterSpiritSounds
 import org.bukkit.ChatColor
+import org.bukkit.block.Block
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.entity.Player
@@ -142,6 +143,10 @@ class Battle(
             SoulMonsterState.DEATH -> TODO()
         }
         elapsedTick++
+    }
+
+    fun defenceEnemyAttack(block: Block) {
+        enemy.defencedByPlayer(block)
     }
 
 }

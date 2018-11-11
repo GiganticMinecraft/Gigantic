@@ -51,4 +51,14 @@ object MonsterSpiritAnimations {
         }
     }
 
+    val DEFENCE = { color: Color ->
+        Animation(20) { location, _ ->
+            location.world.spawnColoredParticle(
+                    location,
+                    color,
+                    noiseData = NoiseData(0.01)
+            )
+        }
+    }
+
 }

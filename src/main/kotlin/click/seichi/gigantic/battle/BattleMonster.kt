@@ -179,4 +179,9 @@ class BattleMonster(
 
     }
 
+    fun defencedByPlayer(block: Block) {
+        MonsterSpiritSounds.DEFENCE.play(block.centralLocation)
+        MonsterSpiritAnimations.DEFENCE(monster.color).absorb(entity, block.centralLocation)
+    }
+
 }
