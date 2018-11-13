@@ -2,13 +2,10 @@ package click.seichi.gigantic.spirit
 
 
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.battle.Battle
-import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.find
-import click.seichi.gigantic.extension.getOrPut
-import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.spirit.SpiritManager.spawn
 import click.seichi.gigantic.spirit.spawnreason.MonsterSpawnReason
@@ -47,15 +44,14 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
             RandomSummonCase(1.00, BlockBreakEvent::class.java) { event ->
                 val player = event.player ?: return@RandomSummonCase
                 if (!Achievement.QUEST.isGranted(player)) return@RandomSummonCase
-                if (player.getOrPut(Keys.MONSTER_SPIRIT) != null) return@RandomSummonCase
+                if (BattleManager.findBattle(player) != null) return@RandomSummonCase
                 val quest = Quest.getOrderedList(player)
                         .filter { it.monsterList.isNotEmpty() }
                         .shuffled()
                         .firstOrNull() ?: return@RandomSummonCase
                 val client = quest.getClient(player) ?: return@RandomSummonCase
                 val monster = quest.monsterList.getOrNull(client.processedDegree) ?: return@RandomSummonCase
-                val spirit = MonsterSpirit(MonsterSpawnReason.AWAKE, Battle(monster, player))
-                player.offer(Keys.MONSTER_SPIRIT, spirit)
+                val spirit = MonsterSpirit(MonsterSpawnReason.AWAKE, BattleManager.newBattle(player, monster))
                 spawn(spirit)
             }
     )

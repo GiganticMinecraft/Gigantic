@@ -2,6 +2,8 @@ package click.seichi.gigantic.battle
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.MonsterSpiritMessages
 import click.seichi.gigantic.monster.SoulMonster
@@ -17,9 +19,9 @@ import org.bukkit.entity.Player
 /**
  * @author tar0ss
  */
-class Battle(
-        private val monster: SoulMonster,
-        private val spawner: Player
+class Battle internal constructor(
+        private val spawner: Player,
+        private val monster: SoulMonster
 ) {
 
     private val locale = spawner.wrappedLocale
@@ -49,7 +51,7 @@ class Battle(
 
     fun getSpawner() = if (spawner.isValid) spawner else null
 
-    fun isJoin(player: Player) = players.contains(player)
+    fun isJoined(player: Player) = players.contains(player)
 
     fun join(player: Player): Boolean {
         return when (enemy.state) {
@@ -145,8 +147,11 @@ class Battle(
         elapsedTick++
     }
 
-    fun defenceEnemyAttack(block: Block) {
-        enemy.defencedByPlayer(block)
+    fun tryDefence(player: Player, block: Block) {
+        val locations = player.getOrPut(Keys.ATTACK_WAIT_LOCATION_SET)
+        if (locations.remove(block.location)) {
+            enemy.defencedByPlayer(block)
+        }
     }
 
 }

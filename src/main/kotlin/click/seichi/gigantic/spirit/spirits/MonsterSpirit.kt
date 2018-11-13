@@ -13,7 +13,7 @@ import click.seichi.gigantic.spirit.spawnreason.SpawnReason
  */
 class MonsterSpirit(
         spawnReason: SpawnReason,
-        val battle: Battle
+        private val battle: Battle
 ) : Spirit(spawnReason, battle.chunk) {
 
     private val senseDuration = 60
@@ -29,7 +29,7 @@ class MonsterSpirit(
             },
             { player, count ->
                 player ?: return@Sensor
-                if (!battle.isJoin(player))
+                if (!battle.isJoined(player))
                     battle.join(player)
                 battle.wake(count.div(senseDuration.toDouble()))
                 if (count % 10 == 0)
