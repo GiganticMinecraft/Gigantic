@@ -4,6 +4,7 @@ import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.monster.SoulMonster
+import org.bukkit.ChatColor
 import java.util.*
 
 /**
@@ -15,7 +16,7 @@ object RelicMessages {
         val relic = drop.relic
         val prob = drop.probability
         LocalizedText(
-                Locale.JAPANESE.let { it to "${relic.getName(it)}を手に入れた!!" }
+                Locale.JAPANESE.let { it to "${ChatColor.YELLOW}${relic.getName(it)}を手に入れた!!" }
         )
     }
 

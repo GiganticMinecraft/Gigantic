@@ -125,18 +125,6 @@ class PlayerListener : Listener {
         ))
 
         Achievement.update(player, true)
-
-        player.getOrPut(Keys.BELT).wear(player)
-        player.getOrPut(Keys.BAG).carry(player)
-
-
-        player.updateInventory()
-
-        PlayerMessages.MEMORY_SIDEBAR(
-                player.find(CatalogPlayerCache.MEMORY) ?: return,
-                player.find(CatalogPlayerCache.APTITUDE) ?: return,
-                true
-        ).sendTo(player)
     }
 
     // プレイヤーのメニュー以外のインベントリーオープンをキャンセル
@@ -233,10 +221,6 @@ class PlayerListener : Listener {
             PlayerMessages.LEVEL_UP_HEALTH(prevMax, it.max).sendTo(player)
         }
 
-        player.getOrPut(Keys.BELT).wear(player)
-        player.getOrPut(Keys.BAG).carry(player)
-
-        player.updateInventory()
     }
 
     @EventHandler

@@ -16,5 +16,6 @@ data class QuestClient(
          *  0: 開始直後
          *  n: モンスター討伐n回目
          */
-        var processedDegree: Int
+        var processedDegree: Int,
+        var clearNum: Int
 )

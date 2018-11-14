@@ -1,15 +1,18 @@
 package click.seichi.gigantic.battle
 
+import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.RelicMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.ai.SoulMonsterState
 import click.seichi.gigantic.popup.pops.BattlePops
 import click.seichi.gigantic.popup.pops.PopUpParameters
+import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.sound.sounds.BattleSounds
 import org.bukkit.Chunk
 import org.bukkit.block.Block
@@ -21,7 +24,8 @@ import org.bukkit.entity.Player
 class Battle internal constructor(
         val chunk: Chunk,
         val spawner: Player,
-        monster: SoulMonster
+        val monster: SoulMonster,
+        val quest: Quest?
 ) {
     // 使用言語
     private val locale = spawner.wrappedLocale
@@ -123,13 +127,15 @@ class Battle internal constructor(
 
     private fun win() {
         BattleSounds.WIN.play(enemy.eyeLocation)
-
+        players.forEach { BattleMessages.WIN(monster).sendTo(it) }
+        quest?.process(spawner, monster)
         enemy.randomDrops()?.let { drop ->
             players.forEach { player ->
                 player.transform(Keys.RELIC_MAP[drop.relic]!!) {
                     it + 1
                 }
                 RelicMessages.DROP(drop).sendTo(player)
+                Achievement.update(player, false)
             }
         }
         end()

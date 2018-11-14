@@ -23,4 +23,6 @@ class UserQuest(id: EntityID<Int>) : IntEntity(id) {
 
     var processedDegree by UserQuestTable.processedDegree
 
+    var clearNum by UserQuestTable.clearNum
+
 }

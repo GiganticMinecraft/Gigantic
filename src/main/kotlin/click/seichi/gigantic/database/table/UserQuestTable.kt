@@ -20,4 +20,6 @@ object UserQuestTable : IntIdTable("users_quests") {
     // 進んだ度合い
     val processedDegree = integer("processed_degree").default(0)
 
+    val clearNum = integer("clear_num").default(0)
+
 }

@@ -59,7 +59,7 @@ open class SoulMonsterAI {
         }
         return blocks.filter { block ->
             block.isCrust && block.isSurface && block.chunk == chunk && alreadyAttackedBlockSet.find { it.block == block } == null
-        }.sortedByDescending { it.y + Random.nextDouble() }.firstOrNull()?.let { AttackBlock(target, it, elapsedTick) }
+        }.map { it to it.y + Random.nextDouble() }.sortedByDescending { it.second }.firstOrNull()?.let { AttackBlock(target, it.first, elapsedTick) }
     }
 
 

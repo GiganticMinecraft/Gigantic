@@ -8,14 +8,15 @@ import click.seichi.gigantic.monster.SoulMonster
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.joda.time.DateTime
+import java.util.*
 
 /**
  * @author tar0ss
  */
 enum class Quest(
         val id: Int,
-        val localizedName: LocalizedText,
-        val localizedLore: List<LocalizedText>?,
+        private val localizedName: LocalizedText,
+        private val localizedLore: List<LocalizedText>?,
         vararg monsters: SoulMonster
 ) {
     PIG_CROWD(0, QuestMessages.PIG, null, SoulMonster.PIG, SoulMonster.PIG_WARRIOR, SoulMonster.MR_PIG),
@@ -36,6 +37,12 @@ enum class Quest(
 
     val monsterList = monsters.toList()
 
+    val maxDegree = monsterList.size
+
+    fun getTitle(locale: Locale) = localizedName.asSafety(locale)
+
+    fun getLore(locale: Locale) = localizedLore?.map { it.asSafety(locale) }
+
     // クエスト発注
     fun order(player: Player) {
         getClient(player)?.run {
@@ -50,10 +57,16 @@ enum class Quest(
     }
 
     // クエスト進行
-    fun process(player: Player, degree: Int) {
-        getClient(player)?.run {
-            isProcessed = true
-            processedDegree = degree
+    fun process(player: Player, monster: SoulMonster) {
+        val degree = monsterList.indexOf(monster) + 1
+        if (degree == monsterList.size) {
+            complete(player)
+        } else {
+            getClient(player)?.run {
+                isProcessed = true
+                processedDegree = degree
+            }
+            QuestMessages.QUEST_PROCEED(this, degree).sendTo(player)
         }
     }
 
@@ -63,7 +76,9 @@ enum class Quest(
             isOrdered = false
             isProcessed = false
             processedDegree = 0
+            clearNum++
         }
+        QuestMessages.QUEST_COMPLETE(this).sendTo(player)
     }
 
     fun getClient(player: Player): QuestClient? {

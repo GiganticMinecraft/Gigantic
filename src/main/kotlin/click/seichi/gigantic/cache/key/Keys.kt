@@ -537,7 +537,8 @@ object Keys {
                                 userQuest.isOrdered,
                                 userQuest.orderedAt,
                                 userQuest.isProcessed,
-                                userQuest.processedDegree
+                                userQuest.processedDegree,
+                                userQuest.clearNum
                         )
 
                     }
@@ -549,6 +550,7 @@ object Keys {
                         userQuest.orderedAt = value.orderedAt
                         userQuest.isProcessed = value.isProcessed
                         userQuest.processedDegree = value.processedDegree
+                        userQuest.clearNum = value.clearNum
                     }
 
                     override fun satisfyWith(value: QuestClient?): Boolean {

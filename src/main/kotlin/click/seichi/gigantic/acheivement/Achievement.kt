@@ -147,6 +147,14 @@ enum class Achievement(
                     .forEach {
                         it.update(player, isAction)
                     }
+            player.getOrPut(Keys.BELT).wear(player)
+            player.getOrPut(Keys.BAG).carry(player)
+            player.updateInventory()
+            PlayerMessages.MEMORY_SIDEBAR(
+                    player.find(CatalogPlayerCache.MEMORY) ?: return,
+                    player.find(CatalogPlayerCache.APTITUDE) ?: return,
+                    true
+            ).sendTo(player)
         }
     }
 

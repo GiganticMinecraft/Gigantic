@@ -1,12 +1,40 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.message.ChatMessage
+import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.quest.Quest
+import org.bukkit.ChatColor
 import java.util.*
 
 /**
  * @author tar0ss
  */
 object QuestMessages {
+
+    val QUEST_PROCEED = { quest: Quest, degree: Int ->
+        ChatMessage(ChatMessageProtocol.CHAT,
+                LocalizedText(
+                        Locale.JAPANESE.let {
+                            it to "${ChatColor.YELLOW}" +
+                                    "\"${quest.getTitle(it)}\"" +
+                                    " クエストが進行しました" +
+                                    "( $degree / ${quest.maxDegree} )"
+                        }
+                ))
+    }
+
+    val QUEST_COMPLETE = { quest: Quest ->
+        ChatMessage(ChatMessageProtocol.CHAT,
+                LocalizedText(
+                        Locale.JAPANESE.let {
+                            it to "${ChatColor.LIGHT_PURPLE}" +
+                                    "\"${quest.getTitle(it)}\"" +
+                                    " クエストを完了しました"
+                        }
+                ))
+    }
+
 
     val LADON = LocalizedText(
             Locale.JAPANESE to "金の森を守りしもの"

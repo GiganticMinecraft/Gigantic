@@ -22,10 +22,10 @@ object QuestButtons {
             override fun getItemStack(player: Player): ItemStack? {
                 return ItemStack(Material.ENCHANTED_BOOK).apply {
                     setDisplayName("${ChatColor.LIGHT_PURPLE}" +
-                            client.quest.localizedName.asSafety(player.wrappedLocale))
+                            client.quest.getTitle(player.wrappedLocale))
                     clearLore()
                     // 説明文
-                    client.quest.localizedLore?.map { "${ChatColor.GRAY}" + it.asSafety(player.wrappedLocale) }
+                    client.quest.getLore(player.wrappedLocale)?.map { "${ChatColor.GRAY}" + it }
                             ?.let {
                                 setLore(*it.toTypedArray())
                             }
@@ -36,8 +36,9 @@ object QuestButtons {
                             "${ChatColor.WHITE}" + MenuMessages.LINE,
                             "${ChatColor.WHITE}" + QuestMenuMessages.MONSTER_LIST.asSafety(player.wrappedLocale)
                     )
-                    client.quest.monsterList.forEach { monster: SoulMonster ->
-                        addLore("${ChatColor.WHITE}" + monster.getName(player.wrappedLocale))
+                    client.quest.monsterList.forEachIndexed { index: Int, monster: SoulMonster ->
+                        val color = if (client.processedDegree > index) ChatColor.DARK_RED else ChatColor.WHITE
+                        addLore("$color" + monster.getName(player.wrappedLocale))
                     }
                 }
             }
