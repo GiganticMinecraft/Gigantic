@@ -71,7 +71,7 @@ enum class Achievement(
         it.hasRelic(Relic.PIGS_FEATHER)
     }, grantMessage = AchievementMessages.UNLOCK_FLASH),
     SKILL_MINE_BURST(201, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
+        it.hasRelic(Relic.BLUE_BLAZE_POWDER)
     }, grantMessage = AchievementMessages.SKILL_MINE_BURST),
 
     // spells
@@ -133,6 +133,11 @@ enum class Achievement(
         QUEST.isGranted(it)
     }, action = {
         Quest.PIG_CROWD.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_BLAZE_ORDER(407, {
+        SKILL_FLASH.isGranted(it)
+    }, action = {
+        Quest.BLAZE_CROWD.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     ;
 

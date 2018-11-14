@@ -18,6 +18,7 @@ enum class Relic(
         private val icon: ItemStack = Head.RUBY_JEWELLERY.toItemStack()
 ) {
     PIGS_FEATHER(0, RelicMessages.PIGS_FEATHER, null, icon = ItemStack(Material.FEATHER)),
+    BLUE_BLAZE_POWDER(1, RelicMessages.BLUE_BLAZE_POWDER, null, icon = ItemStack(Material.BLAZE_POWDER)),
     SPELL_BOOK_EXPLOSION(100, RelicMessages.SPELL_BOOK_EXPLOSION, null, 1),
     GOLDEN_APPLE(150, RelicMessages.GOLDEN_APPLE, null),
     WILL_CRYSTAL_SAPPHIRE(200, RelicMessages.WILL_CRYSTAL_SAPPHIRE, null),

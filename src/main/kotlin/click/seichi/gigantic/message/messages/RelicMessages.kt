@@ -75,4 +75,8 @@ object RelicMessages {
     val PIGS_FEATHER = LocalizedText(
             Locale.JAPANESE to "豚の羽根"
     )
+
+    val BLUE_BLAZE_POWDER = LocalizedText(
+            Locale.JAPANESE to "ブルーブレイズのパウダー"
+    )
 }

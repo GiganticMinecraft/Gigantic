@@ -19,13 +19,58 @@ enum class Quest(
         private val localizedLore: List<LocalizedText>?,
         vararg monsters: SoulMonster
 ) {
-    PIG_CROWD(0, QuestMessages.PIG, null, SoulMonster.PIG, SoulMonster.PIG_WARRIOR, SoulMonster.MR_PIG),
-    LADON(100, QuestMessages.LADON, null, SoulMonster.LADON),
-    UNDINE(200, QuestMessages.UNDINE, null, SoulMonster.UNDINE),
-    SALAMANDRA(300, QuestMessages.SALAMANDRA, null, SoulMonster.SALAMANDRA),
-    SYLPHID(400, QuestMessages.SYLPHID, null, SoulMonster.SYLPHID),
-    NOMOS(500, QuestMessages.NOMOS, null, SoulMonster.NOMOS),
-    LOA(600, QuestMessages.LOA, null, SoulMonster.LOA),
+    PIG_CROWD(
+            0,
+            QuestMessages.PIG,
+            null,
+            SoulMonster.PIG,
+            SoulMonster.PIG_WARRIOR,
+            SoulMonster.MR_PIG
+    ),
+    BLAZE_CROWD(
+            1,
+            QuestMessages.BLAZE,
+            null,
+            SoulMonster.BLAZE,
+            SoulMonster.BLAZE_WARRIOR,
+            SoulMonster.BLUE_BLAZE
+    ),
+    LADON(
+            100,
+            QuestMessages.LADON,
+            null,
+            SoulMonster.LADON
+    ),
+    UNDINE(
+            200,
+            QuestMessages.UNDINE,
+            null,
+            SoulMonster.UNDINE
+    ),
+    SALAMANDRA(
+            300,
+            QuestMessages.SALAMANDRA,
+            null,
+            SoulMonster.SALAMANDRA
+    ),
+    SYLPHID(
+            400,
+            QuestMessages.SYLPHID,
+            null,
+            SoulMonster.SYLPHID
+    ),
+    NOMOS(
+            500,
+            QuestMessages.NOMOS,
+            null,
+            SoulMonster.NOMOS
+    ),
+    LOA(
+            600,
+            QuestMessages.LOA,
+            null,
+            SoulMonster.LOA
+    ),
     ;
 
     companion object {

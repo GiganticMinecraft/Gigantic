@@ -39,8 +39,21 @@ object MonsterMessages {
     val PIG_WARRIOR = LocalizedText(
             Locale.JAPANESE to "豚戦士"
     )
+
     val MR_PIG = LocalizedText(
             Locale.JAPANESE to "ミスターピッグ"
+    )
+
+    val BLAZE = LocalizedText(
+            Locale.JAPANESE to "ブレイズ"
+    )
+
+    val BLAZE_WARRIOR = LocalizedText(
+            Locale.JAPANESE to "ブレイズ・ウォーリアー"
+    )
+
+    val BLUE_BLAZE = LocalizedText(
+            Locale.JAPANESE to "ブルーブレイズ"
     )
 
 }

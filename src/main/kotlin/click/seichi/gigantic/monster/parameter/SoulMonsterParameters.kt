@@ -7,22 +7,112 @@ import org.bukkit.Material
  */
 object SoulMonsterParameters {
 
-    val PIG = SoulMonsterParameter(50L, 10, 0.1, 1, 100L, Material.PINK_WOOL)
+    val PIG = SoulMonsterParameter(
+            50L,
+            10,
+            0.1,
+            1,
+            100L,
+            Material.PINK_WOOL
+    )
 
-    val PIG_WARRIOR = SoulMonsterParameter(80L, 20, 0.15, 2, 100L, Material.PINK_CONCRETE_POWDER)
+    val PIG_WARRIOR = SoulMonsterParameter(
+            80L,
+            20,
+            0.15,
+            2,
+            100L,
+            Material.PINK_CONCRETE_POWDER
+    )
 
-    val MR_PIG = SoulMonsterParameter(100L, 25, 0.2, 3, 100L, Material.PINK_CONCRETE)
+    val MR_PIG = SoulMonsterParameter(
+            100L,
+            25,
+            0.2,
+            3,
+            100L,
+            Material.PINK_CONCRETE
+    )
 
-    val LADON = SoulMonsterParameter(50L, 10, 0.2, 1, 100L, Material.GOLD_BLOCK)
+    val BLAZE = SoulMonsterParameter(
+            280L,
+            80,
+            0.12,
+            2,
+            80L,
+            Material.NETHERRACK
+    )
 
-    val UNDINE = SoulMonsterParameter(50L, 10, 0.2, 1, 100L, Material.BLUE_GLAZED_TERRACOTTA)
+    val BLAZE_WARRIOR = SoulMonsterParameter(
+            400L,
+            140,
+            0.15,
+            3,
+            80L,
+            Material.NETHER_BRICKS
+    )
 
-    val SALAMANDRA = SoulMonsterParameter(50L, 10, 0.2, 1, 100L, Material.RED_GLAZED_TERRACOTTA)
+    val BLUE_BLAZE = SoulMonsterParameter(
+            700L,
+            250,
+            0.18,
+            4,
+            80L,
+            Material.BLUE_CONCRETE_POWDER
+    )
 
-    val SYLPHID = SoulMonsterParameter(50L, 10, 0.2, 1, 100L, Material.WHITE_GLAZED_TERRACOTTA)
+    val LADON = SoulMonsterParameter(
+            50L,
+            10,
+            0.2,
+            1,
+            100L,
+            Material.GOLD_BLOCK
+    )
 
-    val NOMOS = SoulMonsterParameter(50L, 10, 0.2, 1, 100L, Material.BROWN_GLAZED_TERRACOTTA)
+    val UNDINE = SoulMonsterParameter(
+            50L,
+            10,
+            0.2,
+            1,
+            100L,
+            Material.BLUE_GLAZED_TERRACOTTA
+    )
 
-    val LOA = SoulMonsterParameter(50L, 10, 0.2, 1, 100L, Material.LIME_GLAZED_TERRACOTTA)
+    val SALAMANDRA = SoulMonsterParameter(
+            50L,
+            10,
+            0.2,
+            1,
+            100L,
+            Material.RED_GLAZED_TERRACOTTA
+    )
+
+    val SYLPHID = SoulMonsterParameter(
+            50L,
+            10,
+            0.2,
+            1,
+            100L,
+            Material.WHITE_GLAZED_TERRACOTTA
+    )
+
+    val NOMOS = SoulMonsterParameter(
+            50L,
+            10,
+            0.2,
+            1,
+            100L,
+            Material.BROWN_GLAZED_TERRACOTTA
+    )
+
+    val LOA = SoulMonsterParameter(
+            50L,
+            10,
+            0.2,
+            1,
+            100L,
+            Material.LIME_GLAZED_TERRACOTTA
+    )
 
 }

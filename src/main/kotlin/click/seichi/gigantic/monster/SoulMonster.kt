@@ -57,6 +57,36 @@ enum class SoulMonster(
             DropRelic(Relic.PIGS_FEATHER)
     ),
 
+
+    BLAZE(
+            10,
+            Head.BLAZE,
+            MonsterMessages.BLAZE,
+            null,
+            Color.fromRGB(251, 208, 67),
+            SoulMonsterParameters.BLAZE,
+            SoulMonsterAI::class
+    ),
+    BLAZE_WARRIOR(
+            11,
+            Head.BLAZE_WARRIOR,
+            MonsterMessages.BLAZE_WARRIOR,
+            null,
+            Color.fromRGB(251, 208, 67),
+            SoulMonsterParameters.BLAZE_WARRIOR,
+            SoulMonsterAI::class
+    ),
+    BLUE_BLAZE(
+            12,
+            Head.BLUE_BLAZE,
+            MonsterMessages.BLUE_BLAZE,
+            null,
+            Color.fromRGB(82, 154, 222),
+            SoulMonsterParameters.BLUE_BLAZE,
+            SoulMonsterAI::class,
+            DropRelic(Relic.BLUE_BLAZE_POWDER)
+    ),
+
     LADON(
             100,
             Head.LADON,
