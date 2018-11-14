@@ -1,9 +1,12 @@
 package click.seichi.gigantic.battle
 
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
+import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.ai.SoulMonsterState
+import click.seichi.gigantic.popup.pops.BattlePops
+import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.sound.sounds.BattleSounds
 import org.bukkit.Chunk
 import org.bukkit.block.Block
@@ -31,7 +34,7 @@ class Battle internal constructor(
 
     fun getJoinedPlayers() = players.toList()
 
-    fun isJoined(player: Player) = players.contains(player)
+    fun isJoined(player: Player) = players.contains(player) || player == spawner
 
     fun spawnEnemy() {
         enemy.spawn()
@@ -104,8 +107,16 @@ class Battle internal constructor(
     }
 
     fun tryDefence(player: Player, block: Block) {
-            enemy.defencedByPlayer(block)
+        enemy.defencedByPlayer(block)
     }
 
+    fun tryAttack(player: Player, block: Block) {
+        val damage = 1.toBigDecimal()
+        val trueDamage = enemy.damageByPlayer(player, damage)
+        BattlePops.BATTLE_DAMAGE(trueDamage).pop(block.centralLocation, diffY = PopUpParameters.BATTLE_DAMAGE_DIFF)
+        if (enemy.isDead()) {
+            end()
+        }
+    }
 
 }

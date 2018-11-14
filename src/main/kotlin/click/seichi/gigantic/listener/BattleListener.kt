@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 class BattleListener : Listener {
 
     @EventHandler
-    fun onInteract(event: PlayerInteractEvent) {
+    fun defence(event: PlayerInteractEvent) {
         val block = event.clickedBlock ?: return
         val player = event.player ?: return
         val battle = player.findBattle() ?: return
@@ -22,14 +22,24 @@ class BattleListener : Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    fun onBlockBreak(event: BlockBreakEvent) {
+    fun cancelIfAnotherBattleChunk(event: BlockBreakEvent) {
         val block = event.block ?: return
         val player = event.player ?: return
         val battle = block.findBattle() ?: return
         if (battle.isJoined(player)) return
         event.isCancelled = true
         PlayerMessages.BATTLE.sendTo(player)
+    }
 
+    @EventHandler(priority = EventPriority.MONITOR)
+    fun attack(event: BlockBreakEvent) {
+        if (event.isCancelled) return
+        val block = event.block ?: return
+        val player = event.player ?: return
+        val battle = player.findBattle() ?: return
+        if (!battle.isStarted) return
+        if (battle.chunk == block.chunk)
+            battle.tryAttack(player, block)
     }
 
 }

@@ -23,6 +23,7 @@ class MonsterSpirit(
             { player ->
                 player ?: return@Sensor false
                 when {
+                    player != battle.spawner -> false
                     player.location.distance(battle.enemy.location) > 2.5 -> false
                     else -> true
                 }

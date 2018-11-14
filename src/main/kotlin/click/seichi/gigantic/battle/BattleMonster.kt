@@ -5,21 +5,20 @@ import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.manipulate
-import click.seichi.gigantic.message.messages.MonsterSpiritMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.ai.AttackBlock
 import click.seichi.gigantic.monster.ai.SoulMonsterState
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SoulMonsterSounds
+import click.seichi.gigantic.topbar.bars.BattleBars
 import org.bukkit.*
 import org.bukkit.block.Block
-import org.bukkit.boss.BarColor
-import org.bukkit.boss.BarStyle
 import org.bukkit.boss.BossBar
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
 import org.bukkit.util.EulerAngle
+import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -53,14 +52,7 @@ class BattleMonster(
         }
     }
     // モンスターのボスバー
-    private val bossBar: BossBar = Gigantic.createInvisibleBossBar().apply {
-        isVisible = true
-        style = BarStyle.SOLID
-        title = "${ChatColor.RED}" +
-                MonsterSpiritMessages.SEAL(monster.getName(locale)).asSafety(locale)
-        color = BarColor.RED
-        progress = 0.0
-    }
+    private val bossBar: BossBar = Gigantic.createInvisibleBossBar()
 
     // 攻撃対象プレイヤー
     var attackTarget: Player = spawner
@@ -72,7 +64,7 @@ class BattleMonster(
     var destination: Location? = null
         private set
 
-    var health = monster.parameter.health
+    var health = monster.parameter.health.toBigDecimal()
 
     var location: Location = spawnLocation
 
@@ -83,6 +75,8 @@ class BattleMonster(
 
     private var disappearCount = 0
 
+    private val totalDamageMap = mutableMapOf<Player, BigDecimal>()
+
     fun spawn() {
         SoulMonsterSounds.SPAWN.play(spawnLocation)
     }
@@ -92,9 +86,7 @@ class BattleMonster(
     }
 
     fun leave(player: Player) {
-        bossBar.apply {
-            removePlayer(player)
-        }
+        bossBar.removePlayer(player)
     }
 
     fun remove() {
@@ -110,27 +102,16 @@ class BattleMonster(
 
     // 起こしているとき
     fun updateAwakeProgress(nextProgress: Double) {
-        bossBar.apply {
-            val prev = progress
-            if (nextProgress > prev)
-                progress = nextProgress
-        }
+        BattleBars.SEAL(nextProgress, monster, locale).show(bossBar)
         MonsterSpiritAnimations.AWAKE.start(eyeLocation)
     }
 
     fun resetAwakeProgress() {
-        bossBar.apply {
-            progress = 0.0
-        }
+        BattleBars.RESET(monster, locale).show(bossBar)
     }
 
     fun awake() {
-        bossBar.apply {
-            color = BarColor.PURPLE
-            style = BarStyle.SEGMENTED_20
-            title = "${ChatColor.LIGHT_PURPLE}" +
-                    MonsterSpiritMessages.START(monster.getName(locale)).asSafety(locale)
-        }
+        BattleBars.AWAKE(monster.parameter.health.toBigDecimal(), monster, locale).show(bossBar)
         state = SoulMonsterState.MOVE
         destination = ai.searchDestination(chunk, attackTarget, location)
     }
@@ -251,5 +232,18 @@ class BattleMonster(
         MonsterSpiritAnimations.DEFENCE(monster.color).absorb(entity, block.centralLocation, meanY = 0.9)
     }
 
+    fun damageByPlayer(player: Player, damage: BigDecimal): BigDecimal {
+        val trueDamage = damage.coerceIn(0.toBigDecimal(), health)
+        totalDamageMap.compute(player) { _, amount ->
+            amount?.plus(trueDamage) ?: trueDamage
+        }
+        health -= trueDamage
+        BattleBars.AWAKE(health, monster, locale).show(bossBar)
+        return trueDamage
+    }
+
+    fun isDead(): Boolean {
+        return health == 0.toBigDecimal()
+    }
 
 }

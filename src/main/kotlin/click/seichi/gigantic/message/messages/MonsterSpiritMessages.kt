@@ -14,9 +14,9 @@ object MonsterSpiritMessages {
         )
     }
 
-    val START = { monsterName: String ->
+    val AWAKE = { monsterName: String ->
         LocalizedText(
-                Locale.JAPANESE to "$monsterName"
+                Locale.JAPANESE to monsterName
         )
     }
 
