@@ -2,9 +2,12 @@ package click.seichi.gigantic.battle
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.ai.AttackBlock
@@ -12,6 +15,7 @@ import click.seichi.gigantic.monster.ai.SoulMonsterState
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SoulMonsterSounds
 import click.seichi.gigantic.topbar.bars.BattleBars
+import click.seichi.gigantic.util.Random
 import org.bukkit.*
 import org.bukkit.block.Block
 import org.bukkit.boss.BossBar
@@ -77,6 +81,8 @@ class BattleMonster(
 
     private val totalDamageMap = mutableMapOf<Player, BigDecimal>()
 
+    private val attackBlockData = Bukkit.createBlockData(monster.parameter.attackMaterial)
+
     fun spawn() {
         SoulMonsterSounds.SPAWN.play(spawnLocation)
     }
@@ -92,6 +98,10 @@ class BattleMonster(
     fun remove() {
         bossBar.removeAll()
         entity.remove()
+        attackBlocks.forEach {
+            it.target.sendBlockChange(it.block.location,
+                    Bukkit.createBlockData(it.block.type))
+        }
     }
 
     // 戦闘中のみ呼び出し。プレイヤーが戦闘中に抜けた際にターゲットを更新
@@ -116,16 +126,14 @@ class BattleMonster(
         destination = ai.searchDestination(chunk, attackTarget, location)
     }
 
-    fun update(elapsedTick: Long): SoulMonsterState {
+    fun update(elapsedTick: Long) {
         when (state) {
             SoulMonsterState.MOVE -> move(elapsedTick)
             SoulMonsterState.ATTACK -> attack(elapsedTick)
-            SoulMonsterState.DEATH -> TODO()
             else -> {
             }
         }
         updateLocation()
-        return state
     }
 
     private fun updateLocation() {
@@ -184,7 +192,6 @@ class BattleMonster(
         val block = attackBlock.block
 
         if (!entity.isValid || !player.isValid) return
-        val attackBlockData = Bukkit.createBlockData(monster.parameter.attackMaterial)
         // send attack ready particle
 
         // effects
@@ -206,7 +213,7 @@ class BattleMonster(
 
         // attack
         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-            if (!entity.isValid || !player.isValid) return@runTaskLater
+            if (!entity.isValid || !player.isValid || player.isDead) return@runTaskLater
 
             if (!attackBlocks.remove(attackBlock)) return@runTaskLater
             if (block.isEmpty) return@runTaskLater
@@ -214,6 +221,10 @@ class BattleMonster(
             // health
             player.manipulate(CatalogPlayerCache.HEALTH) { health ->
                 health.decrease(monster.parameter.attackDamage)
+                if (health.isZero) {
+                    player.offer(Keys.DEATH_MESSAGE, DeathMessages.BY_MONSTER(monster))
+                    state = SoulMonsterState.KILL_SPAWNER
+                }
                 PlayerMessages.HEALTH_DISPLAY(health).sendTo(player)
             }
             // effects
@@ -238,12 +249,15 @@ class BattleMonster(
             amount?.plus(trueDamage) ?: trueDamage
         }
         health -= trueDamage
+        if (health == 0.toBigDecimal()) {
+            state = SoulMonsterState.DEATH
+        }
         BattleBars.AWAKE(health, monster, locale).show(bossBar)
         return trueDamage
     }
 
-    fun isDead(): Boolean {
-        return health == 0.toBigDecimal()
+    fun randomDrops(): SoulMonster.DropRelic? {
+        return monster.dropRelicSet.firstOrNull { it.probability > Random.nextDouble() }
     }
 
 }

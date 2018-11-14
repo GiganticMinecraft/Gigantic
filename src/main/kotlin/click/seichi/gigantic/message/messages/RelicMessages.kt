@@ -1,12 +1,27 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.message.ChatMessage
+import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.monster.SoulMonster
 import java.util.*
 
 /**
  * @author tar0ss
  */
 object RelicMessages {
+
+    val DROP_TEXT = { drop: SoulMonster.DropRelic ->
+        val relic = drop.relic
+        val prob = drop.probability
+        LocalizedText(
+                Locale.JAPANESE.let { it to "${relic.getName(it)}を手に入れた!!" }
+        )
+    }
+
+    val DROP = { drop: SoulMonster.DropRelic ->
+        ChatMessage(ChatMessageProtocol.CHAT, DROP_TEXT(drop))
+    }
 
     val SPELL_BOOK_EXPLOSION = LocalizedText(
             Locale.JAPANESE to "魔導書-エクスプロージョン-"

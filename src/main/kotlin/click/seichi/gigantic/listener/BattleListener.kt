@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
 /**
@@ -26,7 +27,7 @@ class BattleListener : Listener {
         val block = event.block ?: return
         val player = event.player ?: return
         val battle = block.findBattle() ?: return
-        if (battle.isJoined(player)) return
+        if (battle.isJoined(player) || battle.spawner == player) return
         event.isCancelled = true
         PlayerMessages.BATTLE.sendTo(player)
     }
@@ -40,6 +41,12 @@ class BattleListener : Listener {
         if (!battle.isStarted) return
         if (battle.chunk == block.chunk)
             battle.tryAttack(player, block)
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    fun lose(event: PlayerDeathEvent) {
+        val player = event.entity ?: return
+
     }
 
 }

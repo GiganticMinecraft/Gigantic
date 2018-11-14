@@ -1,12 +1,11 @@
 package click.seichi.gigantic.relic
 
-import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.RelicMessages
 import org.bukkit.Material
-import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import java.util.*
 
 /**
  * @author tar0ss
@@ -33,10 +32,10 @@ enum class Relic(
         fun findById(id: Int) = idMap[id]
     }
 
-    fun getName(player: Player) = localizedName.asSafety(player.wrappedLocale)
+    fun getName(locale: Locale) = localizedName.asSafety(locale)
 
-    fun getLore(player: Player) = localizedLore?.map { it.asSafety(player.wrappedLocale) }
+    fun getLore(locale: Locale) = localizedLore?.map { it.asSafety(locale) }
 
-    fun getIcon(player: Player) = icon.clone()
+    fun getIcon() = icon.clone()
 
 }

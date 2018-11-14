@@ -5,7 +5,6 @@ package click.seichi.gigantic.cache.manipulator
  */
 enum class MineBlockReason(val id: Int) {
     GENERAL(0),
-    RAID_BOSS(1),
     DEATH_PENALTY(2),
     ;
 

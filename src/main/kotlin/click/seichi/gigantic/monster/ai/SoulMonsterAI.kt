@@ -51,7 +51,9 @@ open class SoulMonsterAI {
         (-3..3).forEach { x ->
             (-3..3).forEach { z ->
                 (-1..5).forEach { y ->
-                    blocks.add(target.location.block.getRelative(x, y, z))
+                    target.location.block.getRelative(x, y, z).let {
+                        blocks.add(it)
+                    }
                 }
             }
         }

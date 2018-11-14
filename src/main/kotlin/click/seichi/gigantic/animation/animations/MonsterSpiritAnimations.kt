@@ -27,8 +27,8 @@ object MonsterSpiritAnimations {
             location.world.spawnColoredParticleSpherically(
                     location,
                     color,
-                    count = 5,
-                    radius = 2.5
+                    count = 2,
+                    radius = 1.5
             )
         }
     }

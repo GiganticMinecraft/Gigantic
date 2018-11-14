@@ -16,6 +16,8 @@ enum class SoulMonsterState {
     DEATH,
     // 消滅
     DISAPPEAR,
+    // 召喚者をキル
+    KILL_SPAWNER,
 
     ;
 }

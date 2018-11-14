@@ -268,7 +268,6 @@ class PlayerListener : Listener {
         val player = event.entity ?: return
         event.keepInventory = true
         event.keepLevel = true
-        // asSafetyを使うとnullの除外ができないのでこのまま
         player.getOrPut(Keys.DEATH_MESSAGE)?.asSafety(player.wrappedLocale)?.let { deathMessage ->
             event.deathMessage = deathMessage
         }

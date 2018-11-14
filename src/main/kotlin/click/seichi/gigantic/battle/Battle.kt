@@ -1,8 +1,11 @@
 package click.seichi.gigantic.battle
 
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.message.messages.RelicMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.ai.SoulMonsterState
 import click.seichi.gigantic.popup.pops.BattlePops
@@ -34,7 +37,7 @@ class Battle internal constructor(
 
     fun getJoinedPlayers() = players.toList()
 
-    fun isJoined(player: Player) = players.contains(player) || player == spawner
+    fun isJoined(player: Player) = players.contains(player)
 
     fun spawnEnemy() {
         enemy.spawn()
@@ -92,9 +95,11 @@ class Battle internal constructor(
                 )
         }
         MonsterSpiritAnimations.AMBIENT(enemy.color).start(enemy.location)
-        when (enemy.update(elapsedTick)) {
-            SoulMonsterState.DEATH -> TODO()
+        enemy.update(elapsedTick)
+        when (enemy.state) {
+            SoulMonsterState.DEATH -> win()
             SoulMonsterState.DISAPPEAR -> end()
+            SoulMonsterState.KILL_SPAWNER -> lose()
             else -> {
             }
         }
@@ -114,9 +119,23 @@ class Battle internal constructor(
         val damage = 1.toBigDecimal()
         val trueDamage = enemy.damageByPlayer(player, damage)
         BattlePops.BATTLE_DAMAGE(trueDamage).pop(block.centralLocation, diffY = PopUpParameters.BATTLE_DAMAGE_DIFF)
-        if (enemy.isDead()) {
-            end()
-        }
     }
 
+    private fun win() {
+        BattleSounds.WIN.play(enemy.eyeLocation)
+
+        enemy.randomDrops()?.let { drop ->
+            players.forEach { player ->
+                player.transform(Keys.RELIC_MAP[drop.relic]!!) {
+                    it + 1
+                }
+                RelicMessages.DROP(drop).sendTo(player)
+            }
+        }
+        end()
+    }
+
+    private fun lose() {
+        end()
+    }
 }

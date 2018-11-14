@@ -21,6 +21,9 @@ class Health : Manipulator<Health, PlayerCache> {
         private set
     private lateinit var level: Level
 
+    val isZero: Boolean
+        get() = current == 0L
+
     override fun from(cache: Cache<PlayerCache>): Health? {
         current = cache.getOrPut(Keys.HEALTH)
         level = cache.find(CatalogPlayerCache.LEVEL) ?: return null
