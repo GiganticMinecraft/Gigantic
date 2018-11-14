@@ -1,8 +1,8 @@
 package click.seichi.gigantic.spirit.spirits
 
 import click.seichi.gigantic.battle.Battle
-import click.seichi.gigantic.monster.SoulMonsterState
-import click.seichi.gigantic.sound.sounds.MonsterSpiritSounds
+import click.seichi.gigantic.battle.BattleManager
+import click.seichi.gigantic.sound.sounds.SoulMonsterSounds
 import click.seichi.gigantic.spirit.Sensor
 import click.seichi.gigantic.spirit.Spirit
 import click.seichi.gigantic.spirit.SpiritType
@@ -31,9 +31,9 @@ class MonsterSpirit(
                 player ?: return@Sensor
                 if (!battle.isJoined(player))
                     battle.join(player)
-                battle.wake(count.div(senseDuration.toDouble()))
+                battle.updateAwakeProgress(count.div(senseDuration.toDouble()))
                 if (count % 10 == 0)
-                    MonsterSpiritSounds.SENSE_SUB.playOnly(player)
+                    SoulMonsterSounds.SENSE_SUB.playOnly(player)
             },
             { player ->
                 player ?: return@Sensor
@@ -50,24 +50,17 @@ class MonsterSpirit(
     override val spiritType = SpiritType.MONSTER
 
     override fun onSpawn() {
-        battle.spawn()
-    }
-
-    private fun disappearCondition(): Boolean {
-        val spawner = battle.getSpawner() ?: return true
-        when {
-            spawner.location.distance(battle.enemy.location) > 30.0 && !battle.isStarted -> return true
-            battle.getJoinedPlayers().isEmpty() && battle.isStarted -> return true
-        }
-        return false
+        battle.spawnEnemy()
     }
 
     override fun onRender() {
         battle.getJoinedPlayers().filter { !it.isValid }
                 .forEach { battle.leave(it) }
-        if (disappearCondition()) {
+        if (battle.disappearCondition()) {
+            BattleManager.endBattle(battle)
             battle.end()
             remove()
+            return
         }
         if (!battle.isStarted) {
             sensor.update()
@@ -76,9 +69,9 @@ class MonsterSpirit(
     }
 
     override fun onRemove() {
-        when (battle.enemy.state) {
-            SoulMonsterState.DISAPPEAR -> MonsterSpiritSounds.DISAPPEAR.play(battle.enemy.location)
-        }
+//        when (battle.enemy.state) {
+//            SoulMonsterState.DISAPPEAR -> SoulMonsterSounds.DISAPPEAR.play(battle.enemy.location)
+//        }
     }
 
 }

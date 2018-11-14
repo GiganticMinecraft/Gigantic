@@ -33,7 +33,7 @@ object MonsterSpiritAnimations {
         }
     }
 
-    val WAKE = Animation(1) { location, _ ->
+    val AWAKE = Animation(1) { location, _ ->
         location.world.spawnParticle(
                 Particle.SMOKE_NORMAL,
                 location,

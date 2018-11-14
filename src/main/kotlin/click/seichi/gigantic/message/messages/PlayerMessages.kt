@@ -113,5 +113,10 @@ object PlayerMessages {
                     "スポーン地点に近いため、保護されています"
     ))
 
+    val BATTLE = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "他のプレイヤーがバトル中です"
+    ))
+
 
 }

@@ -1,5 +1,6 @@
 package click.seichi.gigantic.extension
 
+import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Key
@@ -78,3 +79,5 @@ fun Player.spawnColoredParticleSpherically(
 fun Player.hasRelic(relic: Relic): Boolean {
     return getOrPut(Keys.RELIC_MAP[relic] ?: return false) > 0
 }
+
+fun Player.findBattle() = BattleManager.findBattle(this)

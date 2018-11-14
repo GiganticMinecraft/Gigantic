@@ -1,4 +1,4 @@
-package click.seichi.gigantic.monster
+package click.seichi.gigantic.monster.ai
 
 /**
  * @author tar0ss
@@ -6,10 +6,6 @@ package click.seichi.gigantic.monster
 enum class SoulMonsterState {
     // 待機
     SEAL,
-    // 目覚め
-    WAKE,
-    // 消滅
-    DISAPPEAR,
     // 指示待機
     WAIT,
     // 移動
@@ -17,5 +13,9 @@ enum class SoulMonsterState {
     // 攻撃
     ATTACK,
     // 死亡
-    DEATH;
+    DEATH,
+    // 消滅
+    DISAPPEAR,
+
+    ;
 }

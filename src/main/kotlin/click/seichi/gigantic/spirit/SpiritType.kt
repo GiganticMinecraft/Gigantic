@@ -6,6 +6,8 @@ import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.findBattle
+import click.seichi.gigantic.extension.isBattled
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.spirit.SpiritManager.spawn
 import click.seichi.gigantic.spirit.spawnreason.MonsterSpawnReason
@@ -42,16 +44,21 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
     MONSTER(
             // TODO rebase to 0.02
             RandomSummonCase(1.00, BlockBreakEvent::class.java) { event ->
+                if (event.isCancelled) return@RandomSummonCase
                 val player = event.player ?: return@RandomSummonCase
+                val chunk = event.block.chunk ?: return@RandomSummonCase
                 if (!Achievement.QUEST.isGranted(player)) return@RandomSummonCase
-                if (BattleManager.findBattle(player) != null) return@RandomSummonCase
+                // 他のバトルに参加している場合は終了
+                if (player.findBattle() != null) return@RandomSummonCase
+                // チャンクがバトル中なら終了
+                if (chunk.isBattled) return@RandomSummonCase
                 val quest = Quest.getOrderedList(player)
                         .filter { it.monsterList.isNotEmpty() }
                         .shuffled()
                         .firstOrNull() ?: return@RandomSummonCase
                 val client = quest.getClient(player) ?: return@RandomSummonCase
                 val monster = quest.monsterList.getOrNull(client.processedDegree) ?: return@RandomSummonCase
-                val spirit = MonsterSpirit(MonsterSpawnReason.AWAKE, BattleManager.newBattle(player, monster))
+                val spirit = MonsterSpirit(MonsterSpawnReason.AWAKE, BattleManager.newBattle(chunk, player, monster))
                 spawn(spirit)
             }
     )

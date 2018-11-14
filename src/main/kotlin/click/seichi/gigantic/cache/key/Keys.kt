@@ -14,7 +14,6 @@ import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
-import org.bukkit.Location
 import org.bukkit.block.Block
 import org.jetbrains.exposed.dao.Entity
 import java.math.BigDecimal
@@ -559,15 +558,5 @@ object Keys {
                 }
             }
             .toMap()
-
-    val ATTACK_WAIT_LOCATION_SET = object : Key<PlayerCache, MutableSet<Location>> {
-        override val default: MutableSet<Location>
-            get() = mutableSetOf()
-
-        override fun satisfyWith(value: MutableSet<Location>): Boolean {
-            return true
-        }
-
-    }
 
 }

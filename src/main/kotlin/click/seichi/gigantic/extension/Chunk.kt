@@ -1,5 +1,6 @@
 package click.seichi.gigantic.extension
 
+import click.seichi.gigantic.battle.BattleManager
 import org.bukkit.Chunk
 import org.bukkit.block.Block
 
@@ -17,3 +18,6 @@ fun Chunk.forEachBlock(action: (Block) -> Unit) {
         }
     }
 }
+
+val Chunk.isBattled: Boolean
+    get() = BattleManager.getBattleSet().firstOrNull { it.chunk == this } != null

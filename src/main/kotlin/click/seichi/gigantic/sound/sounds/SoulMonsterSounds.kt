@@ -7,7 +7,7 @@ import org.bukkit.SoundCategory
 /**
  * @author tar0ss
  */
-object MonsterSpiritSounds {
+object SoulMonsterSounds {
 
     val SPAWN = DetailedSound(
             Sound.ENTITY_ELDER_GUARDIAN_HURT,
