@@ -51,10 +51,8 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
                 if (player.findBattle() != null) return@RandomSummonCase
                 // チャンクがバトル中なら終了
                 if (chunk.isBattled) return@RandomSummonCase
-                val quest = Quest.getOrderedList(player)
-                        .filter { it.monsterList.isNotEmpty() }
-                        .shuffled()
-                        .firstOrNull() ?: return@RandomSummonCase
+                val quest = Quest.getOrderedList(player).firstOrNull { it.monsterList.isNotEmpty() }
+                        ?: return@RandomSummonCase
                 val client = quest.getClient(player) ?: return@RandomSummonCase
                 val monster = quest.monsterList.getOrNull(client.processedDegree) ?: return@RandomSummonCase
                 val spirit = MonsterSpirit(MonsterSpawnReason.AWAKE, BattleManager.newBattle(chunk, player, monster, quest))
