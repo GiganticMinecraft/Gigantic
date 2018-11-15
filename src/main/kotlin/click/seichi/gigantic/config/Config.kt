@@ -10,4 +10,5 @@ object Config : SimpleConfiguration("config", Gigantic.PLUGIN) {
     val PLAYER_DEATH_PENALTY = getDouble("player.death_penalty")
 
     val WORLD_SIDE_LENGTH = getDouble("world.side_length")
+
 }
