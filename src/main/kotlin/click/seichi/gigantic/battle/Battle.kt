@@ -44,6 +44,7 @@ class Battle internal constructor(
     fun isJoined(player: Player) = players.contains(player)
 
     fun spawnEnemy() {
+        BattleMessages.SPAWN(monster).sendTo(spawner)
         enemy.spawn()
     }
 
@@ -55,7 +56,6 @@ class Battle internal constructor(
         }
         return false
     }
-
 
     fun join(player: Player): Boolean {
         return if (!isStarted) {
