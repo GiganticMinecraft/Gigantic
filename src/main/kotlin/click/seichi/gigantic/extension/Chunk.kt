@@ -1,8 +1,14 @@
 package click.seichi.gigantic.extension
 
+import click.seichi.gigantic.battle.Battle
 import click.seichi.gigantic.battle.BattleManager
+import click.seichi.gigantic.util.Random
 import org.bukkit.Chunk
+import org.bukkit.GameRule
+import org.bukkit.Location
 import org.bukkit.block.Block
+import org.bukkit.block.BlockFace
+import kotlin.math.abs
 
 /**
  * @author tar0ss
@@ -19,5 +25,21 @@ fun Chunk.forEachBlock(action: (Block) -> Unit) {
     }
 }
 
+fun Chunk.findBattle(): Battle? = BattleManager.findBattle(this)
+
 val Chunk.isBattled: Boolean
-    get() = BattleManager.findBattle(this) != null
+    get() = findBattle() != null
+
+val Chunk.isSpawnArea: Boolean
+    get() = abs(x - world.spawnLocation.chunk.x) < world.getGameRuleValue(GameRule.SPAWN_RADIUS).div(16) &&
+            abs(z - world.spawnLocation.chunk.z) < world.getGameRuleValue(GameRule.SPAWN_RADIUS).div(16)
+
+fun Chunk.getSpawnableLocation(): Location {
+    val x = Random.nextInt(15)
+    val z = Random.nextInt(15)
+    var block: Block = getBlock(x, 255, z)
+    while (!block.isSurface && block.y > 1) {
+        block = block.getRelative(BlockFace.DOWN)
+    }
+    return block.centralLocation.add(0.0, 2.0, 0.0)
+}

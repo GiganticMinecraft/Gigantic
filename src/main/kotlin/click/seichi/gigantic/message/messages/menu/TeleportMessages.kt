@@ -19,6 +19,10 @@ object TeleportMessages {
             Locale.JAPANESE to "プレイヤーを選択"
     )
 
+    val TELEPORT_TO_RANDOM_CHUNK = LocalizedText(
+            Locale.JAPANESE to "ランダムな場所にテレポート"
+    )
+
     val TELEPORT_TO_PLAYER_TITLE = LocalizedText(
             Locale.JAPANESE to "テレポートするプレイヤーを選ぶ"
     )

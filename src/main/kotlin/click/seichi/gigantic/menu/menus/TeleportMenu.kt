@@ -21,7 +21,8 @@ object TeleportMenu : Menu() {
     }
 
     init {
-        registerButton(0, TeleportButtons.TELEPORT_TO_PLAYER)
+        registerButton(0, TeleportButtons.TELEPORT_TO_RANDOM_CHUNK)
+        registerButton(1, TeleportButtons.TELEPORT_TO_PLAYER)
         registerButton(8, TeleportButtons.TELEPORT_TOGGLE)
     }
 

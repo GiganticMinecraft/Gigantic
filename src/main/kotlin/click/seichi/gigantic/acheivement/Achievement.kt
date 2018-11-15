@@ -46,7 +46,7 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.MANA_STONE,
             priority = UpdatePriority.HIGHEST),
     TELEPORT(101, {
-        false
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 2
     }, grantMessage = AchievementMessages.TELEPORT),
     QUEST(102, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3

@@ -133,7 +133,7 @@ object AchievementMessages {
                 it to "${ChatColor.YELLOW}" +
                         "テレポートができるようになった!!\n" +
                         "${ChatColor.GRAY}" +
-                        "任意の場所やプレイヤーにテレポートする\n" +
+                        "ランダムな場所やプレイヤーにテレポートする\n" +
                         "\"${SkillParameters.TELEPORT_KEY}\" キー を押してテレポート先を選択!!\n"
             }
     ))

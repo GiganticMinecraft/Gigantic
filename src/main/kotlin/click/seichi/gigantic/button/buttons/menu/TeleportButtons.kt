@@ -2,12 +2,15 @@ package click.seichi.gigantic.button.buttons.menu
 
 import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.menus.TeleportMenu
 import click.seichi.gigantic.menu.menus.TeleportToPlayerMenu
 import click.seichi.gigantic.message.messages.menu.TeleportMessages
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import click.seichi.gigantic.util.Random
 import org.bukkit.ChatColor
+import org.bukkit.Chunk
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -30,6 +33,38 @@ object TeleportButtons {
         override fun onClick(player: Player, event: InventoryClickEvent) {
             if (event.inventory.holder === TeleportToPlayerMenu) return
             TeleportToPlayerMenu.open(player)
+        }
+
+    }
+
+    val TELEPORT_TO_RANDOM_CHUNK = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.CHORUS_FRUIT).apply {
+                setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_RANDOM_CHUNK.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            var chunk: Chunk? = null
+            var count = 0
+            while (chunk == null && count++ < 20) {
+                chunk = randomChunk(player).let {
+                    if (it.isBattled || it.isSpawnArea) null else it
+                }
+            }
+            if (chunk == null) return
+            if (!chunk.isLoaded) {
+                if (chunk.load(true)) return
+            }
+            val location = chunk.getSpawnableLocation()
+            player.teleport(location)
+            PlayerSounds.TELEPORT.play(location)
+        }
+
+        private fun randomChunk(player: Player): Chunk {
+            val radius = Config.WORLD_SIDE_LENGTH.div(16).div(2).toInt()
+            return player.world.getChunkAt(Random.nextInt(-radius, radius), Random.nextInt(-radius, radius))
         }
 
     }
