@@ -3,7 +3,6 @@ package click.seichi.gigantic.button.buttons.menu
 import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.menus.QuestSelectMenu
-import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.QuestMenuMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.quest.QuestClient
@@ -26,7 +25,7 @@ object QuestButtons {
                     if (!client.isProcessed) {
                         type = Material.BOOK
                     }
-                    val titleColor = if (client.isProcessed) ChatColor.LIGHT_PURPLE else ChatColor.DARK_GRAY
+                    val titleColor = if (client.isProcessed) ChatColor.WHITE else ChatColor.DARK_GRAY
                     setDisplayName("$titleColor${ChatColor.BOLD}" +
                             client.quest.getTitle(player.wrappedLocale))
                     clearLore()
@@ -35,22 +34,26 @@ object QuestButtons {
                             ?.let {
                                 setLore(*it.toTypedArray())
                             }
+                    if (client.quest.monsterList.isNotEmpty()) {
+                        // 倒すモンスターの詳細
+                        addLore("${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                                QuestMenuMessages.MONSTER_LIST.asSafety(player.wrappedLocale)
+                        )
+                        if (client.isProcessed)
+                            addLore("${ChatColor.GRAY}" +
+                                    QuestMenuMessages.MONSTER_REASON.asSafety(player.wrappedLocale))
+                        client.quest.monsterList.forEachIndexed { index: Int, monster: SoulMonster ->
+                            val color = if (client.processedDegree > index) ChatColor.DARK_RED else ChatColor.WHITE
+                            addLore("$color - " + monster.getName(player.wrappedLocale))
+                        }
+                    }
+                    addLore(" ")
                     if (client.isProcessed) {
-                        addLore("${ChatColor.RED}${ChatColor.UNDERLINE}" +
+                        addLore("${ChatColor.RED}${ChatColor.UNDERLINE}${ChatColor.BOLD}" +
                                 QuestMenuMessages.PROCESS_ON.asSafety(player.wrappedLocale))
                     } else {
-                        addLore("${ChatColor.GREEN}${ChatColor.UNDERLINE}" +
+                        addLore("${ChatColor.GREEN}${ChatColor.UNDERLINE}${ChatColor.BOLD}" +
                                 QuestMenuMessages.PROCESS_OFF.asSafety(player.wrappedLocale))
-                    }
-                    if (client.quest.monsterList.isEmpty()) return@apply
-                    // 倒すモンスターの詳細
-                    addLore(
-                            "${ChatColor.WHITE}" + MenuMessages.LINE,
-                            "${ChatColor.YELLOW}" + QuestMenuMessages.MONSTER_LIST.asSafety(player.wrappedLocale)
-                    )
-                    client.quest.monsterList.forEachIndexed { index: Int, monster: SoulMonster ->
-                        val color = if (client.processedDegree > index) ChatColor.DARK_RED else ChatColor.WHITE
-                        addLore("$color" + monster.getName(player.wrappedLocale))
                     }
                 }
             }

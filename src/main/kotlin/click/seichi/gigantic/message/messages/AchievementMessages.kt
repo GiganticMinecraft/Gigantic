@@ -146,10 +146,12 @@ object AchievementMessages {
                         "メニューからクエストを選択!\n"
             }
     ))
+
     val QUEST_ORDER = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${Quest.COLOR}" +
                         "新しいクエストが発生しました。\n"
             }
     ))
+
 }
