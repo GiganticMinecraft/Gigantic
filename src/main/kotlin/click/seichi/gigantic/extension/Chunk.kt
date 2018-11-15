@@ -20,4 +20,4 @@ fun Chunk.forEachBlock(action: (Block) -> Unit) {
 }
 
 val Chunk.isBattled: Boolean
-    get() = BattleManager.getBattleSet().firstOrNull { it.chunk == this } != null
+    get() = BattleManager.findBattle(this) != null

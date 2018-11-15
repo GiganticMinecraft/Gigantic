@@ -15,6 +15,7 @@ import click.seichi.gigantic.sound.sounds.BattleSounds
 import org.bukkit.Chunk
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
+import java.util.*
 
 /**
  * @author tar0ss
@@ -25,6 +26,7 @@ class Battle internal constructor(
         val monster: SoulMonster,
         val quest: Quest?
 ) {
+    private val uuid = UUID.randomUUID()
     // 使用言語
     private val locale = spawner.wrappedLocale
     // 経過時間
@@ -46,7 +48,7 @@ class Battle internal constructor(
         enemy.spawn()
     }
 
-    fun disappearCondition(): Boolean {
+    private fun disappearCondition(): Boolean {
         when {
             !spawner.isValid -> return true
             spawner.location.distance(enemy.location) > 30.0 && !isStarted -> return true
@@ -88,6 +90,12 @@ class Battle internal constructor(
     }
 
     fun update() {
+
+        if (disappearCondition()) {
+            end()
+            return
+        }
+
         if (!isStarted) {
             if (elapsedTick % 8L == 0L)
                 MonsterSpiritAnimations.AMBIENT_EXHAUST(enemy.color).exhaust(
@@ -96,7 +104,7 @@ class Battle internal constructor(
                         meanY = 0.9
                 )
         }
-        MonsterSpiritAnimations.AMBIENT(enemy.color).start(enemy.location)
+        MonsterSpiritAnimations.AMBIENT(enemy.color).start(enemy.eyeLocation)
         enemy.update(elapsedTick)
         when (enemy.state) {
             SoulMonsterState.DEATH -> win()
@@ -108,7 +116,11 @@ class Battle internal constructor(
         elapsedTick++
     }
 
+    var isEnded: Boolean = false
+        private set
+
     fun end() {
+        isEnded = true
         players.toSet().forEach { leave(it) }
         enemy.remove()
     }
@@ -142,5 +154,14 @@ class Battle internal constructor(
 
     private fun lose() {
         end()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is Battle) return false
+        return this.uuid == other.uuid
+    }
+
+    override fun hashCode(): Int {
+        return this.uuid.hashCode()
     }
 }

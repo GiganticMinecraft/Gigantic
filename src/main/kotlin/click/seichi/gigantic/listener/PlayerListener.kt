@@ -61,6 +61,7 @@ class PlayerListener : Listener {
     // プレイヤーデータのロード
     @EventHandler
     fun onPlayerPreLoginAsync(event: AsyncPlayerPreLoginEvent) {
+        if (!Bukkit.getPluginManager().isPluginEnabled(Gigantic.PLUGIN)) return
         runBlocking {
             /**
              * 複数サーバで動かすと，ログアウト時の書き込みよりもログイン時の読込の方が早くなってしまい，

@@ -22,7 +22,6 @@ object BattleManager {
         battleSet.remove(battle)
     }
 
-    fun getBattleSet() = battleSet.toSet()
-
+    fun findBattle(chunk: Chunk) = battleSet.find { it.chunk == chunk }
 
 }

@@ -1,5 +1,6 @@
 package click.seichi.gigantic.button.buttons.menu
 
+import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.menus.QuestSelectMenu
@@ -60,8 +61,13 @@ object QuestButtons {
 
             override fun onClick(player: Player, event: InventoryClickEvent) {
                 client.isProcessed = !client.isProcessed
+
                 PlayerSounds.TOGGLE.playOnly(player)
                 QuestSelectMenu.reopen(player)
+
+                if (client.isProcessed) return
+
+                BattleManager.findBattle(player)?.end()
             }
 
         }

@@ -24,12 +24,12 @@ object BattleMessages {
     }
 
     val SPAWN = { monster: SoulMonster ->
-        ChatMessage(ChatMessageProtocol.CHAT,
+        ChatMessage(ChatMessageProtocol.ACTION_BAR,
                 LocalizedText(
                         Locale.JAPANESE.let {
-                            it to "${ChatColor.YELLOW}" +
+                            it to "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
                                     monster.getName(it) +
-                                    "が出現"
+                                    " が出現!!"
                         }
                 ))
     }
