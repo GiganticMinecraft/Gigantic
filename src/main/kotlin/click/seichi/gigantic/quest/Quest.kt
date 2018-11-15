@@ -78,6 +78,9 @@ enum class Quest(
 
         fun getOrderedList(player: Player) =
                 values().filter { it.isOrdered(player) }
+
+        fun getProcessedList(player: Player) =
+                values().filter { it.isProcessed(player) }
     }
 
     val monsterList = monsters.toList()
@@ -99,6 +102,12 @@ enum class Quest(
 
     fun isOrdered(player: Player): Boolean {
         return getClient(player)?.isOrdered ?: false
+    }
+
+    fun isProcessed(player: Player): Boolean {
+        return getClient(player)?.run {
+            isOrdered && isProcessed
+        } ?: false
     }
 
     // クエスト進行

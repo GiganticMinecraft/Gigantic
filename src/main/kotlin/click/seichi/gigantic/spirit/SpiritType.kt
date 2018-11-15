@@ -43,7 +43,6 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
     ),
     MONSTER(
             RandomSummonCase(0.02, BlockBreakEvent::class.java) { event ->
-                if (event.isCancelled) return@RandomSummonCase
                 val player = event.player ?: return@RandomSummonCase
                 val chunk = event.block.chunk ?: return@RandomSummonCase
                 if (!Achievement.QUEST.isGranted(player)) return@RandomSummonCase
@@ -51,7 +50,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
                 if (player.findBattle() != null) return@RandomSummonCase
                 // チャンクがバトル中なら終了
                 if (chunk.isBattled) return@RandomSummonCase
-                val quest = Quest.getOrderedList(player).firstOrNull { it.monsterList.isNotEmpty() }
+                val quest = Quest.getProcessedList(player).firstOrNull { it.monsterList.isNotEmpty() }
                         ?: return@RandomSummonCase
                 val client = quest.getClient(player) ?: return@RandomSummonCase
                 val monster = quest.monsterList.getOrNull(client.processedDegree) ?: return@RandomSummonCase

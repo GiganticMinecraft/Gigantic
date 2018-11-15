@@ -16,4 +16,12 @@ object QuestMenuMessages {
             Locale.JAPANESE to "出現モンスター"
     )
 
+    val PROCESS_ON = LocalizedText(
+            Locale.JAPANESE to "クリックで一時中断"
+    )
+
+    val PROCESS_OFF = LocalizedText(
+            Locale.JAPANESE to "クリックで再開"
+    )
+
 }
