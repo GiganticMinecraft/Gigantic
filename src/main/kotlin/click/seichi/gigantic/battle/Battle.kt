@@ -2,9 +2,7 @@ package click.seichi.gigantic.battle
 
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
-import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.RelicMessages
@@ -127,13 +125,14 @@ class Battle internal constructor(
 
     private fun win() {
         BattleSounds.WIN.play(enemy.eyeLocation)
-        players.forEach { BattleMessages.WIN(monster).sendTo(it) }
+        players.forEach {
+            BattleMessages.WIN(monster).sendTo(it)
+            enemy.defeatedBy(it)
+        }
         quest?.process(spawner, monster)
         enemy.randomDrops()?.let { drop ->
             players.forEach { player ->
-                player.transform(Keys.RELIC_MAP[drop.relic]!!) {
-                    it + 1
-                }
+                drop.relic.dropTo(player)
                 RelicMessages.DROP(drop).sendTo(player)
                 Achievement.update(player, false)
             }

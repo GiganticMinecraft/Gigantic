@@ -1,5 +1,7 @@
 package click.seichi.gigantic.monster
 
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.MonsterMessages
@@ -10,6 +12,7 @@ import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
 import org.bukkit.Color
 import org.bukkit.Material
+import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.util.*
 import kotlin.reflect.KClass
@@ -165,6 +168,10 @@ enum class SoulMonster(
     val dropRelicSet = dropRelic.toSet()
 
     fun createAIInstance() = aiClass.createInstance()
+
+    fun defeatedBy(player: Player) {
+        player.transform(Keys.SOUL_MONSTER[this] ?: return) { it + 1 }
+    }
 
     data class DropRelic(
             val relic: Relic,

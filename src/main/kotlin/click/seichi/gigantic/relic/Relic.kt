@@ -1,9 +1,12 @@
 package click.seichi.gigantic.relic
 
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.RelicMessages
 import org.bukkit.Material
+import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
@@ -38,5 +41,9 @@ enum class Relic(
     fun getLore(locale: Locale) = localizedLore?.map { it.asSafety(locale) }
 
     fun getIcon() = icon.clone()
+
+    fun dropTo(player: Player) {
+        player.transform(Keys.RELIC_MAP[this] ?: return) { it + 1 }
+    }
 
 }

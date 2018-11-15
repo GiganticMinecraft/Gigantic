@@ -42,11 +42,11 @@ enum class Achievement(
 
     // systems
     MANA_STONE(100, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+        false
     }, grantMessage = AchievementMessages.MANA_STONE,
             priority = UpdatePriority.HIGHEST),
     TELEPORT(101, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 15
+        false
     }, grantMessage = AchievementMessages.TELEPORT),
     QUEST(102, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
@@ -56,7 +56,7 @@ enum class Achievement(
 
     // wills
     WILL_BASIC_1(150, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 14
+        false
     }, action = { player ->
         player.manipulate(CatalogPlayerCache.APTITUDE) { willAptitude ->
             willAptitude.addRandomIfNeeded(WillGrade.BASIC, 1)?.let {
@@ -77,25 +77,25 @@ enum class Achievement(
     // spells
     SPELL_STELLA_CLAIR(300, {
         MANA_STONE.isGranted(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+                false
     }, grantMessage = AchievementMessages.UNLOCK_STELLA_CLAIR),
     SPELL_TERRA_DRAIN(301, {
         MANA_STONE.isGranted(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+                false
     }, grantMessage = AchievementMessages.UNLOCK_TERRA_DRAIN),
     SPELL_GRAND_NATURA(302, {
         MANA_STONE.isGranted(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 14
+                false
     }, grantMessage = AchievementMessages.UNLOCK_GRAND_NATURA),
 
     SPELL_AQUA_LINEA(303, {
         MANA_STONE.isGranted(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 18
+                false
     }, grantMessage = AchievementMessages.UNLOCK_AQUA_LINEA),
 
     // quest order
     QUEST_LADON_ORDER(400, {
-        MANA_STONE.isGranted(it)
+        false
     }, action = {
         Quest.LADON.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),

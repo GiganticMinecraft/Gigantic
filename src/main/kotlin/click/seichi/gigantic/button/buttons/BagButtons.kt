@@ -197,4 +197,34 @@ object BagButtons {
 
     }
 
+
+    val SOUL_MONSTER = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            if (!Achievement.QUEST.isGranted(player)) return null
+            return ItemStack(Material.WRITABLE_BOOK).apply {
+                if (Quest.getOrderedList(player).isEmpty()) {
+                    setDisplayName("${ChatColor.GRAY}${ChatColor.UNDERLINE}"
+                            + BagMessages.NO_QUEST.asSafety(player.wrappedLocale))
+                } else {
+                    setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                            + BagMessages.QUEST.asSafety(player.wrappedLocale))
+                }
+                clearLore()
+                itemMeta = itemMeta.apply {
+                    addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                    addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
+                }
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (Quest.getOrderedList(player).isEmpty()) return
+            if (event.inventory.holder === QuestSelectMenu) return
+            QuestSelectMenu.open(player)
+        }
+
+    }
+
 }

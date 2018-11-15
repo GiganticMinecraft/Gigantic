@@ -260,4 +260,8 @@ class BattleMonster(
         return monster.dropRelicSet.firstOrNull { it.probability > Random.nextDouble() }
     }
 
+    fun defeatedBy(player: Player) {
+        monster.defeatedBy(player)
+    }
+
 }
