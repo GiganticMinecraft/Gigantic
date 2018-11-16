@@ -200,5 +200,5 @@ enum class Achievement(
 
     private fun canGrant(player: Player) = canGranting(player)
 
-    fun isGranted(player: Player) = canGrant(player) && player.getOrPut(Keys.ACHIEVEMENT_MAP[this]!!)
+    fun isGranted(player: Player) = canGrant(player) && Keys.ACHIEVEMENT_MAP[this]?.let { player.getOrPut(it) } ?: false
 }
