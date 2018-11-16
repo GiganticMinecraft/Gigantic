@@ -125,7 +125,7 @@ class PlayerListener : Listener {
                 false
         ))
 
-        Achievement.update(player, true)
+        Achievement.update(player)
     }
 
     // プレイヤーのメニュー以外のインベントリーオープンをキャンセル

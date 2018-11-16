@@ -147,7 +147,7 @@ class Battle internal constructor(
             players.forEach { player ->
                 drop.relic.dropTo(player)
                 RelicMessages.DROP(drop).sendTo(player)
-                Achievement.update(player, false)
+                Achievement.update(player)
             }
         }
         end()

@@ -147,10 +147,10 @@ enum class Achievement(
     }
 
     companion object {
-        fun update(player: Player, isAction: Boolean = false) {
+        fun update(player: Player) {
             values().sortedBy { it -> it.priority.amount }
                     .forEach {
-                        it.update(player, isAction)
+                        it.update(player)
                     }
             player.getOrPut(Keys.BELT).wear(player)
             player.getOrPut(Keys.BAG).carry(player)
@@ -164,14 +164,9 @@ enum class Achievement(
     }
 
 
-    private fun update(player: Player, isAction: Boolean) {
+    private fun update(player: Player) {
         if (canGrant(player)) {
-            if (isGranted(player)) {
-                // 現在も解除可能で既に解除済みの時
-                if (isAction) {
-                    action
-                }
-            } else {
+            if (!isGranted(player)) {
                 // 現在も解除可能で解除していない時
                 grant(player)
             }
