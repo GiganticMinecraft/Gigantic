@@ -182,7 +182,7 @@ class BattleMonster(
         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
             state = SoulMonsterState.MOVE
             destination = ai.searchDestination(chunk, attackTarget, location)
-        }, monster.parameter.attackTimes * 10L)
+        }, monster.parameter.attackTimes * 10L + 10L)
 
         state = SoulMonsterState.WAIT
     }

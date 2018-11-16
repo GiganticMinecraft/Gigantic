@@ -3,6 +3,7 @@ package click.seichi.gigantic.cache.key
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.bag.Bag
 import click.seichi.gigantic.bag.bags.MainBag
+import click.seichi.gigantic.battle.Battle
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.manipulator.MineBlockReason
@@ -560,5 +561,14 @@ object Keys {
                 }
             }
             .toMap()
+
+    val LAST_BATTLE = object : Key<PlayerCache, Battle?> {
+        override val default: Battle?
+            get() = null
+
+        override fun satisfyWith(value: Battle?): Boolean {
+            return true
+        }
+    }
 
 }

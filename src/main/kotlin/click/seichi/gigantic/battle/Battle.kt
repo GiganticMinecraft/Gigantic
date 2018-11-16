@@ -2,7 +2,9 @@ package click.seichi.gigantic.battle
 
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.RelicMessages
@@ -85,17 +87,16 @@ class Battle internal constructor(
         enemy.awake()
         players.forEach {
             BattleSounds.START.playOnly(it)
+            it.offer(Keys.LAST_BATTLE, null)
         }
         isStarted = true
     }
 
     fun update() {
-
         if (disappearCondition()) {
             end()
             return
         }
-
         if (!isStarted) {
             if (elapsedTick % 8L == 0L)
                 MonsterSpiritAnimations.AMBIENT_EXHAUST(enemy.color).exhaust(
@@ -153,6 +154,9 @@ class Battle internal constructor(
     }
 
     private fun lose() {
+        players.forEach {
+            it.offer(Keys.LAST_BATTLE, this)
+        }
         end()
     }
 

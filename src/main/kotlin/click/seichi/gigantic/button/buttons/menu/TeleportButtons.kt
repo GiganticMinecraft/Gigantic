@@ -69,6 +69,27 @@ object TeleportButtons {
 
     }
 
+    val TELEPORT_TO_BATTLE_CHUNK = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            val lastBattle = player.getOrPut(Keys.LAST_BATTLE) ?: return null
+            return lastBattle.monster.getIcon().apply {
+                setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_BATTLE_CHUNK.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            val lastBattle = player.getOrPut(Keys.LAST_BATTLE) ?: return
+            val chunk = lastBattle.chunk
+            chunk.load(true)
+            val location = chunk.getSpawnableLocation()
+            player.teleport(location)
+            PlayerSounds.TELEPORT.play(location)
+
+        }
+
+    }
+
     val TELEPORT_TOGGLE = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {

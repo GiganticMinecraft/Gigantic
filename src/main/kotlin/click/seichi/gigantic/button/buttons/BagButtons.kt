@@ -75,9 +75,10 @@ object BagButtons {
     val SKILL = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.BLAZE_POWDER).apply {
+            return ItemStack(Material.FLINT_AND_STEEL).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}" +
                         SkillMenuMessages.TITLE.asSafety(player.wrappedLocale))
+                hideAllFlag()
             }
         }
 

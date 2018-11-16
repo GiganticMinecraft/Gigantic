@@ -37,6 +37,14 @@ fun ItemStack.addLore(vararg lore: String) {
     }
 }
 
+fun ItemStack.hideAllFlag() {
+    itemMeta = itemMeta.also { meta ->
+        ItemFlag.values().forEach {
+            meta.addItemFlags(it)
+        }
+    }
+}
+
 fun ItemStack.setEnchanted(flag: Boolean) {
     itemMeta = itemMeta.also { meta ->
         when (flag) {
