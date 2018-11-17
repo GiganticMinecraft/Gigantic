@@ -208,16 +208,15 @@ class BattleMonster(
 
         attackBlocks.add(attackBlock)
 
-        Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-            if (!entity.isValid || !player.isValid) return@runTaskLater
+        Bukkit.getScheduler().runTaskTimer(Gigantic.PLUGIN, {
+            if (!entity.isValid || !player.isValid) return@runTaskTimer
 
-            if (block.isEmpty) return@runTaskLater
+            if (block.isEmpty || !attackBlocks.contains(attackBlock)) return@runTaskTimer
 
             // effects
-            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation.add(0.0, 0.5, 0.0), 20, attackBlockData)
+            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation.add(0.0, 0.5, 0.0), 3, attackBlockData)
             player.sendBlockChange(block.location, attackBlockData)
-
-        }, 20L)
+        }, 20L, 1L)
 
         // attack
         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
