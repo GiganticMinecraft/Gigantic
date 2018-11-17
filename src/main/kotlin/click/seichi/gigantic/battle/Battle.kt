@@ -14,7 +14,6 @@ import click.seichi.gigantic.popup.pops.BattlePops
 import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.sound.sounds.BattleSounds
-import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
@@ -109,7 +108,6 @@ class Battle internal constructor(
         MonsterSpiritAnimations.AMBIENT(enemy.color).start(enemy.eyeLocation)
         enemy.update(elapsedTick)
 
-        Bukkit.getConsoleSender().sendMessage("${enemy.state}")
         when (enemy.state) {
             SoulMonsterState.DEATH -> win()
             SoulMonsterState.DISAPPEAR -> end()
