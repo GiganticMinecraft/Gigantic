@@ -1,5 +1,6 @@
 package click.seichi.gigantic.acheivement
 
+import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
@@ -28,12 +29,12 @@ enum class Achievement(
     // messages
     JOIN_SERVER(0, { true }, action = { player ->
         player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
-            it.unlock(click.seichi.gigantic.belt.Belt.DIG)
-            it.unlock(click.seichi.gigantic.belt.Belt.MINE)
-            it.unlock(click.seichi.gigantic.belt.Belt.CUT)
-            it.setCanSwitch(click.seichi.gigantic.belt.Belt.DIG, true)
-            it.setCanSwitch(click.seichi.gigantic.belt.Belt.MINE, true)
-            it.setCanSwitch(click.seichi.gigantic.belt.Belt.CUT, true)
+            it.unlock(Belt.DIG)
+            it.unlock(Belt.MINE)
+            it.unlock(Belt.CUT)
+            it.setCanSwitch(Belt.DIG, true)
+            it.setCanSwitch(Belt.MINE, true)
+            it.setCanSwitch(Belt.CUT, true)
         }
     }, grantMessage = AchievementMessages.FIRST_JOIN),
     FIRST_LEVEL_UP(1, {
