@@ -12,7 +12,7 @@ import java.util.*
 object TeleportMessages {
 
     val TITLE = LocalizedText(
-            Locale.JAPANESE to "テレポート対象を選択"
+            Locale.JAPANESE to "プレイヤーを選択"
     )
 
     val TELEPORT_TO_PLAYER = LocalizedText(
@@ -20,11 +20,11 @@ object TeleportMessages {
     )
 
     val TELEPORT_TO_RANDOM_CHUNK = LocalizedText(
-            Locale.JAPANESE to "ランダムな場所にテレポート"
+            Locale.JAPANESE to "ランダムな場所へ"
     )
 
     val TELEPORT_TO_BATTLE_CHUNK = LocalizedText(
-            Locale.JAPANESE to "最後に戦闘していた場所へテレポート"
+            Locale.JAPANESE to "最後に戦闘していた場所へ"
     )
 
     val TELEPORT_TO_PLAYER_TITLE = LocalizedText(
