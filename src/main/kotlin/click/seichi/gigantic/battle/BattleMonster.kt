@@ -166,12 +166,13 @@ class BattleMonster(
     fun getAttackBlocks() = attackBlocks.toSet()
 
     private fun attack(elapsedTick: Long) {
-        (1..monster.parameter.attackTimes).forEachIndexed { index, _ ->
+        // set attack blocks
+        (1..monster.parameter.attackTimes).forEach { index ->
             Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
                 val attackBlock = ai.getAttackBlock(chunk, getAttackBlocks(), attackTarget, elapsedTick)
                 if (attackBlock == null) {
                     disappearCount++
-                    if (disappearCount > 10) {
+                    if (disappearCount > 5 * monster.parameter.attackTimes) {
                         state = SoulMonsterState.DISAPPEAR
                     }
                     return@runTaskLater
@@ -182,8 +183,7 @@ class BattleMonster(
         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
             state = SoulMonsterState.MOVE
             destination = ai.searchDestination(chunk, attackTarget, location)
-        }, monster.parameter.attackTimes * 10L + 10L)
-
+        }, monster.parameter.attackTimes * 10L)
         state = SoulMonsterState.WAIT
     }
 

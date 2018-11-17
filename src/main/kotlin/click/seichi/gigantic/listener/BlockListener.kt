@@ -1,11 +1,9 @@
 package click.seichi.gigantic.listener
 
-import org.bukkit.Material
 import org.bukkit.entity.FallingBlock
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockFromToEvent
-import org.bukkit.event.block.BlockSpreadEvent
 import org.bukkit.event.entity.EntityChangeBlockEvent
 
 /**
@@ -29,15 +27,6 @@ class BlockListener : Listener {
         if (block.type == material) {
             event.isCancelled = true
         }
-    }
-
-    // 芝生の増殖を抑止
-    @EventHandler
-    fun onBlockSpread(event: BlockSpreadEvent) {
-        if (event.isCancelled) return
-        if (event.newState.type != Material.GRASS_BLOCK) return
-        event.isCancelled = true
-
     }
 
 }

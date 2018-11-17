@@ -113,9 +113,14 @@ object PlayerMessages {
                     "スポーン地点に近いため、保護されています"
     ))
 
-    val BATTLE = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val BATTLE_ANOTHER_PLAYER = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
                     "他のプレイヤーがバトル中です"
+    ))
+
+    val BREAK_NOT_BATTLE_CHUNK = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "バトル中は敵のいるチャンクしか掘れません"
     ))
 
 

@@ -23,13 +23,23 @@ class BattleListener : Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    fun cancelIfAnotherBattleChunk(event: BlockBreakEvent) {
+    fun cancelAnotherBattleChunk(event: BlockBreakEvent) {
         val block = event.block ?: return
         val player = event.player ?: return
         val battle = block.findBattle() ?: return
         if (battle.isJoined(player) || battle.spawner == player) return
         event.isCancelled = true
-        PlayerMessages.BATTLE.sendTo(player)
+        PlayerMessages.BATTLE_ANOTHER_PLAYER.sendTo(player)
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    fun cancelAnotherChunk(event: BlockBreakEvent) {
+        val block = event.block ?: return
+        val player = event.player ?: return
+        val battle = block.findBattle() ?: return
+        if (!battle.isJoined(player) || battle.chunk == block.chunk) return
+        event.isCancelled = true
+        PlayerMessages.BREAK_NOT_BATTLE_CHUNK.sendTo(player)
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
