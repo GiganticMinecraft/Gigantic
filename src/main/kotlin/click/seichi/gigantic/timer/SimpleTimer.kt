@@ -44,15 +44,18 @@ open class SimpleTimer : Timer {
     override fun start() {
         remainTimeToFire = coolTime
         onStart()
+        if (isCancelled) {
+            end()
+            return
+        }
 
         object : BukkitRunnable() {
             var elapsedSeconds = 0L
             override fun run() {
                 remainTimeToFire = coolTime.minus(elapsedSeconds)
                 onCooldown(remainTimeToFire)
-                elapsedSeconds++
 
-                if (elapsedSeconds <= coolTime && !isCancelled) return
+                if (elapsedSeconds++ <= coolTime && !isCancelled) return
                 cancel()
                 end()
             }
