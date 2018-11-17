@@ -7,6 +7,7 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.monster.SoulMonster
@@ -251,6 +252,7 @@ class BattleMonster(
                     player.offer(Keys.DEATH_MESSAGE, DeathMessages.BY_MONSTER(player.name, monster))
                 }
                 PlayerMessages.HEALTH_DISPLAY(health).sendTo(player)
+                BattleMessages.DAMEGE(monster, monster.parameter.attackDamage).sendTo(player)
             }
             // effects
             SoulMonsterSounds.ATTACK.play(block.centralLocation)

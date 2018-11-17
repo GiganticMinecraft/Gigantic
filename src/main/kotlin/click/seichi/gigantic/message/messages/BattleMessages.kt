@@ -13,7 +13,7 @@ import java.util.*
 object BattleMessages {
 
     val WIN = { monster: SoulMonster ->
-        ChatMessage(ChatMessageProtocol.CHAT,
+        ChatMessage(ChatMessageProtocol.ACTION_BAR,
                 LocalizedText(
                         Locale.JAPANESE.let {
                             it to "${ChatColor.YELLOW}" +
@@ -30,6 +30,17 @@ object BattleMessages {
                             it to "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
                                     monster.getName(it) +
                                     " が出現!!"
+                        }
+                ))
+    }
+
+    val DAMEGE = { monster: SoulMonster, damage: Long ->
+        ChatMessage(ChatMessageProtocol.ACTION_BAR,
+                LocalizedText(
+                        Locale.JAPANESE.let {
+                            it to "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
+                                    monster.getName(it) +
+                                    " から $damage のダメージを受けた"
                         }
                 ))
     }

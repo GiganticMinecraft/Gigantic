@@ -36,8 +36,8 @@ class BattleListener : Listener {
     fun cancelAnotherChunk(event: BlockBreakEvent) {
         val block = event.block ?: return
         val player = event.player ?: return
-        val battle = block.findBattle() ?: return
-        if (!battle.isJoined(player) || battle.chunk == block.chunk) return
+        val battle = player.findBattle() ?: return
+        if (battle.chunk == block.chunk) return
         event.isCancelled = true
         PlayerMessages.BREAK_NOT_BATTLE_CHUNK.sendTo(player)
     }
