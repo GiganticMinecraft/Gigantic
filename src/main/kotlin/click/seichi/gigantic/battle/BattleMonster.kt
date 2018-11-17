@@ -13,6 +13,7 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.ai.AttackBlock
 import click.seichi.gigantic.monster.ai.SoulMonsterState
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SoulMonsterSounds
 import click.seichi.gigantic.topbar.bars.BattleBars
 import click.seichi.gigantic.util.Random
@@ -252,6 +253,7 @@ class BattleMonster(
                     player.offer(Keys.DEATH_MESSAGE, DeathMessages.BY_MONSTER(player.name, monster))
                 }
                 PlayerMessages.HEALTH_DISPLAY(health).sendTo(player)
+                PlayerSounds.INJURED.play(player.location)
                 BattleMessages.DAMEGE(monster, monster.parameter.attackDamage).sendTo(player)
             }
             // effects
