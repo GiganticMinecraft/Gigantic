@@ -44,6 +44,7 @@ open class Miner : Breaker {
         // bedrock process
         block.changeRelativeBedrock()
 
+        if (!block.isCrust) return
         // carry player cache
         player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
             it.add(1L)

@@ -4,10 +4,7 @@ package click.seichi.gigantic.spirit
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.find
-import click.seichi.gigantic.extension.findBattle
-import click.seichi.gigantic.extension.isBattled
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.spirit.SpiritManager.spawn
 import click.seichi.gigantic.spirit.spawnreason.MonsterSpawnReason
@@ -35,6 +32,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
     WILL(
             RandomSummonCase(0.05, BlockBreakEvent::class.java) { event ->
                 val player = event.player ?: return@RandomSummonCase
+                if (!event.block.isCrust) return@RandomSummonCase
                 if (!Achievement.WILL_BASIC_1.isGranted(player)) return@RandomSummonCase
                 val aptitudeSet = player.find(CatalogPlayerCache.APTITUDE)?.copySet() ?: return@RandomSummonCase
                 val will = aptitudeSet.shuffled().firstOrNull() ?: return@RandomSummonCase
@@ -44,6 +42,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
     MONSTER(
             RandomSummonCase(0.02, BlockBreakEvent::class.java) { event ->
                 val player = event.player ?: return@RandomSummonCase
+                if (!event.block.isCrust) return@RandomSummonCase
                 val chunk = event.block.chunk ?: return@RandomSummonCase
                 if (!Achievement.QUEST.isGranted(player)) return@RandomSummonCase
                 // 他のバトルに参加している場合は終了

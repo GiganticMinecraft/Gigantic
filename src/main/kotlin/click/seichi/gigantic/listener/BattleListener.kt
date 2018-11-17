@@ -1,6 +1,7 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.extension.findBattle
+import click.seichi.gigantic.extension.isCrust
 import click.seichi.gigantic.message.messages.PlayerMessages
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -36,6 +37,7 @@ class BattleListener : Listener {
         val block = event.block ?: return
         val player = event.player ?: return
         val battle = player.findBattle() ?: return
+        if (!battle.isStarted) return
         if (battle.chunk == block.chunk) return
         event.isCancelled = true
         PlayerMessages.BREAK_NOT_BATTLE_CHUNK.sendTo(player)
@@ -46,8 +48,8 @@ class BattleListener : Listener {
         if (event.isCancelled) return
         val block = event.block ?: return
         val player = event.player ?: return
+        if (!block.isCrust) return
         val battle = player.findBattle() ?: return
-        if (!battle.isStarted) return
         if (battle.chunk == block.chunk)
             battle.tryAttack(player, block)
     }

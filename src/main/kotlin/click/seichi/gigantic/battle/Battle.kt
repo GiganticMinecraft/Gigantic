@@ -156,6 +156,7 @@ class Battle internal constructor(
     }
 
     fun tryAttack(player: Player, block: Block) {
+        if (!isStarted) return
         val damage = 1.toBigDecimal()
         val trueDamage = enemy.damageByPlayer(player, damage)
         BattlePops.BATTLE_DAMAGE(trueDamage).pop(block.centralLocation, diffY = PopUpParameters.BATTLE_DAMAGE_DIFF)
