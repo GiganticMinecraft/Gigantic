@@ -12,7 +12,6 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.ai.AttackBlock
 import click.seichi.gigantic.monster.ai.SoulMonsterState
-import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SoulMonsterSounds
 import click.seichi.gigantic.topbar.bars.BattleBars
 import click.seichi.gigantic.util.Random
@@ -21,6 +20,7 @@ import org.bukkit.block.Block
 import org.bukkit.boss.BossBar
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
+import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.EulerAngle
 import java.math.BigDecimal
 import java.util.*
@@ -107,8 +107,7 @@ class BattleMonster(
         bossBar.removeAll()
         entity.remove()
         attackBlocks.forEach {
-            it.target.sendBlockChange(it.block.location,
-                    Bukkit.createBlockData(it.block.type))
+            it.target.sendBlockChange(it.block.location, it.block.blockData)
         }
     }
 
@@ -191,7 +190,7 @@ class BattleMonster(
         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
             state = SoulMonsterState.MOVE
             destination = ai.searchDestination(chunk, attackTarget, location)
-        }, monster.parameter.attackTimes * 10L + 120L + 1L)
+        }, monster.parameter.attackTimes * 10L + 60L)
         state = SoulMonsterState.WAIT
     }
 
@@ -208,15 +207,35 @@ class BattleMonster(
 
         attackBlocks.add(attackBlock)
 
-        Bukkit.getScheduler().runTaskTimer(Gigantic.PLUGIN, {
-            if (!entity.isValid || !player.isValid) return@runTaskTimer
+        object : BukkitRunnable() {
+            var ticks = 0L
+            override fun run() {
+                if (ticks++ > 100L) {
+                    if (player.isOnline) {
+                        player.sendBlockChange(block.location, block.blockData)
+                    }
+                    cancel()
+                    return
+                }
 
-            if (block.isEmpty || !attackBlocks.contains(attackBlock)) return@runTaskTimer
+                if (!entity.isValid || !player.isValid) return
 
-            // effects
-            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation.add(0.0, 0.5, 0.0), 3, attackBlockData)
-            player.sendBlockChange(block.location, attackBlockData)
-        }, 20L, 1L)
+                if (block.isEmpty || !attackBlocks.contains(attackBlock)) {
+                    player.sendBlockChange(block.location, block.blockData)
+                    return
+                }
+
+                // effects
+                MonsterSpiritAnimations.ATTACK_READY_BLOCK(attackBlockData)
+                        .start(block.centralLocation)
+                player.sendBlockChange(block.location, attackBlockData)
+                if (ticks % 10 == 0L) {
+                    SoulMonsterSounds.ATTACK_READY_SUB.play(block.centralLocation)
+                }
+
+            }
+
+        }.runTaskTimer(Gigantic.PLUGIN, 20, 1L)
 
         // attack
         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
@@ -235,8 +254,6 @@ class BattleMonster(
             }
             // effects
             SoulMonsterSounds.ATTACK.play(block.centralLocation)
-            PlayerSounds.INJURED.play(player.location)
-            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation, 20, attackBlockData)
 
             block.type = Material.AIR
         }, 20L + 100L)

@@ -40,7 +40,7 @@ object SoulMonsterSounds {
     val ATTACK_READY_SUB = DetailedSound(
             Sound.ENTITY_HORSE_AMBIENT,
             SoundCategory.HOSTILE,
-            pitch = 0.1F,
+            pitch = 0.6F,
             volume = 0.5F
     )
 
@@ -48,7 +48,7 @@ object SoulMonsterSounds {
             Sound.ENTITY_EVOKER_CAST_SPELL,
             SoundCategory.HOSTILE,
             pitch = 0.6F,
-            volume = 0.5F
+            volume = 0.8F
     )
 
     val DEFENCE = DetailedSound(
