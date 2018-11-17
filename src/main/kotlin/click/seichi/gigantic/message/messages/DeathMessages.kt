@@ -9,9 +9,9 @@ import java.util.*
  */
 object DeathMessages {
 
-    val BY_MONSTER = { monster: SoulMonster ->
+    val BY_MONSTER = { name: String, monster: SoulMonster ->
         LocalizedText(
-                Locale.JAPANESE.let { it to "${monster.getName(it)}に殺された..." }
+                Locale.JAPANESE.let { it to "$name は ${monster.getName(it)} に倒された..." }
         )
     }
 

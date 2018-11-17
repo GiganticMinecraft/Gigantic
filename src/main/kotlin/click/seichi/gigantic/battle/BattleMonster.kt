@@ -222,7 +222,7 @@ class BattleMonster(
             player.manipulate(CatalogPlayerCache.HEALTH) { health ->
                 health.decrease(monster.parameter.attackDamage)
                 if (health.isZero) {
-                    player.offer(Keys.DEATH_MESSAGE, DeathMessages.BY_MONSTER(monster))
+                    player.offer(Keys.DEATH_MESSAGE, DeathMessages.BY_MONSTER(player.name, monster))
                     state = SoulMonsterState.KILL_SPAWNER
                 }
                 PlayerMessages.HEALTH_DISPLAY(health).sendTo(player)
