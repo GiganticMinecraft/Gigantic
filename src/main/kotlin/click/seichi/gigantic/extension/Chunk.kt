@@ -7,7 +7,6 @@ import org.bukkit.Chunk
 import org.bukkit.GameRule
 import org.bukkit.Location
 import org.bukkit.block.Block
-import org.bukkit.block.BlockFace
 import kotlin.math.abs
 
 /**
@@ -38,8 +37,5 @@ fun Chunk.getSpawnableLocation(): Location {
     val x = Random.nextInt(15)
     val z = Random.nextInt(15)
     var block: Block = getBlock(x, 255, z)
-    while (!block.isSurface && block.y > 1) {
-        block = block.getRelative(BlockFace.DOWN)
-    }
-    return block.centralLocation.add(0.0, 2.0, 0.0)
+    return block.surfaceBlock.centralLocation.add(0.0, 2.0, 0.0)
 }

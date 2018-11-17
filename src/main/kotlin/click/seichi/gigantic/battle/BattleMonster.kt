@@ -277,7 +277,10 @@ class BattleMonster(
         if (health == 0.toBigDecimal()) {
             state = SoulMonsterState.DEATH
         }
-        BattleBars.AWAKE(health, monster, locale).show(bossBar)
+        if (trueDamage > 0.toBigDecimal()) {
+            BattleBars.AWAKE(health, monster, locale).show(bossBar)
+            MonsterSpiritAnimations.DAMAGE_FROM_PLAYER.start(eyeLocation)
+        }
         return trueDamage
     }
 

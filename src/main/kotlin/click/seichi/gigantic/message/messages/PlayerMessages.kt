@@ -1,10 +1,11 @@
 package click.seichi.gigantic.message.messages
 
-import click.seichi.gigantic.cache.manipulator.manipulators.*
+import click.seichi.gigantic.cache.manipulator.manipulators.Health
+import click.seichi.gigantic.cache.manipulator.manipulators.Level
+import click.seichi.gigantic.cache.manipulator.manipulators.Mana
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.*
 import click.seichi.gigantic.player.Defaults
-import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.math.BigDecimal
@@ -15,29 +16,6 @@ import java.util.*
  */
 object PlayerMessages {
 
-    val MEMORY_SIDEBAR = { memory: Memory, aptitude: WillAptitude, isForced: Boolean ->
-        val willMap = Will.values()
-                .filter { aptitude.has(it) }
-                .map { it to (memory.get(it)) }.toMap()
-        SideBarMessage(
-                "memory",
-                LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.DARK_GREEN}" +
-                                "遺志の記憶"
-                ),
-                willMap.keys.map { will ->
-                    SideBarRow.getRowById(will.id) to LocalizedText(
-                            Locale.JAPANESE.let {
-                                it to "${ChatColor.GREEN}" +
-                                        "${will.localizedName.asSafety(it)} : " +
-                                        "${ChatColor.RESET}${ChatColor.WHITE}" +
-                                        "${willMap[will] ?: 0}個${ChatColor.RESET}"
-                            }
-                    )
-                }.toMap()
-                , isForced
-        )
-    }
 
     val EXP_BAR_DISPLAY = { level: Level ->
         val expToLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L

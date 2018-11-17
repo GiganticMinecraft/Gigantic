@@ -78,4 +78,12 @@ object MonsterSpiritAnimations {
         }
     }
 
+    val DAMAGE_FROM_PLAYER = Animation(1) { location, l ->
+        location.world.spawnParticle(
+                Particle.DAMAGE_INDICATOR,
+                location,
+                1
+        )
+    }
+
 }

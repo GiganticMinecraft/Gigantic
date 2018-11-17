@@ -4,7 +4,7 @@ import click.seichi.gigantic.animation.animations.WillSpiritAnimations
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.manipulate
-import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
 import click.seichi.gigantic.sound.sounds.WillSpiritSounds
 import click.seichi.gigantic.spirit.Sensor
@@ -55,7 +55,7 @@ class WillSpirit(
                 player.manipulate(CatalogPlayerCache.MEMORY) {
                     it.add(will, willSize.memory.toLong())
                 }
-                PlayerMessages.MEMORY_SIDEBAR(
+                SideBarMessages.MEMORY_SIDEBAR(
                         player.find(CatalogPlayerCache.MEMORY) ?: return@Sensor,
                         player.find(CatalogPlayerCache.APTITUDE) ?: return@Sensor,
                         false

@@ -7,6 +7,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
@@ -156,7 +157,7 @@ enum class Achievement(
             player.getOrPut(Keys.BELT).wear(player)
             player.getOrPut(Keys.BAG).carry(player)
             player.updateInventory()
-            PlayerMessages.MEMORY_SIDEBAR(
+            SideBarMessages.MEMORY_SIDEBAR(
                     player.find(CatalogPlayerCache.MEMORY) ?: return,
                     player.find(CatalogPlayerCache.APTITUDE) ?: return,
                     true

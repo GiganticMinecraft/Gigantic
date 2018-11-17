@@ -35,8 +35,7 @@ val Block.isSurface
     else (1..3).firstOrNull {
         val block = getRelative(0, it, 0)
         !Gigantic.AIRS.contains(block.type) && !block.isPassable
-    }
-            ?.let { false } ?: true
+    }?.let { false } ?: true
 
 
 val Block.centralLocation: Location
@@ -98,3 +97,12 @@ val Block.isSpawnArea: Boolean
     get() = chunk.isSpawnArea
 
 fun Block.findBattle() = BattleManager.findBattle(chunk)
+
+val Block.surfaceBlock: Block
+    get() {
+        var block = world.getBlockAt(x, 255, z)
+        while (!block.isSurface && block.y > 1) {
+            block = block.getRelative(BlockFace.DOWN)
+        }
+        return block
+    }
