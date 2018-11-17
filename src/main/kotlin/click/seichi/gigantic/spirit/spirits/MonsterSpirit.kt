@@ -55,17 +55,16 @@ class MonsterSpirit(
     }
 
     override fun onRender() {
-        battle.getJoinedPlayers().filter { !it.isValid }
-                .forEach { battle.leave(it) }
         if (!battle.isStarted) {
             sensor.update()
         }
         battle.update()
-
         if (battle.isEnded) {
             BattleManager.endBattle(battle)
             remove()
         }
+
+
     }
 
     override fun onRemove() {

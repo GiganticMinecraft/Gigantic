@@ -13,8 +13,6 @@ data class SoulMonsterParameter(
         val speed: Double,
         // blocks per attack
         val attackTimes: Int,
-        // ticks to attack
-        val tickToAttack: Long,
         val attackMaterial: Material
 ) {
 }

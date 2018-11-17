@@ -14,6 +14,7 @@ import click.seichi.gigantic.popup.pops.BattlePops
 import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.sound.sounds.BattleSounds
+import click.seichi.gigantic.sound.sounds.SoulMonsterSounds
 import org.bukkit.Chunk
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
@@ -50,14 +51,6 @@ class Battle internal constructor(
         enemy.spawn()
     }
 
-    private fun disappearCondition(): Boolean {
-        when {
-            !spawner.isValid -> return true
-            spawner.location.distance(enemy.location) > 30.0 && !isStarted -> return true
-            players.isEmpty() && isStarted -> return true
-        }
-        return false
-    }
 
     fun join(player: Player): Boolean {
         return if (!isStarted) {
@@ -92,7 +85,45 @@ class Battle internal constructor(
         isStarted = true
     }
 
+    private fun disappearCondition(): Boolean {
+        return when {
+            !spawner.isValid -> true
+            spawner.location.distance(enemy.location) > 30.0 && !isStarted -> true
+            players.isEmpty() && isStarted -> true
+            else -> false
+        }
+    }
+
+    private fun loseCondition(): Boolean {
+        return when {
+            !isStarted -> false
+            spawner.isValid && spawner.isDead -> true
+            else -> false
+        }
+    }
+
     fun update() {
+        when (enemy.state) {
+            SoulMonsterState.DEATH -> win()
+            SoulMonsterState.DISAPPEAR -> {
+                SoulMonsterSounds.DISAPPEAR.play(enemy.eyeLocation)
+                end()
+            }
+            else -> {
+            }
+        }
+        getJoinedPlayers().forEach {
+            if (!it.isValid) {
+                leave(it)
+                if (it.isDead) {
+                    it.offer(Keys.LAST_BATTLE, this)
+                }
+            }
+        }
+        if (loseCondition()) {
+            lose()
+            return
+        }
         if (disappearCondition()) {
             end()
             return
@@ -107,16 +138,9 @@ class Battle internal constructor(
         }
         MonsterSpiritAnimations.AMBIENT(enemy.color).start(enemy.eyeLocation)
         enemy.update(elapsedTick)
-
-        when (enemy.state) {
-            SoulMonsterState.DEATH -> win()
-            SoulMonsterState.DISAPPEAR -> end()
-            SoulMonsterState.KILL_SPAWNER -> lose()
-            else -> {
-            }
-        }
         elapsedTick++
     }
+
 
     var isEnded: Boolean = false
         private set

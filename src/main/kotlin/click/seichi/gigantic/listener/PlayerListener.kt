@@ -21,6 +21,7 @@ import click.seichi.gigantic.sound.sounds.SkillSounds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -254,7 +255,7 @@ class PlayerListener : Listener {
         event.keepInventory = true
         event.keepLevel = true
         player.getOrPut(Keys.DEATH_MESSAGE)?.asSafety(player.wrappedLocale)?.let { deathMessage ->
-            event.deathMessage = deathMessage
+            event.deathMessage = "${ChatColor.RED}" + deathMessage
         }
         player.offer(Keys.DEATH_MESSAGE, null)
 

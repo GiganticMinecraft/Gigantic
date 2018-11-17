@@ -63,7 +63,15 @@ class BattleMonster(
         private set
     // 状態遷移用
     var state: SoulMonsterState = SoulMonsterState.SEAL
-        private set
+        private set(value) {
+            field = when (field) {
+                SoulMonsterState.DISAPPEAR,
+                SoulMonsterState.DEATH -> field
+                else -> value
+            }
+        }
+
+
     // 目的地
     var destination: Location? = null
         private set
@@ -169,21 +177,21 @@ class BattleMonster(
         // set attack blocks
         (1..monster.parameter.attackTimes).forEach { index ->
             Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-                val attackBlock = ai.getAttackBlock(chunk, getAttackBlocks(), attackTarget, elapsedTick)
-                if (attackBlock == null) {
+                val attackBlocks = ai.getAttackBlocks(chunk, getAttackBlocks(), attackTarget, elapsedTick)
+                if (attackBlocks == null) {
                     disappearCount++
                     if (disappearCount > 5 * monster.parameter.attackTimes) {
                         state = SoulMonsterState.DISAPPEAR
                     }
                     return@runTaskLater
                 }
-                attack(attackBlock)
+                attackBlocks.forEach { attack(it) }
             }, index * 10L)
         }
         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
             state = SoulMonsterState.MOVE
             destination = ai.searchDestination(chunk, attackTarget, location)
-        }, monster.parameter.attackTimes * 10L)
+        }, monster.parameter.attackTimes * 10L + 120L + 1L)
         state = SoulMonsterState.WAIT
     }
 
@@ -223,7 +231,6 @@ class BattleMonster(
                 health.decrease(monster.parameter.attackDamage)
                 if (health.isZero) {
                     player.offer(Keys.DEATH_MESSAGE, DeathMessages.BY_MONSTER(player.name, monster))
-                    state = SoulMonsterState.KILL_SPAWNER
                 }
                 PlayerMessages.HEALTH_DISPLAY(health).sendTo(player)
             }
@@ -233,7 +240,7 @@ class BattleMonster(
             block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation, 20, attackBlockData)
 
             block.type = Material.AIR
-        }, 20L + monster.parameter.tickToAttack)
+        }, 20L + 100L)
 
     }
 

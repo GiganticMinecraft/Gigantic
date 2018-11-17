@@ -12,12 +12,13 @@ enum class SoulMonsterState {
     MOVE,
     // 攻撃
     ATTACK,
+
+    // end flag state
+
     // 死亡
     DEATH,
     // 消滅
     DISAPPEAR,
-    // 召喚者をキル
-    KILL_SPAWNER,
 
     ;
 }

@@ -12,7 +12,6 @@ object SoulMonsterParameters {
             10,
             0.1,
             1,
-            100L,
             Material.PINK_WOOL
     )
 
@@ -21,7 +20,6 @@ object SoulMonsterParameters {
             20,
             0.15,
             2,
-            100L,
             Material.PINK_CONCRETE_POWDER
     )
 
@@ -30,7 +28,6 @@ object SoulMonsterParameters {
             25,
             0.2,
             3,
-            100L,
             Material.PINK_CONCRETE
     )
 
@@ -39,7 +36,6 @@ object SoulMonsterParameters {
             80,
             0.12,
             2,
-            80L,
             Material.NETHERRACK
     )
 
@@ -48,7 +44,6 @@ object SoulMonsterParameters {
             140,
             0.15,
             3,
-            80L,
             Material.NETHER_BRICKS
     )
 
@@ -57,7 +52,6 @@ object SoulMonsterParameters {
             250,
             0.18,
             4,
-            80L,
             Material.BLUE_CONCRETE_POWDER
     )
 
@@ -66,7 +60,6 @@ object SoulMonsterParameters {
             10,
             0.2,
             1,
-            100L,
             Material.GOLD_BLOCK
     )
 
@@ -75,7 +68,6 @@ object SoulMonsterParameters {
             10,
             0.2,
             1,
-            100L,
             Material.BLUE_GLAZED_TERRACOTTA
     )
 
@@ -84,7 +76,6 @@ object SoulMonsterParameters {
             10,
             0.2,
             1,
-            100L,
             Material.RED_GLAZED_TERRACOTTA
     )
 
@@ -93,7 +84,6 @@ object SoulMonsterParameters {
             10,
             0.2,
             1,
-            100L,
             Material.WHITE_GLAZED_TERRACOTTA
     )
 
@@ -102,7 +92,6 @@ object SoulMonsterParameters {
             10,
             0.2,
             1,
-            100L,
             Material.BROWN_GLAZED_TERRACOTTA
     )
 
@@ -111,7 +100,6 @@ object SoulMonsterParameters {
             10,
             0.2,
             1,
-            100L,
             Material.LIME_GLAZED_TERRACOTTA
     )
 

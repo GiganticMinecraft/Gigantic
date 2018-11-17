@@ -41,12 +41,12 @@ open class SoulMonsterAI {
         return targetLocation
     }
 
-    open fun getAttackBlock(
+    open fun getAttackBlocks(
             chunk: Chunk,
             alreadyAttackedBlockSet: Set<AttackBlock>,
             target: Player,
             elapsedTick: Long
-    ): AttackBlock? {
+    ): Set<AttackBlock>? {
         val blocks = mutableSetOf<Block>()
         (-3..3).forEach { x ->
             (-3..3).forEach { z ->
@@ -59,7 +59,12 @@ open class SoulMonsterAI {
         }
         return blocks.filter { block ->
             block.isCrust && block.isSurface && block.chunk == chunk && alreadyAttackedBlockSet.find { it.block == block } == null
-        }.map { it to it.y + Random.nextDouble() }.sortedByDescending { it.second }.firstOrNull()?.let { AttackBlock(target, it.first, elapsedTick) }
+        }
+                .map { it to it.y + Random.nextDouble() }
+                .sortedByDescending { it.second }
+                .firstOrNull()
+                ?.let { AttackBlock(target, it.first, elapsedTick) }
+                ?.let { setOf(it) }
     }
 
 
