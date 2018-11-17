@@ -211,7 +211,7 @@ class BattleMonster(
         object : BukkitRunnable() {
             var ticks = 0L
             override fun run() {
-                if (ticks++ > 100L) {
+                if (ticks++ > 60L) {
                     if (player.isOnline) {
                         player.sendBlockChange(block.location, block.blockData)
                     }
@@ -258,7 +258,7 @@ class BattleMonster(
             SoulMonsterSounds.ATTACK.play(block.centralLocation)
 
             block.type = Material.AIR
-        }, 20L + 100L)
+        }, 20L + 60L)
 
     }
 

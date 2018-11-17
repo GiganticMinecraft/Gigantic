@@ -16,6 +16,7 @@ import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.sound.sounds.BattleSounds
 import click.seichi.gigantic.sound.sounds.SoulMonsterSounds
 import org.bukkit.Chunk
+import org.bukkit.GameMode
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import java.util.*
@@ -113,7 +114,7 @@ class Battle internal constructor(
             }
         }
         getJoinedPlayers().forEach {
-            if (!it.isValid) {
+            if (!it.isValid || it.gameMode != GameMode.SURVIVAL) {
                 leave(it)
                 if (it.isDead) {
                     it.offer(Keys.LAST_BATTLE, this)
