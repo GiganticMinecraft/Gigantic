@@ -1,13 +1,13 @@
 package click.seichi.gigantic.monster.ai
 
+import click.seichi.gigantic.battle.BattlePlayer
 import org.bukkit.block.Block
-import org.bukkit.entity.Player
 
 /**
  * @author tar0ss
  */
 data class AttackBlock(
-        val target: Player,
+        val target: BattlePlayer,
         val block: Block,
         val elapsedTick: Long
 )

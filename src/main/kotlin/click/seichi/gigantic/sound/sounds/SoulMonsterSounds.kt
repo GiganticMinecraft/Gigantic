@@ -23,13 +23,6 @@ object SoulMonsterSounds {
             volume = 0.5F
     )
 
-    val DISAPPEAR = DetailedSound(
-            Sound.ENTITY_ENDER_EYE_DEATH,
-            SoundCategory.HOSTILE,
-            pitch = 0.4F,
-            volume = 0.5F
-    )
-
     val ATTACK_READY = DetailedSound(
             Sound.ENTITY_ZOMBIE_INFECT,
             SoundCategory.HOSTILE,

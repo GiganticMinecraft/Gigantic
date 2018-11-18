@@ -37,7 +37,6 @@ class BattleListener : Listener {
         val block = event.block ?: return
         val player = event.player ?: return
         val battle = player.findBattle() ?: return
-        if (!battle.isStarted) return
         if (battle.chunk == block.chunk) return
         event.isCancelled = true
         PlayerMessages.BREAK_NOT_BATTLE_CHUNK.sendTo(player)

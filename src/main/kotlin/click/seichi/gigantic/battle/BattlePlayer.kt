@@ -8,8 +8,10 @@ import org.bukkit.entity.Player
 /**
  * @author tar0ss
  */
-class BattlePlayer(private val player: Player) {
-
+class BattlePlayer(
+        val player: Player,
+        val isSpawner: Boolean = false
+) {
     private val statuses: MutableSet<PlayerStatus> = mutableSetOf()
 
     var health: Long = player.getOrPut(Keys.HEALTH)

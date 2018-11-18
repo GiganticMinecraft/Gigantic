@@ -1,12 +1,14 @@
 package click.seichi.gigantic.battle
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.animation.animations.BattleMonsterAnimations
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
@@ -16,51 +18,39 @@ import click.seichi.gigantic.monster.ai.SoulMonsterState
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SoulMonsterSounds
 import click.seichi.gigantic.topbar.bars.BattleBars
-import click.seichi.gigantic.util.Random
-import org.bukkit.*
+import org.bukkit.Bukkit
+import org.bukkit.Chunk
+import org.bukkit.Location
+import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.boss.BossBar
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.EulerAngle
-import java.util.*
 
 /**
  * @author tar0ss
  */
 class BattleMonster(
         private val monster: SoulMonster,
-        private val spawner: Player,
-        private val chunk: Chunk,
-        private val locale: Locale
+        spawner: BattlePlayer,
+        private val chunk: Chunk
 ) {
+    private val locale = spawner.player.wrappedLocale
     // モンスターAI
     private val ai = monster.createAIInstance()
     // 攻撃ブロック
     private val attackBlocks: MutableSet<AttackBlock> = mutableSetOf()
-    // モンスターのスポーン位置
-    private val spawnLocation: Location = ai.searchSpawnLocation(spawner, chunk)
-    // モンスターの実体
-    private val entity = spawnLocation.world.spawn(spawnLocation, ArmorStand::class.java) {
-        it.run {
-            isVisible = false
-            setBasePlate(false)
-            setArms(true)
-            isMarker = true
-            isInvulnerable = true
-            canPickupItems = false
-            setGravity(false)
-            isCustomNameVisible = false
-            isSmall = true
-            helmet = monster.getIcon()
-        }
-    }
     // モンスターのボスバー
     private val bossBar: BossBar = Gigantic.createInvisibleBossBar()
-
+    // モンスターの実体
+    private lateinit var entity: ArmorStand
+    private lateinit var location: Location
+    private val eyeLocation: Location
+        get() = entity.eyeLocation
     // 攻撃対象プレイヤー
-    var attackTarget: Player = spawner
+    var attackTarget: BattlePlayer = spawner
         private set
     // 状態遷移用
     var state: SoulMonsterState = SoulMonsterState.SEAL
@@ -71,20 +61,11 @@ class BattleMonster(
                 else -> value
             }
         }
-
-
     // 目的地
     var destination: Location? = null
         private set
 
     var health = monster.parameter.health
-
-    var location: Location = spawnLocation
-
-    val eyeLocation: Location
-        get() = location.clone().add(0.0, 0.9, 0.0)
-    val color: Color
-        get() = monster.color
 
     private var disappearCount = 0
 
@@ -92,46 +73,44 @@ class BattleMonster(
 
     private val attackBlockData = Bukkit.createBlockData(monster.parameter.attackMaterial)
 
-    fun spawn() {
-        SoulMonsterSounds.SPAWN.play(spawnLocation)
-    }
-
-    fun join(player: Player) {
-        bossBar.addPlayer(player)
-    }
-
-    fun leave(player: Player) {
-        bossBar.removePlayer(player)
+    fun leave(battlePlayer: BattlePlayer) {
+        bossBar.removePlayer(battlePlayer.player)
     }
 
     fun remove() {
         bossBar.removeAll()
         entity.remove()
         attackBlocks.forEach {
-            it.target.sendBlockChange(it.block.location, it.block.blockData)
+            it.target.player.sendBlockChange(it.block.location, it.block.blockData)
         }
     }
 
     // 戦闘中のみ呼び出し。プレイヤーが戦闘中に抜けた際にターゲットを更新
-    fun updateTargets(joinedPlayers: Set<Player>): Boolean {
+    fun updateTargets(joinedPlayers: MutableSet<BattlePlayer>): Boolean {
         attackTarget = joinedPlayers.shuffled().firstOrNull() ?: return false
         return true
     }
 
-    // 起こしているとき
-    fun updateAwakeProgress(nextProgress: Double) {
-        BattleBars.SEAL(nextProgress, monster, locale).show(bossBar)
-        MonsterSpiritAnimations.AWAKE.start(eyeLocation)
-    }
-
-    fun resetAwakeProgress() {
-        BattleBars.RESET(monster, locale).show(bossBar)
-    }
-
-    fun awake() {
-        BattleBars.AWAKE(monster.parameter.health.toLong(), monster, locale).show(bossBar)
+    fun awake(spawnLocation: Location, players: Set<BattlePlayer>) {
+        entity = spawnLocation.world.spawn(spawnLocation, ArmorStand::class.java) {
+            it.run {
+                isVisible = false
+                setBasePlate(false)
+                setArms(true)
+                isMarker = true
+                isInvulnerable = true
+                canPickupItems = false
+                setGravity(false)
+                isCustomNameVisible = false
+                isSmall = true
+                helmet = monster.getIcon()
+            }
+        }
+        players.forEach { bossBar.addPlayer(it.player) }
+        BattleBars.AWAKE(monster.parameter.health, monster, locale).show(bossBar)
         state = SoulMonsterState.MOVE
-        destination = ai.searchDestination(chunk, attackTarget, location)
+        destination = ai.searchDestination(chunk, attackTarget, entity.eyeLocation)
+        location = entity.location
     }
 
     fun update(elapsedTick: Long) {
@@ -142,16 +121,17 @@ class BattleMonster(
             }
         }
         updateLocation()
+        MonsterSpiritAnimations.AMBIENT(monster.color).start(entity.eyeLocation)
     }
 
     private fun updateLocation() {
         val fixedLocation = location.clone().apply {
-            if (attackTarget.isValid) {
-                this.direction = attackTarget.eyeLocation.clone()
+            if (attackTarget.player.isValid) {
+                this.direction = attackTarget.player.eyeLocation.clone()
                         .subtract(eyeLocation.clone())
                         .toVector().normalize()
-                val diffY = attackTarget.eyeLocation.y - eyeLocation.y
-                val distance = attackTarget.eyeLocation.distance(eyeLocation)
+                val diffY = attackTarget.player.eyeLocation.y - eyeLocation.y
+                val distance = attackTarget.player.eyeLocation.distance(eyeLocation)
                 val sin = diffY / distance
                 val cos = 1.0 - Math.pow(sin, 2.0)
                 val diffX = distance * cos
@@ -196,7 +176,7 @@ class BattleMonster(
     }
 
     private fun attack(attackBlock: AttackBlock) {
-        val player = attackBlock.target
+        val player = attackBlock.target.player
         val block = attackBlock.block
 
         if (!entity.isValid || !player.isValid) return
@@ -204,7 +184,7 @@ class BattleMonster(
 
         // effects
         SoulMonsterSounds.ATTACK_READY.play(entity.eyeLocation)
-        MonsterSpiritAnimations.ATTACK_READY(monster.color).exhaust(entity, block.centralLocation, meanY = 0.9)
+        BattleMonsterAnimations.ATTACK_READY(monster.color).exhaust(entity, block.centralLocation, meanY = 0.9)
 
         attackBlocks.add(attackBlock)
 
@@ -227,7 +207,7 @@ class BattleMonster(
                 }
 
                 // effects
-                MonsterSpiritAnimations.ATTACK_READY_BLOCK(attackBlockData)
+                BattleMonsterAnimations.ATTACK_READY_BLOCK(attackBlockData)
                         .start(block.centralLocation)
                 player.sendBlockChange(block.location, attackBlockData)
                 if (ticks % 10 == 0L) {
@@ -266,7 +246,7 @@ class BattleMonster(
     fun defencedByPlayer(block: Block) {
         if (!attackBlocks.removeIf { block == it.block }) return
         SoulMonsterSounds.DEFENCE.play(block.centralLocation)
-        MonsterSpiritAnimations.DEFENCE(monster.color).absorb(entity, block.centralLocation, meanY = 0.9)
+        BattleMonsterAnimations.DEFENCE(monster.color).absorb(entity, block.centralLocation, meanY = 0.9)
     }
 
     fun damageByPlayer(player: Player, damage: Long): Long {
@@ -280,17 +260,9 @@ class BattleMonster(
         }
         if (trueDamage > 0L) {
             BattleBars.AWAKE(health, monster, locale).show(bossBar)
-            MonsterSpiritAnimations.DAMAGE_FROM_PLAYER.start(eyeLocation)
+            BattleMonsterAnimations.DAMAGE_FROM_PLAYER.start(eyeLocation)
         }
         return trueDamage
-    }
-
-    fun randomDrops(): SoulMonster.DropRelic? {
-        return monster.dropRelicSet.firstOrNull { it.probability > Random.nextDouble() }
-    }
-
-    fun defeatedBy(player: Player) {
-        monster.defeatedBy(player)
     }
 
 }

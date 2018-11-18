@@ -1,7 +1,7 @@
 package click.seichi.gigantic.battle
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.offer
@@ -14,11 +14,13 @@ import click.seichi.gigantic.popup.pops.BattlePops
 import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.sound.sounds.BattleSounds
-import click.seichi.gigantic.sound.sounds.SoulMonsterSounds
+import click.seichi.gigantic.util.Random
 import org.bukkit.Chunk
 import org.bukkit.GameMode
+import org.bukkit.Location
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
+import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 
 /**
@@ -27,129 +29,80 @@ import java.util.*
 class Battle internal constructor(
         val chunk: Chunk,
         val spawner: Player,
+        val players: Set<Player>,
         val monster: SoulMonster,
         val quest: Quest?
 ) {
     private val uuid = UUID.randomUUID()
     // 使用言語
     private val locale = spawner.wrappedLocale
+    // 参加プレイヤー
+    private val battlers = players.map { BattlePlayer(it, it == spawner) }.toMutableSet()
+    // スポーンプレイヤー
+    private val battleSpawner = this.battlers.find { it.isSpawner }!!
+    // 敵
+    private val enemy = BattleMonster(monster, this.battleSpawner, chunk)
     // 経過時間
     var elapsedTick: Long = -1L
-    // 敵
-    val enemy = BattleMonster(monster, spawner, chunk, locale)
-    // プレイヤー
-    private val players = mutableSetOf<Player>()
-    // 敵との戦闘が始まっているかどうか
-    var isStarted: Boolean = false
         private set
 
-    fun getJoinedPlayers() = players.toList()
+    fun getJoinedPlayers() = battlers.toSet()
 
-    fun isJoined(player: Player) = players.contains(player)
-
-    fun spawnEnemy() {
-        BattleMessages.SPAWN(monster).sendTo(spawner)
-        enemy.spawn()
-    }
-
-
-    fun join(player: Player): Boolean {
-        return if (!isStarted) {
-            players.add(player)
-            enemy.join(player)
-            true
-        } else false
-    }
+    fun isJoined(player: Player) = battlers.find { it.equals(player) } != null
 
     fun leave(player: Player) {
-        players.removeIf { it.equals(player) }
-        enemy.leave(player)
-        if (isStarted)
-            enemy.updateTargets(players)
-
-        if (!isStarted && players.isEmpty()) {
-            enemy.resetAwakeProgress()
-        }
+        val battlePlayer = battlers.find { it.equals(player) } ?: return
+        leave(battlePlayer)
     }
 
-    fun updateAwakeProgress(nextProgress: Double) {
-        enemy.updateAwakeProgress(nextProgress)
+    private fun leave(battlePlayer: BattlePlayer) {
+        battlers.remove(battlePlayer)
+        enemy.leave(battlePlayer)
+        enemy.updateTargets(battlers)
     }
 
-
-    fun start() {
-        enemy.awake()
-        players.forEach {
-            BattleSounds.START.playOnly(it)
-            it.offer(Keys.LAST_BATTLE, null)
+    fun start(spawnLocation: Location) {
+        enemy.awake(spawnLocation, getJoinedPlayers())
+        battlers.forEach {
+            BattleSounds.START.playOnly(it.player)
+            it.player.offer(Keys.LAST_BATTLE, null)
         }
-        isStarted = true
-    }
-
-    private fun disappearCondition(): Boolean {
-        return when {
-            !spawner.isValid -> true
-            spawner.location.distance(enemy.location) > 30.0 && !isStarted -> true
-            players.isEmpty() && isStarted -> true
-            else -> false
-        }
-    }
-
-    private fun loseCondition(): Boolean {
-        return when {
-            !isStarted -> false
-            spawner.isValid && spawner.isDead -> true
-            else -> false
-        }
+        object : BukkitRunnable() {
+            override fun run() {
+                elapsedTick++
+                update()
+                if (battlers.isEmpty()) {
+                    cancel()
+                    return
+                }
+            }
+        }.runTaskTimer(Gigantic.PLUGIN, 1L, 1L)
     }
 
     fun update() {
-        when (enemy.state) {
-            SoulMonsterState.DEATH -> win()
-            SoulMonsterState.DISAPPEAR -> {
-                SoulMonsterSounds.DISAPPEAR.play(enemy.eyeLocation)
-                end()
-            }
-            else -> {
-            }
-        }
         getJoinedPlayers().forEach {
-            if (!it.isValid || it.gameMode != GameMode.SURVIVAL) {
+            if (!it.player.isValid || it.player.gameMode != GameMode.SURVIVAL) {
                 leave(it)
-                if (it.isDead) {
-                    it.offer(Keys.LAST_BATTLE, this)
+                if (it.player.isDead) {
+                    it.player.offer(Keys.LAST_BATTLE, this@Battle)
                 }
             }
         }
-        if (loseCondition()) {
-            lose()
-            return
+        when {
+            !battleSpawner.player.isValid
+                    || battlers.isEmpty()
+                    || enemy.state == SoulMonsterState.DISAPPEAR -> end()
+            battleSpawner.player.isDead -> lose()
+            enemy.state == SoulMonsterState.DEATH -> win()
         }
-        if (disappearCondition()) {
-            end()
-            return
-        }
-        if (!isStarted) {
-            if (elapsedTick % 8L == 0L)
-                MonsterSpiritAnimations.AMBIENT_EXHAUST(enemy.color).exhaust(
-                        spawner,
-                        enemy.eyeLocation,
-                        meanY = 0.9
-                )
-        }
-        MonsterSpiritAnimations.AMBIENT(enemy.color).start(enemy.eyeLocation)
         enemy.update(elapsedTick)
         elapsedTick++
     }
 
-
-    var isEnded: Boolean = false
-        private set
-
     fun end() {
-        isEnded = true
-        players.toSet().forEach { leave(it) }
+        battlers.toSet().forEach { leave(it) }
         enemy.remove()
+        BattleManager.endBattle(this)
     }
 
     fun tryDefence(player: Player, block: Block) {
@@ -157,32 +110,32 @@ class Battle internal constructor(
     }
 
     fun tryAttack(player: Player, block: Block) {
-        if (!isStarted) return
         val damage = 1L
         val trueDamage = enemy.damageByPlayer(player, damage)
         BattlePops.BATTLE_DAMAGE(trueDamage).pop(block.centralLocation, diffY = PopUpParameters.BATTLE_DAMAGE_DIFF)
     }
 
     private fun win() {
-        BattleSounds.WIN.play(enemy.eyeLocation)
-        players.forEach {
-            BattleMessages.WIN(monster).sendTo(it)
-            enemy.defeatedBy(it)
+        battlers.forEach {
+            BattleSounds.WIN.play(it.player.location)
+            BattleMessages.WIN(monster).sendTo(it.player)
+            monster.defeatedBy(it.player)
         }
-        quest?.process(spawner, monster)
-        enemy.randomDrops()?.let { drop ->
-            players.forEach { player ->
-                drop.relic.dropTo(player)
-                RelicMessages.DROP(drop).sendTo(player)
-                Achievement.update(player)
-            }
-        }
+        quest?.process(battleSpawner.player, monster)
+        monster.dropRelicSet.firstOrNull { it.probability > Random.nextDouble() }
+                ?.let { drop ->
+                    battlers.forEach { battlePlayer ->
+                        drop.relic.dropTo(battlePlayer.player)
+                        RelicMessages.DROP(drop).sendTo(battlePlayer.player)
+                        Achievement.update(battlePlayer.player)
+                    }
+                }
         end()
     }
 
     private fun lose() {
-        players.forEach {
-            it.offer(Keys.LAST_BATTLE, this)
+        battlers.forEach {
+            it.player.offer(Keys.LAST_BATTLE, this)
         }
         end()
     }

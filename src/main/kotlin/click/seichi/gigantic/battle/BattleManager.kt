@@ -12,11 +12,11 @@ object BattleManager {
 
     private val battleSet: MutableSet<Battle> = mutableSetOf()
 
-    fun newBattle(chunk: Chunk, player: Player, soulMonster: SoulMonster, quest: Quest? = null): Battle {
-        return Battle(chunk, player, soulMonster, quest).also { battleSet.add(it) }
+    fun newBattle(chunk: Chunk, spawner: Player, players: Set<Player>, soulMonster: SoulMonster, quest: Quest? = null): Battle {
+        return Battle(chunk, spawner, players, soulMonster, quest).also { battleSet.add(it) }
     }
 
-    fun findBattle(player: Player) = battleSet.find { it.isJoined(player) || it.spawner == player }
+    fun findBattle(player: Player) = battleSet.find { it.isJoined(player) }
 
     fun endBattle(battle: Battle) {
         battleSet.remove(battle)
