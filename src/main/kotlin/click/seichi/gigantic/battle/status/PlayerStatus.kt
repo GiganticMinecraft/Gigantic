@@ -1,5 +1,6 @@
 package click.seichi.gigantic.battle.status
 
+import click.seichi.gigantic.battle.EffectPriority
 import org.bukkit.entity.Player
 
 /**

@@ -1,5 +1,7 @@
 package click.seichi.gigantic.battle.status
 
+import click.seichi.gigantic.battle.EffectPriority
+
 /**
  * @author tar0ss
  */
