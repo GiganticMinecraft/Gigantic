@@ -8,6 +8,10 @@ import java.util.*
  */
 object RelicMenuMessages {
 
+    val TITLE = LocalizedText(
+            Locale.JAPANESE to "レリック一覧"
+    )
+
     val NUM = LocalizedText(
             Locale.JAPANESE to "所持数"
     )

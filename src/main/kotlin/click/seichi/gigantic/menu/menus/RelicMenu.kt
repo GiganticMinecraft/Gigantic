@@ -6,7 +6,7 @@ import click.seichi.gigantic.button.buttons.menu.PrevButton
 import click.seichi.gigantic.button.buttons.menu.RelicButtons
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.BookMenu
-import click.seichi.gigantic.message.messages.menu.QuestMenuMessages
+import click.seichi.gigantic.message.messages.menu.RelicMenuMessages
 import click.seichi.gigantic.relic.Relic
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
@@ -26,7 +26,7 @@ object RelicMenu : BookMenu() {
     private val prevButton = PrevButton(this)
 
     override fun getMaxPage(player: Player): Int {
-        return Relic.getDroppedList(player).size
+        return Relic.getDroppedList(player).size.div(numOfContentsPerPage).plus(1)
     }
 
     override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {
@@ -48,7 +48,7 @@ object RelicMenu : BookMenu() {
 
     override fun getTitle(player: Player, page: Int): String {
         return "${ChatColor.BLACK}" +
-                "${QuestMenuMessages.SELECT_MENU_TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
+                "${RelicMenuMessages.TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {

@@ -26,7 +26,7 @@ object QuestSelectMenu : BookMenu() {
     private val prevButton = PrevButton(this)
 
     override fun getMaxPage(player: Player): Int {
-        return Quest.getOrderedList(player).size
+        return Quest.getOrderedList(player).size.div(numOfContentsPerPage).plus(1)
     }
 
     override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {

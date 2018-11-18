@@ -37,7 +37,7 @@ enum class Relic(
 
     companion object {
         fun getDroppedList(player: Player): List<Relic> {
-            return values().filter { player.getOrPut(Keys.RELIC_MAP[it] ?: return@filter false) > 0L }
+            return values().filter { it.has(player) }
         }
     }
 
