@@ -64,4 +64,12 @@ object MonsterMessages {
             Locale.JAPANESE to "鶏キング"
     )
 
+    val WITHER_SKELETON = LocalizedText(
+            Locale.JAPANESE to "ウィザースケルトン"
+    )
+
+    val WITHER = LocalizedText(
+            Locale.JAPANESE to "ウィザー"
+    )
+
 }

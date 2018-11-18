@@ -42,6 +42,15 @@ enum class Quest(
             SoulMonster.CHICKEN,
             SoulMonster.CHICKEN_KING
     ),
+    WITHER(
+            3,
+            QuestMessages.WITHER,
+            null,
+            SoulMonster.WITHER_SKELETON,
+            SoulMonster.WITHER_SKELETON,
+            SoulMonster.WITHER_SKELETON,
+            SoulMonster.WITHER
+    ),
     LADON(
             100,
             QuestMessages.LADON,
@@ -117,9 +126,15 @@ enum class Quest(
         } ?: false
     }
 
+    fun isCleared(player: Player): Boolean {
+        return getClient(player)?.run {
+            clearNum > 0
+        } ?: false
+    }
+
     // クエスト進行
-    fun process(player: Player, monster: SoulMonster) {
-        val degree = monsterList.indexOf(monster) + 1
+    fun process(player: Player) {
+        val degree = getClient(player)?.processedDegree?.plus(1) ?: return
         if (degree == monsterList.size) {
             complete(player)
         } else {

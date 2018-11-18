@@ -126,7 +126,7 @@ class Battle internal constructor(
             BattleMessages.WIN(monster).sendTo(it.player)
             monster.defeatedBy(it.player)
         }
-        quest?.process(battleSpawner.player, monster)
+        quest?.process(battleSpawner.player)
         monster.dropRelicSet.firstOrNull { it.probability > Random.nextDouble() }
                 ?.let { drop ->
                     battlers.forEach { battlePlayer ->

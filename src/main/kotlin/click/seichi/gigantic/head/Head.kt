@@ -26,6 +26,8 @@ enum class Head(
     CHICKEN("http://textures.minecraft.net/texture/1638469a599ceef7207537603248a9ab11ff591fd378bea4735b346a7fae893"),
     CHICKEN_KING("http://textures.minecraft.net/texture/384c0a970e291c5e877ed790ff429d57592eceb29cbbf955786e92cf13d9f701"),
     CHICKEN_KING_CROWN("http://textures.minecraft.net/texture/b26e38d8c1da8d451d7194f3a7fad90a141dfe6165b6667f7a8cba0919139"),
+    WITHER_SKELETON("http://textures.minecraft.net/texture/7953b6c68448e7e6b6bf8fb273d7203acd8e1be19e81481ead51f45de59a8"),
+    WITHER("http://textures.minecraft.net/texture/cdf74e323ed41436965f5c57ddf2815d5332fe999e68fbb9d6cf5c8bd4139f"),
     LADON("http://textures.minecraft.net/texture/f7cba5b68ee7ac9b93dc4f684c528c5efd7e78c6ac77cefd1111bae6cdc84f"),
     UNDINE("http://textures.minecraft.net/texture/20014da813f52b384ad631e6811ee88c3d832f821319f60f7b21360d402f5bba"),
     SALAMANDRA("http://textures.minecraft.net/texture/125522e5f235011d71bce3832ac1560d94b346e773dae187e2b3d4a0b5561a"),

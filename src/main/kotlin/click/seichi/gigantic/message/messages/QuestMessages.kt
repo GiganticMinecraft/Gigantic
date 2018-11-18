@@ -72,4 +72,8 @@ object QuestMessages {
             Locale.JAPANESE to "庭には二羽鶏がいる"
     )
 
+    val WITHER = LocalizedText(
+            Locale.JAPANESE to "世界を蝕むもの"
+    )
+
 }

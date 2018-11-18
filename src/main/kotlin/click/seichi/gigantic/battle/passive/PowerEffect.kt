@@ -24,7 +24,7 @@ enum class PowerEffect {
         }
 
         override fun effectCondition(battler: BattlePlayer, block: Block): Boolean {
-            return Relic.CHICKEN_KING_CROWN.getDroppedNum(battler.player) > 0L
+            return Relic.CHICKEN_KING_CROWN.has(battler.player)
         }
     }
     ;

@@ -24,6 +24,8 @@ enum class Relic(
     PIGS_FEATHER(0, RelicMessages.PIGS_FEATHER, null, icon = ItemStack(Material.FEATHER)),
     BLUE_BLAZE_POWDER(1, RelicMessages.BLUE_BLAZE_POWDER, null, icon = ItemStack(Material.BLAZE_POWDER)),
     CHICKEN_KING_CROWN(2, RelicMessages.CHICKEN_KING_CROWN, RelicMessages.CHICKEN_KING_CROWN_LORE, icon = Head.CHICKEN_KING_CROWN.toItemStack()),
+    WITHER_SKELETON_SKULL(3, RelicMessages.WITHER_SKELETON_SKULL, null, icon = ItemStack(Material.WITHER_SKELETON_SKULL)),
+    MANA_STONE(4, RelicMessages.MANA_STONE, null, icon = ItemStack(Material.NETHER_STAR)),
     SPELL_BOOK_EXPLOSION(100, RelicMessages.SPELL_BOOK_EXPLOSION, null, 1),
     GOLDEN_APPLE(150, RelicMessages.GOLDEN_APPLE, null),
     WILL_CRYSTAL_SAPPHIRE(200, RelicMessages.WILL_CRYSTAL_SAPPHIRE, null),
@@ -44,6 +46,8 @@ enum class Relic(
     fun getLore(locale: Locale) = localizedLore?.map { it.asSafety(locale) }
 
     fun getIcon() = icon.clone()
+
+    fun has(player: Player) = getDroppedNum(player) > 0
 
     fun getDroppedNum(player: Player) = Keys.RELIC_MAP[this]?.let { player.getOrPut(it) } ?: 0L
 

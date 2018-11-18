@@ -45,7 +45,7 @@ enum class Achievement(
 
     // systems
     MANA_STONE(100, {
-        false
+        Relic.MANA_STONE.has(it)
     }, grantMessage = AchievementMessages.MANA_STONE,
             priority = UpdatePriority.HIGHEST),
     TELEPORT(101, {
@@ -146,6 +146,11 @@ enum class Achievement(
         SoulMonster.PIG_WARRIOR.isDefeatedBy(it)
     }, action = {
         Quest.CHICKEN_CROWD.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_WITHER_ORDER(409, {
+        Quest.BLAZE_CROWD.isCleared(it)
+    }, action = {
+        Quest.WITHER.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     ;
 

@@ -29,7 +29,7 @@ enum class Spell(
             SpellMessages.STELLA_CLAIR_LORE,
             Achievement.SPELL_STELLA_CLAIR,
             Spells.STELLA_CLAIR
-    )
+    ),
     ;
 
     fun tryCast(player: Player) = invoker.tryInvoke(player)

@@ -93,4 +93,13 @@ object RelicMessages {
             )
     )
 
+    val MANA_STONE = LocalizedText(
+            Locale.JAPANESE to "マナ・ストーン"
+    )
+
+    val WITHER_SKELETON_SKULL = LocalizedText(
+            Locale.JAPANESE to "ウィザースケルトンの頭"
+    )
+
+
 }

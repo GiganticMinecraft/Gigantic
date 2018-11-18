@@ -109,6 +109,26 @@ enum class SoulMonster(
             SoulMonsterAI::class,
             DropRelic(Relic.CHICKEN_KING_CROWN)
     ),
+    WITHER_SKELETON(
+            15,
+            Head.WITHER_SKELETON,
+            MonsterMessages.WITHER_SKELETON,
+            null,
+            Color.fromRGB(37, 37, 39),
+            SoulMonsterParameters.WITHER_SKELETON,
+            SoulMonsterAI::class,
+            DropRelic(Relic.WITHER_SKELETON_SKULL)
+    ),
+    WITHER(
+            16,
+            Head.WITHER,
+            MonsterMessages.WITHER,
+            null,
+            Color.fromRGB(19, 19, 21),
+            SoulMonsterParameters.WITHER,
+            SoulMonsterAI::class,
+            DropRelic(Relic.MANA_STONE)
+    ),
 
     LADON(
             100,
