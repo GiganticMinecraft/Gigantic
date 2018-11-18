@@ -112,7 +112,6 @@ object HotButtons {
     val TELEPORT_DOOR = object : HotButton {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!Achievement.TELEPORT.isGranted(player)) return null
             return ItemStack(Material.DARK_OAK_DOOR).apply {
                 setDisplayName(HookedItemMessages.TELEPORT.asSafety(player.wrappedLocale))
                 setLore(*HookedItemMessages.TELEPORT_LORE
@@ -123,12 +122,10 @@ object HotButtons {
         }
 
         override fun onItemHeld(player: Player, event: PlayerItemHeldEvent) {
-            if (!Achievement.TELEPORT.isGranted(player)) return
             TeleportMenu.open(player)
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!Achievement.TELEPORT.isGranted(player)) return
             TeleportMenu.open(player)
         }
 
