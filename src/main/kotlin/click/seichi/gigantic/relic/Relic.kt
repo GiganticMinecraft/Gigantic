@@ -1,6 +1,7 @@
 package click.seichi.gigantic.relic
 
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
@@ -32,8 +33,9 @@ enum class Relic(
     ;
 
     companion object {
-        private val idMap = values().map { it.id to it }.toMap()
-        fun findById(id: Int) = idMap[id]
+        fun getDroppedList(player: Player): List<Relic> {
+            return values().filter { player.getOrPut(Keys.RELIC_MAP[it] ?: return@filter false) > 0L }
+        }
     }
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)
@@ -41,6 +43,8 @@ enum class Relic(
     fun getLore(locale: Locale) = localizedLore?.map { it.asSafety(locale) }
 
     fun getIcon() = icon.clone()
+
+    fun getDroppedNum(player: Player) = Keys.RELIC_MAP[this]?.let { player.getOrPut(it) } ?: 0L
 
     fun dropTo(player: Player) {
         player.transform(Keys.RELIC_MAP[this] ?: return) { it + 1 }

@@ -33,4 +33,13 @@ object BagMessages {
             Locale.JAPANESE to "クエストがありません"
     )
 
+    val RELIC = LocalizedText(
+            Locale.JAPANESE to "レリック"
+    )
+
+    val NO_RELIC = LocalizedText(
+            Locale.JAPANESE to "レリックがありません"
+    )
+
+
 }

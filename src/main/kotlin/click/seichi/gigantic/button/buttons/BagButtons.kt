@@ -6,15 +6,14 @@ import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.menu.menus.QuestSelectMenu
-import click.seichi.gigantic.menu.menus.SkillMenu
-import click.seichi.gigantic.menu.menus.SpecialThanksMenu
-import click.seichi.gigantic.menu.menus.SpellMenu
+import click.seichi.gigantic.head.Head
+import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.BagMessages
 import click.seichi.gigantic.message.messages.menu.ProfileMessages
 import click.seichi.gigantic.message.messages.menu.SkillMenuMessages
 import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
 import click.seichi.gigantic.quest.Quest
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.ChatColor
 import org.bukkit.GameMode
@@ -198,18 +197,17 @@ object BagButtons {
 
     }
 
-
-    val SOUL_MONSTER = object : Button {
+    val RELIC = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
             if (!Achievement.QUEST.isGranted(player)) return null
-            return ItemStack(Material.WRITABLE_BOOK).apply {
-                if (Quest.getOrderedList(player).isEmpty()) {
+            return Head.JEWELLERY_BOX.toItemStack().apply {
+                if (Relic.getDroppedList(player).isEmpty()) {
                     setDisplayName("${ChatColor.GRAY}${ChatColor.UNDERLINE}"
-                            + BagMessages.NO_QUEST.asSafety(player.wrappedLocale))
+                            + BagMessages.NO_RELIC.asSafety(player.wrappedLocale))
                 } else {
                     setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
-                            + BagMessages.QUEST.asSafety(player.wrappedLocale))
+                            + BagMessages.RELIC.asSafety(player.wrappedLocale))
                 }
                 clearLore()
                 itemMeta = itemMeta.apply {
@@ -221,9 +219,9 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (Quest.getOrderedList(player).isEmpty()) return
-            if (event.inventory.holder === QuestSelectMenu) return
-            QuestSelectMenu.open(player)
+            if (Relic.getDroppedList(player).isEmpty()) return
+            if (event.inventory.holder === RelicMenu) return
+            RelicMenu.open(player)
         }
 
     }
