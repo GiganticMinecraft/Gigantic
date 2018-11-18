@@ -147,7 +147,7 @@ class BattleMonster(
         val speed = monster.parameter.speed
         val diff = des.clone().subtract(location).toVector().normalize().multiply(speed)
         location.add(diff)
-        if (des.distance(location) >= 0.1) return
+        if (des.distance(location) >= monster.parameter.speed) return
         state = SoulMonsterState.ATTACK
     }
 

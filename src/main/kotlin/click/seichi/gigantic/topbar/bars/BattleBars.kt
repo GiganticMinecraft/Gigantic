@@ -37,8 +37,8 @@ object BattleBars {
     }
 
     val AWAKE = { health: Long, monster: SoulMonster, locale: Locale ->
-        val maxHealth = monster.parameter.health.toBigDecimal()
-        val titleColor = when (maxHealth.toLong()) {
+        val maxHealth = monster.parameter.health
+        val titleColor = when (maxHealth) {
             in 0 until 500 -> ChatColor.LIGHT_PURPLE
             in 500 until 2000 -> ChatColor.DARK_PURPLE
             in 2000 until 10000 -> ChatColor.DARK_BLUE
@@ -58,7 +58,7 @@ object BattleBars {
                         "$bossName " +
                         "$health" +
                         " / " +
-                        "${maxHealth.setScale(1)}",
+                        "$maxHealth",
                 progress,
                 barColor,
                 BarStyle.SEGMENTED_20

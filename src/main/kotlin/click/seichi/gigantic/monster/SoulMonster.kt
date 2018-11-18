@@ -1,6 +1,7 @@
 package click.seichi.gigantic.monster
 
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
@@ -89,6 +90,25 @@ enum class SoulMonster(
             SoulMonsterAI::class,
             DropRelic(Relic.BLUE_BLAZE_POWDER)
     ),
+    CHICKEN(
+            13,
+            Head.CHICKEN,
+            MonsterMessages.CHICKEN,
+            null,
+            Color.fromRGB(230, 227, 222),
+            SoulMonsterParameters.CHICKEN,
+            SoulMonsterAI::class
+    ),
+    CHICKEN_KING(
+            14,
+            Head.CHICKEN_KING,
+            MonsterMessages.CHICKEN_KING,
+            null,
+            Color.fromRGB(230, 227, 222),
+            SoulMonsterParameters.CHICKEN_KING,
+            SoulMonsterAI::class,
+            DropRelic(Relic.CHICKEN_KING_CROWN)
+    ),
 
     LADON(
             100,
@@ -168,6 +188,8 @@ enum class SoulMonster(
     val dropRelicSet = dropRelic.toSet()
 
     fun createAIInstance() = aiClass.createInstance()
+
+    fun isDefeatedBy(player: Player) = Keys.SOUL_MONSTER[this]?.let { player.getOrPut(it) > 0 } ?: false
 
     fun defeatedBy(player: Player) {
         player.transform(Keys.SOUL_MONSTER[this] ?: return) { it + 1 }

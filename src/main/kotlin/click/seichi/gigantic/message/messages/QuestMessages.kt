@@ -68,4 +68,8 @@ object QuestMessages {
             Locale.JAPANESE to "もっと熱くなれよ"
     )
 
+    val CHICKEN = LocalizedText(
+            Locale.JAPANESE to "庭には二羽鶏がいる"
+    )
+
 }

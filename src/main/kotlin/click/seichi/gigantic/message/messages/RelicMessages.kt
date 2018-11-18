@@ -79,4 +79,18 @@ object RelicMessages {
     val BLUE_BLAZE_POWDER = LocalizedText(
             Locale.JAPANESE to "ブルーブレイズのパウダー"
     )
+
+    val CHICKEN_KING_CROWN = LocalizedText(
+            Locale.JAPANESE to "鶏キングの王冠"
+    )
+
+    val CHICKEN_KING_CROWN_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "10コンボ以上の攻撃時に"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "1の追加ダメージ"
+            )
+    )
+
 }

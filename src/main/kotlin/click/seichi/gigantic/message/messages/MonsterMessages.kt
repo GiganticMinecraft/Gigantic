@@ -56,4 +56,12 @@ object MonsterMessages {
             Locale.JAPANESE to "ブルーブレイズ"
     )
 
+    val CHICKEN = LocalizedText(
+            Locale.JAPANESE to "鶏"
+    )
+
+    val CHICKEN_KING = LocalizedText(
+            Locale.JAPANESE to "鶏キング"
+    )
+
 }

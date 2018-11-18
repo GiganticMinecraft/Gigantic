@@ -8,6 +8,7 @@ import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
+import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
@@ -140,6 +141,11 @@ enum class Achievement(
         SKILL_FLASH.isGranted(it)
     }, action = {
         Quest.BLAZE_CROWD.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_CHICKEN_ORDER(408, {
+        SoulMonster.PIG_WARRIOR.isDefeatedBy(it)
+    }, action = {
+        Quest.CHICKEN_CROWD.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     ;
 

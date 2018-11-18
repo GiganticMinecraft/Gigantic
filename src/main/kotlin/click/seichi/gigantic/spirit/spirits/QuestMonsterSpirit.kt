@@ -90,7 +90,7 @@ class QuestMonsterSpirit(
                     bossBar.addPlayer(player)
                     val nextProgress = count.div(senseDuration.toDouble())
                     BattleBars.SEAL(nextProgress, monster, spawner.wrappedLocale).show(bossBar)
-                    MonsterSpiritAnimations.AWAKE.start(entity.eyeLocation)
+                    MonsterSpiritAnimations.AWAKE.start(entity.eyeLocation.add(0.0, 0.9, 0.0))
                     if (count % 10 == 0)
                         SoulMonsterSounds.SENSE_SUB.playOnly(player)
                 },

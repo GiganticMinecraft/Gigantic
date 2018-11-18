@@ -35,6 +35,13 @@ enum class Quest(
             SoulMonster.BLAZE_WARRIOR,
             SoulMonster.BLUE_BLAZE
     ),
+    CHICKEN_CROWD(
+            2,
+            QuestMessages.CHICKEN,
+            null,
+            SoulMonster.CHICKEN,
+            SoulMonster.CHICKEN_KING
+    ),
     LADON(
             100,
             QuestMessages.LADON,

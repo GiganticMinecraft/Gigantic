@@ -55,6 +55,22 @@ object SoulMonsterParameters {
             Material.BLUE_CONCRETE_POWDER
     )
 
+    val CHICKEN = SoulMonsterParameter(
+            70L,
+            8,
+            0.2,
+            2,
+            Material.WHITE_WOOL
+    )
+
+    val CHICKEN_KING = SoulMonsterParameter(
+            140L,
+            14,
+            0.25,
+            3,
+            Material.WHITE_TERRACOTTA
+    )
+
     val LADON = SoulMonsterParameter(
             50L,
             10,

@@ -101,7 +101,10 @@ class Battle internal constructor(
     }
 
     fun end() {
-        battlers.toSet().forEach { leave(it) }
+        battlers.toSet().forEach {
+            Achievement.update(it.player)
+            leave(it)
+        }
         enemy.remove()
         BattleManager.endBattle(this)
     }
@@ -129,7 +132,6 @@ class Battle internal constructor(
                     battlers.forEach { battlePlayer ->
                         drop.relic.dropTo(battlePlayer.player)
                         RelicMessages.DROP(drop).sendTo(battlePlayer.player)
-                        Achievement.update(battlePlayer.player)
                     }
                 }
         end()
