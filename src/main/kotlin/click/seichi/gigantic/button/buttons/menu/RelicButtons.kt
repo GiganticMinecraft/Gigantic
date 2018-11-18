@@ -8,7 +8,6 @@ import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.menu.RelicMenuMessages
 import click.seichi.gigantic.relic.Relic
 import org.bukkit.ChatColor
-import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
@@ -21,7 +20,7 @@ object RelicButtons {
     val RELIC: (Relic) -> Button = { relic ->
         object : Button {
             override fun getItemStack(player: Player): ItemStack? {
-                return ItemStack(Material.ENCHANTED_BOOK).apply {
+                return relic.getIcon().apply {
                     setDisplayName("${ChatColor.WHITE}${ChatColor.BOLD}" +
                             relic.getName(player.wrappedLocale))
                     clearLore()
