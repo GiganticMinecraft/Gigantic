@@ -6,7 +6,6 @@ import click.seichi.gigantic.topbar.TopBar
 import org.bukkit.ChatColor
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -37,7 +36,7 @@ object BattleBars {
         )
     }
 
-    val AWAKE = { health: BigDecimal, monster: SoulMonster, locale: Locale ->
+    val AWAKE = { health: Long, monster: SoulMonster, locale: Locale ->
         val maxHealth = monster.parameter.health.toBigDecimal()
         val titleColor = when (maxHealth.toLong()) {
             in 0 until 500 -> ChatColor.LIGHT_PURPLE
@@ -47,7 +46,7 @@ object BattleBars {
             else -> ChatColor.WHITE
         }
         val progress = health.toDouble().div(maxHealth.toDouble()).coerceIn(0.0, 1.0)
-        val barColor = when (progress.toDouble()) {
+        val barColor = when (progress) {
             in 0.0..0.05 -> BarColor.RED
             in 0.05..0.20 -> BarColor.PINK
             in 0.20..0.70 -> BarColor.BLUE
@@ -57,7 +56,7 @@ object BattleBars {
         TopBar(
                 "$titleColor" +
                         "$bossName " +
-                        "${health.setScale(1)}" +
+                        "$health" +
                         " / " +
                         "${maxHealth.setScale(1)}",
                 progress,

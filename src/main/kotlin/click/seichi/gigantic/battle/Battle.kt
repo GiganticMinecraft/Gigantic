@@ -62,7 +62,7 @@ class Battle internal constructor(
     }
 
     fun leave(player: Player) {
-        players.remove(player)
+        players.removeIf { it.equals(player) }
         enemy.leave(player)
         if (isStarted)
             enemy.updateTargets(players)
@@ -158,7 +158,7 @@ class Battle internal constructor(
 
     fun tryAttack(player: Player, block: Block) {
         if (!isStarted) return
-        val damage = 1.toBigDecimal()
+        val damage = 1L
         val trueDamage = enemy.damageByPlayer(player, damage)
         BattlePops.BATTLE_DAMAGE(trueDamage).pop(block.centralLocation, diffY = PopUpParameters.BATTLE_DAMAGE_DIFF)
     }

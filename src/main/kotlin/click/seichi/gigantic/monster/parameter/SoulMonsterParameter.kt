@@ -8,7 +8,7 @@ import org.bukkit.Material
 data class SoulMonsterParameter(
         val health: Long,
         // one block damage
-        val attackDamage: Long,
+        val power: Long,
         // distance per tick
         val speed: Double,
         // blocks per attack

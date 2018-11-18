@@ -24,7 +24,6 @@ import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.EulerAngle
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -78,7 +77,7 @@ class BattleMonster(
     var destination: Location? = null
         private set
 
-    var health = monster.parameter.health.toBigDecimal()
+    var health = monster.parameter.health
 
     var location: Location = spawnLocation
 
@@ -89,7 +88,7 @@ class BattleMonster(
 
     private var disappearCount = 0
 
-    private val totalDamageMap = mutableMapOf<Player, BigDecimal>()
+    private val totalDamageMap = mutableMapOf<Player, Long>()
 
     private val attackBlockData = Bukkit.createBlockData(monster.parameter.attackMaterial)
 
@@ -130,7 +129,7 @@ class BattleMonster(
     }
 
     fun awake() {
-        BattleBars.AWAKE(monster.parameter.health.toBigDecimal(), monster, locale).show(bossBar)
+        BattleBars.AWAKE(monster.parameter.health.toLong(), monster, locale).show(bossBar)
         state = SoulMonsterState.MOVE
         destination = ai.searchDestination(chunk, attackTarget, location)
     }
@@ -248,13 +247,13 @@ class BattleMonster(
 
             // health
             player.manipulate(CatalogPlayerCache.HEALTH) { health ->
-                health.decrease(monster.parameter.attackDamage)
+                health.decrease(monster.parameter.power)
                 if (health.isZero) {
                     player.offer(Keys.DEATH_MESSAGE, DeathMessages.BY_MONSTER(player.name, monster))
                 }
                 PlayerMessages.HEALTH_DISPLAY(health).sendTo(player)
                 PlayerSounds.INJURED.play(player.location)
-                BattleMessages.DAMEGE(monster, monster.parameter.attackDamage).sendTo(player)
+                BattleMessages.DAMEGE(monster, monster.parameter.power).sendTo(player)
             }
             // effects
             SoulMonsterSounds.ATTACK.play(block.centralLocation)
@@ -270,16 +269,16 @@ class BattleMonster(
         MonsterSpiritAnimations.DEFENCE(monster.color).absorb(entity, block.centralLocation, meanY = 0.9)
     }
 
-    fun damageByPlayer(player: Player, damage: BigDecimal): BigDecimal {
-        val trueDamage = damage.coerceIn(0.toBigDecimal(), health)
+    fun damageByPlayer(player: Player, damage: Long): Long {
+        val trueDamage = damage.coerceIn(0L, health)
         totalDamageMap.compute(player) { _, amount ->
             amount?.plus(trueDamage) ?: trueDamage
         }
         health -= trueDamage
-        if (health == 0.toBigDecimal()) {
+        if (health == 0L) {
             state = SoulMonsterState.DEATH
         }
-        if (trueDamage > 0.toBigDecimal()) {
+        if (trueDamage > 0L) {
             BattleBars.AWAKE(health, monster, locale).show(bossBar)
             MonsterSpiritAnimations.DAMAGE_FROM_PLAYER.start(eyeLocation)
         }
