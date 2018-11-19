@@ -3,15 +3,11 @@ package click.seichi.gigantic.breaker
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.popup.pops.SkillPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
-import org.bukkit.Bukkit
 import org.bukkit.Effect
 import org.bukkit.Particle
 import org.bukkit.block.Block
@@ -44,9 +40,9 @@ open class Miner : Breaker {
         // bedrock process
         block.changeRelativeBedrock()
 
-        if (!block.isCrust) return
+        if (!block.isCrust && !block.isTree) return
         // carry player cache
-        player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
+        player.manipulate(CatalogPlayerCache.EXP) {
             it.add(1L)
         }
         player.manipulate(CatalogPlayerCache.MINE_COMBO) {
@@ -56,13 +52,7 @@ open class Miner : Breaker {
         player.offer(Keys.IS_UPDATE_PROFILE, true)
         player.getOrPut(Keys.BAG).carry(player)
 
-        player.manipulate(CatalogPlayerCache.LEVEL) {
-            it.calculate(ExpProducer.calcExp(player)) { current ->
-                Bukkit.getPluginManager().callEvent(LevelUpEvent(current, player))
-            }
-            PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(player)
-        }
-
+        player.updateLevel()
 
         val mineBurst = player.find(CatalogPlayerCache.MINE_BURST)
         if (mineBurst?.duringFire() == true)

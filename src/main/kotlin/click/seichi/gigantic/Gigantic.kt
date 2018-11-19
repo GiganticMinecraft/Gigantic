@@ -242,7 +242,7 @@ class Gigantic : JavaPlugin() {
             SchemaUtils.createMissingTablesAndColumns(
                     UserTable,
                     UserWillTable,
-                    UserMineBlockTable,
+                    UserExpTable,
                     UserMonsterTable,
                     UserRelicTable,
                     UserAchievementTable,

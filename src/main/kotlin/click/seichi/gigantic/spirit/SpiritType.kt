@@ -32,7 +32,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
     WILL(
             RandomSummonCase(0.05, BlockBreakEvent::class.java) { event ->
                 val player = event.player ?: return@RandomSummonCase
-                if (!event.block.isCrust) return@RandomSummonCase
+                if (!event.block.isCrust && !event.block.isTree) return@RandomSummonCase
                 if (!Achievement.WILL_BASIC_1.isGranted(player)) return@RandomSummonCase
                 val aptitudeSet = player.find(CatalogPlayerCache.APTITUDE)?.copySet() ?: return@RandomSummonCase
                 val will = aptitudeSet.shuffled().firstOrNull() ?: return@RandomSummonCase
@@ -42,7 +42,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
     MONSTER(
             RandomSummonCase(0.02, BlockBreakEvent::class.java) { event ->
                 val player = event.player ?: return@RandomSummonCase
-                if (!event.block.isCrust) return@RandomSummonCase
+                if (!event.block.isCrust && !event.block.isTree) return@RandomSummonCase
                 val chunk = event.block.chunk ?: return@RandomSummonCase
                 if (!Achievement.QUEST.isGranted(player)) return@RandomSummonCase
                 // 他のバトルに参加している場合は終了

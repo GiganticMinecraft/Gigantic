@@ -3,8 +3,9 @@ package click.seichi.gigantic.cache.manipulator
 /**
  * @author tar0ss
  */
-enum class MineBlockReason(val id: Int) {
-    GENERAL(0),
+enum class ExpReason(val id: Int) {
+    MINE_BLOCK(0),
+    COMBO_BONUS(1),
     DEATH_PENALTY(2),
     ;
 

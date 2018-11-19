@@ -6,7 +6,7 @@ import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.MineBlockReason
+import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.PlayerLevelConfig
@@ -14,7 +14,6 @@ import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.player.ExpProducer
 import click.seichi.gigantic.popup.pops.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
@@ -103,10 +102,7 @@ class PlayerListener : Listener {
 
         if (!player.isOp) player.gameMode = GameMode.SURVIVAL
 
-        player.manipulate(CatalogPlayerCache.LEVEL) { level ->
-            level.calculate(ExpProducer.calcExp(player)) {}
-            PlayerMessages.EXP_BAR_DISPLAY(level).sendTo(player)
-        }
+        player.updateLevel()
 
         player.manipulate(CatalogPlayerCache.MANA) {
             it.updateMaxMana()
@@ -260,7 +256,7 @@ class PlayerListener : Listener {
         player.offer(Keys.DEATH_MESSAGE, null)
 
         player.manipulate(CatalogPlayerCache.LEVEL) { level ->
-            player.manipulate(CatalogPlayerCache.MINE_BLOCK) {
+            player.manipulate(CatalogPlayerCache.EXP) {
                 val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
                 val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1] ?: 0L
                 val maxPenalty = level.exp.minus(expToCurrentLevel)
@@ -268,13 +264,13 @@ class PlayerListener : Listener {
                         .div(100L)
                         .times(Config.PLAYER_DEATH_PENALTY.times(100).roundToLong())
                         .coerceAtMost(maxPenalty)
-                it.add(penaltyMineBlock, MineBlockReason.DEATH_PENALTY)
+                it.add(penaltyMineBlock, ExpReason.DEATH_PENALTY)
                 if (penaltyMineBlock != 0L)
                     PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
             }
-            level.calculate(ExpProducer.calcExp(player)) {}
-            PlayerMessages.EXP_BAR_DISPLAY(level).sendTo(player)
         }
+
+        player.updateLevel()
     }
 
     @EventHandler

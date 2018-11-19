@@ -3,7 +3,7 @@ package click.seichi.gigantic.cache.cache
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.MineBlockReason
+import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.monster.SoulMonster
@@ -53,8 +53,8 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.AQUA_LINEA_TOGGLE.let {
                     offer(it, it.read(user))
                 }
-                Keys.MINEBLOCK_MAP.forEach { reason, key ->
-                    offer(key, key.read(userMineBlockMap[reason] ?: return@forEach))
+                Keys.EXP_MAP.forEach { reason, key ->
+                    offer(key, key.read(userExpMap[reason] ?: return@forEach))
                 }
                 Keys.MEMORY_MAP.forEach { will, key ->
                     offer(key, key.read(userWillMap[will] ?: return@forEach))
@@ -119,8 +119,8 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.AQUA_LINEA_TOGGLE.let {
                     it.store(user, getOrDefault(it))
                 }
-                Keys.MINEBLOCK_MAP.forEach { reason, key ->
-                    key.store(userMineBlockMap[reason] ?: return@forEach, getOrDefault(key))
+                Keys.EXP_MAP.forEach { reason, key ->
+                    key.store(userExpMap[reason] ?: return@forEach, getOrDefault(key))
                 }
                 Keys.MEMORY_MAP.forEach { will, key ->
                     key.store(userWillMap[will] ?: return@forEach, getOrDefault(key))
@@ -172,10 +172,10 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             })
         }.toMap()
 
-        val userMineBlockMap = MineBlockReason.values().map { reason ->
-            reason to (UserMineBlock
-                    .find { (UserMineBlockTable.userId eq uniqueId) and (UserMineBlockTable.reasonId eq reason.id) }
-                    .firstOrNull() ?: UserMineBlock.new {
+        val userExpMap = ExpReason.values().map { reason ->
+            reason to (UserExp
+                    .find { (UserExpTable.userId eq uniqueId) and (UserExpTable.reasonId eq reason.id) }
+                    .firstOrNull() ?: UserExp.new {
                 user = this@UserEntityData.user
                 reasonId = reason.id
             })

@@ -6,7 +6,7 @@ import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.battle.Battle
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.cache.PlayerCache
-import click.seichi.gigantic.cache.manipulator.MineBlockReason
+import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.monster.SoulMonster
@@ -107,20 +107,20 @@ object Keys {
 
     }
 
-    val MINEBLOCK_MAP: Map<MineBlockReason, DatabaseKey<PlayerCache, Long>> = MineBlockReason.values()
+    val EXP_MAP: Map<ExpReason, DatabaseKey<PlayerCache, Long>> = ExpReason.values()
             .map {
                 it to object : DatabaseKey<PlayerCache, Long> {
                     override val default: Long
                         get() = 0L
 
                     override fun read(entity: Entity<*>): Long {
-                        val userMineBlock = entity as UserMineBlock
-                        return userMineBlock.mineBlock
+                        val userExp = entity as UserExp
+                        return userExp.exp
                     }
 
                     override fun store(entity: Entity<*>, value: Long) {
-                        val userMineBlock = entity as UserMineBlock
-                        userMineBlock.mineBlock = value
+                        val userExp = entity as UserExp
+                        userExp.exp = value
                     }
 
                     override fun satisfyWith(value: Long): Boolean {

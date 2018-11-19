@@ -40,8 +40,13 @@ enum class Achievement(
         }
     }, grantMessage = AchievementMessages.FIRST_JOIN),
     FIRST_LEVEL_UP(1, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 1
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 2
     }, grantMessage = AchievementMessages.FIRST_LEVEL_UP),
+
+    MINE_COMBO(2, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
+    }, grantMessage = AchievementMessages.MINE_COMBO),
+
 
     // systems
     MANA_STONE(100, {
@@ -49,10 +54,10 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.MANA_STONE,
             priority = UpdatePriority.HIGHEST),
     TELEPORT(101, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 2
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
     }, grantMessage = AchievementMessages.TELEPORT),
     QUEST(102, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 4
     }, grantMessage = AchievementMessages.QUEST,
             priority = UpdatePriority.HIGHEST),
 

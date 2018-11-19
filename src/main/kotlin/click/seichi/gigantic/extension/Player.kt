@@ -6,16 +6,16 @@ import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Key
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
+import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.event.events.LevelUpEvent
+import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.util.CardinalDirection
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.chat.ComponentSerializer
-import org.bukkit.Color
-import org.bukkit.Location
-import org.bukkit.Material
-import org.bukkit.Particle
+import org.bukkit.*
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
@@ -81,3 +81,14 @@ fun Player.hasRelic(relic: Relic): Boolean {
 }
 
 fun Player.findBattle() = BattleManager.findBattle(this)
+
+fun Player.calcExp() = find(CatalogPlayerCache.EXP)?.calcExp() ?: 0L
+
+fun Player.updateLevel() {
+    manipulate(CatalogPlayerCache.LEVEL) {
+        it.calculate(calcExp()) { current ->
+            Bukkit.getPluginManager().callEvent(LevelUpEvent(current, this))
+        }
+        PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(this)
+    }
+}

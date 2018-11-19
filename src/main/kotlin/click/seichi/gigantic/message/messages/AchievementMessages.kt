@@ -27,6 +27,16 @@ object AchievementMessages {
             }
     ))
 
+    val MINE_COMBO = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "マインコンボ解禁!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "ブロックを連続破壊してコンボが切れないようにしよう！\n"
+            }
+    ))
+
+
     val SKILL_MINE_BURST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +

@@ -17,7 +17,7 @@ object CatalogPlayerCache {
 
     val MINE_BURST = MineBurst::class.java
 
-    val MINE_BLOCK = MineBlock::class.java
+    val EXP = Exp::class.java
 
     val MINE_COMBO = MineCombo::class.java
 
