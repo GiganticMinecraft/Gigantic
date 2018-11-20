@@ -101,5 +101,8 @@ object RelicMessages {
             Locale.JAPANESE to "ウィザースケルトンの頭"
     )
 
+    val ROTTEN_FLESH = LocalizedText(
+            Locale.JAPANESE to "村人ゾンビの肉"
+    )
 
 }

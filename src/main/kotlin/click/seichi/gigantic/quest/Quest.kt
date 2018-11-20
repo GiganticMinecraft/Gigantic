@@ -51,6 +51,13 @@ enum class Quest(
             SoulMonster.WITHER_SKELETON,
             SoulMonster.WITHER
     ),
+    BEGINS(
+            4,
+            QuestMessages.BEGINS,
+            null,
+            SoulMonster.VILLAGER,
+            SoulMonster.ZOMBIE_VILLAGER
+    ),
     LADON(
             100,
             QuestMessages.LADON,

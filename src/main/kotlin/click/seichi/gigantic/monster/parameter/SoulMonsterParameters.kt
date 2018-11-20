@@ -87,6 +87,22 @@ object SoulMonsterParameters {
             Material.BLACK_CONCRETE
     )
 
+    val VILLAGER = SoulMonsterParameter(
+            50L,
+            0,
+            0.1,
+            0,
+            Material.GRASS_BLOCK
+    )
+
+    val ZOMBIE_VILLAGER = SoulMonsterParameter(
+            70L,
+            0,
+            0.1,
+            1,
+            Material.MOSSY_COBBLESTONE
+    )
+
     val LADON = SoulMonsterParameter(
             50L,
             10,

@@ -17,6 +17,8 @@ enum class Head(
         private val urlString: String
 ) {
     // soul monster heads
+    VILLAGER("http://textures.minecraft.net/texture/822d8e751c8f2fd4c8942c44bdb2f5ca4d8ae8e575ed3eb34c18a86e93b"),
+    ZOMBIE_VILLAGER("http://textures.minecraft.net/texture/e5e08a8776c1764c3fe6a6ddd412dfcb87f41331dad479ac96c21df4bf3ac89c"),
     PIG("http://textures.minecraft.net/texture/621668ef7cb79dd9c22ce3d1f3f4cb6e2559893b6df4a469514e667c16aa4"),
     PIG_WARRIOR("http://textures.minecraft.net/texture/c343b0f771dbbe4a53a3b8fe323ec0a3fef35da3ddaccda56b706a6f5491d796"),
     MR_PIG("http://textures.minecraft.net/texture/a1a15a9e301c3dd18ff1464bbd10972ab9e9df164533c33822de79898ae2cd"),

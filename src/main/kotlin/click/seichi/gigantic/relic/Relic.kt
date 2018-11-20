@@ -26,6 +26,7 @@ enum class Relic(
     CHICKEN_KING_CROWN(2, RelicMessages.CHICKEN_KING_CROWN, RelicMessages.CHICKEN_KING_CROWN_LORE, icon = Head.CHICKEN_KING_CROWN.toItemStack()),
     WITHER_SKELETON_SKULL(3, RelicMessages.WITHER_SKELETON_SKULL, null, icon = ItemStack(Material.WITHER_SKELETON_SKULL)),
     MANA_STONE(4, RelicMessages.MANA_STONE, null, icon = ItemStack(Material.NETHER_STAR)),
+    ROTTEN_FLESH(4, RelicMessages.ROTTEN_FLESH, null, icon = ItemStack(Material.ROTTEN_FLESH)),
     SPELL_BOOK_EXPLOSION(100, RelicMessages.SPELL_BOOK_EXPLOSION, null, 1),
     GOLDEN_APPLE(150, RelicMessages.GOLDEN_APPLE, null),
     WILL_CRYSTAL_SAPPHIRE(200, RelicMessages.WILL_CRYSTAL_SAPPHIRE, null),

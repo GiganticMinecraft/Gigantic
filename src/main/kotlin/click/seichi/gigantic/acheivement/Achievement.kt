@@ -8,7 +8,6 @@ import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
-import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
@@ -58,8 +57,7 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.TELEPORT_PLAYER),
     QUEST(102, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
-    }, grantMessage = AchievementMessages.QUEST,
-            priority = UpdatePriority.HIGHEST),
+    }, priority = UpdatePriority.HIGHEST),
     TELEPORT_LAST_DEATH(103, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 6
     }, grantMessage = AchievementMessages.TELEPORT_LAST_DEATH),
@@ -141,7 +139,7 @@ enum class Achievement(
         Quest.LOA.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_PIG_ORDER(406, {
-        QUEST.isGranted(it)
+        Quest.BEGINS.isCleared(it)
     }, action = {
         Quest.PIG_CROWD.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
@@ -151,7 +149,8 @@ enum class Achievement(
         Quest.BLAZE_CROWD.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_CHICKEN_ORDER(408, {
-        SoulMonster.PIG_WARRIOR.isDefeatedBy(it)
+        Quest.BEGINS.isCleared(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 8
     }, action = {
         Quest.CHICKEN_CROWD.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
@@ -160,6 +159,11 @@ enum class Achievement(
     }, action = {
         Quest.WITHER.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_BEGINS_ORDER(410, {
+        QUEST.isGranted(it)
+    }, action = {
+        Quest.BEGINS.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER_FIRST),
     ;
 
     /**1から順に [update] される**/

@@ -76,4 +76,9 @@ object QuestMessages {
             Locale.JAPANESE to "世界を蝕むもの"
     )
 
+    val BEGINS = LocalizedText(
+            Locale.JAPANESE to "始まり"
+    )
+
+
 }

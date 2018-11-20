@@ -159,19 +159,18 @@ object AchievementMessages {
             }
     ))
 
-    val QUEST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}" +
-                        "クエストが受けられるようになった!!\n" +
-                        "${ChatColor.GRAY}" +
-                        "メニューからクエストを選択!\n"
-            }
-    ))
-
     val QUEST_ORDER = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${Quest.COLOR}" +
-                        "新しいクエストが発生しました。\n"
+                        "新しいクエストが受けられるようになった\n"
+            }
+    ))
+
+    val QUEST_ORDER_FIRST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${Quest.COLOR}" +
+                        "初めてのクエストが受けられるようになった\n" +
+                        "メニューからクエストを受注しよう!!"
             }
     ))
 

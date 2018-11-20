@@ -72,4 +72,12 @@ object MonsterMessages {
             Locale.JAPANESE to "ウィザー"
     )
 
+    val VILLAGER = LocalizedText(
+            Locale.JAPANESE to "村人"
+    )
+
+    val ZOMBIE_VILLAGER = LocalizedText(
+            Locale.JAPANESE to "ゾンビ村人"
+    )
+
 }

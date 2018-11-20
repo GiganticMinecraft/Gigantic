@@ -129,6 +129,26 @@ enum class SoulMonster(
             SoulMonsterAI::class,
             DropRelic(Relic.MANA_STONE)
     ),
+    VILLAGER(
+            17,
+            Head.VILLAGER,
+            MonsterMessages.VILLAGER,
+            null,
+            Color.fromRGB(189, 137, 113),
+            SoulMonsterParameters.VILLAGER,
+            SoulMonsterAI::class
+    ),
+    ZOMBIE_VILLAGER(
+            18,
+            Head.ZOMBIE_VILLAGER,
+            MonsterMessages.ZOMBIE_VILLAGER,
+            null,
+            Color.fromRGB(71, 99, 43),
+            SoulMonsterParameters.ZOMBIE_VILLAGER,
+            SoulMonsterAI::class,
+            DropRelic(Relic.ROTTEN_FLESH)
+    ),
+
 
     LADON(
             100,
