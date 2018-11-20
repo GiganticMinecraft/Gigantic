@@ -53,13 +53,16 @@ enum class Achievement(
         Relic.MANA_STONE.has(it)
     }, grantMessage = AchievementMessages.MANA_STONE,
             priority = UpdatePriority.HIGHEST),
-    TELEPORT(101, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
-    }, grantMessage = AchievementMessages.TELEPORT),
-    QUEST(102, {
+    TELEPORT_PLAYER(101, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 4
+    }, grantMessage = AchievementMessages.TELEPORT_PLAYER),
+    QUEST(102, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
     }, grantMessage = AchievementMessages.QUEST,
             priority = UpdatePriority.HIGHEST),
+    TELEPORT_LAST_DEATH(103, {
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 6
+    }, grantMessage = AchievementMessages.TELEPORT_LAST_DEATH),
 
 
     // wills

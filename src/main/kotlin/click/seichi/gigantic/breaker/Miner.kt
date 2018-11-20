@@ -1,5 +1,6 @@
 package click.seichi.gigantic.breaker
 
+import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -45,9 +46,11 @@ open class Miner : Breaker {
         player.manipulate(CatalogPlayerCache.EXP) {
             it.add(1L)
         }
-        player.manipulate(CatalogPlayerCache.MINE_COMBO) {
-            it.combo(1L)
-            SkillPops.MINE_COMBO(it).pop(block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
+        if (Achievement.MINE_COMBO.isGranted(player)) {
+            player.manipulate(CatalogPlayerCache.MINE_COMBO) {
+                it.combo(1L)
+                SkillPops.MINE_COMBO(it).pop(block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
+            }
         }
         player.offer(Keys.IS_UPDATE_PROFILE, true)
         player.getOrPut(Keys.BAG).carry(player)
@@ -58,8 +61,9 @@ open class Miner : Breaker {
         if (mineBurst?.duringFire() == true)
             SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
 
-        val currentCombo = player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0
+        if (!Achievement.MINE_COMBO.isGranted(player)) return
 
+        val currentCombo = player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0
         // Sounds
         when {
             mineBurst?.duringFire() == true -> SkillSounds.MINE_BURST_ON_BREAK(currentCombo).playOnly(player)

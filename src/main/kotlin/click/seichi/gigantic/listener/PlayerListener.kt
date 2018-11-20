@@ -102,14 +102,13 @@ class PlayerListener : Listener {
 
         if (!player.isOp) player.gameMode = GameMode.SURVIVAL
 
-        player.updateLevel()
+        player.updateLevel(false)
 
         player.manipulate(CatalogPlayerCache.MANA) {
             it.updateMaxMana()
         }
 
         player.manipulate(CatalogPlayerCache.HEALTH) {
-            it.updateMaxHealth()
             PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
         }
         player.saturation = Float.MAX_VALUE
@@ -212,7 +211,6 @@ class PlayerListener : Listener {
 
         player.manipulate(CatalogPlayerCache.HEALTH) {
             val prevMax = it.max
-            it.updateMaxHealth()
             it.increase(it.max)
             PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
             if (prevMax == it.max) return@manipulate
@@ -250,6 +248,7 @@ class PlayerListener : Listener {
         val player = event.entity ?: return
         event.keepInventory = true
         event.keepLevel = true
+        player.offer(Keys.LAST_DEATH_CHUNK, player.location.chunk)
         player.getOrPut(Keys.DEATH_MESSAGE)?.asSafety(player.wrappedLocale)?.let { deathMessage ->
             event.deathMessage = "${ChatColor.RED}" + deathMessage
         }

@@ -15,7 +15,9 @@ object AchievementMessages {
 
     val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                    "ブロックを壊そう!!\n"
+                    "ブロックを壊そう!!\n" +
+                    "${ChatColor.GRAY}" +
+                    "\"${SkillParameters.TELEPORT_KEY}\" キー を押すかメニューからランダムテレポートができるぞ!!\n"
     ))
 
     val FIRST_LEVEL_UP = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
@@ -138,13 +140,22 @@ object AchievementMessages {
             }
     ))
 
-    val TELEPORT = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val TELEPORT_PLAYER = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "テレポートができるようになった!!\n" +
+                        "プレイヤーテレポートが使えるようになった!!\n" +
                         "${ChatColor.GRAY}" +
-                        "ランダムな場所やプレイヤーにテレポートできる\n" +
                         "\"${SkillParameters.TELEPORT_KEY}\" キー を押すかメニューからテレポート先を選択!!\n"
+            }
+    ))
+
+    val TELEPORT_LAST_DEATH = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "ラストデステレポートが使えるようになった!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "最後に死亡した場所に戻ることができる!!" +
+                        "\"${SkillParameters.TELEPORT_KEY}\" キー を押すかメニューから選択!!\n"
             }
     ))
 

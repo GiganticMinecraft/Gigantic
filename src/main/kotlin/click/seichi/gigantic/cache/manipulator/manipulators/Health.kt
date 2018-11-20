@@ -19,14 +19,14 @@ class Health : Manipulator<Health, PlayerCache> {
     // wrapした体力の最大値
     var max: Long by Delegates.notNull()
         private set
-    private lateinit var level: Level
 
     val isZero: Boolean
         get() = current == 0L
 
     override fun from(cache: Cache<PlayerCache>): Health? {
         current = cache.getOrPut(Keys.HEALTH)
-        level = cache.find(CatalogPlayerCache.LEVEL) ?: return null
+        val level = cache.find(CatalogPlayerCache.LEVEL) ?: return null
+        max = HealthConfig.HEALTH_MAP[level.current] ?: Defaults.MAX_MANA
         return this
     }
 
@@ -68,9 +68,5 @@ class Health : Manipulator<Health, PlayerCache> {
     }
 
     fun isMaxHealth() = current == max
-
-    fun updateMaxHealth() {
-        max = HealthConfig.HEALTH_MAP[level.current] ?: Defaults.MAX_MANA
-    }
 
 }

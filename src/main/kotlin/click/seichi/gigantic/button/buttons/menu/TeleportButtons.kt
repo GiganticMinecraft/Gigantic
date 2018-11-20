@@ -26,7 +26,7 @@ object TeleportButtons {
     val TELEPORT_TO_PLAYER = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!Achievement.TELEPORT.isGranted(player)) return null
+            if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return null
             return ItemStack(Material.PLAYER_HEAD).apply {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_PLAYER.asSafety(player.wrappedLocale))
             }
@@ -34,7 +34,7 @@ object TeleportButtons {
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
             if (event.inventory.holder === TeleportToPlayerMenu) return
-            if (!Achievement.TELEPORT.isGranted(player)) return
+            if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return
             TeleportToPlayerMenu.open(player)
         }
 
@@ -72,27 +72,24 @@ object TeleportButtons {
 
     }
 
-    val TELEPORT_TO_BATTLE_CHUNK = object : Button {
+    val TELEPORT_TO_DEATH_CHUNK = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!Achievement.TELEPORT.isGranted(player)) return null
-            if (!Achievement.QUEST.isGranted(player)) return null
-            val lastBattle = player.getOrPut(Keys.LAST_BATTLE) ?: return null
-            return lastBattle.monster.getIcon().apply {
-                setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_BATTLE_CHUNK.asSafety(player.wrappedLocale))
+            if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return null
+            player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return null
+            return ItemStack(Material.BONE).apply {
+                setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_LAST_DEATH.asSafety(player.wrappedLocale))
             }
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!Achievement.TELEPORT.isGranted(player)) return
-            if (!Achievement.QUEST.isGranted(player)) return
-            val lastBattle = player.getOrPut(Keys.LAST_BATTLE) ?: return
-            val chunk = lastBattle.chunk
+            if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return
+            val chunk = player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return
             chunk.load(true)
             val location = chunk.getSpawnableLocation()
             player.teleport(location)
             PlayerSounds.TELEPORT.play(location)
-
+            player.offer(Keys.LAST_DEATH_CHUNK, null)
         }
 
     }
@@ -100,7 +97,7 @@ object TeleportButtons {
     val TELEPORT_TOGGLE = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
-            if (!Achievement.TELEPORT.isGranted(player)) return null
+            if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return null
             val toggle = player.getOrPut(Keys.TELEPORT_TOGGLE)
             return ItemStack(Material.DAYLIGHT_DETECTOR).apply {
                 if (toggle)
@@ -116,7 +113,7 @@ object TeleportButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!Achievement.TELEPORT.isGranted(player)) return
+            if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return
             player.transform(Keys.TELEPORT_TOGGLE) { !it }
             PlayerSounds.TOGGLE.playOnly(player)
             TeleportMenu.reopen(player)

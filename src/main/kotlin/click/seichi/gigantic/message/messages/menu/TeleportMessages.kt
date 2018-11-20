@@ -23,8 +23,8 @@ object TeleportMessages {
             Locale.JAPANESE to "ランダムな場所へ"
     )
 
-    val TELEPORT_TO_BATTLE_CHUNK = LocalizedText(
-            Locale.JAPANESE to "最後に戦闘していた場所へ"
+    val TELEPORT_TO_LAST_DEATH = LocalizedText(
+            Locale.JAPANESE to "最後に死亡した場所へ"
     )
 
     val TELEPORT_TO_PLAYER_TITLE = LocalizedText(

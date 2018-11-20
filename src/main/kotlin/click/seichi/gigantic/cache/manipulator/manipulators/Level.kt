@@ -14,7 +14,7 @@ class Level : Manipulator<Level, PlayerCache> {
         val MAX = PlayerLevelConfig.MAX
     }
 
-    var current: Int = 0
+    var current: Int = 1
         private set
 
     var exp: Long = 0L

@@ -84,7 +84,7 @@ fun Player.findBattle() = BattleManager.findBattle(this)
 
 fun Player.calcExp() = find(CatalogPlayerCache.EXP)?.calcExp() ?: 0L
 
-fun Player.updateLevel() {
+fun Player.updateLevel(isCallEvent: Boolean = true) {
     manipulate(CatalogPlayerCache.LEVEL) {
         it.calculate(calcExp()) { current ->
             Bukkit.getPluginManager().callEvent(LevelUpEvent(current, this))

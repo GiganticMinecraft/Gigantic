@@ -18,13 +18,14 @@ object HealthConfig : SimpleConfiguration("health", Gigantic.PLUGIN) {
     }
 
     override fun makeFile(file: File, plugin: JavaPlugin, fileName: String) {
-        val pol = Polynomial(84.0, 15.28, 0.9039, 0.0099)
+        val pol = Polynomial(0.0, 15.28, 0.9039, 0.0099)
 
         file.printWriter().use { out ->
             out.println("level_to_health:")
-            (0..1).forEach { out.println("  $it: ${Defaults.HEALTH}") }
-            (2..PlayerLevelConfig.MAX).forEach { out.println("  $it: ${pol.calculation(it)}") }
+            (1..5).forEach { out.println("  $it: ${Defaults.HEALTH}") }
+            (6..PlayerLevelConfig.MAX).forEach { out.println("  $it: ${pol.calculation(it)}") }
         }
+
     }
 
 }

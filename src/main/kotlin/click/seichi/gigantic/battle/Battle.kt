@@ -3,9 +3,7 @@ package click.seichi.gigantic.battle
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.battle.passive.PowerEffect
-import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.RelicMessages
@@ -66,7 +64,6 @@ class Battle internal constructor(
         enemy.awake(spawnLocation, getJoinedPlayers())
         battlers.forEach {
             BattleSounds.START.playOnly(it.player)
-            it.player.offer(Keys.LAST_BATTLE, null)
         }
         object : BukkitRunnable() {
             override fun run() {
@@ -84,9 +81,6 @@ class Battle internal constructor(
         getJoinedPlayers().forEach {
             if (!it.player.isValid || it.player.gameMode != GameMode.SURVIVAL) {
                 leave(it)
-                if (it.player.isDead) {
-                    it.player.offer(Keys.LAST_BATTLE, this@Battle)
-                }
             }
         }
         when {
@@ -138,9 +132,6 @@ class Battle internal constructor(
     }
 
     private fun lose() {
-        battlers.forEach {
-            it.player.offer(Keys.LAST_BATTLE, this)
-        }
         end()
     }
 
