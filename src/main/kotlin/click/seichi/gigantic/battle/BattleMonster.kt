@@ -109,8 +109,8 @@ class BattleMonster(
         players.forEach { bossBar.addPlayer(it.player) }
         BattleBars.AWAKE(monster.parameter.health, monster, locale).show(bossBar)
         state = SoulMonsterState.MOVE
-        destination = ai.searchDestination(chunk, attackTarget, entity.eyeLocation)
         location = entity.location
+        destination = ai.searchDestination(chunk, attackTarget, location)
     }
 
     fun update(elapsedTick: Long) {
