@@ -76,8 +76,20 @@ object RelicMessages {
             Locale.JAPANESE to "豚の羽根"
     )
 
+    val PIGS_FEATHER_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "スキル フラッシュ"
+            )
+    )
+
     val BLUE_BLAZE_POWDER = LocalizedText(
             Locale.JAPANESE to "ブルーブレイズのパウダー"
+    )
+
+    val BLUE_BLAZE_POWDER_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "スキル マインバースト"
+            )
     )
 
     val CHICKEN_KING_CROWN = LocalizedText(
