@@ -155,18 +155,20 @@ class BattleMonster(
 
     private fun attack(elapsedTick: Long) {
         // set attack blocks
-        (1..monster.parameter.attackTimes).forEach { index ->
-            Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-                val attackBlocks = ai.getAttackBlocks(chunk, getAttackBlocks(), attackTarget, elapsedTick)
-                if (attackBlocks == null) {
-                    disappearCount++
-                    if (disappearCount > 5 * monster.parameter.attackTimes) {
-                        state = SoulMonsterState.DISAPPEAR
+        if (monster.parameter.attackTimes > 0) {
+            (1..monster.parameter.attackTimes).forEach { index ->
+                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+                    val attackBlocks = ai.getAttackBlocks(chunk, getAttackBlocks(), attackTarget, elapsedTick)
+                    if (attackBlocks == null) {
+                        disappearCount++
+                        if (disappearCount > 5 * monster.parameter.attackTimes) {
+                            state = SoulMonsterState.DISAPPEAR
+                        }
+                        return@runTaskLater
                     }
-                    return@runTaskLater
-                }
-                attackBlocks.forEach { attack(it) }
-            }, index * 10L)
+                    attackBlocks.forEach { attack(it) }
+                }, index * 10L)
+            }
         }
         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
             state = SoulMonsterState.MOVE
@@ -233,8 +235,13 @@ class BattleMonster(
                 }
                 PlayerMessages.HEALTH_DISPLAY(health).sendTo(player)
                 PlayerSounds.INJURED.play(player.location)
-                BattleMessages.DAMEGE(monster, monster.parameter.power).sendTo(player)
+                BattleMessages.DAMAGE(monster, monster.parameter.power).sendTo(player)
             }
+
+            if (!SoulMonster.ZOMBIE_VILLAGER.isDefeatedBy(player)) {
+                BattleMessages.FIRST_DAMAGE.sendTo(player)
+            }
+
             // effects
             SoulMonsterSounds.ATTACK.play(block.centralLocation)
 

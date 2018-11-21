@@ -87,7 +87,8 @@ fun Player.calcExp() = find(CatalogPlayerCache.EXP)?.calcExp() ?: 0L
 fun Player.updateLevel(isCallEvent: Boolean = true) {
     manipulate(CatalogPlayerCache.LEVEL) {
         it.calculate(calcExp()) { current ->
-            Bukkit.getPluginManager().callEvent(LevelUpEvent(current, this))
+            if (isCallEvent)
+                Bukkit.getPluginManager().callEvent(LevelUpEvent(current, this))
         }
         PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(this)
     }

@@ -15,7 +15,7 @@ class TitleMessage(
 ) : Message {
     override fun sendTo(player: Player) {
         player.sendTitle(
-                title?.asSafety(player.wrappedLocale),
+                title?.asSafety(player.wrappedLocale) ?: "",
                 subTitle?.asSafety(player.wrappedLocale),
                 fadeIn,
                 stay,

@@ -18,7 +18,7 @@ object QuestMessages {
                         Locale.JAPANESE.let {
                             it to "${ChatColor.YELLOW}" +
                                     "\"${quest.getTitle(it)}\"" +
-                                    " クエストが進行しました" +
+                                    " クエストが進んだ" +
                                     "( $degree / ${quest.maxDegree} )"
                         }
                 ))
@@ -30,7 +30,7 @@ object QuestMessages {
                         Locale.JAPANESE.let {
                             it to "${ChatColor.LIGHT_PURPLE}" +
                                     "\"${quest.getTitle(it)}\"" +
-                                    " クエストを完了しました"
+                                    " クエストを完了した"
                         }
                 ))
     }

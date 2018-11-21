@@ -112,6 +112,9 @@ class QuestMonsterSpirit(
         )
         SoulMonsterSounds.SPAWN.play(spawnLocation)
         BattleMessages.SPAWN(monster).sendTo(spawner)
+        if (!SoulMonster.VILLAGER.isDefeatedBy(spawner)) {
+            BattleMessages.FIRST_SPAWN.sendTo(spawner)
+        }
     }
 
     private var elapsedTick = -1L
@@ -127,7 +130,10 @@ class QuestMonsterSpirit(
             )
         MonsterSpiritAnimations.AMBIENT(monster.color).start(entity.eyeLocation)
 
-        if (!spawner.isValid || spawner.location.distance(entity.eyeLocation) > 30 || isStarted) {
+        if (!spawner.isValid ||
+                spawner.location.distance(entity.eyeLocation) > 30 ||
+                isStarted ||
+                quest.getClient(spawner)?.isProcessed?.not() == true) {
             entity.remove()
             bossBar.removeAll()
             remove()

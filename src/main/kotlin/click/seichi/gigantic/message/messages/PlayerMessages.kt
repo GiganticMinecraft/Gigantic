@@ -86,17 +86,17 @@ object PlayerMessages {
         ManaMessage(mana, amount.toDouble())
     }
 
-    val SPAWN_PROTECT = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val SPAWN_PROTECT = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
                     "スポーン地点に近いため、保護されています"
     ))
 
-    val BATTLE_ANOTHER_PLAYER = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val BATTLE_ANOTHER_PLAYER = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
                     "他のプレイヤーがバトル中です"
     ))
 
-    val BREAK_NOT_BATTLE_CHUNK = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val BREAK_OTHER_CHUNK = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
                     "バトル中は敵のいるチャンクしか掘れません"
     ))

@@ -2,7 +2,9 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.extension.findBattle
 import click.seichi.gigantic.extension.isCrust
+import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.monster.SoulMonster
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -23,7 +25,7 @@ class BattleListener : Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    fun cancelAnotherBattleChunk(event: BlockBreakEvent) {
+    fun cancelOtherPlayersBattleChunk(event: BlockBreakEvent) {
         val block = event.block ?: return
         val player = event.player ?: return
         val battle = block.findBattle() ?: return
@@ -33,13 +35,16 @@ class BattleListener : Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    fun cancelAnotherChunk(event: BlockBreakEvent) {
+    fun cancelNotBattleChunk(event: BlockBreakEvent) {
         val block = event.block ?: return
         val player = event.player ?: return
         val battle = player.findBattle() ?: return
         if (battle.chunk == block.chunk) return
         event.isCancelled = true
-        PlayerMessages.BREAK_NOT_BATTLE_CHUNK.sendTo(player)
+        PlayerMessages.BREAK_OTHER_CHUNK.sendTo(player)
+        if (!SoulMonster.ZOMBIE_VILLAGER.isDefeatedBy(player)) {
+            BattleMessages.FIRST_BREAK_OTHER_CHUNK.sendTo(player)
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

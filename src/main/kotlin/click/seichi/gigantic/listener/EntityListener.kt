@@ -20,7 +20,7 @@ class EntityListener : Listener {
     }
 
     @EventHandler
-    fun onDamege(event: EntityDamageByEntityEvent) {
+    fun onDamage(event: EntityDamageByEntityEvent) {
         if (event.damager.type != EntityType.FIREWORK) return
         event.isCancelled = true
     }
