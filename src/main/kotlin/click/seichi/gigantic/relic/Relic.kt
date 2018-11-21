@@ -18,7 +18,7 @@ enum class Relic(
         val id: Int,
         private val localizedName: LocalizedText,
         private val localizedLore: List<LocalizedText>?,
-        val maxAmount: Int = Int.MAX_VALUE,
+        val maxAmount: Long = Long.MAX_VALUE,
         private val icon: ItemStack = Head.RUBY_JEWELLERY.toItemStack()
 ) {
     PIGS_FEATHER(0, RelicMessages.PIGS_FEATHER, RelicMessages.PIGS_FEATHER_LORE, icon = ItemStack(Material.FEATHER)),
@@ -53,7 +53,7 @@ enum class Relic(
     fun getDroppedNum(player: Player) = Keys.RELIC_MAP[this]?.let { player.getOrPut(it) } ?: 0L
 
     fun dropTo(player: Player) {
-        player.transform(Keys.RELIC_MAP[this] ?: return) { it + 1 }
+        player.transform(Keys.RELIC_MAP[this] ?: return) { if (it < maxAmount) it + 1 else maxAmount }
     }
 
 }
