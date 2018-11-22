@@ -11,9 +11,9 @@ import java.util.*
  */
 object EffectMessages {
 
-    val CHICKEN_KING_CROWN = ChatMessage(ChatMessageProtocol.ACTION_BAR,
+    val COMBO = ChatMessage(ChatMessageProtocol.ACTION_BAR,
             LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.GREEN}パッシブ発動:鶏キングの王冠"
+                    Locale.JAPANESE to "${ChatColor.GREEN}コンボ数によりダメージ増加"
             )
     )
 

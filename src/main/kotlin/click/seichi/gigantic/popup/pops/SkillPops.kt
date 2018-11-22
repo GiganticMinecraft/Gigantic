@@ -12,13 +12,13 @@ object SkillPops {
     val MINE_COMBO = { combo: MineCombo ->
         val color = when (combo.currentCombo) {
             in 0..9 -> ChatColor.WHITE
-            in 10..29 -> ChatColor.GREEN
-            in 30..69 -> ChatColor.AQUA
-            in 70..149 -> ChatColor.BLUE
-            in 150..349 -> ChatColor.YELLOW
-            in 350..799 -> ChatColor.DARK_AQUA
-            in 800..1199 -> ChatColor.LIGHT_PURPLE
-            else -> ChatColor.GOLD
+            in 10..29 -> ChatColor.YELLOW
+            in 30..69 -> ChatColor.GREEN
+            in 70..149 -> ChatColor.LIGHT_PURPLE
+            in 150..349 -> ChatColor.DARK_GREEN
+            in 350..799 -> ChatColor.DARK_GRAY
+            in 800..1199 -> ChatColor.DARK_BLUE
+            else -> ChatColor.BLACK
         }
         PopUp(
                 "$color${combo.currentCombo} Combo",
