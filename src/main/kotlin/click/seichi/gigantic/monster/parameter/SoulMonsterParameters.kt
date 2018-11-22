@@ -41,7 +41,7 @@ object SoulMonsterParameters {
 
     val BLAZE_WARRIOR = SoulMonsterParameter(
             400L,
-            60,
+            50,
             0.15,
             3,
             Material.NETHER_BRICKS
@@ -49,7 +49,7 @@ object SoulMonsterParameters {
 
     val BLUE_BLAZE = SoulMonsterParameter(
             700L,
-            80,
+            60,
             0.18,
             4,
             Material.BLUE_CONCRETE_POWDER
