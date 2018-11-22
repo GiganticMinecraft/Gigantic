@@ -11,4 +11,6 @@ object Config : SimpleConfiguration("config", Gigantic.PLUGIN) {
 
     val WORLD_SIDE_LENGTH = getDouble("world.side_length")
 
+    val DEBUG_MODE = getBoolean("debug_mode")
+
 }

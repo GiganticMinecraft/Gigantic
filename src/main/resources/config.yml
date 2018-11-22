@@ -4,3 +4,6 @@ player:
 world:
   side_length: 20000.0
 
+debug_mode: false
+
+
