@@ -10,7 +10,8 @@ object SoulMonsterParameters {
     val PIG = SoulMonsterParameter(
             50L,
             10,
-            0.1,
+            100L,
+            10L,
             1,
             Material.PINK_WOOL
     )
@@ -18,7 +19,8 @@ object SoulMonsterParameters {
     val PIG_WARRIOR = SoulMonsterParameter(
             80L,
             20,
-            0.15,
+            120L,
+            10L,
             2,
             Material.PINK_CONCRETE_POWDER
     )
@@ -26,7 +28,8 @@ object SoulMonsterParameters {
     val MR_PIG = SoulMonsterParameter(
             100L,
             25,
-            0.2,
+            140L,
+            10L,
             3,
             Material.PINK_CONCRETE
     )
@@ -34,7 +37,8 @@ object SoulMonsterParameters {
     val BLAZE = SoulMonsterParameter(
             280L,
             40,
-            0.12,
+            160L,
+            6L,
             2,
             Material.NETHERRACK
     )
@@ -42,7 +46,8 @@ object SoulMonsterParameters {
     val BLAZE_WARRIOR = SoulMonsterParameter(
             400L,
             50,
-            0.15,
+            180L,
+            6L,
             3,
             Material.NETHER_BRICKS
     )
@@ -50,7 +55,8 @@ object SoulMonsterParameters {
     val BLUE_BLAZE = SoulMonsterParameter(
             700L,
             60,
-            0.18,
+            200L,
+            6L,
             4,
             Material.BLUE_CONCRETE_POWDER
     )
@@ -58,23 +64,26 @@ object SoulMonsterParameters {
     val CHICKEN = SoulMonsterParameter(
             70L,
             8,
-            0.2,
-            2,
+            240L,
+            4L,
+            3,
             Material.WHITE_WOOL
     )
 
     val CHICKEN_KING = SoulMonsterParameter(
             140L,
             14,
-            0.25,
-            3,
+            200L,
+            4L,
+            6,
             Material.WHITE_TERRACOTTA
     )
 
     val TURTLE = SoulMonsterParameter(
             210L,
             200,
-            0.05,
+            200L,
+            40L,
             1,
             Material.LIME_WOOL
     )
@@ -82,23 +91,26 @@ object SoulMonsterParameters {
     val TURTLE_SOLDIER = SoulMonsterParameter(
             320L,
             200,
-            0.06,
-            2,
+            180L,
+            40L,
+            1,
             Material.LIME_TERRACOTTA
     )
 
     val TURTLE_KING = SoulMonsterParameter(
             430L,
             200,
-            0.07,
-            3,
+            200L,
+            40L,
+            2,
             Material.GREEN_CONCRETE
     )
 
     val SPIDER = SoulMonsterParameter(
             560L,
             80,
-            0.15,
+            140L,
+            7L,
             2,
             Material.COBWEB
     )
@@ -106,7 +118,8 @@ object SoulMonsterParameters {
     val CAVE_SPIDER = SoulMonsterParameter(
             710L,
             90,
-            0.16,
+            160L,
+            7L,
             3,
             Material.COBWEB
     )
@@ -114,7 +127,8 @@ object SoulMonsterParameters {
     val SPIDER_KING = SoulMonsterParameter(
             880L,
             100,
-            0.17,
+            180L,
+            7L,
             4,
             Material.COBWEB
     )
@@ -122,103 +136,116 @@ object SoulMonsterParameters {
     val ZOMBIE = SoulMonsterParameter(
             1180L,
             160,
-            0.1,
-            4,
+            100L,
+            15L,
+            1,
             Material.MOSSY_COBBLESTONE
     )
 
     val ZOMBIE_SOLDIER = SoulMonsterParameter(
             1420L,
             180,
-            0.11,
-            5,
+            120L,
+            15L,
+            2,
             Material.MOSSY_COBBLESTONE
     )
 
     val ZOMBIE_KING = SoulMonsterParameter(
             1800L,
             200,
-            0.12,
-            6,
+            140L,
+            15L,
+            3,
             Material.MOSSY_COBBLESTONE
     )
 
     val SKELETON = SoulMonsterParameter(
             2200L,
             240,
-            0.1,
-            6,
+            250L,
+            5L,
+            3,
             Material.BONE_BLOCK
     )
 
     val SKELETON_SOLDIER = SoulMonsterParameter(
             2500L,
             260,
-            0.11,
-            7,
+            250L,
+            5L,
+            4,
             Material.BONE_BLOCK
     )
 
     val SKELETON_KING = SoulMonsterParameter(
             2800L,
             280,
-            0.12,
-            8,
+            250L,
+            5L,
+            5,
             Material.BONE_BLOCK
     )
 
     val ORC = SoulMonsterParameter(
             5600L,
             320,
-            0.1,
-            8,
+            180L,
+            16L,
+            3,
             Material.STONE_BRICKS
     )
 
     val ORC_SOLDIER = SoulMonsterParameter(
             6200L,
-            360,
-            0.11,
-            9,
+            400,
+            180L,
+            16L,
+            3,
             Material.STONE_BRICKS
     )
 
     val ORC_KING = SoulMonsterParameter(
             6800L,
-            400,
-            0.12,
-            10,
+            460,
+            180L,
+            16L,
+            3,
             Material.STONE_BRICKS
     )
 
     val GHOST = SoulMonsterParameter(
             12000L,
             460,
-            0.07,
-            10,
+            160L,
+            9L,
+            2,
             Material.GRAY_STAINED_GLASS
     )
 
     val WHITE_GHOST = SoulMonsterParameter(
             13200L,
             500,
-            0.08,
-            11,
+            160L,
+            9L,
+            3,
             Material.WHITE_STAINED_GLASS
     )
 
     val GHOST_KING = SoulMonsterParameter(
             14400L,
             540,
-            0.09,
-            12,
+            160L,
+            9L,
+            4,
             Material.BLACK_STAINED_GLASS
     )
 
     val WITHER_SKELETON = SoulMonsterParameter(
             700L,
             100,
-            0.3,
+            140L,
+            10L,
             3,
             Material.BLACK_CONCRETE_POWDER
     )
@@ -226,7 +253,8 @@ object SoulMonsterParameters {
     val WITHER = SoulMonsterParameter(
             2500L,
             100,
-            0.4,
+            100L,
+            10L,
             5,
             Material.BLACK_CONCRETE
     )
@@ -234,7 +262,8 @@ object SoulMonsterParameters {
     val VILLAGER = SoulMonsterParameter(
             50L,
             0,
-            0.1,
+            100L,
+            10L,
             0,
             Material.GRASS_BLOCK
     )
@@ -242,7 +271,8 @@ object SoulMonsterParameters {
     val ZOMBIE_VILLAGER = SoulMonsterParameter(
             70L,
             0,
-            0.1,
+            100L,
+            10L,
             1,
             Material.MOSSY_COBBLESTONE
     )
@@ -250,7 +280,8 @@ object SoulMonsterParameters {
     val LADON = SoulMonsterParameter(
             50L,
             10,
-            0.2,
+            100L,
+            10L,
             1,
             Material.GOLD_BLOCK
     )
@@ -258,7 +289,8 @@ object SoulMonsterParameters {
     val UNDINE = SoulMonsterParameter(
             50L,
             10,
-            0.2,
+            100L,
+            10L,
             1,
             Material.BLUE_GLAZED_TERRACOTTA
     )
@@ -266,7 +298,8 @@ object SoulMonsterParameters {
     val SALAMANDRA = SoulMonsterParameter(
             50L,
             10,
-            0.2,
+            100L,
+            10L,
             1,
             Material.RED_GLAZED_TERRACOTTA
     )
@@ -274,7 +307,8 @@ object SoulMonsterParameters {
     val SYLPHID = SoulMonsterParameter(
             50L,
             10,
-            0.2,
+            100L,
+            10L,
             1,
             Material.WHITE_GLAZED_TERRACOTTA
     )
@@ -282,7 +316,8 @@ object SoulMonsterParameters {
     val NOMOS = SoulMonsterParameter(
             50L,
             10,
-            0.2,
+            100L,
+            10L,
             1,
             Material.BROWN_GLAZED_TERRACOTTA
     )
@@ -290,7 +325,8 @@ object SoulMonsterParameters {
     val LOA = SoulMonsterParameter(
             50L,
             10,
-            0.2,
+            100L,
+            10L,
             1,
             Material.LIME_GLAZED_TERRACOTTA
     )

@@ -9,8 +9,8 @@ data class SoulMonsterParameter(
         val health: Long,
         // one block damage
         val power: Long,
-        // distance per tick
-        val speed: Double,
+        val attackInterval: Long,
+        val shotInterval: Long,
         // blocks per attack
         val attackTimes: Int,
         val attackMaterial: Material

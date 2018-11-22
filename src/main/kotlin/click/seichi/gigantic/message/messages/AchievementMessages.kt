@@ -154,7 +154,7 @@ object AchievementMessages {
                 it to "${ChatColor.YELLOW}" +
                         "ラストデステレポートが使えるようになった!!\n" +
                         "${ChatColor.GRAY}" +
-                        "最後に死亡した場所に戻ることができる!!" +
+                        "最後に死亡した場所に戻ることができる!!\n" +
                         "\"${SkillParameters.TELEPORT_KEY}\" キー を押すかメニューから選択!!\n"
             }
     ))

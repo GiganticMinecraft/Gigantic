@@ -67,6 +67,8 @@ class BattleMonster(
 
     var health = monster.parameter.health
 
+    var lastAttackTicks: Long = 0L
+
     private var disappearCount = 0
 
     private val totalDamageMap = mutableMapOf<Player, Long>()
@@ -144,21 +146,27 @@ class BattleMonster(
 
     private fun move(elapsedTick: Long) {
         val des = destination ?: error("destination must not be null")
-        val speed = monster.parameter.speed
-        val diff = des.clone().subtract(location).toVector().normalize().multiply(speed)
+        val diff = des.clone().subtract(location).toVector().normalize().multiply(0.1)
         location.add(diff)
-        if (des.distance(location) >= monster.parameter.speed) return
-        state = SoulMonsterState.ATTACK
+
+
+        if (elapsedTick.minus(lastAttackTicks) >= monster.parameter.attackInterval) {
+            state = SoulMonsterState.ATTACK
+        } else if (des.distance(location) <= 0.1) {
+            state = SoulMonsterState.MOVE
+            destination = ai.searchDestination(chunk, attackTarget, location)
+        }
     }
 
-    fun getAttackBlocks() = attackBlocks.toSet()
+    private fun copyAttackBlocks() = attackBlocks.toSet()
 
     private fun attack(elapsedTick: Long) {
         // set attack blocks
         if (monster.parameter.attackTimes > 0) {
             (1..monster.parameter.attackTimes).forEach { index ->
+                val shotDelay = index * monster.parameter.shotInterval
                 Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-                    val attackBlocks = ai.getAttackBlocks(chunk, getAttackBlocks(), attackTarget, elapsedTick)
+                    val attackBlocks = ai.getAttackBlocks(chunk, copyAttackBlocks(), attackTarget, elapsedTick + shotDelay)
                     if (attackBlocks == null) {
                         disappearCount++
                         if (disappearCount > 5 * monster.parameter.attackTimes) {
@@ -167,13 +175,15 @@ class BattleMonster(
                         return@runTaskLater
                     }
                     attackBlocks.forEach { attack(it) }
-                }, index * 10L)
+                }, shotDelay)
             }
         }
+        val moveDelay = monster.parameter.attackTimes * 10L + 20L
         Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
             state = SoulMonsterState.MOVE
             destination = ai.searchDestination(chunk, attackTarget, location)
-        }, monster.parameter.attackTimes * 10L + 60L)
+            lastAttackTicks = elapsedTick + moveDelay
+        }, moveDelay)
         state = SoulMonsterState.WAIT
     }
 

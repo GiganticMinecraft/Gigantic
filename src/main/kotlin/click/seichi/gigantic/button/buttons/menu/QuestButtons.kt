@@ -26,7 +26,7 @@ object QuestButtons {
                     if (!client.isProcessed) {
                         type = Material.BOOK
                     }
-                    val titleColor = if (client.isProcessed) ChatColor.WHITE else ChatColor.DARK_GRAY
+                    val titleColor = if (client.isProcessed) ChatColor.LIGHT_PURPLE else ChatColor.WHITE
                     setDisplayName("$titleColor${ChatColor.BOLD}" +
                             client.quest.getTitle(player.wrappedLocale))
                     clearLore()
