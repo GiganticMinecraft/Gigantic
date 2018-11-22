@@ -71,6 +71,150 @@ object SoulMonsterParameters {
             Material.WHITE_TERRACOTTA
     )
 
+    val TURTLE = SoulMonsterParameter(
+            210L,
+            200,
+            0.05,
+            1,
+            Material.LIME_WOOL
+    )
+
+    val TURTLE_SOLDIER = SoulMonsterParameter(
+            320L,
+            200,
+            0.06,
+            2,
+            Material.LIME_TERRACOTTA
+    )
+
+    val TURTLE_KING = SoulMonsterParameter(
+            430L,
+            200,
+            0.07,
+            3,
+            Material.GREEN_CONCRETE
+    )
+
+    val SPIDER = SoulMonsterParameter(
+            560L,
+            80,
+            0.15,
+            2,
+            Material.COBWEB
+    )
+
+    val CAVE_SPIDER = SoulMonsterParameter(
+            710L,
+            90,
+            0.16,
+            3,
+            Material.COBWEB
+    )
+
+    val SPIDER_KING = SoulMonsterParameter(
+            880L,
+            100,
+            0.17,
+            4,
+            Material.COBWEB
+    )
+
+    val ZOMBIE = SoulMonsterParameter(
+            1180L,
+            160,
+            0.1,
+            4,
+            Material.MOSSY_COBBLESTONE
+    )
+
+    val ZOMBIE_SOLDIER = SoulMonsterParameter(
+            1420L,
+            180,
+            0.11,
+            5,
+            Material.MOSSY_COBBLESTONE
+    )
+
+    val ZOMBIE_KING = SoulMonsterParameter(
+            1800L,
+            200,
+            0.12,
+            6,
+            Material.MOSSY_COBBLESTONE
+    )
+
+    val SKELETON = SoulMonsterParameter(
+            2200L,
+            240,
+            0.1,
+            6,
+            Material.BONE_BLOCK
+    )
+
+    val SKELETON_SOLDIER = SoulMonsterParameter(
+            2500L,
+            260,
+            0.11,
+            7,
+            Material.BONE_BLOCK
+    )
+
+    val SKELETON_KING = SoulMonsterParameter(
+            2800L,
+            280,
+            0.12,
+            8,
+            Material.BONE_BLOCK
+    )
+
+    val ORC = SoulMonsterParameter(
+            5600L,
+            320,
+            0.1,
+            8,
+            Material.STONE_BRICKS
+    )
+
+    val ORC_SOLDIER = SoulMonsterParameter(
+            6200L,
+            360,
+            0.11,
+            9,
+            Material.STONE_BRICKS
+    )
+
+    val ORC_KING = SoulMonsterParameter(
+            6800L,
+            400,
+            0.12,
+            10,
+            Material.STONE_BRICKS
+    )
+
+    val GHOST = SoulMonsterParameter(
+            12000L,
+            460,
+            0.07,
+            10,
+            Material.GRAY_STAINED_GLASS
+    )
+
+    val WHITE_GHOST = SoulMonsterParameter(
+            13200L,
+            500,
+            0.08,
+            11,
+            Material.WHITE_STAINED_GLASS
+    )
+
+    val GHOST_KING = SoulMonsterParameter(
+            14400L,
+            540,
+            0.09,
+            12,
+            Material.BLACK_STAINED_GLASS
+    )
+
     val WITHER_SKELETON = SoulMonsterParameter(
             700L,
             100,

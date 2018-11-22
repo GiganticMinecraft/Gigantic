@@ -61,7 +61,7 @@ object MonsterMessages {
     )
 
     val CHICKEN_KING = LocalizedText(
-            Locale.JAPANESE to "鶏キング"
+            Locale.JAPANESE to "鶏王"
     )
 
     val WITHER_SKELETON = LocalizedText(
@@ -78,6 +78,78 @@ object MonsterMessages {
 
     val ZOMBIE_VILLAGER = LocalizedText(
             Locale.JAPANESE to "ゾンビ村人"
+    )
+
+    val TURTLE = LocalizedText(
+            Locale.JAPANESE to "亀"
+    )
+
+    val TURTLE_SOLDIER = LocalizedText(
+            Locale.JAPANESE to "亀戦士"
+    )
+
+    val TURTLE_KING = LocalizedText(
+            Locale.JAPANESE to "亀王"
+    )
+
+    val SPIDER = LocalizedText(
+            Locale.JAPANESE to "蜘蛛"
+    )
+
+    val CAVE_SPIDER = LocalizedText(
+            Locale.JAPANESE to "洞窟蜘蛛"
+    )
+
+    val SPIDER_KING = LocalizedText(
+            Locale.JAPANESE to "蜘蛛王"
+    )
+
+    val ZOMBIE = LocalizedText(
+            Locale.JAPANESE to "ゾンビ"
+    )
+
+    val ZOMBIE_SOLDIER = LocalizedText(
+            Locale.JAPANESE to "ゾンビ・ソルジャー"
+    )
+
+    val ZOMBIE_KING = LocalizedText(
+            Locale.JAPANESE to "ゾンビ王"
+    )
+
+    val SKELETON = LocalizedText(
+            Locale.JAPANESE to "スケルトン"
+    )
+
+    val SKELETON_SOLDIER = LocalizedText(
+            Locale.JAPANESE to "スケルトン・ソルジャー"
+    )
+
+    val SKELETON_KING = LocalizedText(
+            Locale.JAPANESE to "スケルトン王"
+    )
+
+    val ORC = LocalizedText(
+            Locale.JAPANESE to "オーク"
+    )
+
+    val ORC_SOLDIER = LocalizedText(
+            Locale.JAPANESE to "オーク・ソルジャー"
+    )
+
+    val ORC_KING = LocalizedText(
+            Locale.JAPANESE to "オーク王"
+    )
+
+    val GHOST = LocalizedText(
+            Locale.JAPANESE to "幽霊"
+    )
+
+    val WHITE_GHOST = LocalizedText(
+            Locale.JAPANESE to "白幽霊"
+    )
+
+    val GHOST_KING = LocalizedText(
+            Locale.JAPANESE to "幽霊王"
     )
 
 }

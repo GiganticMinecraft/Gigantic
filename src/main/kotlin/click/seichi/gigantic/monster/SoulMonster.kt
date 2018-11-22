@@ -148,8 +148,174 @@ enum class SoulMonster(
             SoulMonsterAI::class,
             DropRelic(Relic.ROTTEN_FLESH)
     ),
-
-
+    TURTLE(
+            19,
+            Head.TURTLE,
+            MonsterMessages.TURTLE,
+            null,
+            Color.fromRGB(87, 219, 89),
+            SoulMonsterParameters.TURTLE,
+            SoulMonsterAI::class
+    ),
+    TURTLE_SOLDIER(
+            20,
+            Head.TURTLE_SOLDIER,
+            MonsterMessages.TURTLE_SOLDIER,
+            null,
+            Color.fromRGB(87, 219, 89),
+            SoulMonsterParameters.TURTLE_SOLDIER,
+            SoulMonsterAI::class
+    ),
+    TURTLE_KING(
+            21,
+            Head.TURTLE_KING,
+            MonsterMessages.TURTLE_KING,
+            null,
+            Color.fromRGB(87, 219, 89),
+            SoulMonsterParameters.TURTLE_KING,
+            SoulMonsterAI::class,
+            DropRelic(Relic.TURTLE_KING_CROWN)
+    ),
+    SPIDER(
+            22,
+            Head.SPIDER,
+            MonsterMessages.SPIDER,
+            null,
+            Color.fromRGB(81, 72, 62),
+            SoulMonsterParameters.SPIDER,
+            SoulMonsterAI::class
+    ),
+    CAVE_SPIDER(
+            23,
+            Head.CAVE_SPIDER,
+            MonsterMessages.CAVE_SPIDER,
+            null,
+            Color.fromRGB(34, 65, 67),
+            SoulMonsterParameters.CAVE_SPIDER,
+            SoulMonsterAI::class
+    ),
+    SPIDER_KING(
+            24,
+            Head.SPIDER_KING,
+            MonsterMessages.SPIDER_KING,
+            null,
+            Color.fromRGB(81, 72, 62),
+            SoulMonsterParameters.SPIDER_KING,
+            SoulMonsterAI::class,
+            DropRelic(Relic.SPIDER_KING_CROWN)
+    ),
+    ZOMBIE(
+            25,
+            Head.ZOMBIE,
+            MonsterMessages.ZOMBIE,
+            null,
+            Color.fromRGB(50, 88, 32),
+            SoulMonsterParameters.ZOMBIE,
+            SoulMonsterAI::class
+    ),
+    ZOMBIE_SOLDIER(
+            26,
+            Head.ZOMBIE_SOLDIER,
+            MonsterMessages.ZOMBIE_SOLDIER,
+            null,
+            Color.fromRGB(50, 88, 32),
+            SoulMonsterParameters.ZOMBIE_SOLDIER,
+            SoulMonsterAI::class
+    ),
+    ZOMBIE_KING(
+            27,
+            Head.ZOMBIE_KING,
+            MonsterMessages.ZOMBIE_KING,
+            null,
+            Color.fromRGB(50, 88, 32),
+            SoulMonsterParameters.ZOMBIE_KING,
+            SoulMonsterAI::class,
+            DropRelic(Relic.ZOMBIE_KING_CROWN)
+    ),
+    SKELETON(
+            28,
+            Head.SKELETON,
+            MonsterMessages.SKELETON,
+            null,
+            Color.fromRGB(151, 151, 151),
+            SoulMonsterParameters.SKELETON,
+            SoulMonsterAI::class
+    ),
+    SKELETON_SOLDIER(
+            29,
+            Head.SKELETON_SOLDIER,
+            MonsterMessages.SKELETON_SOLDIER,
+            null,
+            Color.fromRGB(151, 151, 151),
+            SoulMonsterParameters.SKELETON_SOLDIER,
+            SoulMonsterAI::class
+    ),
+    SKELETON_KING(
+            30,
+            Head.SKELETON_KING,
+            MonsterMessages.SKELETON_KING,
+            null,
+            Color.fromRGB(151, 151, 151),
+            SoulMonsterParameters.SKELETON_KING,
+            SoulMonsterAI::class,
+            DropRelic(Relic.SKELETON_KING_CROWN)
+    ),
+    ORC(
+            31,
+            Head.ORC,
+            MonsterMessages.ORC,
+            null,
+            Color.fromRGB(37, 51, 16),
+            SoulMonsterParameters.ORC,
+            SoulMonsterAI::class
+    ),
+    ORC_SOLDIER(
+            32,
+            Head.ORC_SOLDIER,
+            MonsterMessages.ORC_SOLDIER,
+            null,
+            Color.fromRGB(37, 51, 16),
+            SoulMonsterParameters.ORC_SOLDIER,
+            SoulMonsterAI::class
+    ),
+    ORC_KING(
+            33,
+            Head.ORC_KING,
+            MonsterMessages.ORC_KING,
+            null,
+            Color.fromRGB(37, 51, 16),
+            SoulMonsterParameters.ORC_KING,
+            SoulMonsterAI::class,
+            DropRelic(Relic.ORC_KING_CROWN)
+    ),
+    GHOST(
+            34,
+            Head.GHOST,
+            MonsterMessages.GHOST,
+            null,
+            Color.fromRGB(13, 10, 17),
+            SoulMonsterParameters.GHOST,
+            SoulMonsterAI::class
+    ),
+    WHITE_GHOST(
+            35,
+            Head.WHITE_GHOST,
+            MonsterMessages.WHITE_GHOST,
+            null,
+            Color.fromRGB(252, 247, 239),
+            SoulMonsterParameters.WHITE_GHOST,
+            SoulMonsterAI::class
+    ),
+    GHOST_KING(
+            36,
+            Head.GHOST_KING,
+            MonsterMessages.GHOST_KING,
+            null,
+            Color.fromRGB(13, 10, 17),
+            SoulMonsterParameters.GHOST_KING,
+            SoulMonsterAI::class,
+            DropRelic(Relic.GHOST_KING_CROWN)
+    ),
     LADON(
             100,
             Head.LADON,
@@ -161,7 +327,6 @@ enum class SoulMonster(
             DropRelic(Relic.SPELL_BOOK_EXPLOSION),
             DropRelic(Relic.GOLDEN_APPLE)
     ),
-
     UNDINE(
             200,
             Head.UNDINE,

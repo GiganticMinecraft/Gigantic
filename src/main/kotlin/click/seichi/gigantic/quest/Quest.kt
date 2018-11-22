@@ -19,7 +19,7 @@ enum class Quest(
         private val localizedLore: List<LocalizedText>?,
         vararg monsters: SoulMonster
 ) {
-    PIG_CROWD(
+    PIG(
             0,
             QuestMessages.PIG,
             null,
@@ -27,7 +27,7 @@ enum class Quest(
             SoulMonster.PIG_WARRIOR,
             SoulMonster.MR_PIG
     ),
-    BLAZE_CROWD(
+    BLAZE(
             1,
             QuestMessages.BLAZE,
             null,
@@ -35,7 +35,7 @@ enum class Quest(
             SoulMonster.BLAZE_WARRIOR,
             SoulMonster.BLUE_BLAZE
     ),
-    CHICKEN_CROWD(
+    CHICKEN(
             2,
             QuestMessages.CHICKEN,
             null,
@@ -51,12 +51,60 @@ enum class Quest(
             SoulMonster.WITHER_SKELETON,
             SoulMonster.WITHER
     ),
-    BEGINS(
+    BEGIN(
             4,
-            QuestMessages.BEGINS,
+            QuestMessages.BEGIN,
             null,
             SoulMonster.VILLAGER,
             SoulMonster.ZOMBIE_VILLAGER
+    ),
+    TURTLE(
+            5,
+            QuestMessages.TURTLE,
+            null,
+            SoulMonster.TURTLE,
+            SoulMonster.TURTLE_SOLDIER,
+            SoulMonster.TURTLE_KING
+    ),
+    SPIDER(
+            6,
+            QuestMessages.SPIDER,
+            null,
+            SoulMonster.SPIDER,
+            SoulMonster.CAVE_SPIDER,
+            SoulMonster.SPIDER_KING
+    ),
+    ZOMBIE(
+            7,
+            QuestMessages.ZOMBIE,
+            null,
+            SoulMonster.ZOMBIE,
+            SoulMonster.ZOMBIE_SOLDIER,
+            SoulMonster.ZOMBIE_KING
+    ),
+    SKELETON(
+            8,
+            QuestMessages.SKELETON,
+            null,
+            SoulMonster.SKELETON,
+            SoulMonster.SKELETON_SOLDIER,
+            SoulMonster.SKELETON_KING
+    ),
+    ORC(
+            9,
+            QuestMessages.ORC,
+            null,
+            SoulMonster.ORC,
+            SoulMonster.ORC_SOLDIER,
+            SoulMonster.ORC_KING
+    ),
+    GHOST(
+            10,
+            QuestMessages.GHOST,
+            null,
+            SoulMonster.GHOST,
+            SoulMonster.WHITE_GHOST,
+            SoulMonster.GHOST_KING
     ),
     LADON(
             100,

@@ -76,9 +76,32 @@ object QuestMessages {
             Locale.JAPANESE to "世界を蝕むもの"
     )
 
-    val BEGINS = LocalizedText(
+    val BEGIN = LocalizedText(
             Locale.JAPANESE to "始まり"
     )
 
+    val TURTLE = LocalizedText(
+            Locale.JAPANESE to "ヘルメスの竪琴"
+    )
+
+    val SPIDER = LocalizedText(
+            Locale.JAPANESE to "宿直草"
+    )
+
+    val ZOMBIE = LocalizedText(
+            Locale.JAPANESE to "ヴードゥーの司祭"
+    )
+
+    val SKELETON = LocalizedText(
+            Locale.JAPANESE to "メメント・モリ"
+    )
+
+    val ORC = LocalizedText(
+            Locale.JAPANESE to "グレンデル"
+    )
+
+    val GHOST = LocalizedText(
+            Locale.JAPANESE to "死に装束"
+    )
 
 }

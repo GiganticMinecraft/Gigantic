@@ -93,12 +93,90 @@ object RelicMessages {
     )
 
     val CHICKEN_KING_CROWN = LocalizedText(
-            Locale.JAPANESE to "鶏キングの王冠"
+            Locale.JAPANESE to "鶏王の王冠"
     )
 
     val CHICKEN_KING_CROWN_LORE = listOf(
             LocalizedText(
                     Locale.JAPANESE to "10コンボ以上の攻撃時に"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "1の追加ダメージ"
+            )
+    )
+
+    val TURTLE_KING_CROWN = LocalizedText(
+            Locale.JAPANESE to "亀王の王冠"
+    )
+
+    val TURTLE_KING_CROWN_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "30コンボ以上の攻撃時に"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "1の追加ダメージ"
+            )
+    )
+
+    val SPIDER_KING_CROWN = LocalizedText(
+            Locale.JAPANESE to "蜘蛛王の王冠"
+    )
+
+    val SPIDER_KING_CROWN_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "70コンボ以上の攻撃時に"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "1の追加ダメージ"
+            )
+    )
+
+    val ZOMBIE_KING_CROWN = LocalizedText(
+            Locale.JAPANESE to "ゾンビ王の王冠"
+    )
+
+    val ZOMBIE_KING_CROWN_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "150コンボ以上の攻撃時に"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "1の追加ダメージ"
+            )
+    )
+
+    val SKELETON_KING_CROWN = LocalizedText(
+            Locale.JAPANESE to "スケルトン王の王冠"
+    )
+
+    val SKELETON_KING_CROWN_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "350コンボ以上の攻撃時に"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "1の追加ダメージ"
+            )
+    )
+
+    val ORC_KING_CROWN = LocalizedText(
+            Locale.JAPANESE to "オーク王の王冠"
+    )
+
+    val ORC_KING_CROWN_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "800コンボ以上の攻撃時に"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "1の追加ダメージ"
+            )
+    )
+
+    val GHOST_KING_CROWN = LocalizedText(
+            Locale.JAPANESE to "ゴースト王の王冠"
+    )
+
+    val GHOST_KING_CROWN_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "1200コンボ以上の攻撃時に"
             ),
             LocalizedText(
                     Locale.JAPANESE to "1の追加ダメージ"

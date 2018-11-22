@@ -139,31 +139,61 @@ enum class Achievement(
         Quest.LOA.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_PIG_ORDER(406, {
-        Quest.BEGINS.isCleared(it)
+        Quest.BEGIN.isCleared(it)
     }, action = {
-        Quest.PIG_CROWD.order(it)
+        Quest.PIG.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_BLAZE_ORDER(407, {
         SKILL_FLASH.isGranted(it)
     }, action = {
-        Quest.BLAZE_CROWD.order(it)
+        Quest.BLAZE.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_CHICKEN_ORDER(408, {
-        Quest.BEGINS.isCleared(it) &&
+        Quest.BEGIN.isCleared(it) &&
                 it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 8
     }, action = {
-        Quest.CHICKEN_CROWD.order(it)
+        Quest.CHICKEN.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_WITHER_ORDER(409, {
-        Quest.BLAZE_CROWD.isCleared(it)
+        Quest.BLAZE.isCleared(it)
     }, action = {
         Quest.WITHER.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_BEGINS_ORDER(410, {
         QUEST.isGranted(it)
     }, action = {
-        Quest.BEGINS.order(it)
+        Quest.BEGIN.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER_FIRST),
+    QUEST_TURTLE_ORDER(411, {
+        Quest.CHICKEN.isCleared(it)
+    }, action = {
+        Quest.TURTLE.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_SPIDER_ORDER(412, {
+        Quest.TURTLE.isCleared(it)
+    }, action = {
+        Quest.SPIDER.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_ZOMBIE_ORDER(413, {
+        Quest.SPIDER.isCleared(it)
+    }, action = {
+        Quest.ZOMBIE.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_SKELETON_ORDER(414, {
+        Quest.ZOMBIE.isCleared(it)
+    }, action = {
+        Quest.SKELETON.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_ORC_ORDER(415, {
+        Quest.SKELETON.isCleared(it)
+    }, action = {
+        Quest.ORC.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_GHOST_ORDER(416, {
+        Quest.ORC.isCleared(it)
+    }, action = {
+        Quest.GHOST.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
     ;
 
     /**1から順に [update] される**/
