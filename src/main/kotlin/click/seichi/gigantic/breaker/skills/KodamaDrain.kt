@@ -1,4 +1,4 @@
-package click.seichi.gigantic.breaker.spells
+package click.seichi.gigantic.breaker.skills
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.SkillAnimations
@@ -153,6 +153,15 @@ class KodamaDrain : Cutter(), SkillCaster {
         // ベースブロックで無ければ通常破壊処理
         if (!isBaseBlock)
             breakBlock(player, target, false, false)
+    }
+
+    override fun onBreakBlock(player: Player, block: Block) {
+        // Gravity process
+        block.fallUpperCrustBlock()
+        // Remove Liquid process
+        block.removeUpperLiquidBlock()
+        // bedrock process
+        block.changeRelativeBedrock()
     }
 
 }
