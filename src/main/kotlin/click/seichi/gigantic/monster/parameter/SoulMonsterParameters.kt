@@ -61,6 +61,24 @@ object SoulMonsterParameters {
             Material.BLUE_CONCRETE_POWDER
     )
 
+    val WITHER_SKELETON = SoulMonsterParameter(
+            500L,
+            80,
+            160L,
+            20L,
+            3,
+            Material.BLACK_CONCRETE_POWDER
+    )
+
+    val WITHER = SoulMonsterParameter(
+            1400L,
+            120,
+            300L,
+            5L,
+            6,
+            Material.BLACK_CONCRETE
+    )
+
     val GRAY_PARROT = SoulMonsterParameter(
             1400L,
             70,
@@ -267,24 +285,6 @@ object SoulMonsterParameters {
             9L,
             4,
             Material.BLACK_STAINED_GLASS
-    )
-
-    val WITHER_SKELETON = SoulMonsterParameter(
-            700L,
-            100,
-            140L,
-            10L,
-            3,
-            Material.BLACK_CONCRETE_POWDER
-    )
-
-    val WITHER = SoulMonsterParameter(
-            2500L,
-            100,
-            100L,
-            10L,
-            5,
-            Material.BLACK_CONCRETE
     )
 
     val VILLAGER = SoulMonsterParameter(

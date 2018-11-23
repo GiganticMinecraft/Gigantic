@@ -154,7 +154,8 @@ enum class Achievement(
         Quest.CHICKEN.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_WITHER_ORDER(409, {
-        Quest.BLAZE.isCleared(it)
+        Quest.BEGIN.isCleared(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }, action = {
         Quest.WITHER.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
