@@ -16,7 +16,6 @@ import java.util.*
  */
 object PlayerMessages {
 
-
     val EXP_BAR_DISPLAY = { level: Level ->
         val expToLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
         val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1]

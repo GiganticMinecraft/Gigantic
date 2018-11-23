@@ -1,16 +1,14 @@
 package click.seichi.gigantic.config
 
-import click.seichi.gigantic.Gigantic
-
 /**
  * @author tar0ss
  */
-object Config : SimpleConfiguration("config", Gigantic.PLUGIN) {
+object Config : SimpleConfiguration("config") {
 
-    val PLAYER_DEATH_PENALTY = getDouble("player.death_penalty")
+    val PLAYER_DEATH_PENALTY by lazy { getDouble("player.death_penalty") }
 
-    val WORLD_SIDE_LENGTH = getDouble("world.side_length")
+    val WORLD_SIDE_LENGTH by lazy { getDouble("world.side_length") }
 
-    val DEBUG_MODE = getBoolean("debug_mode")
+    val DEBUG_MODE by lazy { getBoolean("debug_mode") }
 
 }

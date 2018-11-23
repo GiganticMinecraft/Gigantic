@@ -1,6 +1,5 @@
 package click.seichi.gigantic.config
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.config.PlayerLevelConfig.MAX
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.util.Polynomial
@@ -10,7 +9,7 @@ import java.io.File
 /**
  * @author tar0ss
  */
-object ManaConfig : SimpleConfiguration("mana", Gigantic.PLUGIN) {
+object ManaConfig : SimpleConfiguration("mana") {
 
     val MANA_MAP by lazy {
         (1..MAX).map {

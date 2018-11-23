@@ -8,12 +8,11 @@ import java.io.File
  * @author tar0ss
  */
 abstract class SimpleConfiguration(
-        fileName: String,
-        plugin: JavaPlugin,
-        file: File = File(plugin.dataFolder, "$fileName.yml")
+        private val fileName: String
 ) : YamlConfiguration() {
 
-    init {
+    fun init(plugin: JavaPlugin) {
+        val file = File(plugin.dataFolder, "$fileName.yml")
         if (!file.exists()) {
             this.makeFile(file, plugin, fileName)
         }

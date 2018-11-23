@@ -61,7 +61,6 @@ class PlayerListener : Listener {
     // プレイヤーデータのロード
     @EventHandler
     fun onPlayerPreLoginAsync(event: AsyncPlayerPreLoginEvent) {
-        if (!Bukkit.getPluginManager().isPluginEnabled(Gigantic.PLUGIN)) return
         runBlocking {
             /**
              * 複数サーバで動かすと，ログアウト時の書き込みよりもログイン時の読込の方が早くなってしまい，
@@ -86,7 +85,7 @@ class PlayerListener : Listener {
             player.gameMode = GameMode.SURVIVAL
         }
         val uniqueId = player.uniqueId
-        PlayerCacheMemory.remove(uniqueId, true)
+        PlayerCacheMemory.writeThenRemoved(uniqueId, true)
     }
 
     @EventHandler
@@ -102,7 +101,7 @@ class PlayerListener : Listener {
 
         if (!player.isOp) player.gameMode = GameMode.SURVIVAL
 
-        player.updateLevel(false)
+        player.updateLevel(true)
 
         player.manipulate(CatalogPlayerCache.MANA) {
             it.updateMaxMana()
@@ -263,7 +262,7 @@ class PlayerListener : Listener {
                         .div(100L)
                         .times(Config.PLAYER_DEATH_PENALTY.times(100).roundToLong())
                         .coerceAtMost(maxPenalty)
-                it.add(penaltyMineBlock, ExpReason.DEATH_PENALTY)
+                it.add(penaltyMineBlock.times(-1L), ExpReason.DEATH_PENALTY)
                 if (penaltyMineBlock != 0L)
                     PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
             }

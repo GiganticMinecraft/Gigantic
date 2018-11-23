@@ -1,6 +1,5 @@
 package click.seichi.gigantic.config
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.util.Polynomial
 import org.bukkit.plugin.java.JavaPlugin
@@ -9,7 +8,7 @@ import java.io.File
 /**
  * @author tar0ss
  */
-object HealthConfig : SimpleConfiguration("health", Gigantic.PLUGIN) {
+object HealthConfig : SimpleConfiguration("health") {
 
     val HEALTH_MAP by lazy {
         (1..PlayerLevelConfig.MAX).map {

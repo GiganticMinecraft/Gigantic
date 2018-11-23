@@ -82,12 +82,15 @@ fun Player.hasRelic(relic: Relic): Boolean {
 
 fun Player.findBattle() = BattleManager.findBattle(this)
 
-fun Player.calcExp() = find(CatalogPlayerCache.EXP)?.calcExp() ?: 0L
-
-fun Player.updateLevel(isCallEvent: Boolean = true) {
+fun Player.updateLevel(isFirstJoin: Boolean = false) {
+    val exp = find(CatalogPlayerCache.EXP)
+    // ログイン時にデバッグ用経験値を再設定
+    if (isFirstJoin) {
+        exp?.resetDebugNum()
+    }
     manipulate(CatalogPlayerCache.LEVEL) {
-        it.calculate(calcExp()) { current ->
-            if (isCallEvent)
+        it.calculate(exp?.calcExp() ?: 0L) { current ->
+            if (!isFirstJoin)
                 Bukkit.getPluginManager().callEvent(LevelUpEvent(current, this))
         }
         PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(this)

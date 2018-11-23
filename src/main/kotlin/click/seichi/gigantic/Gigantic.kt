@@ -2,7 +2,7 @@ package click.seichi.gigantic
 
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.config.DatabaseConfig
+import click.seichi.gigantic.config.*
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.extension.register
@@ -26,6 +26,7 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
+import kotlin.properties.Delegates
 
 /**
  * @author tar0ss
@@ -35,8 +36,12 @@ class Gigantic : JavaPlugin() {
 
     companion object {
         lateinit var PLUGIN: Gigantic
+            private set
         // protocolLib manager
         lateinit var PROTOCOL_MG: ProtocolManager
+            private set
+        var IS_DEBUG: Boolean by Delegates.notNull()
+            private set
 
         val DEFAULT_LOCALE = Locale.JAPANESE!!
 
@@ -199,6 +204,17 @@ class Gigantic : JavaPlugin() {
             world.getEntitiesByClass(ArmorStand::class.java).forEach { it.remove() }
         }
 
+        loadConfigurtion(
+                Config,
+                DatabaseConfig,
+                DebugConfig,
+                HealthConfig,
+                ManaConfig,
+                PlayerLevelConfig
+        )
+
+        IS_DEBUG = Config.DEBUG_MODE
+
         registerListeners(
                 MenuListener(),
                 PlayerListener(),
@@ -226,6 +242,8 @@ class Gigantic : JavaPlugin() {
 
         logger.info("Gigantic is enabled!!")
     }
+
+    private fun loadConfigurtion(vararg configurations: SimpleConfiguration) = configurations.forEach { it.init(this) }
 
     private fun registerListeners(vararg listeners: Listener) = listeners.forEach { it.register() }
 
@@ -262,7 +280,7 @@ class Gigantic : JavaPlugin() {
                 }
                 player.gameMode = GameMode.SURVIVAL
             }
-            PlayerCacheMemory.remove(player.uniqueId, false)
+            PlayerCacheMemory.writeThenRemoved(player.uniqueId, false)
             player.kickPlayer("Restarting...Please wait a few minutes.")
         }
         logger.info("Gigantic is disabled!!")

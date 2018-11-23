@@ -1,10 +1,13 @@
 package click.seichi.gigantic.cache.manipulator.manipulators
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.Manipulator
+import click.seichi.gigantic.config.DebugConfig
+import click.seichi.gigantic.config.PlayerLevelConfig
 
 class Exp : Manipulator<Exp, PlayerCache> {
 
@@ -33,12 +36,17 @@ class Exp : Manipulator<Exp, PlayerCache> {
 
     fun calcExp(): Long {
         return ExpReason.values().fold(0L) { source: Long, reason ->
-            source + map.getOrDefault(reason, 0L).run {
-                when (reason) {
-                    ExpReason.DEATH_PENALTY -> times(-1L)
-                    else -> this@run
-                }
-            }
+            source + map.getOrDefault(reason, 0L)
+        }
+    }
+
+    fun resetDebugNum() {
+        map[ExpReason.DEBUG] = 0L
+        if (Gigantic.IS_DEBUG) {
+            val level = DebugConfig.LEVEL
+            val nextExp = PlayerLevelConfig.LEVEL_MAP[level] ?: 0L
+            val currentExp = calcExp()
+            map[ExpReason.DEBUG] = nextExp - currentExp
         }
     }
 

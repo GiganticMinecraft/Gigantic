@@ -1,6 +1,8 @@
 package click.seichi.gigantic.cache
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.cache.PlayerCache
+import click.seichi.gigantic.config.DebugConfig
 import java.util.*
 
 /**
@@ -23,14 +25,16 @@ object PlayerCacheMemory {
     }
 
     fun write(uniqueId: UUID, isAsync: Boolean) {
-        playerCacheMap[uniqueId]?.run {
-            if (isAsync) writeAsync()
-            else write()
-        }
+        write(playerCacheMap[uniqueId] ?: return, isAsync)
     }
 
-    fun remove(uniqueId: UUID, isAsync: Boolean) {
-        playerCacheMap.remove(uniqueId)?.run {
+    fun writeThenRemoved(uniqueId: UUID, isAsync: Boolean) {
+        write(playerCacheMap.remove(uniqueId) ?: return, isAsync)
+    }
+
+    private fun write(playerCache: PlayerCache, isAsync: Boolean) {
+        playerCache.run {
+            if (Gigantic.IS_DEBUG && !DebugConfig.IS_SAVE_DATABASE) return@run
             if (isAsync) writeAsync()
             else write()
         }

@@ -1,11 +1,9 @@
 package click.seichi.gigantic.config
 
-import click.seichi.gigantic.Gigantic
-
 /**
  * @author tar0ss
  */
-object PlayerLevelConfig : SimpleConfiguration("level", Gigantic.PLUGIN) {
+object PlayerLevelConfig : SimpleConfiguration("level") {
 
     val MAX by lazy { getInt("max") }
 
