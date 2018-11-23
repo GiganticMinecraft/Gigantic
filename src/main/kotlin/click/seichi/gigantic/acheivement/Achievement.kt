@@ -143,19 +143,17 @@ enum class Achievement(
         Quest.PIG.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_BLAZE_ORDER(407, {
-        SKILL_FLASH.isGranted(it)
+        Quest.PIG.isCleared(it)
     }, action = {
         Quest.BLAZE.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_CHICKEN_ORDER(408, {
-        Quest.BEGIN.isCleared(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 8
+        Quest.BEGIN.isCleared(it)
     }, action = {
         Quest.CHICKEN.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_WITHER_ORDER(409, {
-        Quest.BEGIN.isCleared(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+        Quest.BLAZE.isCleared(it)
     }, action = {
         Quest.WITHER.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),

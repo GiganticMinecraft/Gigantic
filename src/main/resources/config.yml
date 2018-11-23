@@ -15,6 +15,7 @@ world:
   side_length: 20000.0
 
 # TRUEの時debug.ymlに従う
+# データベースの書き込みは行わない
 debug_mode: false
 
 

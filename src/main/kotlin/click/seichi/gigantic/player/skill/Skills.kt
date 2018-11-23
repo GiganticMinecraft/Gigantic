@@ -1,6 +1,5 @@
 package click.seichi.gigantic.player.skill
 
-import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.breaker.skills.KodamaDrain
 import click.seichi.gigantic.cache.key.Keys
@@ -30,7 +29,6 @@ object Skills {
         val coolTime = SkillParameters.MINE_BURST_COOLTIME
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SKILL_MINE_BURST.isGranted(player)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             if (!mineBurst.canStart()) return null
             return Consumer { p ->
@@ -69,7 +67,6 @@ object Skills {
         val coolTime = SkillParameters.FLASH_COOLTIME
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SKILL_FLASH.isGranted(player)) return null
             val flash = player.find(CatalogPlayerCache.FLASH) ?: return null
             if (!flash.canStart()) return null
             return Consumer { p ->
@@ -127,7 +124,6 @@ object Skills {
     val KODAMA_DRAIN = object : Invokable {
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SKILL_KODAMA_DRAIN.isGranted(player)) return null
             val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return null
             if (!block.isLog) return null
             return Consumer { p ->

@@ -1,6 +1,2 @@
 # 接続時のレベル
 level: 1
-
-# データベース
-database:
-  save: true

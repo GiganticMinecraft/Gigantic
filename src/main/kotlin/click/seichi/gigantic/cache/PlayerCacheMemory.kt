@@ -2,7 +2,6 @@ package click.seichi.gigantic.cache
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.cache.PlayerCache
-import click.seichi.gigantic.config.DebugConfig
 import java.util.*
 
 /**
@@ -34,7 +33,7 @@ object PlayerCacheMemory {
 
     private fun write(playerCache: PlayerCache, isAsync: Boolean) {
         playerCache.run {
-            if (Gigantic.IS_DEBUG && !DebugConfig.IS_SAVE_DATABASE) return@run
+            if (Gigantic.IS_DEBUG) return@run
             if (isAsync) writeAsync()
             else write()
         }

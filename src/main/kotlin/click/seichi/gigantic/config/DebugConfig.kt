@@ -7,6 +7,4 @@ object DebugConfig : SimpleConfiguration("debug") {
 
     val LEVEL by lazy { getInt("level") }
 
-    val IS_SAVE_DATABASE by lazy { getBoolean("database.save") }
-
 }

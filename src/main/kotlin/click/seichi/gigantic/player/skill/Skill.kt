@@ -59,7 +59,7 @@ enum class Skill(
     )
     ;
 
-    fun tryCast(player: Player) = invoker.tryInvoke(player)
+    fun tryCast(player: Player) = if (isGranted(player)) invoker.tryInvoke(player) else false
 
     fun isGranted(player: Player) = achievement?.isGranted(player) ?: true
 

@@ -105,6 +105,8 @@ class PlayerListener : Listener {
 
         player.manipulate(CatalogPlayerCache.MANA) {
             it.updateMaxMana()
+            if (Achievement.MANA_STONE.isGranted(player))
+                PlayerMessages.MANA_DISPLAY(it).sendTo(player)
         }
 
         player.manipulate(CatalogPlayerCache.HEALTH) {
