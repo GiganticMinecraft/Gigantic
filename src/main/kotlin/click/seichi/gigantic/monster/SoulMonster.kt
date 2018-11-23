@@ -316,6 +316,34 @@ enum class SoulMonster(
             SoulMonsterAI::class,
             DropRelic(Relic.GHOST_KING_CROWN)
     ),
+    GRAY_PARROT(
+            37,
+            Head.GRAY_PARROT,
+            MonsterMessages.GRAY_PARROT,
+            null,
+            Color.fromRGB(147, 149, 148),
+            SoulMonsterParameters.GRAY_PARROT,
+            SoulMonsterAI::class
+    ),
+    RED_PARROT(
+            38,
+            Head.RED_PARROT,
+            MonsterMessages.RED_PARROT,
+            null,
+            Color.fromRGB(233, 2, 2),
+            SoulMonsterParameters.RED_PARROT,
+            SoulMonsterAI::class
+    ),
+    ELDER_PARROT(
+            39,
+            Head.ELDER_PARROT,
+            MonsterMessages.ELDER_PARROT,
+            null,
+            Color.fromRGB(165, 162, 145),
+            SoulMonsterParameters.ELDER_PARROT,
+            SoulMonsterAI::class,
+            DropRelic(Relic.CHIP_OF_WOOD)
+    ),
     LADON(
             100,
             Head.LADON,

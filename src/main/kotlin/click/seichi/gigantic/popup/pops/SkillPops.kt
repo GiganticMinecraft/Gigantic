@@ -33,5 +33,12 @@ object SkillPops {
         )
     }
 
+    val KODAMA_DRAIN = { amount: Long ->
+        PopUp(
+                "${ChatColor.GREEN}$amount HP",
+                PopUp.PopPattern.POP_LONG
+        )
+    }
+
 
 }

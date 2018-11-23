@@ -36,7 +36,7 @@ object SpellButtons {
     }
 /*
 
-    val TERRA_DRAIN = object : Button {
+    val KODAMA_DRAIN = object : Button {
 
         override fun getItemStack(player: Player): ItemStack? {
             if (!Achievement.SPELL_TERRA_DRAIN.isGranted(player)) return null
@@ -46,7 +46,7 @@ object SpellButtons {
                     setDisplayName(SpellMenuMessages.TERRA_DRAIN_TITLE_ON.asSafety(player.wrappedLocale))
                 else
                     setDisplayName(SpellMenuMessages.TERRA_DRAIN_TITLE_OFF.asSafety(player.wrappedLocale))
-                setLore(*SpellMenuMessages.TERRA_DRAIN
+                setLore(*SpellMenuMessages.KODAMA_DRAIN
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
                 if (toggle)

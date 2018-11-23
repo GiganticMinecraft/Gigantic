@@ -1,25 +1,24 @@
 package click.seichi.gigantic.breaker.spells
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.animation.animations.SpellAnimations
+import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.breaker.Cutter
-import click.seichi.gigantic.breaker.SpellCaster
+import click.seichi.gigantic.breaker.SkillCaster
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.player.spell.SpellParameters
-import click.seichi.gigantic.popup.pops.SpellPops
-import click.seichi.gigantic.sound.sounds.SpellSounds
+import click.seichi.gigantic.player.skill.SkillParameters
+import click.seichi.gigantic.popup.pops.SkillPops
+import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Bukkit
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
-import java.math.BigDecimal
 
 /**
  * @author tar0ss
  */
-class TerraDrain : Cutter(), SpellCaster {
+class KodamaDrain : Cutter(), SkillCaster {
 
     private val relationalFaceSet = setOf(
             BlockFace.NORTH,
@@ -33,40 +32,38 @@ class TerraDrain : Cutter(), SpellCaster {
     )
 
     override fun cast(player: Player, base: Block) {
-        SpellAnimations.TERRA_DRAIN_ON_FIRE.start(base.centralLocation)
-        SpellSounds.TERRA_DRAIN_ON_FIRE.play(player.location)
+        SkillAnimations.KODAMA_DRAIN_ON_FIRE.start(base.centralLocation)
+        SkillSounds.KODAMA_DRAIN_ON_FIRE.play(player.location)
         breakRelationalBlock(player, base, true)
     }
 
-    override fun calcConsumeMana(player: Player, block: Block): BigDecimal {
-        return SpellParameters.TERRA_DRAIN_MANA_PER_BLOCK.toBigDecimal()
-    }
-
     override fun onCastToBlock(player: Player, block: Block) {
-
-        SpellAnimations.TERRA_DRAIN_ON_BREAK.start(block.centralLocation)
-        SpellSounds.TERRA_DRAIN_ON_BREAK.play(block.centralLocation)
+        SkillAnimations.KODAMA_DRAIN_ON_BREAK.start(block.centralLocation)
+        SkillSounds.KODAMA_DRAIN_ON_BREAK.play(block.centralLocation)
         player.manipulate(CatalogPlayerCache.HEALTH) {
             if (it.isMaxHealth()) return@manipulate
             val percent = when {
-                block.isLog -> SpellParameters.TERRA_DRAIN_LOG_HEAL_PERCENT
-                block.isLeaves -> SpellParameters.TERRA_DRAIN_LEAVES_HEAL_PERCENT
+                block.isLog -> SkillParameters.KODAMA_DRAIN_LOG_HEAL_PERCENT
+                block.isLeaves -> SkillParameters.KODAMA_DRAIN_LEAVES_HEAL_PERCENT
                 else -> 0.0
             }
             val wrappedAmount = it.increase(it.max.div(100.0).times(percent).toLong())
             if (wrappedAmount > 0) {
-                SpellPops.HEAL(wrappedAmount).pop(block.centralLocation)
+                // pop
+                SkillPops.KODAMA_DRAIN(wrappedAmount).pop(block.centralLocation)
+                // display
                 PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
             }
         }
     }
 
     private fun breakRelationalBlock(player: Player, target: Block, isBaseBlock: Boolean) {
-//        player.server.consoleSender.sendMessage("${target.type} ${target.x} ${target.y} ${target.z} ")
         if (!target.isTree) return
 
         // 原木でなければ処理しない
         if (target.isLog) {
+
+            // 破壊ブロック段を処理
             relationalFaceSet.map {
                 Bukkit.getScheduler().runTaskLater(
                         Gigantic.PLUGIN,
@@ -87,6 +84,7 @@ class TerraDrain : Cutter(), SpellCaster {
                         }
                 )
             }
+            // 破壊ブロック段の上段を処理
             val upperBlock = target.getRelative(BlockFace.UP)
             relationalFaceSet.map {
                 Bukkit.getScheduler().runTaskLater(
@@ -116,6 +114,8 @@ class TerraDrain : Cutter(), SpellCaster {
                     },
                     9L
             )
+
+            // 破壊ブロック段の下段を処理
             val underBlock = target.getRelative(BlockFace.DOWN)
             relationalFaceSet.map {
                 Bukkit.getScheduler().runTaskLater(
@@ -146,7 +146,11 @@ class TerraDrain : Cutter(), SpellCaster {
                     9L
             )
         }
+
+        // ブロックへのキャスト処理
         castToBlock(player, target)
+
+        // ベースブロックで無ければ通常破壊処理
         if (!isBaseBlock)
             breakBlock(player, target, false, false)
     }

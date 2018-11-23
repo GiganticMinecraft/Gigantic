@@ -1,8 +1,15 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.acheivement.Achievement
+import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.breaker.Miner
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.popup.pops.PopUpParameters
+import click.seichi.gigantic.popup.pops.SkillPops
+import click.seichi.gigantic.sound.sounds.PlayerSounds
+import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -26,6 +33,38 @@ class PlayerMonitor : Listener {
         val player = event.player ?: return
         val block = event.block ?: return
         Miner().breakBlock(player, block)
+
+        // add exp
+        if (!block.isCrust && !block.isTree) return
+
+        player.manipulate(CatalogPlayerCache.EXP) {
+            it.add(1L)
+        }
+
+        if (Achievement.MINE_COMBO.isGranted(player)) {
+            player.manipulate(CatalogPlayerCache.MINE_COMBO) {
+                it.combo(1L)
+                SkillPops.MINE_COMBO(it).pop(block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
+            }
+        }
+        player.offer(Keys.IS_UPDATE_PROFILE, true)
+
+        // update
+        player.getOrPut(Keys.BAG).carry(player)
+        player.updateLevel()
+        // play sounds
+        val mineBurst = player.find(CatalogPlayerCache.MINE_BURST)
+        if (mineBurst?.duringFire() == true)
+            SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
+
+        if (!Achievement.MINE_COMBO.isGranted(player)) return
+
+        val currentCombo = player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0
+        // Sounds
+        when {
+            mineBurst?.duringFire() == true -> SkillSounds.MINE_BURST_ON_BREAK(currentCombo).playOnly(player)
+            else -> PlayerSounds.OBTAIN_EXP(currentCombo).playOnly(player)
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

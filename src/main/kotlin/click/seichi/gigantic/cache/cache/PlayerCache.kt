@@ -44,15 +44,6 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.TELEPORT_TOGGLE.let {
                     offer(it, it.read(user))
                 }
-                Keys.TERRA_DRAIN_TOGGLE.let {
-                    offer(it, it.read(user))
-                }
-                Keys.GRAND_NATURA_TOGGLE.let {
-                    offer(it, it.read(user))
-                }
-                Keys.AQUA_LINEA_TOGGLE.let {
-                    offer(it, it.read(user))
-                }
                 Keys.EXP_MAP.forEach { reason, key ->
                     offer(key, key.read(userExpMap[reason] ?: return@forEach))
                 }
@@ -108,15 +99,6 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                     it.store(user, getOrDefault(it))
                 }
                 Keys.TELEPORT_TOGGLE.let {
-                    it.store(user, getOrDefault(it))
-                }
-                Keys.TERRA_DRAIN_TOGGLE.let {
-                    it.store(user, getOrDefault(it))
-                }
-                Keys.GRAND_NATURA_TOGGLE.let {
-                    it.store(user, getOrDefault(it))
-                }
-                Keys.AQUA_LINEA_TOGGLE.let {
                     it.store(user, getOrDefault(it))
                 }
                 Keys.EXP_MAP.forEach { reason, key ->

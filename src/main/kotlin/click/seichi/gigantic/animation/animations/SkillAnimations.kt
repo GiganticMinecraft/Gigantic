@@ -33,4 +33,20 @@ object SkillAnimations {
                 Random.nextGaussian(0.0, 0.3)
         )
     }
+
+    val KODAMA_DRAIN_ON_BREAK = Animation(1) { location, _ ->
+        location.world.spawnParticle(Particle.VILLAGER_HAPPY, location, 1,
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3)
+        )
+    }
+
+    val KODAMA_DRAIN_ON_FIRE = Animation(1) { location, _ ->
+        location.world.spawnParticle(Particle.HEART, location, 10,
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3)
+        )
+    }
 }

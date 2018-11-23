@@ -183,6 +183,16 @@ object RelicMessages {
             )
     )
 
+    val CHIP_OF_WOOD = LocalizedText(
+            Locale.JAPANESE to "精なる木の屑"
+    )
+
+    val CHIP_OF_WOOD_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "スキル コダマ・ドレイン"
+            )
+    )
+
     val MANA_STONE = LocalizedText(
             Locale.JAPANESE to "マナ・ストーン"
     )

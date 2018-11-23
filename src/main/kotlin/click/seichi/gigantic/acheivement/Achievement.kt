@@ -82,16 +82,15 @@ enum class Achievement(
     SKILL_MINE_BURST(201, {
         it.hasRelic(Relic.BLUE_BLAZE_POWDER)
     }, grantMessage = AchievementMessages.SKILL_MINE_BURST),
+    SKILL_KODAMA_DRAIN(202, {
+        it.hasRelic(Relic.CHIP_OF_WOOD)
+    }, grantMessage = AchievementMessages.UNLOCK_KODAMA_DRAIN),
 
     // spells
     SPELL_STELLA_CLAIR(300, {
         MANA_STONE.isGranted(it) &&
                 false
     }, grantMessage = AchievementMessages.UNLOCK_STELLA_CLAIR),
-    SPELL_TERRA_DRAIN(301, {
-        MANA_STONE.isGranted(it) &&
-                false
-    }, grantMessage = AchievementMessages.UNLOCK_TERRA_DRAIN),
     SPELL_GRAND_NATURA(302, {
         MANA_STONE.isGranted(it) &&
                 false
@@ -193,6 +192,11 @@ enum class Achievement(
         Quest.ORC.isCleared(it)
     }, action = {
         Quest.GHOST.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_PARROT_ORDER(417, {
+        Quest.BLAZE.isCleared(it)
+    }, action = {
+        Quest.PARROT.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     ;
 

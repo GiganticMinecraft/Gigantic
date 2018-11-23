@@ -155,12 +155,12 @@ object HandButtons {
             if (!Achievement.MANA_STONE.isGranted(player)) return
             val action = event.action ?: return
             if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return
-            val coolTime = !player.getOrPut(Keys.MANA_STONE_CAN_TOGGLE)
+            val coolTime = !player.getOrPut(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN)
             if (coolTime) return
-            player.offer(Keys.MANA_STONE_CAN_TOGGLE, false)
+            player.offer(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN, false)
             Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
                 if (!player.isValid) return@runTaskLater
-                player.offer(Keys.MANA_STONE_CAN_TOGGLE, true)
+                player.offer(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN, true)
             }, 5L)
             player.transform(Keys.SPELL_TOGGLE) { spellToggle ->
                 val next = !spellToggle

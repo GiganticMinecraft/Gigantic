@@ -61,6 +61,34 @@ object SoulMonsterParameters {
             Material.BLUE_CONCRETE_POWDER
     )
 
+    val GRAY_PARROT = SoulMonsterParameter(
+            1400L,
+            70,
+            150L,
+            6L,
+            2,
+            Material.LIGHT_GRAY_WOOL
+    )
+
+    val RED_PARROT = SoulMonsterParameter(
+            1600L,
+            80,
+            175L,
+            6L,
+            3,
+            Material.RED_WOOL
+    )
+
+    val ELDER_PARROT = SoulMonsterParameter(
+            1800L,
+            90,
+            180L,
+            6L,
+            4,
+            Material.LIGHT_GRAY_CONCRETE_POWDER
+    )
+
+
     val CHICKEN = SoulMonsterParameter(
             70L,
             8,

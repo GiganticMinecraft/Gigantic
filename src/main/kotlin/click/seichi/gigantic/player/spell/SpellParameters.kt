@@ -11,12 +11,6 @@ object SpellParameters {
 
     const val STELLA_CLAIR_PROBABILITY_PERCENT = 10
 
-    const val TERRA_DRAIN_LOG_HEAL_PERCENT = 3.0
-
-    const val TERRA_DRAIN_LEAVES_HEAL_PERCENT = 0.3
-
-    const val TERRA_DRAIN_MANA_PER_BLOCK = 0.7
-
     const val GRAND_NATURA_MAX_RADIUS = 5
 
     const val GRAND_NATURA_MANA_PER_BLOCK = 2.0

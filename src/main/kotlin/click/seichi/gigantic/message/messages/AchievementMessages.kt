@@ -70,16 +70,13 @@ object AchievementMessages {
     ))
 
 
-    val UNLOCK_TERRA_DRAIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_KODAMA_DRAIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "回復魔法: テラ・ドレイン を覚えた!!\n" +
-                        "\"スキル\"メニューで有効化しよう!!" +
+                        "回復スキル: コダマ・ドレイン を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: 木を倒し、自身の体力を回復する\n" +
-                        "原木を破壊して発動!!\n" +
-                        "${ChatColor.BLUE}" +
-                        "---スニークで通常破壊"
+                        "パッシブ効果: 木を破壊して自身の体力を割合回復!!\n" +
+                        "原木を通常破壊時に発動!!\n"
             }
     ))
 

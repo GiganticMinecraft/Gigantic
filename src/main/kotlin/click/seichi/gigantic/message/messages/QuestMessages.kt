@@ -104,4 +104,8 @@ object QuestMessages {
             Locale.JAPANESE to "死に装束"
     )
 
+    val PARROT = LocalizedText(
+            Locale.JAPANESE to "こだまことだま"
+    )
+
 }

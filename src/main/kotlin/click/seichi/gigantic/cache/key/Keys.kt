@@ -340,47 +340,7 @@ object Keys {
 
     }
 
-    val HEAL_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
-        override val default: Block?
-            get() = null
-
-        override fun satisfyWith(value: Block?): Boolean {
-            return true
-        }
-
-    }
-
-    val TERRA_DRAIN_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
-        override val default: Block?
-            get() = null
-
-        override fun satisfyWith(value: Block?): Boolean {
-            return true
-        }
-
-    }
-
-    val STELLA_CLAIR_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
-        override val default: Block?
-            get() = null
-
-        override fun satisfyWith(value: Block?): Boolean {
-            return true
-        }
-
-    }
-
-    val GRAND_NATURA_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
-        override val default: Block?
-            get() = null
-
-        override fun satisfyWith(value: Block?): Boolean {
-            return true
-        }
-
-    }
-
-    val AQUA_LINEA_SKILL_BLOCK = object : Key<PlayerCache, Block?> {
+    val BREAK_BLOCK = object : Key<PlayerCache, Block?> {
         override val default: Block?
             get() = null
 
@@ -431,68 +391,8 @@ object Keys {
 
     }
 
-    val TERRA_DRAIN_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
-        override val default: Boolean
-            get() = false
 
-        override fun read(entity: Entity<*>): Boolean {
-            val user = entity as User
-            return user.terraDrainToggle
-        }
-
-        override fun store(entity: Entity<*>, value: Boolean) {
-            val user = entity as User
-            user.terraDrainToggle = value
-        }
-
-        override fun satisfyWith(value: Boolean): Boolean {
-            return true
-        }
-
-    }
-
-    val GRAND_NATURA_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
-        override val default: Boolean
-            get() = false
-
-        override fun read(entity: Entity<*>): Boolean {
-            val user = entity as User
-            return user.grandNaturaToggle
-        }
-
-        override fun store(entity: Entity<*>, value: Boolean) {
-            val user = entity as User
-            user.grandNaturaToggle = value
-        }
-
-        override fun satisfyWith(value: Boolean): Boolean {
-            return true
-        }
-
-    }
-
-    val AQUA_LINEA_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
-        override val default: Boolean
-            get() = false
-
-        override fun read(entity: Entity<*>): Boolean {
-            val user = entity as User
-            return user.aquaLineaToggle
-        }
-
-        override fun store(entity: Entity<*>, value: Boolean) {
-            val user = entity as User
-            user.aquaLineaToggle = value
-        }
-
-        override fun satisfyWith(value: Boolean): Boolean {
-            return true
-        }
-
-    }
-
-
-    val MANA_STONE_CAN_TOGGLE = object : Key<PlayerCache, Boolean> {
+    val IS_MANA_STONE_TOGGLE_COOLDOWN = object : Key<PlayerCache, Boolean> {
 
         override val default: Boolean
             get() = true

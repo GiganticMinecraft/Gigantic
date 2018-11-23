@@ -27,7 +27,7 @@ enum class Head(
     BLUE_BLAZE("http://textures.minecraft.net/texture/55a13bb48e3595b55de8dd6943fc38db5235371278c695bd453e49a0999"),
     CHICKEN("http://textures.minecraft.net/texture/1638469a599ceef7207537603248a9ab11ff591fd378bea4735b346a7fae893"),
     CHICKEN_KING("http://textures.minecraft.net/texture/384c0a970e291c5e877ed790ff429d57592eceb29cbbf955786e92cf13d9f701"),
-    CHICKEN_KING_CROWN("http://textures.minecraft.net/texture/b26e38d8c1da8d451d7194f3a7fad90a141dfe6165b6667f7a8cba0919139"),
+    KING_CROWN("http://textures.minecraft.net/texture/b26e38d8c1da8d451d7194f3a7fad90a141dfe6165b6667f7a8cba0919139"),
     WITHER_SKELETON("http://textures.minecraft.net/texture/7953b6c68448e7e6b6bf8fb273d7203acd8e1be19e81481ead51f45de59a8"),
     WITHER("http://textures.minecraft.net/texture/cdf74e323ed41436965f5c57ddf2815d5332fe999e68fbb9d6cf5c8bd4139f"),
     LADON("http://textures.minecraft.net/texture/f7cba5b68ee7ac9b93dc4f684c528c5efd7e78c6ac77cefd1111bae6cdc84f"),
@@ -54,6 +54,9 @@ enum class Head(
     GHOST("http://textures.minecraft.net/texture/ef7a4f95e5fe99b45be61bb33882c12a93b22d297fd1765ab21e7748dc6b8cf3"),
     WHITE_GHOST("http://textures.minecraft.net/texture/abedb8d4b06eeb979ee515f778f31b3deef92fb5817f3452f51fc58d48134"),
     GHOST_KING("http://textures.minecraft.net/texture/dffd9ee22dfaf44935ff470835893288a52baadb63fd494bf53a232835b5523e"),
+    GRAY_PARROT("http://textures.minecraft.net/texture/1bb292942eb2417a234c375fe38af8a25e22e4b8b9bf1a8824012c901eaedbec"),
+    RED_PARROT("http://textures.minecraft.net/texture/f0bfa850f5de4b2981cce78f52fc2cc7cd7b5c62caefeddeb9cf311e83d9097"),
+    ELDER_PARROT("http://textures.minecraft.net/texture/1bb292942eb2417a234c375fe38af8a25e22e4b8b9bf1a8824012c901eaedbec"),
 
     // raid boss heads
      MOLE("http://textures.minecraft.net/texture/7d2e9feca25c973ef63c982dcc37d3cf7671ceca521034db6923d9f018ff7fa8"),

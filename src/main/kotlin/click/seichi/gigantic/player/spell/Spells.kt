@@ -4,7 +4,6 @@ import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SpellAnimations
 import click.seichi.gigantic.breaker.spells.AquaLinea
 import click.seichi.gigantic.breaker.spells.GrandNatura
-import click.seichi.gigantic.breaker.spells.TerraDrain
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
@@ -30,7 +29,7 @@ object Spells {
             val mana = player.find(CatalogPlayerCache.MANA) ?: return null
             if (mana.isMaxMana()) return null
             return Consumer { p ->
-                val block = player.remove(Keys.STELLA_CLAIR_SKILL_BLOCK) ?: return@Consumer
+                val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 p.manipulate(CatalogPlayerCache.MANA) {
                     val wrappedAmount = it.increase(it.max.div(100.toBigDecimal()).times(SpellParameters.STELLA_CLAIR_AMOUNT_PERCENT.toBigDecimal()))
                     SpellAnimations.STELLA_CLAIR.absorb(p, block.centralLocation)
@@ -41,40 +40,15 @@ object Spells {
             }
         }
     }
-
-    val TERRA_DRAIN = object : Invokable {
-
-        override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SPELL_TERRA_DRAIN.isGranted(player)) return null
-            if (player.isSneaking) return null
-            if (!player.getOrPut(Keys.TERRA_DRAIN_TOGGLE)) return null
-            val block = player.getOrPut(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return null
-            if (!block.isLog) return null
-            var canSpell = true
-            player.manipulate(CatalogPlayerCache.MANA) {
-                if (it.current <= 0.toBigDecimal()) {
-                    canSpell = false
-                    PlayerMessages.MANA_DISPLAY(it).sendTo(player)
-                }
-            }
-            if (!canSpell) return null
-            return Consumer { p ->
-                val b = player.remove(Keys.TERRA_DRAIN_SKILL_BLOCK) ?: return@Consumer
-                TerraDrain().cast(p, b)
-            }
-        }
-
-    }
     //　グランド・ナトラ
     val GRAND_NATURA = object : Invokable {
 
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!Achievement.SPELL_GRAND_NATURA.isGranted(player)) return null
             if (player.isSneaking) return null
-            if (!player.getOrPut(Keys.GRAND_NATURA_TOGGLE)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             if (mineBurst.duringFire()) return null
-            val block = player.getOrPut(Keys.GRAND_NATURA_SKILL_BLOCK) ?: return null
+            val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return null
             if (!SpellParameters.GRAND_NATURA_RELATIONAL_BLOCKS.contains(block.type)) return null
             var canSpell = true
             player.manipulate(CatalogPlayerCache.MANA) {
@@ -85,7 +59,7 @@ object Spells {
             }
             if (!canSpell) return null
             return Consumer { p ->
-                val b = player.remove(Keys.GRAND_NATURA_SKILL_BLOCK) ?: return@Consumer
+                val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 GrandNatura().cast(p, b)
             }
         }
@@ -99,10 +73,9 @@ object Spells {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!Achievement.SPELL_AQUA_LINEA.isGranted(player)) return null
             if (player.isSneaking) return null
-            if (!player.getOrPut(Keys.AQUA_LINEA_TOGGLE)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             if (mineBurst.duringFire()) return null
-            val block = player.getOrPut(Keys.AQUA_LINEA_SKILL_BLOCK) ?: return null
+            val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return null
             if (!block.isCrust) return null
             var canSpell = true
             player.manipulate(CatalogPlayerCache.MANA) {
@@ -113,7 +86,7 @@ object Spells {
             }
             if (!canSpell) return null
             return Consumer { p ->
-                val b = player.remove(Keys.AQUA_LINEA_SKILL_BLOCK) ?: return@Consumer
+                val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 AquaLinea().cast(p, b)
             }
         }

@@ -24,4 +24,9 @@ object SkillParameters {
     const val HEAL_PROBABILITY_PERCENT = 20
 
     const val TELEPORT_KEY = "8"
+
+    const val KODAMA_DRAIN_LOG_HEAL_PERCENT = 1.0
+
+    const val KODAMA_DRAIN_LEAVES_HEAL_PERCENT = 0.1
+
 }

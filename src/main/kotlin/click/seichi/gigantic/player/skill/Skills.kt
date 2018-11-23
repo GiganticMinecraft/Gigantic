@@ -2,6 +2,7 @@ package click.seichi.gigantic.player.skill
 
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SkillAnimations
+import click.seichi.gigantic.breaker.spells.KodamaDrain
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
@@ -110,13 +111,28 @@ object Skills {
             val health = player.find(CatalogPlayerCache.HEALTH) ?: return null
             if (health.isMaxHealth()) return null
             return Consumer { p ->
-                val block = player.remove(Keys.HEAL_SKILL_BLOCK) ?: return@Consumer
+                val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 p.manipulate(CatalogPlayerCache.HEALTH) {
                     val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_AMOUNT_PERCENT))
                     SkillAnimations.HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
                     SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
                     PlayerMessages.HEALTH_DISPLAY(it).sendTo(p)
                 }
+            }
+        }
+
+    }
+
+
+    val KODAMA_DRAIN = object : Invokable {
+
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            if (!Achievement.SKILL_KODAMA_DRAIN.isGranted(player)) return null
+            val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return null
+            if (!block.isLog) return null
+            return Consumer { p ->
+                val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
+                KodamaDrain().cast(p, b)
             }
         }
 

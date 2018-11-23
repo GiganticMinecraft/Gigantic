@@ -106,6 +106,14 @@ enum class Quest(
             SoulMonster.WHITE_GHOST,
             SoulMonster.GHOST_KING
     ),
+    PARROT(
+            11,
+            QuestMessages.PARROT,
+            null,
+            SoulMonster.GRAY_PARROT,
+            SoulMonster.RED_PARROT,
+            SoulMonster.ELDER_PARROT
+    ),
     LADON(
             100,
             QuestMessages.LADON,

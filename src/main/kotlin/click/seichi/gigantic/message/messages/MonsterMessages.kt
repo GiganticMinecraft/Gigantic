@@ -152,4 +152,16 @@ object MonsterMessages {
             Locale.JAPANESE to "幽霊王"
     )
 
+    val GRAY_PARROT = LocalizedText(
+            Locale.JAPANESE to "オーム(灰)"
+    )
+
+    val RED_PARROT = LocalizedText(
+            Locale.JAPANESE to "オーム(赤)"
+    )
+
+    val ELDER_PARROT = LocalizedText(
+            Locale.JAPANESE to "エルダー・オーム"
+    )
+
 }

@@ -14,21 +14,6 @@ import org.bukkit.inventory.ItemStack
 object SpellAnimations {
 
 
-    val TERRA_DRAIN_ON_BREAK = Animation(1) { location, _ ->
-        location.world.spawnParticle(Particle.VILLAGER_HAPPY, location, 1,
-                Random.nextGaussian(0.0, 0.3),
-                Random.nextGaussian(0.0, 0.3),
-                Random.nextGaussian(0.0, 0.3)
-        )
-    }
-
-    val TERRA_DRAIN_ON_FIRE = Animation(1) { location, _ ->
-        location.world.spawnParticle(Particle.HEART, location, 10,
-                Random.nextGaussian(0.0, 0.3),
-                Random.nextGaussian(0.0, 0.3),
-                Random.nextGaussian(0.0, 0.3)
-        )
-    }
 
     val STELLA_CLAIR = Animation(15) { location, _ ->
         location.world.spawnParticle(Particle.DOLPHIN, location, 10,

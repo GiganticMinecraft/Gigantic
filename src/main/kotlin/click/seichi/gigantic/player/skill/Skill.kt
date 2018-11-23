@@ -21,9 +21,42 @@ enum class Skill(
         private val achievement: Achievement?,
         private val invoker: Invokable
 ) {
-    FLASH(1, 1, ItemStack(Material.FEATHER), SkillMessages.FLASH, SkillMessages.FLASH_LORE, Achievement.SKILL_FLASH, Skills.FLASH),
-    HEAL(2, 0, ItemStack(Material.ROSE_RED), SkillMessages.HEAL, SkillMessages.HEAL_LORE, null, Skills.HEAL),
-    MINE_BURST(3, 2, ItemStack(Material.BLAZE_POWDER), SkillMessages.MINE_BURST, SkillMessages.MINE_BURST_LORE, Achievement.SKILL_MINE_BURST, Skills.MINE_BURST)
+    FLASH(
+            1,
+            1,
+            ItemStack(Material.FEATHER),
+            SkillMessages.FLASH,
+            SkillMessages.FLASH_LORE,
+            Achievement.SKILL_FLASH,
+            Skills.FLASH
+    ),
+    HEAL(
+            2,
+            0,
+            ItemStack(Material.ROSE_RED),
+            SkillMessages.HEAL,
+            SkillMessages.HEAL_LORE,
+            null,
+            Skills.HEAL
+    ),
+    MINE_BURST(
+            3,
+            2,
+            ItemStack(Material.BLAZE_POWDER),
+            SkillMessages.MINE_BURST,
+            SkillMessages.MINE_BURST_LORE,
+            Achievement.SKILL_MINE_BURST,
+            Skills.MINE_BURST
+    ),
+    KODAMA_DRAIN(
+            4,
+            3,
+            ItemStack(Material.OAK_WOOD),
+            SkillMessages.KODAMA_DRAIN,
+            SkillMessages.KODAMA_DRAIN_LORE,
+            Achievement.SKILL_KODAMA_DRAIN,
+            Skills.KODAMA_DRAIN
+    )
     ;
 
     fun tryCast(player: Player) = invoker.tryInvoke(player)
