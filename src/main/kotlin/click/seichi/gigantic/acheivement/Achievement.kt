@@ -202,6 +202,11 @@ enum class Achievement(
     }, action = {
         Quest.SLIME.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_ENDER_MAN_ORDER(419, {
+        Quest.SLIME.isCleared(it)
+    }, action = {
+        Quest.ENDER_MAN.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
     ;
 
     /**1から順に [update] される**/

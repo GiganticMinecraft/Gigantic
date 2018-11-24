@@ -1,5 +1,6 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.extension.enchantLevel
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.skill.SkillParameters
 import org.bukkit.ChatColor
@@ -182,21 +183,16 @@ object HookedItemMessages {
             )
 
     val SEICHI_SPEED_ENCHANT = { level: Int ->
-        val levelString = when (level) {
-            1 -> "Ⅰ"
-            2 -> "Ⅱ"
-            3 -> "Ⅲ"
-            4 -> "Ⅳ"
-            5 -> "Ⅴ"
-            6 -> "Ⅵ"
-            7 -> "Ⅶ"
-            8 -> "Ⅷ"
-            9 -> "Ⅸ"
-            10 -> "Ⅹ"
-            else -> "???"
-        }
+        val levelString = String.enchantLevel(level)
         LocalizedText(
-                Locale.JAPANESE to "整地効率$levelString"
+                Locale.JAPANESE to "整地効率 $levelString"
+        )
+    }
+
+    val COMBO_ATTACK_ENCHANT = { level: Int ->
+        val levelString = String.enchantLevel(level)
+        LocalizedText(
+                Locale.JAPANESE to "コンボアタック $levelString"
         )
     }
 

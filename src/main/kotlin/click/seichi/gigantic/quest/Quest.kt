@@ -122,6 +122,14 @@ enum class Quest(
             SoulMonster.RAINBOW_SLIME,
             SoulMonster.MOISTENED_SLIME
     ),
+    ENDER_MAN(
+            13,
+            QuestMessages.ENDER_MAN,
+            null,
+            SoulMonster.ENDER_MAN,
+            SoulMonster.WHITE_ENDER_MAN,
+            SoulMonster.ELITE_ENDER_MAN
+    ),
     LADON(
             100,
             QuestMessages.LADON,

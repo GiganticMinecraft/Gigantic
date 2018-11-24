@@ -372,6 +372,34 @@ enum class SoulMonster(
             SoulMonsterAI::class,
             DropRelic(Relic.MOISTENED_SLIME_BOLL)
     ),
+    ENDER_MAN(
+            43,
+            Head.ENDER_MAN,
+            MonsterMessages.ENDER_MAN,
+            null,
+            Color.fromRGB(21, 21, 21),
+            SoulMonsterParameters.ENDER_MAN,
+            SoulMonsterAI::class
+    ),
+    WHITE_ENDER_MAN(
+            44,
+            Head.WHITE_ENDER_MAN,
+            MonsterMessages.WHITE_ENDER_MAN,
+            null,
+            Color.fromRGB(233, 233, 233),
+            SoulMonsterParameters.WHITE_ENDER_MAN,
+            SoulMonsterAI::class
+    ),
+    ELITE_ENDER_MAN(
+            45,
+            Head.ELITE_ENDER_MAN,
+            MonsterMessages.ELITE_ENDER_MAN,
+            null,
+            Color.fromRGB(75, 18, 98),
+            SoulMonsterParameters.ELITE_ENDER_MAN,
+            SoulMonsterAI::class,
+            DropRelic(Relic.FADING_ENDER_PEARL)
+    ),
 
     LADON(
             100,

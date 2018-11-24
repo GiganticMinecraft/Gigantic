@@ -16,7 +16,7 @@ object QuestMessages {
         ChatMessage(ChatMessageProtocol.CHAT,
                 LocalizedText(
                         Locale.JAPANESE.let {
-                            it to "${ChatColor.YELLOW}" +
+                            it to "${ChatColor.LIGHT_PURPLE}" +
                                     "\"${quest.getTitle(it)}\"" +
                                     " クエストが進んだ" +
                                     "( $degree / ${quest.maxDegree} )"
@@ -110,6 +110,10 @@ object QuestMessages {
 
     val SLIME = LocalizedText(
             Locale.JAPANESE to "ダイラタンシー流体"
+    )
+
+    val ENDER_MAN = LocalizedText(
+            Locale.JAPANESE to "ビクター・サージ"
     )
 
 }

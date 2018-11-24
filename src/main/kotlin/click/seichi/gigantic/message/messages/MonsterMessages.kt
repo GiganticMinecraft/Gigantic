@@ -176,4 +176,16 @@ object MonsterMessages {
             Locale.JAPANESE to "モイステンド・スライム"
     )
 
+    val ENDER_MAN = LocalizedText(
+            Locale.JAPANESE to "エンダーマン"
+    )
+
+    val WHITE_ENDER_MAN = LocalizedText(
+            Locale.JAPANESE to "ホワイト・エンダーマン"
+    )
+
+    val ELITE_ENDER_MAN = LocalizedText(
+            Locale.JAPANESE to "エリート・エンダーマン"
+    )
+
 }

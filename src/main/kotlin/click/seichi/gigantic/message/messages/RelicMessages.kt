@@ -14,9 +14,8 @@ object RelicMessages {
 
     val DROP_TEXT = { drop: SoulMonster.DropRelic ->
         val relic = drop.relic
-        val prob = drop.probability
         LocalizedText(
-                Locale.JAPANESE.let { it to "${ChatColor.YELLOW}${relic.getName(it)}を手に入れた!!" }
+                Locale.JAPANESE.let { it to "${ChatColor.LIGHT_PURPLE}${relic.getName(it)}を手に入れた!!" }
         )
     }
 
@@ -198,6 +197,16 @@ object RelicMessages {
     )
 
     val MOISTENED_SLIME_BOLL_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "整地効率が１上がる"
+            )
+    )
+
+    val FADING_ENDER_PEARL = LocalizedText(
+            Locale.JAPANESE to "色褪せたエンダーパール"
+    )
+
+    val FADING_ENDER_PEARL_LORE = listOf(
             LocalizedText(
                     Locale.JAPANESE to "整地効率が１上がる"
             )

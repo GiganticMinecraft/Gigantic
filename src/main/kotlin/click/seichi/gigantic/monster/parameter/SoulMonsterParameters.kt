@@ -89,7 +89,7 @@ object SoulMonsterParameters {
     )
 
     val BLAZE_WARRIOR = SoulMonsterParameter(
-            400L,
+            320L,
             50,
             180L,
             6L,
@@ -98,7 +98,7 @@ object SoulMonsterParameters {
     )
 
     val BLUE_BLAZE = SoulMonsterParameter(
-            700L,
+            380L,
             60,
             200L,
             6L,
@@ -106,19 +106,73 @@ object SoulMonsterParameters {
             Material.BLUE_CONCRETE_POWDER
     )
 
-    val WITHER_SKELETON = SoulMonsterParameter(
-            500L,
-            80,
+    val ENDER_MAN = SoulMonsterParameter(
+            180,
+            20,
+            190,
+            10L,
+            1,
+            Material.END_STONE
+    )
+
+    val WHITE_ENDER_MAN = SoulMonsterParameter(
+            220,
+            30,
+            180,
+            10L,
+            2,
+            Material.END_STONE
+    )
+
+    val ELITE_ENDER_MAN = SoulMonsterParameter(
+            240,
+            40,
+            180,
+            10L,
+            3,
+            Material.END_STONE_BRICKS
+    )
+
+    val TURTLE = SoulMonsterParameter(
+            140L,
+            100,
+            260L,
+            40L,
+            1,
+            Material.LIME_WOOL
+    )
+
+    val TURTLE_SOLDIER = SoulMonsterParameter(
             160L,
+            100,
+            230L,
+            40L,
+            1,
+            Material.LIME_TERRACOTTA
+    )
+
+    val TURTLE_KING = SoulMonsterParameter(
+            180L,
+            100,
+            300L,
+            40L,
+            2,
+            Material.GREEN_CONCRETE
+    )
+
+    val WITHER_SKELETON = SoulMonsterParameter(
+            300L,
+            80,
+            220L,
             20L,
             3,
             Material.BLACK_CONCRETE_POWDER
     )
 
     val WITHER = SoulMonsterParameter(
-            1400L,
+            360L,
             120,
-            300L,
+            500L,
             5L,
             6,
             Material.BLACK_CONCRETE
@@ -149,33 +203,6 @@ object SoulMonsterParameters {
             6L,
             4,
             Material.LIGHT_GRAY_CONCRETE_POWDER
-    )
-
-    val TURTLE = SoulMonsterParameter(
-            210L,
-            200,
-            200L,
-            40L,
-            1,
-            Material.LIME_WOOL
-    )
-
-    val TURTLE_SOLDIER = SoulMonsterParameter(
-            320L,
-            200,
-            180L,
-            40L,
-            1,
-            Material.LIME_TERRACOTTA
-    )
-
-    val TURTLE_KING = SoulMonsterParameter(
-            430L,
-            200,
-            200L,
-            40L,
-            2,
-            Material.GREEN_CONCRETE
     )
 
     val SPIDER = SoulMonsterParameter(

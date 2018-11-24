@@ -27,7 +27,7 @@ enum class Head(
     BLUE_BLAZE("http://textures.minecraft.net/texture/55a13bb48e3595b55de8dd6943fc38db5235371278c695bd453e49a0999"),
     CHICKEN("http://textures.minecraft.net/texture/1638469a599ceef7207537603248a9ab11ff591fd378bea4735b346a7fae893"),
     CHICKEN_KING("http://textures.minecraft.net/texture/384c0a970e291c5e877ed790ff429d57592eceb29cbbf955786e92cf13d9f701"),
-    KING_CROWN("http://textures.minecraft.net/texture/b26e38d8c1da8d451d7194f3a7fad90a141dfe6165b6667f7a8cba0919139"),
+    KING_CROWN("http://textures.minecraft.net/texture/45587da7fe7336e8ab9f791ea5e2cfc8a827ca959567eb9d53a647babf948d5"),
     WITHER_SKELETON("http://textures.minecraft.net/texture/7953b6c68448e7e6b6bf8fb273d7203acd8e1be19e81481ead51f45de59a8"),
     WITHER("http://textures.minecraft.net/texture/cdf74e323ed41436965f5c57ddf2815d5332fe999e68fbb9d6cf5c8bd4139f"),
     LADON("http://textures.minecraft.net/texture/f7cba5b68ee7ac9b93dc4f684c528c5efd7e78c6ac77cefd1111bae6cdc84f"),
