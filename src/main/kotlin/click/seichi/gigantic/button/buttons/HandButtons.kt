@@ -99,7 +99,7 @@ object HandButtons {
                 else -> 0
             }
             if (digSpeedLevel > 0) {
-                addEnchantment(Enchantment.DIG_SPEED, digSpeedLevel)
+                addUnsafeEnchantment(Enchantment.DIG_SPEED, digSpeedLevel)
                 addLore("${ChatColor.GRAY}" +
                         HookedItemMessages.SEICHI_SPEED_ENCHANT(digSpeedLevel).asSafety(player.wrappedLocale))
             }
