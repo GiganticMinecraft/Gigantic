@@ -34,6 +34,7 @@ enum class Relic(
     ORC_KING_CROWN(10, RelicMessages.ORC_KING_CROWN, RelicMessages.ORC_KING_CROWN_LORE, icon = Head.KING_CROWN.toItemStack()),
     GHOST_KING_CROWN(11, RelicMessages.GHOST_KING_CROWN, RelicMessages.GHOST_KING_CROWN_LORE, icon = Head.KING_CROWN.toItemStack()),
     CHIP_OF_WOOD(12, RelicMessages.CHIP_OF_WOOD, RelicMessages.CHIP_OF_WOOD_LORE, icon = ItemStack(Material.OAK_WOOD)),
+    MOISTENED_SLIME_BOLL(13, RelicMessages.MOISTENED_SLIME_BOLL, RelicMessages.MOISTENED_SLIME_BOLL_LORE, icon = ItemStack(Material.SLIME_BALL)),
     SPELL_BOOK_EXPLOSION(100, RelicMessages.SPELL_BOOK_EXPLOSION, null, 1),
     GOLDEN_APPLE(150, RelicMessages.GOLDEN_APPLE, null),
     WILL_CRYSTAL_SAPPHIRE(200, RelicMessages.WILL_CRYSTAL_SAPPHIRE, null),

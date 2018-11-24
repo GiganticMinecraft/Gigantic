@@ -96,3 +96,8 @@ fun Player.updateLevel(isFirstJoin: Boolean = false) {
         PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(this)
     }
 }
+
+fun Player.updateInventory(applyMainHand: Boolean, applyOffHand: Boolean) {
+    getOrPut(Keys.BELT).wear(this, applyMainHand, applyOffHand)
+    getOrPut(Keys.BAG).carry(this)
+}

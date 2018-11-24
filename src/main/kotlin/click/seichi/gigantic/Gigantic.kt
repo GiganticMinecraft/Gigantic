@@ -206,11 +206,11 @@ class Gigantic : JavaPlugin() {
 
         loadConfigurtion(
                 Config,
+                PlayerLevelConfig,
                 DatabaseConfig,
                 DebugConfig,
                 HealthConfig,
-                ManaConfig,
-                PlayerLevelConfig
+                ManaConfig
         )
 
         IS_DEBUG = Config.DEBUG_MODE

@@ -7,8 +7,10 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.HookedItemMessages
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.SpellSounds
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
@@ -28,10 +30,6 @@ object HandButtons {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
                 setDisplayName(HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.PICKEL_LORE
-                        .map { it.asSafety(player.wrappedLocale) }
-                        .toTypedArray()
-                )
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -39,9 +37,20 @@ object HandButtons {
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
                 }
                 val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return@apply
-                if (mineBurst.duringFire()) {
-                    addEnchantment(Enchantment.DIG_SPEED, 5)
+
+                val digSpeedLevel = when {
+                    mineBurst.duringFire() -> 10
+                    Relic.MOISTENED_SLIME_BOLL.has(player) -> 1
+                    else -> 0
                 }
+                if (digSpeedLevel > 0) {
+                    addEnchantment(Enchantment.DIG_SPEED, digSpeedLevel)
+                    addLore("${ChatColor.GRAY}" +
+                            HookedItemMessages.SEICHI_SPEED_ENCHANT(digSpeedLevel).asSafety(player.wrappedLocale))
+                }
+                addLore(*HookedItemMessages.PICKEL_LORE
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray())
             }
         }
 
@@ -56,10 +65,6 @@ object HandButtons {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_SHOVEL).apply {
                 setDisplayName(HookedItemMessages.SHOVEL.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.SHOVEL_LORE
-                        .map { it.asSafety(player.wrappedLocale) }
-                        .toTypedArray()
-                )
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -67,10 +72,21 @@ object HandButtons {
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
                 }
                 val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return@apply
-                if (mineBurst.duringFire()) {
-                    addEnchantment(Enchantment.DIG_SPEED, 5)
-                }
 
+                val digSpeedLevel = when {
+                    mineBurst.duringFire() -> 10
+                    Relic.MOISTENED_SLIME_BOLL.has(player) -> 1
+                    else -> 0
+                }
+                if (digSpeedLevel > 0) {
+                    addEnchantment(Enchantment.DIG_SPEED, digSpeedLevel)
+                    addLore("${ChatColor.GRAY}" +
+                            HookedItemMessages.SEICHI_SPEED_ENCHANT(digSpeedLevel).asSafety(player.wrappedLocale))
+                }
+                addLore(*HookedItemMessages.SHOVEL_LORE
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
             }
         }
 
@@ -85,10 +101,6 @@ object HandButtons {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_AXE).apply {
                 setDisplayName(HookedItemMessages.AXE.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.AXE_LORE
-                        .map { it.asSafety(player.wrappedLocale) }
-                        .toTypedArray()
-                )
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -96,9 +108,21 @@ object HandButtons {
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
                 }
                 val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return@apply
-                if (mineBurst.duringFire()) {
-                    addEnchantment(Enchantment.DIG_SPEED, 5)
+
+                val digSpeedLevel = when {
+                    mineBurst.duringFire() -> 10
+                    Relic.MOISTENED_SLIME_BOLL.has(player) -> 1
+                    else -> 0
                 }
+                if (digSpeedLevel > 0) {
+                    addEnchantment(Enchantment.DIG_SPEED, digSpeedLevel)
+                    addLore("${ChatColor.GRAY}" +
+                            HookedItemMessages.SEICHI_SPEED_ENCHANT(digSpeedLevel).asSafety(player.wrappedLocale))
+                }
+                addLore(*HookedItemMessages.AXE_LORE
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
             }
         }
 

@@ -70,6 +70,17 @@ enum class Head(
     // わし
     EAGLE("http://textures.minecraft.net/texture/7c19bdf5ec16fd93825d738c689c1967548574ce7d62ffcd74b32e9bfd5ae9"),
 
+    ENDER_MAN("http://textures.minecraft.net/texture/7a59bb0a7a32965b3d90d8eafa899d1835f424509eadd4e6b709ada50b9cf"),
+    WHITE_ENDER_MAN("http://textures.minecraft.net/texture/14144bd4ac16c4eb753b8e855f31f8fcb41b66333352e2b9f748f6ec411"),
+    ELITE_ENDER_MAN("http://textures.minecraft.net/texture/eb07594e2df273921a77c101d0bfdfa1115abed5b9b2029eb496ceba9bdbb4b3"),
+    SLIME("http://textures.minecraft.net/texture/895aeec6b842ada8669f846d65bc49762597824ab944f22f45bf3bbb941abe6c"),
+    RAINBOW_SLIME("http://textures.minecraft.net/texture/b8be1e54625bb1c477832ed4e5f8d7261ee38f180b0883d1060c212b5c8b71"),
+    MOISTENED_SLIME("http://textures.minecraft.net/texture/ad2010b89b83bb21913f41ece3a1736d98c9955e8de5d3e35f5b6d19c8c5ea1"),
+    DOLPHIN("http://textures.minecraft.net/texture/8e9688b950d880b55b7aa2cfcd76e5a0fa94aac6d16f78e833f7443ea29fed3"),
+    PINK_DOLPHIN("http://textures.minecraft.net/texture/a4208fa0fa6901eb23fe0de4a02b57cb661ac9ed9d4f01dfdf2d073397105ec1"),
+    PHANTOM("http://textures.minecraft.net/texture/7e95153ec23284b283f00d19d29756f244313a061b70ac03b97d236ee57bd982"),
+    BLACK_PHANTOM("http://textures.minecraft.net/texture/40b9189c3713f0dacac9b2bb6065090c52b0c90f108208e0a86be5885e99579a"),
+
     ELEPHANT("http://textures.minecraft.net/texture/7071a76f669db5ed6d32b48bb2dba55d5317d7f45225cb3267ec435cfa514"),
     AFRICA_ELEPHANT("http://textures.minecraft.net/texture/315de7ec204ef5d819862a111a799fe5155940affe8d6b29f1bc6c4242a48c"),
     // raid boss heads

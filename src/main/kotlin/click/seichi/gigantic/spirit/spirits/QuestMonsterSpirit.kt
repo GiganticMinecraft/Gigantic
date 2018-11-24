@@ -141,6 +141,7 @@ class QuestMonsterSpirit(
     }
 
     override fun onRemove() {
+        if (!spawner.isValid) return
         spawner.offer(Keys.BATTLE_SPIRIT, null)
     }
 

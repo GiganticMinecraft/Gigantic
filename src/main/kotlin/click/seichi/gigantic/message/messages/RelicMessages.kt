@@ -193,6 +193,16 @@ object RelicMessages {
             )
     )
 
+    val MOISTENED_SLIME_BOLL = LocalizedText(
+            Locale.JAPANESE to "潤沢なべとべと"
+    )
+
+    val MOISTENED_SLIME_BOLL_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "整地効率が１上がる"
+            )
+    )
+
     val MANA_STONE = LocalizedText(
             Locale.JAPANESE to "マナ・ストーン"
     )

@@ -18,7 +18,7 @@ object HookedItemMessages {
 
     val PICKEL_LORE = mutableListOf(
             LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                    Locale.JAPANESE to "${ChatColor.WHITE}" +
                             "どんなに使っても折れない"
             ),
             LocalizedText(
@@ -36,7 +36,7 @@ object HookedItemMessages {
 
     val SHOVEL_LORE = mutableListOf(
             LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                    Locale.JAPANESE to "${ChatColor.WHITE}" +
                             "どんなに使っても折れない"
             ),
             LocalizedText(
@@ -54,7 +54,7 @@ object HookedItemMessages {
 
     val AXE_LORE = mutableListOf(
             LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                    Locale.JAPANESE to "${ChatColor.WHITE}" +
                             "どんなに使っても折れない"
             ),
             LocalizedText(
@@ -180,5 +180,24 @@ object HookedItemMessages {
                                     "ショートカット \"${SkillParameters.TELEPORT_KEY}\" キー"
                     )
             )
+
+    val SEICHI_SPEED_ENCHANT = { level: Int ->
+        val levelString = when (level) {
+            1 -> "Ⅰ"
+            2 -> "Ⅱ"
+            3 -> "Ⅲ"
+            4 -> "Ⅳ"
+            5 -> "Ⅴ"
+            6 -> "Ⅵ"
+            7 -> "Ⅶ"
+            8 -> "Ⅷ"
+            9 -> "Ⅸ"
+            10 -> "Ⅹ"
+            else -> "???"
+        }
+        LocalizedText(
+                Locale.JAPANESE to "整地効率$levelString"
+        )
+    }
 
 }

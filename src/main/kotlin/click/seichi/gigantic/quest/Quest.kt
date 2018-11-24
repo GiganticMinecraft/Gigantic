@@ -114,6 +114,14 @@ enum class Quest(
             SoulMonster.RED_PARROT,
             SoulMonster.ELDER_PARROT
     ),
+    SLIME(
+            12,
+            QuestMessages.SLIME,
+            null,
+            SoulMonster.SLIME,
+            SoulMonster.RAINBOW_SLIME,
+            SoulMonster.MOISTENED_SLIME
+    ),
     LADON(
             100,
             QuestMessages.LADON,
@@ -205,7 +213,7 @@ enum class Quest(
                 isProcessed = true
                 processedDegree = degree
             }
-            QuestMessages.QUEST_PROCEED(this, degree).sendTo(player)
+            QuestMessages.QUEST_PROCESSED(this, degree).sendTo(player)
         }
     }
 

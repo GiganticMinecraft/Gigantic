@@ -12,7 +12,7 @@ import java.util.*
  */
 object QuestMessages {
 
-    val QUEST_PROCEED = { quest: Quest, degree: Int ->
+    val QUEST_PROCESSED = { quest: Quest, degree: Int ->
         ChatMessage(ChatMessageProtocol.CHAT,
                 LocalizedText(
                         Locale.JAPANESE.let {
@@ -106,6 +106,10 @@ object QuestMessages {
 
     val PARROT = LocalizedText(
             Locale.JAPANESE to "こだまことだま"
+    )
+
+    val SLIME = LocalizedText(
+            Locale.JAPANESE to "ダイラタンシー流体"
     )
 
 }

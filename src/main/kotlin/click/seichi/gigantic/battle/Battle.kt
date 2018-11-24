@@ -4,6 +4,7 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.battle.passive.PowerEffect
 import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.updateInventory
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.RelicMessages
@@ -120,7 +121,6 @@ class Battle internal constructor(
             BattleMessages.WIN(monster).sendTo(it.player)
             monster.defeatedBy(it.player)
         }
-        quest?.process(battleSpawner.player)
         monster.dropRelicSet.firstOrNull { it.probability > Random.nextDouble() }
                 ?.let { drop ->
                     battlers.forEach { battlePlayer ->
@@ -128,6 +128,8 @@ class Battle internal constructor(
                         RelicMessages.DROP(drop).sendTo(battlePlayer.player)
                     }
                 }
+        quest?.process(battleSpawner.player)
+        battleSpawner.player.updateInventory(true, true)
         end()
     }
 

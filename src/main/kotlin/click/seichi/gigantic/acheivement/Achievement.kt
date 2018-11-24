@@ -197,6 +197,11 @@ enum class Achievement(
     }, action = {
         Quest.PARROT.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_SLIME_ORDER(418, {
+        Quest.BEGIN.isCleared(it)
+    }, action = {
+        Quest.SLIME.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
     ;
 
     /**1から順に [update] される**/

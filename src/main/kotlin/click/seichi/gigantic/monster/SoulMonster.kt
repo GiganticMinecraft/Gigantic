@@ -344,6 +344,35 @@ enum class SoulMonster(
             SoulMonsterAI::class,
             DropRelic(Relic.CHIP_OF_WOOD)
     ),
+    SLIME(
+            40,
+            Head.SLIME,
+            MonsterMessages.SLIME,
+            null,
+            Color.fromRGB(64, 119, 64),
+            SoulMonsterParameters.SLIME,
+            SoulMonsterAI::class
+    ),
+    RAINBOW_SLIME(
+            41,
+            Head.RAINBOW_SLIME,
+            MonsterMessages.RAINBOW_SLIME,
+            null,
+            Color.fromRGB(242, 12, 0),
+            SoulMonsterParameters.RAINBOW_SLIME,
+            SoulMonsterAI::class
+    ),
+    MOISTENED_SLIME(
+            42,
+            Head.MOISTENED_SLIME,
+            MonsterMessages.MOISTENED_SLIME,
+            null,
+            Color.fromRGB(165, 196, 117),
+            SoulMonsterParameters.MOISTENED_SLIME,
+            SoulMonsterAI::class,
+            DropRelic(Relic.MOISTENED_SLIME_BOLL)
+    ),
+
     LADON(
             100,
             Head.LADON,

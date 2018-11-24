@@ -34,6 +34,51 @@ object SoulMonsterParameters {
             Material.PINK_CONCRETE
     )
 
+    val CHICKEN = SoulMonsterParameter(
+            45L,
+            8,
+            240L,
+            4L,
+            3,
+            Material.WHITE_WOOL
+    )
+
+    val CHICKEN_KING = SoulMonsterParameter(
+            100L,
+            14,
+            200L,
+            4L,
+            4,
+            Material.WHITE_TERRACOTTA
+    )
+
+    val SLIME = SoulMonsterParameter(
+            40L,
+            30,
+            250L,
+            10L,
+            1,
+            Material.SLIME_BLOCK
+    )
+
+    val RAINBOW_SLIME = SoulMonsterParameter(
+            70L,
+            25,
+            250L,
+            10L,
+            2,
+            Material.SLIME_BLOCK
+    )
+
+    val MOISTENED_SLIME = SoulMonsterParameter(
+            100L,
+            30,
+            250L,
+            10L,
+            3,
+            Material.SLIME_BLOCK
+    )
+
     val BLAZE = SoulMonsterParameter(
             280L,
             40,
@@ -104,25 +149,6 @@ object SoulMonsterParameters {
             6L,
             4,
             Material.LIGHT_GRAY_CONCRETE_POWDER
-    )
-
-
-    val CHICKEN = SoulMonsterParameter(
-            70L,
-            8,
-            240L,
-            4L,
-            3,
-            Material.WHITE_WOOL
-    )
-
-    val CHICKEN_KING = SoulMonsterParameter(
-            140L,
-            14,
-            200L,
-            4L,
-            6,
-            Material.WHITE_TERRACOTTA
     )
 
     val TURTLE = SoulMonsterParameter(
