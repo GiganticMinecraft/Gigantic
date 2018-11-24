@@ -32,6 +32,7 @@ class Level : Manipulator<Level, PlayerCache> {
             nextExp: Long,
             onLevelUp: (Int) -> Unit
     ): Boolean {
+        // TODO construction of lv10
         exp = nextExp
         var isLevelUp = false
         while (canLevelUp(current + 1, exp)) {
