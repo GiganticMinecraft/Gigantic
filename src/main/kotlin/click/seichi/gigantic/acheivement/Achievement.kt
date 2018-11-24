@@ -180,7 +180,7 @@ enum class Achievement(
         Quest.GHOST.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_PARROT_ORDER(417, {
-        Quest.BLAZE.isCleared(it)
+        false
     }, action = {
         Quest.PARROT.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),

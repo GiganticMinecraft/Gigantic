@@ -51,9 +51,10 @@ object ProfileMessages {
                 Locale.JAPANESE to "${ChatColor.GREEN}体力: ${ChatColor.WHITE}${health.current} / ${health.max}"
         )
     }
+
     val PROFILE_MANA = { mana: Mana ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}マナ: ${ChatColor.WHITE}${mana.current} / ${mana.max}"
+                Locale.JAPANESE to "${ChatColor.GREEN}マナ: ${ChatColor.WHITE}${mana.current.setScale(1)} / ${mana.max}"
         )
     }
 
