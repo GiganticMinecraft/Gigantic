@@ -11,4 +11,5 @@ object Defaults {
     const val MANA_LOST_CHAR = "☆"
     const val HEALTH = 100L
     const val BELT_ID = 2
+    const val MANA_UNLOCK_LEVEL = 10
 }

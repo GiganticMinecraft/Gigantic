@@ -8,7 +8,7 @@ import org.bukkit.Material
 object SoulMonsterParameters {
 
     val VILLAGER = SoulMonsterParameter(
-            50L,
+            30L,
             0,
             100L,
             10L,
@@ -17,7 +17,7 @@ object SoulMonsterParameters {
     )
 
     val ZOMBIE_VILLAGER = SoulMonsterParameter(
-            70L,
+            40L,
             0,
             100L,
             10L,
@@ -26,7 +26,7 @@ object SoulMonsterParameters {
     )
 
     val PIG = SoulMonsterParameter(
-            50L,
+            40L,
             10,
             100L,
             10L,
@@ -35,7 +35,7 @@ object SoulMonsterParameters {
     )
 
     val PIG_WARRIOR = SoulMonsterParameter(
-            60L,
+            45L,
             20,
             120L,
             10L,
@@ -44,7 +44,7 @@ object SoulMonsterParameters {
     )
 
     val MR_PIG = SoulMonsterParameter(
-            70L,
+            50L,
             25,
             140L,
             10L,
@@ -53,7 +53,7 @@ object SoulMonsterParameters {
     )
 
     val CHICKEN = SoulMonsterParameter(
-            45L,
+            30L,
             8,
             240L,
             4L,
@@ -62,7 +62,7 @@ object SoulMonsterParameters {
     )
 
     val CHICKEN_KING = SoulMonsterParameter(
-            55L,
+            40L,
             14,
             200L,
             4L,
@@ -71,7 +71,7 @@ object SoulMonsterParameters {
     )
 
     val SLIME = SoulMonsterParameter(
-            40L,
+            30L,
             30,
             250L,
             10L,
@@ -80,7 +80,7 @@ object SoulMonsterParameters {
     )
 
     val RAINBOW_SLIME = SoulMonsterParameter(
-            50L,
+            40L,
             25,
             250L,
             10L,
@@ -89,7 +89,7 @@ object SoulMonsterParameters {
     )
 
     val MOISTENED_SLIME = SoulMonsterParameter(
-            60L,
+            50L,
             30,
             250L,
             10L,
@@ -98,7 +98,7 @@ object SoulMonsterParameters {
     )
 
     val BLAZE = SoulMonsterParameter(
-            120L,
+            70L,
             40,
             160L,
             6L,
@@ -107,7 +107,7 @@ object SoulMonsterParameters {
     )
 
     val BLAZE_WARRIOR = SoulMonsterParameter(
-            130L,
+            80L,
             50,
             180L,
             6L,
@@ -116,7 +116,7 @@ object SoulMonsterParameters {
     )
 
     val BLUE_BLAZE = SoulMonsterParameter(
-            150L,
+            90L,
             60,
             200L,
             6L,
@@ -125,7 +125,7 @@ object SoulMonsterParameters {
     )
 
     val ENDER_MAN = SoulMonsterParameter(
-            90,
+            70,
             20,
             190,
             10L,
@@ -134,7 +134,7 @@ object SoulMonsterParameters {
     )
 
     val WHITE_ENDER_MAN = SoulMonsterParameter(
-            110,
+            78,
             25,
             180,
             10L,
@@ -143,7 +143,7 @@ object SoulMonsterParameters {
     )
 
     val ELITE_ENDER_MAN = SoulMonsterParameter(
-            120,
+            84,
             30,
             180,
             10L,
@@ -152,7 +152,7 @@ object SoulMonsterParameters {
     )
 
     val TURTLE = SoulMonsterParameter(
-            70L,
+            58L,
             80,
             260L,
             40L,
@@ -161,7 +161,7 @@ object SoulMonsterParameters {
     )
 
     val TURTLE_SOLDIER = SoulMonsterParameter(
-            80L,
+            68L,
             80,
             230L,
             40L,
@@ -170,7 +170,7 @@ object SoulMonsterParameters {
     )
 
     val TURTLE_KING = SoulMonsterParameter(
-            90L,
+            78L,
             80,
             300L,
             40L,
@@ -179,7 +179,7 @@ object SoulMonsterParameters {
     )
 
     val WITHER_SKELETON = SoulMonsterParameter(
-            300L,
+            80L,
             80,
             220L,
             20L,
@@ -188,7 +188,7 @@ object SoulMonsterParameters {
     )
 
     val WITHER = SoulMonsterParameter(
-            360L,
+            90L,
             120,
             500L,
             5L,

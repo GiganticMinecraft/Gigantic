@@ -7,8 +7,10 @@ import click.seichi.gigantic.cache.key.Key
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.util.CardinalDirection
 import click.seichi.gigantic.util.NoiseData
@@ -89,13 +91,24 @@ fun Player.updateLevel(isFirstJoin: Boolean = false) {
         exp?.resetDebugNum()
     }
     manipulate(CatalogPlayerCache.LEVEL) {
-        it.calculate(exp?.calcExp() ?: 0L) { current ->
+        val currentExp = when {
+            // マナを開放していない場合は固定
+            it.current == Defaults.MANA_UNLOCK_LEVEL &&
+                    !Relic.MANA_STONE.has(this) -> PlayerLevelConfig.LEVEL_MAP[Defaults.MANA_UNLOCK_LEVEL]
+            // 最大レベルに達している場合は固定
+            it.current == PlayerLevelConfig.MAX -> PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]
+            // それ以外は通常計算
+            else -> exp?.calcExp()
+        } ?: 0L
+        //calc lv
+        it.calculate(currentExp) { current ->
             if (!isFirstJoin)
                 Bukkit.getPluginManager().callEvent(LevelUpEvent(current, this))
         }
         PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(this)
     }
 }
+
 
 fun Player.updateInventory(applyMainHand: Boolean, applyOffHand: Boolean) {
     getOrPut(Keys.BELT).wear(this, applyMainHand, applyOffHand)

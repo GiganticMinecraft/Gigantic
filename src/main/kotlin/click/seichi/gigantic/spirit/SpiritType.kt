@@ -40,7 +40,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
             }
     ),
     MONSTER(
-            RandomSummonCase(0.08, BlockBreakEvent::class.java) { event ->
+            RandomSummonCase(0.2, BlockBreakEvent::class.java) { event ->
                 val player = event.player ?: return@RandomSummonCase
                 if (!event.block.isCrust && !event.block.isTree) return@RandomSummonCase
                 val chunk = event.block.chunk ?: return@RandomSummonCase
