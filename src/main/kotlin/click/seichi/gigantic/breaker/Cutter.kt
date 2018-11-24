@@ -41,13 +41,13 @@ class Cutter : Miner() {
                         },
                         when (it) {
                             BlockFace.NORTH -> 1L
-                            BlockFace.NORTH_EAST -> 3L
-                            BlockFace.EAST -> 5L
-                            BlockFace.SOUTH_EAST -> 7L
-                            BlockFace.SOUTH -> 2L
-                            BlockFace.SOUTH_WEST -> 4L
-                            BlockFace.WEST -> 6L
-                            BlockFace.NORTH_WEST -> 8L
+                            BlockFace.NORTH_EAST -> 2L
+                            BlockFace.EAST -> 1L
+                            BlockFace.SOUTH_EAST -> 2L
+                            BlockFace.SOUTH -> 1L
+                            BlockFace.SOUTH_WEST -> 2L
+                            BlockFace.WEST -> 1L
+                            BlockFace.NORTH_WEST -> 2L
                             else -> throw error("cutter error code:001")
                         }
                 )
@@ -62,14 +62,14 @@ class Cutter : Miner() {
                             breakRelationalBlock(player, upperBlock.getRelative(it), false)
                         },
                         when (it) {
-                            BlockFace.NORTH -> 1L + 9L
-                            BlockFace.NORTH_EAST -> 3L + 9L
-                            BlockFace.EAST -> 5L + 9L
-                            BlockFace.SOUTH_EAST -> 7L + 9L
-                            BlockFace.SOUTH -> 2L + 9L
-                            BlockFace.SOUTH_WEST -> 4L + 9L
-                            BlockFace.WEST -> 6L + 9L
-                            BlockFace.NORTH_WEST -> 8L + 9L
+                            BlockFace.NORTH -> 1L + 2L
+                            BlockFace.NORTH_EAST -> 2L + 2L
+                            BlockFace.EAST -> 1L + 2L
+                            BlockFace.SOUTH_EAST -> 2L + 2L
+                            BlockFace.SOUTH -> 1L + 2L
+                            BlockFace.SOUTH_WEST -> 2L + 2L
+                            BlockFace.WEST -> 1L + 2L
+                            BlockFace.NORTH_WEST -> 1L + 2L
                             else -> throw error("cutter error code:002")
                         }
                 )
@@ -80,7 +80,7 @@ class Cutter : Miner() {
                         if (!player.isValid) return@runTaskLater
                         breakRelationalBlock(player, upperBlock, false)
                     },
-                    9L
+                    2L
             )
 
             // 破壊ブロック段の下段を処理
@@ -93,14 +93,14 @@ class Cutter : Miner() {
                             breakRelationalBlock(player, underBlock.getRelative(it), false)
                         },
                         when (it) {
-                            BlockFace.NORTH -> 1L + 9L
-                            BlockFace.NORTH_EAST -> 3L + 9L
-                            BlockFace.EAST -> 5L + 9L
-                            BlockFace.SOUTH_EAST -> 7L + 9L
-                            BlockFace.SOUTH -> 2L + 9L
-                            BlockFace.SOUTH_WEST -> 4L + 9L
-                            BlockFace.WEST -> 6L + 9L
-                            BlockFace.NORTH_WEST -> 8L + 9L
+                            BlockFace.NORTH -> 1L + 2L
+                            BlockFace.NORTH_EAST -> 2L + 2L
+                            BlockFace.EAST -> 1L + 2L
+                            BlockFace.SOUTH_EAST -> 2L + 2L
+                            BlockFace.SOUTH -> 1L + 9L
+                            BlockFace.SOUTH_WEST -> 2L + 2L
+                            BlockFace.WEST -> 1L + 2L
+                            BlockFace.NORTH_WEST -> 2L + 2L
                             else -> throw error("cutter error code:003")
                         }
                 )
@@ -111,7 +111,7 @@ class Cutter : Miner() {
                         if (!player.isValid) return@runTaskLater
                         breakRelationalBlock(player, underBlock, false)
                     },
-                    9L
+                    2L
             )
         }
 

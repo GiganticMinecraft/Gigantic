@@ -120,11 +120,12 @@ object HandButtons {
                         HookedItemMessages.COMBO_ATTACK_ENCHANT(comboLevel).asSafety(player.wrappedLocale))
             }
 
-
             addLore("${ChatColor.GRAY}" +
-                    HookedItemMessages.CONDENSE_WATER.asSafety(player.wrappedLocale))
+                    HookedItemMessages.CONDENSE_WATER_ENCHANT.asSafety(player.wrappedLocale))
             addLore("${ChatColor.GRAY}" +
-                    HookedItemMessages.CONDENSE_LAVA.asSafety(player.wrappedLocale))
+                    HookedItemMessages.CONDENSE_LAVA_ENCHANT.asSafety(player.wrappedLocale))
+            addLore("${ChatColor.GRAY}" +
+                    HookedItemMessages.CUT_ENCHANT.asSafety(player.wrappedLocale))
         }
     }
 

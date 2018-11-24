@@ -196,12 +196,16 @@ object HookedItemMessages {
         )
     }
 
-    val CONDENSE_WATER = LocalizedText(
+    val CONDENSE_WATER_ENCHANT = LocalizedText(
             Locale.JAPANESE to "氷結 Ⅰ"
     )
 
-    val CONDENSE_LAVA = LocalizedText(
+    val CONDENSE_LAVA_ENCHANT = LocalizedText(
             Locale.JAPANESE to "火成 Ⅰ"
+    )
+
+    val CUT_ENCHANT = LocalizedText(
+            Locale.JAPANESE to "木こり Ⅰ"
     )
 
 
