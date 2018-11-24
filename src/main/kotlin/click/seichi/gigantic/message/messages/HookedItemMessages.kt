@@ -196,4 +196,13 @@ object HookedItemMessages {
         )
     }
 
+    val CONDENSE_WATER = LocalizedText(
+            Locale.JAPANESE to "氷結 Ⅰ"
+    )
+
+    val CONDENSE_LAVA = LocalizedText(
+            Locale.JAPANESE to "火成 Ⅰ"
+    )
+
+
 }
