@@ -7,11 +7,11 @@ object SkillParameters {
 
     const val MINE_BURST_DURATION = 5L
 
-    const val MINE_BURST_COOLTIME = 60L
+    const val MINE_BURST_COOLTIME = 30L
 
     const val MINE_BURST_KEY = "3"
 
-    const val FLASH_COOLTIME = 15L
+    const val FLASH_COOLTIME = 3L
 
     const val FLASH_KEY = "2"
 

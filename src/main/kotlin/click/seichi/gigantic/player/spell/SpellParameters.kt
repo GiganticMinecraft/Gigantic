@@ -9,7 +9,7 @@ object SpellParameters {
 
     const val STELLA_CLAIR_AMOUNT_PERCENT = 7
 
-    const val STELLA_CLAIR_PROBABILITY_PERCENT = 10
+    const val STELLA_CLAIR_PROBABILITY_PERCENT = 15
 
     const val GRAND_NATURA_MAX_RADIUS = 5
 
