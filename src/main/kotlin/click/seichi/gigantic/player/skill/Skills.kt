@@ -1,7 +1,6 @@
 package click.seichi.gigantic.player.skill
 
 import click.seichi.gigantic.animation.animations.SkillAnimations
-import click.seichi.gigantic.breaker.skills.KodamaDrain
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
@@ -115,20 +114,6 @@ object Skills {
                     SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
                     PlayerMessages.HEALTH_DISPLAY(it).sendTo(p)
                 }
-            }
-        }
-
-    }
-
-
-    val KODAMA_DRAIN = object : Invokable {
-
-        override fun findInvokable(player: Player): Consumer<Player>? {
-            val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return null
-            if (!block.isLog) return null
-            return Consumer { p ->
-                val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
-                KodamaDrain().cast(p, b)
             }
         }
 

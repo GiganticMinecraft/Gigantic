@@ -1,6 +1,7 @@
 package click.seichi.gigantic.sound.sounds
 
 import click.seichi.gigantic.sound.DetailedSound
+import click.seichi.gigantic.util.Random
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
 
@@ -23,16 +24,6 @@ object PlayerSounds {
             SoundCategory.PLAYERS,
             pitch = 0.8F,
             volume = 1.0F
-    )
-
-    val SCOOP_WATER = DetailedSound(
-            Sound.ITEM_BUCKET_FILL,
-            SoundCategory.BLOCKS
-    )
-
-    val SCOOP_LAVA = DetailedSound(
-            Sound.ITEM_BUCKET_FILL_LAVA,
-            SoundCategory.BLOCKS
     )
 
     val TELEPORT_AFK = DetailedSound(
@@ -75,6 +66,27 @@ object PlayerSounds {
             SoundCategory.BLOCKS,
             pitch = 1.0F,
             volume = 1.0F
+    )
+
+    val ON_CUT = DetailedSound(
+            Sound.ITEM_HOE_TILL,
+            SoundCategory.BLOCKS,
+            pitch = (1.5 + Random.nextGaussian(variance = 0.4)).toFloat(),
+            volume = 0.2F
+    )
+
+    val ON_CONDENSE_WATER = DetailedSound(
+            Sound.BLOCK_GLASS_PLACE,
+            SoundCategory.BLOCKS,
+            pitch = (1.5 + Random.nextGaussian(variance = 0.2)).toFloat(),
+            volume = 0.5F
+    )
+
+    val ON_CONDENSE_LAVA = DetailedSound(
+            Sound.BLOCK_LAVA_EXTINGUISH,
+            SoundCategory.BLOCKS,
+            pitch = (1.8 + Random.nextGaussian(variance = 0.2)).toFloat(),
+            volume = 0.5F
     )
 
 

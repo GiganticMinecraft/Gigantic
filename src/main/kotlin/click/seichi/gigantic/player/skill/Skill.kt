@@ -47,15 +47,6 @@ enum class Skill(
             SkillMessages.MINE_BURST_LORE,
             Achievement.SKILL_MINE_BURST,
             Skills.MINE_BURST
-    ),
-    KODAMA_DRAIN(
-            4,
-            3,
-            ItemStack(Material.OAK_WOOD),
-            SkillMessages.KODAMA_DRAIN,
-            SkillMessages.KODAMA_DRAIN_LORE,
-            Achievement.SKILL_KODAMA_DRAIN,
-            Skills.KODAMA_DRAIN
     )
     ;
 

@@ -55,16 +55,16 @@ class DetailedSound(
                     player.location,
                     sound,
                     category,
-                    volume,
-                    pitch
+                    volume.coerceIn(0.0F, 2.0F),
+                    pitch.coerceIn(0.0F, 2.0F)
             )
 
     fun play(location: Location) = location.world.playSound(
             location,
             sound,
             category,
-            volume,
-            pitch
+            volume.coerceIn(0.0F, 2.0F),
+            pitch.coerceIn(0.0F, 2.0F)
     )
 
 }

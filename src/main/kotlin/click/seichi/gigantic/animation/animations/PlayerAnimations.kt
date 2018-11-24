@@ -2,6 +2,8 @@ package click.seichi.gigantic.animation.animations
 
 import click.seichi.gigantic.animation.Animation
 import click.seichi.gigantic.extension.launchFireWorks
+import click.seichi.gigantic.util.Random
+import org.bukkit.Particle
 
 /**
  *
@@ -13,5 +15,28 @@ object PlayerAnimations {
         location.launchFireWorks()
     }
 
+    val ON_CUT = Animation(1) { location, _ ->
+        location.world.spawnParticle(Particle.VILLAGER_HAPPY, location, 1,
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3)
+        )
+    }
+
+    val ON_CONDENSE_WATER = Animation(1) { location, _ ->
+        location.world.spawnParticle(Particle.WATER_SPLASH, location, 10,
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3)
+        )
+    }
+
+    val ON_CONDENSE_LAVA = Animation(1) { location, _ ->
+        location.world.spawnParticle(Particle.LAVA, location, 5,
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3),
+                Random.nextGaussian(0.0, 0.3)
+        )
+    }
 
 }

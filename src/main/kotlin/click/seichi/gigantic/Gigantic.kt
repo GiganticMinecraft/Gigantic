@@ -128,7 +128,9 @@ class Gigantic : JavaPlugin() {
                 Material.TERRACOTTA,
                 Material.PRISMARINE,
                 Material.PRISMARINE_BRICKS,
-                Material.DARK_PRISMARINE
+                Material.DARK_PRISMARINE,
+                Material.PACKED_ICE,
+                Material.MAGMA_BLOCK
         )
 
         val LOGS = setOf(
@@ -222,7 +224,6 @@ class Gigantic : JavaPlugin() {
                 PlayerMonitor(),
                 ItemListener(),
                 BlockListener(),
-                SkillSpellListener(),
                 WorldListener(),
                 EntityListener(),
                 ChunkListener(),

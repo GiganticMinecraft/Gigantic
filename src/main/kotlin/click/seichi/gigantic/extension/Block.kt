@@ -1,7 +1,9 @@
 package click.seichi.gigantic.extension
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.battle.BattleManager
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -48,6 +50,7 @@ fun Block.fallUpperCrustBlock() {
         override fun run() {
             val target = getRelative(0, count + 1, 0) ?: return
             target.changeRelativeBedrock()
+            target.condenseRelativeLiquid()
             if (target.isCrust) {
                 target.location.world.spawnFallingBlock(
                         target.location.central.subtract(0.0, 0.5, 0.0),
@@ -62,23 +65,7 @@ fun Block.fallUpperCrustBlock() {
     Bukkit.getScheduler().runTask(Gigantic.PLUGIN, fallTask)
 }
 
-fun Block.removeUpperLiquidBlock() {
-    var count = 0
-    val fallTask = object : Runnable {
-        override fun run() {
-            val target = getRelative(0, count + 1, 0) ?: return
-            target.changeRelativeBedrock()
-            if (target.isLiquid) {
-                target.type = Material.AIR
-                count++
-                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, this, 2L)
-            }
-        }
-    }
-    Bukkit.getScheduler().runTask(Gigantic.PLUGIN, fallTask)
-}
-
-private val bedrockFaceSet = setOf(
+private val faceSet = setOf(
         BlockFace.NORTH,
         BlockFace.EAST,
         BlockFace.SOUTH,
@@ -88,9 +75,31 @@ private val bedrockFaceSet = setOf(
 )
 
 fun Block.changeRelativeBedrock() {
-    bedrockFaceSet.map { getRelative(it) }
+    faceSet.map { getRelative(it) }
             .filter { it.type == Material.BEDROCK && it.y != 0 }
             .forEach { it.type = Material.STONE }
+}
+
+
+fun Block.condenseRelativeLiquid() {
+    faceSet.map { getRelative(it) }
+            .filter { it.isLiquid }
+            .forEach {
+                when (it.type) {
+                    Material.WATER -> {
+                        PlayerSounds.ON_CONDENSE_WATER.play(it.centralLocation)
+                        PlayerAnimations.ON_CONDENSE_WATER.start(it.centralLocation)
+                        it.type = Material.PACKED_ICE
+                    }
+                    Material.LAVA -> {
+                        PlayerSounds.ON_CONDENSE_LAVA.play(it.centralLocation)
+                        PlayerAnimations.ON_CONDENSE_LAVA.start(it.centralLocation)
+                        it.type = Material.MAGMA_BLOCK
+                    }
+                    else -> {
+                    }
+                }
+            }
 }
 
 val Block.isSpawnArea: Boolean

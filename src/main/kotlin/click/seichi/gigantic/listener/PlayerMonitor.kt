@@ -1,7 +1,9 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.breaker.Cutter
 import click.seichi.gigantic.breaker.Miner
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.extension.isLog
 import click.seichi.gigantic.extension.manipulate
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
@@ -25,6 +27,7 @@ class PlayerMonitor : Listener {
 
         val player = event.player ?: return
         val block = event.block ?: return
+        if (block.isLog) Cutter().breakRelationalBlock(player, block, true)
         Miner().breakBlock(player, block)
     }
 

@@ -82,9 +82,6 @@ enum class Achievement(
     SKILL_MINE_BURST(201, {
         it.hasRelic(Relic.BLUE_BLAZE_POWDER)
     }, grantMessage = AchievementMessages.SKILL_MINE_BURST),
-    SKILL_KODAMA_DRAIN(202, {
-        it.hasRelic(Relic.CHIP_OF_WOOD)
-    }, grantMessage = AchievementMessages.UNLOCK_KODAMA_DRAIN),
 
     // spells
     SPELL_STELLA_CLAIR(300, {
