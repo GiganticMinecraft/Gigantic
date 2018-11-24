@@ -85,18 +85,8 @@ enum class Achievement(
 
     // spells
     SPELL_STELLA_CLAIR(300, {
-        MANA_STONE.isGranted(it) &&
-                false
+        MANA_STONE.isGranted(it)
     }, grantMessage = AchievementMessages.UNLOCK_STELLA_CLAIR),
-    SPELL_GRAND_NATURA(302, {
-        MANA_STONE.isGranted(it) &&
-                false
-    }, grantMessage = AchievementMessages.UNLOCK_GRAND_NATURA),
-
-    SPELL_AQUA_LINEA(303, {
-        MANA_STONE.isGranted(it) &&
-                false
-    }, grantMessage = AchievementMessages.UNLOCK_AQUA_LINEA),
 
     // quest order
     QUEST_LADON_ORDER(400, {

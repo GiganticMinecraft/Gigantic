@@ -2,11 +2,12 @@ package click.seichi.gigantic.player.spell
 
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SpellAnimations
-import click.seichi.gigantic.breaker.spells.AquaLinea
-import click.seichi.gigantic.breaker.spells.GrandNatura
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Invokable
 import click.seichi.gigantic.popup.pops.PopUpParameters
@@ -40,56 +41,5 @@ object Spells {
             }
         }
     }
-    //　グランド・ナトラ
-    val GRAND_NATURA = object : Invokable {
 
-        override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SPELL_GRAND_NATURA.isGranted(player)) return null
-            if (player.isSneaking) return null
-            val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
-            if (mineBurst.duringFire()) return null
-            val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return null
-            if (!SpellParameters.GRAND_NATURA_RELATIONAL_BLOCKS.contains(block.type)) return null
-            var canSpell = true
-            player.manipulate(CatalogPlayerCache.MANA) {
-                if (it.current <= 0.toBigDecimal()) {
-                    canSpell = false
-                    PlayerMessages.MANA_DISPLAY(it).sendTo(player)
-                }
-            }
-            if (!canSpell) return null
-            return Consumer { p ->
-                val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
-                GrandNatura().cast(p, b)
-            }
-        }
-
-    }
-
-
-    // アクアリネーア
-    val AQUA_LINEA = object : Invokable {
-
-        override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SPELL_AQUA_LINEA.isGranted(player)) return null
-            if (player.isSneaking) return null
-            val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
-            if (mineBurst.duringFire()) return null
-            val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return null
-            if (!block.isCrust) return null
-            var canSpell = true
-            player.manipulate(CatalogPlayerCache.MANA) {
-                if (it.current <= 0.toBigDecimal()) {
-                    canSpell = false
-                    PlayerMessages.MANA_DISPLAY(it).sendTo(player)
-                }
-            }
-            if (!canSpell) return null
-            return Consumer { p ->
-                val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
-                AquaLinea().cast(p, b)
-            }
-        }
-
-    }
 }
