@@ -10,7 +10,7 @@ object MainBag : Bag() {
     init {
         registerButton(9, BagButtons.PROFILE)
         registerButton(11, BagButtons.SKILL)
-        registerButton(12, BagButtons.SPELL)
+        registerButton(13, BagButtons.SPELL)
         registerButton(19, BagButtons.QUEST)
         registerButton(21, BagButtons.RELIC)
         registerButton(25, BagButtons.AFK)
