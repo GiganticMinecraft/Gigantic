@@ -104,7 +104,7 @@ open class Miner : Breaker {
     private fun trySpell(player: Player): Boolean {
         val toggle = player.getOrPut(Keys.SPELL_TOGGLE)
         if (!toggle) return false
-        if (Spell.EXPLOSION.tryCast(player)) return true
+        //if (Spell.EXPLOSION.tryCast(player)) return true
 
         return false
     }
