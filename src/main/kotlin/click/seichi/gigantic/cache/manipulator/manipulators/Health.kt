@@ -68,7 +68,7 @@ class Health : Manipulator<Health, PlayerCache> {
         return prev - next
     }
 
-    fun isMaxHealth() = current == max
+    fun isMaxHealth() = current >= max
 
     fun updateMaxHealth() {
         max = HealthConfig.HEALTH_MAP[level.current] ?: Defaults.MAX_MANA
