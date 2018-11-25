@@ -105,11 +105,12 @@ class PlayerListener : Listener {
 
         player.manipulate(CatalogPlayerCache.MANA) {
             it.updateMaxMana()
-            if (Achievement.MANA_STONE.isGranted(player))
+            if (Achievement.MANA_STONE.isGranted(player) && it.max > 0.toBigDecimal())
                 PlayerMessages.MANA_DISPLAY(it).sendTo(player)
         }
 
         player.manipulate(CatalogPlayerCache.HEALTH) {
+            it.updateMaxHealth()
             PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
         }
         player.saturation = Float.MAX_VALUE
@@ -203,7 +204,9 @@ class PlayerListener : Listener {
             val prevMax = it.max
             it.updateMaxMana()
             it.increase(it.max, true)
-            PlayerMessages.MANA_DISPLAY(it).sendTo(player)
+            if (it.max > 0.toBigDecimal()) {
+                PlayerMessages.MANA_DISPLAY(it).sendTo(player)
+            }
             if (prevMax == it.max) return@manipulate
             if (!Achievement.MANA_STONE.isGranted(player)) return@manipulate
             PlayerMessages.LEVEL_UP_MANA(prevMax, it.max).sendTo(player)
@@ -211,6 +214,7 @@ class PlayerListener : Listener {
 
         player.manipulate(CatalogPlayerCache.HEALTH) {
             val prevMax = it.max
+            it.updateMaxHealth()
             it.increase(it.max)
             PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
             if (prevMax == it.max) return@manipulate

@@ -20,13 +20,14 @@ class Health : Manipulator<Health, PlayerCache> {
     var max: Long by Delegates.notNull()
         private set
 
+    lateinit var level: Level
+
     val isZero: Boolean
         get() = current == 0L
 
     override fun from(cache: Cache<PlayerCache>): Health? {
         current = cache.getOrPut(Keys.HEALTH)
-        val level = cache.find(CatalogPlayerCache.LEVEL) ?: return null
-        max = HealthConfig.HEALTH_MAP[level.current] ?: Defaults.MAX_MANA
+        level = cache.find(CatalogPlayerCache.LEVEL) ?: return null
         return this
     }
 
@@ -69,4 +70,7 @@ class Health : Manipulator<Health, PlayerCache> {
 
     fun isMaxHealth() = current == max
 
+    fun updateMaxHealth() {
+        max = HealthConfig.HEALTH_MAP[level.current] ?: Defaults.MAX_MANA
+    }
 }
