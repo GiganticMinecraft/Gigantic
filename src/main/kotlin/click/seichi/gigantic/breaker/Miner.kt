@@ -38,12 +38,7 @@ open class Miner : Breaker {
 
 
     protected open fun onBreakBlock(player: Player, block: Block) {
-        // Gravity process
-        block.fallUpperCrustBlock()
-        // bedrock process
-        block.changeRelativeBedrock()
-        // liquid condense
-        block.condenseRelativeLiquid()
+        block.update()
 
         // add exp
         if (!block.isCrust && !block.isTree) return
@@ -65,17 +60,17 @@ open class Miner : Breaker {
                 SkillPops.MINE_COMBO(it).pop(block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
             }
         }
-        player.offer(Keys.IS_UPDATE_PROFILE, true)
-
-        // update
-        player.getOrPut(Keys.BAG).carry(player)
+        player.transform(Keys.IS_UPDATE_PROFILE) {
+            if (!it) player.getOrPut(Keys.BAG).carry(player)
+            true
+        }
         player.updateLevel()
-
 
         // play sounds
         val mineBurst = player.find(CatalogPlayerCache.MINE_BURST)
 
         val currentCombo = player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0
+
         // Sounds
         when {
             mineBurst?.duringFire() == true && Achievement.MINE_COMBO.isGranted(player) -> {
@@ -84,34 +79,32 @@ open class Miner : Breaker {
             }
             else -> PlayerSounds.OBTAIN_EXP(currentCombo).playOnly(player)
         }
-
         player.offer(Keys.BREAK_BLOCK, block)
         when {
-            trySkill(player, block) -> {
+            trySkill(player) -> {
             }
-            trySpell(player, block) -> {
+            trySpell(player) -> {
             }
-            tryHeal(player, block) -> {
+            tryHeal(player) -> {
             }
         }
         player.remove(Keys.BREAK_BLOCK)
     }
 
-    private fun trySkill(player: Player, block: Block): Boolean {
+    private fun trySkill(player: Player): Boolean {
         return false
     }
 
-    private fun tryHeal(player: Player, block: Block): Boolean {
+    private fun tryHeal(player: Player): Boolean {
         if (Skill.HEAL.tryCast(player)) return true
         if (Spell.STELLA_CLAIR.tryCast(player)) return true
-
         return false
     }
 
-    private fun trySpell(player: Player, block: Block): Boolean {
-
+    private fun trySpell(player: Player): Boolean {
         val toggle = player.getOrPut(Keys.SPELL_TOGGLE)
         if (!toggle) return false
+        if (Spell.EXPLOSION.tryCast(player)) return true
 
         return false
     }

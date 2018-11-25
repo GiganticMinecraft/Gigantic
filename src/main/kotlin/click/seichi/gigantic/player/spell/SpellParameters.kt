@@ -13,7 +13,7 @@ object SpellParameters {
 
     const val GRAND_NATURA_MAX_RADIUS = 5
 
-    const val GRAND_NATURA_MANA_PER_BLOCK = 2.0
+    const val EXPLOSION_MANA = 2.0
 
     val GRAND_NATURA_RELATIONAL_BLOCKS = setOf(
             Material.GRASS_BLOCK,

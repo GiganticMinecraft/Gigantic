@@ -30,9 +30,18 @@ enum class Spell(
             Achievement.SPELL_STELLA_CLAIR,
             Spells.STELLA_CLAIR
     ),
+    EXPLOSION(
+            1,
+            1,
+            ItemStack(Material.FIRE_CHARGE),
+            SpellMessages.EXPLOSION,
+            null,
+            null,
+            Spells.EXPLOSION
+    )
     ;
 
-    fun tryCast(player: Player) = invoker.tryInvoke(player)
+    fun tryCast(player: Player) = if (isGranted(player)) invoker.tryInvoke(player) else false
 
     fun isGranted(player: Player) = achievement?.isGranted(player) ?: true
 

@@ -34,6 +34,10 @@ object SpellMessages {
                     )
             )
 
+    val EXPLOSION = LocalizedText(
+            Locale.JAPANESE to "エクスプロージョン"
+    )
+
     val AQUA_LINEA = LocalizedText(
             Locale.JAPANESE to "アクア・リネア"
     )

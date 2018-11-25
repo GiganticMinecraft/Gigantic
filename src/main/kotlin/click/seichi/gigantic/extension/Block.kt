@@ -44,7 +44,13 @@ val Block.centralLocation: Location
     get() = location.clone().add(0.5, 0.5, 0.5)
 
 
-fun Block.fallUpperCrustBlock() {
+fun Block.update() {
+    changeRelativeBedrock()
+    condenseRelativeLiquid()
+    fallUpperCrustBlock()
+}
+
+private fun Block.fallUpperCrustBlock() {
     var count = 0
     val fallTask = object : Runnable {
         override fun run() {
@@ -74,14 +80,14 @@ private val faceSet = setOf(
         BlockFace.DOWN
 )
 
-fun Block.changeRelativeBedrock() {
+private fun Block.changeRelativeBedrock() {
     faceSet.map { getRelative(it) }
             .filter { it.type == Material.BEDROCK && it.y != 0 }
             .forEach { it.type = Material.STONE }
 }
 
 
-fun Block.condenseRelativeLiquid() {
+private fun Block.condenseRelativeLiquid() {
     faceSet.map { getRelative(it) }
             .filter { it.isLiquid }
             .forEach {

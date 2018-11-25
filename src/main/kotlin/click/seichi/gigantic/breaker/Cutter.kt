@@ -2,7 +2,10 @@ package click.seichi.gigantic.breaker
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.PlayerAnimations
-import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.isLog
+import click.seichi.gigantic.extension.isTree
+import click.seichi.gigantic.extension.update
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.Bukkit
 import org.bukkit.block.Block
@@ -97,7 +100,7 @@ class Cutter : Miner() {
                             BlockFace.NORTH_EAST -> 2L + 2L
                             BlockFace.EAST -> 1L + 2L
                             BlockFace.SOUTH_EAST -> 2L + 2L
-                            BlockFace.SOUTH -> 1L + 9L
+                            BlockFace.SOUTH -> 1L + 2L
                             BlockFace.SOUTH_WEST -> 2L + 2L
                             BlockFace.WEST -> 1L + 2L
                             BlockFace.NORTH_WEST -> 2L + 2L
@@ -123,12 +126,7 @@ class Cutter : Miner() {
     override fun onBreakBlock(player: Player, block: Block) {
         PlayerAnimations.ON_CUT.start(block.centralLocation)
         PlayerSounds.ON_CUT.play(block.centralLocation)
-        // Gravity process
-        block.fallUpperCrustBlock()
-        // bedrock process
-        block.changeRelativeBedrock()
-        // liquid condense process
-        block.condenseRelativeLiquid()
+        block.update()
     }
 
 }
