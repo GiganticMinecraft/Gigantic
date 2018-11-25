@@ -33,7 +33,7 @@ object TeleportToPlayerMenu : BookMenu() {
     }
 
     override fun getMaxPage(player: Player): Int {
-        return Bukkit.getOnlinePlayers().size.div(numOfPlayerPerPage).plus(1)
+        return Bukkit.getOnlinePlayers().size.div(numOfPlayerPerPage + 1).plus(1)
     }
 
     override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {
