@@ -100,6 +100,14 @@ fun Player.updateLevel(isFirstJoin: Boolean = false) {
 
 
 fun Player.updateInventory(applyMainHand: Boolean, applyOffHand: Boolean) {
+    updateBelt(applyMainHand, applyOffHand)
+    updateBag()
+}
+
+fun Player.updateBelt(applyMainHand: Boolean, applyOffHand: Boolean) {
     getOrPut(Keys.BELT).wear(this, applyMainHand, applyOffHand)
+}
+
+fun Player.updateBag() {
     getOrPut(Keys.BAG).carry(this)
 }

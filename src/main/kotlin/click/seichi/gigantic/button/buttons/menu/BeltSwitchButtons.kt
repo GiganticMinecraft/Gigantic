@@ -2,7 +2,6 @@ package click.seichi.gigantic.button.buttons.menu
 
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.button.Button
-import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.menus.BeltSwitchSettingMenu
@@ -38,7 +37,7 @@ object BeltSwitchButtons {
                         SkillSounds.SWITCH.playOnly(player)
                     }
                 }
-                player.getOrPut(Keys.BELT).wear(player)
+                player.updateBelt(true, true)
                 BeltSwitchSettingMenu.reopen(player)
             }
 

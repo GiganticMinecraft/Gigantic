@@ -188,7 +188,7 @@ object HandButtons {
                 else SpellSounds.TOGGLE_OFF.playOnly(player)
                 next
             }
-            player.getOrPut(Keys.BELT).wear(player, false, true)
+            player.updateBelt(false, true)
         }
 
     }

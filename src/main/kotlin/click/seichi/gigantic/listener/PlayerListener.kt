@@ -298,12 +298,10 @@ class PlayerListener : Listener {
                 belt.getFixedSlot()?.let {
                     event.player.inventory.heldItemSlot = it
                 }
-                belt.wear(event.player)
-                event.player.getOrPut(Keys.BAG).carry(event.player)
+                event.player.updateInventory(true, true)
             }
             GameMode.CREATIVE -> {
                 event.player.inventory.clear()
-                event.player.updateInventory()
             }
             else -> {
             }

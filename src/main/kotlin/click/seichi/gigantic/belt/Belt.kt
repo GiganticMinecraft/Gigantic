@@ -69,14 +69,14 @@ enum class Belt(
     /**
      * ベルトを身に着ける
      *
-     * @param applyFixedItem 固定しているアイテムも更新するかどうか
+     * @param applyMainHandItem 固定しているアイテムも更新するかどうか
      * @param applyOffHandItem オフハンドも更新するかどうか
      */
-    fun wear(player: Player, applyFixedItem: Boolean = true, applyOffHandItem: Boolean = true) {
+    fun wear(player: Player, applyMainHandItem: Boolean = true, applyOffHandItem: Boolean = true) {
         player.inventory?.run {
             heldItemSlot = fixedSlot
             (0..8).forEach { slot ->
-                if (!applyFixedItem && slot == fixedSlot) return@forEach
+                if (!applyMainHandItem && slot == fixedSlot) return@forEach
                 setItem(slot,
                         buttonMap[slot]?.getItemStack(player) ?: ItemStack(Material.AIR)
                 )
@@ -84,7 +84,7 @@ enum class Belt(
             if (!applyOffHandItem) return@run
             itemInOffHand = offHandButton?.getItemStack(player) ?: ItemStack(Material.AIR)
         }
-        if (applyFixedItem)
+        if (applyMainHandItem)
             player.updateInventory()
     }
 

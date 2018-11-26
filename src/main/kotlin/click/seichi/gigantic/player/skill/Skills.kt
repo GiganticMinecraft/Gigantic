@@ -37,15 +37,15 @@ object Skills {
                     p.removePotionEffect(PotionEffectType.FAST_DIGGING)
                     p.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
                     SkillSounds.MINE_BURST_ON_FIRE.play(player.eyeLocation)
-                    p.getOrPut(Keys.BELT).wear(p)
+                    p.updateBelt(true, false)
                 }.onFire {
-                    p.getOrPut(Keys.BELT).wear(p, false)
+                    p.updateBelt(false, false)
                 }.onCompleteFire {
-                    p.getOrPut(Keys.BELT).wear(p)
+                    p.updateBelt(true, false)
                 }.onCooldown {
-                    p.getOrPut(Keys.BELT).wear(p, false)
+                    p.updateBelt(false, false)
                 }.onCompleteCooldown {
-                    p.getOrPut(Keys.BELT).wear(p)
+                    p.updateBelt(true, false)
                 }.start()
             }
         }
@@ -90,11 +90,11 @@ object Skills {
                         SkillSounds.FLASH_MISS.play(p.location)
                         flash.isCancelled = true
                     }
-                    p.getOrPut(Keys.BELT).wear(p)
+                    p.updateBelt(true, false)
                 }.onCooldown {
-                    p.getOrPut(Keys.BELT).wear(p, false)
+                    p.updateBelt(false, false)
                 }.onCompleteCooldown {
-                    p.getOrPut(Keys.BELT).wear(p)
+                    p.updateBelt(true, false)
                 }.start()
             }
         }

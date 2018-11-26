@@ -207,9 +207,7 @@ enum class Achievement(
                     .forEach {
                         it.update(player)
                     }
-            player.getOrPut(Keys.BELT).wear(player)
-            player.getOrPut(Keys.BAG).carry(player)
-            player.updateInventory()
+            player.updateInventory(true, true)
             SideBarMessages.MEMORY_SIDEBAR(
                     player.find(CatalogPlayerCache.MEMORY) ?: return,
                     player.find(CatalogPlayerCache.APTITUDE) ?: return,
