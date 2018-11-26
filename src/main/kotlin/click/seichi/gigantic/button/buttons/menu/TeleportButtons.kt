@@ -14,6 +14,7 @@ import org.bukkit.ChatColor
 import org.bukkit.Chunk
 import org.bukkit.GameMode
 import org.bukkit.Material
+import org.bukkit.block.Biome
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
@@ -48,12 +49,28 @@ object TeleportButtons {
             }
         }
 
+        private val oceanBiomeSet = setOf(
+                Biome.OCEAN,
+                Biome.COLD_OCEAN,
+                Biome.DEEP_COLD_OCEAN,
+                Biome.DEEP_FROZEN_OCEAN,
+                Biome.DEEP_LUKEWARM_OCEAN,
+                Biome.DEEP_OCEAN,
+                Biome.DEEP_WARM_OCEAN,
+                Biome.FROZEN_OCEAN,
+                Biome.LUKEWARM_OCEAN,
+                Biome.WARM_OCEAN
+        )
+
         override fun onClick(player: Player, event: InventoryClickEvent) {
             var chunk: Chunk? = null
             var count = 0
             while (chunk == null && count++ < 20) {
                 chunk = randomChunk(player).let {
-                    if (it.isBattled || it.isSpawnArea) null else it
+                    if (it.isBattled ||
+                            it.isSpawnArea ||
+                            oceanBiomeSet.contains(it.getBlock(0, 0, 0).biome)
+                    ) null else it
                 }
             }
             if (chunk == null) return
