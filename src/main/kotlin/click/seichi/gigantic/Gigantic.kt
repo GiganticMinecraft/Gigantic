@@ -145,7 +145,10 @@ class Gigantic : JavaPlugin() {
                 Material.STRIPPED_DARK_OAK_LOG,
                 Material.STRIPPED_JUNGLE_LOG,
                 Material.STRIPPED_OAK_LOG,
-                Material.STRIPPED_SPRUCE_LOG
+                Material.STRIPPED_SPRUCE_LOG,
+                Material.MUSHROOM_STEM,
+                Material.RED_MUSHROOM_BLOCK,
+                Material.BROWN_MUSHROOM_BLOCK
         )
 
         val LEAVES = setOf(
