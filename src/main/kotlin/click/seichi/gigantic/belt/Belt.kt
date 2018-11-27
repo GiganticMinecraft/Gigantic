@@ -1,8 +1,10 @@
 package click.seichi.gigantic.belt
 
+import click.seichi.gigantic.item.Armor
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.HandItem
 import click.seichi.gigantic.item.HotButton
+import click.seichi.gigantic.item.items.Armors
 import click.seichi.gigantic.item.items.HandItems
 import click.seichi.gigantic.item.items.HotButtons
 import click.seichi.gigantic.message.LocalizedText
@@ -19,6 +21,10 @@ enum class Belt(
         val localizedName: LocalizedText,
         mainHandItem: Pair<Int, HandItem>,
         val offHandItem: HandItem?,
+        val helmet: Armor?,
+        val chestPlate: Armor?,
+        val leggings: Armor?,
+        val boots: Armor?,
         vararg hotButtons: Pair<Int, HotButton>
 ) {
     DIG(
@@ -26,6 +32,10 @@ enum class Belt(
             BeltMessages.DIG,
             0 to HandItems.SHOVEL,
             HandItems.MANA_STONE,
+            Armors.HELMET,
+            Armors.ELYTRA,
+            Armors.LEGGINGS,
+            Armors.BOOTS,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
             7 to HotButtons.TELEPORT_DOOR,
@@ -36,6 +46,10 @@ enum class Belt(
             BeltMessages.MINE,
             0 to HandItems.PICKEL,
             HandItems.MANA_STONE,
+            Armors.HELMET,
+            Armors.ELYTRA,
+            Armors.LEGGINGS,
+            Armors.BOOTS,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
             7 to HotButtons.TELEPORT_DOOR,
@@ -46,6 +60,10 @@ enum class Belt(
             BeltMessages.CUT,
             0 to HandItems.AXE,
             HandItems.MANA_STONE,
+            Armors.HELMET,
+            Armors.ELYTRA,
+            Armors.LEGGINGS,
+            Armors.BOOTS,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
             7 to HotButtons.TELEPORT_DOOR,
@@ -73,16 +91,21 @@ enum class Belt(
      * @param applyOffHandItem オフハンドも更新するかどうか
      */
     fun wear(player: Player, applyMainHandItem: Boolean = true, applyOffHandItem: Boolean = true) {
-        player.inventory?.run {
-            heldItemSlot = fixedSlot
+        player.inventory?.let { inv ->
+            inv.heldItemSlot = fixedSlot
             (0..8).forEach { slot ->
                 if (!applyMainHandItem && slot == fixedSlot) return@forEach
-                setItem(slot,
+                inv.setItem(slot,
                         buttonMap[slot]?.getItemStack(player) ?: ItemStack(Material.AIR)
                 )
             }
-            if (!applyOffHandItem) return@run
-            itemInOffHand = offHandItem?.getItemStack(player) ?: ItemStack(Material.AIR)
+            inv.helmet = helmet?.getItemStack(player) ?: ItemStack(Material.AIR)
+            inv.chestplate = chestPlate?.getItemStack(player) ?: ItemStack(Material.AIR)
+            inv.leggings = leggings?.getItemStack(player) ?: ItemStack(Material.AIR)
+            inv.boots = boots?.getItemStack(player) ?: ItemStack(Material.AIR)
+
+            if (!applyOffHandItem) return@let
+            inv.itemInOffHand = offHandItem?.getItemStack(player) ?: ItemStack(Material.AIR)
         }
         if (applyMainHandItem)
             player.updateInventory()
