@@ -35,9 +35,7 @@ enum class Belt(
             Armors.LEGGINGS,
             Armors.BOOTS,
             1 to HandItems.FLASH,
-            2 to HandItems.MINE_BURST,
-            7 to HandItems.TELEPORT_DOOR,
-            8 to HandItems.BELT_SWITCHER_SETTING
+            2 to HandItems.MINE_BURST
     ),
     MINE(
             2,
@@ -49,9 +47,7 @@ enum class Belt(
             Armors.LEGGINGS,
             Armors.BOOTS,
             1 to HandItems.FLASH,
-            2 to HandItems.MINE_BURST,
-            7 to HandItems.TELEPORT_DOOR,
-            8 to HandItems.BELT_SWITCHER_SETTING
+            2 to HandItems.MINE_BURST
     ),
     CUT(
             3,
@@ -63,9 +59,7 @@ enum class Belt(
             Armors.LEGGINGS,
             Armors.BOOTS,
             1 to HandItems.FLASH,
-            2 to HandItems.MINE_BURST,
-            7 to HandItems.TELEPORT_DOOR,
-            8 to HandItems.BELT_SWITCHER_SETTING
+            2 to HandItems.MINE_BURST
     ),
     ;
 

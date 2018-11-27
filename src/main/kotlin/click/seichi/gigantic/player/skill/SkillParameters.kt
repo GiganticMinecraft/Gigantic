@@ -9,21 +9,11 @@ object SkillParameters {
 
     const val MINE_BURST_COOLTIME = 30L
 
-    const val MINE_BURST_KEY = "3"
-
     const val FLASH_COOLTIME = 3L
-
-    const val FLASH_KEY = "2"
-
-    const val SWITCH_KEY = "f"
-
-    const val SWITCH_SETTING_KEY = "9"
 
     const val HEAL_AMOUNT_PERCENT = 5
 
     const val HEAL_PROBABILITY_PERCENT = 20
-
-    const val TELEPORT_KEY = "8"
 
     const val KODAMA_DRAIN_LOG_HEAL_PERCENT = 1.0
 

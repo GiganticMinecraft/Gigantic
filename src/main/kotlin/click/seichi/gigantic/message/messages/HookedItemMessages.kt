@@ -24,7 +24,7 @@ object HookedItemMessages {
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                            "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
+                            "\"f\" キー を押してツールを変更"
             )
     ).toList()
 
@@ -42,7 +42,7 @@ object HookedItemMessages {
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                            "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
+                            "\"f\" キー を押してツールを変更"
             )
     ).toList()
 
@@ -60,29 +60,9 @@ object HookedItemMessages {
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                            "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
+                            "\"f\" キー を押してツールを変更"
             )
     ).toList()
-
-
-    val BUCKET = LocalizedText(
-            Locale.JAPANESE to
-                    "${ChatColor.WHITE}" +
-                    "不思議なバケツ"
-    )
-
-    val BUCKET_LORE =
-            mutableListOf(
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "どんなにすくっても溜まらない"
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                    "\"${SkillParameters.SWITCH_KEY}\" キー を押してツールを変更"
-                    )
-            ).toList()
-
 
     val MINE_BURST = LocalizedText(
             Locale.JAPANESE to
@@ -102,10 +82,6 @@ object HookedItemMessages {
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.AQUA}" +
                             "クールタイム: ${SkillParameters.MINE_BURST_COOLTIME}秒"
-            ),
-            LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                            "\"${SkillParameters.MINE_BURST_KEY}\" キー を押して発動"
             )
     )
 
@@ -125,10 +101,6 @@ object HookedItemMessages {
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
                                     "クールタイム: ${SkillParameters.FLASH_COOLTIME}秒"
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                    "\"${SkillParameters.FLASH_KEY}\" キー を押して発動"
                     )
             )
 
@@ -138,14 +110,6 @@ object HookedItemMessages {
                     "${ChatColor.BLUE}" +
                     "ツール切り替え詳細設定"
     )
-
-    val SWITCH_DETAIL_LORE =
-            listOf(
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                    "ショートカット \"${SkillParameters.SWITCH_SETTING_KEY}\" キー"
-                    )
-            )
 
     val MANA_STONE = LocalizedText(
             Locale.JAPANESE to
@@ -173,14 +137,6 @@ object HookedItemMessages {
                     "${ChatColor.BLUE}" +
                     "テレポート"
     )
-
-    val TELEPORT_LORE =
-            listOf(
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                    "ショートカット \"${SkillParameters.TELEPORT_KEY}\" キー"
-                    )
-            )
 
     val SEICHI_SPEED_ENCHANT = { level: Int ->
         val levelString = String.enchantLevel(level)

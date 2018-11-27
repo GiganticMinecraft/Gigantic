@@ -9,6 +9,7 @@ import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.BagMessages
+import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.message.messages.menu.ProfileMessages
 import click.seichi.gigantic.message.messages.menu.SkillMenuMessages
 import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
@@ -222,6 +223,36 @@ object BagButtons {
             if (Relic.getDroppedList(player).isEmpty()) return
             if (event.inventory.holder === RelicMenu) return
             RelicMenu.open(player)
+        }
+
+    }
+
+    val TELEPORT_DOOR = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.DARK_OAK_DOOR).apply {
+                setDisplayName(HookedItemMessages.TELEPORT.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            TeleportMenu.open(player)
+        }
+
+    }
+
+    val BELT_SWITCHER_SETTING = object : Button {
+
+        override fun getItemStack(player: Player): ItemStack? {
+            val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
+            val nextBelt = switcher.nextBelt()
+            return nextBelt.findFixedButton()?.getItemStack(player)?.apply {
+                setDisplayName(HookedItemMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+
         }
 
     }

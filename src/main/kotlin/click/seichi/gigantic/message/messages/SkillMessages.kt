@@ -40,10 +40,6 @@ object SkillMessages {
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
                                     "クールタイム: ${SkillParameters.MINE_BURST_COOLTIME}秒"
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                    "\"${SkillParameters.MINE_BURST_KEY}\" キー を押して発動"
                     )
             )
 
@@ -56,10 +52,6 @@ object SkillMessages {
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
                                     "クールタイム: ${SkillParameters.FLASH_COOLTIME}秒"
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                    "\"${SkillParameters.FLASH_KEY}\" キー を押して発動"
                     )
             )
 

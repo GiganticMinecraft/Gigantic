@@ -7,7 +7,6 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.HandItem
 import click.seichi.gigantic.menu.menus.BeltSwitchSettingMenu
-import click.seichi.gigantic.menu.menus.TeleportMenu
 import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.relic.Relic
@@ -41,6 +40,7 @@ object HandItems {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+            BeltSwitchSettingMenu.open(player)
         }
 
         override fun onInteract(player: Player, event: PlayerInteractEvent) {
@@ -60,6 +60,7 @@ object HandItems {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+            BeltSwitchSettingMenu.open(player)
         }
 
         override fun onInteract(player: Player, event: PlayerInteractEvent) {
@@ -79,6 +80,7 @@ object HandItems {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+            BeltSwitchSettingMenu.open(player)
         }
 
         override fun onInteract(player: Player, event: PlayerInteractEvent) {
@@ -233,52 +235,6 @@ object HandItems {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-        }
-
-    }
-
-    val BELT_SWITCHER_SETTING = object : HandItem {
-
-        override fun getItemStack(player: Player): ItemStack? {
-            val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
-            val nextBelt = switcher.nextBelt()
-            return nextBelt.findFixedButton()?.getItemStack(player)?.apply {
-                setDisplayName(HookedItemMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.SWITCH_DETAIL_LORE
-                        .map { it.asSafety(player.wrappedLocale) }
-                        .toTypedArray()
-                )
-            }
-        }
-
-        override fun onInteract(player: Player, event: PlayerInteractEvent) {
-            BeltSwitchSettingMenu.open(player)
-        }
-
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            BeltSwitchSettingMenu.open(player)
-        }
-
-    }
-
-    val TELEPORT_DOOR = object : HandItem {
-
-        override fun getItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.DARK_OAK_DOOR).apply {
-                setDisplayName(HookedItemMessages.TELEPORT.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.TELEPORT_LORE
-                        .map { it.asSafety(player.wrappedLocale) }
-                        .toTypedArray()
-                )
-            }
-        }
-
-        override fun onInteract(player: Player, event: PlayerInteractEvent) {
-            TeleportMenu.open(player)
-        }
-
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            TeleportMenu.open(player)
         }
 
     }

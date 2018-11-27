@@ -17,15 +17,13 @@ object AchievementMessages {
             Locale.JAPANESE to "${ChatColor.AQUA}" +
                     "ブロックを壊そう!!\n" +
                     "${ChatColor.GRAY}" +
-                    "\"${SkillParameters.TELEPORT_KEY}\" キー を押すかメニューからランダムテレポートができるぞ!!\n"
+                    "メニューからランダムテレポートができるぞ!!\n"
     ))
 
     val FIRST_LEVEL_UP = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "\"${SkillParameters.SWITCH_KEY}\" キー を押してみよう\n" +
-                        "${ChatColor.GRAY}" +
-                        "ツールを入れ替えられたかな？スクロールは効かないので注意！！\n"
+                        "\"f\" キー を押してツールを入れ替えよう"
             }
     ))
 
@@ -44,8 +42,7 @@ object AchievementMessages {
                 it to "${ChatColor.YELLOW}" +
                         "バフスキル: マインバースト を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "アクティブ効果: 少しの間だけ掘る速度が上昇!!\n" +
-                        "\"${SkillParameters.MINE_BURST_KEY}\" キー を押して発動!!\n"
+                        "アクティブ効果: 少しの間だけ掘る速度が上昇!!\n"
             }
     ))
 
@@ -54,8 +51,7 @@ object AchievementMessages {
                 it to "${ChatColor.YELLOW}" +
                         "移動スキル: フラッシュ を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "アクティブ効果: ブロックに向けて発動するとそのブロックの上にワープ!!\n" +
-                        "\"${SkillParameters.FLASH_KEY}\" キー を押して発動!!\n"
+                        "アクティブ効果: ブロックに向けて発動するとそのブロックの上にワープ!!\n"
             }
     ))
 
@@ -142,7 +138,7 @@ object AchievementMessages {
                 it to "${ChatColor.YELLOW}" +
                         "プレイヤーテレポートが使えるようになった!!\n" +
                         "${ChatColor.GRAY}" +
-                        "\"${SkillParameters.TELEPORT_KEY}\" キー を押すかメニューからテレポート先を選択!!\n"
+                        "メニューからテレポート先を選択!!\n"
             }
     ))
 
@@ -152,7 +148,7 @@ object AchievementMessages {
                         "ラストデステレポートが使えるようになった!!\n" +
                         "${ChatColor.GRAY}" +
                         "最後に死亡した場所に戻ることができる!!\n" +
-                        "\"${SkillParameters.TELEPORT_KEY}\" キー を押すかメニューから選択!!\n"
+                        "メニューから選択!!\n"
             }
     ))
 
