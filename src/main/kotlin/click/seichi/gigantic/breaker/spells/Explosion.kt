@@ -61,13 +61,13 @@ class Explosion : Miner(), SpellCaster {
                     },
                     when (it) {
                         BlockFace.NORTH -> 1L
-                        BlockFace.NORTH_EAST -> 2L
+                        BlockFace.NORTH_EAST -> 1L
                         BlockFace.EAST -> 1L
-                        BlockFace.SOUTH_EAST -> 2L
+                        BlockFace.SOUTH_EAST -> 1L
                         BlockFace.SOUTH -> 1L
-                        BlockFace.SOUTH_WEST -> 2L
+                        BlockFace.SOUTH_WEST -> 1L
                         BlockFace.WEST -> 1L
-                        BlockFace.NORTH_WEST -> 2L
+                        BlockFace.NORTH_WEST -> 1L
                         else -> throw error("explosion error code:001")
                     }
             )
@@ -81,14 +81,14 @@ class Explosion : Miner(), SpellCaster {
                         breakRelationalBlock(player, base, upperBlock.getRelative(it), false, depth + 1)
                     },
                     when (it) {
-                        BlockFace.NORTH -> 1L + 2L
-                        BlockFace.NORTH_EAST -> 2L + 2L
-                        BlockFace.EAST -> 1L + 2L
-                        BlockFace.SOUTH_EAST -> 2L + 2L
-                        BlockFace.SOUTH -> 1L + 2L
-                        BlockFace.SOUTH_WEST -> 2L + 2L
-                        BlockFace.WEST -> 1L + 2L
-                        BlockFace.NORTH_WEST -> 2L + 2L
+                        BlockFace.NORTH -> 1L
+                        BlockFace.NORTH_EAST -> 1L
+                        BlockFace.EAST -> 1L
+                        BlockFace.SOUTH_EAST -> 1L
+                        BlockFace.SOUTH -> 1L
+                        BlockFace.SOUTH_WEST -> 1L
+                        BlockFace.WEST -> 1L
+                        BlockFace.NORTH_WEST -> 1L
                         else -> throw error("explosion error code:002")
                     }
             )
@@ -99,7 +99,7 @@ class Explosion : Miner(), SpellCaster {
                     if (!player.isValid) return@runTaskLater
                     breakRelationalBlock(player, base, upperBlock, false, depth + 1)
                 },
-                2L
+                1L
         )
         val underBlock = target.getRelative(BlockFace.DOWN)
         relationalFaceSet.map {
@@ -110,14 +110,14 @@ class Explosion : Miner(), SpellCaster {
                         breakRelationalBlock(player, base, underBlock.getRelative(it), false, depth + 1)
                     },
                     when (it) {
-                        BlockFace.NORTH -> 1L + 2L
-                        BlockFace.NORTH_EAST -> 2L + 2L
-                        BlockFace.EAST -> 1L + 2L
-                        BlockFace.SOUTH_EAST -> 2L + 2L
-                        BlockFace.SOUTH -> 1L + 2L
-                        BlockFace.SOUTH_WEST -> 2L + 2L
-                        BlockFace.WEST -> 1L + 2L
-                        BlockFace.NORTH_WEST -> 2L + 2L
+                        BlockFace.NORTH -> 1L
+                        BlockFace.NORTH_EAST -> 1L
+                        BlockFace.EAST -> 1L
+                        BlockFace.SOUTH_EAST -> 1L
+                        BlockFace.SOUTH -> 1L
+                        BlockFace.SOUTH_WEST -> 1L
+                        BlockFace.WEST -> 1L
+                        BlockFace.NORTH_WEST -> 1L
                         else -> throw error("explosion error code:003")
                     }
             )
@@ -128,7 +128,7 @@ class Explosion : Miner(), SpellCaster {
                     if (!player.isValid) return@runTaskLater
                     breakRelationalBlock(player, base, underBlock, false, depth + 1)
                 },
-                2L
+                1L
         )
         if (!isBaseBlock) {
             castToBlock(player, target)
