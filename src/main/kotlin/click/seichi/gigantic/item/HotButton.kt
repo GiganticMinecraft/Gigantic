@@ -1,4 +1,4 @@
-package click.seichi.gigantic.button
+package click.seichi.gigantic.item
 
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerItemHeldEvent

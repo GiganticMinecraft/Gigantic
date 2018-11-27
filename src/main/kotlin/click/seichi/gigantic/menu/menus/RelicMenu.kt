@@ -1,10 +1,10 @@
 package click.seichi.gigantic.menu.menus
 
-import click.seichi.gigantic.button.Button
-import click.seichi.gigantic.button.buttons.menu.NextButton
-import click.seichi.gigantic.button.buttons.menu.PrevButton
-import click.seichi.gigantic.button.buttons.menu.RelicButtons
 import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.item.Button
+import click.seichi.gigantic.item.items.menu.NextButton
+import click.seichi.gigantic.item.items.menu.PrevButton
+import click.seichi.gigantic.item.items.menu.RelicButtons
 import click.seichi.gigantic.menu.BookMenu
 import click.seichi.gigantic.message.messages.menu.RelicMenuMessages
 import click.seichi.gigantic.relic.Relic

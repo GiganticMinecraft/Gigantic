@@ -1,9 +1,9 @@
-package click.seichi.gigantic.button.buttons
+package click.seichi.gigantic.item.items
 
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.button.HotButton
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.item.HotButton
 import click.seichi.gigantic.menu.menus.BeltSwitchSettingMenu
 import click.seichi.gigantic.menu.menus.TeleportMenu
 import click.seichi.gigantic.message.messages.HookedItemMessages

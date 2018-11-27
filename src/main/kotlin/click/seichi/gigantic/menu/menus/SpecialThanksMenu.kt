@@ -1,7 +1,7 @@
 package click.seichi.gigantic.menu.menus
 
-import click.seichi.gigantic.button.buttons.menu.PlayerHeadButton
 import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.item.items.menu.PlayerHeadButton
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.BagMessages
 import org.bukkit.ChatColor

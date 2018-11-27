@@ -1,10 +1,10 @@
-package click.seichi.gigantic.button.buttons.menu
+package click.seichi.gigantic.item.items.menu
 
-import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.extension.addLore
 import click.seichi.gigantic.extension.clearLore
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.message.messages.menu.RelicMenuMessages
 import click.seichi.gigantic.relic.Relic
 import org.bukkit.ChatColor

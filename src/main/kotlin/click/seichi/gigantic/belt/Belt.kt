@@ -1,10 +1,10 @@
 package click.seichi.gigantic.belt
 
-import click.seichi.gigantic.button.Button
-import click.seichi.gigantic.button.HandButton
-import click.seichi.gigantic.button.HotButton
-import click.seichi.gigantic.button.buttons.HandButtons
-import click.seichi.gigantic.button.buttons.HotButtons
+import click.seichi.gigantic.item.Button
+import click.seichi.gigantic.item.HandItem
+import click.seichi.gigantic.item.HotButton
+import click.seichi.gigantic.item.items.HandItems
+import click.seichi.gigantic.item.items.HotButtons
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.BeltMessages
 import org.bukkit.Material
@@ -17,15 +17,15 @@ import org.bukkit.inventory.ItemStack
 enum class Belt(
         val id: Int,
         val localizedName: LocalizedText,
-        fixedButton: Pair<Int, HandButton>,
-        val offHandButton: HandButton?,
+        mainHandItem: Pair<Int, HandItem>,
+        val offHandItem: HandItem?,
         vararg hotButtons: Pair<Int, HotButton>
 ) {
     DIG(
             1,
             BeltMessages.DIG,
-            0 to HandButtons.SHOVEL,
-            HandButtons.MANA_STONE,
+            0 to HandItems.SHOVEL,
+            HandItems.MANA_STONE,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
             7 to HotButtons.TELEPORT_DOOR,
@@ -34,8 +34,8 @@ enum class Belt(
     MINE(
             2,
             BeltMessages.MINE,
-            0 to HandButtons.PICKEL,
-            HandButtons.MANA_STONE,
+            0 to HandItems.PICKEL,
+            HandItems.MANA_STONE,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
             7 to HotButtons.TELEPORT_DOOR,
@@ -44,8 +44,8 @@ enum class Belt(
     CUT(
             3,
             BeltMessages.CUT,
-            0 to HandButtons.AXE,
-            HandButtons.MANA_STONE,
+            0 to HandItems.AXE,
+            HandItems.MANA_STONE,
             1 to HotButtons.FLASH,
             2 to HotButtons.MINE_BURST,
             7 to HotButtons.TELEPORT_DOOR,
@@ -59,11 +59,11 @@ enum class Belt(
     }
 
     // 手に固定されたスロット番号
-    private var fixedSlot = fixedButton.first
+    private var fixedSlot = mainHandItem.first
 
     private val buttonMap: MutableMap<Int, Button> = mutableMapOf(
             *hotButtons,
-            fixedButton
+            mainHandItem
     )
 
     /**
@@ -82,7 +82,7 @@ enum class Belt(
                 )
             }
             if (!applyOffHandItem) return@run
-            itemInOffHand = offHandButton?.getItemStack(player) ?: ItemStack(Material.AIR)
+            itemInOffHand = offHandItem?.getItemStack(player) ?: ItemStack(Material.AIR)
         }
         if (applyMainHandItem)
             player.updateInventory()
@@ -93,8 +93,8 @@ enum class Belt(
         return buttonMap[slot] as HotButton?
     }
 
-    fun findFixedButton(): HandButton? {
-        return buttonMap[fixedSlot] as HandButton?
+    fun findFixedButton(): HandItem? {
+        return buttonMap[fixedSlot] as HandItem?
     }
 
     fun getButton(slot: Int): Button? {

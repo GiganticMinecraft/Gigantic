@@ -170,7 +170,7 @@ class PlayerListener : Listener {
         val belt = player.getOrPut(Keys.BELT)
         if (event.action == Action.PHYSICAL) return
         belt.findFixedButton()?.onInteract(player, event)
-        belt.offHandButton?.onInteract(player, event)
+        belt.offHandItem?.onInteract(player, event)
     }
 
     @EventHandler

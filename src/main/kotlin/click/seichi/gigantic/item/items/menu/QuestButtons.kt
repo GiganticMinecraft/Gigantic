@@ -1,8 +1,8 @@
-package click.seichi.gigantic.button.buttons.menu
+package click.seichi.gigantic.item.items.menu
 
 import click.seichi.gigantic.battle.BattleManager
-import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.QuestSelectMenu
 import click.seichi.gigantic.message.messages.menu.QuestMenuMessages
 import click.seichi.gigantic.monster.SoulMonster

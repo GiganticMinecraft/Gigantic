@@ -1,4 +1,4 @@
-package click.seichi.gigantic.button
+package click.seichi.gigantic.item
 
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerInteractEvent
@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 /**
  * @author tar0ss
  */
-interface HandButton : Button {
+interface HandItem : Button {
 
     // プレイヤーが行動したときに呼び出される
     fun onInteract(player: Player, event: PlayerInteractEvent)

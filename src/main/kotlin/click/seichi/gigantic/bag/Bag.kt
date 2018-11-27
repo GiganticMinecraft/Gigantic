@@ -1,6 +1,6 @@
 package click.seichi.gigantic.bag
 
-import click.seichi.gigantic.button.Button
+import click.seichi.gigantic.item.Button
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack

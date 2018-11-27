@@ -1,11 +1,11 @@
-package click.seichi.gigantic.button.buttons
+package click.seichi.gigantic.item.items
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.button.HandButton
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.item.HandItem
 import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.SpellSounds
@@ -23,9 +23,9 @@ import org.bukkit.inventory.ItemStack
 /**
  * @author tar0ss
  */
-object HandButtons {
+object HandItems {
 
-    val PICKEL = object : HandButton {
+    val PICKEL = object : HandItem {
 
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
@@ -44,7 +44,7 @@ object HandButtons {
         }
     }
 
-    val SHOVEL = object : HandButton {
+    val SHOVEL = object : HandItem {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_SHOVEL).apply {
                 setDisplayName(HookedItemMessages.SHOVEL.asSafety(player.wrappedLocale))
@@ -63,7 +63,7 @@ object HandButtons {
         }
     }
 
-    val AXE = object : HandButton {
+    val AXE = object : HandItem {
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_AXE).apply {
                 setDisplayName(HookedItemMessages.AXE.asSafety(player.wrappedLocale))
@@ -129,33 +129,7 @@ object HandButtons {
         }
     }
 
-
-    val BUCKET = object : HandButton {
-        override fun getItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.BUCKET).apply {
-                setDisplayName(HookedItemMessages.BUCKET.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.BUCKET_LORE
-                        .map { it.asSafety(player.wrappedLocale) }
-                        .toTypedArray()
-                )
-                itemMeta = itemMeta.apply {
-                    isUnbreakable = true
-                    addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
-                    addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
-                }
-            }
-        }
-
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-        }
-
-        override fun onInteract(player: Player, event: PlayerInteractEvent) {
-        }
-
-    }
-
-    val MANA_STONE = object : HandButton {
+    val MANA_STONE = object : HandItem {
         override fun getItemStack(player: Player): ItemStack? {
             if (!Achievement.MANA_STONE.isGranted(player)) return null
             val spellToggle = player.getOrPut(Keys.SPELL_TOGGLE)

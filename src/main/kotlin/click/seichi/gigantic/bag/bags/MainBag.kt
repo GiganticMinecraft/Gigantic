@@ -1,7 +1,7 @@
 package click.seichi.gigantic.bag.bags
 
 import click.seichi.gigantic.bag.Bag
-import click.seichi.gigantic.button.buttons.BagButtons
+import click.seichi.gigantic.item.items.BagButtons
 
 /**
  * @author tar0ss

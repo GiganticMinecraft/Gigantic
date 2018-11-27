@@ -1,10 +1,10 @@
-package click.seichi.gigantic.button.buttons.menu
+package click.seichi.gigantic.item.items.menu
 
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.TeleportMenu
 import click.seichi.gigantic.menu.menus.TeleportToPlayerMenu
 import click.seichi.gigantic.message.messages.menu.TeleportMessages

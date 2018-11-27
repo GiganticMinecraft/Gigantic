@@ -1,10 +1,10 @@
 package click.seichi.gigantic.menu
 
-import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.NOT_AVAILABLE
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.sound.sounds.MenuSounds
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player

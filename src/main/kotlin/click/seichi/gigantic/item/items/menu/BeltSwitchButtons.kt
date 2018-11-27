@@ -1,9 +1,9 @@
-package click.seichi.gigantic.button.buttons.menu
+package click.seichi.gigantic.item.items.menu
 
 import click.seichi.gigantic.belt.Belt
-import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.BeltSwitchSettingMenu
 import click.seichi.gigantic.message.messages.menu.BeltSwitchMessages
 import click.seichi.gigantic.sound.sounds.SkillSounds

@@ -1,10 +1,10 @@
-package click.seichi.gigantic.button.buttons.menu
+package click.seichi.gigantic.item.items.menu
 
-import click.seichi.gigantic.button.Button
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.setEnchanted
 import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.player.spell.Spell
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
