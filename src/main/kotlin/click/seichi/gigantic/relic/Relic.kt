@@ -21,21 +21,96 @@ enum class Relic(
         val maxAmount: Long = Long.MAX_VALUE,
         private val icon: ItemStack = Head.RUBY_JEWELLERY.toItemStack()
 ) {
-    PIGS_FEATHER(0, RelicMessages.PIGS_FEATHER, RelicMessages.PIGS_FEATHER_LORE, icon = ItemStack(Material.FEATHER)),
-    BLUE_BLAZE_POWDER(1, RelicMessages.BLUE_BLAZE_POWDER, RelicMessages.BLUE_BLAZE_POWDER_LORE, icon = ItemStack(Material.BLAZE_POWDER)),
-    CHICKEN_KING_CROWN(2, RelicMessages.CHICKEN_KING_CROWN, RelicMessages.CHICKEN_KING_CROWN_LORE, icon = Head.KING_CROWN.toItemStack()),
-    WITHER_SKELETON_SKULL(3, RelicMessages.WITHER_SKELETON_SKULL, null, icon = ItemStack(Material.WITHER_SKELETON_SKULL)),
-    MANA_STONE(4, RelicMessages.MANA_STONE, null, icon = ItemStack(Material.NETHER_STAR)),
-    ROTTEN_FLESH(5, RelicMessages.ROTTEN_FLESH, null, icon = ItemStack(Material.ROTTEN_FLESH)),
-    TURTLE_KING_CROWN(6, RelicMessages.TURTLE_KING_CROWN, RelicMessages.TURTLE_KING_CROWN_LORE, icon = Head.KING_CROWN.toItemStack()),
-    SPIDER_KING_CROWN(7, RelicMessages.SPIDER_KING_CROWN, RelicMessages.SPIDER_KING_CROWN_LORE, icon = Head.KING_CROWN.toItemStack()),
-    ZOMBIE_KING_CROWN(8, RelicMessages.ZOMBIE_KING_CROWN, RelicMessages.ZOMBIE_KING_CROWN_LORE, icon = Head.KING_CROWN.toItemStack()),
-    SKELETON_KING_CROWN(9, RelicMessages.SKELETON_KING_CROWN, RelicMessages.SKELETON_KING_CROWN_LORE, icon = Head.KING_CROWN.toItemStack()),
-    ORC_KING_CROWN(10, RelicMessages.ORC_KING_CROWN, RelicMessages.ORC_KING_CROWN_LORE, icon = Head.KING_CROWN.toItemStack()),
-    GHOST_KING_CROWN(11, RelicMessages.GHOST_KING_CROWN, RelicMessages.GHOST_KING_CROWN_LORE, icon = Head.KING_CROWN.toItemStack()),
-    CHIP_OF_WOOD(12, RelicMessages.CHIP_OF_WOOD, RelicMessages.CHIP_OF_WOOD_LORE, icon = ItemStack(Material.OAK_WOOD)),
-    MOISTENED_SLIME_BOLL(13, RelicMessages.MOISTENED_SLIME_BOLL, RelicMessages.MOISTENED_SLIME_BOLL_LORE, icon = ItemStack(Material.SLIME_BALL)),
-    FADING_ENDER_PEARL(14, RelicMessages.FADING_ENDER_PEARL, RelicMessages.FADING_ENDER_PEARL_LORE, icon = ItemStack(Material.ENDER_PEARL)),
+    PIGS_FEATHER(
+            0,
+            RelicMessages.PIGS_FEATHER,
+            RelicMessages.PIGS_FEATHER_LORE,
+            icon = ItemStack(Material.FEATHER)
+    ),
+    BLUE_BLAZE_POWDER(
+            1,
+            RelicMessages.BLUE_BLAZE_POWDER,
+            RelicMessages.BLUE_BLAZE_POWDER_LORE,
+            icon = ItemStack(Material.BLAZE_POWDER)
+    ),
+    CHICKEN_KING_CROWN(
+            2,
+            RelicMessages.CHICKEN_KING_CROWN,
+            RelicMessages.CHICKEN_KING_CROWN_LORE,
+            icon = Head.KING_CROWN.toItemStack()
+    ),
+    WITHER_SKELETON_SKULL(
+            3,
+            RelicMessages.WITHER_SKELETON_SKULL,
+            null,
+            icon = ItemStack(Material.WITHER_SKELETON_SKULL)
+    ),
+    MANA_STONE(
+            4,
+            RelicMessages.MANA_STONE,
+            null,
+            icon = ItemStack(Material.NETHER_STAR)
+    ),
+    ROTTEN_FLESH(
+            5,
+            RelicMessages.ROTTEN_FLESH,
+            null,
+            icon = ItemStack(Material.ROTTEN_FLESH)
+    ),
+    TURTLE_KING_CROWN(
+            6,
+            RelicMessages.TURTLE_KING_CROWN,
+            RelicMessages.TURTLE_KING_CROWN_LORE,
+            icon = Head.KING_CROWN.toItemStack()
+    ),
+    SPIDER_KING_CROWN(
+            7,
+            RelicMessages.SPIDER_KING_CROWN,
+            RelicMessages.SPIDER_KING_CROWN_LORE,
+            icon = Head.KING_CROWN.toItemStack()
+    ),
+    ZOMBIE_KING_CROWN(
+            8,
+            RelicMessages.ZOMBIE_KING_CROWN,
+            RelicMessages.ZOMBIE_KING_CROWN_LORE,
+            icon = Head.KING_CROWN.toItemStack()
+    ),
+    SKELETON_KING_CROWN(
+            9,
+            RelicMessages.SKELETON_KING_CROWN,
+            RelicMessages.SKELETON_KING_CROWN_LORE,
+            icon = Head.KING_CROWN.toItemStack()
+    ),
+    ORC_KING_CROWN(
+            10,
+            RelicMessages.ORC_KING_CROWN,
+            RelicMessages.ORC_KING_CROWN_LORE,
+            icon = Head.KING_CROWN.toItemStack()
+    ),
+    GHOST_KING_CROWN(
+            11,
+            RelicMessages.GHOST_KING_CROWN,
+            RelicMessages.GHOST_KING_CROWN_LORE,
+            icon = Head.KING_CROWN.toItemStack()
+    ),
+    CHIP_OF_WOOD(
+            12,
+            RelicMessages.CHIP_OF_WOOD,
+            RelicMessages.CHIP_OF_WOOD_LORE,
+            icon = ItemStack(Material.OAK_WOOD)
+    ),
+    MOISTENED_SLIME_BOLL(
+            13,
+            RelicMessages.MOISTENED_SLIME_BOLL,
+            RelicMessages.MOISTENED_SLIME_BOLL_LORE,
+            icon = ItemStack(Material.SLIME_BALL)
+    ),
+    FADING_ENDER_PEARL(
+            14,
+            RelicMessages.FADING_ENDER_PEARL,
+            RelicMessages.FADING_ENDER_PEARL_LORE,
+            icon = ItemStack(Material.ENDER_PEARL)
+    ),
     SPELL_BOOK_EXPLOSION(100, RelicMessages.SPELL_BOOK_EXPLOSION, null, 1),
     GOLDEN_APPLE(150, RelicMessages.GOLDEN_APPLE, null),
     WILL_CRYSTAL_SAPPHIRE(200, RelicMessages.WILL_CRYSTAL_SAPPHIRE, null),
