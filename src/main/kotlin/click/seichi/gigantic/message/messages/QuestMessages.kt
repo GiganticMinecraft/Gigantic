@@ -16,9 +16,11 @@ object QuestMessages {
         ChatMessage(ChatMessageProtocol.CHAT,
                 LocalizedText(
                         Locale.JAPANESE.let {
-                            it to "${ChatColor.LIGHT_PURPLE}" +
+                            it to "${quest.category.color}" +
+                                    "${quest.category.getTitle(it)} " +
                                     "\"${quest.getTitle(it)}\"" +
-                                    " クエストが進んだ" +
+                                    "${ChatColor.LIGHT_PURPLE}" +
+                                    " が進んだ" +
                                     "( $degree / ${quest.maxDegree} )"
                         }
                 ))
@@ -28,8 +30,10 @@ object QuestMessages {
         ChatMessage(ChatMessageProtocol.CHAT,
                 LocalizedText(
                         Locale.JAPANESE.let {
-                            it to "${ChatColor.LIGHT_PURPLE}" +
+                            it to "${quest.category.color}" +
+                                    "${quest.category.getTitle(it)} " +
                                     "\"${quest.getTitle(it)}\"" +
+                                    "${ChatColor.LIGHT_PURPLE}" +
                                     " クエストを完了した"
                         }
                 ))

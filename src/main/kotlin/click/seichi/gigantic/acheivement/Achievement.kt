@@ -135,7 +135,7 @@ enum class Achievement(
         Quest.BLAZE.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_CHICKEN_ORDER(408, {
-        Quest.BEGIN.isCleared(it)
+        false
     }, action = {
         Quest.CHICKEN.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
@@ -150,32 +150,32 @@ enum class Achievement(
         Quest.BEGIN.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER_FIRST),
     QUEST_TURTLE_ORDER(411, {
-        Quest.CHICKEN.isCleared(it)
+        false
     }, action = {
         Quest.TURTLE.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_SPIDER_ORDER(412, {
-        Quest.TURTLE.isCleared(it)
+        false
     }, action = {
         Quest.SPIDER.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_ZOMBIE_ORDER(413, {
-        Quest.SPIDER.isCleared(it)
+        false
     }, action = {
         Quest.ZOMBIE.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_SKELETON_ORDER(414, {
-        Quest.ZOMBIE.isCleared(it)
+        false
     }, action = {
         Quest.SKELETON.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_ORC_ORDER(415, {
-        Quest.SKELETON.isCleared(it)
+        false
     }, action = {
         Quest.ORC.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_GHOST_ORDER(416, {
-        Quest.ORC.isCleared(it)
+        false
     }, action = {
         Quest.GHOST.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
@@ -185,12 +185,12 @@ enum class Achievement(
         Quest.PARROT.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_SLIME_ORDER(418, {
-        Quest.BEGIN.isCleared(it)
+        false
     }, action = {
         Quest.SLIME.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_ENDER_MAN_ORDER(419, {
-        Quest.SLIME.isCleared(it)
+        false
     }, action = {
         Quest.ENDER_MAN.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
