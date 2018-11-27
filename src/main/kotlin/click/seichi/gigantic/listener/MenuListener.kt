@@ -36,7 +36,7 @@ class MenuListener : Listener {
         when (event.clickedInventory) {
             event.view.bottomInventory -> {
                 // Belt
-                if (event.isBeltSlot) player.getOrPut(Keys.BELT).getButton(event.slot)?.onClick(player, event)
+                if (event.isBeltSlot) player.getOrPut(Keys.BELT).findItem(event.slot)?.onClick(player, event)
                 // Bag
                 else player.getOrPut(Keys.BAG).getButton(event.slot)?.onClick(player, event)
                 return

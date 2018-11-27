@@ -153,23 +153,24 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
-    @EventHandler
+    /*@EventHandler
     fun onPlayerItemHeld(event: PlayerItemHeldEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
         val belt = player.getOrPut(Keys.BELT)
-        belt.getHotButton(event.newSlot)?.onItemHeld(player, event)
+        belt.findItem(event.newSlot)?.onItemHeld(player, event)
         if (belt.hasFixedSlot() && !belt.isFixed(event.newSlot))
             event.isCancelled = true
     }
-
+*/
     @EventHandler
     fun onInteract(event: PlayerInteractEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
         val belt = player.getOrPut(Keys.BELT)
         if (event.action == Action.PHYSICAL) return
-        belt.findFixedButton()?.onInteract(player, event)
+        val slot = player.inventory.heldItemSlot
+        belt.findItem(slot)?.onInteract(player, event)
         belt.offHandItem?.onInteract(player, event)
     }
 

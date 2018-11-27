@@ -10,7 +10,7 @@ import java.util.*
 object BeltSwitchMessages {
 
     val TITLE = LocalizedText(
-            Locale.JAPANESE to "ベルト切り替え詳細を開く"
+            Locale.JAPANESE to "ベルト切り替え詳細設定"
     )
 
     val BELT_SWITCHER_SETTING_BUTTON_LORE = { canSwitch: Boolean ->

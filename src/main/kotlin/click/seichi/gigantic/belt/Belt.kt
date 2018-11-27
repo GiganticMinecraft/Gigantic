@@ -3,10 +3,8 @@ package click.seichi.gigantic.belt
 import click.seichi.gigantic.item.Armor
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.HandItem
-import click.seichi.gigantic.item.HotButton
 import click.seichi.gigantic.item.items.Armors
 import click.seichi.gigantic.item.items.HandItems
-import click.seichi.gigantic.item.items.HotButtons
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.BeltMessages
 import org.bukkit.Material
@@ -25,7 +23,7 @@ enum class Belt(
         val chestPlate: Armor?,
         val leggings: Armor?,
         val boots: Armor?,
-        vararg hotButtons: Pair<Int, HotButton>
+        vararg items: Pair<Int, HandItem>
 ) {
     DIG(
             1,
@@ -36,10 +34,10 @@ enum class Belt(
             Armors.ELYTRA,
             Armors.LEGGINGS,
             Armors.BOOTS,
-            1 to HotButtons.FLASH,
-            2 to HotButtons.MINE_BURST,
-            7 to HotButtons.TELEPORT_DOOR,
-            8 to HotButtons.BELT_SWITCHER_SETTING
+            1 to HandItems.FLASH,
+            2 to HandItems.MINE_BURST,
+            7 to HandItems.TELEPORT_DOOR,
+            8 to HandItems.BELT_SWITCHER_SETTING
     ),
     MINE(
             2,
@@ -50,10 +48,10 @@ enum class Belt(
             Armors.ELYTRA,
             Armors.LEGGINGS,
             Armors.BOOTS,
-            1 to HotButtons.FLASH,
-            2 to HotButtons.MINE_BURST,
-            7 to HotButtons.TELEPORT_DOOR,
-            8 to HotButtons.BELT_SWITCHER_SETTING
+            1 to HandItems.FLASH,
+            2 to HandItems.MINE_BURST,
+            7 to HandItems.TELEPORT_DOOR,
+            8 to HandItems.BELT_SWITCHER_SETTING
     ),
     CUT(
             3,
@@ -64,10 +62,10 @@ enum class Belt(
             Armors.ELYTRA,
             Armors.LEGGINGS,
             Armors.BOOTS,
-            1 to HotButtons.FLASH,
-            2 to HotButtons.MINE_BURST,
-            7 to HotButtons.TELEPORT_DOOR,
-            8 to HotButtons.BELT_SWITCHER_SETTING
+            1 to HandItems.FLASH,
+            2 to HandItems.MINE_BURST,
+            7 to HandItems.TELEPORT_DOOR,
+            8 to HandItems.BELT_SWITCHER_SETTING
     ),
     ;
 
@@ -80,19 +78,18 @@ enum class Belt(
     private var fixedSlot = mainHandItem.first
 
     private val buttonMap: MutableMap<Int, Button> = mutableMapOf(
-            *hotButtons,
+            *items,
             mainHandItem
     )
 
     /**
      * ベルトを身に着ける
      *
-     * @param applyMainHandItem 固定しているアイテムも更新するかどうか
+     * @param applyMainHandItem メインハンドも更新するかどうか
      * @param applyOffHandItem オフハンドも更新するかどうか
      */
     fun wear(player: Player, applyMainHandItem: Boolean = true, applyOffHandItem: Boolean = true) {
         player.inventory?.let { inv ->
-            inv.heldItemSlot = fixedSlot
             (0..8).forEach { slot ->
                 if (!applyMainHandItem && slot == fixedSlot) return@forEach
                 inv.setItem(slot,
@@ -111,18 +108,12 @@ enum class Belt(
             player.updateInventory()
     }
 
-    fun getHotButton(slot: Int): HotButton? {
-        if (isFixed(slot)) return null
-        return buttonMap[slot] as HotButton?
+    fun findItem(slot: Int): HandItem? {
+        return buttonMap[slot] as HandItem?
     }
 
     fun findFixedButton(): HandItem? {
         return buttonMap[fixedSlot] as HandItem?
-    }
-
-    fun getButton(slot: Int): Button? {
-        return if (isFixed(slot)) findFixedButton()
-        else getHotButton(slot)
     }
 
     fun isFixed(slot: Int) = when {
