@@ -5,6 +5,7 @@ import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Armor
 import click.seichi.gigantic.message.messages.ArmorMessages
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -45,7 +46,8 @@ object Armors {
 
         override fun getItemStack(player: Player): ItemStack? {
             return ItemStack(Material.ELYTRA).apply {
-                setDisplayName(ArmorMessages.ELYTRA.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.WHITE}" +
+                        ArmorMessages.ELYTRA.asSafety(player.wrappedLocale))
 
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
