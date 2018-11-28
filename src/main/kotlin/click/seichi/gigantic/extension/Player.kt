@@ -111,3 +111,7 @@ fun Player.updateBelt(applyMainHand: Boolean, applyOffHand: Boolean) {
 fun Player.updateBag() {
     getOrPut(Keys.BAG).carry(this)
 }
+
+fun Player.fixHandToTool() {
+    inventory.heldItemSlot = getOrPut(Keys.BELT).toolSlot
+}
