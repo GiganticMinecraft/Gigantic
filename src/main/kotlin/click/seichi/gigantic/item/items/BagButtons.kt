@@ -9,7 +9,6 @@ import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.BagMessages
-import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.message.messages.menu.ProfileMessages
 import click.seichi.gigantic.message.messages.menu.SkillMenuMessages
 import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
@@ -231,7 +230,8 @@ object BagButtons {
 
         override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DARK_OAK_DOOR).apply {
-                setDisplayName(HookedItemMessages.TELEPORT.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.TELEPORT.asSafety(player.wrappedLocale))
             }
         }
 
@@ -246,7 +246,8 @@ object BagButtons {
 
         override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.LADDER).apply {
-                setDisplayName(HookedItemMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
             }
         }
 

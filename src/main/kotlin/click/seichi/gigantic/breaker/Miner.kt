@@ -11,7 +11,6 @@ import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.popup.pops.SkillPops
-import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Effect
@@ -47,7 +46,7 @@ open class Miner : Breaker {
 
         if (level != null &&
                 level != PlayerLevelConfig.MAX &&
-                (level != Defaults.MANA_UNLOCK_LEVEL || Relic.MANA_STONE.has(player))
+                (level != Defaults.MANA_UNLOCK_LEVEL || Achievement.MANA_STONE.isGranted(player))
         ) {
             player.manipulate(CatalogPlayerCache.EXP) {
                 it.add(1L)

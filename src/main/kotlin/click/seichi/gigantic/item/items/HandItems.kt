@@ -30,7 +30,8 @@ object HandItems {
 
         override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
-                setDisplayName(HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
+                        HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
                 addEnchantment(this@apply, player)
                 addLore(*HookedItemMessages.PICKEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
@@ -48,7 +49,8 @@ object HandItems {
     val SHOVEL = object : HandItem {
         override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_SHOVEL).apply {
-                setDisplayName(HookedItemMessages.SHOVEL.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
+                        HookedItemMessages.SHOVEL.asSafety(player.wrappedLocale))
                 addEnchantment(this@apply, player)
                 addLore(*HookedItemMessages.SHOVEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
@@ -67,7 +69,8 @@ object HandItems {
     val AXE = object : HandItem {
         override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_AXE).apply {
-                setDisplayName(HookedItemMessages.AXE.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
+                        HookedItemMessages.AXE.asSafety(player.wrappedLocale))
                 addEnchantment(this@apply, player)
                 addLore(*HookedItemMessages.AXE_LORE
                         .map { it.asSafety(player.wrappedLocale) }
@@ -127,6 +130,8 @@ object HandItems {
                     HookedItemMessages.CONDENSE_LAVA_ENCHANT.asSafety(player.wrappedLocale))
             addLore("${ChatColor.GRAY}" +
                     HookedItemMessages.CUT_ENCHANT.asSafety(player.wrappedLocale))
+
+            setEnchanted(true)
         }
     }
 

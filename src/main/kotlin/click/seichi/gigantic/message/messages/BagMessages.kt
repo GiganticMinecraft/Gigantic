@@ -41,5 +41,12 @@ object BagMessages {
             Locale.JAPANESE to "レリックがありません"
     )
 
+    val TELEPORT = LocalizedText(
+            Locale.JAPANESE to "テレポート"
+    )
+
+    val SWITCH_DETAIL = LocalizedText(
+            Locale.JAPANESE to "ツール切り替え詳細設定"
+    )
 
 }

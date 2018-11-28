@@ -21,41 +21,11 @@ enum class Relic(
         val maxAmount: Long = Long.MAX_VALUE,
         private val icon: ItemStack = Head.RUBY_JEWELLERY.toItemStack()
 ) {
-    PIGS_FEATHER(
-            0,
-            RelicMessages.PIGS_FEATHER,
-            RelicMessages.PIGS_FEATHER_LORE,
-            icon = ItemStack(Material.FEATHER)
-    ),
-    BLUE_BLAZE_POWDER(
-            1,
-            RelicMessages.BLUE_BLAZE_POWDER,
-            RelicMessages.BLUE_BLAZE_POWDER_LORE,
-            icon = ItemStack(Material.BLAZE_POWDER)
-    ),
     CHICKEN_KING_CROWN(
             2,
             RelicMessages.CHICKEN_KING_CROWN,
             RelicMessages.CHICKEN_KING_CROWN_LORE,
             icon = Head.KING_CROWN.toItemStack()
-    ),
-    WITHER_SKELETON_SKULL(
-            3,
-            RelicMessages.WITHER_SKELETON_SKULL,
-            null,
-            icon = ItemStack(Material.WITHER_SKELETON_SKULL)
-    ),
-    MANA_STONE(
-            4,
-            RelicMessages.MANA_STONE,
-            null,
-            icon = ItemStack(Material.NETHER_STAR)
-    ),
-    ROTTEN_FLESH(
-            5,
-            RelicMessages.ROTTEN_FLESH,
-            null,
-            icon = ItemStack(Material.ROTTEN_FLESH)
     ),
     TURTLE_KING_CROWN(
             6,

@@ -7,7 +7,6 @@ import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.quest.Quest
-import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
 import org.bukkit.entity.Player
@@ -44,7 +43,7 @@ enum class Achievement(
 
     // systems
     MANA_STONE(100, {
-        Relic.MANA_STONE.has(it)
+        Quest.WITHER.isCleared(it)
     }, grantMessage = AchievementMessages.MANA_STONE,
             priority = UpdatePriority.HIGHEST),
     TELEPORT_PLAYER(101, {

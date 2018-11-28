@@ -2,6 +2,7 @@ package click.seichi.gigantic.item.items
 
 import click.seichi.gigantic.extension.addLore
 import click.seichi.gigantic.extension.setDisplayName
+import click.seichi.gigantic.extension.setEnchanted
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Armor
 import click.seichi.gigantic.message.messages.ArmorMessages
@@ -21,7 +22,8 @@ object Armors {
 
         override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_HELMET).apply {
-                setDisplayName(ArmorMessages.HELMET.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
+                        ArmorMessages.HELMET.asSafety(player.wrappedLocale))
 
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
@@ -34,6 +36,7 @@ object Armors {
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
+                setEnchanted(true)
             }
         }
 
@@ -46,7 +49,7 @@ object Armors {
 
         override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.ELYTRA).apply {
-                setDisplayName("${ChatColor.WHITE}" +
+                setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         ArmorMessages.ELYTRA.asSafety(player.wrappedLocale))
 
                 itemMeta = itemMeta.apply {
@@ -60,6 +63,7 @@ object Armors {
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
+                setEnchanted(true)
             }
         }
 
@@ -72,7 +76,8 @@ object Armors {
 
         override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_LEGGINGS).apply {
-                setDisplayName(ArmorMessages.LEGGINGS.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
+                        ArmorMessages.LEGGINGS.asSafety(player.wrappedLocale))
 
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
@@ -85,6 +90,7 @@ object Armors {
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
+                setEnchanted(true)
             }
         }
 
@@ -97,7 +103,8 @@ object Armors {
 
         override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_BOOTS).apply {
-                setDisplayName(ArmorMessages.BOOTS.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
+                        ArmorMessages.BOOTS.asSafety(player.wrappedLocale))
 
                 itemMeta = itemMeta.apply {
                     isUnbreakable = true
@@ -110,6 +117,7 @@ object Armors {
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
+                setEnchanted(true)
             }
         }
 

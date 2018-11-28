@@ -12,9 +12,7 @@ import java.util.*
 object HookedItemMessages {
 
     val PICKEL = LocalizedText(
-            Locale.JAPANESE to
-                    "${ChatColor.WHITE}" +
-                    "不思議なピッケル"
+            Locale.JAPANESE to "不思議なピッケル"
     )
 
     val PICKEL_LORE = mutableListOf(
@@ -30,9 +28,7 @@ object HookedItemMessages {
 
 
     val SHOVEL = LocalizedText(
-            Locale.JAPANESE to
-                    "${ChatColor.WHITE}" +
-                    "不思議なシャベル"
+            Locale.JAPANESE to "不思議なシャベル"
     )
 
     val SHOVEL_LORE = mutableListOf(
@@ -48,9 +44,7 @@ object HookedItemMessages {
 
 
     val AXE = LocalizedText(
-            Locale.JAPANESE to
-                    "${ChatColor.WHITE}" +
-                    "不思議な斧"
+            Locale.JAPANESE to "不思議な斧"
     )
 
     val AXE_LORE = mutableListOf(
@@ -105,12 +99,6 @@ object HookedItemMessages {
             )
 
 
-    val SWITCH_DETAIL = LocalizedText(
-            Locale.JAPANESE to
-                    "${ChatColor.BLUE}" +
-                    "ツール切り替え詳細設定"
-    )
-
     val MANA_STONE = LocalizedText(
             Locale.JAPANESE to
                     "${ChatColor.AQUA}" +
@@ -130,12 +118,6 @@ object HookedItemMessages {
                     Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                             "右クリックでしまう"
             )
-    )
-
-    val TELEPORT = LocalizedText(
-            Locale.JAPANESE to
-                    "${ChatColor.BLUE}" +
-                    "テレポート"
     )
 
     val SEICHI_SPEED_ENCHANT = { level: Int ->
