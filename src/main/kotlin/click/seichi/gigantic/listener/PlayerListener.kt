@@ -47,17 +47,6 @@ import kotlin.math.roundToLong
  */
 class PlayerListener : Listener {
 
-    // スポーン付近を破壊した場合問答無用でキャンセル
-    @EventHandler(priority = EventPriority.HIGHEST)
-    fun onSpawnAreaBlockBreak(event: BlockBreakEvent) {
-        val player = event.player ?: return
-        val block = event.block ?: return
-        if (player.gameMode == GameMode.CREATIVE) return
-        if (!block.isSpawnArea) return
-        PlayerMessages.SPAWN_PROTECT.sendTo(player)
-        event.isCancelled = true
-    }
-
     // プレイヤーデータのロード
     @EventHandler
     fun onPlayerPreLoginAsync(event: AsyncPlayerPreLoginEvent) {
@@ -153,16 +142,6 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
-    /*@EventHandler
-    fun onPlayerItemHeld(event: PlayerItemHeldEvent) {
-        val player = event.player ?: return
-        if (player.gameMode != GameMode.SURVIVAL) return
-        val belt = player.getOrPut(Keys.BELT)
-        belt.findItem(event.newSlot)?.onItemHeld(player, event)
-        if (belt.hasFixedSlot() && !belt.isFixed(event.newSlot))
-            event.isCancelled = true
-    }
-*/
     @EventHandler
     fun onInteract(event: PlayerInteractEvent) {
         val player = event.player ?: return
@@ -316,6 +295,27 @@ class PlayerListener : Listener {
     fun onMultiPlaceBlock(event: BlockMultiPlaceEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
+        event.isCancelled = true
+    }
+
+    // スポーン付近を破壊した場合問答無用でキャンセル
+    @EventHandler(priority = EventPriority.HIGHEST)
+    fun onSpawnAreaBlockBreak(event: BlockBreakEvent) {
+        val player = event.player ?: return
+        val block = event.block ?: return
+        if (player.gameMode == GameMode.CREATIVE) return
+        if (!block.isSpawnArea) return
+        PlayerMessages.SPAWN_PROTECT.sendTo(player)
+        event.isCancelled = true
+    }
+
+    @EventHandler
+    fun cancelNotToolBreaking(event: BlockBreakEvent) {
+        val player = event.player ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
+        val slot = player.inventory.heldItemSlot
+        val belt = player.getOrPut(Keys.BELT)
+        if (slot == belt.toolSlot) return
         event.isCancelled = true
     }
 

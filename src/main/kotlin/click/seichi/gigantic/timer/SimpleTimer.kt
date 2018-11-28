@@ -1,6 +1,7 @@
 package click.seichi.gigantic.timer
 
 import click.seichi.gigantic.Gigantic
+import org.bukkit.Bukkit
 import org.bukkit.scheduler.BukkitRunnable
 import kotlin.properties.Delegates
 
@@ -54,8 +55,9 @@ open class SimpleTimer : Timer {
             override fun run() {
                 remainTimeToFire = coolTime.minus(elapsedSeconds)
                 onCooldown(remainTimeToFire)
+                Bukkit.getServer().consoleSender.sendMessage("hi!$remainTimeToFire")
 
-                if (elapsedSeconds++ <= coolTime && !isCancelled) return
+                if (elapsedSeconds++ < coolTime && !isCancelled) return
                 cancel()
                 end()
             }
