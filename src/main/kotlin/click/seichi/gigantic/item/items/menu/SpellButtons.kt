@@ -18,7 +18,7 @@ object SpellButtons {
     val SPELL: (Spell) -> Button = { spell: Spell ->
         object : Button {
 
-            override fun getItemStack(player: Player): ItemStack? {
+            override fun findItemStack(player: Player): ItemStack? {
                 if (!spell.isGranted(player)) return null
                 return spell.getIcon(player).apply {
                     setDisplayName(spell.getName(player.wrappedLocale))
@@ -38,7 +38,7 @@ object SpellButtons {
 
     val KODAMA_DRAIN = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.SPELL_TERRA_DRAIN.isGranted(player)) return null
             val toggle = player.getOrPut(Keys.TERRA_DRAIN_TOGGLE)
             return ItemStack(Material.WHEAT_SEEDS).apply {
@@ -70,7 +70,7 @@ object SpellButtons {
 
     val GRAND_NATURA = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.SPELL_GRAND_NATURA.isGranted(player)) return null
             val toggle = player.getOrPut(Keys.GRAND_NATURA_TOGGLE)
             return ItemStack(Material.SEA_PICKLE).apply {
@@ -102,7 +102,7 @@ object SpellButtons {
 
     val AQUA_LINEA = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.SPELL_AQUA_LINEA.isGranted(player)) return null
             val toggle = player.getOrPut(Keys.AQUA_LINEA_TOGGLE)
             return ItemStack(Material.PRISMARINE_CRYSTALS).apply {

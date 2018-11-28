@@ -13,5 +13,6 @@ interface Item {
      *
      * @param player Menuを開いているPlayer
      */
-    fun getItemStack(player: Player): ItemStack?
+    fun findItemStack(player: Player): ItemStack?
+
 }

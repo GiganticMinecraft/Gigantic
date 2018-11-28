@@ -1,17 +1,15 @@
 package click.seichi.gigantic.acheivement
 
-import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
-import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
+import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
-import click.seichi.gigantic.will.WillGrade
 import org.bukkit.entity.Player
 
 /**
@@ -29,13 +27,10 @@ enum class Achievement(
 ) {
     // messages
     JOIN_SERVER(0, { true }, action = { player ->
-        player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
-            it.unlock(Belt.DIG)
-            it.unlock(Belt.MINE)
-            it.unlock(Belt.CUT)
-            it.setCanSwitch(Belt.DIG, true)
-            it.setCanSwitch(Belt.MINE, true)
-            it.setCanSwitch(Belt.CUT, true)
+        player.manipulate(CatalogPlayerCache.TOOL_SWITCHER) {
+            it.unlock(Tool.PICKEL)
+            it.unlock(Tool.SHOVEL)
+            it.unlock(Tool.AXE)
         }
     }, grantMessage = AchievementMessages.FIRST_JOIN),
     FIRST_LEVEL_UP(1, {
@@ -61,19 +56,6 @@ enum class Achievement(
     TELEPORT_LAST_DEATH(103, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 6
     }, grantMessage = AchievementMessages.TELEPORT_LAST_DEATH),
-
-
-    // wills
-    WILL_BASIC_1(150, {
-        false
-    }, action = { player ->
-        player.manipulate(CatalogPlayerCache.APTITUDE) { willAptitude ->
-            willAptitude.addRandomIfNeeded(WillGrade.BASIC, 1)?.let {
-                PlayerMessages.OBTAIN_WILL_APTITUDE(it).sendTo(player)
-            }
-        }
-    }, grantMessage = AchievementMessages.UNLOCK_WILL_BASIC_1,
-            priority = UpdatePriority.HIGHEST),
 
     // skills
     SKILL_FLASH(200, {

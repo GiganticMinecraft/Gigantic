@@ -6,7 +6,6 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.HandItem
-import click.seichi.gigantic.menu.menus.BeltSwitchSettingMenu
 import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.relic.Relic
@@ -29,7 +28,7 @@ object HandItems {
 
     val PICKEL = object : HandItem {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
                 setDisplayName(HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
                 addEnchantment(this@apply, player)
@@ -40,7 +39,6 @@ object HandItems {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            BeltSwitchSettingMenu.open(player)
         }
 
         override fun onInteract(player: Player, event: PlayerInteractEvent) {
@@ -48,7 +46,7 @@ object HandItems {
     }
 
     val SHOVEL = object : HandItem {
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_SHOVEL).apply {
                 setDisplayName(HookedItemMessages.SHOVEL.asSafety(player.wrappedLocale))
                 addEnchantment(this@apply, player)
@@ -60,7 +58,6 @@ object HandItems {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            BeltSwitchSettingMenu.open(player)
         }
 
         override fun onInteract(player: Player, event: PlayerInteractEvent) {
@@ -68,7 +65,7 @@ object HandItems {
     }
 
     val AXE = object : HandItem {
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_AXE).apply {
                 setDisplayName(HookedItemMessages.AXE.asSafety(player.wrappedLocale))
                 addEnchantment(this@apply, player)
@@ -80,7 +77,6 @@ object HandItems {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            BeltSwitchSettingMenu.open(player)
         }
 
         override fun onInteract(player: Player, event: PlayerInteractEvent) {
@@ -135,7 +131,7 @@ object HandItems {
     }
 
     val MANA_STONE = object : HandItem {
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.MANA_STONE.isGranted(player)) return null
             val spellToggle = player.getOrPut(Keys.SPELL_TOGGLE)
             return if (spellToggle) ItemStack(Material.NETHER_STAR).apply {
@@ -175,7 +171,7 @@ object HandItems {
 
     val MINE_BURST = object : HandItem {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.SKILL_MINE_BURST.isGranted(player)) return null
             val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
             return when {
@@ -211,7 +207,7 @@ object HandItems {
 
     val FLASH = object : HandItem {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.SKILL_FLASH.isGranted(player)) return null
             val flash = player.find(CatalogPlayerCache.FLASH) ?: return null
             return when {

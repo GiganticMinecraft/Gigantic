@@ -12,7 +12,7 @@ import java.util.*
  */
 class PlayerHeadButton(private val uuid: UUID) : Button {
 
-    override fun getItemStack(player: Player): ItemStack? {
+    override fun findItemStack(player: Player): ItemStack? {
         return getItemStack()
     }
 

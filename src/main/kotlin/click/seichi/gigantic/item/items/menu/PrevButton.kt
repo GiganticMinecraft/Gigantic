@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack
  * @author tar0ss
  */
 class PrevButton(private val menu: BookMenu) : Button {
-    override fun getItemStack(player: Player): ItemStack? {
+    override fun findItemStack(player: Player): ItemStack? {
         if (!menu.hasPrevPage(player)) return null
         return Head.PUMPKIN_LEFT_ARROW.toItemStack().apply {
             setDisplayName(

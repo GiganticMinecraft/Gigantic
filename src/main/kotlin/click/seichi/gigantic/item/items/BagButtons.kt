@@ -30,7 +30,7 @@ import org.bukkit.inventory.ItemStack
 object BagButtons {
 
     val PROFILE = object : Button {
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return player.getHead().apply {
                 setDisplayName(BagMessages.PROFILE.asSafety(player.wrappedLocale))
                 val level = player.find(CatalogPlayerCache.LEVEL) ?: return@apply
@@ -74,7 +74,7 @@ object BagButtons {
 
     val SKILL = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.FLINT_AND_STEEL).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}" +
                         SkillMenuMessages.TITLE.asSafety(player.wrappedLocale))
@@ -91,7 +91,7 @@ object BagButtons {
 
     val SPELL = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.MANA_STONE.isGranted(player)) return null
             return ItemStack(Material.LAPIS_LAZULI).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
@@ -108,7 +108,7 @@ object BagButtons {
     }
 
     val AFK = object : Button {
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return when (player.gameMode) {
                 GameMode.SPECTATOR -> ItemStack(Material.POPPY, 1).apply {
                     setDisplayName(
@@ -149,7 +149,7 @@ object BagButtons {
 
     val SPECIAL_THANKS = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.MUSIC_DISC_13).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale))
@@ -171,7 +171,7 @@ object BagButtons {
 
     val QUEST = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.QUEST.isGranted(player)) return null
             return ItemStack(Material.WRITABLE_BOOK).apply {
                 if (Quest.getOrderedList(player).isEmpty()) {
@@ -200,7 +200,7 @@ object BagButtons {
 
     val RELIC = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.QUEST.isGranted(player)) return null
             return Head.JEWELLERY_BOX.toItemStack().apply {
                 if (Relic.getDroppedList(player).isEmpty()) {
@@ -229,30 +229,30 @@ object BagButtons {
 
     val TELEPORT_DOOR = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DARK_OAK_DOOR).apply {
                 setDisplayName(HookedItemMessages.TELEPORT.asSafety(player.wrappedLocale))
             }
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (event.inventory.holder === TeleportMenu) return
             TeleportMenu.open(player)
         }
 
     }
 
-    val BELT_SWITCHER_SETTING = object : Button {
+    val TOOL_SWITCH_SETTING = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
-            val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
-            val nextBelt = switcher.nextBelt()
-            return nextBelt.findFixedButton()?.getItemStack(player)?.apply {
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.LADDER).apply {
                 setDisplayName(HookedItemMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
             }
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-
+            if (event.inventory.holder === ToolSwitchSettingMenu) return
+            ToolSwitchSettingMenu.open(player)
         }
 
     }

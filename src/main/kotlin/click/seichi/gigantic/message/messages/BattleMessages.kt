@@ -51,6 +51,11 @@ object BattleMessages {
                     Locale.JAPANESE to "近付いてバトル開始"
             ), 0, 60, 10)
 
+    val FIRST_AWAKE = TitleMessage(null,
+            LocalizedText(
+                    Locale.JAPANESE to "ブロックを掘って攻撃"
+            ), 0, 60, 10)
+
     val FIRST_DAMAGE = TitleMessage(null,
             LocalizedText(
                     Locale.JAPANESE to "敵の攻撃ブロックに触れて攻撃を防ごう"

@@ -20,6 +20,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var health by UserTable.health
 
+    var toolId by UserTable.toolId
+
     var beltId by UserTable.beltId
 
     var maxCombo by UserTable.maxCombo

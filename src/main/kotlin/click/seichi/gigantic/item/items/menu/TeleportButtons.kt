@@ -26,7 +26,7 @@ object TeleportButtons {
 
     val TELEPORT_TO_PLAYER = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return null
             return ItemStack(Material.PLAYER_HEAD).apply {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_PLAYER.asSafety(player.wrappedLocale))
@@ -43,7 +43,7 @@ object TeleportButtons {
 
     val TELEPORT_TO_RANDOM_CHUNK = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.CHORUS_FRUIT).apply {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_RANDOM_CHUNK.asSafety(player.wrappedLocale))
             }
@@ -91,7 +91,7 @@ object TeleportButtons {
 
     val TELEPORT_TO_DEATH_CHUNK = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return null
             player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return null
             return ItemStack(Material.BONE).apply {
@@ -113,7 +113,7 @@ object TeleportButtons {
 
     val TELEPORT_TOGGLE = object : Button {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return null
             val toggle = player.getOrPut(Keys.TELEPORT_TOGGLE)
             return ItemStack(Material.DAYLIGHT_DETECTOR).apply {
@@ -140,7 +140,7 @@ object TeleportButtons {
 
     val TELEPORT_PLAYER: (Player) -> Button = { to: Player ->
         object : Button {
-            override fun getItemStack(player: Player): ItemStack? {
+            override fun findItemStack(player: Player): ItemStack? {
                 return when {
                     !to.isValid -> ItemStack(Material.BLACK_STAINED_GLASS_PANE).apply {
                         setDisplayName("${ChatColor.RED}${to.name}")

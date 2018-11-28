@@ -3,7 +3,6 @@ package click.seichi.gigantic.listener
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.PlayerAnimations
-import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
@@ -17,6 +16,7 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.popup.pops.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
+import click.seichi.gigantic.tool.Tool
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
@@ -178,14 +178,14 @@ class PlayerListener : Listener {
     fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
         val player = event.player ?: return
         event.isCancelled = true
-        var current: Belt? = null
-        player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
+        var current: Tool? = null
+        player.manipulate(CatalogPlayerCache.TOOL_SWITCHER) {
             current = it.current
             it.switch()
         }
-        val nextBelt = player.getOrPut(Keys.BELT)
-        if (current == nextBelt) return
-        nextBelt.wear(player)
+        val nextTool = player.getOrPut(Keys.TOOL)
+        if (current == nextTool) return
+        nextTool.update(player)
         SkillSounds.SWITCH.playOnly(player)
     }
 
@@ -295,10 +295,6 @@ class PlayerListener : Listener {
     fun onChangeGameMode(event: PlayerGameModeChangeEvent) {
         when (event.newGameMode) {
             GameMode.SURVIVAL -> {
-                val belt = event.player.getOrPut(Keys.BELT)
-                belt.getFixedSlot()?.let {
-                    event.player.inventory.heldItemSlot = it
-                }
                 event.player.updateInventory(true, true)
             }
             GameMode.CREATIVE -> {

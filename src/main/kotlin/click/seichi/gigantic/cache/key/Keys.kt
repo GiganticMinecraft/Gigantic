@@ -14,6 +14,7 @@ import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
+import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
 import org.bukkit.Chunk
 import org.bukkit.block.Block
@@ -329,6 +330,74 @@ object Keys {
         }
 
     }
+
+    val TOOL = object : DatabaseKey<PlayerCache, Tool> {
+        override val default: Tool
+            get() = Tool.findById(Defaults.TOOL_ID)!!
+
+        override fun read(entity: Entity<*>): Tool {
+            val user = entity as User
+            return Tool.findById(user.toolId) ?: default
+        }
+
+        override fun store(entity: Entity<*>, value: Tool) {
+            val user = entity as User
+            user.toolId = value.id
+        }
+
+        override fun satisfyWith(value: Tool): Boolean {
+            return true
+        }
+
+    }
+
+    val TOOL_TOGGLE_MAP: Map<Tool, DatabaseKey<PlayerCache, Boolean>> = Tool.values()
+            .map {
+                it to object : DatabaseKey<PlayerCache, Boolean> {
+                    override val default: Boolean
+                        get() = false
+
+                    override fun read(entity: Entity<*>): Boolean {
+                        val userTool = entity as UserTool
+                        return userTool.canSwitch
+                    }
+
+                    override fun store(entity: Entity<*>, value: Boolean) {
+                        val userTool = entity as UserTool
+                        userTool.canSwitch = value
+                    }
+
+                    override fun satisfyWith(value: Boolean): Boolean {
+                        return true
+                    }
+
+                }
+            }
+            .toMap()
+
+    val TOOL_UNLOCK_MAP: Map<Tool, DatabaseKey<PlayerCache, Boolean>> = Tool.values()
+            .map {
+                it to object : DatabaseKey<PlayerCache, Boolean> {
+                    override val default: Boolean
+                        get() = false
+
+                    override fun read(entity: Entity<*>): Boolean {
+                        val userTool = entity as UserTool
+                        return userTool.isUnlocked
+                    }
+
+                    override fun store(entity: Entity<*>, value: Boolean) {
+                        val userTool = entity as UserTool
+                        userTool.isUnlocked = value
+                    }
+
+                    override fun satisfyWith(value: Boolean): Boolean {
+                        return true
+                    }
+
+                }
+            }
+            .toMap()
 
     val DEATH_MESSAGE = object : Key<PlayerCache, LocalizedText?> {
         override val default: LocalizedText?

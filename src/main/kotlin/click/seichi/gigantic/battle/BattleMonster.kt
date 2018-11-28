@@ -110,6 +110,13 @@ class BattleMonster(
         }
         players.forEach { bossBar.addPlayer(it.player) }
         BattleBars.AWAKE(monster.parameter.health, monster, locale).show(bossBar)
+
+        players.map { it.player }.forEach { player ->
+            if (!SoulMonster.VILLAGER.isDefeatedBy(player)) {
+                BattleMessages.FIRST_AWAKE.sendTo(player)
+            }
+        }
+
         state = SoulMonsterState.MOVE
         location = entity.location
         destination = ai.searchDestination(chunk, attackTarget, location)
@@ -184,6 +191,7 @@ class BattleMonster(
             destination = ai.searchDestination(chunk, attackTarget, location)
             lastAttackTicks = elapsedTick + moveDelay
         }, moveDelay)
+
         state = SoulMonsterState.WAIT
     }
 

@@ -3,14 +3,11 @@ package click.seichi.gigantic.spirit
 
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.spirit.SpiritManager.spawn
 import click.seichi.gigantic.spirit.spawnreason.MonsterSpawnReason
-import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
-import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.spirit.summoncase.RandomSummonCase
 import click.seichi.gigantic.spirit.summoncase.SummonCase
 import org.bukkit.event.Event
@@ -33,10 +30,11 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
             RandomSummonCase(0.05, BlockBreakEvent::class.java) { event ->
                 val player = event.player ?: return@RandomSummonCase
                 if (!event.block.isCrust && !event.block.isTree) return@RandomSummonCase
-                if (!Achievement.WILL_BASIC_1.isGranted(player)) return@RandomSummonCase
-                val aptitudeSet = player.find(CatalogPlayerCache.APTITUDE)?.copySet() ?: return@RandomSummonCase
+                return@RandomSummonCase
+                // TODO implements
+                /*val aptitudeSet = player.find(CatalogPlayerCache.APTITUDE)?.copySet() ?: return@RandomSummonCase
                 val will = aptitudeSet.shuffled().firstOrNull() ?: return@RandomSummonCase
-                spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, player))
+                spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, player))*/
             }
     ),
     MONSTER(

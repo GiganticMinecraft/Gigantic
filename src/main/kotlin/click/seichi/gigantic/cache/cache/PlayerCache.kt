@@ -9,6 +9,7 @@ import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
+import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -33,6 +34,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                     offer(it, it.read(user))
                 }
                 Keys.HEALTH.let {
+                    offer(it, it.read(user))
+                }
+                Keys.TOOL.let {
                     offer(it, it.read(user))
                 }
                 Keys.BELT.let {
@@ -68,6 +72,12 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.BELT_UNLOCK_MAP.forEach { belt, key ->
                     offer(key, key.read(userBeltMap[belt] ?: return@forEach))
                 }
+                Keys.TOOL_TOGGLE_MAP.forEach { tool, key ->
+                    offer(key, key.read(userToolMap[tool] ?: return@forEach))
+                }
+                Keys.TOOL_UNLOCK_MAP.forEach { tool, key ->
+                    offer(key, key.read(userToolMap[tool] ?: return@forEach))
+                }
                 Keys.QUEST_MAP.forEach { quest, key ->
                     offer(key, key.read(userQuestMap[quest] ?: return@forEach))
                 }
@@ -90,6 +100,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                     it.store(user, getOrDefault(it))
                 }
                 Keys.HEALTH.let {
+                    it.store(user, getOrDefault(it))
+                }
+                Keys.TOOL.let {
                     it.store(user, getOrDefault(it))
                 }
                 Keys.BELT.let {
@@ -124,6 +137,12 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 }
                 Keys.BELT_UNLOCK_MAP.forEach { belt, key ->
                     key.store(userBeltMap[belt] ?: return@forEach, getOrDefault(key))
+                }
+                Keys.TOOL_TOGGLE_MAP.forEach { tool, key ->
+                    key.store(userToolMap[tool] ?: return@forEach, getOrDefault(key))
+                }
+                Keys.TOOL_UNLOCK_MAP.forEach { tool, key ->
+                    key.store(userToolMap[tool] ?: return@forEach, getOrDefault(key))
                 }
                 Keys.QUEST_MAP.forEach { quest, key ->
                     key.store(userQuestMap[quest] ?: return@forEach, getOrDefault(key))
@@ -187,6 +206,15 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                     .firstOrNull() ?: UserAchievement.new {
                 user = this@UserEntityData.user
                 achievementId = func.id
+            })
+        }.toMap()
+
+        val userToolMap = Tool.values().map { tool ->
+            tool to (UserTool
+                    .find { (UserToolTable.userId eq uniqueId) and (UserToolTable.toolId eq tool.id) }
+                    .firstOrNull() ?: UserTool.new {
+                user = this@UserEntityData.user
+                toolId = tool.id
             })
         }.toMap()
 

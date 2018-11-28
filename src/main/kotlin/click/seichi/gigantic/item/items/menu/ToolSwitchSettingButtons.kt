@@ -1,12 +1,12 @@
 package click.seichi.gigantic.item.items.menu
 
-import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
-import click.seichi.gigantic.menu.menus.BeltSwitchSettingMenu
-import click.seichi.gigantic.message.messages.menu.BeltSwitchMessages
+import click.seichi.gigantic.menu.menus.ToolSwitchSettingMenu
+import click.seichi.gigantic.message.messages.menu.ToolSwitchMessages
 import click.seichi.gigantic.sound.sounds.SkillSounds
+import click.seichi.gigantic.tool.Tool
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
@@ -14,15 +14,14 @@ import org.bukkit.inventory.ItemStack
 /**
  * @author tar0ss
  */
-object BeltSwitchButtons {
-    val BELT_SWITCHER_SETTING: (Belt) -> Button = { belt ->
+object ToolSwitchSettingButtons {
+    val TOOL_SWITCHER_SETTING: (Tool) -> Button = { tool ->
         object : Button {
-            override fun getItemStack(player: Player): ItemStack? {
-                val switcher = player.find(CatalogPlayerCache.BELT_SWITCHER) ?: return null
-                return belt.findFixedButton()?.getItemStack(player)?.apply {
-                    setDisplayName(belt.localizedName.asSafety(player.wrappedLocale))
+            override fun findItemStack(player: Player): ItemStack? {
+                val switcher = player.find(CatalogPlayerCache.TOOL_SWITCHER) ?: return null
+                return tool.findItemStack(player)?.apply {
                     setLore(
-                            *BeltSwitchMessages.BELT_SWITCHER_SETTING_BUTTON_LORE(switcher.canSwitch(belt))
+                            *ToolSwitchMessages.TOOL_SWITCHER_SETTING_BUTTON_LORE(switcher.canSwitch(tool))
                                     .map { it.asSafety(player.wrappedLocale) }
                                     .toTypedArray()
                     )
@@ -30,15 +29,15 @@ object BeltSwitchButtons {
             }
 
             override fun onClick(player: Player, event: InventoryClickEvent) {
-                player.manipulate(CatalogPlayerCache.BELT_SWITCHER) {
-                    it.setCanSwitch(belt, !it.canSwitch(belt))
-                    if (!it.canSwitch(belt)) {
+                player.manipulate(CatalogPlayerCache.TOOL_SWITCHER) {
+                    it.setCanSwitch(tool, !it.canSwitch(tool))
+                    if (!it.canSwitch(tool)) {
                         it.switch()
                         SkillSounds.SWITCH.playOnly(player)
                     }
                 }
                 player.updateBelt(true, true)
-                BeltSwitchSettingMenu.reopen(player)
+                ToolSwitchSettingMenu.reopen(player)
             }
 
         }

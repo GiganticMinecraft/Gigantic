@@ -19,7 +19,7 @@ object RelicButtons {
 
     val RELIC: (Relic) -> Button = { relic ->
         object : Button {
-            override fun getItemStack(player: Player): ItemStack? {
+            override fun findItemStack(player: Player): ItemStack? {
                 return relic.getIcon().apply {
                     setDisplayName("${ChatColor.WHITE}${ChatColor.BOLD}" +
                             relic.getName(player.wrappedLocale))

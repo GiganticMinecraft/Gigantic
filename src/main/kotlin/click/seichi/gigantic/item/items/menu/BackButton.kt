@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack
  */
 class BackButton(private val currentMenu: Menu, private val menu: Menu) : Button {
 
-    override fun getItemStack(player: Player): ItemStack? {
+    override fun findItemStack(player: Player): ItemStack? {
         return Head.LEFT.toItemStack().apply {
             val title = menu.getTitle(player)
             setDisplayName(

@@ -7,13 +7,13 @@ import java.util.*
 /**
  * @author tar0ss
  */
-object BeltSwitchMessages {
+object ToolSwitchMessages {
 
     val TITLE = LocalizedText(
             Locale.JAPANESE to "ベルト切り替え詳細設定"
     )
 
-    val BELT_SWITCHER_SETTING_BUTTON_LORE = { canSwitch: Boolean ->
+    val TOOL_SWITCHER_SETTING_BUTTON_LORE = { canSwitch: Boolean ->
         if (canSwitch) {
             listOf(
                     LocalizedText(

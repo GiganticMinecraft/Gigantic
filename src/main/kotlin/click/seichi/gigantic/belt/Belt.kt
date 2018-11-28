@@ -1,5 +1,7 @@
 package click.seichi.gigantic.belt
 
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.item.Armor
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.HandItem
@@ -17,7 +19,7 @@ import org.bukkit.inventory.ItemStack
 enum class Belt(
         val id: Int,
         val localizedName: LocalizedText,
-        mainHandItem: Pair<Int, HandItem>,
+        val toolSlot: Int,
         val offHandItem: HandItem?,
         val helmet: Armor?,
         val chestPlate: Armor?,
@@ -25,34 +27,10 @@ enum class Belt(
         val boots: Armor?,
         vararg items: Pair<Int, HandItem>
 ) {
-    DIG(
+    DEFAULT(
             1,
             BeltMessages.DIG,
-            0 to HandItems.SHOVEL,
-            HandItems.MANA_STONE,
-            Armors.HELMET,
-            Armors.ELYTRA,
-            Armors.LEGGINGS,
-            Armors.BOOTS,
-            1 to HandItems.FLASH,
-            2 to HandItems.MINE_BURST
-    ),
-    MINE(
-            2,
-            BeltMessages.MINE,
-            0 to HandItems.PICKEL,
-            HandItems.MANA_STONE,
-            Armors.HELMET,
-            Armors.ELYTRA,
-            Armors.LEGGINGS,
-            Armors.BOOTS,
-            1 to HandItems.FLASH,
-            2 to HandItems.MINE_BURST
-    ),
-    CUT(
-            3,
-            BeltMessages.CUT,
-            0 to HandItems.AXE,
+            0,
             HandItems.MANA_STONE,
             Armors.HELMET,
             Armors.ELYTRA,
@@ -68,59 +46,38 @@ enum class Belt(
         fun findById(id: Int) = idMap[id]
     }
 
-    // 手に固定されたスロット番号
-    private var fixedSlot = mainHandItem.first
-
     private val buttonMap: MutableMap<Int, Button> = mutableMapOf(
-            *items,
-            mainHandItem
+            *items
     )
 
     /**
      * ベルトを身に着ける
      *
-     * @param applyMainHandItem メインハンドも更新するかどうか
+     * @param applyTool ツールも更新するかどうか
      * @param applyOffHandItem オフハンドも更新するかどうか
      */
-    fun wear(player: Player, applyMainHandItem: Boolean = true, applyOffHandItem: Boolean = true) {
+    fun wear(player: Player, applyTool: Boolean = true, applyOffHandItem: Boolean = true) {
         player.inventory?.let { inv ->
             (0..8).forEach { slot ->
-                if (!applyMainHandItem && slot == fixedSlot) return@forEach
+                if (slot == toolSlot) return@forEach
                 inv.setItem(slot,
-                        buttonMap[slot]?.getItemStack(player) ?: ItemStack(Material.AIR)
+                        buttonMap[slot]?.findItemStack(player) ?: ItemStack(Material.AIR)
                 )
             }
-            inv.helmet = helmet?.getItemStack(player) ?: ItemStack(Material.AIR)
-            inv.chestplate = chestPlate?.getItemStack(player) ?: ItemStack(Material.AIR)
-            inv.leggings = leggings?.getItemStack(player) ?: ItemStack(Material.AIR)
-            inv.boots = boots?.getItemStack(player) ?: ItemStack(Material.AIR)
+            if (applyTool)
+                player.getOrPut(Keys.TOOL).update(player)
+            inv.helmet = helmet?.findItemStack(player) ?: ItemStack(Material.AIR)
+            inv.chestplate = chestPlate?.findItemStack(player) ?: ItemStack(Material.AIR)
+            inv.leggings = leggings?.findItemStack(player) ?: ItemStack(Material.AIR)
+            inv.boots = boots?.findItemStack(player) ?: ItemStack(Material.AIR)
 
             if (!applyOffHandItem) return@let
-            inv.itemInOffHand = offHandItem?.getItemStack(player) ?: ItemStack(Material.AIR)
+            inv.itemInOffHand = offHandItem?.findItemStack(player) ?: ItemStack(Material.AIR)
         }
-        if (applyMainHandItem)
-            player.updateInventory()
     }
 
     fun findItem(slot: Int): HandItem? {
         return buttonMap[slot] as HandItem?
-    }
-
-    fun findFixedButton(): HandItem? {
-        return buttonMap[fixedSlot] as HandItem?
-    }
-
-    fun isFixed(slot: Int) = when {
-        fixedSlot != slot -> false
-        buttonMap[fixedSlot] == null -> false
-        else -> true
-    }
-
-    fun hasFixedSlot() = buttonMap[fixedSlot] != null
-
-    fun getFixedSlot(): Int? {
-        buttonMap[fixedSlot] ?: return null
-        return fixedSlot
     }
 
 }

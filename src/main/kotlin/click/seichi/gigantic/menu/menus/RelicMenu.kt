@@ -38,10 +38,10 @@ object RelicMenu : BookMenu() {
                 .map { it % numOfContentsPerPage to relicList[it] }
                 .toMap()
                 .forEach { index, relic ->
-                    inventory.setItem(index, RelicButtons.RELIC(relic).getItemStack(player))
+                    inventory.setItem(index, RelicButtons.RELIC(relic).findItemStack(player))
                 }
-        inventory.setItem(numOfContentsPerPage + 3, prevButton.getItemStack(player))
-        inventory.setItem(numOfContentsPerPage + 5, nextButton.getItemStack(player))
+        inventory.setItem(numOfContentsPerPage + 3, prevButton.findItemStack(player))
+        inventory.setItem(numOfContentsPerPage + 5, nextButton.findItemStack(player))
 
         return inventory
     }

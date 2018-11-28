@@ -20,6 +20,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val health = long("health").default(Defaults.HEALTH)
 
+    val toolId = integer("tool_id").default(Defaults.TOOL_ID)
+
     val beltId = integer("belt_id").default(Defaults.BELT_ID)
 
     val maxCombo = long("max_combo").default(0L)

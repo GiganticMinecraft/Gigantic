@@ -17,7 +17,7 @@ object SkillButtons {
 
     val SKILL: (Skill) -> Button = { skill: Skill ->
         object : Button {
-            override fun getItemStack(player: Player): ItemStack? {
+            override fun findItemStack(player: Player): ItemStack? {
                 if (!skill.isGranted(player)) return null
                 return skill.getIcon(player).apply {
                     setDisplayName(skill.getName(player.wrappedLocale))

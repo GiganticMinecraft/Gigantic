@@ -19,7 +19,7 @@ object Armors {
 
     val HELMET = object : Armor {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_HELMET).apply {
                 setDisplayName(ArmorMessages.HELMET.asSafety(player.wrappedLocale))
 
@@ -44,7 +44,7 @@ object Armors {
 
     val ELYTRA = object : Armor {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.ELYTRA).apply {
                 setDisplayName("${ChatColor.WHITE}" +
                         ArmorMessages.ELYTRA.asSafety(player.wrappedLocale))
@@ -70,7 +70,7 @@ object Armors {
 
     val LEGGINGS = object : Armor {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_LEGGINGS).apply {
                 setDisplayName(ArmorMessages.LEGGINGS.asSafety(player.wrappedLocale))
 
@@ -95,7 +95,7 @@ object Armors {
 
     val BOOTS = object : Armor {
 
-        override fun getItemStack(player: Player): ItemStack? {
+        override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_BOOTS).apply {
                 setDisplayName(ArmorMessages.BOOTS.asSafety(player.wrappedLocale))
 
