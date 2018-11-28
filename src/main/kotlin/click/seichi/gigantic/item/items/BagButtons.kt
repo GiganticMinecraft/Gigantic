@@ -201,14 +201,10 @@ object BagButtons {
 
         override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.QUEST.isGranted(player)) return null
+            if (Relic.getDroppedList(player).isEmpty()) return null
             return Head.JEWELLERY_BOX.toItemStack().apply {
-                if (Relic.getDroppedList(player).isEmpty()) {
-                    setDisplayName("${ChatColor.GRAY}${ChatColor.UNDERLINE}"
-                            + BagMessages.NO_RELIC.asSafety(player.wrappedLocale))
-                } else {
-                    setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
-                            + BagMessages.RELIC.asSafety(player.wrappedLocale))
-                }
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.RELIC.asSafety(player.wrappedLocale))
                 clearLore()
                 itemMeta = itemMeta.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
