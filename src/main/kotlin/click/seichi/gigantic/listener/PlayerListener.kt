@@ -300,7 +300,7 @@ class PlayerListener : Listener {
 
     // スポーン付近を破壊した場合問答無用でキャンセル
     @EventHandler(priority = EventPriority.HIGHEST)
-    fun onSpawnAreaBlockBreak(event: BlockBreakEvent) {
+    fun cancelSpawnArea(event: BlockBreakEvent) {
         val player = event.player ?: return
         val block = event.block ?: return
         if (player.gameMode == GameMode.CREATIVE) return
@@ -309,6 +309,7 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
+    // ツール以外で破壊したときキャンセル
     @EventHandler
     fun cancelNotToolBreaking(event: BlockBreakEvent) {
         val player = event.player ?: return
@@ -316,6 +317,19 @@ class PlayerListener : Listener {
         val slot = player.inventory.heldItemSlot
         val belt = player.getOrPut(Keys.BELT)
         if (slot == belt.toolSlot) return
+        PlayerMessages.BREAK_NOT_TOOL.sendTo(player)
+        event.isCancelled = true
+    }
+
+    // ツール以外で破壊したときキャンセル
+    @EventHandler
+    fun cancelNotSneakingUnderBlockBreak(event: BlockBreakEvent) {
+        val player = event.player ?: return
+        val block = event.block ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
+        if (!block.isUnder(player)) return
+        if (player.isSneaking) return
+        PlayerMessages.BREAK_UNDER_BLOCK_NOT_SNEAKING.sendTo(player)
         event.isCancelled = true
     }
 

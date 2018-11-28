@@ -87,17 +87,27 @@ object PlayerMessages {
 
     val SPAWN_PROTECT = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
-                    "スポーン地点に近いため、保護されています"
+                    "スポーン地点に近いので保護されている"
+    ))
+
+    val BREAK_NOT_TOOL = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "正しいツールを使って破壊しよう"
+    ))
+
+    val BREAK_UNDER_BLOCK_NOT_SNEAKING = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "自分より低いブロックはスニークしながら破壊しよう"
     ))
 
     val BATTLE_ANOTHER_PLAYER = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
-                    "他のプレイヤーがバトル中です"
+                    "他のプレイヤーがバトル中"
     ))
 
     val BREAK_OTHER_CHUNK = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
-                    "バトル中は敵のいるチャンクしか掘れません"
+                    "バトル中は敵のいるチャンクしか掘れない"
     ))
 
 

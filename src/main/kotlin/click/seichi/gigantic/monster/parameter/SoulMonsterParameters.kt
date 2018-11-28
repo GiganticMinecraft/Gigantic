@@ -188,7 +188,7 @@ object SoulMonsterParameters {
     )
 
     val WITHER = SoulMonsterParameter(
-            90L,
+            130L,
             120,
             500L,
             5L,

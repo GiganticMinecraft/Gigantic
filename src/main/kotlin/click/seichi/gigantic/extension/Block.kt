@@ -9,6 +9,7 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
+import org.bukkit.entity.Player
 
 /**
  * @author unicroak
@@ -121,3 +122,5 @@ val Block.surfaceBlock: Block
         }
         return block
     }
+
+fun Block.isUnder(player: Player) = player.location.blockY > y

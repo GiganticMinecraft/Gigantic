@@ -114,8 +114,7 @@ enum class SoulMonster(
             null,
             Color.fromRGB(37, 37, 39),
             SoulMonsterParameters.WITHER_SKELETON,
-            SoulMonsterAI::class,
-            DropRelic(Relic.WITHER_SKELETON_SKULL)
+            SoulMonsterAI::class
     ),
     WITHER(
             16,
@@ -124,8 +123,7 @@ enum class SoulMonster(
             null,
             Color.fromRGB(19, 19, 21),
             SoulMonsterParameters.WITHER,
-            SoulMonsterAI::class,
-            DropRelic(Relic.MANA_STONE)
+            SoulMonsterAI::class
     ),
     VILLAGER(
             17,
