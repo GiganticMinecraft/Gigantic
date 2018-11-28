@@ -43,7 +43,7 @@ enum class Achievement(
 
     // systems
     MANA_STONE(100, {
-        Quest.WITHER.isCleared(it)
+        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
     }, grantMessage = AchievementMessages.MANA_STONE,
             priority = UpdatePriority.HIGHEST),
     TELEPORT_PLAYER(101, {
@@ -121,7 +121,7 @@ enum class Achievement(
         Quest.CHICKEN.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_WITHER_ORDER(409, {
-        Quest.BLAZE.isCleared(it)
+        false
     }, action = {
         Quest.WITHER.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),

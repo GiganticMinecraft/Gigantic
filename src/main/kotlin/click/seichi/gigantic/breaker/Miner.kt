@@ -4,9 +4,7 @@ import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.popup.pops.PopUpParameters
@@ -42,15 +40,8 @@ open class Miner : Breaker {
         // add exp
         if (!block.isCrust && !block.isTree) return
 
-        val level = player.find(CatalogPlayerCache.LEVEL)?.current
-
-        if (level != null &&
-                level != PlayerLevelConfig.MAX &&
-                (level != Defaults.MANA_UNLOCK_LEVEL || Achievement.MANA_STONE.isGranted(player))
-        ) {
-            player.manipulate(CatalogPlayerCache.EXP) {
-                it.add(1L)
-            }
+        player.manipulate(CatalogPlayerCache.EXP) {
+            it.add(1L)
         }
 
         if (Achievement.MINE_COMBO.isGranted(player)) {

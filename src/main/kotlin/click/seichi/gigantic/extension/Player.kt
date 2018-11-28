@@ -9,7 +9,6 @@ import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.util.CardinalDirection
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
@@ -75,10 +74,6 @@ fun Player.spawnColoredParticleSpherically(
         count: Int = 1,
         radius: Double
 ) = spawnColoredParticle(location, color, count, NoiseData(radius, { Random.nextGaussian(variance = it / 2) }))
-
-fun Player.hasRelic(relic: Relic): Boolean {
-    return getOrPut(Keys.RELIC_MAP[relic] ?: return false) > 0
-}
 
 fun Player.findBattle() = BattleManager.findBattle(this)
 
