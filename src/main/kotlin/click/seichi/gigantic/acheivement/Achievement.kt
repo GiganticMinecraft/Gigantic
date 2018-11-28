@@ -59,10 +59,10 @@ enum class Achievement(
 
     // skills
     SKILL_FLASH(200, {
-        it.hasRelic(Relic.PIGS_FEATHER)
+        Quest.PIG.isCleared(it)
     }, grantMessage = AchievementMessages.UNLOCK_FLASH),
     SKILL_MINE_BURST(201, {
-        it.hasRelic(Relic.BLUE_BLAZE_POWDER)
+        Quest.BLAZE.isCleared(it)
     }, grantMessage = AchievementMessages.SKILL_MINE_BURST),
 
     // spells

@@ -57,8 +57,7 @@ enum class SoulMonster(
             null,
             Color.fromRGB(255, 182, 193),
             SoulMonsterParameters.MR_PIG,
-            SoulMonsterAI::class,
-            DropRelic(Relic.PIGS_FEATHER)
+            SoulMonsterAI::class
     ),
 
 
@@ -87,8 +86,7 @@ enum class SoulMonster(
             null,
             Color.fromRGB(82, 154, 222),
             SoulMonsterParameters.BLUE_BLAZE,
-            SoulMonsterAI::class,
-            DropRelic(Relic.BLUE_BLAZE_POWDER)
+            SoulMonsterAI::class
     ),
     CHICKEN(
             13,
@@ -145,8 +143,7 @@ enum class SoulMonster(
             null,
             Color.fromRGB(71, 99, 43),
             SoulMonsterParameters.ZOMBIE_VILLAGER,
-            SoulMonsterAI::class,
-            DropRelic(Relic.ROTTEN_FLESH)
+            SoulMonsterAI::class
     ),
     TURTLE(
             19,
