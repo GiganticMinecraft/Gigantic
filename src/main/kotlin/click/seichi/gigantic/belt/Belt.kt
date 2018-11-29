@@ -2,6 +2,7 @@ package click.seichi.gigantic.belt
 
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.item.Armor
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.HandItem
@@ -78,6 +79,15 @@ enum class Belt(
 
     fun findItem(slot: Int): HandItem? {
         return buttonMap[slot] as HandItem?
+    }
+
+    fun grant(player: Player) {
+        player.offer(Keys.BELT_UNLOCK_MAP[this] ?: return, true)
+    }
+
+    fun revoke(player: Player) {
+        player.offer(Keys.BELT_UNLOCK_MAP[this] ?: return, false)
+        player.offer(Keys.BELT_TOGGLE_MAP[this] ?: return, false)
     }
 
 }

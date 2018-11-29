@@ -1,5 +1,6 @@
 package click.seichi.gigantic.acheivement
 
+import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
@@ -31,6 +32,7 @@ enum class Achievement(
             it.unlock(Tool.SHOVEL)
             it.unlock(Tool.AXE)
         }
+        Belt.DEFAULT.grant(player)
     }, grantMessage = AchievementMessages.FIRST_JOIN),
     FIRST_LEVEL_UP(1, {
         it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 2
