@@ -2,6 +2,8 @@ package click.seichi.gigantic.tool
 
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.item.HandItem
 import click.seichi.gigantic.item.items.HandItems
 import click.seichi.gigantic.player.Defaults
@@ -30,4 +32,35 @@ enum class Tool(
         val slot = player.getOrPut(Keys.BELT).toolSlot
         player.inventory.setItem(slot, findItemStack(player) ?: Defaults.ITEM)
     }
+
+
+    fun grant(player: Player) {
+        player.offer(Keys.TOOL_UNLOCK_MAP[this]!!, true)
+    }
+
+    fun revoke(player: Player) {
+        player.offer(Keys.TOOL_UNLOCK_MAP[this]!!, false)
+        player.offer(Keys.TOOL_TOGGLE_MAP[this]!!, false)
+    }
+
+    fun canSwitch(player: Player): Boolean {
+        if (!player.getOrPut(Keys.TOOL_UNLOCK_MAP[this]!!)) return false
+
+        return player.getOrPut(Keys.TOOL_TOGGLE_MAP[this]!!)
+    }
+
+    fun isGranted(player: Player): Boolean {
+        return player.getOrPut(Keys.TOOL_UNLOCK_MAP[this]!!)
+    }
+
+    fun toggle(player: Player): Boolean {
+        var canSwitch = false
+        if (isGranted(player))
+            player.transform(Keys.TOOL_TOGGLE_MAP[this]!!) {
+                canSwitch = !it
+                canSwitch
+            }
+        return canSwitch
+    }
+
 }

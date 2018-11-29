@@ -9,6 +9,7 @@ import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.util.CardinalDirection
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
@@ -41,8 +42,6 @@ fun <V : Any?> Player.replace(key: Key<PlayerCache, V>, value: V) = PlayerCacheM
 fun <V : Any?> Player.transform(key: Key<PlayerCache, V>, transforming: (V) -> V) = PlayerCacheMemory.get(uniqueId).transform(key, transforming)
 
 fun <M : Manipulator<M, PlayerCache>> Player.find(clazz: Class<M>) = PlayerCacheMemory.get(uniqueId).find(clazz)
-
-fun <M : Manipulator<M, PlayerCache>> Player.offer(manipulator: M) = PlayerCacheMemory.get(uniqueId).offer(manipulator)
 
 fun <M : Manipulator<M, PlayerCache>> Player.manipulate(clazz: Class<M>, transforming: (M) -> Unit) = PlayerCacheMemory.get(uniqueId).manipulate(clazz, transforming)
 
@@ -109,4 +108,12 @@ fun Player.updateBag() {
 
 fun Player.fixHandToTool() {
     inventory.heldItemSlot = getOrPut(Keys.BELT).toolSlot
+}
+
+fun Player.switchTool(): Tool? {
+    var tool: Tool? = null
+    manipulate(CatalogPlayerCache.TOOL_SWITCHER) {
+        tool = it.switch()
+    }
+    return tool
 }

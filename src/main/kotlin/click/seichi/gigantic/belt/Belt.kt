@@ -3,6 +3,7 @@ package click.seichi.gigantic.belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.item.Armor
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.HandItem
@@ -82,12 +83,29 @@ enum class Belt(
     }
 
     fun grant(player: Player) {
-        player.offer(Keys.BELT_UNLOCK_MAP[this] ?: return, true)
+        player.offer(Keys.BELT_UNLOCK_MAP[this]!!, true)
     }
 
     fun revoke(player: Player) {
-        player.offer(Keys.BELT_UNLOCK_MAP[this] ?: return, false)
-        player.offer(Keys.BELT_TOGGLE_MAP[this] ?: return, false)
+        player.offer(Keys.BELT_UNLOCK_MAP[this]!!, false)
+        player.offer(Keys.BELT_TOGGLE_MAP[this]!!, false)
+    }
+
+    fun canSwitch(player: Player): Boolean {
+        if (!player.getOrPut(Keys.BELT_UNLOCK_MAP[this]!!)) return false
+
+        return player.getOrPut(Keys.BELT_TOGGLE_MAP[this]!!)
+    }
+
+    fun isGranted(player: Player): Boolean {
+        return player.getOrPut(Keys.BELT_UNLOCK_MAP[this]!!)
+    }
+
+    fun toggle(player: Player) {
+        if (isGranted(player))
+            player.transform(Keys.BELT_TOGGLE_MAP[this]!!) {
+                !it
+            }
     }
 
 }

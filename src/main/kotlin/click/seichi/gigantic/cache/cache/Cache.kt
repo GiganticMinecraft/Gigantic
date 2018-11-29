@@ -19,7 +19,7 @@ abstract class Cache<C : Cache<C>> {
 
     @Suppress("UNCHECKED_CAST")
     fun <M : Manipulator<M, C>> find(clazz: Class<M>): M? {
-        val manipulator = manipulatorMap[clazz] as? M ?: clazz.newInstance().from(this)
+        val manipulator = (manipulatorMap[clazz] as? M ?: clazz.newInstance()).from(this)
         return manipulator?.also { manipulatorMap[clazz] = it }
     }
 

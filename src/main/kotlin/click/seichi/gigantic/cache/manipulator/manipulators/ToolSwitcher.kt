@@ -41,23 +41,14 @@ class ToolSwitcher : Manipulator<ToolSwitcher, PlayerCache> {
         return true
     }
 
-    fun canSwitch(tool: Tool) = (map[tool] ?: false) && (unlockMap[tool] ?: false)
-
-    fun setCanSwitch(tool: Tool, canSwitch: Boolean) {
-        if (unlockMap[tool] == true)
-            map[tool] = canSwitch
-    }
-
-    fun unlock(tool: Tool) {
-        unlockMap[tool] = true
-    }
+    private fun canSwitch(tool: Tool) = (map[tool] ?: false) && (unlockMap[tool] ?: false)
 
     fun switch(): Tool {
         current = nextTool()
         return current
     }
 
-    fun nextTool(): Tool {
+    private fun nextTool(): Tool {
         val currentIndex = toolList.indexOf(current)
         return toolList.asSequence().filterIndexed { index, tool ->
             index > currentIndex && canSwitch(tool)

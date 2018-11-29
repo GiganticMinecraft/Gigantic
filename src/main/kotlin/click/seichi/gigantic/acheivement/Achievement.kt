@@ -27,11 +27,9 @@ enum class Achievement(
 ) {
     // messages
     JOIN_SERVER(0, { true }, action = { player ->
-        player.manipulate(CatalogPlayerCache.TOOL_SWITCHER) {
-            it.unlock(Tool.PICKEL)
-            it.unlock(Tool.SHOVEL)
-            it.unlock(Tool.AXE)
-        }
+        Tool.PICKEL.grant(player)
+        Tool.SHOVEL.grant(player)
+        Tool.AXE.grant(player)
         Belt.DEFAULT.grant(player)
     }, grantMessage = AchievementMessages.FIRST_JOIN),
     FIRST_LEVEL_UP(1, {
