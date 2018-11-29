@@ -1,9 +1,6 @@
 package click.seichi.gigantic.message
 
-import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.manipulators.Mana
-import click.seichi.gigantic.extension.getOrPut
-import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
@@ -50,8 +47,6 @@ class ManaMessage(
     private val spaceString = (1..(50 - maxNum)).joinToString(separator = "") { " " }
 
     override fun sendTo(player: Player) {
-        player.offer(Keys.IS_UPDATE_PROFILE, true)
-        player.getOrPut(Keys.BAG).carry(player)
         player.sendTitle(
                 "",
                 "$remainNumString$lostNumString$spaceString",

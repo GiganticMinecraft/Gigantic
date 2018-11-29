@@ -93,14 +93,23 @@ class PlayerListener : Listener {
 
         player.manipulate(CatalogPlayerCache.MANA) {
             it.updateMaxMana()
+        }
+        player.find(CatalogPlayerCache.MANA)?.let {
             if (Achievement.MANA_STONE.isGranted(player) && it.max > 0.toBigDecimal())
                 PlayerMessages.MANA_DISPLAY(it).sendTo(player)
         }
 
+
         player.manipulate(CatalogPlayerCache.HEALTH) {
             it.updateMaxHealth()
+        }
+        player.find(CatalogPlayerCache.HEALTH)?.let {
             PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
         }
+
+        player.offer(Keys.IS_UPDATE_PROFILE, true)
+        player.getOrPut(Keys.BAG).carry(player)
+
         player.saturation = Float.MAX_VALUE
         player.foodLevel = 20
         // 4秒間無敵付与
@@ -183,9 +192,6 @@ class PlayerListener : Listener {
             val prevMax = it.max
             it.updateMaxMana()
             it.increase(it.max, true)
-            if (it.max > 0.toBigDecimal()) {
-                PlayerMessages.MANA_DISPLAY(it).sendTo(player)
-            }
             if (prevMax == it.max) return@manipulate
             if (!Achievement.MANA_STONE.isGranted(player)) return@manipulate
             PlayerMessages.LEVEL_UP_MANA(prevMax, it.max).sendTo(player)
@@ -195,10 +201,20 @@ class PlayerListener : Listener {
             val prevMax = it.max
             it.updateMaxHealth()
             it.increase(it.max)
-            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
             if (prevMax == it.max) return@manipulate
             PlayerMessages.LEVEL_UP_HEALTH(prevMax, it.max).sendTo(player)
         }
+
+        player.find(CatalogPlayerCache.MANA)?.let {
+            if (Achievement.MANA_STONE.isGranted(player) && it.max > 0.toBigDecimal())
+                PlayerMessages.MANA_DISPLAY(it).sendTo(player)
+        }
+        player.find(CatalogPlayerCache.HEALTH)?.let {
+            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+        }
+
+        player.offer(Keys.IS_UPDATE_PROFILE, true)
+        player.getOrPut(Keys.BAG).carry(player)
 
     }
 
@@ -265,6 +281,9 @@ class PlayerListener : Listener {
             }
             PlayerMessages.HEALTH_DISPLAY(player.find(CatalogPlayerCache.HEALTH) ?: return@runTaskLater
             ).sendTo(player)
+
+            player.offer(Keys.IS_UPDATE_PROFILE, true)
+            player.getOrPut(Keys.BAG).carry(player)
         }, 1L)
 
     }

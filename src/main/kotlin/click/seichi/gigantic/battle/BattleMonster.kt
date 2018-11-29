@@ -5,10 +5,7 @@ import click.seichi.gigantic.animation.animations.BattleMonsterAnimations
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.manipulate
-import click.seichi.gigantic.extension.offer
-import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
@@ -251,10 +248,16 @@ class BattleMonster(
                 if (health.isZero) {
                     player.offer(Keys.DEATH_MESSAGE, DeathMessages.BY_MONSTER(player.name, monster))
                 }
-                PlayerMessages.HEALTH_DISPLAY(health).sendTo(player)
                 PlayerSounds.INJURED.play(player.location)
                 BattleMessages.DAMAGE(monster, monster.parameter.power).sendTo(player)
             }
+
+            player.find(CatalogPlayerCache.HEALTH)?.let {
+                PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
+            }
+
+            player.offer(Keys.IS_UPDATE_PROFILE, true)
+            player.getOrPut(Keys.BAG).carry(player)
 
             if (!SoulMonster.ZOMBIE_VILLAGER.isDefeatedBy(player)) {
                 BattleMessages.FIRST_DAMAGE.sendTo(player)

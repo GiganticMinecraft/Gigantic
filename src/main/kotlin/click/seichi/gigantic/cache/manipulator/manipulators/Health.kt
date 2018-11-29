@@ -47,11 +47,10 @@ class Health : Manipulator<Health, PlayerCache> {
             current in (next + 1)..max -> current = max // overflow
             next < current -> {
             } // overflow,current = current
-            current < max -> current = next.coerceAtMost(max)
+            current <= max -> current = next.coerceAtMost(max)
             else -> {
             } // current = current
         }
-
         return current - prev
     }
 

@@ -105,17 +105,27 @@ object Skills {
     val HEAL = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (SkillParameters.HEAL_PROBABILITY_PERCENT < Random.nextInt(100)) return null
-            val health = player.find(CatalogPlayerCache.HEALTH) ?: return null
-            if (health.isMaxHealth()) return null
+            player.find(CatalogPlayerCache.HEALTH)?.let {
+                if (it.isMaxHealth()) return null
+            } ?: return null
+
             return Consumer { p ->
                 val block = p.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
+                var wrappedAmount = 0L
                 p.manipulate(CatalogPlayerCache.HEALTH) {
-                    val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_AMOUNT_PERCENT))
-                    SkillAnimations.HEAL.absorb(p, block.centralLocation)
-                    SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
-                    PlayerMessages.HEALTH_DISPLAY(it).sendTo(p)
-                    SkillSounds.HEAL.play(block.centralLocation)
+                    wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_AMOUNT_PERCENT))
                 }
+
+                SkillAnimations.HEAL.absorb(p, block.centralLocation)
+                SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
+                SkillSounds.HEAL.play(block.centralLocation)
+
+                player.find(CatalogPlayerCache.HEALTH)?.let {
+                    PlayerMessages.HEALTH_DISPLAY(it).sendTo(p)
+                }
+
+                player.offer(Keys.IS_UPDATE_PROFILE, true)
+                player.getOrPut(Keys.BAG).carry(player)
             }
         }
 
