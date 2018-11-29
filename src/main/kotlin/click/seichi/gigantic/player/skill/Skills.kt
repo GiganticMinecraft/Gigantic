@@ -108,12 +108,13 @@ object Skills {
             val health = player.find(CatalogPlayerCache.HEALTH) ?: return null
             if (health.isMaxHealth()) return null
             return Consumer { p ->
-                val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
+                val block = p.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 p.manipulate(CatalogPlayerCache.HEALTH) {
                     val wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_AMOUNT_PERCENT))
-                    SkillAnimations.HEAL.start(p.location.clone().add(0.0, 1.7, 0.0))
+                    SkillAnimations.HEAL.absorb(p, block.centralLocation)
                     SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
                     PlayerMessages.HEALTH_DISPLAY(it).sendTo(p)
+                    SkillSounds.HEAL.play(block.centralLocation)
                 }
             }
         }

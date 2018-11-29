@@ -1,6 +1,7 @@
 package click.seichi.gigantic.sound.sounds
 
 import click.seichi.gigantic.sound.DetailedSound
+import click.seichi.gigantic.util.Random
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
 
@@ -40,10 +41,10 @@ object SkillSounds {
             volume = 1.0F
     )
 
-    val SWITCH = DetailedSound(
-            Sound.ITEM_ARMOR_EQUIP_DIAMOND,
+    val HEAL = DetailedSound(
+            Sound.ITEM_SHOVEL_FLATTEN,
             SoundCategory.BLOCKS,
-            pitch = 1.4F,
+            pitch = (0.2 + Random.nextGaussian(variance = 0.4)).toFloat(),
             volume = 1.0F
     )
 

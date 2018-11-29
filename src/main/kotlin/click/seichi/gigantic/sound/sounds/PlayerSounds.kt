@@ -89,5 +89,11 @@ object PlayerSounds {
             volume = 0.5F
     )
 
+    val SWITCH = DetailedSound(
+            Sound.ITEM_ARMOR_EQUIP_DIAMOND,
+            SoundCategory.BLOCKS,
+            pitch = 1.4F,
+            volume = 1.0F
+    )
 
 }

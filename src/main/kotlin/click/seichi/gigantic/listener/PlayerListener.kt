@@ -15,7 +15,6 @@ import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.popup.pops.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
-import click.seichi.gigantic.sound.sounds.SkillSounds
 import click.seichi.gigantic.tool.Tool
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -165,7 +164,7 @@ class PlayerListener : Listener {
         val nextTool = player.getOrPut(Keys.TOOL)
         if (current == nextTool) return
         nextTool.update(player)
-        SkillSounds.SWITCH.playOnly(player)
+        PlayerSounds.SWITCH.playOnly(player)
     }
 
     @EventHandler

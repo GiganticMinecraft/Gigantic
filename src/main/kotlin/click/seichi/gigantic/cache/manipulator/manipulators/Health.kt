@@ -32,7 +32,8 @@ class Health : Manipulator<Health, PlayerCache> {
     }
 
     override fun set(cache: Cache<PlayerCache>): Boolean {
-        return cache.offer(Keys.HEALTH, current)
+        cache.offer(Keys.HEALTH, current)
+        return true
     }
 
     /**

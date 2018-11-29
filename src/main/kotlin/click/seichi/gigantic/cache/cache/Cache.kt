@@ -23,8 +23,6 @@ abstract class Cache<C : Cache<C>> {
         return manipulator?.also { manipulatorMap[clazz] = it }
     }
 
-    fun <M : Manipulator<M, C>> offer(manipulator: M) = manipulator.set(this)
-
     @Suppress("UNCHECKED_CAST")
     fun <M : Manipulator<M, C>> manipulate(clazz: Class<M>, manipulating: (M) -> Unit): Boolean {
         return find(clazz)?.apply(manipulating)?.set(this) ?: false

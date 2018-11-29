@@ -7,7 +7,7 @@ import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.ToolSwitchSettingMenu
 import click.seichi.gigantic.message.messages.menu.ToolSwitchMessages
-import click.seichi.gigantic.sound.sounds.SkillSounds
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.tool.Tool
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -32,7 +32,7 @@ object ToolSwitchSettingButtons {
             override fun onClick(player: Player, event: InventoryClickEvent) {
                 if (!tool.toggle(player)) {
                     player.switchTool()
-                    SkillSounds.SWITCH.playOnly(player)
+                    PlayerSounds.SWITCH.playOnly(player)
                 }
                 player.updateBelt(true, true)
                 ToolSwitchSettingMenu.reopen(player)

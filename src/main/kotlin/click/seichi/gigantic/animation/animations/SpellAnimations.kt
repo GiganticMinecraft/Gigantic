@@ -13,8 +13,6 @@ import org.bukkit.inventory.ItemStack
  */
 object SpellAnimations {
 
-
-
     val STELLA_CLAIR = Animation(15) { location, _ ->
         location.world.spawnParticle(Particle.DOLPHIN, location, 10,
                 Random.nextGaussian(0.0, 0.15),

@@ -43,7 +43,7 @@ fun <V : Any?> Player.transform(key: Key<PlayerCache, V>, transforming: (V) -> V
 
 fun <M : Manipulator<M, PlayerCache>> Player.find(clazz: Class<M>) = PlayerCacheMemory.get(uniqueId).find(clazz)
 
-fun <M : Manipulator<M, PlayerCache>> Player.manipulate(clazz: Class<M>, transforming: (M) -> Unit) = PlayerCacheMemory.get(uniqueId).manipulate(clazz, transforming)
+fun <M : Manipulator<M, PlayerCache>> Player.manipulate(clazz: Class<M>, manipulating: (M) -> Unit) = PlayerCacheMemory.get(uniqueId).manipulate(clazz, manipulating)
 
 val Player.wrappedLocale: Locale
     get() = getOrPut(Keys.LOCALE)

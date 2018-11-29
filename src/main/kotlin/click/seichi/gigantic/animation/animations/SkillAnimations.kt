@@ -1,7 +1,9 @@
 package click.seichi.gigantic.animation.animations
 
 import click.seichi.gigantic.animation.Animation
+import click.seichi.gigantic.extension.spawnColoredParticle
 import click.seichi.gigantic.util.Random
+import org.bukkit.Color
 import org.bukkit.Particle
 
 /**
@@ -26,11 +28,9 @@ object SkillAnimations {
 
     }
 
-    val HEAL = Animation(1) { location, _ ->
-        location.world.spawnParticle(Particle.HEART, location, 3,
-                Random.nextGaussian(0.0, 0.3),
-                Random.nextGaussian(0.0, 0.3),
-                Random.nextGaussian(0.0, 0.3)
-        )
+    val HEAL = Animation(5) { location, ticks ->
+        if (ticks == 0L)
+            location.world.spawnParticle(Particle.HEART, location, 1)
+        location.world.spawnColoredParticle(location, Color.fromRGB(204, 0, 0), 1)
     }
 }
