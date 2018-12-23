@@ -9,8 +9,6 @@ import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.HandItem
 import click.seichi.gigantic.item.items.Armors
 import click.seichi.gigantic.item.items.HandItems
-import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.message.messages.BeltMessages
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -20,7 +18,6 @@ import org.bukkit.inventory.ItemStack
  */
 enum class Belt(
         val id: Int,
-        val localizedName: LocalizedText,
         val toolSlot: Int,
         val offHandItem: HandItem?,
         val helmet: Armor?,
@@ -31,7 +28,6 @@ enum class Belt(
 ) {
     DEFAULT(
             1,
-            BeltMessages.DIG,
             0,
             HandItems.MANA_STONE,
             Armors.HELMET,
