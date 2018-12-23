@@ -36,10 +36,10 @@ class Cutter : Miner() {
 
             // 破壊ブロック段を処理
             relationalFaceSet.map {
-                Bukkit.getScheduler().runTaskLater(
+                Bukkit.getScheduler().scheduleSyncDelayedTask(
                         Gigantic.PLUGIN,
                         {
-                            if (!player.isValid) return@runTaskLater
+                            if (!player.isValid) return@scheduleSyncDelayedTask
                             breakRelationalBlock(player, target.getRelative(it), false)
                         },
                         when (it) {
@@ -58,10 +58,10 @@ class Cutter : Miner() {
             // 破壊ブロック段の上段を処理
             val upperBlock = target.getRelative(BlockFace.UP)
             relationalFaceSet.map {
-                Bukkit.getScheduler().runTaskLater(
+                Bukkit.getScheduler().scheduleSyncDelayedTask(
                         Gigantic.PLUGIN,
                         {
-                            if (!player.isValid) return@runTaskLater
+                            if (!player.isValid) return@scheduleSyncDelayedTask
                             breakRelationalBlock(player, upperBlock.getRelative(it), false)
                         },
                         when (it) {
@@ -77,10 +77,10 @@ class Cutter : Miner() {
                         }
                 )
             }
-            Bukkit.getScheduler().runTaskLater(
+            Bukkit.getScheduler().scheduleSyncDelayedTask(
                     Gigantic.PLUGIN,
                     {
-                        if (!player.isValid) return@runTaskLater
+                        if (!player.isValid) return@scheduleSyncDelayedTask
                         breakRelationalBlock(player, upperBlock, false)
                     },
                     2L
@@ -89,10 +89,10 @@ class Cutter : Miner() {
             // 破壊ブロック段の下段を処理
             val underBlock = target.getRelative(BlockFace.DOWN)
             relationalFaceSet.map {
-                Bukkit.getScheduler().runTaskLater(
+                Bukkit.getScheduler().scheduleSyncDelayedTask(
                         Gigantic.PLUGIN,
                         {
-                            if (!player.isValid) return@runTaskLater
+                            if (!player.isValid) return@scheduleSyncDelayedTask
                             breakRelationalBlock(player, underBlock.getRelative(it), false)
                         },
                         when (it) {
@@ -108,10 +108,10 @@ class Cutter : Miner() {
                         }
                 )
             }
-            Bukkit.getScheduler().runTaskLater(
+            Bukkit.getScheduler().scheduleSyncDelayedTask(
                     Gigantic.PLUGIN,
                     {
-                        if (!player.isValid) return@runTaskLater
+                        if (!player.isValid) return@scheduleSyncDelayedTask
                         breakRelationalBlock(player, underBlock, false)
                     },
                     2L

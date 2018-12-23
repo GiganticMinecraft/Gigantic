@@ -65,7 +65,7 @@ private fun Block.fallUpperCrustBlock() {
                 )
                 target.type = Material.AIR
                 count++
-                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, this, 2L)
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, this, 2L)
             }
         }
     }

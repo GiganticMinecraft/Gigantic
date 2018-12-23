@@ -41,11 +41,11 @@ class WorldListener : Listener {
 
     @EventHandler
     fun onWorldSave(event: WorldSaveEvent) {
-        Bukkit.getScheduler().runTask(Gigantic.PLUGIN) {
+        Bukkit.getScheduler().runTask(Gigantic.PLUGIN, Runnable {
             Bukkit.getOnlinePlayers().forEach {
                 PlayerCacheMemory.write(it.uniqueId, false)
             }
-        }
+        })
     }
 
 }

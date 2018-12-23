@@ -34,7 +34,7 @@ class AquaLinea : Miner(), SpellCaster {
         // Relationalの連続破壊
         getRelationalBlocks(player, base).toSet().forEach { target ->
             delay += SpellParameters.AQUA_LINEA_LINED_BREAK_INTERVAL
-            Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
                 breakRelationalBlock(player, target, false, linedBlockFace, 1)
             }, delay)
         }
@@ -92,9 +92,9 @@ class AquaLinea : Miner(), SpellCaster {
         if (count > maxCount) return
 
         // restart 10 ticks later
-        Bukkit.getScheduler().runTaskLater(
+        Bukkit.getScheduler().scheduleSyncDelayedTask(
                 Gigantic.PLUGIN, {
-            if (!player.isValid) return@runTaskLater
+            if (!player.isValid) return@scheduleSyncDelayedTask
             breakRelationalBlock(player, target, false, linedBlockFace, count + 1)
         }, SpellParameters.AQUA_LINEA_RESTART_BREAK_INTERVAL)
 
@@ -112,9 +112,9 @@ class AquaLinea : Miner(), SpellCaster {
         if (distance > maxDistance) return
 
         // break
-        Bukkit.getScheduler().runTaskLater(
+        Bukkit.getScheduler().scheduleSyncDelayedTask(
                 Gigantic.PLUGIN, {
-            if (!player.isValid) return@runTaskLater
+            if (!player.isValid) return@scheduleSyncDelayedTask
             breakLinedBlock(player, target.getRelative(linedBlockFace), false, linedBlockFace, distance + 1)
         }, 1L)
 

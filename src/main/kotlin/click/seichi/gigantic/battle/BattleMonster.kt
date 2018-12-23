@@ -169,21 +169,21 @@ class BattleMonster(
         if (monster.parameter.attackTimes > 0) {
             (1..monster.parameter.attackTimes).forEach { index ->
                 val shotDelay = index * monster.parameter.shotInterval
-                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
                     val attackBlocks = ai.getAttackBlocks(chunk, copyAttackBlocks(), attackTarget, elapsedTick + shotDelay)
                     if (attackBlocks == null) {
                         disappearCount++
                         if (disappearCount > 5 * monster.parameter.attackTimes) {
                             state = SoulMonsterState.DISAPPEAR
                         }
-                        return@runTaskLater
+                        return@scheduleSyncDelayedTask
                     }
                     attackBlocks.forEach { attack(it) }
                 }, shotDelay)
             }
         }
         val moveDelay = monster.parameter.attackTimes * 10L + 20L
-        Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
             state = SoulMonsterState.MOVE
             destination = ai.searchDestination(chunk, attackTarget, location)
             lastAttackTicks = elapsedTick + moveDelay
@@ -236,11 +236,11 @@ class BattleMonster(
         }.runTaskTimer(Gigantic.PLUGIN, 20, 1L)
 
         // attack
-        Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-            if (!entity.isValid || !player.isValid || player.isDead) return@runTaskLater
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
+            if (!entity.isValid || !player.isValid || player.isDead) return@scheduleSyncDelayedTask
 
-            if (!attackBlocks.remove(attackBlock)) return@runTaskLater
-            if (block.isEmpty) return@runTaskLater
+            if (!attackBlocks.remove(attackBlock)) return@scheduleSyncDelayedTask
+            if (block.isEmpty) return@scheduleSyncDelayedTask
 
             // health
             player.manipulate(CatalogPlayerCache.HEALTH) { health ->

@@ -53,10 +53,10 @@ class Explosion : Miner(), SpellCaster {
         if (depth > maxDepth) return
 
         relationalFaceSet.map {
-            Bukkit.getScheduler().runTaskLater(
+            Bukkit.getScheduler().scheduleSyncDelayedTask(
                     Gigantic.PLUGIN,
                     {
-                        if (!player.isValid) return@runTaskLater
+                        if (!player.isValid) return@scheduleSyncDelayedTask
                         breakRelationalBlock(player, base, target.getRelative(it), false, depth + 1)
                     },
                     when (it) {
@@ -74,10 +74,10 @@ class Explosion : Miner(), SpellCaster {
         }
         val upperBlock = target.getRelative(BlockFace.UP)
         relationalFaceSet.map {
-            Bukkit.getScheduler().runTaskLater(
+            Bukkit.getScheduler().scheduleSyncDelayedTask(
                     Gigantic.PLUGIN,
                     {
-                        if (!player.isValid) return@runTaskLater
+                        if (!player.isValid) return@scheduleSyncDelayedTask
                         breakRelationalBlock(player, base, upperBlock.getRelative(it), false, depth + 1)
                     },
                     when (it) {
@@ -93,20 +93,20 @@ class Explosion : Miner(), SpellCaster {
                     }
             )
         }
-        Bukkit.getScheduler().runTaskLater(
+        Bukkit.getScheduler().scheduleSyncDelayedTask(
                 Gigantic.PLUGIN,
                 {
-                    if (!player.isValid) return@runTaskLater
+                    if (!player.isValid) return@scheduleSyncDelayedTask
                     breakRelationalBlock(player, base, upperBlock, false, depth + 1)
                 },
                 1L
         )
         val underBlock = target.getRelative(BlockFace.DOWN)
         relationalFaceSet.map {
-            Bukkit.getScheduler().runTaskLater(
+            Bukkit.getScheduler().scheduleSyncDelayedTask(
                     Gigantic.PLUGIN,
                     {
-                        if (!player.isValid) return@runTaskLater
+                        if (!player.isValid) return@scheduleSyncDelayedTask
                         breakRelationalBlock(player, base, underBlock.getRelative(it), false, depth + 1)
                     },
                     when (it) {
@@ -122,10 +122,10 @@ class Explosion : Miner(), SpellCaster {
                     }
             )
         }
-        Bukkit.getScheduler().runTaskLater(
+        Bukkit.getScheduler().scheduleSyncDelayedTask(
                 Gigantic.PLUGIN,
                 {
-                    if (!player.isValid) return@runTaskLater
+                    if (!player.isValid) return@scheduleSyncDelayedTask
                     breakRelationalBlock(player, base, underBlock, false, depth + 1)
                 },
                 1L

@@ -33,15 +33,11 @@ abstract class Cache<C : Cache<C>> {
     abstract fun write()
 
     fun readAsync() {
-        Bukkit.getScheduler().runTask(Gigantic.PLUGIN) {
-            read()
-        }
+        Bukkit.getScheduler().runTask(Gigantic.PLUGIN, Runnable { read() })
     }
 
     fun writeAsync() {
-        Bukkit.getScheduler().runTask(Gigantic.PLUGIN) {
-            write()
-        }
+        Bukkit.getScheduler().runTask(Gigantic.PLUGIN, Runnable { write() })
     }
 
     private fun <V : Any?> registerKey(key: Key<C, out V>, value: V? = null) {

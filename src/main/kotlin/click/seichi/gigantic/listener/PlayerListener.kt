@@ -274,12 +274,12 @@ class PlayerListener : Listener {
     @EventHandler
     fun onReSpawn(event: PlayerRespawnEvent) {
         val player = event.player ?: return
-        Bukkit.getServer().scheduler.runTaskLater(Gigantic.PLUGIN, {
-            if (!player.isValid) return@runTaskLater
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
+            if (!player.isValid) return@scheduleSyncDelayedTask
             player.manipulate(CatalogPlayerCache.HEALTH) {
                 it.increase(it.max.div(10.0).times(3.0).toLong())
             }
-            PlayerMessages.HEALTH_DISPLAY(player.find(CatalogPlayerCache.HEALTH) ?: return@runTaskLater
+            PlayerMessages.HEALTH_DISPLAY(player.find(CatalogPlayerCache.HEALTH) ?: return@scheduleSyncDelayedTask
             ).sendTo(player)
 
             player.offer(Keys.IS_UPDATE_PROFILE, true)

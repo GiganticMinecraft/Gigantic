@@ -120,8 +120,8 @@ object HandItems {
             val coolTime = !player.getOrPut(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN)
             if (coolTime) return
             player.offer(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN, false)
-            Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-                if (!player.isValid) return@runTaskLater
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
+                if (!player.isValid) return@scheduleSyncDelayedTask
                 player.offer(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN, true)
             }, 5L)
             player.transform(Keys.SPELL_TOGGLE) { spellToggle ->

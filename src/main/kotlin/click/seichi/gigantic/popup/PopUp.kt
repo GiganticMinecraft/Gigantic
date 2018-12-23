@@ -75,13 +75,13 @@ class PopUp(
             }
         }.apply {
             if (popPattern == PopPattern.POP_LONG) {
-                Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
                     setGravity(false)
                 }, 5L)
             }
 
-            Bukkit.getScheduler().runTaskLater(Gigantic.PLUGIN, {
-                if (!isValid) return@runTaskLater
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
+                if (!isValid) return@scheduleSyncDelayedTask
                 remove()
             }, when (popPattern) {
                 PopUp.PopPattern.STILL -> duration

@@ -24,7 +24,7 @@ class LinedChatMessage(
             .split(NEW_LINE_SYMBOL)
             .mapIndexed { index, text -> text to interval * index }
             .forEach {
-                Bukkit.getScheduler().runTaskLater(
+                Bukkit.getScheduler().scheduleSyncDelayedTask(
                         instance,
                         { if (player.isValid) protocol.sendTo(player, it.first) },
                         it.second
