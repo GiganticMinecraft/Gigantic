@@ -68,6 +68,9 @@ enum class Achievement(
     SPELL_STELLA_CLAIR(300, {
         MANA_STONE.isGranted(it)
     }, grantMessage = AchievementMessages.UNLOCK_STELLA_CLAIR),
+    SPELL_APOSTOLUS(301, {
+        MANA_STONE.isGranted(it)
+    }, grantMessage = AchievementMessages.UNLOCK_APOSTOLUS),
 
     // quest order
     QUEST_LADON_ORDER(400, {

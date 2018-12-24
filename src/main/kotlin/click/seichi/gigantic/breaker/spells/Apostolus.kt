@@ -13,10 +13,9 @@ import org.bukkit.entity.Player
 import java.math.BigDecimal
 
 /**
- *
  * @author tar0ss
  */
-class Explosion : Miner(), SpellCaster {
+class Apostolus : Miner(), SpellCaster {
 
     private val relationalFaceSet = setOf(
             BlockFace.NORTH,
@@ -39,7 +38,7 @@ class Explosion : Miner(), SpellCaster {
     }
 
     override fun calcConsumeMana(player: Player, block: Block): BigDecimal {
-        return SpellParameters.EXPLOSION_MANA.toBigDecimal()
+        return SpellParameters.APOSTOLUS_MANA.toBigDecimal()
     }
 
     override fun onCastToBlock(player: Player, block: Block) {

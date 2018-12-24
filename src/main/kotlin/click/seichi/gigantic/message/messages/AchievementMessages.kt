@@ -55,38 +55,6 @@ object AchievementMessages {
             }
     ))
 
-    val UNLOCK_HEAL = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}" +
-                        "回復スキル: ヒール を覚えた!!\n" +
-                        "${ChatColor.GRAY}" +
-                        "パッシブ効果: ブロックを破壊で最大体力の${SkillParameters.HEAL_AMOUNT_PERCENT}%を回復!!\n" +
-                        "通常破壊時に一定確率で発動する\n"
-            }
-    ))
-
-
-    val UNLOCK_KODAMA_DRAIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}" +
-                        "回復スキル: コダマ・ドレイン を覚えた!!\n" +
-                        "${ChatColor.GRAY}" +
-                        "パッシブ効果: 木を破壊して自身の体力を割合回復!!\n" +
-                        "原木を通常破壊時に発動!!\n"
-            }
-    ))
-
-
-    val UNLOCK_WILL_BASIC_1 = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}" +
-                        "意志と交感できるようになった!!\n" +
-                        "${ChatColor.GRAY}" +
-                        "ブロックを破壊すると、稀に遺志が現れるぞ!!\n" +
-                        "遺志と交感することで記憶を獲得しよう\n"
-            }
-    ))
-
     val MANA_STONE = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.AQUA}" +
@@ -107,29 +75,13 @@ object AchievementMessages {
             }
     ))
 
-    val UNLOCK_GRAND_NATURA = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_APOSTOLUS = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "破壊魔法: グランド・ナトラ を覚えた!!\n" +
-                        "\"スキル\"メニューで有効化しよう!!" +
+                        "回復魔法: アポストルス を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: 植物を吸収する\n" +
-                        "芝生又はキノコブロックを通常破壊時に発動\n" +
-                        "${ChatColor.BLUE}" +
-                        "---スニークで通常破壊"
-            }
-    ))
-
-    val UNLOCK_AQUA_LINEA = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}" +
-                        "破壊魔法: アクア・リネーア を覚えた!!\n" +
-                        "\"スキル\"メニューで有効化しよう!!" +
-                        "${ChatColor.GRAY}" +
-                        "パッシブ効果: ブロックが泡となって消える\n" +
-                        "通常破壊時に発動\n" +
-                        "${ChatColor.BLUE}" +
-                        "---スニークで通常破壊"
+                        "アクティブ効果: ブロック破壊時に，周囲のブロックも同時に破壊する!!\n" +
+                        "通常破壊時に発動する\n"
             }
     ))
 

@@ -2,7 +2,7 @@ package click.seichi.gigantic.player.spell
 
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SpellAnimations
-import click.seichi.gigantic.breaker.spells.Explosion
+import click.seichi.gigantic.breaker.spells.Apostolus
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
@@ -50,13 +50,13 @@ object Spells {
         }
     }
 
-    val EXPLOSION = object : Invokable {
+    val APOSTOLUS = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
             val mana = player.find(CatalogPlayerCache.MANA) ?: return null
             if (!mana.hasMana(0.toBigDecimal())) return null
             return Consumer { p ->
                 val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
-                Explosion().cast(p, b)
+                Apostolus().cast(p, b)
             }
         }
     }

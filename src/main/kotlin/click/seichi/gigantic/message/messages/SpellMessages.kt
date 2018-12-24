@@ -34,28 +34,20 @@ object SpellMessages {
                     )
             )
 
-    val EXPLOSION = LocalizedText(
-            Locale.JAPANESE to "エクスプロージョン"
+    val APOSTOLUS = LocalizedText(
+            Locale.JAPANESE to "アポストルス"
     )
 
-    val AQUA_LINEA = LocalizedText(
-            Locale.JAPANESE to "アクア・リネア"
-    )
-
-    val IGNIS_VOLCANO = LocalizedText(
-            Locale.JAPANESE to "イグニス・ヴォルケーノ"
-    )
-
-    val AER_SLASH = LocalizedText(
-            Locale.JAPANESE to "エアル・スラッシュ"
-    )
-
-    val TERRA_DRAIN = LocalizedText(
-            Locale.JAPANESE to "テラ・ドレイン"
-    )
-
-    val GRAND_NATURA = LocalizedText(
-            Locale.JAPANESE to "グランド・ナトラ"
-    )
+    val APOSTOLUS_LORE =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "アクティブ効果: ブロック破壊時,周囲も破壊"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    "全ての通常破壊で発動"
+                    )
+            )
 
 }
