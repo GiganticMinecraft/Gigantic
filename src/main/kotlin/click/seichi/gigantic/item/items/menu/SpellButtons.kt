@@ -31,7 +31,7 @@ object SpellButtons {
             }
 
             override fun onClick(player: Player, event: InventoryClickEvent) {
-                if (spell == Spell.APOSTOLUS) {
+                if (spell == Spell.APOSTOL) {
                     ApostolusSettingMenu.open(player)
                 }
             }

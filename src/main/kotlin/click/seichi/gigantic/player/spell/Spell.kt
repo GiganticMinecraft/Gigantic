@@ -30,14 +30,14 @@ enum class Spell(
             Achievement.SPELL_STELLA_CLAIR,
             Spells.STELLA_CLAIR
     ),
-    APOSTOLUS(
+    APOSTOL(
             1,
             1,
             ItemStack(Material.FIRE_CHARGE),
-            SpellMessages.APOSTOLUS,
-            SpellMessages.APOSTOLUS_LORE,
-            Achievement.SPELL_APOSTOLUS,
-            Spells.APOSTOLUS
+            SpellMessages.APOSTOL,
+            SpellMessages.APOSTOL_LORE,
+            Achievement.SPELL_APOSTOL,
+            Spells.APOSTOL
     )
     ;
 

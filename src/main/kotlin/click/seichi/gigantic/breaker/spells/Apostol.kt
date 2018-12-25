@@ -15,7 +15,7 @@ import java.math.BigDecimal
 /**
  * @author tar0ss
  */
-class Apostolus : Miner(), SpellCaster {
+class Apostol : Miner(), SpellCaster {
 
     override fun cast(player: Player, base: Block) {
         // この時点で既に破壊ブロックが存在しない可能性あり
@@ -25,12 +25,9 @@ class Apostolus : Miner(), SpellCaster {
         // onBreak処理（先にやっておくことで，途中でサーバーが終了したときに対応）
         // すべてのエフェクトの実行速度に影響を与えないようにする．
 
-        // TODO revase
-        /*
         player.manipulate(CatalogPlayerCache.MANA) {
             it.decrease(calcConsumeMana(player, breakBlockSet))
         }
-        */
 
         player.find(CatalogPlayerCache.MANA)?.let {
             PlayerMessages.MANA_DISPLAY(it).sendTo(player)

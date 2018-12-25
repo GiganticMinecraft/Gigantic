@@ -34,11 +34,11 @@ object SpellMessages {
                     )
             )
 
-    val APOSTOLUS = LocalizedText(
-            Locale.JAPANESE to "アポストルス"
+    val APOSTOL = LocalizedText(
+            Locale.JAPANESE to "アポストル"
     )
 
-    val APOSTOLUS_LORE =
+    val APOSTOL_LORE =
             listOf(
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.GRAY}" +

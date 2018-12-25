@@ -68,7 +68,7 @@ enum class Achievement(
     SPELL_STELLA_CLAIR(300, {
         MANA_STONE.isGranted(it)
     }, grantMessage = AchievementMessages.UNLOCK_STELLA_CLAIR),
-    SPELL_APOSTOLUS(301, {
+    SPELL_APOSTOL(301, {
         MANA_STONE.isGranted(it)
     }, grantMessage = AchievementMessages.UNLOCK_APOSTOLUS),
 
@@ -109,12 +109,14 @@ enum class Achievement(
         Quest.LOA.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_PIG_ORDER(406, {
-        Quest.BEGIN.isCleared(it)
+        Quest.BEGIN.isCleared(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
     }, action = {
         Quest.PIG.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_BLAZE_ORDER(407, {
-        Quest.PIG.isCleared(it)
+        Quest.PIG.isCleared(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 9
     }, action = {
         Quest.BLAZE.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
