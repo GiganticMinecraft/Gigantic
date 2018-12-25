@@ -5,7 +5,6 @@ import click.seichi.gigantic.item.items.menu.SpellButtons
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
 import click.seichi.gigantic.player.spell.Spell
-import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 
 /**
@@ -17,8 +16,7 @@ object SpellMenu : Menu() {
         get() = 9
 
     override fun getTitle(player: Player): String {
-        return "${ChatColor.BLACK}" +
-                SpellMenuMessages.TITLE.asSafety(player.wrappedLocale)
+        return SpellMenuMessages.TITLE.asSafety(player.wrappedLocale)
     }
 
     init {

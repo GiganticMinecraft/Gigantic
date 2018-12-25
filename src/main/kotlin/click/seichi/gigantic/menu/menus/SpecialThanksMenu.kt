@@ -4,7 +4,6 @@ import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.items.menu.PlayerHeadButton
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.BagMessages
-import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
@@ -18,8 +17,7 @@ object SpecialThanksMenu : Menu() {
         get() = 9
 
     override fun getTitle(player: Player): String {
-        return "${ChatColor.BLACK}" +
-                BagMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale)
+        return BagMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale)
     }
 
     private val playerMap: Map<String, String> = mapOf(

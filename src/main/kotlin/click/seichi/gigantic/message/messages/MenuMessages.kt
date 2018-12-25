@@ -11,13 +11,12 @@ object MenuMessages {
 
     val LINE = (1..23).joinToString(separator = "-") { "" }
 
-
     val BACK_BUTTON = { menuTitle: String ->
         LocalizedText(
                 Locale.JAPANESE to "${ChatColor.RESET}${ChatColor.GRAY}" +
                         menuTitle +
                         "${ChatColor.RESET}${ChatColor.GRAY}" +
-                        "に戻る"
+                        "メニューに戻る"
         )
     }
 

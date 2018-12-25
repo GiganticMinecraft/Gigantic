@@ -8,7 +8,6 @@ import click.seichi.gigantic.item.items.menu.QuestButtons
 import click.seichi.gigantic.menu.BookMenu
 import click.seichi.gigantic.message.messages.menu.QuestMenuMessages
 import click.seichi.gigantic.quest.Quest
-import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 
@@ -48,8 +47,7 @@ object QuestSelectMenu : BookMenu() {
     }
 
     override fun getTitle(player: Player, page: Int): String {
-        return "${ChatColor.BLACK}" +
-                "${QuestMenuMessages.SELECT_MENU_TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
+        return "${QuestMenuMessages.SELECT_MENU_TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {

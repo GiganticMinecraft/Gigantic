@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack
 /**
  * @author tar0ss
  */
-object ApostolusBreakAreaSettingMenu : Menu() {
+object ApostolusSettingMenu : Menu() {
 
     override val size: Int
         get() = 3 * 9

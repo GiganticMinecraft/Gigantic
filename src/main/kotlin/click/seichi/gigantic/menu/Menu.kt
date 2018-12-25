@@ -3,6 +3,7 @@ package click.seichi.gigantic.menu
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.sound.sounds.MenuSounds
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
@@ -30,11 +31,14 @@ abstract class Menu : InventoryHolder {
 
     open val closeSound = MenuSounds.MENU_CLOSE
 
+    open val titleColor = ChatColor.BLACK
+
     protected fun getButtonMap() = buttonMap.toMap()
 
     /**
-     * TODO 色をここで変更させるべきではない．別の変数に持たせておきたい
+     *
      * Menuのタイトルを取得します
+     * ここで色コードを入れないで下さい．
      *
      * @param player Menuを開いているplayer
      */
@@ -71,7 +75,7 @@ abstract class Menu : InventoryHolder {
     }
 
     protected open fun createInventory(player: Player): Inventory {
-        val title = getTitle(player)
+        val title = titleColor.toString() + getTitle(player)
         val inventory = when (type) {
             InventoryType.CHEST -> {
                 Bukkit.createInventory(this, size, title)

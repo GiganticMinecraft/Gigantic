@@ -5,7 +5,7 @@ import click.seichi.gigantic.extension.setEnchanted
 import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
-import click.seichi.gigantic.menu.menus.ApostolusBreakAreaSettingMenu
+import click.seichi.gigantic.menu.menus.ApostolusSettingMenu
 import click.seichi.gigantic.player.spell.Spell
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -32,7 +32,7 @@ object SpellButtons {
 
             override fun onClick(player: Player, event: InventoryClickEvent) {
                 if (spell == Spell.APOSTOLUS) {
-                    ApostolusBreakAreaSettingMenu.open(player)
+                    ApostolusSettingMenu.open(player)
                 }
             }
 

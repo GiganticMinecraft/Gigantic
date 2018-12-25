@@ -5,7 +5,6 @@ import click.seichi.gigantic.item.items.menu.ToolSwitchSettingButtons
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.menu.ToolSwitchMessages
 import click.seichi.gigantic.tool.Tool
-import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 
 /**
@@ -17,8 +16,7 @@ object ToolSwitchSettingMenu : Menu() {
         get() = 9
 
     override fun getTitle(player: Player): String {
-        return "${ChatColor.BLACK}" +
-                ToolSwitchMessages.TITLE.asSafety(player.wrappedLocale)
+        return ToolSwitchMessages.TITLE.asSafety(player.wrappedLocale)
     }
 
     init {

@@ -4,7 +4,6 @@ import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.items.menu.TeleportButtons
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.menu.TeleportMessages
-import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 
 /**
@@ -16,8 +15,7 @@ object TeleportMenu : Menu() {
         get() = 9
 
     override fun getTitle(player: Player): String {
-        return "${ChatColor.BLACK}" +
-                TeleportMessages.TITLE.asSafety(player.wrappedLocale)
+        return TeleportMessages.TITLE.asSafety(player.wrappedLocale)
     }
 
     init {

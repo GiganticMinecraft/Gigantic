@@ -8,7 +8,6 @@ import click.seichi.gigantic.item.items.menu.RelicButtons
 import click.seichi.gigantic.menu.BookMenu
 import click.seichi.gigantic.message.messages.menu.RelicMenuMessages
 import click.seichi.gigantic.relic.Relic
-import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 
@@ -47,8 +46,7 @@ object RelicMenu : BookMenu() {
     }
 
     override fun getTitle(player: Player, page: Int): String {
-        return "${ChatColor.BLACK}" +
-                "${RelicMenuMessages.TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
+        return "${RelicMenuMessages.TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {

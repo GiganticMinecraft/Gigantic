@@ -8,7 +8,6 @@ import click.seichi.gigantic.item.items.menu.TeleportButtons
 import click.seichi.gigantic.menu.BookMenu
 import click.seichi.gigantic.message.messages.menu.TeleportMessages
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 
@@ -54,8 +53,7 @@ object TeleportToPlayerMenu : BookMenu() {
     }
 
     override fun getTitle(player: Player, page: Int): String {
-        return "${ChatColor.BLACK}" +
-                "${TeleportMessages.TELEPORT_TO_PLAYER_TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
+        return "${TeleportMessages.TELEPORT_TO_PLAYER_TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
