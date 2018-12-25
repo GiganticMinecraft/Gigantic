@@ -9,7 +9,6 @@ import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.tool.Tool
-import click.seichi.gigantic.will.Will
 import org.bukkit.entity.Player
 
 /**
@@ -73,7 +72,24 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.UNLOCK_APOSTOLUS),
 
     // quest order
-    QUEST_LADON_ORDER(400, {
+    QUEST_BEGINS_ORDER(401, {
+        QUEST.isGranted(it)
+    }, action = {
+        Quest.BEGIN.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER_FIRST),
+    QUEST_PIG_ORDER(402, {
+        Quest.BEGIN.isCleared(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
+    }, action = {
+        Quest.PIG.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    QUEST_BLAZE_ORDER(403, {
+        Quest.PIG.isCleared(it) &&
+                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 9
+    }, action = {
+        Quest.BLAZE.order(it)
+    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    /*QUEST_LADON_ORDER(400, {
         false
     }, action = {
         Quest.LADON.order(it)
@@ -179,7 +195,7 @@ enum class Achievement(
         false
     }, action = {
         Quest.ENDER_MAN.order(it)
-    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    }, grantMessage = AchievementMessages.QUEST_ORDER),*/
     ;
 
     /**1から順に [update] される**/
