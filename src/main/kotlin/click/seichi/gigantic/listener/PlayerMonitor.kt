@@ -28,8 +28,13 @@ class PlayerMonitor : Listener {
 
         val player = event.player ?: return
         val block = event.block ?: return
-        if (block.isLog && ToolEnchantment.CUTTER.has(player)) Cutter().breakRelationalBlock(player, block, true)
-        Miner().breakBlock(player, block)
+        if (block.isLog && ToolEnchantment.CUTTER.has(player)) {
+            Cutter().breakRelationalBlock(player, block, true)
+        }
+        Miner().run {
+            onBreakBlock(player, block)
+            breakBlock(player, block)
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

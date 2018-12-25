@@ -12,6 +12,7 @@ import click.seichi.gigantic.popup.pops.SkillPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Effect
+import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
@@ -24,17 +25,21 @@ import org.bukkit.entity.Player
 open class Miner : Breaker {
 
     override fun breakBlock(player: Player, block: Block, isBroken: Boolean, showBrokenEffect: Boolean) {
-        onBreakBlock(player, block)
-        if (showBrokenEffect) {
-            block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation, 1, block.blockData)
-            block.world.playEffect(block.centralLocation, Effect.STEP_SOUND, block.type)
+        if (block.isLiquid) {
+            if (isBroken) return
+            block.type = Material.AIR
+        } else {
+            if (showBrokenEffect) {
+                block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation, 1, block.blockData)
+                block.world.playEffect(block.centralLocation, Effect.STEP_SOUND, block.type)
+            }
+            if (isBroken) return
+            block.breakNaturally(player.inventory.itemInMainHand)
         }
-        if (isBroken) return
-        block.breakNaturally(player.inventory.itemInMainHand)
     }
 
 
-    protected open fun onBreakBlock(player: Player, block: Block) {
+    open fun onBreakBlock(player: Player, block: Block) {
         block.update()
 
         // add exp

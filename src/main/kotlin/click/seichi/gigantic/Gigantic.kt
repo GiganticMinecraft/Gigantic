@@ -16,6 +16,7 @@ import com.comphenix.protocol.events.PacketListener
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
+import org.bukkit.block.Block
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.boss.BossBar
@@ -44,6 +45,8 @@ class Gigantic : JavaPlugin() {
             private set
 
         val DEFAULT_LOCALE = Locale.JAPANESE!!
+
+        val BROKEN_BLOCK_SET = mutableSetOf<Block>()
 
         fun createInvisibleBossBar(): BossBar = Bukkit.createBossBar(
                 "title",
@@ -276,8 +279,18 @@ class Gigantic : JavaPlugin() {
     }
 
     override fun onDisable() {
+
         SpiritManager.getSpiritSet().forEach { it.remove() }
+
         server.scheduler.cancelTasks(this)
+
+        //全ての破壊済ブロックを確認し，破壊されていなければ消す
+        BROKEN_BLOCK_SET.filter { !it.isEmpty }.also {
+            logger.info("破壊されているはずのブロックが${it.size}個 破壊されていなかったため，削除しました．")
+        }.forEach {
+            it.type = Material.AIR
+        }
+
         Bukkit.getOnlinePlayers().filterNotNull().forEach { player ->
             if (player.gameMode == GameMode.SPECTATOR) {
                 player.find(CatalogPlayerCache.AFK_LOCATION)?.let { it ->
@@ -288,6 +301,7 @@ class Gigantic : JavaPlugin() {
             PlayerCacheMemory.writeThenRemoved(player.uniqueId, false)
             player.kickPlayer("Restarting...Please wait a few minutes.")
         }
+
         logger.info("Gigantic is disabled!!")
         Bukkit.getPluginManager().disablePlugin(this)
     }

@@ -119,8 +119,10 @@ class Cutter : Miner() {
         }
 
         // ベースブロックで無ければ通常破壊処理
-        if (!isBaseBlock)
+        if (!isBaseBlock) {
+            onBreakBlock(player, target)
             breakBlock(player, target, false, false)
+        }
     }
 
     override fun onBreakBlock(player: Player, block: Block) {

@@ -39,16 +39,16 @@ class Apostolus : Miner(), SpellCaster {
         player.offer(Keys.IS_UPDATE_PROFILE, true)
         player.getOrPut(Keys.BAG).carry(player)
 
-        // 一旦破壊するブロック全てを保存（保存場所未定）
-
         // 実際の破壊処理（エフェクト部分）
-        // TODO ice and melt
-        breakBlockSet.forEach { target ->
-            breakBlock(player, target, false, false)
+        breakBlockSet.run {
+            forEach { target ->
+                breakBlock(player, target, false, false)
+            }
+            // 凍結，火成等の処理を最後にまとめる
+            forEach { target ->
+                onBreakBlock(player, target)
+            }
         }
-        // 正常に実行された場合は保存しておいたブロックをすべて削除
-
-        //終了
     }
 
     private fun calcBreakBlockSet(player: Player, base: Block): Set<Block> {
@@ -143,11 +143,20 @@ class Apostolus : Miner(), SpellCaster {
         }
 
         return allBlockSet.filter {
-            it.isCrust && it != base && !it.isSpawnArea
+            // 種類の制約
+            it.isCrust || it.isLiquid
+        }.filter {
+            // 因果の制約
+            it != base
+        }.filter {
+            // 場所の制約
+            !it.isSpawnArea
         }.toMutableSet().apply {
+            // 場所の制約
             if (!player.isSneaking) {
                 removeIf { it.isUnder(player) }
             }
+            // 場所の制約
             val battle = player.findBattle()
             removeIf { it.findBattle() != battle }
         }
