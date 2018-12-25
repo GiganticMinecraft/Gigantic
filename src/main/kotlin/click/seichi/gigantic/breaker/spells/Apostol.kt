@@ -160,7 +160,7 @@ class Apostol : Miner(), SpellCaster {
     }
 
     override fun calcConsumeMana(player: Player, breakBlockSet: Set<Block>): BigDecimal {
-        return SpellParameters.APOSTOLUS_MANA.toBigDecimal() * breakBlockSet.size.toBigDecimal()
+        return SpellParameters.APOSTOL_MANA.toBigDecimal() * breakBlockSet.size.toBigDecimal()
     }
 
     override fun onBreakBlock(player: Player, block: Block) {
