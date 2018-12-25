@@ -10,16 +10,17 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.tool.Tool
-import click.seichi.gigantic.util.CardinalDirection
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.chat.ComponentSerializer
 import org.bukkit.*
+import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
+import kotlin.math.roundToInt
 
 /**
  * @author tar0ss
@@ -48,8 +49,29 @@ fun <M : Manipulator<M, PlayerCache>> Player.manipulate(clazz: Class<M>, manipul
 val Player.wrappedLocale: Locale
     get() = getOrPut(Keys.LOCALE)
 
-val Player.cardinalDirection
-    get() = CardinalDirection.getCardinalDirection(this)
+
+/**
+ * プレイヤーが向いている方向の[BlockFace]を取得する
+ */
+private const val UP_PITCH_MAX = -60
+private const val DOWN_PITCH_MIN = 60
+
+fun Player.calcBreakFace(): BlockFace {
+    when (location.pitch.roundToInt()) {
+        in -90..UP_PITCH_MAX -> return BlockFace.UP
+        in DOWN_PITCH_MIN..90 -> return BlockFace.DOWN
+    }
+    var rot = (location.yaw + 180) % 360
+    if (rot < 0) rot += 360
+    return when (rot.roundToInt()) {
+        in 0 until 45 -> BlockFace.NORTH
+        in 45 until 135 -> BlockFace.EAST
+        in 135 until 225 -> BlockFace.SOUTH
+        in 225 until 315 -> BlockFace.WEST
+        else -> BlockFace.NORTH
+    }
+
+}
 
 fun Player.sendActionBar(message: String) = spigot().sendMessage(ChatMessageType.ACTION_BAR, ComponentSerializer.parse("{\"text\": \"$message\"}")[0])
 

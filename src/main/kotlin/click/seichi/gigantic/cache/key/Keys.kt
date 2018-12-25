@@ -4,6 +4,7 @@ import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.bag.Bag
 import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.belt.Belt
+import click.seichi.gigantic.breaker.BreakArea
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.database.dao.*
@@ -548,6 +549,39 @@ object Keys {
         override fun satisfyWith(value: QuestMonsterSpirit?): Boolean {
             return true
         }
+    }
+
+    /**
+     * 破壊スキルの破壊範囲
+     * defaultが0,0,0なのでエラー出る可能性あり
+     */
+    val APOSTOLUS_BREAK_AREA = object : DatabaseKey<PlayerCache, BreakArea> {
+
+        override val default: BreakArea
+            get() = BreakArea(1, 1, 1)
+
+        override fun read(entity: Entity<*>): BreakArea {
+            val user = entity as User
+            return BreakArea(
+                    user.apostolusWidth,
+                    user.apostolusHeight,
+                    user.apostolusDepth
+            )
+        }
+
+        override fun store(entity: Entity<*>, value: BreakArea) {
+            val user = entity as User
+            user.run {
+                apostolusWidth = value.width
+                apostolusHeight = value.height
+                apostolusDepth = value.depth
+            }
+        }
+
+        override fun satisfyWith(value: BreakArea): Boolean {
+            return true
+        }
+
     }
 
 }

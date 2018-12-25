@@ -14,7 +14,10 @@ object MenuMessages {
 
     val BACK_BUTTON = { menuTitle: String ->
         LocalizedText(
-                Locale.JAPANESE to "$menuTitle${ChatColor.RESET}${ChatColor.WHITE}に戻る"
+                Locale.JAPANESE to "${ChatColor.RESET}${ChatColor.GRAY}" +
+                        menuTitle +
+                        "${ChatColor.RESET}${ChatColor.GRAY}" +
+                        "に戻る"
         )
     }
 

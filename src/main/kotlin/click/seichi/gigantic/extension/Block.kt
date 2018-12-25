@@ -124,3 +124,15 @@ val Block.surfaceBlock: Block
     }
 
 fun Block.isUnder(player: Player) = player.location.blockY > y
+
+val BlockFace.leftFace: BlockFace
+    get() = when (this) {
+        BlockFace.NORTH -> BlockFace.WEST
+        BlockFace.EAST -> BlockFace.NORTH
+        BlockFace.SOUTH -> BlockFace.EAST
+        BlockFace.WEST -> BlockFace.SOUTH
+        else -> BlockFace.NORTH
+    }
+
+val BlockFace.rightFace: BlockFace
+    get() = leftFace.oppositeFace

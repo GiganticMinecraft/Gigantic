@@ -40,20 +40,6 @@ object PlayerSounds {
             volume = 1.0F
     )
 
-    val SPELL_TOGGLE_ON = DetailedSound(
-            Sound.BLOCK_BEACON_ACTIVATE,
-            SoundCategory.BLOCKS,
-            pitch = 1.4F,
-            volume = 1.0F
-    )
-
-    val SPELL_TOGGLE_OFF = DetailedSound(
-            Sound.BLOCK_BEACON_DEACTIVATE,
-            SoundCategory.BLOCKS,
-            pitch = 1.4F,
-            volume = 1.0F
-    )
-
     val TELEPORT = DetailedSound(
             Sound.BLOCK_WOODEN_DOOR_OPEN,
             SoundCategory.BLOCKS,

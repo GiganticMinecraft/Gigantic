@@ -28,13 +28,13 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var spellToggle by UserTable.spellToggle
 
+    var apostolusWidth by UserTable.apostolusWidth
+
+    var apostolusHeight by UserTable.apostolusHeight
+
+    var apostolusDepth by UserTable.apostolusDepth
+
     var teleportToggle by UserTable.teleportToggle
-
-    var terraDrainToggle by UserTable.terraDrainToggle
-
-    var grandNaturaToggle by UserTable.grandNaturaToggle
-
-    var aquaLineaToggle by UserTable.aquaLineaToggle
 
     var createdDate by UserTable.createdAt
 

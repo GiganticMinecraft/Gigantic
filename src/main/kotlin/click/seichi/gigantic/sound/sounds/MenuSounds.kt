@@ -26,16 +26,4 @@ object MenuSounds {
             SoundCategory.BLOCKS,
             pitch = 4.0F
     )
-
-    val BATTLE_MENU_OPEN = DetailedSound(
-            Sound.BLOCK_ENDER_CHEST_OPEN,
-            SoundCategory.BLOCKS,
-            pitch = 0.3F
-    )
-
-    val BATTLE_MENU_CLOSE = DetailedSound(
-            Sound.BLOCK_ENDER_CHEST_CLOSE,
-            SoundCategory.BLOCKS,
-            pitch = 0.3F
-    )
 }

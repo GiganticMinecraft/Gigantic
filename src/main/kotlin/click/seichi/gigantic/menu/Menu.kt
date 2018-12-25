@@ -16,7 +16,11 @@ abstract class Menu : InventoryHolder {
 
     private val buttonMap: MutableMap<Int, Button> = mutableMapOf()
 
-    open val type = InventoryType.CHEST
+    /**
+     * 1.13.2 現在　CHEST以外使用不可なためoverride禁止
+     *
+     */
+    val type = InventoryType.CHEST
 
     open val size by lazy {
         type.defaultSize
@@ -29,6 +33,7 @@ abstract class Menu : InventoryHolder {
     protected fun getButtonMap() = buttonMap.toMap()
 
     /**
+     * TODO 色をここで変更させるべきではない．別の変数に持たせておきたい
      * Menuのタイトルを取得します
      *
      * @param player Menuを開いているplayer
