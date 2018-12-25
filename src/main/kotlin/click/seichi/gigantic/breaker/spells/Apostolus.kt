@@ -49,11 +49,6 @@ class Apostolus : Miner(), SpellCaster {
         // 正常に実行された場合は保存しておいたブロックをすべて削除
 
         //終了
-
-        // TODO implements
-//        SpellAnimations.GRAND_NATURA_ON_FIRE.start(base.centralLocation)
-//        SpellSounds.GRAND_NATURA_ON_FIRE.play(player.location)
-        //breakRelationalBlock(player, base, base, true, 0)
     }
 
     private fun calcBreakBlockSet(player: Player, base: Block): Set<Block> {
@@ -143,9 +138,9 @@ class Apostolus : Miner(), SpellCaster {
                     }
                 }
             }
+            else -> {
+            }
         }
-
-        // TODO 破壊可能条件はこれだけじゃないはず，保護とかも考える
 
         return allBlockSet.filter {
             it.isCrust && it != base && !it.isSpawnArea
