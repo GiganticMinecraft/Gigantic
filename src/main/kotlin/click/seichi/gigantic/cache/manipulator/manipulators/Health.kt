@@ -4,7 +4,6 @@ import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.HealthConfig
 import click.seichi.gigantic.player.Defaults
 import kotlin.properties.Delegates
@@ -20,19 +19,18 @@ class Health : Manipulator<Health, PlayerCache> {
     var max: Long by Delegates.notNull()
         private set
 
-    lateinit var level: Level
-
     val isZero: Boolean
         get() = current == 0L
 
     override fun from(cache: Cache<PlayerCache>): Health? {
         current = cache.getOrPut(Keys.HEALTH)
-        level = cache.find(CatalogPlayerCache.LEVEL) ?: return null
+        max = cache.getOrPut(Keys.MAX_HEALTH)
         return this
     }
 
     override fun set(cache: Cache<PlayerCache>): Boolean {
         cache.offer(Keys.HEALTH, current)
+        cache.offer(Keys.MAX_HEALTH, max)
         return true
     }
 
@@ -70,7 +68,7 @@ class Health : Manipulator<Health, PlayerCache> {
 
     fun isMaxHealth() = current >= max
 
-    fun updateMaxHealth() {
-        max = HealthConfig.HEALTH_MAP[level.current] ?: Defaults.MAX_MANA
+    fun updateMaxHealth(level: Int) {
+        max = HealthConfig.HEALTH_MAP[level] ?: Defaults.MAX_MANA
     }
 }

@@ -46,7 +46,7 @@ open class Miner : Breaker {
         if (!block.isCrust && !block.isTree) return
 
         player.manipulate(CatalogPlayerCache.EXP) {
-            it.add(1L)
+            it.inc()
         }
 
         if (Achievement.MINE_COMBO.isGranted(player)) {
@@ -62,13 +62,13 @@ open class Miner : Breaker {
         player.updateLevel()
 
         // play sounds
-        val mineBurst = player.find(CatalogPlayerCache.MINE_BURST)
+        val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
 
-        val currentCombo = player.find(CatalogPlayerCache.MINE_COMBO)?.currentCombo ?: 0
+        val currentCombo = player.getOrPut(Keys.MINE_COMBO)
 
         // Sounds
         when {
-            mineBurst?.duringFire() == true && Achievement.MINE_COMBO.isGranted(player) -> {
+            mineBurst.duringFire() && Achievement.MINE_COMBO.isGranted(player) -> {
                 SkillSounds.MINE_BURST_ON_BREAK(currentCombo).playOnly(player)
                 SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
             }

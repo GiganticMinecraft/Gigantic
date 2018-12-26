@@ -13,6 +13,7 @@ import click.seichi.gigantic.popup.pops.SpellPops
 import click.seichi.gigantic.sound.sounds.SpellSounds
 import click.seichi.gigantic.util.Random
 import org.bukkit.entity.Player
+import java.math.BigDecimal
 import java.util.function.Consumer
 
 /**
@@ -25,9 +26,7 @@ object Spells {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!Achievement.SPELL_STELLA_CLAIR.isGranted(player)) return null
             if (SpellParameters.STELLA_CLAIR_PROBABILITY_PERCENT < Random.nextInt(100)) return null
-            player.find(CatalogPlayerCache.MANA)?.let {
-                if (it.isMaxMana()) return null
-            } ?: return null
+            if (player.mana >= player.maxMana) return null
             return Consumer { p ->
                 val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 var wrappedAmount = 0.toBigDecimal()
@@ -40,9 +39,7 @@ object Spells {
                 SpellPops.STELLA_CLAIR(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.STELLA_CLAIR_SKILL_DIFF, 0.0))
                 SpellSounds.STELLA_CLAIR.play(block.centralLocation)
 
-                player.find(CatalogPlayerCache.MANA)?.let {
-                    PlayerMessages.MANA_DISPLAY(it).sendTo(p)
-                }
+                PlayerMessages.MANA_DISPLAY(p.mana, p.maxMana).sendTo(p)
 
                 player.offer(Keys.IS_UPDATE_PROFILE, true)
                 player.getOrPut(Keys.BAG).carry(player)
@@ -52,8 +49,8 @@ object Spells {
 
     val APOSTOL = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
-            val mana = player.find(CatalogPlayerCache.MANA) ?: return null
-            if (!mana.hasMana(0.toBigDecimal())) return null
+            // TODO implements
+            if (!player.hasMana(BigDecimal.ZERO)) return null
             return Consumer { p ->
                 val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 Apostol().cast(p, b)

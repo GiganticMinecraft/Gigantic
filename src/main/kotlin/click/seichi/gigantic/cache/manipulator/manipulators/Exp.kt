@@ -1,17 +1,15 @@
 package click.seichi.gigantic.cache.manipulator.manipulators
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.Manipulator
-import click.seichi.gigantic.config.DebugConfig
-import click.seichi.gigantic.config.PlayerLevelConfig
+import java.math.BigDecimal
 
 class Exp : Manipulator<Exp, PlayerCache> {
 
-    private val map: MutableMap<ExpReason, Long> = mutableMapOf()
+    private val map: MutableMap<ExpReason, BigDecimal> = mutableMapOf()
 
     override fun from(cache: Cache<PlayerCache>): Exp? {
         map.clear()
@@ -26,29 +24,17 @@ class Exp : Manipulator<Exp, PlayerCache> {
         return true
     }
 
-    fun add(num: Long, reason: ExpReason = ExpReason.MINE_BLOCK): Long {
-        val next = (map[reason] ?: 0L) + num
+    fun add(num: BigDecimal, reason: ExpReason = ExpReason.MINE_BLOCK): BigDecimal {
+        val next = (map[reason] ?: BigDecimal.ZERO) + num
         map[reason] = next
         return next
     }
 
-    fun get(reason: ExpReason = ExpReason.MINE_BLOCK) = map[reason] ?: 0L
-
-    fun calcExp(): Long {
-        return ExpReason.values().fold(0L) { source: Long, reason ->
-            source + map.getOrDefault(reason, 0L)
-        }
+    fun inc(num: BigDecimal = BigDecimal.ONE, reason: ExpReason = ExpReason.MINE_BLOCK): BigDecimal {
+        return add(num, reason)
     }
 
-    fun resetDebugNum() {
-        map[ExpReason.DEBUG] = 0L
-        if (Gigantic.IS_DEBUG) {
-            val level = DebugConfig.LEVEL
-            val nextExp = (PlayerLevelConfig.LEVEL_MAP[level + 1] ?: 0L) - 1
-            val currentExp = calcExp()
-            map[ExpReason.DEBUG] = nextExp - currentExp
-        }
-    }
+    fun get(reason: ExpReason = ExpReason.MINE_BLOCK) = map[reason] ?: BigDecimal.ZERO
 
     fun copyMap() = map.toMap()
 

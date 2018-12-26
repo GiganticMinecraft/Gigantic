@@ -7,6 +7,7 @@ import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.breaker.BreakArea
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.manipulator.ExpReason
+import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.monster.SoulMonster
@@ -15,9 +16,12 @@ import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
+import click.seichi.gigantic.timer.LingeringTimer
+import click.seichi.gigantic.timer.SimpleTimer
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
 import org.bukkit.Chunk
+import org.bukkit.Location
 import org.bukkit.block.Block
 import org.jetbrains.exposed.dao.Entity
 import java.math.BigDecimal
@@ -88,6 +92,16 @@ object Keys {
 
     }
 
+    val MAX_MANA = object : Key<PlayerCache, BigDecimal> {
+        override val default: BigDecimal
+            get() = Defaults.MANA.toBigDecimal()
+
+        override fun satisfyWith(value: BigDecimal): Boolean {
+            return true
+        }
+
+    }
+
     val HEALTH = object : DatabaseKey<PlayerCache, Long> {
 
         override val default: Long
@@ -109,24 +123,35 @@ object Keys {
 
     }
 
-    val EXP_MAP: Map<ExpReason, DatabaseKey<PlayerCache, Long>> = ExpReason.values()
-            .map {
-                it to object : DatabaseKey<PlayerCache, Long> {
-                    override val default: Long
-                        get() = 0L
+    val MAX_HEALTH = object : Key<PlayerCache, Long> {
 
-                    override fun read(entity: Entity<*>): Long {
+        override val default: Long
+            get() = 100L
+
+        override fun satisfyWith(value: Long): Boolean {
+            return value >= 0
+        }
+
+    }
+
+    val EXP_MAP: Map<ExpReason, DatabaseKey<PlayerCache, BigDecimal>> = ExpReason.values()
+            .map {
+                it to object : DatabaseKey<PlayerCache, BigDecimal> {
+                    override val default: BigDecimal
+                        get() = BigDecimal.ZERO
+
+                    override fun read(entity: Entity<*>): BigDecimal {
                         val userExp = entity as UserExp
                         return userExp.exp
                     }
 
-                    override fun store(entity: Entity<*>, value: Long) {
+                    override fun store(entity: Entity<*>, value: BigDecimal) {
                         val userExp = entity as UserExp
                         userExp.exp = value
                     }
 
-                    override fun satisfyWith(value: Long): Boolean {
-                        return value >= 0L
+                    override fun satisfyWith(value: BigDecimal): Boolean {
+                        return true
                     }
 
                 }
@@ -583,5 +608,64 @@ object Keys {
         }
 
     }
+
+    val LEVEL = object : Key<PlayerCache, Int> {
+        override val default: Int
+            get() = 1
+
+        override fun satisfyWith(value: Int): Boolean {
+            return value >= 1 && value <= PlayerLevelConfig.MAX
+        }
+
+    }
+
+    val SKILL_FLASH = object : Key<PlayerCache, SimpleTimer> {
+        override val default: SimpleTimer
+            get() = SimpleTimer()
+
+        override fun satisfyWith(value: SimpleTimer): Boolean {
+            return true
+        }
+    }
+
+    val SKILL_MINE_BURST = object : Key<PlayerCache, LingeringTimer> {
+        override val default: LingeringTimer
+            get() = LingeringTimer()
+
+        override fun satisfyWith(value: LingeringTimer): Boolean {
+            return true
+        }
+    }
+
+    val AFK_LOCATION = object : Key<PlayerCache, Location?> {
+        override val default: Location?
+            get() = null
+
+        override fun satisfyWith(value: Location?): Boolean {
+            return true
+        }
+
+    }
+
+    val MINE_COMBO = object : Key<PlayerCache, Long> {
+        override val default: Long
+            get() = 0L
+
+        override fun satisfyWith(value: Long): Boolean {
+            return value >= 0L
+        }
+
+    }
+
+    val LAST_COMBO_TIME = object : Key<PlayerCache, Long> {
+        override val default: Long
+            get() = System.currentTimeMillis()
+
+        override fun satisfyWith(value: Long): Boolean {
+            return true
+        }
+
+    }
+
 
 }

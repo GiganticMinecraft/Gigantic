@@ -1,12 +1,13 @@
 package click.seichi.gigantic.message.messages
 
-import click.seichi.gigantic.cache.manipulator.manipulators.Memory
-import click.seichi.gigantic.cache.manipulator.manipulators.WillAptitude
+import click.seichi.gigantic.extension.hasAptitude
+import click.seichi.gigantic.extension.memory
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.SideBarMessage
 import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
+import org.bukkit.entity.Player
 import java.util.*
 
 /**
@@ -14,10 +15,10 @@ import java.util.*
  */
 object SideBarMessages {
 
-    val MEMORY_SIDEBAR = { memory: Memory, aptitude: WillAptitude, isForced: Boolean ->
+    val MEMORY_SIDEBAR = { player: Player, isForced: Boolean ->
         val willMap = Will.values()
-                .filter { aptitude.has(it) }
-                .map { it to (memory.get(it)) }.toMap()
+                .filter { player.hasAptitude(it) }
+                .map { it to player.memory(it) }.toMap()
         SideBarMessage(
                 "memory",
                 LocalizedText(

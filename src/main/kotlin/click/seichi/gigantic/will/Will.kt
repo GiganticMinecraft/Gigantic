@@ -1,11 +1,8 @@
 package click.seichi.gigantic.will
 
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.find
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.WillMessages
 import org.bukkit.Color
-import org.bukkit.entity.Player
 
 /**
  * @author unicroak
@@ -34,5 +31,4 @@ enum class Will(val id: Int, val color: Color, val grade: WillGrade, val localiz
         fun findById(id: Int) = idMap[id]
     }
 
-    fun isAptitude(player: Player) = player.find(CatalogPlayerCache.APTITUDE)?.has(this) ?: false
 }

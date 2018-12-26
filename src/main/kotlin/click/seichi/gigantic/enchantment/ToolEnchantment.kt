@@ -1,8 +1,10 @@
 package click.seichi.gigantic.enchantment
 
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.extension.addLore
+import click.seichi.gigantic.extension.enchantLevel
+import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.relic.Relic
 import org.bukkit.ChatColor
@@ -25,10 +27,10 @@ enum class ToolEnchantment(
         }
 
         override fun calcLevel(player: Player, itemStack: ItemStack): Int {
-            val mineBurst = player.find(CatalogPlayerCache.MINE_BURST)
+            val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
 
             return when {
-                mineBurst?.duringFire() == true -> 10
+                mineBurst?.duringFire() -> 10
                 Relic.FADING_ENDER_PEARL.has(player) -> 2
                 Relic.MOISTENED_SLIME_BOLL.has(player) -> 1
                 else -> 0

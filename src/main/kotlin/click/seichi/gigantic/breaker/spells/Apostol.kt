@@ -29,9 +29,7 @@ class Apostol : Miner(), SpellCaster {
             it.decrease(calcConsumeMana(player, breakBlockSet))
         }
 
-        player.find(CatalogPlayerCache.MANA)?.let {
-            PlayerMessages.MANA_DISPLAY(it).sendTo(player)
-        }
+        PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
         player.offer(Keys.IS_UPDATE_PROFILE, true)
         player.getOrPut(Keys.BAG).carry(player)

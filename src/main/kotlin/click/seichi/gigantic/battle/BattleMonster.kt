@@ -252,9 +252,7 @@ class BattleMonster(
                 BattleMessages.DAMAGE(monster, monster.parameter.power).sendTo(player)
             }
 
-            player.find(CatalogPlayerCache.HEALTH)?.let {
-                PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
-            }
+            PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
 
             player.offer(Keys.IS_UPDATE_PROFILE, true)
             player.getOrPut(Keys.BAG).carry(player)

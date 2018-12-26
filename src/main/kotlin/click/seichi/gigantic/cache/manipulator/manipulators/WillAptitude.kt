@@ -4,7 +4,6 @@ import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 
@@ -13,8 +12,6 @@ import click.seichi.gigantic.will.WillGrade
  */
 class WillAptitude : Manipulator<WillAptitude, PlayerCache> {
 
-    private lateinit var level: Level
-
     private val set = mutableSetOf<Will>()
 
     override fun from(cache: Cache<PlayerCache>): WillAptitude? {
@@ -22,7 +19,6 @@ class WillAptitude : Manipulator<WillAptitude, PlayerCache> {
         Will.values().map { it to cache.getOrPut(Keys.APTITUDE_MAP[it] ?: return null) }
                 .filter { it.second }
                 .forEach { add(it.first) }
-        level = cache.find(CatalogPlayerCache.LEVEL) ?: return null
         return this
     }
 
@@ -31,7 +27,7 @@ class WillAptitude : Manipulator<WillAptitude, PlayerCache> {
         return true
     }
 
-    fun has(will: Will) = set.contains(will)
+    private fun has(will: Will) = set.contains(will)
 
     fun copySet() = set.toSet()
 

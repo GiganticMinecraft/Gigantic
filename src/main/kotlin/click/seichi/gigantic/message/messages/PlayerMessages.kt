@@ -1,8 +1,5 @@
 package click.seichi.gigantic.message.messages
 
-import click.seichi.gigantic.cache.manipulator.manipulators.Health
-import click.seichi.gigantic.cache.manipulator.manipulators.Level
-import click.seichi.gigantic.cache.manipulator.manipulators.Mana
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.*
 import click.seichi.gigantic.player.Defaults
@@ -16,16 +13,16 @@ import java.util.*
  */
 object PlayerMessages {
 
-    val EXP_BAR_DISPLAY = { level: Level ->
-        val expToLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
-        val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1]
+    val EXP_BAR_DISPLAY = { level: Int, exp: BigDecimal ->
+        val expToLevel = PlayerLevelConfig.LEVEL_MAP[level] ?: BigDecimal.ZERO
+        val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level + 1]
                 ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
-        LevelMessage(level.current, (level.exp - expToLevel).div((expToNextLevel - expToLevel).toFloat().coerceAtLeast(Float.MIN_VALUE)))
+        LevelMessage(level, (exp - expToLevel).setScale(2).div((expToNextLevel - expToLevel)).toFloat().coerceAtLeast(Float.MIN_VALUE))
     }
 
-    val HEALTH_DISPLAY = { health: Health ->
-        val interval = health.max.div(20.0)
-        val healthAmount = health.current.div(interval)
+    val HEALTH_DISPLAY = { health: Long, maxHealth: Long ->
+        val interval = maxHealth.div(20.0)
+        val healthAmount = health.div(interval)
         HealthMessage(healthAmount)
     }
 
@@ -71,18 +68,18 @@ object PlayerMessages {
         ))
     }
 
-    val DEATH_PENALTY = { penaltyMineBlock: Long ->
+    val DEATH_PENALTY = { penaltyMineBlock: BigDecimal ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                        "経験値を$penaltyMineBlock 失った..."
+                        "経験値を${penaltyMineBlock.setScale(1)} 失った..."
         ))
     }
 
 
-    val MANA_DISPLAY = { mana: Mana ->
-        val interval = mana.max.div(Defaults.MANA_BAR_NUM.toBigDecimal())
-        val amount = mana.current.div(interval)
-        ManaMessage(mana, amount.toDouble())
+    val MANA_DISPLAY = { mana: BigDecimal, maxMana: BigDecimal ->
+        val interval = maxMana.div(Defaults.MANA_BAR_NUM.toBigDecimal())
+        val amount = mana.div(interval)
+        ManaMessage(mana, maxMana, amount.toDouble())
     }
 
     val SPAWN_PROTECT = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(

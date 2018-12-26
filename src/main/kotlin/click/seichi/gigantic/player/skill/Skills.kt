@@ -28,7 +28,7 @@ object Skills {
         val coolTime = SkillParameters.MINE_BURST_COOLTIME
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
+            val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
             if (!mineBurst.canStart()) return null
             return Consumer { p ->
                 mineBurst.coolTime = coolTime
@@ -67,7 +67,7 @@ object Skills {
         val coolTime = SkillParameters.FLASH_COOLTIME
 
         override fun findInvokable(player: Player): Consumer<Player>? {
-            val flash = player.find(CatalogPlayerCache.FLASH) ?: return null
+            val flash = player.getOrPut(Keys.SKILL_FLASH)
             if (!flash.canStart()) return null
             return Consumer { p ->
                 flash.coolTime = coolTime
@@ -105,9 +105,7 @@ object Skills {
     val HEAL = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (SkillParameters.HEAL_PROBABILITY_PERCENT < Random.nextInt(100)) return null
-            player.find(CatalogPlayerCache.HEALTH)?.let {
-                if (it.isMaxHealth()) return null
-            } ?: return null
+            if (player.wrappedHealth >= player.wrappedMaxHealth) return null
 
             return Consumer { p ->
                 val block = p.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
@@ -120,9 +118,7 @@ object Skills {
                 SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
                 SkillSounds.HEAL.play(block.centralLocation)
 
-                player.find(CatalogPlayerCache.HEALTH)?.let {
-                    PlayerMessages.HEALTH_DISPLAY(it).sendTo(p)
-                }
+                PlayerMessages.HEALTH_DISPLAY(p.wrappedHealth, p.wrappedMaxHealth).sendTo(p)
 
                 player.offer(Keys.IS_UPDATE_PROFILE, true)
                 player.getOrPut(Keys.BAG).carry(player)

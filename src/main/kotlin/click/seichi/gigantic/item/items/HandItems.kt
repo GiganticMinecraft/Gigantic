@@ -3,7 +3,6 @@ package click.seichi.gigantic.item.items
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.enchantment.ToolEnchantment
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.HandItem
@@ -140,7 +139,7 @@ object HandItems {
 
         override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.SKILL_MINE_BURST.isGranted(player)) return null
-            val mineBurst = player.find(CatalogPlayerCache.MINE_BURST) ?: return null
+            val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST) ?: return null
             return when {
                 mineBurst.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
                     mineBurst.run {
@@ -176,7 +175,7 @@ object HandItems {
 
         override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.SKILL_FLASH.isGranted(player)) return null
-            val flash = player.find(CatalogPlayerCache.FLASH) ?: return null
+            val flash = player.getOrPut(Keys.SKILL_FLASH) ?: return null
             return when {
                 flash.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
                     flash.run {

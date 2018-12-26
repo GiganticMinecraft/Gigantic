@@ -1,16 +1,17 @@
 package click.seichi.gigantic.message
 
-import click.seichi.gigantic.cache.manipulator.manipulators.Mana
 import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
+import java.math.BigDecimal
 import kotlin.math.roundToInt
 
 /**
  * @author tar0ss
  */
 class ManaMessage(
-        val mana: Mana,
+        mana: BigDecimal,
+        maxMana: BigDecimal,
         // 棒の本数(double値)
         amount: Double
 ) : Message {
@@ -24,12 +25,12 @@ class ManaMessage(
         else -> amount.coerceAtLeast(0.00).roundToInt()
     }
 
-    private val ratio = mana.current.div(mana.max).toDouble().coerceAtLeast(0.00)
+    private val ratio = mana.div(maxMana).toDouble().coerceAtLeast(0.00)
 
     private val remainNumString = (1..nextNum).joinToString(
             prefix = when {
-                ratio == 0.00 && mana.current == 0.toBigDecimal() -> ChatColor.RED
-                mana.current > mana.max -> ChatColor.GOLD
+                ratio == 0.00 && mana == 0.toBigDecimal() -> ChatColor.RED
+                mana > maxMana -> ChatColor.GOLD
                 ratio in 0.00..0.20 -> ChatColor.DARK_BLUE
                 ratio in 0.20..0.80 -> ChatColor.BLUE
                 ratio in 0.80..0.99 -> ChatColor.LIGHT_PURPLE
@@ -40,7 +41,7 @@ class ManaMessage(
     ) { Defaults.MANA_CHAR }
 
     private val lostNumString = (1..(maxNum - nextNum)).joinToString(
-            prefix = if (ratio == 0.00 && mana.current == 0.toBigDecimal()) "${ChatColor.RED}" else "${ChatColor.GRAY}",
+            prefix = if (ratio == 0.00 && mana == 0.toBigDecimal()) "${ChatColor.RED}" else "${ChatColor.GRAY}",
             separator = ""
     ) { Defaults.MANA_LOST_CHAR }
 

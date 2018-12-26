@@ -1,17 +1,22 @@
 package click.seichi.gigantic.extension
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Key
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.config.DebugConfig
+import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
+import click.seichi.gigantic.will.Will
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.chat.ComponentSerializer
 import org.bukkit.*
@@ -19,6 +24,7 @@ import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
+import java.math.BigDecimal
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -42,13 +48,45 @@ fun <V : Any?> Player.replace(key: Key<PlayerCache, V>, value: V) = PlayerCacheM
 
 fun <V : Any?> Player.transform(key: Key<PlayerCache, V>, transforming: (V) -> V) = PlayerCacheMemory.get(uniqueId).transform(key, transforming)
 
-fun <M : Manipulator<M, PlayerCache>> Player.find(clazz: Class<M>) = PlayerCacheMemory.get(uniqueId).find(clazz)
-
 fun <M : Manipulator<M, PlayerCache>> Player.manipulate(clazz: Class<M>, manipulating: (M) -> Unit) = PlayerCacheMemory.get(uniqueId).manipulate(clazz, manipulating)
 
 val Player.wrappedLocale: Locale
     get() = getOrPut(Keys.LOCALE)
 
+val Player.wrappedLevel: Int
+    get() = getOrPut(Keys.LEVEL)
+
+val Player.wrappedExp: BigDecimal
+    get() = ExpReason.values().fold(BigDecimal.ZERO) { source, reason ->
+        source + getOrPut(Keys.EXP_MAP[reason]!!)
+    }
+
+val Player.wrappedHealth: Long
+    get() = getOrPut(Keys.HEALTH)
+
+val Player.wrappedMaxHealth: Long
+    get() = getOrPut(Keys.MAX_HEALTH)
+
+val Player.mana: BigDecimal
+    get() = getOrPut(Keys.MANA)
+
+val Player.maxMana: BigDecimal
+    get() = getOrPut(Keys.MAX_MANA)
+
+val Player.combo: Long
+    get() = getOrPut(Keys.MINE_COMBO)
+
+val Player.maxCombo: Long
+    get() = getOrPut(Keys.MAX_COMBO)
+
+
+fun Player.isMaxMana() = mana >= maxMana
+
+fun Player.hasMana(other: BigDecimal) = mana >= other
+
+fun Player.hasAptitude(will: Will) = getOrPut(Keys.APTITUDE_MAP[will]!!)
+
+fun Player.memory(will: Will) = getOrPut(Keys.MEMORY_MAP[will]!!)
 
 /**
  * プレイヤーが向いている方向の[BlockFace]を取得する
@@ -99,19 +137,26 @@ fun Player.spawnColoredParticleSpherically(
 fun Player.findBattle() = BattleManager.findBattle(this)
 
 fun Player.updateLevel(isFirstJoin: Boolean = false) {
-    val exp = find(CatalogPlayerCache.EXP)
-    // ログイン時にデバッグ用経験値を再設定
     if (isFirstJoin) {
-        exp?.resetDebugNum()
+        offer(Keys.EXP_MAP[ExpReason.DEBUG]!!, BigDecimal.ZERO)
+        if (Gigantic.IS_DEBUG) {
+            val level = DebugConfig.LEVEL
+            val nextExp = (PlayerLevelConfig.LEVEL_MAP[level + 1] ?: BigDecimal.ZERO).minus(BigDecimal.ONE)
+            val currentExp = wrappedExp
+
+            offer(Keys.EXP_MAP[ExpReason.DEBUG]!!, nextExp - currentExp)
+        }
     }
+
     manipulate(CatalogPlayerCache.LEVEL) {
         //calc lv
-        it.calculate(exp?.calcExp() ?: 0L) { current ->
+        it.calculate(wrappedExp) { current ->
             if (!isFirstJoin)
                 Bukkit.getPluginManager().callEvent(LevelUpEvent(current, this))
         }
-        PlayerMessages.EXP_BAR_DISPLAY(it).sendTo(this)
     }
+
+    PlayerMessages.EXP_BAR_DISPLAY(player.wrappedLevel, player.wrappedExp).sendTo(this)
 }
 
 

@@ -4,10 +4,8 @@ import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.ManaConfig
 import java.math.BigDecimal
-import java.util.*
 import kotlin.properties.Delegates
 
 /**
@@ -20,18 +18,17 @@ class Mana : Manipulator<Mana, PlayerCache> {
         private set
     var max: BigDecimal by Delegates.notNull()
         private set
-    private lateinit var level: Level
-    private lateinit var locale: Locale
 
     override fun from(cache: Cache<PlayerCache>): Mana? {
         current = cache.getOrPut(Keys.MANA)
-        level = cache.find(CatalogPlayerCache.LEVEL) ?: return null
-        locale = cache.getOrPut(Keys.LOCALE)
+        max = cache.getOrPut(Keys.MAX_MANA)
         return this
     }
 
     override fun set(cache: Cache<PlayerCache>): Boolean {
-        return cache.offer(Keys.MANA, current)
+        cache.offer(Keys.MANA, current)
+        cache.offer(Keys.MAX_MANA, max)
+        return true
     }
 
     fun increase(other: BigDecimal, ignoreMax: Boolean = false): BigDecimal {
@@ -60,12 +57,8 @@ class Mana : Manipulator<Mana, PlayerCache> {
         return prev - current
     }
 
-    fun updateMaxMana() {
-        max = ManaConfig.MANA_MAP[level.current] ?: 0.toBigDecimal()
+    fun updateMaxMana(level: Int) {
+        max = ManaConfig.MANA_MAP[level] ?: 0.toBigDecimal()
     }
-
-    fun isMaxMana() = current >= max
-
-    fun hasMana(other: BigDecimal) = current >= other
 
 }

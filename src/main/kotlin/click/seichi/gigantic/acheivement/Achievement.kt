@@ -33,27 +33,27 @@ enum class Achievement(
         Belt.DEFAULT.grant(player)
     }, grantMessage = AchievementMessages.FIRST_JOIN),
     FIRST_LEVEL_UP(1, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 2
+        it.wrappedLevel >= 2
     }, grantMessage = AchievementMessages.FIRST_LEVEL_UP),
 
     MINE_COMBO(2, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 3
+        it.wrappedLevel >= 3
     }, grantMessage = AchievementMessages.MINE_COMBO),
 
 
     // systems
     MANA_STONE(100, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 10
+        it.wrappedLevel >= 10
     }, grantMessage = AchievementMessages.MANA_STONE,
             priority = UpdatePriority.HIGHEST),
     TELEPORT_PLAYER(101, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 4
+        it.wrappedLevel >= 4
     }, grantMessage = AchievementMessages.TELEPORT_PLAYER),
     QUEST(102, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 5
+        it.wrappedLevel >= 5
     }, priority = UpdatePriority.HIGHEST),
     TELEPORT_LAST_DEATH(103, {
-        it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 6
+        it.wrappedLevel >= 6
     }, grantMessage = AchievementMessages.TELEPORT_LAST_DEATH),
 
     // skills
@@ -80,13 +80,13 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.QUEST_ORDER_FIRST),
     QUEST_PIG_ORDER(402, {
         Quest.BEGIN.isCleared(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
+                it.wrappedLevel >= 7
     }, action = {
         Quest.PIG.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_BLAZE_ORDER(403, {
         Quest.PIG.isCleared(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 9
+                it.wrappedLevel >= 9
     }, action = {
         Quest.BLAZE.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
@@ -127,13 +127,13 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_PIG_ORDER(406, {
         Quest.BEGIN.isCleared(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 7
+                it.wrappedLevel >= 7
     }, action = {
         Quest.PIG.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
     QUEST_BLAZE_ORDER(407, {
         Quest.PIG.isCleared(it) &&
-                it.find(CatalogPlayerCache.LEVEL)?.current ?: 0 >= 9
+                it.wrappedLevel >= 9
     }, action = {
         Quest.BLAZE.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),
@@ -211,11 +211,12 @@ enum class Achievement(
                         it.update(player)
                     }
             player.updateInventory(true, true)
-            SideBarMessages.MEMORY_SIDEBAR(
-                    player.find(CatalogPlayerCache.MEMORY) ?: return,
-                    player.find(CatalogPlayerCache.APTITUDE) ?: return,
-                    true
-            ).sendTo(player)
+            player.manipulate(CatalogPlayerCache.MEMORY) { memory ->
+                player.manipulate(CatalogPlayerCache.APTITUDE) { aptitude ->
+                    SideBarMessages.MEMORY_SIDEBAR(player, true).sendTo(player)
+                }
+            }
+
         }
     }
 

@@ -37,8 +37,8 @@ import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
-import kotlin.math.roundToLong
 
 
 /**
@@ -67,7 +67,7 @@ class PlayerListener : Listener {
             return
         }
         if (player.gameMode == GameMode.SPECTATOR) {
-            player.find(CatalogPlayerCache.AFK_LOCATION)?.getLocation()?.let {
+            player.getOrPut(Keys.AFK_LOCATION)?.let {
                 player.teleport(it)
             }
             player.gameMode = GameMode.SURVIVAL
@@ -92,20 +92,16 @@ class PlayerListener : Listener {
         player.updateLevel(true)
 
         player.manipulate(CatalogPlayerCache.MANA) {
-            it.updateMaxMana()
-        }
-        player.find(CatalogPlayerCache.MANA)?.let {
-            if (Achievement.MANA_STONE.isGranted(player) && it.max > 0.toBigDecimal())
-                PlayerMessages.MANA_DISPLAY(it).sendTo(player)
+            it.updateMaxMana(player.level)
         }
 
+        if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
+            PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
         player.manipulate(CatalogPlayerCache.HEALTH) {
-            it.updateMaxHealth()
+            it.updateMaxHealth(player.level)
         }
-        player.find(CatalogPlayerCache.HEALTH)?.let {
-            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
-        }
+        PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
 
         player.offer(Keys.IS_UPDATE_PROFILE, true)
         player.getOrPut(Keys.BAG).carry(player)
@@ -190,7 +186,7 @@ class PlayerListener : Listener {
 
         player.manipulate(CatalogPlayerCache.MANA) {
             val prevMax = it.max
-            it.updateMaxMana()
+            it.updateMaxMana(event.level)
             it.increase(it.max, true)
             if (prevMax == it.max) return@manipulate
             if (!Achievement.MANA_STONE.isGranted(player)) return@manipulate
@@ -199,19 +195,16 @@ class PlayerListener : Listener {
 
         player.manipulate(CatalogPlayerCache.HEALTH) {
             val prevMax = it.max
-            it.updateMaxHealth()
+            it.updateMaxHealth(event.level)
             it.increase(it.max)
             if (prevMax == it.max) return@manipulate
             PlayerMessages.LEVEL_UP_HEALTH(prevMax, it.max).sendTo(player)
         }
 
-        player.find(CatalogPlayerCache.MANA)?.let {
-            if (Achievement.MANA_STONE.isGranted(player) && it.max > 0.toBigDecimal())
-                PlayerMessages.MANA_DISPLAY(it).sendTo(player)
-        }
-        player.find(CatalogPlayerCache.HEALTH)?.let {
-            PlayerMessages.HEALTH_DISPLAY(it).sendTo(player)
-        }
+        if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
+            PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
+
+        PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
 
         player.offer(Keys.IS_UPDATE_PROFILE, true)
         player.getOrPut(Keys.BAG).carry(player)
@@ -255,15 +248,15 @@ class PlayerListener : Listener {
 
         player.manipulate(CatalogPlayerCache.LEVEL) { level ->
             player.manipulate(CatalogPlayerCache.EXP) {
-                val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: 0L
-                val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1] ?: 0L
-                val maxPenalty = level.exp.minus(expToCurrentLevel)
+                val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: BigDecimal.ZERO
+                val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1] ?: BigDecimal.ZERO
+                val maxPenalty = player.wrappedExp.minus(expToCurrentLevel)
                 val penaltyMineBlock = expToNextLevel.minus(expToCurrentLevel)
-                        .div(100L)
-                        .times(Config.PLAYER_DEATH_PENALTY.times(100).roundToLong())
+                        .div(100.toBigDecimal())
+                        .times(Config.PLAYER_DEATH_PENALTY.times(100).toBigDecimal())
                         .coerceAtMost(maxPenalty)
-                it.add(penaltyMineBlock.times(-1L), ExpReason.DEATH_PENALTY)
-                if (penaltyMineBlock != 0L)
+                it.add(penaltyMineBlock.times((-1).toBigDecimal()), ExpReason.DEATH_PENALTY)
+                if (penaltyMineBlock != BigDecimal.ZERO)
                     PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
             }
         }
@@ -279,8 +272,7 @@ class PlayerListener : Listener {
             player.manipulate(CatalogPlayerCache.HEALTH) {
                 it.increase(it.max.div(10.0).times(3.0).toLong())
             }
-            PlayerMessages.HEALTH_DISPLAY(player.find(CatalogPlayerCache.HEALTH) ?: return@scheduleSyncDelayedTask
-            ).sendTo(player)
+            PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
 
             player.offer(Keys.IS_UPDATE_PROFILE, true)
             player.getOrPut(Keys.BAG).carry(player)

@@ -1,10 +1,10 @@
 package click.seichi.gigantic
 
 import click.seichi.gigantic.cache.PlayerCacheMemory
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.*
 import click.seichi.gigantic.database.table.*
-import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
@@ -293,8 +293,8 @@ class Gigantic : JavaPlugin() {
 
         Bukkit.getOnlinePlayers().filterNotNull().forEach { player ->
             if (player.gameMode == GameMode.SPECTATOR) {
-                player.find(CatalogPlayerCache.AFK_LOCATION)?.let { it ->
-                    player.teleport(it.getLocation())
+                player.getOrPut(Keys.AFK_LOCATION)?.let { it ->
+                    player.teleport(it)
                 }
                 player.gameMode = GameMode.SURVIVAL
             }

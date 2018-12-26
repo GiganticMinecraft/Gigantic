@@ -11,6 +11,6 @@ object UserExpTable : IntIdTable("users_exps") {
 
     val reasonId = integer("reasonId").primaryKey()
 
-    val exp = long("exp").default(0L)
+    val exp = decimal("exp", 30, 6).default(0.toBigDecimal())
 
 }

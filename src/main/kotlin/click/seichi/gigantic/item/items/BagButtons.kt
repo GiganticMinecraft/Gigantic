@@ -32,32 +32,30 @@ object BagButtons {
         override fun findItemStack(player: Player): ItemStack? {
             return player.getHead().apply {
                 setDisplayName(BagMessages.PROFILE.asSafety(player.wrappedLocale))
-                val level = player.find(CatalogPlayerCache.LEVEL) ?: return@apply
-                val aptitude = player.find(CatalogPlayerCache.APTITUDE) ?: return@apply
-                val health = player.find(CatalogPlayerCache.HEALTH) ?: return@apply
-                val mineCombo = player.find(CatalogPlayerCache.MINE_COMBO) ?: return@apply
-                val mana = player.find(CatalogPlayerCache.MANA) ?: return@apply
                 val isUpdate = player.getOrPut(Keys.IS_UPDATE_PROFILE)
                 val lore = mutableListOf<String>()
                 if (isUpdate) {
                     lore.add(ProfileMessages.NEED_UPDATE.asSafety(player.wrappedLocale))
                 } else {
                     lore.addAll(listOf(
-                            ProfileMessages.PROFILE_LEVEL(level).asSafety(player.wrappedLocale),
-                            ProfileMessages.PROFILE_EXP(level).asSafety(player.wrappedLocale),
-                            ProfileMessages.PROFILE_HEALTH(health).asSafety(player.wrappedLocale)
+                            ProfileMessages.PROFILE_LEVEL(player.wrappedLevel).asSafety(player.wrappedLocale),
+                            ProfileMessages.PROFILE_EXP(player.wrappedLevel, player.wrappedExp).asSafety(player.wrappedLocale),
+                            ProfileMessages.PROFILE_HEALTH(player.wrappedHealth, player.wrappedMaxHealth).asSafety(player.wrappedLocale)
                     )
                     )
                     if (Achievement.MANA_STONE.isGranted(player)) {
-                        lore.add(ProfileMessages.PROFILE_MANA(mana).asSafety(player.wrappedLocale))
+                        lore.add(ProfileMessages.PROFILE_MANA(player.mana, player.maxMana).asSafety(player.wrappedLocale))
                     }
 
-                    lore.addAll(listOf(
-                            ProfileMessages.PROFILE_MAX_COMBO(mineCombo).asSafety(player.wrappedLocale),
-                            *ProfileMessages.PROFILE_WILL_APTITUDE(aptitude).map { it.asSafety(player.wrappedLocale) }.toTypedArray())
-                    )
+                    player.manipulate(CatalogPlayerCache.APTITUDE) { aptitude ->
+                        lore.addAll(listOf(
+                                ProfileMessages.PROFILE_MAX_COMBO(player.maxCombo).asSafety(player.wrappedLocale),
+                                *ProfileMessages.PROFILE_WILL_APTITUDE(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                        )
+                    }
                 }
                 setLore(*lore.toTypedArray())
+
             }
         }
 
@@ -124,18 +122,18 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            val afkLocation = player.find(CatalogPlayerCache.AFK_LOCATION) ?: return
+            val afkLocation = player.getOrPut(Keys.AFK_LOCATION) ?: return
             when (player.gameMode) {
                 GameMode.SURVIVAL -> {
                     player.gameMode = GameMode.SPECTATOR
-                    afkLocation.saveLocation(player.location)
+                    player.offer(Keys.AFK_LOCATION, player.location)
                     // 見えなくなるバグのため
                     player.showPlayer(Gigantic.PLUGIN, player)
                     player.getOrPut(Keys.BAG).carry(player)
                 }
                 GameMode.SPECTATOR -> {
                     player.gameMode = GameMode.SURVIVAL
-                    player.teleport(afkLocation.getLocation())
+                    player.teleport(afkLocation)
                     player.getOrPut(Keys.BAG).carry(player)
                     PlayerSounds.TELEPORT_AFK.play(player.location)
                 }

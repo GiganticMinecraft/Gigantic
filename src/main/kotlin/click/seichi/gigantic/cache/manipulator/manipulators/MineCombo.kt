@@ -14,20 +14,24 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
     var maxCombo: Long by Delegates.notNull()
         private set
 
+    var currentCombo: Long = 0L
+        private set
+
+    private var lastComboTime = System.currentTimeMillis()
+
     override fun from(cache: Cache<PlayerCache>): MineCombo? {
         maxCombo = cache.getOrPut(Keys.MAX_COMBO)
+        currentCombo = cache.getOrPut(Keys.MINE_COMBO)
+        lastComboTime = cache.getOrPut(Keys.LAST_COMBO_TIME)
         return this
     }
 
     override fun set(cache: Cache<PlayerCache>): Boolean {
         cache.offer(Keys.MAX_COMBO, maxCombo)
+        cache.offer(Keys.MINE_COMBO, currentCombo)
+        cache.offer(Keys.LAST_COMBO_TIME, lastComboTime)
         return true
     }
-
-    var currentCombo: Long = 0L
-        private set
-
-    private var lastComboTime = System.currentTimeMillis()
 
     companion object {
         const val COMBO_CONTINUATION_SECONDS = 3L

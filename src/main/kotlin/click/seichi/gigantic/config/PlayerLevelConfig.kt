@@ -1,5 +1,7 @@
 package click.seichi.gigantic.config
 
+import java.math.BigDecimal
+
 /**
  * @author tar0ss
  */
@@ -9,7 +11,7 @@ object PlayerLevelConfig : SimpleConfiguration("level") {
 
     val LEVEL_MAP by lazy {
         (1..(MAX + 1)).map {
-            it to getLong("level_to_exp.$it")
+            it to BigDecimal(getString("level_to_exp.$it"))
         }.toMap()
     }
 

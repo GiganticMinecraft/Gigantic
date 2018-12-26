@@ -1,8 +1,7 @@
 package click.seichi.gigantic.battle.passive
 
 import click.seichi.gigantic.battle.BattlePlayer
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.combo
 import click.seichi.gigantic.message.messages.EffectMessages
 import click.seichi.gigantic.relic.Relic
 import org.bukkit.block.Block
@@ -13,11 +12,13 @@ import org.bukkit.block.Block
 enum class PowerEffect {
     CHICKEN_KING_CROWN() {
         override fun modifyPower(source: Long, battler: BattlePlayer, block: Block): Long {
-            val mineCombo = battler.player.find(CatalogPlayerCache.MINE_COMBO) ?: return source
-            if (mineCombo.currentCombo == 10L) {
+            val requireCombo = 10L
+
+            val combo = battler.player.combo
+            if (combo == requireCombo) {
                 EffectMessages.COMBO.sendTo(battler.player)
             }
-            return if (mineCombo.currentCombo >= 10L)
+            return if (combo >= requireCombo)
                 source + 1
             else
                 source
@@ -29,11 +30,13 @@ enum class PowerEffect {
     },
     TURTLE_KING_CROWN() {
         override fun modifyPower(source: Long, battler: BattlePlayer, block: Block): Long {
-            val mineCombo = battler.player.find(CatalogPlayerCache.MINE_COMBO) ?: return source
-            if (mineCombo.currentCombo == 30L) {
+            val requireCombo = 30L
+
+            val combo = battler.player.combo
+            if (combo == requireCombo) {
                 EffectMessages.COMBO.sendTo(battler.player)
             }
-            return if (mineCombo.currentCombo >= 30L)
+            return if (combo >= requireCombo)
                 source + 1
             else
                 source
@@ -45,11 +48,13 @@ enum class PowerEffect {
     },
     SPIDER_KING_CROWN() {
         override fun modifyPower(source: Long, battler: BattlePlayer, block: Block): Long {
-            val mineCombo = battler.player.find(CatalogPlayerCache.MINE_COMBO) ?: return source
-            if (mineCombo.currentCombo == 70L) {
+            val requireCombo = 70L
+
+            val combo = battler.player.combo
+            if (combo == requireCombo) {
                 EffectMessages.COMBO.sendTo(battler.player)
             }
-            return if (mineCombo.currentCombo >= 70L)
+            return if (combo >= requireCombo)
                 source + 1
             else
                 source
@@ -61,11 +66,13 @@ enum class PowerEffect {
     },
     ZOMBIE_KING_CROWN() {
         override fun modifyPower(source: Long, battler: BattlePlayer, block: Block): Long {
-            val mineCombo = battler.player.find(CatalogPlayerCache.MINE_COMBO) ?: return source
-            if (mineCombo.currentCombo == 150L) {
+            val requireCombo = 150L
+
+            val combo = battler.player.combo
+            if (combo == requireCombo) {
                 EffectMessages.COMBO.sendTo(battler.player)
             }
-            return if (mineCombo.currentCombo >= 150L)
+            return if (combo >= requireCombo)
                 source + 1
             else
                 source
@@ -77,11 +84,13 @@ enum class PowerEffect {
     },
     SKELETON_KING_CROWN() {
         override fun modifyPower(source: Long, battler: BattlePlayer, block: Block): Long {
-            val mineCombo = battler.player.find(CatalogPlayerCache.MINE_COMBO) ?: return source
-            if (mineCombo.currentCombo == 350L) {
+            val requireCombo = 350L
+
+            val combo = battler.player.combo
+            if (combo == requireCombo) {
                 EffectMessages.COMBO.sendTo(battler.player)
             }
-            return if (mineCombo.currentCombo >= 350L)
+            return if (combo >= requireCombo)
                 source + 1
             else
                 source
@@ -93,11 +102,13 @@ enum class PowerEffect {
     },
     ORC_KING_CROWN() {
         override fun modifyPower(source: Long, battler: BattlePlayer, block: Block): Long {
-            val mineCombo = battler.player.find(CatalogPlayerCache.MINE_COMBO) ?: return source
-            if (mineCombo.currentCombo == 800L) {
+            val requireCombo = 800L
+
+            val combo = battler.player.combo
+            if (combo == requireCombo) {
                 EffectMessages.COMBO.sendTo(battler.player)
             }
-            return if (mineCombo.currentCombo >= 800L)
+            return if (combo >= requireCombo)
                 source + 1
             else
                 source
@@ -109,11 +120,13 @@ enum class PowerEffect {
     },
     GHOST_KING_CROWN() {
         override fun modifyPower(source: Long, battler: BattlePlayer, block: Block): Long {
-            val mineCombo = battler.player.find(CatalogPlayerCache.MINE_COMBO) ?: return source
-            if (mineCombo.currentCombo == 1200L) {
+            val requireCombo = 1200L
+
+            val combo = battler.player.combo
+            if (combo == requireCombo) {
                 EffectMessages.COMBO.sendTo(battler.player)
             }
-            return if (mineCombo.currentCombo >= 1200L)
+            return if (combo >= requireCombo)
                 source + 1
             else
                 source

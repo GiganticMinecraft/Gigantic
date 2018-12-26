@@ -1,11 +1,13 @@
 package click.seichi.gigantic.message.messages.menu
 
-import click.seichi.gigantic.cache.manipulator.manipulators.*
 import click.seichi.gigantic.config.PlayerLevelConfig
+import click.seichi.gigantic.extension.hasAptitude
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor
+import org.bukkit.entity.Player
+import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -25,46 +27,46 @@ object ProfileMessages {
             Locale.JAPANESE to "${ChatColor.YELLOW}クリックして更新"
     )
 
-    val PROFILE_LEVEL = { level: Level ->
+    val PROFILE_LEVEL = { level: Int ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}整地レベル: ${ChatColor.WHITE}${level.current}"
+                Locale.JAPANESE to "${ChatColor.GREEN}整地レベル: ${ChatColor.WHITE}${level}"
         )
     }
 
-    val PROFILE_EXP = { level: Level ->
-        val isMax = level.current == PlayerLevelConfig.MAX
+    val PROFILE_EXP = { level: Int, exp: BigDecimal ->
+        val isMax = level == PlayerLevelConfig.MAX
         if (isMax) {
             LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.GREEN}経験値: ${ChatColor.WHITE}${level.exp} / ${level.exp}"
+                    Locale.JAPANESE to "${ChatColor.GREEN}経験値: ${ChatColor.WHITE}${exp.setScale(0)} / ${exp.setScale(0)}"
             )
         } else {
-            val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1]
+            val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level + 1]
                     ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
             LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.GREEN}経験値: ${ChatColor.WHITE}${level.exp} / $expToNextLevel"
+                    Locale.JAPANESE to "${ChatColor.GREEN}経験値: ${ChatColor.WHITE}${exp.setScale(0)} / ${expToNextLevel.setScale(0)}"
             )
         }
     }
 
-    val PROFILE_HEALTH = { health: Health ->
+    val PROFILE_HEALTH = { health: Long, maxHealth: Long ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}体力: ${ChatColor.WHITE}${health.current} / ${health.max}"
+                Locale.JAPANESE to "${ChatColor.GREEN}体力: ${ChatColor.WHITE}$health / $maxHealth"
         )
     }
 
-    val PROFILE_MANA = { mana: Mana ->
+    val PROFILE_MANA = { mana: BigDecimal, maxMana: BigDecimal ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}マナ: ${ChatColor.WHITE}${mana.current.setScale(1)} / ${mana.max}"
+                Locale.JAPANESE to "${ChatColor.GREEN}マナ: ${ChatColor.WHITE}${mana.setScale(1)} / ${maxMana.setScale(1)}"
         )
     }
 
-    val PROFILE_MAX_COMBO = { mineCombo: MineCombo ->
+    val PROFILE_MAX_COMBO = { maxCombo: Long ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}最大コンボ数: ${ChatColor.WHITE}${mineCombo.maxCombo} combo"
+                Locale.JAPANESE to "${ChatColor.GREEN}最大コンボ数: ${ChatColor.WHITE}$maxCombo combo"
         )
     }
 
-    val PROFILE_WILL_APTITUDE = { aptitude: WillAptitude ->
+    val PROFILE_WILL_APTITUDE = { player: Player ->
         arrayOf(
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.GREEN}適正遺志"
@@ -74,7 +76,7 @@ object ProfileMessages {
                             locale to Will.values()
                                     .filter { it.grade == WillGrade.BASIC }
                                     .joinToString(" ") {
-                                        if (aptitude.has(it))
+                                        if (player.hasAptitude(it))
                                             "${ChatColor.WHITE}${it.localizedName.asSafety(locale)}"
                                         else
                                             "${ChatColor.DARK_GRAY}${it.localizedName.asSafety(locale)}"
@@ -86,7 +88,7 @@ object ProfileMessages {
                             locale to Will.values()
                                     .filter { it.grade == WillGrade.ADVANCED }
                                     .joinToString(" ") {
-                                        if (aptitude.has(it))
+                                        if (player.hasAptitude(it))
                                             "${ChatColor.WHITE}${it.localizedName.asSafety(locale)}"
                                         else
                                             "${ChatColor.DARK_GRAY}${it.localizedName.asSafety(locale)}"

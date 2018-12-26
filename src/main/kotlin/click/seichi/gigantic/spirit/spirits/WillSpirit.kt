@@ -2,7 +2,7 @@ package click.seichi.gigantic.spirit.spirits
 
 import click.seichi.gigantic.animation.animations.WillSpiritAnimations
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.find
+import click.seichi.gigantic.extension.hasAptitude
 import click.seichi.gigantic.extension.manipulate
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
@@ -35,7 +35,7 @@ class WillSpirit(
             { player ->
                 player ?: return@Sensor false
                 when {
-                    player.find(CatalogPlayerCache.APTITUDE)?.has(will)?.not() ?: true -> false
+                    player.hasAptitude(will).not() -> false
                     targetPlayer == null -> true
                     player.uniqueId == targetPlayer.uniqueId -> true
                     else -> false
@@ -56,8 +56,7 @@ class WillSpirit(
                     it.add(will, willSize.memory.toLong())
                 }
                 SideBarMessages.MEMORY_SIDEBAR(
-                        player.find(CatalogPlayerCache.MEMORY) ?: return@Sensor,
-                        player.find(CatalogPlayerCache.APTITUDE) ?: return@Sensor,
+                        player,
                         false
                 ).sendTo(player)
                 remove()

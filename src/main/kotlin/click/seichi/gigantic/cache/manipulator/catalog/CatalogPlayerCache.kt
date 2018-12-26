@@ -15,15 +15,9 @@ object CatalogPlayerCache {
 
     val APTITUDE = WillAptitude::class.java
 
-    val MINE_BURST = MineBurst::class.java
-
     val EXP = Exp::class.java
 
     val MINE_COMBO = MineCombo::class.java
-
-    val AFK_LOCATION = AfkLocation::class.java
-
-    val FLASH = Flash::class.java
 
     val HEALTH = Health::class.java
 

@@ -15,17 +15,9 @@ import org.bukkit.Bukkit
 abstract class Cache<C : Cache<C>> {
     private val keyMap: MutableMap<Key<C, out Any?>, Any?> = mutableMapOf()
 
-    private val manipulatorMap: MutableMap<Class<out Any>, Any> = mutableMapOf()
-
-    @Suppress("UNCHECKED_CAST")
-    fun <M : Manipulator<M, C>> find(clazz: Class<M>): M? {
-        val manipulator = (manipulatorMap[clazz] as? M ?: clazz.newInstance()).from(this)
-        return manipulator?.also { manipulatorMap[clazz] = it }
-    }
-
     @Suppress("UNCHECKED_CAST")
     fun <M : Manipulator<M, C>> manipulate(clazz: Class<M>, manipulating: (M) -> Unit): Boolean {
-        return find(clazz)?.apply(manipulating)?.set(this) ?: false
+        return clazz.newInstance().from(this)?.apply(manipulating)?.set(this) ?: false
     }
 
     abstract fun read()
