@@ -1,6 +1,5 @@
 package click.seichi.gigantic.popup.pops
 
-import click.seichi.gigantic.cache.manipulator.manipulators.MineCombo
 import click.seichi.gigantic.popup.PopUp
 import org.bukkit.ChatColor
 
@@ -9,19 +8,22 @@ import org.bukkit.ChatColor
  */
 object SkillPops {
 
-    val MINE_COMBO = { combo: MineCombo ->
-        val color = when (combo.currentCombo) {
-            in 0..9 -> ChatColor.WHITE
-            in 10..29 -> ChatColor.YELLOW
-            in 30..69 -> ChatColor.GREEN
-            in 70..149 -> ChatColor.LIGHT_PURPLE
-            in 150..349 -> ChatColor.DARK_GREEN
-            in 350..799 -> ChatColor.DARK_GRAY
-            in 800..1199 -> ChatColor.DARK_BLUE
+    val MINE_COMBO = { combo: Long, rank: Int ->
+        val color = when (rank) {
+            1 -> ChatColor.WHITE
+            2 -> ChatColor.YELLOW
+            3 -> ChatColor.GREEN
+            4 -> ChatColor.LIGHT_PURPLE
+            5 -> ChatColor.DARK_GREEN
+            6 -> ChatColor.DARK_GRAY
+            7 -> ChatColor.DARK_AQUA
+            8 -> ChatColor.DARK_BLUE
+            9 -> ChatColor.DARK_PURPLE
+            10 -> ChatColor.DARK_RED
             else -> ChatColor.BLACK
         }
         PopUp(
-                "$color${combo.currentCombo} Combo",
+                "$color$combo Combo",
                 PopUp.PopPattern.POP
         )
     }
@@ -32,13 +34,5 @@ object SkillPops {
                 PopUp.PopPattern.POP_LONG
         )
     }
-
-    val KODAMA_DRAIN = { amount: Long ->
-        PopUp(
-                "${ChatColor.GREEN}$amount HP",
-                PopUp.PopPattern.POP_LONG
-        )
-    }
-
 
 }

@@ -208,7 +208,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onCombo(event: ComboEvent) {
-
+        event.player.updateTool()
     }
 
     @EventHandler

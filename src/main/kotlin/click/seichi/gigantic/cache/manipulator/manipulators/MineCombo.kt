@@ -35,6 +35,20 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
 
     companion object {
         const val COMBO_CONTINUATION_SECONDS = 3L
+
+        fun calcComboRank(combo: Long) = when (combo) {
+            in 0..9 -> 1
+            in 10..29 -> 2
+            in 30..69 -> 3
+            in 70..149 -> 4
+            in 150..309 -> 5
+            in 310..629 -> 6
+            in 630..1269 -> 7
+            in 1270..2549 -> 8
+            in 2550..5109 -> 9
+            in 5110..10229 -> 10
+            else -> 11
+        }
     }
 
     fun combo(count: Long): Long {
@@ -59,4 +73,5 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
         val diff = now - lastComboTime
         return COMBO_CONTINUATION_SECONDS > diff.div(1000)
     }
+
 }

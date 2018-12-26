@@ -22,11 +22,6 @@ object SkillMessages {
             Locale.JAPANESE to "マイン・バースト"
     )
 
-    val KODAMA_DRAIN = LocalizedText(
-            Locale.JAPANESE to "コダマ・ドレイン"
-    )
-
-
     val MINE_BURST_LORE =
             listOf(
                     LocalizedText(
@@ -74,29 +69,4 @@ object SkillMessages {
                                     "全ての通常破壊で発動"
                     )
             )
-
-    val KODAMA_DRAIN_LORE =
-            listOf(
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "パッシブ効果: 原木を破壊して体力を回復"
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "※間接的に破壊したブロックは回復以外の効果を持たない"
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "回復量(原木): 最大体力の %.1f ".format(SkillParameters.KODAMA_DRAIN_LOG_HEAL_PERCENT).plus("%")
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "回復量(葉): 最大体力の %.1f ".format(SkillParameters.KODAMA_DRAIN_LEAVES_HEAL_PERCENT).plus("%")
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                                    "原木を通常破壊で発動"
-                    )
-            )
-
 }

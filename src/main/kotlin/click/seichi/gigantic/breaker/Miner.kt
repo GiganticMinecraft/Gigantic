@@ -56,10 +56,13 @@ open class Miner : Breaker {
         if (Achievement.MINE_COMBO.isGranted(player)) {
             player.manipulate(CatalogPlayerCache.MINE_COMBO) {
                 it.combo(1L)
-                SkillPops.MINE_COMBO(it).pop(block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
             }
         }
-        if (currentCombo > player.combo) {
+        SkillPops.MINE_COMBO(player.combo, player.comboRank)
+                .pop(block.centralLocation
+                        .add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
+
+        if (currentCombo < player.combo) {
             ((currentCombo + 1)..player.combo).forEach { combo ->
                 Bukkit.getPluginManager().callEvent(ComboEvent(combo, player))
             }

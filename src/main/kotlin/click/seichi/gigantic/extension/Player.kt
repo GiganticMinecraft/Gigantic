@@ -9,6 +9,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.cache.manipulator.manipulators.MineCombo
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
@@ -79,6 +80,9 @@ val Player.combo: Long
 
 val Player.maxCombo: Long
     get() = getOrPut(Keys.MAX_COMBO)
+
+val Player.comboRank: Int
+    get() = MineCombo.calcComboRank(combo)
 
 
 fun Player.isMaxMana() = mana >= maxMana
@@ -174,6 +178,12 @@ fun Player.updateDisplay(applyMainHand: Boolean, applyOffHand: Boolean) {
     updateSideBar()
 }
 
+// ツールだけ更新したいときはこれを使う
+fun Player.updateTool() {
+    getOrPut(Keys.TOOL).update(this)
+}
+
+// ベルト全体を更新したいときはこれを使う
 fun Player.updateBelt(applyMainHand: Boolean, applyOffHand: Boolean) {
     getOrPut(Keys.BELT).wear(this, applyMainHand, applyOffHand)
 }
