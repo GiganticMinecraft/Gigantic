@@ -6,6 +6,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.event.events.ComboEvent
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.popup.pops.PopUpParameters
@@ -57,10 +58,14 @@ open class Miner : Breaker {
             player.manipulate(CatalogPlayerCache.MINE_COMBO) {
                 it.combo(1L)
             }
+            SkillPops.MINE_COMBO(player.combo, player.comboRank).pop(
+                    block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0)
+            )
+            if (player.combo <= currentCombo) {
+                PlayerMessages.DECREASE_COMBO(currentCombo - player.combo).sendTo(player)
+            }
         }
-        SkillPops.MINE_COMBO(player.combo, player.comboRank)
-                .pop(block.centralLocation
-                        .add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
+
 
         if (currentCombo < player.combo) {
             ((currentCombo + 1)..player.combo).forEach { combo ->

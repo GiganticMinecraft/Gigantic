@@ -107,5 +107,11 @@ object PlayerMessages {
                     "バトル中は敵のいるチャンクしか掘れない"
     ))
 
+    val DECREASE_COMBO = { decreaseCombo: Long ->
+        ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.RED}" +
+                        "時間経過によりコンボが$decreaseCombo 減少"
+        ))
+    }
 
 }

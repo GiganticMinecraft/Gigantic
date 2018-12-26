@@ -4,6 +4,7 @@ import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
+import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
 /**
@@ -36,6 +37,8 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
     companion object {
         const val COMBO_CONTINUATION_SECONDS = 3L
 
+        const val COMBO_DECREASE_INTERVAL = 3L
+
         fun calcComboRank(combo: Long) = when (combo) {
             in 0..9 -> 1
             in 10..29 -> 2
@@ -52,26 +55,37 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
     }
 
     fun combo(count: Long): Long {
-        if (canContinue()) {
+        val now = System.currentTimeMillis()
+        val elapsedTime = now - lastComboTime
+        if (canContinue(elapsedTime)) {
+            // コンボ継続可能な場合
             currentCombo += count
             if (currentCombo > maxCombo) {
                 maxCombo = currentCombo
             }
         } else {
-            currentCombo = count
+            // コンボ継続不能な場合
+            // 時間経過[COMBO_DECREASE_INTERVAL]秒ごとにコンボ1割減少する
+            // 減少パーセント
+            val decreaseRate = elapsedTime.div(1000)
+                    .minus(COMBO_CONTINUATION_SECONDS)
+                    .div(COMBO_DECREASE_INTERVAL)
+                    .plus(1)
+                    .times(10)
+                    .coerceAtMost(100)
+            val decreaseCombo = currentCombo.toDouble()
+                    .div(100.0)
+                    .times(decreaseRate).roundToInt()
+            currentCombo -= decreaseCombo + count
         }
-        updateComboTime()
+
+        // 更新
+        lastComboTime = now
         return currentCombo
     }
 
-    private fun updateComboTime() {
-        lastComboTime = System.currentTimeMillis()
-    }
-
-    private fun canContinue(): Boolean {
-        val now = System.currentTimeMillis()
-        val diff = now - lastComboTime
-        return COMBO_CONTINUATION_SECONDS > diff.div(1000)
+    private fun canContinue(elapsedTime: Long): Boolean {
+        return COMBO_CONTINUATION_SECONDS > elapsedTime.div(1000)
     }
 
 }
