@@ -62,10 +62,9 @@ open class Miner : Breaker {
                     block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0)
             )
             if (player.combo <= currentCombo) {
-                PlayerMessages.DECREASE_COMBO(currentCombo - player.combo).sendTo(player)
+                PlayerMessages.DECREASE_COMBO(currentCombo - player.combo + 1L).sendTo(player)
             }
         }
-
 
         if (currentCombo < player.combo) {
             ((currentCombo + 1)..player.combo).forEach { combo ->
