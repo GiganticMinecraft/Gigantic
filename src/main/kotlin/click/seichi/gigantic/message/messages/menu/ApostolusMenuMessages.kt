@@ -33,6 +33,23 @@ object ApostolusMenuMessages {
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.RESET}${ChatColor.WHITE}" +
                                 "奥行:${breakArea.depth}"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.RESET}${ChatColor.WHITE}" +
+                                "現在の同時破壊数:${breakArea.calcBreakNum()}"
+                )
+        )
+    }
+
+    val LIMIT_OF_BREAK_NUM_LORE = { maxBreakNum: Int ->
+        setOf(
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.RESET}${ChatColor.DARK_GRAY}" +
+                                "マナの最大値によって同時破壊数は増えます"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.RESET}${ChatColor.DARK_GRAY}" +
+                                "( 最大同時破壊数:$maxBreakNum )"
                 )
         )
     }
@@ -80,6 +97,11 @@ object ApostolusMenuMessages {
                         "奥行を1下げる(現在:${breakArea.depth})"
         )
     }
+
+    val LIMIT_OF_BREAK_NUM = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RESET}${ChatColor.RED}" +
+                    "最大同時破壊数を超えています"
+    )
 
 
 }

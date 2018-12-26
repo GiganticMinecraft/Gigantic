@@ -5,7 +5,9 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.BackButton
 import click.seichi.gigantic.menu.Menu
+import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.ApostolusMenuMessages
+import click.seichi.gigantic.player.spell.SpellParameters
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -35,8 +37,15 @@ object ApostolusSettingMenu : Menu() {
                     setDisplayName(ApostolusMenuMessages.CURRENT_AREA.asSafety(player.wrappedLocale))
 
                     val breakArea = player.getOrPut(Keys.APOSTOLUS_BREAK_AREA)
+                    val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
 
                     setLore(*ApostolusMenuMessages.CURRENT_AREA_LORE(breakArea)
+                            .map { it.asSafety(player.wrappedLocale) }
+                            .toTypedArray())
+
+                    addLore(MenuMessages.LINE)
+
+                    addLore(*ApostolusMenuMessages.LIMIT_OF_BREAK_NUM_LORE(limitOfBreakNum)
                             .map { it.asSafety(player.wrappedLocale) }
                             .toTypedArray())
 
@@ -57,7 +66,14 @@ object ApostolusSettingMenu : Menu() {
             override fun findItemStack(player: Player): ItemStack? {
                 return ItemStack(Material.YELLOW_STAINED_GLASS_PANE).apply {
                     val breakArea = player.getOrPut(Keys.APOSTOLUS_BREAK_AREA)
-                    setDisplayName(ApostolusMenuMessages.BIGGER_WIDTH(breakArea).asSafety(player.wrappedLocale))
+                    val nextBreakArea = breakArea.add(2, 0, 0)
+                    val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
+
+                    if (nextBreakArea.calcBreakNum() > limitOfBreakNum) {
+                        setDisplayName(ApostolusMenuMessages.LIMIT_OF_BREAK_NUM.asSafety(player.wrappedLocale))
+                    } else {
+                        setDisplayName(ApostolusMenuMessages.BIGGER_WIDTH(breakArea).asSafety(player.wrappedLocale))
+                    }
                 }
             }
 
@@ -65,11 +81,15 @@ object ApostolusSettingMenu : Menu() {
             override fun onClick(player: Player, event: InventoryClickEvent) {
                 player.transform(Keys.APOSTOLUS_BREAK_AREA) { breakArea ->
                     val nextBreakArea = breakArea.add(2, 0, 0)
-                    if (nextBreakArea.width > 0)
+                    val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
+                    if (nextBreakArea.width > 0 && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
+                        PlayerSounds.TOGGLE.playOnly(player)
                         nextBreakArea
-                    else breakArea
+                    } else {
+                        PlayerSounds.FAIL.playOnly(player)
+                        breakArea
+                    }
                 }
-                PlayerSounds.TOGGLE.playOnly(player)
                 reopen(player)
             }
 
@@ -87,11 +107,14 @@ object ApostolusSettingMenu : Menu() {
                     override fun onClick(player: Player, event: InventoryClickEvent) {
                         player.transform(Keys.APOSTOLUS_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(-2, 0, 0)
-                            if (nextBreakArea.width > 0)
+                            if (nextBreakArea.width > 0) {
+                                PlayerSounds.TOGGLE.playOnly(player)
                                 nextBreakArea
-                            else breakArea
+                            } else {
+                                PlayerSounds.FAIL.playOnly(player)
+                                breakArea
+                            }
                         }
-                        PlayerSounds.TOGGLE.playOnly(player)
                         reopen(player)
                     }
 
@@ -103,18 +126,29 @@ object ApostolusSettingMenu : Menu() {
                     override fun findItemStack(player: Player): ItemStack? {
                         return ItemStack(Material.ORANGE_STAINED_GLASS_PANE).apply {
                             val breakArea = player.getOrPut(Keys.APOSTOLUS_BREAK_AREA)
-                            setDisplayName(ApostolusMenuMessages.BIGGER_HEIGHT(breakArea).asSafety(player.wrappedLocale))
+                            val nextBreakArea = breakArea.add(0, 1, 0)
+                            val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
+
+                            if (nextBreakArea.calcBreakNum() > limitOfBreakNum) {
+                                setDisplayName(ApostolusMenuMessages.LIMIT_OF_BREAK_NUM.asSafety(player.wrappedLocale))
+                            } else {
+                                setDisplayName(ApostolusMenuMessages.BIGGER_HEIGHT(breakArea).asSafety(player.wrappedLocale))
+                            }
                         }
                     }
 
                     override fun onClick(player: Player, event: InventoryClickEvent) {
                         player.transform(Keys.APOSTOLUS_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 1, 0)
-                            if (nextBreakArea.height > 0)
+                            val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
+                            if (nextBreakArea.height > 0 && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
+                                PlayerSounds.TOGGLE.playOnly(player)
                                 nextBreakArea
-                            else breakArea
+                            } else {
+                                PlayerSounds.FAIL.playOnly(player)
+                                breakArea
+                            }
                         }
-                        PlayerSounds.TOGGLE.playOnly(player)
                         reopen(player)
                     }
 
@@ -132,11 +166,14 @@ object ApostolusSettingMenu : Menu() {
                     override fun onClick(player: Player, event: InventoryClickEvent) {
                         player.transform(Keys.APOSTOLUS_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, -1, 0)
-                            if (nextBreakArea.height > 0)
+                            if (nextBreakArea.height > 0) {
+                                PlayerSounds.TOGGLE.playOnly(player)
                                 nextBreakArea
-                            else breakArea
+                            } else {
+                                PlayerSounds.FAIL.playOnly(player)
+                                breakArea
+                            }
                         }
-                        PlayerSounds.TOGGLE.playOnly(player)
                         reopen(player)
                     }
 
@@ -148,18 +185,29 @@ object ApostolusSettingMenu : Menu() {
                     override fun findItemStack(player: Player): ItemStack? {
                         return ItemStack(Material.MAGENTA_STAINED_GLASS_PANE).apply {
                             val breakArea = player.getOrPut(Keys.APOSTOLUS_BREAK_AREA)
-                            setDisplayName(ApostolusMenuMessages.BIGGER_DEPTH(breakArea).asSafety(player.wrappedLocale))
+                            val nextBreakArea = breakArea.add(0, 0, 1)
+                            val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
+
+                            if (nextBreakArea.calcBreakNum() > limitOfBreakNum) {
+                                setDisplayName(ApostolusMenuMessages.LIMIT_OF_BREAK_NUM.asSafety(player.wrappedLocale))
+                            } else {
+                                setDisplayName(ApostolusMenuMessages.BIGGER_DEPTH(breakArea).asSafety(player.wrappedLocale))
+                            }
                         }
                     }
 
                     override fun onClick(player: Player, event: InventoryClickEvent) {
                         player.transform(Keys.APOSTOLUS_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 0, 1)
-                            if (nextBreakArea.depth > 0)
+                            val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
+                            if (nextBreakArea.depth > 0 && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
+                                PlayerSounds.TOGGLE.playOnly(player)
                                 nextBreakArea
-                            else breakArea
+                            } else {
+                                PlayerSounds.FAIL.playOnly(player)
+                                breakArea
+                            }
                         }
-                        PlayerSounds.TOGGLE.playOnly(player)
                         reopen(player)
                     }
 
@@ -177,11 +225,14 @@ object ApostolusSettingMenu : Menu() {
                     override fun onClick(player: Player, event: InventoryClickEvent) {
                         player.transform(Keys.APOSTOLUS_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 0, -1)
-                            if (nextBreakArea.depth > 0)
+                            if (nextBreakArea.depth > 0) {
+                                PlayerSounds.TOGGLE.playOnly(player)
                                 nextBreakArea
-                            else breakArea
+                            } else {
+                                PlayerSounds.FAIL.playOnly(player)
+                                breakArea
+                            }
                         }
-                        PlayerSounds.TOGGLE.playOnly(player)
                         reopen(player)
                     }
 

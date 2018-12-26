@@ -40,6 +40,13 @@ object PlayerSounds {
             volume = 1.0F
     )
 
+    val FAIL = DetailedSound(
+            Sound.BLOCK_DISPENSER_FAIL,
+            SoundCategory.BLOCKS,
+            pitch = 1.4F,
+            volume = 1.0F
+    )
+
     val TELEPORT = DetailedSound(
             Sound.BLOCK_WOODEN_DOOR_OPEN,
             SoundCategory.BLOCKS,

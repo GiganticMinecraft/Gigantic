@@ -23,4 +23,6 @@ data class BreakArea(
                 this.depth + depth
         )
     }
+
+    fun calcBreakNum() = width * height * depth
 }
