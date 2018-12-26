@@ -1,2 +1,4 @@
 # 接続時のレベル
 level: 1
+# Achievementを一時的に全て利用可能にする
+achievement_unlock: true

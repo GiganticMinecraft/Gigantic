@@ -44,7 +44,7 @@ class Exp : Manipulator<Exp, PlayerCache> {
         map[ExpReason.DEBUG] = 0L
         if (Gigantic.IS_DEBUG) {
             val level = DebugConfig.LEVEL
-            val nextExp = PlayerLevelConfig.LEVEL_MAP[level] ?: 0L
+            val nextExp = (PlayerLevelConfig.LEVEL_MAP[level + 1] ?: 0L) - 1
             val currentExp = calcExp()
             map[ExpReason.DEBUG] = nextExp - currentExp
         }

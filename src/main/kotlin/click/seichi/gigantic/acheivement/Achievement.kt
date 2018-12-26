@@ -3,6 +3,7 @@ package click.seichi.gigantic.acheivement
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
@@ -253,7 +254,13 @@ enum class Achievement(
         }
     }
 
-    private fun canGrant(player: Player) = canGranting(player)
+    private fun canGrant(player: Player) =
+            if (DebugConfig.ACHIEVEMENT_UNLOCK) true
+            else canGranting(player)
 
-    fun isGranted(player: Player) = canGrant(player) && Keys.ACHIEVEMENT_MAP[this]?.let { player.getOrPut(it) } ?: false
+    fun isGranted(player: Player) =
+            if (DebugConfig.ACHIEVEMENT_UNLOCK) true
+            else canGrant(player) && Keys.ACHIEVEMENT_MAP[this]?.let { player.getOrPut(it) } ?: false
+
+
 }
