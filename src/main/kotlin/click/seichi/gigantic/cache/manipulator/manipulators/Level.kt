@@ -30,8 +30,7 @@ class Level : Manipulator<Level, PlayerCache> {
     }
 
     fun calculate(
-            nextExp: BigDecimal,
-            onLevelUp: (Int) -> Unit
+            nextExp: BigDecimal
     ): Boolean {
         var isLevelUp = false
         while (canLevelUp(current + 1, nextExp)) {
@@ -40,7 +39,6 @@ class Level : Manipulator<Level, PlayerCache> {
             }
             current++
             isLevelUp = true
-            onLevelUp(current)
         }
 
         return isLevelUp

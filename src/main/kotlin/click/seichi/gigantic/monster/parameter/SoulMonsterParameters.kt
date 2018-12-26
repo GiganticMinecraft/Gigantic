@@ -18,7 +18,7 @@ object SoulMonsterParameters {
 
     val ZOMBIE_VILLAGER = SoulMonsterParameter(
             40L,
-            0,
+            1,
             100L,
             10L,
             1,
@@ -36,19 +36,19 @@ object SoulMonsterParameters {
 
     val PIG_WARRIOR = SoulMonsterParameter(
             45L,
-            20,
+            15,
             120L,
             10L,
-            2,
+            1,
             Material.PINK_CONCRETE_POWDER
     )
 
     val MR_PIG = SoulMonsterParameter(
             50L,
-            25,
+            20,
             140L,
             10L,
-            3,
+            1,
             Material.PINK_CONCRETE
     )
 
@@ -102,25 +102,25 @@ object SoulMonsterParameters {
             40,
             160L,
             6L,
-            2,
+            1,
             Material.NETHERRACK
     )
 
     val BLAZE_WARRIOR = SoulMonsterParameter(
             80L,
-            50,
+            45,
             180L,
             6L,
-            3,
+            1,
             Material.NETHER_BRICKS
     )
 
     val BLUE_BLAZE = SoulMonsterParameter(
             90L,
-            60,
+            50,
             200L,
             6L,
-            4,
+            2,
             Material.BLUE_CONCRETE_POWDER
     )
 

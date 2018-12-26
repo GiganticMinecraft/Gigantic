@@ -53,7 +53,7 @@ enum class Achievement(
         it.wrappedLevel >= 5
     }, priority = UpdatePriority.HIGHEST),
     TELEPORT_LAST_DEATH(103, {
-        it.wrappedLevel >= 6
+        it.wrappedLevel >= 7
     }, grantMessage = AchievementMessages.TELEPORT_LAST_DEATH),
 
     // skills
@@ -73,6 +73,8 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.UNLOCK_APOSTOLUS),
 
     // quest order
+
+    // MAIN QUEST
     QUEST_BEGINS_ORDER(401, {
         QUEST.isGranted(it)
     }, action = {

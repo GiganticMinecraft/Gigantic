@@ -136,8 +136,10 @@ fun Player.spawnColoredParticleSpherically(
 
 fun Player.findBattle() = BattleManager.findBattle(this)
 
-fun Player.updateLevel(isFirstJoin: Boolean = false) {
-    if (isFirstJoin) {
+fun Player.updateLevel(isOnLogin: Boolean = false) {
+
+    // ログイン時のデバッグモード処理
+    if (isOnLogin) {
         offer(Keys.EXP_MAP[ExpReason.DEBUG]!!, BigDecimal.ZERO)
         if (Gigantic.IS_DEBUG) {
             val level = DebugConfig.LEVEL
@@ -148,15 +150,20 @@ fun Player.updateLevel(isFirstJoin: Boolean = false) {
         }
     }
 
+    // レベル計算
+    val currentLevel = player.wrappedLevel
     manipulate(CatalogPlayerCache.LEVEL) {
-        //calc lv
-        it.calculate(wrappedExp) { current ->
-            if (!isFirstJoin)
-                Bukkit.getPluginManager().callEvent(LevelUpEvent(current, this))
-        }
+        it.calculate(wrappedExp)
     }
 
     PlayerMessages.EXP_BAR_DISPLAY(player.wrappedLevel, player.wrappedExp).sendTo(this)
+
+    // 上昇レベルに応じてEvent call
+    if (player.wrappedLevel > currentLevel && !isOnLogin) {
+        ((currentLevel + 1)..player.wrappedLevel).forEach { level ->
+            Bukkit.getPluginManager().callEvent(LevelUpEvent(level, this))
+        }
+    }
 }
 
 
