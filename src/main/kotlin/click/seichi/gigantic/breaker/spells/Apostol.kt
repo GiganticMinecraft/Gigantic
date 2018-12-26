@@ -61,16 +61,23 @@ class Apostol : Miner(), SpellCaster {
 
                 columnBlockSet.add(base)
 
-                // 上はheight - 2まで(>=3が保証されていると仮定する)
-                if (breakArea.height >= 3) {
-                    (1..(breakArea.height - 2)).forEach {
-                        columnBlockSet.add(base.getRelative(BlockFace.UP, it))
-                    }
-                }
+                // 高さ２の場合は上側のみ
+                if (breakArea.height == 2) {
+                    // 上のみ
+                    columnBlockSet.add(base.getRelative(BlockFace.UP))
 
-                // 下は1ブロック
-                if (breakArea.height > 1) {
-                    columnBlockSet.add(base.getRelative(BlockFace.DOWN))
+                } else {
+                    // 上はheight - 2まで(>=3が保証されていると仮定する)
+                    if (breakArea.height >= 3) {
+                        (1..(breakArea.height - 2)).forEach {
+                            columnBlockSet.add(base.getRelative(BlockFace.UP, it))
+                        }
+                    }
+
+                    // 下は1ブロック
+                    if (breakArea.height > 1) {
+                        columnBlockSet.add(base.getRelative(BlockFace.DOWN))
+                    }
                 }
 
                 // プレイヤーの正面に当たるブロックセット
