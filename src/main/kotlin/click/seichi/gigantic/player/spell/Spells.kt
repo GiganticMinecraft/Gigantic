@@ -41,8 +41,6 @@ object Spells {
 
                 PlayerMessages.MANA_DISPLAY(p.mana, p.maxMana).sendTo(p)
 
-                player.offer(Keys.IS_UPDATE_PROFILE, true)
-                player.getOrPut(Keys.BAG).carry(player)
             }
         }
     }

@@ -254,9 +254,6 @@ class BattleMonster(
 
             PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
 
-            player.offer(Keys.IS_UPDATE_PROFILE, true)
-            player.getOrPut(Keys.BAG).carry(player)
-
             if (!SoulMonster.ZOMBIE_VILLAGER.isDefeatedBy(player)) {
                 BattleMessages.FIRST_DAMAGE.sendTo(player)
             }

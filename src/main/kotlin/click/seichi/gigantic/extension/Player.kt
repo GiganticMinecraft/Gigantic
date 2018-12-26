@@ -13,6 +13,7 @@ import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
@@ -167,9 +168,10 @@ fun Player.updateLevel(isOnLogin: Boolean = false) {
 }
 
 
-fun Player.updateInventory(applyMainHand: Boolean, applyOffHand: Boolean) {
+fun Player.updateDisplay(applyMainHand: Boolean, applyOffHand: Boolean) {
     updateBelt(applyMainHand, applyOffHand)
     updateBag()
+    updateSideBar()
 }
 
 fun Player.updateBelt(applyMainHand: Boolean, applyOffHand: Boolean) {
@@ -178,6 +180,10 @@ fun Player.updateBelt(applyMainHand: Boolean, applyOffHand: Boolean) {
 
 fun Player.updateBag() {
     getOrPut(Keys.BAG).carry(this)
+}
+
+fun Player.updateSideBar() {
+    SideBarMessages.MEMORY_SIDEBAR(this, true).sendTo(this)
 }
 
 fun Player.fixHandToTool() {

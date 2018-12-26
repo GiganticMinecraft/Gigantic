@@ -9,6 +9,7 @@ import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.PlayerLevelConfig
+import click.seichi.gigantic.event.events.ComboEvent
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
@@ -102,9 +103,6 @@ class PlayerListener : Listener {
             it.updateMaxHealth(player.level)
         }
         PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
-
-        player.offer(Keys.IS_UPDATE_PROFILE, true)
-        player.getOrPut(Keys.BAG).carry(player)
 
         player.saturation = Float.MAX_VALUE
         player.foodLevel = 20
@@ -206,8 +204,10 @@ class PlayerListener : Listener {
 
         PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
 
-        player.offer(Keys.IS_UPDATE_PROFILE, true)
-        player.getOrPut(Keys.BAG).carry(player)
+    }
+
+    @EventHandler
+    fun onCombo(event: ComboEvent) {
 
     }
 
@@ -274,8 +274,7 @@ class PlayerListener : Listener {
             }
             PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
 
-            player.offer(Keys.IS_UPDATE_PROFILE, true)
-            player.getOrPut(Keys.BAG).carry(player)
+            player.updateBag()
         }, 1L)
 
     }
@@ -284,7 +283,7 @@ class PlayerListener : Listener {
     fun onChangeGameMode(event: PlayerGameModeChangeEvent) {
         when (event.newGameMode) {
             GameMode.SURVIVAL -> {
-                event.player.updateInventory(true, true)
+                event.player.updateDisplay(true, true)
             }
             GameMode.CREATIVE -> {
                 event.player.inventory.clear()

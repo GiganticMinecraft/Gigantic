@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack
  * @author tar0ss
  */
 object ToolSwitchSettingButtons {
+
     val TOOL_SWITCHER_SETTING: (Tool) -> Button = { tool ->
         object : Button {
             override fun findItemStack(player: Player): ItemStack? {
@@ -40,4 +41,5 @@ object ToolSwitchSettingButtons {
 
         }
     }
+
 }

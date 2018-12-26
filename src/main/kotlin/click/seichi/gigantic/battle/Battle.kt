@@ -4,7 +4,7 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.battle.passive.PowerEffect
 import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.updateInventory
+import click.seichi.gigantic.extension.updateDisplay
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.RelicMessages
@@ -129,7 +129,7 @@ class Battle internal constructor(
                     }
                 }
         quest?.process(battleSpawner.player)
-        battleSpawner.player.updateInventory(true, true)
+        battleSpawner.player.updateDisplay(true, true)
         end()
     }
 

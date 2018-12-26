@@ -25,7 +25,7 @@ fun ItemStack.setLore(vararg lore: String) {
 fun ItemStack.clearLore() {
     itemMeta = itemMeta.also { meta ->
         if (meta.hasLore())
-            meta.lore.clear()
+            meta.lore = listOf()
     }
 }
 

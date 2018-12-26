@@ -119,9 +119,6 @@ object Skills {
                 SkillSounds.HEAL.play(block.centralLocation)
 
                 PlayerMessages.HEALTH_DISPLAY(p.wrappedHealth, p.wrappedMaxHealth).sendTo(p)
-
-                player.offer(Keys.IS_UPDATE_PROFILE, true)
-                player.getOrPut(Keys.BAG).carry(player)
             }
         }
 

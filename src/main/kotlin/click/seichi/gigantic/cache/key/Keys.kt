@@ -498,18 +498,6 @@ object Keys {
 
     }
 
-    // 現在の表示から更新されていたらTRUE
-    val IS_UPDATE_PROFILE = object : Key<PlayerCache, Boolean> {
-
-        override val default: Boolean
-            get() = false
-
-        override fun satisfyWith(value: Boolean): Boolean {
-            return true
-        }
-
-    }
-
     val MENU_PAGE = object : Key<PlayerCache, Int> {
         override val default: Int
             get() = 1

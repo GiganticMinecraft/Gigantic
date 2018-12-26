@@ -16,5 +16,4 @@ object Defaults {
     const val HEALTH = 100L
     const val TOOL_ID = 2
     const val BELT_ID = 1
-    const val MANA_UNLOCK_LEVEL = 10
 }

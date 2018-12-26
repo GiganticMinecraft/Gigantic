@@ -2,12 +2,10 @@ package click.seichi.gigantic.acheivement
 
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
-import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.tool.Tool
 import org.bukkit.entity.Player
@@ -208,33 +206,35 @@ enum class Achievement(
 
     companion object {
         fun update(player: Player) {
+            var isChanged = false
             values().sortedBy { it -> it.priority.amount }
                     .forEach {
-                        it.update(player)
+                        if (it.update(player)) {
+                            isChanged = true
+                        }
                     }
-            player.updateInventory(true, true)
-            player.manipulate(CatalogPlayerCache.MEMORY) { memory ->
-                player.manipulate(CatalogPlayerCache.APTITUDE) { aptitude ->
-                    SideBarMessages.MEMORY_SIDEBAR(player, true).sendTo(player)
-                }
-            }
-
+            if (!isChanged) return
+            player.updateDisplay(true, true)
         }
     }
 
 
-    private fun update(player: Player) {
+    private fun update(player: Player): Boolean {
+        var isChanged = false
         if (canGrant(player)) {
             if (!isGranted(player)) {
                 // 現在も解除可能で解除していない時
                 grant(player)
+                isChanged = true
             }
         } else {
             if (isGranted(player)) {
                 // 現在解除できないがすでに解除しているとき
                 revoke(player)
+                isChanged = true
             }
         }
+        return isChanged
     }
 
     // 与える

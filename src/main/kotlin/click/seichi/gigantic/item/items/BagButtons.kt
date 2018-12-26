@@ -32,39 +32,33 @@ object BagButtons {
         override fun findItemStack(player: Player): ItemStack? {
             return player.getHead().apply {
                 setDisplayName(BagMessages.PROFILE.asSafety(player.wrappedLocale))
-                val isUpdate = player.getOrPut(Keys.IS_UPDATE_PROFILE)
                 val lore = mutableListOf<String>()
-                if (isUpdate) {
-                    lore.add(ProfileMessages.NEED_UPDATE.asSafety(player.wrappedLocale))
-                } else {
-                    lore.addAll(listOf(
-                            ProfileMessages.PROFILE_LEVEL(player.wrappedLevel).asSafety(player.wrappedLocale),
-                            ProfileMessages.PROFILE_EXP(player.wrappedLevel, player.wrappedExp).asSafety(player.wrappedLocale),
-                            ProfileMessages.PROFILE_HEALTH(player.wrappedHealth, player.wrappedMaxHealth).asSafety(player.wrappedLocale)
-                    )
-                    )
-                    if (Achievement.MANA_STONE.isGranted(player)) {
-                        lore.add(ProfileMessages.PROFILE_MANA(player.mana, player.maxMana).asSafety(player.wrappedLocale))
-                    }
-
-                    player.manipulate(CatalogPlayerCache.APTITUDE) { aptitude ->
-                        lore.addAll(listOf(
-                                ProfileMessages.PROFILE_MAX_COMBO(player.maxCombo).asSafety(player.wrappedLocale),
-                                *ProfileMessages.PROFILE_WILL_APTITUDE(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray())
-                        )
-                    }
+                lore.addAll(listOf(
+                        ProfileMessages.UPDATE.asSafety(player.wrappedLocale),
+                        ProfileMessages.PROFILE_LEVEL(player.wrappedLevel).asSafety(player.wrappedLocale),
+                        ProfileMessages.PROFILE_EXP(player.wrappedLevel, player.wrappedExp).asSafety(player.wrappedLocale),
+                        ProfileMessages.PROFILE_HEALTH(player.wrappedHealth, player.wrappedMaxHealth).asSafety(player.wrappedLocale)
+                )
+                )
+                if (Achievement.MANA_STONE.isGranted(player)) {
+                    lore.add(ProfileMessages.PROFILE_MANA(player.mana, player.maxMana).asSafety(player.wrappedLocale))
                 }
+
+                player.manipulate(CatalogPlayerCache.APTITUDE) { aptitude ->
+                    lore.addAll(listOf(
+                            ProfileMessages.PROFILE_MAX_COMBO(player.maxCombo).asSafety(player.wrappedLocale),
+                            *ProfileMessages.PROFILE_WILL_APTITUDE(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                    )
+                }
+
                 setLore(*lore.toTypedArray())
 
             }
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            val isUpdate = player.getOrPut(Keys.IS_UPDATE_PROFILE)
-            if (!isUpdate) return
-            player.offer(Keys.IS_UPDATE_PROFILE, false)
             PlayerSounds.TOGGLE.playOnly(player)
-            player.getOrPut(Keys.BAG).carry(player)
+            player.updateBag()
         }
 
     }
@@ -129,12 +123,12 @@ object BagButtons {
                     player.offer(Keys.AFK_LOCATION, player.location)
                     // 見えなくなるバグのため
                     player.showPlayer(Gigantic.PLUGIN, player)
-                    player.getOrPut(Keys.BAG).carry(player)
+                    player.updateBag()
                 }
                 GameMode.SPECTATOR -> {
                     player.gameMode = GameMode.SURVIVAL
                     player.teleport(afkLocation)
-                    player.getOrPut(Keys.BAG).carry(player)
+                    player.updateBag()
                     PlayerSounds.TELEPORT_AFK.play(player.location)
                 }
                 else -> {
@@ -155,6 +149,7 @@ object BagButtons {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
+                    addItemFlags(ItemFlag.HIDE_PLACED_ON)
                 }
             }
         }

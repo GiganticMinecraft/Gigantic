@@ -4,6 +4,7 @@ import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.event.events.ComboEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
@@ -11,6 +12,7 @@ import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.popup.pops.SkillPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
+import org.bukkit.Bukkit
 import org.bukkit.Effect
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -49,31 +51,35 @@ open class Miner : Breaker {
             it.inc()
         }
 
+        val currentCombo = player.combo
+
         if (Achievement.MINE_COMBO.isGranted(player)) {
             player.manipulate(CatalogPlayerCache.MINE_COMBO) {
                 it.combo(1L)
                 SkillPops.MINE_COMBO(it).pop(block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0))
             }
         }
-        player.transform(Keys.IS_UPDATE_PROFILE) {
-            if (!it) player.getOrPut(Keys.BAG).carry(player)
-            true
+        if (currentCombo > player.combo) {
+            ((currentCombo + 1)..player.combo).forEach { combo ->
+                Bukkit.getPluginManager().callEvent(ComboEvent(combo, player))
+            }
         }
+
         player.updateLevel()
 
         // play sounds
         val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
-
-        val currentCombo = player.getOrPut(Keys.MINE_COMBO)
-
-        // Sounds
-        when {
-            mineBurst.duringFire() && Achievement.MINE_COMBO.isGranted(player) -> {
-                SkillSounds.MINE_BURST_ON_BREAK(currentCombo).playOnly(player)
-                SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
+        if (Achievement.MINE_COMBO.isGranted(player)) {
+            // Sounds
+            when {
+                mineBurst.duringFire() -> {
+                    SkillSounds.MINE_BURST_ON_BREAK(player.combo).playOnly(player)
+                    SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
+                }
+                else -> PlayerSounds.OBTAIN_EXP(player.combo).playOnly(player)
             }
-            else -> PlayerSounds.OBTAIN_EXP(currentCombo).playOnly(player)
         }
+
         player.offer(Keys.BREAK_BLOCK, block)
         when {
             trySkill(player) -> {

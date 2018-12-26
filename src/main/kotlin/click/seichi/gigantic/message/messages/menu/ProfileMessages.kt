@@ -23,8 +23,8 @@ object ProfileMessages {
             Locale.JAPANESE to "${ChatColor.AQUA}プロフィール"
     )
 
-    val NEED_UPDATE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.YELLOW}クリックして更新"
+    val UPDATE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.UNDERLINE}クリックして更新"
     )
 
     val PROFILE_LEVEL = { level: Int ->

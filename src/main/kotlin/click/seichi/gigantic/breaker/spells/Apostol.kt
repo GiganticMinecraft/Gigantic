@@ -31,9 +31,6 @@ class Apostol : Miner(), SpellCaster {
 
         PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
-        player.offer(Keys.IS_UPDATE_PROFILE, true)
-        player.getOrPut(Keys.BAG).carry(player)
-
         // 実際の破壊処理（エフェクト部分）
         breakBlockSet.run {
             forEach { target ->
