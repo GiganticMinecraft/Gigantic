@@ -12,7 +12,7 @@ import java.util.*
 object ApostolusMenuMessages {
 
     val TITLE = LocalizedText(
-            Locale.JAPANESE to "アポストルス詳細設定"
+            Locale.JAPANESE to "アポストル詳細設定"
     )
 
     val CURRENT_AREA = LocalizedText(

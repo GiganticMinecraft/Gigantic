@@ -38,16 +38,18 @@ open class Miner : Breaker {
 
 
     open fun onBreakBlock(player: Player, block: Block) {
-        block.update()
 
-        // add exp
-        if (!block.isCrust && !block.isTree) return
+        if (!block.isCrust && !block.isTree) {
+            block.update()
+            return
+        }
 
         player.manipulate(CatalogPlayerCache.EXP) {
             it.inc()
         }
 
         player.updateLevel()
+
 
         // play sounds
         val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
@@ -63,20 +65,27 @@ open class Miner : Breaker {
         }
 
         player.offer(Keys.BREAK_BLOCK, block)
-        // スキル間干渉のないもの
-        Skill.MINE_COMBO.tryCast(player)
-        // スキル間干渉のあるもの
+        player.offer(Keys.INCREASE_COMBO, 1L)
+        // ヒール系
         when {
             Skill.HEAL.tryCast(player) -> {
             }
             Spell.STELLA_CLAIR.tryCast(player) -> {
             }
+
+        }
+        // 破壊系
+        when {
             !player.getOrPut(Keys.SPELL_TOGGLE) -> {
             }
             Spell.APOSTOL.tryCast(player) -> {
             }
         }
-        player.remove(Keys.BREAK_BLOCK)
+
+        // 最終結果コンボ数
+        Skill.MINE_COMBO.tryCast(player)
+
+        block.update()
     }
 
 }

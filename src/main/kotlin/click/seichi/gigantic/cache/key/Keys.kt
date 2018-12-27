@@ -655,5 +655,15 @@ object Keys {
 
     }
 
+    val INCREASE_COMBO = object : Key<PlayerCache, Long> {
+        override val default: Long
+            get() = 0L
+
+        override fun satisfyWith(value: Long): Boolean {
+            return true
+        }
+
+    }
+
 
 }

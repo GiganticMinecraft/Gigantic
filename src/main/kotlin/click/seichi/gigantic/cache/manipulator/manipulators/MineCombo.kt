@@ -6,7 +6,6 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.player.skill.SkillParameters.COMBO_CONTINUATION_SECONDS
 import click.seichi.gigantic.player.skill.SkillParameters.COMBO_DECREASE_INTERVAL
-import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
 /**
@@ -57,7 +56,7 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
                     .coerceAtMost(100)
             val decreaseCombo = currentCombo.toDouble()
                     .div(100.0)
-                    .times(decreaseRate).roundToInt()
+                    .times(decreaseRate).toInt()
             if (decreaseRate >= 100) {
                 currentCombo = count
             } else {

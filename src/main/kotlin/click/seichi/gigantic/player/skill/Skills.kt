@@ -131,29 +131,24 @@ object Skills {
         override fun findInvokable(p: Player): Consumer<Player>? {
             return Consumer { player ->
                 val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
-
                 val currentCombo = player.combo
+                val increaseCombo = player.getOrPut(Keys.INCREASE_COMBO)
 
                 player.manipulate(CatalogPlayerCache.MINE_COMBO) {
-                    it.combo(1L)
+                    it.combo(increaseCombo)
                 }
+
+                // コンボ数が減少した場合警告
+                if (player.combo <= currentCombo) {
+                    PlayerMessages.DECREASE_COMBO(currentCombo - player.combo + increaseCombo).sendTo(player)
+                }
+                // コンボイベント発生
+                Bukkit.getPluginManager().callEvent(ComboEvent(player.combo, player))
 
                 // 現在のコンボ数をプレイヤーに告知
                 SkillPops.MINE_COMBO(player.combo, player.comboRank).pop(
                         block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0)
                 )
-
-                // コンボ数が減少した場合警告
-                if (player.combo <= currentCombo) {
-                    PlayerMessages.DECREASE_COMBO(currentCombo - player.combo + 1L).sendTo(player)
-                }
-
-                // コンボ数に応じてコンボ発生
-                if (currentCombo < player.combo) {
-                    ((currentCombo + 1)..player.combo).forEach { combo ->
-                        Bukkit.getPluginManager().callEvent(ComboEvent(combo, player))
-                    }
-                }
             }
         }
 
