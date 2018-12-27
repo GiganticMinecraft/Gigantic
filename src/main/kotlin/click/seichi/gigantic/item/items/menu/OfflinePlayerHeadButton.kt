@@ -10,7 +10,7 @@ import java.util.*
 /**
  * @author tar0ss
  */
-class PlayerHeadButton(private val uuid: UUID) : Button {
+class OfflinePlayerHeadButton(private val uuid: UUID) : Button {
 
     override fun findItemStack(player: Player): ItemStack? {
         return getItemStack()

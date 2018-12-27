@@ -1,9 +1,7 @@
 package click.seichi.gigantic.menu.menus
 
-import click.seichi.gigantic.extension.addLore
-import click.seichi.gigantic.extension.setDisplayName
-import click.seichi.gigantic.extension.setLore
-import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.EffectMenuMessages
@@ -27,8 +25,54 @@ object EffectMenu : Menu() {
     }
 
     init {
+
+        // プレイヤー情報
+        registerButton(9, object : Button {
+
+            override fun findItemStack(player: Player): ItemStack? {
+                return player.getHead().apply {
+                    setDisplayName(EffectMenuMessages.PLAYER.asSafety(player.wrappedLocale))
+                    clearLore()
+                    // TODO implements
+                    addLore(EffectMenuMessages.VOTE_POINT.asSafety(player.wrappedLocale) +
+                            ": " + "${ChatColor.RESET}" + "${ChatColor.WHITE}" +
+                            "114514")
+                    addLore(EffectMenuMessages.POMME.asSafety(player.wrappedLocale) +
+                            ": " + "${ChatColor.RESET}" + "${ChatColor.WHITE}" +
+                            "1919")
+                    addLore(EffectMenuMessages.DONATE_POINT.asSafety(player.wrappedLocale) +
+                            ": " + "${ChatColor.RESET}" + "${ChatColor.WHITE}" +
+                            "810")
+                    addLore(MenuMessages.LINE)
+                    addLore(EffectMenuMessages.VOTE_POINT_DESCRIPTION.asSafety(player.wrappedLocale))
+                    addLore(EffectMenuMessages.POMME_DESCRIPTION.asSafety(player.wrappedLocale))
+                    addLore(EffectMenuMessages.DONATE_POINT_DESCRIPTION.asSafety(player.wrappedLocale))
+                }
+            }
+
+            override fun onClick(player: Player, event: InventoryClickEvent) {
+
+            }
+
+        })
+
+        // デフォルトエフェクト
+        registerButton(12, object : Button {
+
+            override fun findItemStack(player: Player): ItemStack? {
+                return ItemStack(Material.GLASS).apply {
+                    setDisplayName(EffectMenuMessages.DEFAULT_EFFECT.asSafety(player.wrappedLocale))
+                }
+            }
+
+            override fun onClick(player: Player, event: InventoryClickEvent) {
+                // TODO implements
+            }
+
+        })
+
         GiganticEffect.values().forEach { effect ->
-            registerButton(effect.slot, object : click.seichi.gigantic.item.Button {
+            registerButton(effect.slot + 27, object : click.seichi.gigantic.item.Button {
                 override fun findItemStack(player: Player): ItemStack? {
                     val itemStack = if (effect.isBought(player)) effect.getIcon()
                     else ItemStack(Material.BEDROCK)
@@ -38,17 +82,20 @@ object EffectMenu : Menu() {
                         setLore(*effect.getLore(player.wrappedLocale).toTypedArray())
 
                         addLore(MenuMessages.LINE)
-                        //購入方法と購入に必要なポイントを提示
-                        addLore("${effect.amount} " +
-                                when (effect.buyType) {
-                                    GiganticEffect.BuyType.VOTE_POINT -> EffectMenuMessages.VOTE_POINT
-                                    GiganticEffect.BuyType.POMME -> EffectMenuMessages.POMME
-                                    GiganticEffect.BuyType.DONATE_POINT -> EffectMenuMessages.DONATE_POINT
-                                }.asSafety(player.wrappedLocale) +
-                                "${ChatColor.RESET}" +
-                                EffectMenuMessages.BUY_TYPE.asSafety(player.wrappedLocale))
 
-                        addLore("")
+                        if (!effect.isBought(player)) {
+                            //購入方法と購入に必要なポイントを提示
+                            addLore("${effect.amount} " +
+                                    when (effect.buyType) {
+                                        GiganticEffect.BuyType.VOTE_POINT -> EffectMenuMessages.VOTE_POINT
+                                        GiganticEffect.BuyType.POMME -> EffectMenuMessages.POMME
+                                        GiganticEffect.BuyType.DONATE_POINT -> EffectMenuMessages.DONATE_POINT
+                                    }.asSafety(player.wrappedLocale) +
+                                    "${ChatColor.RESET}" +
+                                    EffectMenuMessages.BUY_TYPE.asSafety(player.wrappedLocale))
+
+                            addLore("")
+                        }
 
                         when {
                             effect.isBought(player) -> // 購入済みの場合

@@ -53,4 +53,30 @@ object EffectMenuMessages {
                     " で購入できる"
     )
 
+    val PLAYER = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GREEN}" +
+                    "${ChatColor.UNDERLINE}" +
+                    "プレイヤー情報"
+    )
+
+    val VOTE_POINT_DESCRIPTION = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                    "JMSから投票することで1投票ポイント獲得できる"
+    )
+
+    val POMME_DESCRIPTION = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                    "SPADEをプレイすることで一定数のポムを獲得できる"
+    )
+
+    val DONATE_POINT_DESCRIPTION = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                    "寄付1円につき1寄付ポイント獲得できる"
+    )
+
+    val DEFAULT_EFFECT = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.WHITE}" +
+                    "エフェクトなし(通常エフェクト)"
+    )
+
 }
