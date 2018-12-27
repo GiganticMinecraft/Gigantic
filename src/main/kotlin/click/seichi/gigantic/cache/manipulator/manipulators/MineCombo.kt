@@ -4,6 +4,8 @@ import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
+import click.seichi.gigantic.player.skill.SkillParameters.COMBO_CONTINUATION_SECONDS
+import click.seichi.gigantic.player.skill.SkillParameters.COMBO_DECREASE_INTERVAL
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
@@ -32,26 +34,6 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
         cache.offer(Keys.MINE_COMBO, currentCombo)
         cache.offer(Keys.LAST_COMBO_TIME, lastComboTime)
         return true
-    }
-
-    companion object {
-        const val COMBO_CONTINUATION_SECONDS = 3L
-
-        const val COMBO_DECREASE_INTERVAL = 3L
-
-        fun calcComboRank(combo: Long) = when (combo) {
-            in 0..9 -> 1
-            in 10..29 -> 2
-            in 30..69 -> 3
-            in 70..149 -> 4
-            in 150..309 -> 5
-            in 310..629 -> 6
-            in 630..1269 -> 7
-            in 1270..2549 -> 8
-            in 2550..5109 -> 9
-            in 5110..10229 -> 10
-            else -> 11
-        }
     }
 
     fun combo(count: Long): Long {

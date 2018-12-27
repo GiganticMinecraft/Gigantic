@@ -12,14 +12,14 @@ object SkillPops {
         val color = when (rank) {
             1 -> ChatColor.WHITE
             2 -> ChatColor.YELLOW
-            3 -> ChatColor.GREEN
-            4 -> ChatColor.LIGHT_PURPLE
-            5 -> ChatColor.DARK_GREEN
-            6 -> ChatColor.DARK_GRAY
+            3 -> ChatColor.GOLD
+            4 -> ChatColor.GREEN
+            5 -> ChatColor.LIGHT_PURPLE
+            6 -> ChatColor.DARK_GREEN
             7 -> ChatColor.DARK_AQUA
-            8 -> ChatColor.DARK_BLUE
+            8 -> ChatColor.DARK_RED
             9 -> ChatColor.DARK_PURPLE
-            10 -> ChatColor.DARK_RED
+            10 -> ChatColor.DARK_BLUE
             else -> ChatColor.BLACK
         }
         PopUp(

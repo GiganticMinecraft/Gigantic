@@ -9,12 +9,12 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.cache.manipulator.manipulators.MineCombo
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
+import click.seichi.gigantic.player.skill.SkillParameters
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
@@ -82,7 +82,7 @@ val Player.maxCombo: Long
     get() = getOrPut(Keys.MAX_COMBO)
 
 val Player.comboRank: Int
-    get() = MineCombo.calcComboRank(combo)
+    get() = SkillParameters.calcComboRank(combo)
 
 
 fun Player.isMaxMana() = mana >= maxMana

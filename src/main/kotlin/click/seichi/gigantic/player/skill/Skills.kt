@@ -3,6 +3,7 @@ package click.seichi.gigantic.player.skill
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.event.events.ComboEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Invokable
@@ -10,6 +11,7 @@ import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.popup.pops.SkillPops
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import click.seichi.gigantic.util.Random
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
@@ -119,6 +121,39 @@ object Skills {
                 SkillSounds.HEAL.play(block.centralLocation)
 
                 PlayerMessages.HEALTH_DISPLAY(p.wrappedHealth, p.wrappedMaxHealth).sendTo(p)
+            }
+        }
+
+    }
+
+    // sound 処理は[Miner]で纏めてある
+    val MINE_COMBO = object : Invokable {
+        override fun findInvokable(p: Player): Consumer<Player>? {
+            return Consumer { player ->
+                val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
+
+                val currentCombo = player.combo
+
+                player.manipulate(CatalogPlayerCache.MINE_COMBO) {
+                    it.combo(1L)
+                }
+
+                // 現在のコンボ数をプレイヤーに告知
+                SkillPops.MINE_COMBO(player.combo, player.comboRank).pop(
+                        block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0)
+                )
+
+                // コンボ数が減少した場合警告
+                if (player.combo <= currentCombo) {
+                    PlayerMessages.DECREASE_COMBO(currentCombo - player.combo + 1L).sendTo(player)
+                }
+
+                // コンボ数に応じてコンボ発生
+                if (currentCombo < player.combo) {
+                    ((currentCombo + 1)..player.combo).forEach { combo ->
+                        Bukkit.getPluginManager().callEvent(ComboEvent(combo, player))
+                    }
+                }
             }
         }
 

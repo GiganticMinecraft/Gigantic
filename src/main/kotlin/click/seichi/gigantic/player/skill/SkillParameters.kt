@@ -15,8 +15,22 @@ object SkillParameters {
 
     const val HEAL_PROBABILITY_PERCENT = 20
 
-    const val KODAMA_DRAIN_LOG_HEAL_PERCENT = 1.0
+    const val COMBO_CONTINUATION_SECONDS = 3L
 
-    const val KODAMA_DRAIN_LEAVES_HEAL_PERCENT = 0.1
+    const val COMBO_DECREASE_INTERVAL = 3L
+
+    fun calcComboRank(combo: Long) = when (combo) {
+        in 0..9 -> 1
+        in 10..29 -> 2
+        in 30..69 -> 3
+        in 70..149 -> 4
+        in 150..309 -> 5
+        in 310..629 -> 6
+        in 630..1269 -> 7
+        in 1270..2549 -> 8
+        in 2550..5109 -> 9
+        in 5110..10229 -> 10
+        else -> 11
+    }
 
 }

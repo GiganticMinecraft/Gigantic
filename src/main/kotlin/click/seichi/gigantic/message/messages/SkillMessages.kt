@@ -69,4 +69,26 @@ object SkillMessages {
                                     "全ての通常破壊で発動"
                     )
             )
+
+
+    val MINE_COMBO = LocalizedText(
+            Locale.JAPANESE to "マイン・コンボ"
+    )
+
+    val MINE_COMBO_LORE =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "パッシブ効果: 掘り続けると採掘速度が徐々に上昇"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "コンボ継続時間: ${SkillParameters.COMBO_CONTINUATION_SECONDS}秒"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "コンボが途切れると${SkillParameters.COMBO_DECREASE_INTERVAL}秒おきに" +
+                                    "コンボ数が1割減少"
+                    )
+            )
 }

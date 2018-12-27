@@ -14,16 +14,20 @@ import java.util.*
  */
 enum class Skill(
         val id: Int,
+
+        // スキル一覧メニューで使用
         val slot: Int,
         private val icon: ItemStack,
         private val localizedName: LocalizedText,
         private val localizedLore: List<LocalizedText>?,
+        // スキル発動に必要な実績
         private val achievement: Achievement?,
+        // 発動
         private val invoker: Invokable
 ) {
     FLASH(
             1,
-            1,
+            2,
             ItemStack(Material.FEATHER),
             SkillMessages.FLASH,
             SkillMessages.FLASH_LORE,
@@ -41,12 +45,21 @@ enum class Skill(
     ),
     MINE_BURST(
             3,
-            2,
+            3,
             ItemStack(Material.BLAZE_POWDER),
             SkillMessages.MINE_BURST,
             SkillMessages.MINE_BURST_LORE,
             Achievement.SKILL_MINE_BURST,
             Skills.MINE_BURST
+    ),
+    MINE_COMBO(
+            4,
+            1,
+            ItemStack(Material.MAGMA_CREAM),
+            SkillMessages.MINE_COMBO,
+            SkillMessages.MINE_COMBO_LORE,
+            Achievement.SKILL_MINE_COMBO,
+            Skills.MINE_COMBO
     )
     ;
 
@@ -55,6 +68,7 @@ enum class Skill(
     fun isGranted(player: Player) = achievement?.isGranted(player) ?: true
 
     // 解禁条件を表示するためにplayerを引数に
+    // TODO [player] を用いて解禁条件文を追記
     fun getIcon(player: Player) = icon.clone()
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)

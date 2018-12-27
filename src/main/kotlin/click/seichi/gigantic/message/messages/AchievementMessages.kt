@@ -27,17 +27,18 @@ object AchievementMessages {
             }
     ))
 
-    val MINE_COMBO = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_SKILL_MINE_COMBO = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "マインコンボ解禁!!\n" +
+                        "バフスキル: マインコンボ解禁!!\n" +
                         "${ChatColor.GRAY}" +
-                        "ブロックを連続破壊してコンボが切れないようにしよう！\n"
+                        "パッシブ効果: ブロックを連続破壊してコンボが切れないようにしよう！\n" +
+                        "コンボ数によって採掘速度が上昇するぞ！\n"
             }
     ))
 
 
-    val SKILL_MINE_BURST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_SKILL_MINE_BURST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "バフスキル: マインバースト を覚えた!!\n" +
@@ -65,7 +66,7 @@ object AchievementMessages {
             }
     ))
 
-    val UNLOCK_STELLA_CLAIR = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_SPELL_STELLA_CLAIR = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "回復魔法: ステラ・クレア を覚えた!!\n" +
@@ -75,7 +76,7 @@ object AchievementMessages {
             }
     ))
 
-    val UNLOCK_APOSTOLUS = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_SPELL_APOSTOLUS = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "破壊魔法: アポストル を覚えた!!\n" +

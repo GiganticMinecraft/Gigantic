@@ -34,9 +34,7 @@ enum class Achievement(
         it.wrappedLevel >= 2
     }, grantMessage = AchievementMessages.FIRST_LEVEL_UP),
 
-    MINE_COMBO(2, {
-        it.wrappedLevel >= 3
-    }, grantMessage = AchievementMessages.MINE_COMBO),
+
 
 
     // systems
@@ -60,15 +58,18 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.UNLOCK_FLASH),
     SKILL_MINE_BURST(201, {
         Quest.BLAZE.isCleared(it)
-    }, grantMessage = AchievementMessages.SKILL_MINE_BURST),
+    }, grantMessage = AchievementMessages.UNLOCK_SKILL_MINE_BURST),
+    SKILL_MINE_COMBO(202, {
+        it.wrappedLevel >= 3
+    }, grantMessage = AchievementMessages.UNLOCK_SKILL_MINE_COMBO),
 
     // spells
     SPELL_STELLA_CLAIR(300, {
         MANA_STONE.isGranted(it)
-    }, grantMessage = AchievementMessages.UNLOCK_STELLA_CLAIR),
+    }, grantMessage = AchievementMessages.UNLOCK_SPELL_STELLA_CLAIR),
     SPELL_APOSTOL(301, {
         MANA_STONE.isGranted(it)
-    }, grantMessage = AchievementMessages.UNLOCK_APOSTOLUS),
+    }, grantMessage = AchievementMessages.UNLOCK_SPELL_APOSTOLUS),
 
     // quest order
 

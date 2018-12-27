@@ -4,16 +4,11 @@ import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.event.events.ComboEvent
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
-import click.seichi.gigantic.popup.pops.PopUpParameters
-import click.seichi.gigantic.popup.pops.SkillPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
-import org.bukkit.Bukkit
 import org.bukkit.Effect
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -52,31 +47,11 @@ open class Miner : Breaker {
             it.inc()
         }
 
-        val currentCombo = player.combo
-
-        if (Achievement.MINE_COMBO.isGranted(player)) {
-            player.manipulate(CatalogPlayerCache.MINE_COMBO) {
-                it.combo(1L)
-            }
-            SkillPops.MINE_COMBO(player.combo, player.comboRank).pop(
-                    block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0)
-            )
-            if (player.combo <= currentCombo) {
-                PlayerMessages.DECREASE_COMBO(currentCombo - player.combo + 1L).sendTo(player)
-            }
-        }
-
-        if (currentCombo < player.combo) {
-            ((currentCombo + 1)..player.combo).forEach { combo ->
-                Bukkit.getPluginManager().callEvent(ComboEvent(combo, player))
-            }
-        }
-
         player.updateLevel()
 
         // play sounds
         val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
-        if (Achievement.MINE_COMBO.isGranted(player)) {
+        if (Achievement.SKILL_MINE_COMBO.isGranted(player)) {
             // Sounds
             when {
                 mineBurst.duringFire() -> {
@@ -88,33 +63,20 @@ open class Miner : Breaker {
         }
 
         player.offer(Keys.BREAK_BLOCK, block)
+        // スキル間干渉のないもの
+        Skill.MINE_COMBO.tryCast(player)
+        // スキル間干渉のあるもの
         when {
-            trySkill(player) -> {
+            Skill.HEAL.tryCast(player) -> {
             }
-            trySpell(player) -> {
+            Spell.STELLA_CLAIR.tryCast(player) -> {
             }
-            tryHeal(player) -> {
+            !player.getOrPut(Keys.SPELL_TOGGLE) -> {
+            }
+            Spell.APOSTOL.tryCast(player) -> {
             }
         }
         player.remove(Keys.BREAK_BLOCK)
-    }
-
-    private fun trySkill(player: Player): Boolean {
-        return false
-    }
-
-    private fun tryHeal(player: Player): Boolean {
-        if (Skill.HEAL.tryCast(player)) return true
-        if (Spell.STELLA_CLAIR.tryCast(player)) return true
-        return false
-    }
-
-    private fun trySpell(player: Player): Boolean {
-        val toggle = player.getOrPut(Keys.SPELL_TOGGLE)
-        if (!toggle) return false
-        if (Spell.APOSTOL.tryCast(player)) return true
-
-        return false
     }
 
 }
