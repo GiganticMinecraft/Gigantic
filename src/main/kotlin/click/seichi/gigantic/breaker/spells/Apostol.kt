@@ -3,6 +3,7 @@ package click.seichi.gigantic.breaker.spells
 import click.seichi.gigantic.breaker.Miner
 import click.seichi.gigantic.breaker.SpellCaster
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
@@ -27,6 +28,10 @@ class Apostol : Miner(), SpellCaster {
 
         player.manipulate(CatalogPlayerCache.MANA) {
             it.decrease(calcConsumeMana(player, breakBlockSet))
+        }
+
+        player.manipulate(CatalogPlayerCache.EXP) {
+            it.add(breakBlockSet.size.toBigDecimal(), ExpReason.SPELL_APOSTOL)
         }
 
         PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)

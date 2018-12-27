@@ -251,10 +251,12 @@ class PlayerListener : Listener {
                 val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: BigDecimal.ZERO
                 val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level.current + 1] ?: BigDecimal.ZERO
                 val maxPenalty = player.wrappedExp.minus(expToCurrentLevel)
+
                 val penaltyMineBlock = expToNextLevel.minus(expToCurrentLevel)
                         .div(100.toBigDecimal())
-                        .times(Config.PLAYER_DEATH_PENALTY.times(100).toBigDecimal())
+                        .times(Config.PLAYER_DEATH_PENALTY.toBigDecimal())
                         .coerceAtMost(maxPenalty)
+
                 it.add(penaltyMineBlock.times((-1).toBigDecimal()), ExpReason.DEATH_PENALTY)
                 if (penaltyMineBlock != BigDecimal.ZERO)
                     PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
