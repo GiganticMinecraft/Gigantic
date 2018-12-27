@@ -6,6 +6,7 @@ import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.*
 
 /**
@@ -17,7 +18,7 @@ object PlayerMessages {
         val expToLevel = PlayerLevelConfig.LEVEL_MAP[level] ?: BigDecimal.ZERO
         val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level + 1]
                 ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
-        LevelMessage(level, (exp - expToLevel).setScale(2).div((expToNextLevel - expToLevel)).toFloat().coerceAtLeast(Float.MIN_VALUE))
+        LevelMessage(level, (exp - expToLevel).setScale(2).divide((expToNextLevel - expToLevel), 10, RoundingMode.HALF_UP).toFloat().coerceAtLeast(Float.MIN_VALUE))
     }
 
     val HEALTH_DISPLAY = { health: Long, maxHealth: Long ->
@@ -77,8 +78,8 @@ object PlayerMessages {
 
 
     val MANA_DISPLAY = { mana: BigDecimal, maxMana: BigDecimal ->
-        val interval = maxMana.div(Defaults.MANA_BAR_NUM.toBigDecimal())
-        val amount = mana.div(interval)
+        val interval = maxMana.divide(Defaults.MANA_BAR_NUM.toBigDecimal(), 10, RoundingMode.HALF_UP)
+        val amount = mana.divide(interval, 10, RoundingMode.HALF_UP)
         ManaMessage(mana, maxMana, amount.toDouble())
     }
 
@@ -111,6 +112,13 @@ object PlayerMessages {
         ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.RED}" +
                         "時間経過によりコンボが$decreaseCombo 減少"
+        ))
+    }
+
+    val UPDATE_MAX_COMBO = { prevmaxCombo: Long, maxCombo: Long ->
+        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.YELLOW}" +
+                        "最大コンボ数更新!! ($prevmaxCombo → $maxCombo)"
         ))
     }
 

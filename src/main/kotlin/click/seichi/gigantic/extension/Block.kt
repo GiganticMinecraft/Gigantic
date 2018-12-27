@@ -33,6 +33,9 @@ val Block.isTree
 val Block.isGrass
     get() = Gigantic.GRASSES.contains(type)
 
+val Block.isWaterPlant
+    get() = Gigantic.WATER_PLANTS.contains(type)
+
 val Block.isSurface
     get() = if (Gigantic.AIRS.contains(type)) false
     else (1..3).firstOrNull {
@@ -90,15 +93,15 @@ private fun Block.changeRelativeBedrock() {
 
 private fun Block.condenseRelativeLiquid() {
     faceSet.map { getRelative(it) }
-            .filter { it.isLiquid }
+            .filter { it.isLiquid || it.isWaterPlant }
             .forEach {
-                when (it.type) {
-                    Material.WATER -> {
+                when {
+                    it.type == Material.WATER || it.isWaterPlant -> {
                         PlayerSounds.ON_CONDENSE_WATER.play(it.centralLocation)
                         PlayerAnimations.ON_CONDENSE_WATER.start(it.centralLocation)
                         it.type = Material.PACKED_ICE
                     }
-                    Material.LAVA -> {
+                    it.type == Material.LAVA -> {
                         PlayerSounds.ON_CONDENSE_LAVA.play(it.centralLocation)
                         PlayerAnimations.ON_CONDENSE_LAVA.start(it.centralLocation)
                         it.type = Material.MAGMA_BLOCK

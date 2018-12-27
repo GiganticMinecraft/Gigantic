@@ -133,6 +133,7 @@ object Skills {
                 val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 val currentCombo = player.combo
                 val increaseCombo = player.getOrPut(Keys.INCREASE_COMBO)
+                val currentMaxCombo = player.maxCombo
 
                 player.manipulate(CatalogPlayerCache.MINE_COMBO) {
                     it.combo(increaseCombo)
@@ -140,7 +141,14 @@ object Skills {
 
                 // コンボ数が減少した場合警告
                 if (player.combo <= currentCombo) {
-                    PlayerMessages.DECREASE_COMBO(currentCombo - player.combo + increaseCombo).sendTo(player)
+                    // 長時間放置時は除外
+                    if (player.combo != increaseCombo) {
+                        PlayerMessages.DECREASE_COMBO(currentCombo - player.combo + increaseCombo).sendTo(player)
+                    }
+                    // 最大コンボ数が更新されていれば報告
+                    if (player.maxCombo > currentMaxCombo) {
+                        PlayerMessages.UPDATE_MAX_COMBO(currentCombo, player.maxCombo).sendTo(player)
+                    }
                 }
                 // コンボイベント発生
                 Bukkit.getPluginManager().callEvent(ComboEvent(player.combo, player))

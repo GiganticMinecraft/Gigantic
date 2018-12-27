@@ -44,12 +44,16 @@ object ApostolusMenuMessages {
     val LIMIT_OF_BREAK_NUM_LORE = { maxBreakNum: Int ->
         setOf(
                 LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
+                        Locale.JAPANESE to "${ChatColor.YELLOW}" +
                                 "マナの最大値によって同時破壊数は増えます"
                 ),
                 LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
-                                "( 最大同時破壊数:$maxBreakNum )"
+                        Locale.JAPANESE to "${ChatColor.YELLOW}" +
+                                "( " +
+                                "${ChatColor.RESET}${ChatColor.RED}${ChatColor.BOLD}" +
+                                "最大" +
+                                "${ChatColor.RESET}${ChatColor.YELLOW}" +
+                                "同時破壊数:$maxBreakNum )"
                 )
         )
     }

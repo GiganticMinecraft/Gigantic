@@ -4,6 +4,7 @@ import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import java.math.BigDecimal
+import java.math.RoundingMode
 import kotlin.math.roundToInt
 
 /**
@@ -25,7 +26,7 @@ class ManaMessage(
         else -> amount.coerceAtLeast(0.00).roundToInt()
     }
 
-    private val ratio = mana.div(maxMana).toDouble().coerceAtLeast(0.00)
+    private val ratio = mana.divide(maxMana, 10, RoundingMode.HALF_UP).toDouble().coerceAtLeast(0.00)
 
     private val remainNumString = (1..nextNum).joinToString(
             prefix = when {

@@ -13,6 +13,7 @@ import click.seichi.gigantic.event.events.ComboEvent
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
+import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.popup.pops.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
@@ -39,6 +40,7 @@ import org.bukkit.event.player.*
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.concurrent.TimeUnit
 
 
@@ -246,6 +248,10 @@ class PlayerListener : Listener {
         }
         player.offer(Keys.DEATH_MESSAGE, null)
 
+        if (Achievement.TELEPORT_LAST_DEATH.isGranted(player)) {
+            DeathMessages.DEATH_TELEPORT.sendTo(player)
+        }
+
         player.manipulate(CatalogPlayerCache.LEVEL) { level ->
             player.manipulate(CatalogPlayerCache.EXP) {
                 val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: BigDecimal.ZERO
@@ -253,7 +259,7 @@ class PlayerListener : Listener {
                 val maxPenalty = player.wrappedExp.minus(expToCurrentLevel)
 
                 val penaltyMineBlock = expToNextLevel.minus(expToCurrentLevel)
-                        .div(100.toBigDecimal())
+                        .divide(100.toBigDecimal(), 10, RoundingMode.HALF_UP)
                         .times(Config.PLAYER_DEATH_PENALTY.toBigDecimal())
                         .coerceAtMost(maxPenalty)
 

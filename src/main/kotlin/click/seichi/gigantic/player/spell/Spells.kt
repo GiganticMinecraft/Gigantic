@@ -14,6 +14,7 @@ import click.seichi.gigantic.sound.sounds.SpellSounds
 import click.seichi.gigantic.util.Random
 import org.bukkit.entity.Player
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.function.Consumer
 
 /**
@@ -32,7 +33,7 @@ object Spells {
                 var wrappedAmount = 0.toBigDecimal()
 
                 p.manipulate(CatalogPlayerCache.MANA) {
-                    wrappedAmount = it.increase(it.max.div(100.toBigDecimal()).times(SpellParameters.STELLA_CLAIR_AMOUNT_PERCENT.toBigDecimal()))
+                    wrappedAmount = it.increase(it.max.divide(100.toBigDecimal(), 10, RoundingMode.HALF_UP).times(SpellParameters.STELLA_CLAIR_AMOUNT_PERCENT.toBigDecimal()))
                 }
 
                 SpellAnimations.STELLA_CLAIR.absorb(p, block.centralLocation)

@@ -104,7 +104,6 @@ object BagButtons {
             return when (player.gameMode) {
                 GameMode.SPECTATOR -> ItemStack(Material.POPPY, 1).apply {
                     setDisplayName(
-
                             BagMessages.BACK_FROM_REST.asSafety(player.wrappedLocale)
                     )
                 }
@@ -131,7 +130,7 @@ object BagButtons {
                     if (afkLocation != null) {
                         player.teleport(afkLocation)
                     }
-                    player.updateBag()
+                    player.closeInventory()
                     PlayerSounds.TELEPORT_AFK.play(player.location)
                 }
                 else -> {
@@ -243,6 +242,7 @@ object BagButtons {
             return ItemStack(Material.LADDER).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
+                setLore(BagMessages.SWITCH_DETAIL_LORE.asSafety(player.wrappedLocale))
             }
         }
 

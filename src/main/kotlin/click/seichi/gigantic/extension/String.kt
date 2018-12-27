@@ -1,5 +1,8 @@
 package click.seichi.gigantic.extension
 
+import click.seichi.gigantic.util.Random
+import org.bukkit.ChatColor
+
 /**
  * @author unicroak
  * @author tar0ss
@@ -15,6 +18,11 @@ fun String.beginWithUpperCase(): String {
         else -> this[0].toUpperCase() + this.substring(1)
     }
 }
+
+fun String.toRainbow() = this.toCharArray().map {
+    "${ChatColor.RESET}${Random.nextChatColor()}$it"
+}.joinToString(separator = "")
+
 
 fun String.Companion.enchantLevel(level: Int) =
         when (level) {

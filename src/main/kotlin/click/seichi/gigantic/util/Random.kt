@@ -3,6 +3,7 @@ package click.seichi.gigantic.util
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import click.seichi.gigantic.will.WillSize
+import org.bukkit.ChatColor
 import org.bukkit.Color
 
 /**
@@ -41,4 +42,17 @@ internal object Random {
             ?: nextWillSizeWithRegularity()
 
     fun nextColor() = Color.fromRGB(nextInt(255), nextInt(255), nextInt(255))!!
+
+    private val chatColorSet = setOf(
+            ChatColor.YELLOW,
+            ChatColor.LIGHT_PURPLE,
+            ChatColor.GOLD,
+            ChatColor.GREEN,
+            ChatColor.RED,
+            ChatColor.AQUA,
+            ChatColor.BLUE,
+            ChatColor.GRAY
+    )
+
+    fun nextChatColor() = chatColorSet.random()
 }

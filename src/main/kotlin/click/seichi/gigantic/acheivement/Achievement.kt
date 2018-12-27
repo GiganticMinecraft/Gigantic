@@ -2,6 +2,7 @@ package click.seichi.gigantic.acheivement
 
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
@@ -32,7 +33,6 @@ enum class Achievement(
     FIRST_LEVEL_UP(1, {
         it.wrappedLevel >= 2
     }, grantMessage = AchievementMessages.FIRST_LEVEL_UP),
-
 
     //TODO 一度すべてのクエストを隠蔽しているので実装時は一気にやる
     // systems
@@ -261,11 +261,11 @@ enum class Achievement(
     }
 
     private fun canGrant(player: Player) =
-            if (DebugConfig.ACHIEVEMENT_UNLOCK) true
+            if (DebugConfig.ACHIEVEMENT_UNLOCK && Config.DEBUG_MODE) true
             else canGranting(player)
 
     fun isGranted(player: Player) =
-            if (DebugConfig.ACHIEVEMENT_UNLOCK) true
+            if (DebugConfig.ACHIEVEMENT_UNLOCK && Config.DEBUG_MODE) true
             else canGrant(player) && Keys.ACHIEVEMENT_MAP[this]?.let { player.getOrPut(it) } ?: false
 
 

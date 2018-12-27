@@ -1,6 +1,7 @@
 package click.seichi.gigantic.player.spell
 
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 /**
  * @author tar0ss
@@ -18,9 +19,9 @@ object SpellParameters {
     fun calcLimitOfBreakNumOfApostol(maxMana: BigDecimal): Int {
         return maxMana
                 .setScale(5)
-                .div(100.toBigDecimal())
+                .divide(100.toBigDecimal(), 10, RoundingMode.HALF_UP)
                 .times(5.toBigDecimal())
-                .div(APOSTOL_MANA.toBigDecimal())
+                .divide(APOSTOL_MANA.toBigDecimal(), 10, RoundingMode.HALF_UP)
                 .coerceAtMost(Integer.MAX_VALUE.toBigDecimal())
                 .toInt()
     }

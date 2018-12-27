@@ -200,6 +200,23 @@ class Gigantic : JavaPlugin() {
                 Material.LARGE_FERN
         )
 
+        val WATER_PLANTS = setOf(
+                Material.SEAGRASS,
+                Material.SEA_PICKLE,
+                Material.TALL_SEAGRASS,
+                Material.KELP_PLANT,
+                Material.BRAIN_CORAL,
+                Material.BUBBLE_CORAL,
+                Material.FIRE_CORAL,
+                Material.HORN_CORAL,
+                Material.TUBE_CORAL,
+                Material.BRAIN_CORAL_FAN,
+                Material.BUBBLE_CORAL_FAN,
+                Material.FIRE_CORAL_FAN,
+                Material.HORN_CORAL_FAN,
+                Material.TUBE_CORAL_FAN
+        )
+
         val TREES = setOf(*LOGS.toTypedArray(), *LEAVES.toTypedArray())
     }
 
