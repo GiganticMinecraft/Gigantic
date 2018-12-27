@@ -74,9 +74,4 @@ object EffectMenuMessages {
                     "寄付1円につき1寄付ポイント獲得できる"
     )
 
-    val DEFAULT_EFFECT = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.WHITE}" +
-                    "エフェクトなし(通常エフェクト)"
-    )
-
 }

@@ -59,9 +59,12 @@ object EffectMenu : Menu() {
         // デフォルトエフェクト
         registerButton(12, object : Button {
 
+            val effect = GiganticEffect.DEFAULT
+
             override fun findItemStack(player: Player): ItemStack? {
-                return ItemStack(Material.GLASS).apply {
-                    setDisplayName(EffectMenuMessages.DEFAULT_EFFECT.asSafety(player.wrappedLocale))
+                return effect.getIcon().apply {
+                    setDisplayName(effect.getName(player.wrappedLocale))
+                    setLore(*effect.getLore(player.wrappedLocale).toTypedArray())
                 }
             }
 
@@ -71,7 +74,8 @@ object EffectMenu : Menu() {
 
         })
 
-        GiganticEffect.values().forEach { effect ->
+        // DEFAULT を抜いたエフェクト全て
+        GiganticEffect.values().filter { it.id != 0 }.forEach { effect ->
             registerButton(effect.slot + 27, object : click.seichi.gigantic.item.Button {
                 override fun findItemStack(player: Player): ItemStack? {
                     val itemStack = if (effect.isBought(player)) effect.getIcon()
@@ -90,6 +94,7 @@ object EffectMenu : Menu() {
                                         GiganticEffect.BuyType.VOTE_POINT -> EffectMenuMessages.VOTE_POINT
                                         GiganticEffect.BuyType.POMME -> EffectMenuMessages.POMME
                                         GiganticEffect.BuyType.DONATE_POINT -> EffectMenuMessages.DONATE_POINT
+                                        else -> throw Error("$effect is illegal buytype : ${effect.buyType}")
                                     }.asSafety(player.wrappedLocale) +
                                     "${ChatColor.RESET}" +
                                     EffectMenuMessages.BUY_TYPE.asSafety(player.wrappedLocale))

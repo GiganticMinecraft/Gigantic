@@ -36,6 +36,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var teleportToggle by UserTable.teleportToggle
 
+    var effectId by UserTable.effectId
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt

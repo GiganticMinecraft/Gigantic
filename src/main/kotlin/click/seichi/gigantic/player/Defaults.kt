@@ -16,4 +16,5 @@ object Defaults {
     const val HEALTH = 100L
     const val TOOL_ID = 2
     const val BELT_ID = 1
+    const val EFFECT_ID = 0
 }

@@ -36,6 +36,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val teleportToggle = bool("teleport_toggle").default(true)
 
+    val effectId = integer("effect_id").default(Defaults.EFFECT_ID)
+
     val createdAt = datetime("created_at").default(DateTime.now())
 
     val updatedAt = datetime("updated_at").default(DateTime.now())

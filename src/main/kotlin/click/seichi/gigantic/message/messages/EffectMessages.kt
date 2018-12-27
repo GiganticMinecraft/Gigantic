@@ -21,4 +21,16 @@ object EffectMessages {
             )
     )
 
+    val DEFAULT = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.WHITE}" +
+                    "通常エフェクト"
+    )
+
+    val DEFAULT_LORE = setOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.WHITE}" +
+                            "マイクラの通常エフェクト"
+            )
+    )
+
 }

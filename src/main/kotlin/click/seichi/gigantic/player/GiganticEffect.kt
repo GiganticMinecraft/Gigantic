@@ -14,6 +14,7 @@ import java.util.*
  * @author tar0ss
  */
 enum class GiganticEffect(
+        // 変更禁止 id=0はデフォルトエフェクトに対応
         val id: Int,
         // エフェクトメニューに配置されるスロット
         val slot: Int,
@@ -28,6 +29,17 @@ enum class GiganticEffect(
         // 説明文
         val localizedLore: Set<LocalizedText>
 ) {
+    DEFAULT(
+            0,
+            // DEFAULT のみ無意味な値
+            0,
+            ItemStack(Material.GRASS_BLOCK),
+            BuyType.DEFAULT,
+            // DEFAULT のみ無意味な値
+            0,
+            EffectMessages.DEFAULT,
+            EffectMessages.DEFAULT_LORE
+    ),
     EXPLOSION(
             1,
             0,
@@ -40,6 +52,8 @@ enum class GiganticEffect(
     ;
 
     enum class BuyType {
+        // マイクラデフォ
+        DEFAULT,
         // 投票
         VOTE_POINT,
         // Spade 通貨
