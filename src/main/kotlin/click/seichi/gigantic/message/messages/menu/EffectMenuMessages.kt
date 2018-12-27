@@ -74,4 +74,16 @@ object EffectMenuMessages {
                     "寄付1円につき1寄付ポイント獲得できる"
     )
 
+    val CLICK_TO_SELECT = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.WHITE}" +
+                    "${ChatColor.UNDERLINE}" +
+                    "クリックで選択"
+    )
+
+    val SELECTED = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
+                    "${ChatColor.UNDERLINE}" +
+                    "選択中"
+    )
+
 }

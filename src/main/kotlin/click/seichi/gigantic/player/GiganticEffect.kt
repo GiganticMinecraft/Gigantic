@@ -62,6 +62,10 @@ enum class GiganticEffect(
         DONATE_POINT,
     }
 
+    companion object {
+        private val idMap = values().map { it.id to it }.toMap()
+        fun findById(id: Int) = idMap[id]
+    }
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)
 
@@ -86,5 +90,11 @@ enum class GiganticEffect(
         // TODO implements
         return true
     }
+
+    // 選択中か
+    fun isSelected(player: Player) = player.getOrPut(Keys.EFFECT) == this
+
+    // 選択する　
+    fun select(player: Player) = player.offer(Keys.EFFECT, this)
 
 }

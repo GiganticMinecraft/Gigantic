@@ -717,5 +717,23 @@ object Keys {
                         }
             }.toMap()
 
+    val EFFECT = object : DatabaseKey<PlayerCache, GiganticEffect> {
+        override val default: GiganticEffect
+            get() = GiganticEffect.DEFAULT
+
+        override fun read(entity: Entity<*>): GiganticEffect {
+            val user = entity as User
+            return GiganticEffect.findById(user.effectId) ?: default
+        }
+
+        override fun store(entity: Entity<*>, value: GiganticEffect) {
+            val user = entity as User
+            user.effectId = value.id
+        }
+
+        override fun satisfyWith(value: GiganticEffect): Boolean {
+            return true
+        }
+    }
 
 }

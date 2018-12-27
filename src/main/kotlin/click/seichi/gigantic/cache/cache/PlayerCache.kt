@@ -52,6 +52,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.APOSTOLUS_BREAK_AREA.let {
                     offer(it, it.read(user))
                 }
+                Keys.EFFECT.let {
+                    offer(it, it.read(user))
+                }
                 Keys.EXP_MAP.forEach { reason, key ->
                     offer(key, key.read(userExpMap[reason] ?: return@forEach))
                 }
@@ -125,6 +128,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                     it.store(user, getOrDefault(it))
                 }
                 Keys.APOSTOLUS_BREAK_AREA.let {
+                    it.store(user, getOrDefault(it))
+                }
+                Keys.EFFECT.let {
                     it.store(user, getOrDefault(it))
                 }
                 Keys.EXP_MAP.forEach { reason, key ->
