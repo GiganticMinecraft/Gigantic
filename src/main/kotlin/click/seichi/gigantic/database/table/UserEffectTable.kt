@@ -14,6 +14,6 @@ object UserEffectTable : IntIdTable("users_effects") {
 
     val isBought = bool("is_bought").default(false)
 
-    val boughtAt = UserTable.datetime("bought_at").default(DateTime.now())
+    val boughtAt = datetime("bought_at").default(DateTime.now())
 
 }
