@@ -7,6 +7,7 @@ import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.monster.SoulMonster
+import click.seichi.gigantic.player.GiganticEffect
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.tool.Tool
@@ -83,6 +84,12 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 }
                 Keys.QUEST_MAP.forEach { quest, key ->
                     offer(key, key.read(userQuestMap[quest] ?: return@forEach))
+                }
+                Keys.EFFECT_BOUGHT_MAP.forEach { effect, key ->
+                    offer(key, key.read(userEffectMap[effect] ?: return@forEach))
+                }
+                Keys.EFFECT_BOUGHT_TIME_MAP.forEach { effect, key ->
+                    offer(key, key.read(userEffectMap[effect] ?: return@forEach))
                 }
             }
         }
@@ -239,6 +246,15 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                     .firstOrNull() ?: UserQuest.new {
                 user = this@UserEntityData.user
                 questId = quest.id
+            })
+        }.toMap()
+
+        val userEffectMap = GiganticEffect.values().map { effect ->
+            effect to (UserEffect
+                    .find { (UserEffectTable.userId eq uniqueId) and (UserEffectTable.effectId eq effect.id) }
+                    .firstOrNull() ?: UserEffect.new {
+                user = this@UserEntityData.user
+                effectId = effect.id
             })
         }.toMap()
 

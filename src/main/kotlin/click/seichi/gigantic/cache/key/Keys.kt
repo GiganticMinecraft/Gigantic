@@ -12,6 +12,7 @@ import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.GiganticEffect
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
@@ -24,6 +25,7 @@ import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.block.Block
 import org.jetbrains.exposed.dao.Entity
+import org.joda.time.DateTime
 import java.math.BigDecimal
 import java.util.*
 
@@ -664,6 +666,56 @@ object Keys {
         }
 
     }
+
+    val EFFECT_BOUGHT_MAP: Map<GiganticEffect, DatabaseKey<PlayerCache, Boolean>> = GiganticEffect.values()
+            .map { effect ->
+                effect to
+                        object : DatabaseKey<PlayerCache, Boolean> {
+
+                            override val default: Boolean
+                                get() = false
+
+                            override fun read(entity: Entity<*>): Boolean {
+                                val userEffect = entity as UserEffect
+                                return userEffect.isBought
+                            }
+
+                            override fun store(entity: Entity<*>, value: Boolean) {
+                                val userEffect = entity as UserEffect
+                                userEffect.isBought = value
+                            }
+
+                            override fun satisfyWith(value: Boolean): Boolean {
+                                return true
+                            }
+
+                        }
+            }.toMap()
+
+    val EFFECT_BOUGHT_TIME_MAP: Map<GiganticEffect, DatabaseKey<PlayerCache, DateTime>> = GiganticEffect.values()
+            .map { effect ->
+                effect to
+                        object : DatabaseKey<PlayerCache, DateTime> {
+
+                            override val default: DateTime
+                                get() = DateTime.now()
+
+                            override fun read(entity: Entity<*>): DateTime {
+                                val userEffect = entity as UserEffect
+                                return userEffect.boughtAt
+                            }
+
+                            override fun store(entity: Entity<*>, value: DateTime) {
+                                val userEffect = entity as UserEffect
+                                userEffect.boughtAt = value
+                            }
+
+                            override fun satisfyWith(value: DateTime): Boolean {
+                                return true
+                            }
+
+                        }
+            }.toMap()
 
 
 }

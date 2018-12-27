@@ -10,6 +10,7 @@ import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.BagMessages
 import click.seichi.gigantic.message.messages.menu.ProfileMessages
+import click.seichi.gigantic.message.messages.menu.ShopMenuMessages
 import click.seichi.gigantic.message.messages.menu.SkillMenuMessages
 import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
 import click.seichi.gigantic.quest.Quest
@@ -248,6 +249,24 @@ object BagButtons {
         override fun onClick(player: Player, event: InventoryClickEvent) {
             if (event.inventory.holder === ToolSwitchSettingMenu) return
             ToolSwitchSettingMenu.open(player)
+        }
+
+    }
+
+    val SHOP = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            if (!Achievement.SHOP.isGranted(player)) return null
+            return ItemStack(Material.ENCHANTING_TABLE).apply {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + ShopMenuMessages.TITLE.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (!Achievement.SHOP.isGranted(player)) return
+            if (event.inventory.holder === ShopMenu) return
+            ShopMenu.open(player)
         }
 
     }

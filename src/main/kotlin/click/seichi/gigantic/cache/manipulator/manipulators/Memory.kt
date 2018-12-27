@@ -13,7 +13,6 @@ class Memory : Manipulator<Memory, PlayerCache> {
 
     val map = mutableMapOf<Will, Long>()
 
-
     override fun from(cache: Cache<PlayerCache>): Memory? {
         map.clear()
         Will.values().forEach { add(it, cache.getOrPut(Keys.MEMORY_MAP[it] ?: return null)) }

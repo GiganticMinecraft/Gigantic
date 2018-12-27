@@ -1,7 +1,5 @@
 package click.seichi.gigantic.message.messages
 
-import click.seichi.gigantic.message.ChatMessage
-import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import org.bukkit.ChatColor
 import java.util.*
@@ -11,9 +9,15 @@ import java.util.*
  */
 object EffectMessages {
 
-    val COMBO = ChatMessage(ChatMessageProtocol.ACTION_BAR,
+    val EXPLOSION = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "エクスプロージョン"
+    )
+
+    val EXPLOSION_LORE = setOf(
             LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.GREEN}コンボ数によりダメージ増加"
+                    Locale.JAPANESE to "${ChatColor.WHITE}" +
+                            "爆発する"
             )
     )
 

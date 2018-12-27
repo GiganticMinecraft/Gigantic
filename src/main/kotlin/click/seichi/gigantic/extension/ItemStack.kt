@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack
 
 fun ItemStack.setDisplayName(name: String) {
     itemMeta = itemMeta.also { meta ->
-        meta.displayName = name
+        meta.displayName = "$RESET$name"
     }
 }
 

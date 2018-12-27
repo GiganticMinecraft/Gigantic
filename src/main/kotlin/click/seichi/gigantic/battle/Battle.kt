@@ -2,7 +2,6 @@ package click.seichi.gigantic.battle
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.battle.passive.PowerEffect
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.updateDisplay
 import click.seichi.gigantic.extension.wrappedLocale
@@ -110,7 +109,7 @@ class Battle internal constructor(
 
     fun tryAttack(player: Player, block: Block) {
         val battler = battlers.find { it.equals(player) } ?: return
-        val damage = PowerEffect.calcDamage(battler, block)
+        val damage = 1L
         val trueDamage = enemy.damageByPlayer(player, damage)
         BattlePops.BATTLE_DAMAGE(trueDamage).pop(block.centralLocation, diffY = PopUpParameters.BATTLE_DAMAGE_DIFF)
     }
