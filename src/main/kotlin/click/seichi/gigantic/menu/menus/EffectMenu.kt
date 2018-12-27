@@ -6,7 +6,7 @@ import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
-import click.seichi.gigantic.message.messages.menu.ShopMenuMessages
+import click.seichi.gigantic.message.messages.menu.EffectMenuMessages
 import click.seichi.gigantic.player.GiganticEffect
 import org.bukkit.ChatColor
 import org.bukkit.Material
@@ -17,13 +17,13 @@ import org.bukkit.inventory.ItemStack
 /**
  * @author tar0ss
  */
-object ShopMenu : Menu() {
+object EffectMenu : Menu() {
 
     override val size: Int
         get() = 54
 
     override fun getTitle(player: Player): String {
-        return ShopMenuMessages.TITLE.asSafety(player.wrappedLocale)
+        return EffectMenuMessages.TITLE.asSafety(player.wrappedLocale)
     }
 
     init {
@@ -41,22 +41,22 @@ object ShopMenu : Menu() {
                         //購入方法と購入に必要なポイントを提示
                         addLore("${effect.amount} " +
                                 when (effect.buyType) {
-                                    GiganticEffect.BuyType.VOTE_POINT -> ShopMenuMessages.VOTE_POINT
-                                    GiganticEffect.BuyType.POMME -> ShopMenuMessages.POMME
-                                    GiganticEffect.BuyType.DONATE_POINT -> ShopMenuMessages.DONATE_POINT
+                                    GiganticEffect.BuyType.VOTE_POINT -> EffectMenuMessages.VOTE_POINT
+                                    GiganticEffect.BuyType.POMME -> EffectMenuMessages.POMME
+                                    GiganticEffect.BuyType.DONATE_POINT -> EffectMenuMessages.DONATE_POINT
                                 }.asSafety(player.wrappedLocale) +
                                 "${ChatColor.RESET}" +
-                                ShopMenuMessages.BUY_TYPE.asSafety(player.wrappedLocale))
+                                EffectMenuMessages.BUY_TYPE.asSafety(player.wrappedLocale))
 
                         addLore("")
 
                         when {
                             effect.isBought(player) -> // 購入済みの場合
-                                addLore(ShopMenuMessages.HAS_BOUGHT.asSafety(player.wrappedLocale))
+                                addLore(EffectMenuMessages.HAS_BOUGHT.asSafety(player.wrappedLocale))
                             effect.canBuy(player) -> // 購入されていないかつ購入できる場合
-                                addLore(ShopMenuMessages.CAN_BUY.asSafety(player.wrappedLocale))
+                                addLore(EffectMenuMessages.CAN_BUY.asSafety(player.wrappedLocale))
                             else -> // 購入されていないかつ購入できない場合
-                                addLore(ShopMenuMessages.CANT_BUY.asSafety(player.wrappedLocale))
+                                addLore(EffectMenuMessages.CANT_BUY.asSafety(player.wrappedLocale))
                         }
 
 

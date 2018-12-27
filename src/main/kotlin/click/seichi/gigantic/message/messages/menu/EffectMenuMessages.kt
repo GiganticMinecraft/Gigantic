@@ -7,10 +7,10 @@ import java.util.*
 /**
  * @author tar0ss
  */
-object ShopMenuMessages {
+object EffectMenuMessages {
 
     val TITLE = LocalizedText(
-            Locale.JAPANESE to "ショップ"
+            Locale.JAPANESE to "エフェクト"
     )
 
     val HAS_BOUGHT = LocalizedText(

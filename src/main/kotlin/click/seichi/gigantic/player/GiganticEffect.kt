@@ -15,9 +15,9 @@ import java.util.*
  */
 enum class GiganticEffect(
         val id: Int,
-        // ショップに配置されるスロット
+        // エフェクトメニューに配置されるスロット
         val slot: Int,
-        // ショップに表示されるItemStack
+        // エフェクトメニューに表示されるItemStack
         private val icon: ItemStack,
         // 購入方法
         val buyType: BuyType,

@@ -9,8 +9,8 @@ import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.BagMessages
+import click.seichi.gigantic.message.messages.menu.EffectMenuMessages
 import click.seichi.gigantic.message.messages.menu.ProfileMessages
-import click.seichi.gigantic.message.messages.menu.ShopMenuMessages
 import click.seichi.gigantic.message.messages.menu.SkillMenuMessages
 import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
 import click.seichi.gigantic.quest.Quest
@@ -253,20 +253,20 @@ object BagButtons {
 
     }
 
-    val SHOP = object : Button {
+    val EFFECT = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
-            if (!Achievement.SHOP.isGranted(player)) return null
+            if (!Achievement.EFFECT.isGranted(player)) return null
             return ItemStack(Material.ENCHANTING_TABLE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
-                        + ShopMenuMessages.TITLE.asSafety(player.wrappedLocale))
+                        + EffectMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!Achievement.SHOP.isGranted(player)) return
-            if (event.inventory.holder === ShopMenu) return
-            ShopMenu.open(player)
+            if (!Achievement.EFFECT.isGranted(player)) return
+            if (event.inventory.holder === EffectMenu) return
+            EffectMenu.open(player)
         }
 
     }
