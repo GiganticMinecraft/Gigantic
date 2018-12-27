@@ -58,7 +58,11 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
             val decreaseCombo = currentCombo.toDouble()
                     .div(100.0)
                     .times(decreaseRate).roundToInt()
-            currentCombo -= decreaseCombo + count
+            if (decreaseRate >= 100) {
+                currentCombo = count
+            } else {
+                currentCombo -= decreaseCombo + count
+            }
         }
 
         // 更新

@@ -47,7 +47,6 @@ object Spells {
 
     val APOSTOL = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
-            // TODO implements
             if (!player.hasMana(BigDecimal.ZERO)) return null
             return Consumer { p ->
                 val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
