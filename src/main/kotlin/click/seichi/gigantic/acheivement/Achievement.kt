@@ -6,7 +6,6 @@ import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
-import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.tool.Tool
 import org.bukkit.entity.Player
 
@@ -35,8 +34,7 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.FIRST_LEVEL_UP),
 
 
-
-
+    //TODO 一度すべてのクエストを隠蔽しているので実装時は一気にやる
     // systems
     MANA_STONE(100, {
         it.wrappedLevel >= 10
@@ -46,7 +44,7 @@ enum class Achievement(
         it.wrappedLevel >= 4
     }, grantMessage = AchievementMessages.TELEPORT_PLAYER),
     QUEST(102, {
-        it.wrappedLevel >= 5
+        false /*it.wrappedLevel >= 5*/
     }, priority = UpdatePriority.HIGHEST),
     TELEPORT_LAST_DEATH(103, {
         it.wrappedLevel >= 7
@@ -54,10 +52,10 @@ enum class Achievement(
 
     // skills
     SKILL_FLASH(200, {
-        Quest.PIG.isCleared(it)
+        it.wrappedLevel >= 5/*Quest.PIG.isCleared(it)*/
     }, grantMessage = AchievementMessages.UNLOCK_FLASH),
     SKILL_MINE_BURST(201, {
-        Quest.BLAZE.isCleared(it)
+        it.wrappedLevel >= 8/*Quest.BLAZE.isCleared(it)*/
     }, grantMessage = AchievementMessages.UNLOCK_SKILL_MINE_BURST),
     SKILL_MINE_COMBO(202, {
         it.wrappedLevel >= 3
@@ -74,7 +72,7 @@ enum class Achievement(
     // quest order
 
     // MAIN QUEST
-    QUEST_BEGINS_ORDER(401, {
+    /*QUEST_BEGINS_ORDER(401, {
         QUEST.isGranted(it)
     }, action = {
         Quest.BEGIN.order(it)
@@ -90,7 +88,7 @@ enum class Achievement(
                 it.wrappedLevel >= 9
     }, action = {
         Quest.BLAZE.order(it)
-    }, grantMessage = AchievementMessages.QUEST_ORDER),
+    }, grantMessage = AchievementMessages.QUEST_ORDER),*/
     /*QUEST_LADON_ORDER(400, {
         false
     }, action = {
@@ -206,7 +204,8 @@ enum class Achievement(
     }
 
     companion object {
-        fun update(player: Player) {
+        // 強制的にプレイヤー表示部分を更新したい場合は[isForced]をtrueに設定
+        fun update(player: Player, isForced: Boolean = false) {
             var isChanged = false
             values().sortedBy { it -> it.priority.amount }
                     .forEach {
@@ -214,7 +213,7 @@ enum class Achievement(
                             isChanged = true
                         }
                     }
-            if (!isChanged) return
+            if (!isChanged && !isForced) return
             player.updateDisplay(true, true)
         }
     }

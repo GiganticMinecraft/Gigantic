@@ -116,7 +116,7 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
-            val afkLocation = player.getOrPut(Keys.AFK_LOCATION) ?: return
+            val afkLocation = player.getOrPut(Keys.AFK_LOCATION)
             when (player.gameMode) {
                 GameMode.SURVIVAL -> {
                     player.gameMode = GameMode.SPECTATOR
@@ -127,7 +127,9 @@ object BagButtons {
                 }
                 GameMode.SPECTATOR -> {
                     player.gameMode = GameMode.SURVIVAL
-                    player.teleport(afkLocation)
+                    if (afkLocation != null) {
+                        player.teleport(afkLocation)
+                    }
                     player.updateBag()
                     PlayerSounds.TELEPORT_AFK.play(player.location)
                 }
