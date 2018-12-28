@@ -9,9 +9,7 @@ import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
-import org.bukkit.Effect
 import org.bukkit.Material
-import org.bukkit.Particle
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
@@ -22,18 +20,11 @@ import org.bukkit.entity.Player
  */
 open class Miner : Breaker {
 
-    override fun breakBlock(player: Player, block: Block, isBroken: Boolean, showBrokenEffect: Boolean) {
-        if (block.isLiquid) {
-            if (isBroken) return
+    override fun breakBlock(player: Player, block: Block) {
+        if (block.isLiquid)
             block.type = Material.AIR
-        } else {
-            if (showBrokenEffect) {
-                block.world.spawnParticle(Particle.BLOCK_CRACK, block.centralLocation, 1, block.blockData)
-                block.world.playEffect(block.centralLocation, Effect.STEP_SOUND, block.type)
-            }
-            if (isBroken) return
+        else
             block.breakNaturally(player.inventory.itemInMainHand)
-        }
     }
 
 
@@ -64,7 +55,9 @@ open class Miner : Breaker {
             }
         }
 
+        // 破壊対象ブロックをInvoker用に保存
         player.offer(Keys.BREAK_BLOCK, block)
+
         player.offer(Keys.INCREASE_COMBO, 1L)
         // ヒール系
         when {

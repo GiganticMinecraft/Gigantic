@@ -92,4 +92,16 @@ object EffectMenuMessages {
                     "選択中"
     )
 
+    val GENERAL_BREAK = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GREEN}" +
+                    "${ChatColor.BOLD}" +
+                    "通常破壊 :"
+    )
+
+    val APOSTOL = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                    "${ChatColor.BOLD}" +
+                    "アポストル :"
+    )
+
 }

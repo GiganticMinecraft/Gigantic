@@ -1,6 +1,7 @@
-package click.seichi.gigantic.player
+package click.seichi.gigantic
 
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.getOrPut
 import org.bukkit.entity.Player
 

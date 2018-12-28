@@ -6,8 +6,8 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.database.table.*
+import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.monster.SoulMonster
-import click.seichi.gigantic.player.GiganticEffect
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.tool.Tool

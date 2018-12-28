@@ -10,9 +10,7 @@ interface Breaker {
 
     fun breakBlock(
             player: Player,
-            block: Block,
-            isBroken: Boolean = true,
-            showBrokenEffect: Boolean = false
+            block: Block
     )
 
 }

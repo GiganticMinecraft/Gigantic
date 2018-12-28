@@ -4,6 +4,7 @@ import click.seichi.gigantic.breaker.Cutter
 import click.seichi.gigantic.breaker.Miner
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.enchantment.ToolEnchantment
+import click.seichi.gigantic.extension.effect
 import click.seichi.gigantic.extension.isLog
 import click.seichi.gigantic.extension.manipulate
 import org.bukkit.GameMode
@@ -28,13 +29,14 @@ class PlayerMonitor : Listener {
 
         val player = event.player ?: return
         val block = event.block ?: return
+
         if (block.isLog && ToolEnchantment.CUTTER.has(player)) {
             Cutter().breakRelationalBlock(player, block, true)
         }
-        Miner().run {
-            onBreakBlock(player, block)
-            breakBlock(player, block)
-        }
+
+        Miner().onBreakBlock(player, block)
+
+        player.effect.generalBreak(player, block)
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

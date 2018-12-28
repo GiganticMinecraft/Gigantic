@@ -1,13 +1,19 @@
-package click.seichi.gigantic.player
+package click.seichi.gigantic.effect
 
+import click.seichi.gigantic.Currency
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
+import click.seichi.gigantic.effect.effector.ApostolEffector
+import click.seichi.gigantic.effect.effector.GeneralBreakEffector
+import click.seichi.gigantic.effect.effectors.ApostolEffectors
+import click.seichi.gigantic.effect.effectors.GeneralBreakEffectors
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.EffectMessages
 import org.bukkit.Material
+import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.util.*
@@ -29,7 +35,11 @@ enum class GiganticEffect(
         // 名前
         private val localizedName: LocalizedText,
         // 説明文
-        private val localizedLore: Set<LocalizedText>
+        private val localizedLore: Set<LocalizedText>,
+        // 通常破壊のエフェクト
+        private val generalEffector: GeneralBreakEffector? = null,
+        //        // Apostolのエフェクト
+        private val apostolEffector: ApostolEffector? = null
 ) {
     DEFAULT(
             0,
@@ -40,7 +50,10 @@ enum class GiganticEffect(
             // DEFAULT のみ無意味な値
             0,
             EffectMessages.DEFAULT,
-            EffectMessages.DEFAULT_LORE
+            EffectMessages.DEFAULT_LORE,
+            GeneralBreakEffectors.DEFAULT,
+            ApostolEffectors.DEFAULT
+
     ),
     EXPLOSION(
             1,
@@ -49,13 +62,26 @@ enum class GiganticEffect(
             Currency.VOTE_POINT,
             50,
             EffectMessages.EXPLOSION,
-            EffectMessages.EXPLOSION_LORE
+            EffectMessages.EXPLOSION_LORE,
+            apostolEffector = ApostolEffectors.EXPLOSION
     ),
     ;
 
     companion object {
         private val idMap = values().map { it.id to it }.toMap()
         fun findById(id: Int) = idMap[id]
+    }
+
+    val hasGeneralBreakEffect = generalEffector != null
+
+    val hasApostolEffect = apostolEffector != null
+
+    fun generalBreak(player: Player, block: Block) {
+        (generalEffector ?: DEFAULT.generalEffector)!!.generalBreak(player, block)
+    }
+
+    fun apostolBreak(player: Player, breakBlockSet: Set<Block>) {
+        (apostolEffector ?: DEFAULT.apostolEffector)!!.apostolBreak(player, breakBlockSet)
     }
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)

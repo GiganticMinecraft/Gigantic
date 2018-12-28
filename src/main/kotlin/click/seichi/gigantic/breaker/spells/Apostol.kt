@@ -38,15 +38,7 @@ class Apostol : Miner(), SpellCaster {
         PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
         // 実際の破壊処理（エフェクト部分）
-        breakBlockSet.run {
-            forEach { target ->
-                breakBlock(player, target, false, false)
-            }
-            // 凍結，火成等の処理を最後にまとめる
-            forEach { target ->
-                onBreakBlock(player, target)
-            }
-        }
+        player.getOrPut(Keys.EFFECT).apostolBreak(player, breakBlockSet)
     }
 
     private fun calcBreakBlockSet(player: Player, base: Block): Set<Block> {

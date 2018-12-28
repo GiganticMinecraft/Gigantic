@@ -1,4 +1,4 @@
-package click.seichi.gigantic.player
+package click.seichi.gigantic.cache.key
 
 import org.joda.time.DateTime
 

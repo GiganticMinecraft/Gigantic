@@ -1,5 +1,6 @@
 package click.seichi.gigantic.extension
 
+import click.seichi.gigantic.Currency
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.cache.PlayerCacheMemory
@@ -11,10 +12,10 @@ import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
+import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
-import click.seichi.gigantic.player.Currency
 import click.seichi.gigantic.player.skill.SkillParameters
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.util.NoiseData
@@ -87,15 +88,18 @@ val Player.maxCombo: Long
 val Player.comboRank: Int
     get() = SkillParameters.calcComboRank(combo)
 
+// 累計
 val Player.votePoint: Int
     get() = Currency.VOTE_POINT.getAmount(this)
-
+// 累計
 val Player.pomme: Int
     get() = Currency.POMME.getAmount(this)
-
+// 累計
 val Player.donatePoint: Int
     get() = Currency.DONATE_POINT.getAmount(this)
 
+val Player.effect: GiganticEffect
+    get() = getOrPut(Keys.EFFECT)
 
 fun Player.isMaxMana() = mana >= maxMana
 

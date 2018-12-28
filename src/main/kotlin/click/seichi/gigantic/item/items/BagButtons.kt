@@ -2,6 +2,7 @@ package click.seichi.gigantic.item.items
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
+import click.seichi.gigantic.cache.key.DonateTicket
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.database.dao.DonateHistory
@@ -14,7 +15,6 @@ import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.BagMessages
 import click.seichi.gigantic.message.messages.menu.*
 import click.seichi.gigantic.player.Defaults
-import click.seichi.gigantic.player.DonateTicket
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds

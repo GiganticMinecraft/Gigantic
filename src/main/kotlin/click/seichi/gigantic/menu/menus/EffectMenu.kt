@@ -1,13 +1,13 @@
 package click.seichi.gigantic.menu.menus
 
+import click.seichi.gigantic.Currency
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.EffectMenuMessages
-import click.seichi.gigantic.player.Currency
-import click.seichi.gigantic.player.GiganticEffect
 import click.seichi.gigantic.sound.DetailedSound
 import click.seichi.gigantic.sound.sounds.MenuSounds
 import org.bukkit.ChatColor
@@ -125,6 +125,15 @@ object EffectMenu : Menu() {
                     return itemStack.apply {
                         setDisplayName(effect.getName(player.wrappedLocale))
                         setLore(*effect.getLore(player.wrappedLocale).toTypedArray())
+
+                        addLore("")
+
+                        addLore(EffectMenuMessages.GENERAL_BREAK.asSafety(player.wrappedLocale) +
+                                "${ChatColor.RESET} " +
+                                if (effect.hasGeneralBreakEffect) "${ChatColor.GREEN}あり" else "${ChatColor.WHITE}なし")
+                        addLore(EffectMenuMessages.APOSTOL.asSafety(player.wrappedLocale) +
+                                "${ChatColor.RESET}" +
+                                if (effect.hasApostolEffect) "${ChatColor.GREEN}あり" else "${ChatColor.WHITE}なし")
 
                         addLore(MenuMessages.LINE)
 
