@@ -14,3 +14,10 @@ commands:
     default: op
     permission: gigantic.vote
     permission-message: You don't have <permission>
+  donate:
+    description: This is donate command.
+    usage: /donate <uuid> <num>
+    aliases: [donate]
+    default: op
+    permission: gigantic.donate
+    permission-message: You don't have <permission>

@@ -14,7 +14,7 @@ import java.util.*
 /**
  * @author tar0ss
  */
-class VoteCommand : TabExecutor {
+class DonateCommand : TabExecutor {
 
     override fun onCommand(
             sender: CommandSender,
@@ -28,7 +28,6 @@ class VoteCommand : TabExecutor {
         if (args.size != 2) return false
 
         val uuid = UUID.fromString(args[0]) ?: return false
-        // 投票数
         val increase = args[1].toIntOrNull() ?: return false
 
         // 非同期に実行
@@ -43,14 +42,14 @@ class VoteCommand : TabExecutor {
                         return@transaction
                     }
                     // プレイヤーがオンライン，オフライン関係なく書き換え
-                    user.votePoint += increase
+                    user.donatePoint += increase
                     messages.add(PointMessages.COMPLETE_STORE)
                 }
 
                 // 全てのメッセージを同期送信
                 object : BukkitRunnable() {
                     override fun run() {
-                        sender.sendMessage(PointMessages.DETECT_VOTE.asSafety(Gigantic.DEFAULT_LOCALE))
+                        sender.sendMessage(PointMessages.DETECT_DONATE.asSafety(Gigantic.DEFAULT_LOCALE))
                         sender.sendMessage("UUID : $uuid ")
                         sender.sendMessage("NUM : $increase")
                         messages.forEach { message ->
