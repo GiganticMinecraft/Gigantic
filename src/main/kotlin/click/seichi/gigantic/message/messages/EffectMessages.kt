@@ -1,5 +1,6 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.extension.toRainbow
 import click.seichi.gigantic.message.LocalizedText
 import org.bukkit.ChatColor
 import java.util.*
@@ -11,6 +12,7 @@ object EffectMessages {
 
     val FLAME = LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
+                    "${ChatColor.BOLD}" +
                     "フレイム"
     )
 
@@ -23,19 +25,18 @@ object EffectMessages {
 
 
     val MAGIC = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.RED}" +
-                    "マジック"
+            Locale.JAPANESE to "マジック".toRainbow(true)
     )
 
     val MAGIC_LORE = setOf(
             LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.WHITE}" +
-                            "カラフルな羊毛に変身する"
+                    Locale.JAPANESE to "カラフルな羊毛に変身する".toRainbow()
             )
     )
 
     val BLIZZARD = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.RED}" +
+            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                    "${ChatColor.BOLD}" +
                     "ブリザード"
     )
 
@@ -48,6 +49,7 @@ object EffectMessages {
 
     val EXPLOSION = LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
+                    "${ChatColor.BOLD}" +
                     "エクスプロージョン"
     )
 
@@ -60,6 +62,7 @@ object EffectMessages {
 
     val DEFAULT = LocalizedText(
             Locale.JAPANESE to "${ChatColor.WHITE}" +
+                    "${ChatColor.BOLD}" +
                     "通常エフェクト"
     )
 

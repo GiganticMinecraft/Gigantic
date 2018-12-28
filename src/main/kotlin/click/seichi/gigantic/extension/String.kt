@@ -19,8 +19,8 @@ fun String.beginWithUpperCase(): String {
     }
 }
 
-fun String.toRainbow() = this.toCharArray().map {
-    "${ChatColor.RESET}${Random.nextChatColor()}$it"
+fun String.toRainbow(isBold: Boolean = false) = this.toCharArray().map {
+    "${ChatColor.RESET}${Random.nextChatColor()}${if (isBold) "${ChatColor.BOLD}" else ""}$it"
 }.joinToString(separator = "")
 
 
