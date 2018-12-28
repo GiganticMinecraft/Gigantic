@@ -36,22 +36,6 @@ open class Miner : Breaker {
             it.inc()
         }
 
-        player.updateLevel()
-
-
-        // play sounds
-        val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
-        if (Achievement.SKILL_MINE_COMBO.isGranted(player)) {
-            // Sounds
-            when {
-                mineBurst.duringFire() -> {
-                    SkillSounds.MINE_BURST_ON_BREAK(player.combo).playOnly(player)
-                    SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
-                }
-                else -> PlayerSounds.OBTAIN_EXP(player.combo).playOnly(player)
-            }
-        }
-
         // 破壊対象ブロックをInvoker用に保存
         player.offer(Keys.BREAK_BLOCK, block)
 
@@ -62,7 +46,6 @@ open class Miner : Breaker {
             }
             Spell.STELLA_CLAIR.tryCast(player) -> {
             }
-
         }
         // 破壊系
         when {
@@ -72,8 +55,28 @@ open class Miner : Breaker {
             }
         }
 
+        val currentCombo = player.combo
         // 最終結果コンボ数
         Skill.MINE_COMBO.tryCast(player)
+
+        // play sounds
+        val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
+        if (Achievement.SKILL_MINE_COMBO.isGranted(player)) {
+            // Sounds
+            when {
+                mineBurst.duringFire() -> {
+                    SkillSounds.MINE_BURST_ON_BREAK(player.combo).playOnly(player)
+                    SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
+                }
+                // 破壊数が1の時
+                player.combo - currentCombo == 1L -> PlayerSounds.OBTAIN_EXP(player.combo).playOnly(player)
+                // 複数破壊の時
+                else -> {
+                }
+            }
+        }
+
+        player.updateLevel()
 
         block.update()
     }

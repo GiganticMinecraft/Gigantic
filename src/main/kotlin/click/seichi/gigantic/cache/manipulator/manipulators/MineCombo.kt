@@ -60,7 +60,8 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
             if (decreaseRate >= 100 || decreaseCombo >= currentCombo) {
                 currentCombo = count
             } else {
-                currentCombo -= decreaseCombo + count
+                currentCombo -= decreaseCombo
+                currentCombo += count
             }
         }
 

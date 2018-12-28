@@ -138,6 +138,7 @@ object Skills {
                 player.manipulate(CatalogPlayerCache.MINE_COMBO) {
                     it.combo(increaseCombo)
                 }
+                player.sendMessage("combo: ${player.combo}")
 
                 // コンボ数が減少した場合警告
                 if (player.combo <= currentCombo) {
