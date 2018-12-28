@@ -331,7 +331,8 @@ class Gigantic : JavaPlugin() {
                     UserToolTable,
                     UserBeltTable,
                     UserQuestTable,
-                    UserEffectTable
+                    UserEffectTable,
+                    DonateHistoryTable
             )
         }
     }

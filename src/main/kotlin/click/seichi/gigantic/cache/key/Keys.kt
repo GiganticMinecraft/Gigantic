@@ -13,6 +13,7 @@ import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.DonateTicket
 import click.seichi.gigantic.player.GiganticEffect
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
@@ -812,5 +813,16 @@ object Keys {
             return true
         }
     }
+
+    val DONATE_TICKET_LIST = object : Key<PlayerCache, List<DonateTicket>> {
+        override val default: List<DonateTicket>
+            get() = listOf()
+
+        override fun satisfyWith(value: List<DonateTicket>): Boolean {
+            return true
+        }
+    }
+
+
 
 }

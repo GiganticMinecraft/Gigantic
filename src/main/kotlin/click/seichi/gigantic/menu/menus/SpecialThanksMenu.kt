@@ -14,7 +14,7 @@ import java.util.*
 object SpecialThanksMenu : Menu() {
 
     override val size: Int
-        get() = 9
+        get() = playerMap.size.div(9).plus(1).times(9).coerceAtMost(64)
 
     override fun getTitle(player: Player): String {
         return BagMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale)

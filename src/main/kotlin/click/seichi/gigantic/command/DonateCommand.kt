@@ -1,6 +1,7 @@
 package click.seichi.gigantic.command
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.database.dao.DonateHistory
 import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.command.PointMessages
@@ -43,6 +44,13 @@ class DonateCommand : TabExecutor {
                     }
                     // プレイヤーがオンライン，オフライン関係なく書き換え
                     user.donatePoint += increase
+
+                    // Historyに追加
+                    DonateHistory.new {
+                        this@new.user = user
+                        this@new.amount = increase
+                    }
+
                     messages.add(PointMessages.COMPLETE_STORE)
                 }
 

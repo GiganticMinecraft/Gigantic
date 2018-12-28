@@ -9,7 +9,8 @@ import click.seichi.gigantic.item.items.BagButtons
 object MainBag : Bag() {
     init {
         registerButton(9, BagButtons.PROFILE)
-        registerButton(11, BagButtons.SKILL)
+        registerButton(10, BagButtons.DONATE_HISTORY)
+        registerButton(12, BagButtons.SKILL)
         registerButton(13, BagButtons.SPELL)
         registerButton(15, BagButtons.EFFECT)
 //        registerButton(19, BagButtons.QUEST)

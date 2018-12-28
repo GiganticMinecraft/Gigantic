@@ -29,12 +29,12 @@ object QuestSelectMenu : BookMenu() {
     }
 
     override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {
-        val quest = Quest.getOrderedList(player)
+        val questList = Quest.getOrderedList(player)
         val start = (page - 1) * numOfContentsPerPage
         val end = page * numOfContentsPerPage
         (start until end)
-                .filter { quest.getOrNull(it) != null }
-                .map { it % numOfContentsPerPage to quest[it] }
+                .filter { questList.getOrNull(it) != null }
+                .map { it % numOfContentsPerPage to questList[it] }
                 .toMap()
                 .forEach { index, quest ->
                     inventory.setItem(index, QuestButtons.QUEST(quest.getClient(player)

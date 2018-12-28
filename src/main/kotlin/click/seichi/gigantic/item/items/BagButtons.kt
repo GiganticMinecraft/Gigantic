@@ -4,17 +4,17 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.database.dao.DonateHistory
 import click.seichi.gigantic.database.dao.User
+import click.seichi.gigantic.database.table.DonateHistoryTable
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.BagMessages
-import click.seichi.gigantic.message.messages.menu.EffectMenuMessages
-import click.seichi.gigantic.message.messages.menu.ProfileMessages
-import click.seichi.gigantic.message.messages.menu.SkillMenuMessages
-import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
+import click.seichi.gigantic.message.messages.menu.*
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.DonateTicket
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
@@ -77,6 +77,7 @@ object BagButtons {
             PlayerSounds.TOGGLE.playOnly(player)
             player.offer(Keys.PROFILE_IS_UPDATING, true)
             player.updateBag()
+            val uniqueId = player.uniqueId
             // 投票，ポム，寄付系のポイントをデータベースから取得後更新
             object : BukkitRunnable() {
                 override fun run() {
@@ -84,7 +85,7 @@ object BagButtons {
                     var pomme: Int? = null
                     var donatePoint: Int? = null
                     transaction {
-                        val user = User.findById(player.uniqueId)!!
+                        val user = User.findById(uniqueId)!!
                         votePoint = user.votePoint
                         pomme = user.pomme
                         donatePoint = user.donatePoint
@@ -109,6 +110,53 @@ object BagButtons {
                 }
             }.runTaskAsynchronously(Gigantic.PLUGIN)
 
+        }
+
+    }
+
+    val DONATE_HISTORY = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.PAPER).apply {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}" +
+                        DonateHistoryMessages.TITLE.asSafety(player.wrappedLocale))
+                hideAllFlag()
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (event.inventory.holder === DonateHistoryMenu) return
+            //寄付履歴のリストを作成した後に表示
+            // 一旦寄付履歴を全て削除
+            player.offer(Keys.DONATE_TICKET_LIST, listOf())
+            DonateHistoryMenu.open(player)
+            val uniqueId = player.uniqueId
+
+            //　非同期で寄付履歴リストを作成
+            object : BukkitRunnable() {
+                override fun run() {
+                    val donateList: MutableList<DonateTicket> = mutableListOf()
+                    transaction {
+                        DonateHistory
+                                .find { DonateHistoryTable.userId eq uniqueId }
+                                .map { DonateTicket(it.createdAt, it.amount) }
+                                .toList().let {
+                                    donateList.addAll(it)
+                                }
+                    }
+                    object : BukkitRunnable() {
+                        override fun run() {
+                            if (!player.isValid) return
+                            //既に開いていなければ終了
+                            val holder = player.openInventory.topInventory.holder
+                            if (holder != DonateHistoryMenu) return
+                            // 寄付履歴を保存
+                            player.offer(Keys.DONATE_TICKET_LIST, donateList)
+                            DonateHistoryMenu.reopen(player)
+                        }
+                    }.runTaskLater(Gigantic.PLUGIN, Defaults.DONATE_HISTORY_LOAD_TIME)
+                }
+            }.runTaskAsynchronously(Gigantic.PLUGIN)
         }
 
     }

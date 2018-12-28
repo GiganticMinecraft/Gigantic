@@ -20,7 +20,7 @@ abstract class Bag {
     }
 
     fun carry(player: Player) {
-        val holder = player.inventory.holder
+        val holder = player.openInventory.topInventory.holder
         if (holder is Menu) holder.reopen(player)
         forEachIndexed(player) { index, itemStack ->
             player.inventory.setItem(index, itemStack ?: ItemStack(Material.AIR))
