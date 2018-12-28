@@ -82,7 +82,7 @@ object ApostolusSettingMenu : Menu() {
                 player.transform(Keys.APOSTOLUS_BREAK_AREA) { breakArea ->
                     val nextBreakArea = breakArea.add(2, 0, 0)
                     val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
-                    if (nextBreakArea.width > 0 && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
+                    if (nextBreakArea.width in 1..10 && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
                         PlayerSounds.TOGGLE.playOnly(player)
                         nextBreakArea
                     } else {
@@ -141,7 +141,7 @@ object ApostolusSettingMenu : Menu() {
                         player.transform(Keys.APOSTOLUS_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 1, 0)
                             val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
-                            if (nextBreakArea.height > 0 && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
+                            if (nextBreakArea.height in 1..10 && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
                                 PlayerSounds.TOGGLE.playOnly(player)
                                 nextBreakArea
                             } else {
@@ -200,7 +200,7 @@ object ApostolusSettingMenu : Menu() {
                         player.transform(Keys.APOSTOLUS_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 0, 1)
                             val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
-                            if (nextBreakArea.depth > 0 && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
+                            if (nextBreakArea.depth in 1..10 && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
                                 PlayerSounds.TOGGLE.playOnly(player)
                                 nextBreakArea
                             } else {

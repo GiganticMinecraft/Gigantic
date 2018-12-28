@@ -41,6 +41,7 @@ object ApostolEffectors {
                 forEach { target ->
                     if (Random.nextDouble() > EffectParameters.EXPLOSION_PROBABILITY.div(100.0)) return@forEach
                     ApostolAnimations.EXPLOSION.start(target.centralLocation)
+                    EffectSounds.EXPLOSION.play(target.centralLocation)
                 }
                 // 凍結，火成等の処理を最後にまとめる
                 forEach { target ->
@@ -65,6 +66,7 @@ object ApostolEffectors {
                     breakBlockSet.forEach { target ->
                         if (Random.nextDouble() > EffectParameters.BLIZZARD_PROBABILITY.div(100.0)) return@forEach
                         ApostolAnimations.BLIZZARD.start(target.centralLocation)
+                        EffectSounds.BLIZZARD.play(target.centralLocation)
                     }
                     breakBlockSet.forEach { target ->
                         target.update()

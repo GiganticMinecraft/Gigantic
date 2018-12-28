@@ -137,6 +137,7 @@ class Gigantic : JavaPlugin() {
                 Material.PRISMARINE_BRICKS,
                 Material.DARK_PRISMARINE,
                 Material.PACKED_ICE,
+                Material.BLUE_ICE,
                 Material.MAGMA_BLOCK
         )
 
@@ -209,6 +210,7 @@ class Gigantic : JavaPlugin() {
                 Material.SEA_PICKLE,
                 Material.TALL_SEAGRASS,
                 Material.KELP_PLANT,
+                Material.KELP,
                 Material.BRAIN_CORAL,
                 Material.BUBBLE_CORAL,
                 Material.FIRE_CORAL,

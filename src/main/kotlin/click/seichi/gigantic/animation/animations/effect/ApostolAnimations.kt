@@ -1,7 +1,6 @@
 package click.seichi.gigantic.animation.animations.effect
 
 import click.seichi.gigantic.animation.Animation
-import org.bukkit.Effect
 import org.bukkit.Material
 import org.bukkit.Particle
 
@@ -11,12 +10,11 @@ import org.bukkit.Particle
 object ApostolAnimations {
 
     val EXPLOSION = Animation(0) { location, _ ->
-        location.world.createExplosion(location, 0F, false)
+        location.world.spawnParticle(Particle.EXPLOSION_NORMAL, location, 1)
     }
 
     val BLIZZARD = Animation(0) { location, _ ->
         location.world.spawnParticle(Particle.BLOCK_CRACK, location, 1, Material.PACKED_ICE.createBlockData())
-        location.world.playEffect(location, Effect.STEP_SOUND, Material.PACKED_ICE)
     }
 
     val MAGIC = Animation(0) { location, _ ->

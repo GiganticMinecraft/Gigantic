@@ -9,6 +9,20 @@ import org.bukkit.SoundCategory
  */
 object EffectSounds {
 
+    val EXPLOSION = DetailedSound(
+            Sound.ENTITY_GENERIC_EXPLODE,
+            SoundCategory.BLOCKS,
+            0.1F,
+            1.0F
+    )
+
+    val BLIZZARD = DetailedSound(
+            Sound.BLOCK_GLASS_BREAK,
+            SoundCategory.BLOCKS,
+            0.1F,
+            1.0F
+    )
+
     val MAGIC = DetailedSound(
             Sound.ENTITY_CHICKEN_EGG,
             SoundCategory.BLOCKS,
