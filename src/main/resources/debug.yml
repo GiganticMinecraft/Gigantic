@@ -2,3 +2,5 @@
 level: 1
 # Achievementを一時的に全て利用可能にする
 achievement_unlock: true
+# GiganticEffectを一時的にすべて利用可能にする
+effect_unlock: true

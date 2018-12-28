@@ -1,6 +1,8 @@
 package click.seichi.gigantic.player
 
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.config.Config
+import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.message.LocalizedText
@@ -40,16 +42,15 @@ enum class GiganticEffect(
             EffectMessages.DEFAULT,
             EffectMessages.DEFAULT_LORE
     ),
-    // TODO 実装後にコメントを外す
-//    EXPLOSION(
-//            1,
-//            0,
-//            ItemStack(Material.TNT),
-//            Currency.VOTE_POINT,
-//            50,
-//            EffectMessages.EXPLOSION,
-//            EffectMessages.EXPLOSION_LORE
-//    ),
+    EXPLOSION(
+            1,
+            0,
+            ItemStack(Material.TNT),
+            Currency.VOTE_POINT,
+            50,
+            EffectMessages.EXPLOSION,
+            EffectMessages.EXPLOSION_LORE
+    ),
     ;
 
     companion object {
@@ -64,7 +65,7 @@ enum class GiganticEffect(
     fun getIcon() = icon.clone()
 
     // 購入しているか
-    fun isBought(player: Player) = player.getOrPut(Keys.EFFECT_BOUGHT_MAP[this]!!)
+    fun isBought(player: Player) = (Config.DEBUG_MODE && DebugConfig.EFFECT_UNLOCK) || player.getOrPut(Keys.EFFECT_BOUGHT_MAP[this]!!)
 
     // 購入した日付
     fun boughtAt(player: Player) = player.getOrPut(Keys.EFFECT_BOUGHT_TIME_MAP[this]!!)
