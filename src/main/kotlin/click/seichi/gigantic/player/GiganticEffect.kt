@@ -25,9 +25,9 @@ enum class GiganticEffect(
         // 必要ポイント
         val amount: Int,
         // 名前
-        val localizedName: LocalizedText,
+        private val localizedName: LocalizedText,
         // 説明文
-        val localizedLore: Set<LocalizedText>
+        private val localizedLore: Set<LocalizedText>
 ) {
     DEFAULT(
             0,
