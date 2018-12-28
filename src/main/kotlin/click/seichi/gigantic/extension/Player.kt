@@ -14,6 +14,7 @@ import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
+import click.seichi.gigantic.player.Currency
 import click.seichi.gigantic.player.skill.SkillParameters
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.util.NoiseData
@@ -87,13 +88,13 @@ val Player.comboRank: Int
     get() = SkillParameters.calcComboRank(combo)
 
 val Player.votePoint: Int
-    get() = getOrPut(Keys.VOTE_POINT)
+    get() = Currency.VOTE_POINT.getAmount(this)
 
 val Player.pomme: Int
-    get() = getOrPut(Keys.POMME)
+    get() = Currency.POMME.getAmount(this)
 
 val Player.donatePoint: Int
-    get() = getOrPut(Keys.DONATE_POINT)
+    get() = Currency.DONATE_POINT.getAmount(this)
 
 
 fun Player.isMaxMana() = mana >= maxMana

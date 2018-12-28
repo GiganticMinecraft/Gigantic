@@ -13,9 +13,8 @@ object EffectMenuMessages {
             Locale.JAPANESE to "エフェクト"
     )
 
-    val HAS_BOUGHT = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.AQUA}" +
-                    "購入済み"
+    val CURRENT_EFFECT = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}現在使用中のエフェクト"
     )
 
     val CAN_BUY = LocalizedText(
@@ -29,6 +28,13 @@ object EffectMenuMessages {
                     "${ChatColor.UNDERLINE}" +
                     "購入できない"
     )
+
+    val REMAIN = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                    "${ChatColor.BOLD}" +
+                    "残り"
+    )
+
 
     val VOTE_POINT = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +

@@ -72,19 +72,19 @@ object ProfileMessages {
 
     val PROFILE_VOTE_POINT = { votePoint: Int ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}投票p: ${ChatColor.WHITE}$votePoint"
+                Locale.JAPANESE to "${ChatColor.GREEN}累計投票数: ${ChatColor.WHITE}$votePoint"
         )
     }
 
     val PROFILE_POMME = { pomme: Int ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}ポム: ${ChatColor.WHITE}$pomme"
+                Locale.JAPANESE to "${ChatColor.GREEN}累計ポム: ${ChatColor.WHITE}$pomme"
         )
     }
 
     val PROFILE_DONATE_POINT = { donatePoint: Int ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}寄付p: ${ChatColor.WHITE}$donatePoint"
+                Locale.JAPANESE to "${ChatColor.GREEN}累計寄付額: ${ChatColor.WHITE}$donatePoint"
         )
     }
 

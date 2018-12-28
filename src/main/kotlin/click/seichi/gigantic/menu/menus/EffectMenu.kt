@@ -6,6 +6,7 @@ import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.EffectMenuMessages
+import click.seichi.gigantic.player.Currency
 import click.seichi.gigantic.player.GiganticEffect
 import click.seichi.gigantic.sound.DetailedSound
 import click.seichi.gigantic.sound.sounds.MenuSounds
@@ -43,15 +44,19 @@ object EffectMenu : Menu() {
                     setDisplayName(EffectMenuMessages.PLAYER.asSafety(player.wrappedLocale))
                     clearLore()
                     // TODO implements
-                    addLore(EffectMenuMessages.VOTE_POINT.asSafety(player.wrappedLocale) +
+                    addLore(EffectMenuMessages.REMAIN.asSafety(player.wrappedLocale) +
+                            EffectMenuMessages.VOTE_POINT.asSafety(player.wrappedLocale) +
                             ": " + "${ChatColor.RESET}" + "${ChatColor.WHITE}" +
-                            "114514")
-                    addLore(EffectMenuMessages.POMME.asSafety(player.wrappedLocale) +
+                            "${Currency.VOTE_POINT.calcRemainAmount(player)}")
+                    // TODO Pomme実装後に実装
+//                    addLore(EffectMenuMessages.REMAIN.asSafety(player.wrappedLocale) +
+//                            EffectMenuMessages.POMME.asSafety(player.wrappedLocale) +
+//                            ": " + "${ChatColor.RESET}" + "${ChatColor.WHITE}" +
+//                            "${Currency.POMME.calcRemainAmount(player)}")
+                    addLore(EffectMenuMessages.REMAIN.asSafety(player.wrappedLocale) +
+                            EffectMenuMessages.DONATE_POINT.asSafety(player.wrappedLocale) +
                             ": " + "${ChatColor.RESET}" + "${ChatColor.WHITE}" +
-                            "1919")
-                    addLore(EffectMenuMessages.DONATE_POINT.asSafety(player.wrappedLocale) +
-                            ": " + "${ChatColor.RESET}" + "${ChatColor.WHITE}" +
-                            "810")
+                            "${Currency.DONATE_POINT.calcRemainAmount(player)}")
                     addLore(MenuMessages.LINE)
                     addLore(EffectMenuMessages.VOTE_POINT_DESCRIPTION.asSafety(player.wrappedLocale))
                     addLore(EffectMenuMessages.POMME_DESCRIPTION.asSafety(player.wrappedLocale))
@@ -70,8 +75,9 @@ object EffectMenu : Menu() {
             override fun findItemStack(player: Player): ItemStack? {
                 val effect = player.getOrPut(Keys.EFFECT)
                 return effect.getIcon().apply {
-                    setDisplayName(effect.getName(player.wrappedLocale))
-                    setLore(*effect.getLore(player.wrappedLocale).toTypedArray())
+                    setDisplayName(EffectMenuMessages.CURRENT_EFFECT.asSafety(player.wrappedLocale))
+                    addLore(effect.getName(player.wrappedLocale))
+                    addLore(*effect.getLore(player.wrappedLocale).toTypedArray())
                     setEnchanted(true)
                 }
             }
@@ -125,11 +131,11 @@ object EffectMenu : Menu() {
                         if (!effect.isBought(player)) {
                             //購入方法と購入に必要なポイントを提示
                             addLore("${effect.amount} " +
-                                    when (effect.buyType) {
-                                        GiganticEffect.BuyType.VOTE_POINT -> EffectMenuMessages.VOTE_POINT
-                                        GiganticEffect.BuyType.POMME -> EffectMenuMessages.POMME
-                                        GiganticEffect.BuyType.DONATE_POINT -> EffectMenuMessages.DONATE_POINT
-                                        else -> throw Error("$effect is illegal buy type : ${effect.buyType}")
+                                    when (effect.currency) {
+                                        Currency.VOTE_POINT -> EffectMenuMessages.VOTE_POINT
+                                        Currency.POMME -> EffectMenuMessages.POMME
+                                        Currency.DONATE_POINT -> EffectMenuMessages.DONATE_POINT
+                                        else -> throw Error("$effect is illegal buy type : ${effect.currency}")
                                     }.asSafety(player.wrappedLocale) +
                                     "${ChatColor.RESET}" +
                                     EffectMenuMessages.BUY_TYPE.asSafety(player.wrappedLocale))
@@ -166,6 +172,8 @@ object EffectMenu : Menu() {
                         reopen(player)
                     } else {
                         // 購入されていない場合
+
+                        // 購入可否判定
                         if (!effect.canBuy(player)) return
                         // 購入処理
                         effect.buy(player)

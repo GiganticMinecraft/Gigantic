@@ -21,7 +21,7 @@ enum class GiganticEffect(
         // エフェクトメニューに表示されるItemStack
         private val icon: ItemStack,
         // 購入方法
-        val buyType: BuyType,
+        val currency: Currency,
         // 必要ポイント
         val amount: Int,
         // 名前
@@ -34,33 +34,23 @@ enum class GiganticEffect(
             // DEFAULT のみ無意味な値
             0,
             ItemStack(Material.GRASS_BLOCK),
-            BuyType.DEFAULT,
+            Currency.DEFAULT,
             // DEFAULT のみ無意味な値
             0,
             EffectMessages.DEFAULT,
             EffectMessages.DEFAULT_LORE
     ),
-    EXPLOSION(
-            1,
-            0,
-            ItemStack(Material.TNT),
-            BuyType.VOTE_POINT,
-            50,
-            EffectMessages.EXPLOSION,
-            EffectMessages.EXPLOSION_LORE
-    ),
+    // TODO 実装後にコメントを外す
+//    EXPLOSION(
+//            1,
+//            0,
+//            ItemStack(Material.TNT),
+//            Currency.VOTE_POINT,
+//            50,
+//            EffectMessages.EXPLOSION,
+//            EffectMessages.EXPLOSION_LORE
+//    ),
     ;
-
-    enum class BuyType {
-        // マイクラデフォ
-        DEFAULT,
-        // 投票
-        VOTE_POINT,
-        // Spade 通貨
-        POMME,
-        // 寄付金
-        DONATE_POINT,
-    }
 
     companion object {
         private val idMap = values().map { it.id to it }.toMap()
@@ -81,14 +71,13 @@ enum class GiganticEffect(
 
     // 購入
     fun buy(player: Player) {
-        // TODO implements
         player.offer(Keys.EFFECT_BOUGHT_MAP[this]!!, true)
     }
 
     // 購入可能か
     fun canBuy(player: Player): Boolean {
-        // TODO implements
-        return true
+        if (isBought(player)) return false
+        return currency.calcRemainAmount(player) >= amount
     }
 
     // 選択中か

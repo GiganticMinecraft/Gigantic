@@ -51,7 +51,8 @@ object BagButtons {
                         ProfileMessages.PROFILE_EXP(player.wrappedLevel, player.wrappedExp),
                         ProfileMessages.PROFILE_HEALTH(player.wrappedHealth, player.wrappedMaxHealth),
                         ProfileMessages.PROFILE_VOTE_POINT(player.votePoint),
-                        ProfileMessages.PROFILE_POMME(player.pomme),
+                        // TODO Pomme実装後に実装
+//                        ProfileMessages.PROFILE_POMME(player.pomme),
                         ProfileMessages.PROFILE_DONATE_POINT(player.donatePoint)
                 ).map { it.asSafety(player.wrappedLocale) }
                 )

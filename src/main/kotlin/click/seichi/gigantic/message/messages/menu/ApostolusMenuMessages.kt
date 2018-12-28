@@ -6,7 +6,6 @@ import org.bukkit.ChatColor
 import java.util.*
 
 /**
- * TODO 色が適当なので直すこと
  * @author tar0ss
  */
 object ApostolusMenuMessages {
