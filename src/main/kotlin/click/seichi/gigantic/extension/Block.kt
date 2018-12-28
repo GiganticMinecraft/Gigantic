@@ -4,12 +4,12 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.sound.sounds.PlayerSounds
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
+import org.bukkit.scheduler.BukkitRunnable
 
 /**
  * @author unicroak
@@ -55,25 +55,19 @@ fun Block.update() {
 }
 
 private fun Block.fallUpperCrustBlock() {
-    var count = 0
-    val fallTask = object : Runnable {
+    object : BukkitRunnable() {
         override fun run() {
-            val target = getRelative(0, count + 1, 0) ?: return
-            if (Gigantic.BROKEN_BLOCK_SET.contains(target)) return
-            target.changeRelativeBedrock()
-            target.condenseRelativeLiquid()
-            if (target.isCrust) {
+            val target = getRelative(BlockFace.UP) ?: return
+            if (target.isCrust && !Gigantic.BROKEN_BLOCK_SET.contains(target)) {
                 target.location.world.spawnFallingBlock(
                         target.location.central.subtract(0.0, 0.5, 0.0),
                         target.blockData
                 )
                 target.type = Material.AIR
-                count++
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, this, 2L)
             }
+            target.update()
         }
-    }
-    Bukkit.getScheduler().runTask(Gigantic.PLUGIN, fallTask)
+    }.runTaskLater(Gigantic.PLUGIN, 2L)
 }
 
 private val faceSet = setOf(
