@@ -18,7 +18,7 @@ object PlayerMessages {
         val expToLevel = PlayerLevelConfig.LEVEL_MAP[level] ?: BigDecimal.ZERO
         val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level + 1]
                 ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
-        LevelMessage(level, (exp - expToLevel).setScale(2).divide((expToNextLevel - expToLevel), 10, RoundingMode.HALF_UP).toFloat().coerceAtLeast(Float.MIN_VALUE))
+        LevelMessage(level, (exp - expToLevel).setScale(2, RoundingMode.FLOOR).divide((expToNextLevel - expToLevel), 10, RoundingMode.HALF_UP).toFloat().coerceAtLeast(Float.MIN_VALUE))
     }
 
     val HEALTH_DISPLAY = { health: Long, maxHealth: Long ->
@@ -72,7 +72,7 @@ object PlayerMessages {
     val DEATH_PENALTY = { penaltyMineBlock: BigDecimal ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                        "経験値を${penaltyMineBlock.setScale(1)} 失った..."
+                        "経験値を${penaltyMineBlock.setScale(0, RoundingMode.HALF_UP)} 失った..."
         ))
     }
 

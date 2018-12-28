@@ -8,6 +8,7 @@ import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.*
 
 /**
@@ -33,7 +34,7 @@ object ProfileMessages {
 
     val PROFILE_LEVEL = { level: Int ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}整地レベル: ${ChatColor.WHITE}${level}"
+                Locale.JAPANESE to "${ChatColor.GREEN}整地レベル: ${ChatColor.WHITE}$level"
         )
     }
 
@@ -41,13 +42,13 @@ object ProfileMessages {
         val isMax = level == PlayerLevelConfig.MAX
         if (isMax) {
             LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.GREEN}経験値: ${ChatColor.WHITE}${exp.setScale(0)} / ${exp.setScale(0)}"
+                    Locale.JAPANESE to "${ChatColor.GREEN}経験値: ${ChatColor.WHITE}${exp.setScale(0, RoundingMode.FLOOR)} / ${exp.setScale(0, RoundingMode.FLOOR)}"
             )
         } else {
             val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level + 1]
                     ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
             LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.GREEN}経験値: ${ChatColor.WHITE}${exp.setScale(0)} / ${expToNextLevel.setScale(0)}"
+                    Locale.JAPANESE to "${ChatColor.GREEN}経験値: ${ChatColor.WHITE}${exp.setScale(0, RoundingMode.FLOOR)} / ${expToNextLevel.setScale(0, RoundingMode.FLOOR)}"
             )
         }
     }
@@ -60,7 +61,7 @@ object ProfileMessages {
 
     val PROFILE_MANA = { mana: BigDecimal, maxMana: BigDecimal ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}マナ: ${ChatColor.WHITE}${mana.setScale(1)} / ${maxMana.setScale(1)}"
+                Locale.JAPANESE to "${ChatColor.GREEN}マナ: ${ChatColor.WHITE}${mana.setScale(1, RoundingMode.HALF_UP)} / ${maxMana.setScale(1, RoundingMode.HALF_UP)}"
         )
     }
 

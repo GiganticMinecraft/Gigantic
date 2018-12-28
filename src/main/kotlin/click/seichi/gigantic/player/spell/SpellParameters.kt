@@ -18,7 +18,6 @@ object SpellParameters {
     // 最大同時破壊数 = maxMana * (5/100) / 2
     fun calcLimitOfBreakNumOfApostol(maxMana: BigDecimal): Int {
         return maxMana
-                .setScale(5)
                 .divide(100.toBigDecimal(), 10, RoundingMode.HALF_UP)
                 .times(5.toBigDecimal())
                 .divide(APOSTOL_MANA.toBigDecimal(), 10, RoundingMode.HALF_UP)
