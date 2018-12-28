@@ -744,7 +744,7 @@ object Keys {
 
         override fun read(entity: Entity<*>): Int {
             val user = entity as User
-            return user.votePoint
+            return user.vote
         }
 
         override fun store(entity: Entity<*>, value: Int) {
@@ -782,24 +782,24 @@ object Keys {
         }
     }
     // データの読み込みしか行わない特殊なケース
-    val DONATE_POINT = object : DatabaseKey<PlayerCache, Int> {
+    val DONATION = object : DatabaseKey<PlayerCache, Int> {
         override val default: Int
             get() = 0
 
         override fun read(entity: Entity<*>): Int {
             val user = entity as User
-            return user.donatePoint
+            return user.donation
         }
 
         override fun store(entity: Entity<*>, value: Int) {
             // データベースが書き換えられていた場合，上書き削除してしまうので
             // 書き込まなくてよい．ポイントは減ることもないし増えることもない．
-            Gigantic.PLUGIN.logger.warning("寄付pのデータベース書き込みは禁止されています")
+            Gigantic.PLUGIN.logger.warning("寄付金のデータベース書き込みは禁止されています")
         }
 
         override fun satisfyWith(value: Int): Boolean {
             // 強制的に書き換えを拒否
-            Gigantic.PLUGIN.logger.warning("寄付pの書き換えは禁止されています")
+            Gigantic.PLUGIN.logger.warning("寄付金の書き換えは禁止されています")
             return false
         }
     }

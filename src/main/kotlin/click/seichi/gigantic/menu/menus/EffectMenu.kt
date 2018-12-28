@@ -54,13 +54,14 @@ object EffectMenu : Menu() {
 //                            ": " + "${ChatColor.RESET}" + "${ChatColor.WHITE}" +
 //                            "${Currency.POMME.calcRemainAmount(player)}")
                     addLore(EffectMenuMessages.REMAIN.asSafety(player.wrappedLocale) +
-                            EffectMenuMessages.DONATE_POINT.asSafety(player.wrappedLocale) +
+                            EffectMenuMessages.DONATION.asSafety(player.wrappedLocale) +
                             ": " + "${ChatColor.RESET}" + "${ChatColor.WHITE}" +
                             "${Currency.DONATE_POINT.calcRemainAmount(player)}")
                     addLore(MenuMessages.LINE)
                     addLore(EffectMenuMessages.VOTE_POINT_DESCRIPTION.asSafety(player.wrappedLocale))
-                    addLore(EffectMenuMessages.POMME_DESCRIPTION.asSafety(player.wrappedLocale))
-                    addLore(EffectMenuMessages.DONATE_POINT_DESCRIPTION.asSafety(player.wrappedLocale))
+                    // TODO Pomme実装後に実装
+//                    addLore(EffectMenuMessages.POMME_DESCRIPTION.asSafety(player.wrappedLocale))
+                    addLore(EffectMenuMessages.DONATION_DESCRIPTION.asSafety(player.wrappedLocale))
                 }
             }
 
@@ -143,7 +144,7 @@ object EffectMenu : Menu() {
                                     when (effect.currency) {
                                         Currency.VOTE_POINT -> EffectMenuMessages.VOTE_POINT
                                         Currency.POMME -> EffectMenuMessages.POMME
-                                        Currency.DONATE_POINT -> EffectMenuMessages.DONATE_POINT
+                                        Currency.DONATE_POINT -> EffectMenuMessages.DONATION
                                         else -> throw Error("$effect is illegal buy type : ${effect.currency}")
                                     }.asSafety(player.wrappedLocale) +
                                     "${ChatColor.RESET}" +

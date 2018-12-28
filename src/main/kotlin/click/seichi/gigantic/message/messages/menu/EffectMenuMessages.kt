@@ -48,7 +48,7 @@ object EffectMenuMessages {
                     "ポム"
     )
 
-    val DONATE_POINT = LocalizedText(
+    val DONATION = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GOLD}" +
                     "${ChatColor.BOLD}" +
                     "寄付p"
@@ -75,9 +75,9 @@ object EffectMenuMessages {
                     "SPADEをプレイすることで一定数のポムを獲得できる"
     )
 
-    val DONATE_POINT_DESCRIPTION = LocalizedText(
+    val DONATION_DESCRIPTION = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GRAY}" +
-                    "寄付1円につき1寄付ポイント獲得できる"
+                    "寄付100円につき1寄付ポイント獲得できる"
     )
 
     val CLICK_TO_SELECT = LocalizedText(

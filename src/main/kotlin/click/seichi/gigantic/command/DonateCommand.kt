@@ -43,7 +43,7 @@ class DonateCommand : TabExecutor {
                         return@transaction
                     }
                     // プレイヤーがオンライン，オフライン関係なく書き換え
-                    user.donatePoint += increase
+                    user.donation += increase
 
                     // Historyに追加
                     DonateHistory.new {

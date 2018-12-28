@@ -5,6 +5,7 @@ import click.seichi.gigantic.will.WillGrade
 import click.seichi.gigantic.will.WillSize
 import org.bukkit.ChatColor
 import org.bukkit.Color
+import org.bukkit.Material
 
 /**
  * @author unicroak
@@ -55,4 +56,22 @@ internal object Random {
     )
 
     fun nextChatColor() = chatColorSet.random()
+
+    private val woolSet = setOf(
+            Material.RED_WOOL,
+            Material.YELLOW_WOOL,
+            Material.GREEN_WOOL,
+            Material.BLUE_WOOL,
+            Material.BROWN_WOOL,
+            Material.CYAN_WOOL,
+            Material.LIGHT_BLUE_WOOL,
+            Material.LIME_WOOL,
+            Material.MAGENTA_WOOL,
+            Material.ORANGE_WOOL,
+            Material.PINK_WOOL,
+            Material.PURPLE_WOOL,
+            Material.YELLOW_WOOL
+    )
+
+    fun nextWool() = woolSet.random()
 }

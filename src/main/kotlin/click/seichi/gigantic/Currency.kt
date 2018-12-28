@@ -30,7 +30,7 @@ enum class Currency {
     // 寄付金
     DONATE_POINT {
         override fun getAmount(player: Player): Int {
-            return player.getOrPut(Keys.DONATE_POINT)
+            return player.getOrPut(Keys.DONATION).div(100)
         }
     },
     ;

@@ -83,9 +83,9 @@ object ProfileMessages {
         )
     }
 
-    val PROFILE_DONATE_POINT = { donatePoint: Int ->
+    val PROFILE_DONATION = { donation: Int ->
         LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}累計寄付額: ${ChatColor.WHITE}$donatePoint"
+                Locale.JAPANESE to "${ChatColor.GREEN}累計寄付額: ${ChatColor.WHITE}$donation"
         )
     }
 

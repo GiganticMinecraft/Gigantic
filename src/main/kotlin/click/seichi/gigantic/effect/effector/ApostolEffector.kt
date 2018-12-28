@@ -8,5 +8,5 @@ import org.bukkit.entity.Player
  */
 interface ApostolEffector {
 
-    fun apostolBreak(player: Player, breakBlockSet: Set<Block>)
+    fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>)
 }

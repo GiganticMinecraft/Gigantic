@@ -43,7 +43,7 @@ class VoteCommand : TabExecutor {
                         return@transaction
                     }
                     // プレイヤーがオンライン，オフライン関係なく書き換え
-                    user.votePoint += increase
+                    user.vote += increase
                     messages.add(PointMessages.COMPLETE_STORE)
                 }
 

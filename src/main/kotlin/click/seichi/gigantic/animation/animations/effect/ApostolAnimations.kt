@@ -18,4 +18,8 @@ object ApostolAnimations {
         location.world.spawnParticle(Particle.BLOCK_CRACK, location, 1, Material.PACKED_ICE.createBlockData())
         location.world.playEffect(location, Effect.STEP_SOUND, Material.PACKED_ICE)
     }
+
+    val MAGIC = Animation(0) { location, _ ->
+        location.world.spawnParticle(Particle.NOTE, location, 1)
+    }
 }

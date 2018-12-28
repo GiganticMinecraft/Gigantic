@@ -61,7 +61,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.POMME.let {
                     force(it, it.read(user))
                 }
-                Keys.DONATE_POINT.let {
+                Keys.DONATION.let {
                     force(it, it.read(user))
                 }
                 Keys.EXP_MAP.forEach { reason, key ->

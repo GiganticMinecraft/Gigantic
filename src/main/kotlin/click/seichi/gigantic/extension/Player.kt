@@ -94,7 +94,10 @@ val Player.votePoint: Int
 // 累計
 val Player.pomme: Int
     get() = Currency.POMME.getAmount(this)
-// 累計
+// 累計寄付額
+val Player.donation: Int
+    get() = getOrPut(Keys.DONATION)
+// 累計寄付p (寄付額/100)
 val Player.donatePoint: Int
     get() = Currency.DONATE_POINT.getAmount(this)
 

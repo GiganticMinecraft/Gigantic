@@ -38,11 +38,11 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var effectId by UserTable.effectId
 
-    var votePoint by UserTable.votePoint
+    var vote by UserTable.vote
 
     var pomme by UserTable.pomme
 
-    var donatePoint by UserTable.donatePoint
+    var donation by UserTable.donation
 
     var createdDate by UserTable.createdAt
 

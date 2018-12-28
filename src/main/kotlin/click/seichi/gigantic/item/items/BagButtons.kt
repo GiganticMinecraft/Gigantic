@@ -53,7 +53,7 @@ object BagButtons {
                         ProfileMessages.PROFILE_VOTE_POINT(player.votePoint),
                         // TODO Pomme実装後に実装
 //                        ProfileMessages.PROFILE_POMME(player.pomme),
-                        ProfileMessages.PROFILE_DONATE_POINT(player.donatePoint)
+                        ProfileMessages.PROFILE_DONATION(player.donation)
                 ).map { it.asSafety(player.wrappedLocale) }
                 )
                 if (Achievement.MANA_STONE.isGranted(player)) {
@@ -83,12 +83,12 @@ object BagButtons {
                 override fun run() {
                     var votePoint: Int? = null
                     var pomme: Int? = null
-                    var donatePoint: Int? = null
+                    var donation: Int? = null
                     transaction {
                         val user = User.findById(uniqueId)!!
-                        votePoint = user.votePoint
+                        votePoint = user.vote
                         pomme = user.pomme
-                        donatePoint = user.donatePoint
+                        donation = user.donation
                     }
                     object : BukkitRunnable() {
                         override fun run() {
@@ -100,8 +100,8 @@ object BagButtons {
                             pomme?.let {
                                 player.force(Keys.POMME, it)
                             }
-                            donatePoint?.let {
-                                player.force(Keys.DONATE_POINT, it)
+                            donation?.let {
+                                player.force(Keys.DONATION, it)
                             }
                             player.offer(Keys.PROFILE_IS_UPDATING, false)
                             player.updateBag()

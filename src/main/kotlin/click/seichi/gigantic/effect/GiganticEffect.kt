@@ -76,6 +76,16 @@ enum class GiganticEffect(
             EffectMessages.BLIZZARD_LORE,
             apostolEffector = ApostolEffectors.BLIZZARD
     ),
+    MAGIC(
+            3,
+            2,
+            ItemStack(Material.RED_WOOL),
+            Currency.DONATE_POINT,
+            10,
+            EffectMessages.MAGIC,
+            EffectMessages.MAGIC_LORE,
+            apostolEffector = ApostolEffectors.MAGIC
+    ),
 
     ;
 
@@ -92,8 +102,8 @@ enum class GiganticEffect(
         (generalEffector ?: DEFAULT.generalEffector)!!.generalBreak(player, block)
     }
 
-    fun apostolBreak(player: Player, breakBlockSet: Set<Block>) {
-        (apostolEffector ?: DEFAULT.apostolEffector)!!.apostolBreak(player, breakBlockSet)
+    fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
+        (apostolEffector ?: DEFAULT.apostolEffector)!!.apostolBreak(player, base, breakBlockSet)
     }
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)

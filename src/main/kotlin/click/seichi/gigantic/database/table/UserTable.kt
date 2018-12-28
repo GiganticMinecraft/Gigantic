@@ -38,11 +38,11 @@ object UserTable : IdTable<UUID>("users") {
 
     val effectId = integer("effect_id").default(Defaults.EFFECT_ID)
 
-    val votePoint = integer("vote_point").default(0)
+    val vote = integer("vote").default(0)
 
     val pomme = integer("pomme").default(0)
 
-    val donatePoint = integer("donate_point").default(0)
+    val donation = integer("donation").default(0)
 
     val createdAt = datetime("created_at").default(DateTime.now())
 
