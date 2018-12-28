@@ -27,6 +27,10 @@ object ProfileMessages {
             Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.UNDERLINE}クリックして更新"
     )
 
+    val UPDATING = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}更新中....."
+    )
+
     val PROFILE_LEVEL = { level: Int ->
         LocalizedText(
                 Locale.JAPANESE to "${ChatColor.GREEN}整地レベル: ${ChatColor.WHITE}${level}"
@@ -63,6 +67,24 @@ object ProfileMessages {
     val PROFILE_MAX_COMBO = { maxCombo: Long ->
         LocalizedText(
                 Locale.JAPANESE to "${ChatColor.GREEN}最大コンボ数: ${ChatColor.WHITE}$maxCombo combo"
+        )
+    }
+
+    val PROFILE_VOTE_POINT = { votePoint: Int ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GREEN}投票p: ${ChatColor.WHITE}$votePoint"
+        )
+    }
+
+    val PROFILE_POMME = { pomme: Int ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GREEN}ポム: ${ChatColor.WHITE}$pomme"
+        )
+    }
+
+    val PROFILE_DONATE_POINT = { donatePoint: Int ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GREEN}寄付p: ${ChatColor.WHITE}$donatePoint"
         )
     }
 

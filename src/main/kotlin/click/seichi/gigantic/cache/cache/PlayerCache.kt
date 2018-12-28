@@ -55,6 +55,15 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.EFFECT.let {
                     offer(it, it.read(user))
                 }
+                Keys.VOTE_POINT.let {
+                    force(it, it.read(user))
+                }
+                Keys.POMME.let {
+                    force(it, it.read(user))
+                }
+                Keys.DONATE_POINT.let {
+                    force(it, it.read(user))
+                }
                 Keys.EXP_MAP.forEach { reason, key ->
                     offer(key, key.read(userExpMap[reason] ?: return@forEach))
                 }
@@ -175,7 +184,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
      *
      * @author tar0ss
      */
-    class UserEntityData(uniqueId: UUID, playerName: String) {
+    inner class UserEntityData(uniqueId: UUID, playerName: String) {
 
         val user = User.findById(uniqueId)?.apply {
             name = playerName

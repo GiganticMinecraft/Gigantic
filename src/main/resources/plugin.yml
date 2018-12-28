@@ -4,3 +4,13 @@ main: click.seichi.gigantic.Gigantic
 api-version: 1.13
 depend: [ProtocolLib]
 load: STARTUP
+
+
+commands:
+  vote:
+    description: This is vote command.
+    usage: /vote <uuid> <num>
+    aliases: [vote]
+    default: op
+    permission: gigantic.vote
+    permission-message: You don't have <permission>

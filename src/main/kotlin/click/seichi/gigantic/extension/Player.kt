@@ -46,6 +46,8 @@ fun <V : Any?> Player.remove(key: Key<PlayerCache, V>) = PlayerCacheMemory.get(u
 
 fun <V : Any?> Player.offer(key: Key<PlayerCache, V>, value: V) = PlayerCacheMemory.get(uniqueId).offer(key, value)
 
+fun <V : Any?> Player.force(key: Key<PlayerCache, V>, value: V) = PlayerCacheMemory.get(uniqueId).force(key, value)
+
 fun <V : Any?> Player.replace(key: Key<PlayerCache, V>, value: V) = PlayerCacheMemory.get(uniqueId).replace(key, value)
 
 fun <V : Any?> Player.transform(key: Key<PlayerCache, V>, transforming: (V) -> V) = PlayerCacheMemory.get(uniqueId).transform(key, transforming)
@@ -83,6 +85,15 @@ val Player.maxCombo: Long
 
 val Player.comboRank: Int
     get() = SkillParameters.calcComboRank(combo)
+
+val Player.votePoint: Int
+    get() = getOrPut(Keys.VOTE_POINT)
+
+val Player.pomme: Int
+    get() = getOrPut(Keys.POMME)
+
+val Player.donatePoint: Int
+    get() = getOrPut(Keys.DONATE_POINT)
 
 
 fun Player.isMaxMana() = mana >= maxMana

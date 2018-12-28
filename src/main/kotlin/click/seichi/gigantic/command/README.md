@@ -1,11 +1,11 @@
 Command Package
 ======
-最終更新日時 2018/06/04 執筆 tar0ss
+最終更新日時 2018/12/28 執筆 tar0ss
 
-新コマンド実装方法
+新規コマンド実装方法
 ---
 commandsパッケージ内にTabExecutorを実装したクラスを生成する．
-そのクラスをCommandRegistrationに追記する．
+そのクラスをmainクラスに追記する．
 plugin.ymlにも追記する
 
 クラス例
@@ -18,6 +18,16 @@ class TestCommand :TabExecutor{
 
      override fun onTabComplete(p0: CommandSender?, p1: Command?, p2: String?, p3: Array<out String>?): MutableList<String> {
          return mutableListOf()
+     }
+ }
+ ```
+ 
+ 第一引数の場合分け
+ ```kotlin
+ when (args[0].toLowerCase()) {
+     "aaa" -> {
+     }
+     else -> {
      }
  }
  ```

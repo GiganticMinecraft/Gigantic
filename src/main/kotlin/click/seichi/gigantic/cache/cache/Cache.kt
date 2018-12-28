@@ -66,6 +66,15 @@ abstract class Cache<C : Cache<C>> {
         return true
     }
 
+    /**
+     * 強制的に値を書き換える．
+     * 安易に利用することを禁ずる
+     */
+    fun <V : Any?> force(key: Key<C, V>, value: V): Boolean {
+        registerKey(key, value)
+        return true
+    }
+
     fun <V : Any?> replace(key: Key<C, V>, value: V): Boolean {
         if (!key.satisfyWith(value)) return false
         keyMap.replace(key, value) ?: return false

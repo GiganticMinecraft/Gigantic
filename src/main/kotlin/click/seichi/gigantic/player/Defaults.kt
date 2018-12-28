@@ -17,4 +17,6 @@ object Defaults {
     const val TOOL_ID = 2
     const val BELT_ID = 1
     const val EFFECT_ID = 0
+    // プロフィール更新にかかる時間（秒）
+    const val PROFILE_UPDATE_TIME = 1L
 }

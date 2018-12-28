@@ -2,8 +2,10 @@ package click.seichi.gigantic
 
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.command.VoteCommand
 import click.seichi.gigantic.config.*
 import click.seichi.gigantic.database.table.*
+import click.seichi.gigantic.extension.bind
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.head.Head
@@ -20,6 +22,7 @@ import org.bukkit.block.Block
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.boss.BossBar
+import org.bukkit.command.CommandExecutor
 import org.bukkit.entity.ArmorStand
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
@@ -229,7 +232,7 @@ class Gigantic : JavaPlugin() {
             world.getEntitiesByClass(ArmorStand::class.java).forEach { it.remove() }
         }
 
-        loadConfigurtion(
+        loadConfiguration(
                 Config,
                 PlayerLevelConfig,
                 DatabaseConfig,
@@ -257,6 +260,10 @@ class Gigantic : JavaPlugin() {
                 ExperienceOrbSpawn(this)
         )
 
+        bindCommands(
+                "vote" to VoteCommand()
+        )
+
         prepareDatabase()
 
         // reflectionを使うので先に生成
@@ -267,34 +274,6 @@ class Gigantic : JavaPlugin() {
         logger.info("Gigantic is enabled!!")
     }
 
-    private fun loadConfigurtion(vararg configurations: SimpleConfiguration) = configurations.forEach { it.init(this) }
-
-    private fun registerListeners(vararg listeners: Listener) = listeners.forEach { it.register() }
-
-    private fun registerPacketListeners(vararg listeners: PacketListener) = listeners.forEach { PROTOCOL_MG.addPacketListener(it) }
-
-    private fun prepareDatabase() {
-        //connect MySQL
-        Database.connect("jdbc:mysql://${DatabaseConfig.HOST}/${DatabaseConfig.DATABASE}",
-                "com.mysql.jdbc.Driver", DatabaseConfig.USER, DatabaseConfig.PASSWORD)
-
-        //create Tables
-        transaction {
-            // プレイヤー用のテーブルを作成
-            SchemaUtils.createMissingTablesAndColumns(
-                    UserTable,
-                    UserWillTable,
-                    UserExpTable,
-                    UserMonsterTable,
-                    UserRelicTable,
-                    UserAchievementTable,
-                    UserToolTable,
-                    UserBeltTable,
-                    UserQuestTable,
-                    UserEffectTable
-            )
-        }
-    }
 
     override fun onDisable() {
 
@@ -322,6 +301,37 @@ class Gigantic : JavaPlugin() {
 
         logger.info("Gigantic is disabled!!")
         Bukkit.getPluginManager().disablePlugin(this)
+    }
+
+    private fun loadConfiguration(vararg configurations: SimpleConfiguration) = configurations.forEach { it.init(this) }
+
+    private fun registerListeners(vararg listeners: Listener) = listeners.forEach { it.register() }
+
+    private fun registerPacketListeners(vararg listeners: PacketListener) = listeners.forEach { PROTOCOL_MG.addPacketListener(it) }
+
+    private fun bindCommands(vararg commands: Pair<String, CommandExecutor>) = commands.toMap().forEach { id, executor -> executor.bind(id) }
+
+    private fun prepareDatabase() {
+        //connect MySQL
+        Database.connect("jdbc:mysql://${DatabaseConfig.HOST}/${DatabaseConfig.DATABASE}",
+                "com.mysql.jdbc.Driver", DatabaseConfig.USER, DatabaseConfig.PASSWORD)
+
+        //create Tables
+        transaction {
+            // プレイヤー用のテーブルを作成
+            SchemaUtils.createMissingTablesAndColumns(
+                    UserTable,
+                    UserWillTable,
+                    UserExpTable,
+                    UserMonsterTable,
+                    UserRelicTable,
+                    UserAchievementTable,
+                    UserToolTable,
+                    UserBeltTable,
+                    UserQuestTable,
+                    UserEffectTable
+            )
+        }
     }
 
 }

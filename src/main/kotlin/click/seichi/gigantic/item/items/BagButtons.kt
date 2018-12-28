@@ -4,6 +4,7 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.item.Button
@@ -13,6 +14,7 @@ import click.seichi.gigantic.message.messages.menu.EffectMenuMessages
 import click.seichi.gigantic.message.messages.menu.ProfileMessages
 import click.seichi.gigantic.message.messages.menu.SkillMenuMessages
 import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
@@ -23,6 +25,8 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
+import org.bukkit.scheduler.BukkitRunnable
+import org.jetbrains.exposed.sql.transactions.transaction
 
 /**
  * @author tar0ss
@@ -34,12 +38,22 @@ object BagButtons {
             return player.getHead().apply {
                 setDisplayName(BagMessages.PROFILE.asSafety(player.wrappedLocale))
                 val lore = mutableListOf<String>()
+
+                lore.add(when {
+                    player.getOrPut(Keys.PROFILE_IS_UPDATING) -> ProfileMessages.UPDATING
+                    else -> ProfileMessages.UPDATE
+                }.asSafety(player.wrappedLocale))
+
+                lore.add("")
+
                 lore.addAll(listOf(
-                        ProfileMessages.UPDATE.asSafety(player.wrappedLocale),
-                        ProfileMessages.PROFILE_LEVEL(player.wrappedLevel).asSafety(player.wrappedLocale),
-                        ProfileMessages.PROFILE_EXP(player.wrappedLevel, player.wrappedExp).asSafety(player.wrappedLocale),
-                        ProfileMessages.PROFILE_HEALTH(player.wrappedHealth, player.wrappedMaxHealth).asSafety(player.wrappedLocale)
-                )
+                        ProfileMessages.PROFILE_LEVEL(player.wrappedLevel),
+                        ProfileMessages.PROFILE_EXP(player.wrappedLevel, player.wrappedExp),
+                        ProfileMessages.PROFILE_HEALTH(player.wrappedHealth, player.wrappedMaxHealth),
+                        ProfileMessages.PROFILE_VOTE_POINT(player.votePoint),
+                        ProfileMessages.PROFILE_POMME(player.pomme),
+                        ProfileMessages.PROFILE_DONATE_POINT(player.donatePoint)
+                ).map { it.asSafety(player.wrappedLocale) }
                 )
                 if (Achievement.MANA_STONE.isGranted(player)) {
                     lore.add(ProfileMessages.PROFILE_MANA(player.mana, player.maxMana).asSafety(player.wrappedLocale))
@@ -58,8 +72,42 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (player.getOrPut(Keys.PROFILE_IS_UPDATING)) return
             PlayerSounds.TOGGLE.playOnly(player)
+            player.offer(Keys.PROFILE_IS_UPDATING, true)
             player.updateBag()
+            // 投票，ポム，寄付系のポイントをデータベースから取得後更新
+            object : BukkitRunnable() {
+                override fun run() {
+                    var votePoint: Int? = null
+                    var pomme: Int? = null
+                    var donatePoint: Int? = null
+                    transaction {
+                        val user = User.findById(player.uniqueId)!!
+                        votePoint = user.votePoint
+                        pomme = user.pomme
+                        donatePoint = user.donatePoint
+                    }
+                    object : BukkitRunnable() {
+                        override fun run() {
+                            if (!player.isValid) return
+
+                            votePoint?.let {
+                                player.force(Keys.VOTE_POINT, it)
+                            }
+                            pomme?.let {
+                                player.force(Keys.POMME, it)
+                            }
+                            donatePoint?.let {
+                                player.force(Keys.DONATE_POINT, it)
+                            }
+                            player.offer(Keys.PROFILE_IS_UPDATING, false)
+                            player.updateBag()
+                        }
+                    }.runTaskLater(Gigantic.PLUGIN, Defaults.PROFILE_UPDATE_TIME * 20)
+                }
+            }.runTaskAsynchronously(Gigantic.PLUGIN)
+
         }
 
     }

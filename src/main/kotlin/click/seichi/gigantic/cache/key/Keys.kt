@@ -1,5 +1,6 @@
 package click.seichi.gigantic.cache.key
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.bag.Bag
 import click.seichi.gigantic.bag.bags.MainBag
@@ -732,6 +733,82 @@ object Keys {
         }
 
         override fun satisfyWith(value: GiganticEffect): Boolean {
+            return true
+        }
+    }
+
+    // データの読み込みしか行わない特殊なケース
+    val VOTE_POINT = object : DatabaseKey<PlayerCache, Int> {
+        override val default: Int
+            get() = 0
+
+        override fun read(entity: Entity<*>): Int {
+            val user = entity as User
+            return user.votePoint
+        }
+
+        override fun store(entity: Entity<*>, value: Int) {
+            // データベースが書き換えられていた場合，上書き削除してしまうので
+            // 書き込まなくてよい．ポイントは減ることもないし増えることもない．
+            Gigantic.PLUGIN.logger.warning("投票pのデータベース書き込みは禁止されています")
+        }
+
+        override fun satisfyWith(value: Int): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("投票pの書き換えは禁止されています")
+            return false
+        }
+    }
+    // データの読み込みしか行わない特殊なケース
+    val POMME = object : DatabaseKey<PlayerCache, Int> {
+        override val default: Int
+            get() = 0
+
+        override fun read(entity: Entity<*>): Int {
+            val user = entity as User
+            return user.pomme
+        }
+
+        override fun store(entity: Entity<*>, value: Int) {
+            // データベースが書き換えられていた場合，上書き削除してしまうので
+            // 書き込まなくてよい．ポイントは減ることもないし増えることもない．
+            Gigantic.PLUGIN.logger.warning("ポムのデータベース書き込みは禁止されています")
+        }
+
+        override fun satisfyWith(value: Int): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("ポムの書き換えは禁止されています")
+            return false
+        }
+    }
+    // データの読み込みしか行わない特殊なケース
+    val DONATE_POINT = object : DatabaseKey<PlayerCache, Int> {
+        override val default: Int
+            get() = 0
+
+        override fun read(entity: Entity<*>): Int {
+            val user = entity as User
+            return user.donatePoint
+        }
+
+        override fun store(entity: Entity<*>, value: Int) {
+            // データベースが書き換えられていた場合，上書き削除してしまうので
+            // 書き込まなくてよい．ポイントは減ることもないし増えることもない．
+            Gigantic.PLUGIN.logger.warning("寄付pのデータベース書き込みは禁止されています")
+        }
+
+        override fun satisfyWith(value: Int): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("寄付pの書き換えは禁止されています")
+            return false
+        }
+    }
+
+    val PROFILE_IS_UPDATING = object : Key<PlayerCache, Boolean> {
+        override val default: Boolean
+            get() = false
+
+        override fun satisfyWith(value: Boolean): Boolean {
             return true
         }
     }
