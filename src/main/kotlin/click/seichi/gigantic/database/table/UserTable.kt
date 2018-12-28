@@ -28,11 +28,11 @@ object UserTable : IdTable<UUID>("users") {
 
     val spellToggle = bool("spell_toggle").default(false)
 
-    val apostolusWidth = integer("apostolus_width").default(1)
+    val apostolWidth = integer("apostol_width").default(1)
 
-    val apostolusHeight = integer("apostolus_height").default(1)
+    val apostolHeight = integer("apostol_height").default(1)
 
-    val apostolusDepth = integer("apostolus_depth").default(1)
+    val apostolDepth = integer("apostol_depth").default(1)
 
     val teleportToggle = bool("teleport_toggle").default(true)
 

@@ -45,7 +45,7 @@ class Apostol : Miner(), SpellCaster {
         // プレイヤーの向いている方向を取得
         val breakFace = player.calcBreakFace()
         // プレイヤーが選択している破壊範囲を取得
-        val breakArea = player.getOrPut(Keys.APOSTOLUS_BREAK_AREA)
+        val breakArea = player.getOrPut(Keys.APOSTOL_BREAK_AREA)
 
         val allBlockSet = mutableSetOf<Block>()
 

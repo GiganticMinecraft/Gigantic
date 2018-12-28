@@ -28,11 +28,11 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var spellToggle by UserTable.spellToggle
 
-    var apostolusWidth by UserTable.apostolusWidth
+    var apostolWidth by UserTable.apostolWidth
 
-    var apostolusHeight by UserTable.apostolusHeight
+    var apostolHeight by UserTable.apostolHeight
 
-    var apostolusDepth by UserTable.apostolusDepth
+    var apostolDepth by UserTable.apostolDepth
 
     var teleportToggle by UserTable.teleportToggle
 

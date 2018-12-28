@@ -40,7 +40,7 @@ object SpellMenu : Menu() {
 
                 override fun onClick(player: Player, event: InventoryClickEvent) {
                     if (spell == Spell.APOSTOL) {
-                        ApostolusSettingMenu.open(player)
+                        ApostolSettingMenu.open(player)
                     }
                 }
 

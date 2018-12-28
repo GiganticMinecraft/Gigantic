@@ -569,9 +569,8 @@ object Keys {
 
     /**
      * 破壊スキルの破壊範囲
-     * defaultが0,0,0なのでエラー出る可能性あり
      */
-    val APOSTOLUS_BREAK_AREA = object : DatabaseKey<PlayerCache, BreakArea> {
+    val APOSTOL_BREAK_AREA = object : DatabaseKey<PlayerCache, BreakArea> {
 
         override val default: BreakArea
             get() = BreakArea(1, 1, 1)
@@ -579,18 +578,18 @@ object Keys {
         override fun read(entity: Entity<*>): BreakArea {
             val user = entity as User
             return BreakArea(
-                    user.apostolusWidth,
-                    user.apostolusHeight,
-                    user.apostolusDepth
+                    user.apostolWidth,
+                    user.apostolHeight,
+                    user.apostolDepth
             )
         }
 
         override fun store(entity: Entity<*>, value: BreakArea) {
             val user = entity as User
             user.run {
-                apostolusWidth = value.width
-                apostolusHeight = value.height
-                apostolusDepth = value.depth
+                apostolWidth = value.width
+                apostolHeight = value.height
+                apostolDepth = value.depth
             }
         }
 

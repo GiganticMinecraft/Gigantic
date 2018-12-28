@@ -2,13 +2,14 @@ package click.seichi.gigantic.message.messages.menu
 
 import click.seichi.gigantic.breaker.BreakArea
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.player.spell.SpellParameters
 import org.bukkit.ChatColor
 import java.util.*
 
 /**
  * @author tar0ss
  */
-object ApostolusMenuMessages {
+object ApostolMenuMessages {
 
     val TITLE = LocalizedText(
             Locale.JAPANESE to "アポストル詳細設定"
@@ -40,11 +41,19 @@ object ApostolusMenuMessages {
         )
     }
 
+    val LIMIT_SIZE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
+                    "各パラメーターは " +
+                    "${ChatColor.RED}${ChatColor.BOLD}" + SpellParameters.APOSTOL_LIMIT_SIZE +
+                    " ${ChatColor.RESET}${ChatColor.YELLOW}" +
+                    "より小さくしよう"
+    )
+
     val LIMIT_OF_BREAK_NUM_LORE = { maxBreakNum: Int ->
         setOf(
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.YELLOW}" +
-                                "マナの最大値によって同時破壊数は増えます"
+                                "マナの最大値によって同時破壊数は増える"
                 ),
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.YELLOW}" +
