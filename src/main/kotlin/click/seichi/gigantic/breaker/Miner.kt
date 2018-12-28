@@ -21,10 +21,7 @@ import org.bukkit.entity.Player
 open class Miner : Breaker {
 
     override fun breakBlock(player: Player, block: Block) {
-        if (block.isLiquid)
-            block.type = Material.AIR
-        else
-            block.breakNaturally(player.inventory.itemInMainHand)
+        block.type = Material.AIR
     }
 
 

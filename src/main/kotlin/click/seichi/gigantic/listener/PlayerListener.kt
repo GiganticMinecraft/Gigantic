@@ -327,7 +327,7 @@ class PlayerListener : Listener {
     }
 
     // ツール以外で破壊したときキャンセル
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     fun cancelNotToolBreaking(event: BlockBreakEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
@@ -339,7 +339,7 @@ class PlayerListener : Listener {
     }
 
     // ツール以外で破壊したときキャンセル
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     fun cancelNotSneakingUnderBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
         val block = event.block ?: return
@@ -347,6 +347,13 @@ class PlayerListener : Listener {
         if (!block.isUnder(player)) return
         if (player.isSneaking) return
         PlayerMessages.BREAK_UNDER_BLOCK_NOT_SNEAKING.sendTo(player)
+        event.isCancelled = true
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    fun cancelBrokenBlockBreak(event: BlockBreakEvent) {
+        val block = event.block ?: return
+        if (!Gigantic.BROKEN_BLOCK_SET.contains(block)) return
         event.isCancelled = true
     }
 

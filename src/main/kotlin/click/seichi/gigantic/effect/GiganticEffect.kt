@@ -63,8 +63,10 @@ enum class GiganticEffect(
             50,
             EffectMessages.EXPLOSION,
             EffectMessages.EXPLOSION_LORE,
-            apostolEffector = ApostolEffectors.EXPLOSION
+            GeneralBreakEffectors.EXPLOSION,
+            ApostolEffectors.EXPLOSION
     ),
+
     ;
 
     companion object {

@@ -31,7 +31,7 @@ object SpellAnimations {
         )
     }
 
-    val GRAND_NATURA_ON_FIRE = Animation(1) { location, _ ->
+    val GRAND_NATURA_ON_FIRE = Animation(0) { location, _ ->
         location.world.spawnParticle(Particle.TOTEM, location, 4,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
@@ -39,7 +39,7 @@ object SpellAnimations {
         )
     }
 
-    val AQUA_LINEA_ON_BREAK = Animation(1) { location, _ ->
+    val AQUA_LINEA_ON_BREAK = Animation(0) { location, _ ->
         location.world.spawnParticle(Particle.WATER_WAKE, location, 5,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
@@ -52,7 +52,7 @@ object SpellAnimations {
         )
     }
 
-    val AQUA_LINEA_ON_FIRE = Animation(1) { location, _ ->
+    val AQUA_LINEA_ON_FIRE = Animation(0) { location, _ ->
         location.world.spawnParticle(Particle.WATER_SPLASH, location, 10,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),

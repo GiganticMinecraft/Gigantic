@@ -154,7 +154,7 @@ object BagButtons {
                             player.offer(Keys.DONATE_TICKET_LIST, donateList)
                             DonateHistoryMenu.reopen(player)
                         }
-                    }.runTaskLater(Gigantic.PLUGIN, Defaults.DONATE_HISTORY_LOAD_TIME)
+                    }.runTaskLater(Gigantic.PLUGIN, Defaults.DONATE_HISTORY_LOAD_TIME * 20)
                 }
             }.runTaskAsynchronously(Gigantic.PLUGIN)
         }

@@ -1,5 +1,6 @@
 package click.seichi.gigantic.effect.effectors
 
+import click.seichi.gigantic.animation.animations.effect.ApostolAnimations
 import click.seichi.gigantic.effect.EffectParameters
 import click.seichi.gigantic.effect.effector.ApostolEffector
 import click.seichi.gigantic.extension.centralLocation
@@ -18,10 +19,7 @@ object ApostolEffectors {
         override fun apostolBreak(player: Player, breakBlockSet: Set<Block>) {
             breakBlockSet.run {
                 forEach { target ->
-                    if (target.isLiquid)
-                        target.type = Material.AIR
-                    else
-                        target.breakNaturally(player.inventory.itemInMainHand)
+                    target.type = Material.AIR
                 }
                 // 凍結，火成等の処理を最後にまとめる
                 forEach { target ->
@@ -35,14 +33,11 @@ object ApostolEffectors {
         override fun apostolBreak(player: Player, breakBlockSet: Set<Block>) {
             breakBlockSet.run {
                 forEach { target ->
-                    if (target.isLiquid)
-                        target.type = Material.AIR
-                    else
-                        target.breakNaturally(player.inventory.itemInMainHand)
+                    target.type = Material.AIR
                 }
                 forEach { target ->
                     if (Random.nextDouble() > EffectParameters.EXPLOSION_PROBABILITY.div(100.0)) return@forEach
-                    target.world.createExplosion(target.centralLocation, 0F, false)
+                    ApostolAnimations.EXPLOSION.start(target.centralLocation)
                 }
                 // 凍結，火成等の処理を最後にまとめる
                 forEach { target ->
@@ -51,4 +46,5 @@ object ApostolEffectors {
             }
         }
     }
+
 }

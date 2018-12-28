@@ -7,5 +7,4 @@ object EffectParameters {
 
     // 爆発が起きる確率(%)
     val EXPLOSION_PROBABILITY = 11
-
 }

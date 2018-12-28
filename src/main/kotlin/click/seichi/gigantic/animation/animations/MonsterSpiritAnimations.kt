@@ -23,7 +23,7 @@ object MonsterSpiritAnimations {
     }
 
     val AMBIENT = { color: Color ->
-        Animation(1) { location, _ ->
+        Animation(0) { location, _ ->
             location.world.spawnColoredParticleSpherically(
                     location,
                     color,
@@ -33,7 +33,7 @@ object MonsterSpiritAnimations {
         }
     }
 
-    val AWAKE = Animation(1) { location, _ ->
+    val AWAKE = Animation(0) { location, _ ->
         location.world.spawnParticle(
                 Particle.SMOKE_NORMAL,
                 location,

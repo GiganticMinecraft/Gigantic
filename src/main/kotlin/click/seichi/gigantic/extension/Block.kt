@@ -49,6 +49,7 @@ val Block.centralLocation: Location
 
 
 fun Block.update() {
+    if (Gigantic.BROKEN_BLOCK_SET.contains(this)) return
     changeRelativeBedrock()
     condenseRelativeLiquid()
     fallUpperCrustBlock()
@@ -86,6 +87,7 @@ private val faceSet = setOf(
 
 private fun Block.changeRelativeBedrock() {
     faceSet.map { getRelative(it) }
+            .filter { !Gigantic.BROKEN_BLOCK_SET.contains(it) }
             .filter { it.type == Material.BEDROCK && it.y != 0 }
             .forEach { it.type = Material.STONE }
 }
@@ -93,6 +95,7 @@ private fun Block.changeRelativeBedrock() {
 
 private fun Block.condenseRelativeLiquid() {
     faceSet.map { getRelative(it) }
+            .filter { !Gigantic.BROKEN_BLOCK_SET.contains(it) }
             .filter { it.isLiquid || it.isWaterPlant }
             .forEach {
                 when {

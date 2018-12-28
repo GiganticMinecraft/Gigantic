@@ -15,7 +15,7 @@ import org.bukkit.block.data.BlockData
 object BattleMonsterAnimations {
 
     val AMBIENT = { color: Color ->
-        Animation(1) { location, _ ->
+        Animation(0) { location, _ ->
             location.world.spawnColoredParticleSpherically(
                     location,
                     color,
@@ -36,7 +36,7 @@ object BattleMonsterAnimations {
     }
 
     val ATTACK_READY_BLOCK = { data: BlockData ->
-        Animation(1) { location, _ ->
+        Animation(0) { location, _ ->
             location.world.spawnParticle(
                     Particle.BLOCK_CRACK,
                     location.clone().add(
@@ -60,7 +60,7 @@ object BattleMonsterAnimations {
         }
     }
 
-    val DAMAGE_FROM_PLAYER = Animation(1) { location, l ->
+    val DAMAGE_FROM_PLAYER = Animation(0) { location, l ->
         location.world.spawnParticle(
                 Particle.DAMAGE_INDICATOR,
                 location,

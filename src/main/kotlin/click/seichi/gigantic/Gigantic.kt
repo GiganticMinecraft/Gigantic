@@ -298,7 +298,7 @@ class Gigantic : JavaPlugin() {
                 player.gameMode = GameMode.SURVIVAL
             }
             PlayerCacheMemory.writeThenRemoved(player.uniqueId, false)
-            player.kickPlayer("Restarting...Please wait a few minutes.")
+            player.kickPlayer("Restarting...Please wait a few seconds.")
         }
 
         logger.info("Gigantic is disabled!!")

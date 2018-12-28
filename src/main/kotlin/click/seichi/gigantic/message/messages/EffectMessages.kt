@@ -9,6 +9,18 @@ import java.util.*
  */
 object EffectMessages {
 
+    val BLIZZARD = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "ブリザード"
+    )
+
+    val BLIZZARD_LORE = setOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.WHITE}" +
+                            "凍結する"
+            )
+    )
+
     val EXPLOSION = LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
                     "エクスプロージョン"
