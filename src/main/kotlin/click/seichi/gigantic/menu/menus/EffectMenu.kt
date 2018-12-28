@@ -129,11 +129,11 @@ object EffectMenu : Menu() {
                         addLore("")
 
                         addLore(EffectMenuMessages.GENERAL_BREAK.asSafety(player.wrappedLocale) +
-                                "${ChatColor.RESET} " +
-                                if (effect.hasGeneralBreakEffect) "${ChatColor.GREEN}あり" else "${ChatColor.WHITE}なし")
+                                "${ChatColor.RESET}${ChatColor.WHITE} " +
+                                if (effect.hasGeneralBreakEffect) "あり" else "なし")
                         addLore(EffectMenuMessages.APOSTOL.asSafety(player.wrappedLocale) +
-                                "${ChatColor.RESET}" +
-                                if (effect.hasApostolEffect) "${ChatColor.GREEN}あり" else "${ChatColor.WHITE}なし")
+                                "${ChatColor.RESET}${ChatColor.WHITE} " +
+                                if (effect.hasApostolEffect) "あり" else "なし")
 
                         addLore(MenuMessages.LINE)
 
