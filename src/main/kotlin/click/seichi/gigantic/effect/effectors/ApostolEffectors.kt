@@ -1,5 +1,6 @@
 package click.seichi.gigantic.effect.effectors
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.effect.ApostolAnimations
 import click.seichi.gigantic.effect.EffectParameters
 import click.seichi.gigantic.effect.effector.ApostolEffector
@@ -9,6 +10,7 @@ import click.seichi.gigantic.util.Random
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
+import org.bukkit.scheduler.BukkitRunnable
 
 /**
  * @author tar0ss
@@ -44,6 +46,30 @@ object ApostolEffectors {
                     target.update()
                 }
             }
+        }
+    }
+
+    val BLIZZARD = object : ApostolEffector {
+        override fun apostolBreak(player: Player, breakBlockSet: Set<Block>) {
+            Gigantic.BROKEN_BLOCK_SET.addAll(breakBlockSet)
+            breakBlockSet.forEach { target ->
+                target.type = Material.PACKED_ICE
+            }
+            object : BukkitRunnable() {
+                override fun run() {
+                    Gigantic.BROKEN_BLOCK_SET.removeAll(breakBlockSet)
+                    breakBlockSet.forEach { target ->
+                        target.type = Material.AIR
+                    }
+                    breakBlockSet.forEach { target ->
+                        if (Random.nextDouble() > EffectParameters.BLIZZARD_PROBABILITY.div(100.0)) return@forEach
+                        ApostolAnimations.BLIZZARD.start(target.centralLocation)
+                    }
+                    breakBlockSet.forEach { target ->
+                        target.update()
+                    }
+                }
+            }.runTaskLater(Gigantic.PLUGIN, EffectParameters.BLIZZARD_TIME * 20L)
         }
     }
 

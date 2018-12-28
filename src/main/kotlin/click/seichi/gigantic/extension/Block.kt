@@ -49,7 +49,6 @@ val Block.centralLocation: Location
 
 
 fun Block.update() {
-    if (Gigantic.BROKEN_BLOCK_SET.contains(this)) return
     changeRelativeBedrock()
     condenseRelativeLiquid()
     fallUpperCrustBlock()
@@ -60,6 +59,7 @@ private fun Block.fallUpperCrustBlock() {
     val fallTask = object : Runnable {
         override fun run() {
             val target = getRelative(0, count + 1, 0) ?: return
+            if (Gigantic.BROKEN_BLOCK_SET.contains(target)) return
             target.changeRelativeBedrock()
             target.condenseRelativeLiquid()
             if (target.isCrust) {

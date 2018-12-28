@@ -66,6 +66,16 @@ enum class GiganticEffect(
             GeneralBreakEffectors.EXPLOSION,
             ApostolEffectors.EXPLOSION
     ),
+    BLIZZARD(
+            2,
+            1,
+            ItemStack(Material.PACKED_ICE),
+            Currency.VOTE_POINT,
+            70,
+            EffectMessages.BLIZZARD,
+            EffectMessages.BLIZZARD_LORE,
+            apostolEffector = ApostolEffectors.BLIZZARD
+    ),
 
     ;
 
