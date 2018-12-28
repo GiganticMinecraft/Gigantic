@@ -29,4 +29,11 @@ object EffectSounds {
             0.4F,
             1.5F
     )
+
+    val FLAME = DetailedSound(
+            Sound.ENTITY_BLAZE_SHOOT,
+            SoundCategory.BLOCKS,
+            0.4F,
+            0.5F
+    )
 }

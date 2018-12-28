@@ -20,4 +20,8 @@ object ApostolAnimations {
     val MAGIC = Animation(0) { location, _ ->
         location.world.spawnParticle(Particle.NOTE, location, 1)
     }
+
+    val FLAME = Animation(0) { location, _ ->
+        location.world.spawnParticle(Particle.FLAME, location, 10)
+    }
 }

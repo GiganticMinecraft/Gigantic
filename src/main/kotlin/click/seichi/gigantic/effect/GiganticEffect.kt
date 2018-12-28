@@ -86,6 +86,16 @@ enum class GiganticEffect(
             EffectMessages.MAGIC_LORE,
             apostolEffector = ApostolEffectors.MAGIC
     ),
+    FLAME(
+            4,
+            3,
+            ItemStack(Material.NETHER_WART),
+            Currency.DONATE_POINT,
+            10,
+            EffectMessages.FLAME,
+            EffectMessages.FLAME_LORE,
+            apostolEffector = ApostolEffectors.FLAME
+    ),
 
     ;
 
