@@ -28,19 +28,17 @@ class Cutter : Miner() {
             BlockFace.NORTH_WEST
     )
 
-    fun breakRelationalBlock(player: Player, target: Block, isBaseBlock: Boolean) {
+    fun breakRelationalBlock(target: Block, isBaseBlock: Boolean) {
         if (!target.isTree) return
 
         // 原木でなければ処理しない
         if (target.isLog) {
-
             // 破壊ブロック段を処理
             relationalFaceSet.map {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(
                         Gigantic.PLUGIN,
                         {
-                            if (!player.isValid) return@scheduleSyncDelayedTask
-                            breakRelationalBlock(player, target.getRelative(it), false)
+                            breakRelationalBlock(target.getRelative(it), false)
                         },
                         when (it) {
                             BlockFace.NORTH -> 1L
@@ -61,8 +59,7 @@ class Cutter : Miner() {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(
                         Gigantic.PLUGIN,
                         {
-                            if (!player.isValid) return@scheduleSyncDelayedTask
-                            breakRelationalBlock(player, upperBlock.getRelative(it), false)
+                            breakRelationalBlock(upperBlock.getRelative(it), false)
                         },
                         when (it) {
                             BlockFace.NORTH -> 1L + 2L
@@ -80,8 +77,7 @@ class Cutter : Miner() {
             Bukkit.getScheduler().scheduleSyncDelayedTask(
                     Gigantic.PLUGIN,
                     {
-                        if (!player.isValid) return@scheduleSyncDelayedTask
-                        breakRelationalBlock(player, upperBlock, false)
+                        breakRelationalBlock(upperBlock, false)
                     },
                     2L
             )
@@ -92,8 +88,7 @@ class Cutter : Miner() {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(
                         Gigantic.PLUGIN,
                         {
-                            if (!player.isValid) return@scheduleSyncDelayedTask
-                            breakRelationalBlock(player, underBlock.getRelative(it), false)
+                            breakRelationalBlock(underBlock.getRelative(it), false)
                         },
                         when (it) {
                             BlockFace.NORTH -> 1L + 2L
@@ -111,8 +106,7 @@ class Cutter : Miner() {
             Bukkit.getScheduler().scheduleSyncDelayedTask(
                     Gigantic.PLUGIN,
                     {
-                        if (!player.isValid) return@scheduleSyncDelayedTask
-                        breakRelationalBlock(player, underBlock, false)
+                        breakRelationalBlock(underBlock, false)
                     },
                     2L
             )
@@ -120,12 +114,12 @@ class Cutter : Miner() {
 
         // ベースブロックで無ければ通常破壊処理
         if (!isBaseBlock) {
-            onBreakBlock(player, target)
-            breakBlock(player, target)
+            onBreakBlock(null, target)
+            breakBlock(target)
         }
     }
 
-    override fun onBreakBlock(player: Player, block: Block) {
+    override fun onBreakBlock(player: Player?, block: Block) {
         PlayerAnimations.ON_CUT.start(block.centralLocation)
         PlayerSounds.ON_CUT.play(block.centralLocation)
         block.update()

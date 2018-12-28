@@ -163,7 +163,7 @@ class Apostol : Miner(), SpellCaster {
         return SpellParameters.APOSTOL_MANA.toBigDecimal() * breakBlockSet.size.toBigDecimal()
     }
 
-    override fun onBreakBlock(player: Player, block: Block) {
+    override fun onBreakBlock(player: Player?, block: Block) {
         block.update()
     }
 

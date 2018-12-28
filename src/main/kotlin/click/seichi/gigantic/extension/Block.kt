@@ -3,6 +3,7 @@ package click.seichi.gigantic.extension
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.battle.BattleManager
+import click.seichi.gigantic.breaker.Cutter
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.Location
 import org.bukkit.Material
@@ -58,16 +59,29 @@ private fun Block.fallUpperCrustBlock() {
     object : BukkitRunnable() {
         override fun run() {
             val target = getRelative(BlockFace.UP) ?: return
-            if (target.isCrust && !Gigantic.BROKEN_BLOCK_SET.contains(target)) {
-                target.location.world.spawnFallingBlock(
-                        target.location.central.subtract(0.0, 0.5, 0.0),
-                        target.blockData
-                )
-                target.type = Material.AIR
+            when {
+                Gigantic.BROKEN_BLOCK_SET.contains(target) -> {
+                }
+                target.isCrust -> {
+                    target.fall()
+                }
+                target.isLog -> {
+                    Cutter().breakRelationalBlock(target, false)
+                    return
+                }
             }
             target.update()
         }
     }.runTaskLater(Gigantic.PLUGIN, 2L)
+}
+
+
+private fun Block.fall() {
+    location.world.spawnFallingBlock(
+            location.central.subtract(0.0, 0.5, 0.0),
+            blockData
+    )
+    type = Material.AIR
 }
 
 private val faceSet = setOf(

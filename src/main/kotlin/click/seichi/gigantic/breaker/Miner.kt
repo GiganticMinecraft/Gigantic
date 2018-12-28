@@ -20,14 +20,19 @@ import org.bukkit.entity.Player
  */
 open class Miner : Breaker {
 
-    override fun breakBlock(player: Player, block: Block) {
+    override fun breakBlock(block: Block) {
         block.type = Material.AIR
     }
 
 
-    open fun onBreakBlock(player: Player, block: Block) {
+    open fun onBreakBlock(player: Player?, block: Block) {
 
         if (!block.isCrust && !block.isTree) {
+            block.update()
+            return
+        }
+
+        if (player == null) {
             block.update()
             return
         }
