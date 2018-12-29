@@ -133,7 +133,7 @@ object Skills {
             return Consumer { player ->
                 val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 val currentCombo = player.combo
-                val increaseCombo = player.getOrPut(Keys.INCREASE_COMBO)
+                val increaseCombo = 1L
                 val currentMaxCombo = player.maxCombo
 
                 player.manipulate(CatalogPlayerCache.MINE_COMBO) {

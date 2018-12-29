@@ -1,11 +1,9 @@
 package click.seichi.gigantic.extension
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.breaker.Cutter
-import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.GameMode
@@ -175,20 +173,7 @@ fun Block.firstOrNullOfNearPlayer(player: Player) = world.players
         // TODO パーティモードをいれるならここに制約追加
         .firstOrNull { xzDistance(it) < Config.PROTECT_RADIUS }
 
-fun Block.calcGravity(player: Player): Int {
-    return when {
-        player.getOrPut(Keys.SPELL_TOGGLE) &&
-                Achievement.SPELL_APOSTOL.isGranted(player) &&
-                player.hasMana(0.toBigDecimal()) -> {
-            val breakArea = player.getOrPut(Keys.APOSTOL_BREAK_AREA)
-            ((breakArea.height + Config.MAX_BREAKABLE_GRAVITY)..(255 - y))
-                    .map { getRelative(BlockFace.UP, it) }
-                    .filter { !it.isAir }
-                    .size
-        }
-        else -> ((1 + Config.MAX_BREAKABLE_GRAVITY)..(255 - y))
-                .map { getRelative(BlockFace.UP, it) }
-                .filter { !it.isAir }
-                .size
-    }
-}
+fun Block.calcGravity() = ((1 + Config.MAX_BREAKABLE_GRAVITY)..(255 - y))
+        .map { getRelative(BlockFace.UP, it) }
+        .filter { !it.isAir }
+        .size

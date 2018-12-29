@@ -657,16 +657,6 @@ object Keys {
 
     }
 
-    val INCREASE_COMBO = object : Key<PlayerCache, Long> {
-        override val default: Long
-            get() = 0L
-
-        override fun satisfyWith(value: Long): Boolean {
-            return true
-        }
-
-    }
-
     val EFFECT_BOUGHT_MAP: Map<GiganticEffect, DatabaseKey<PlayerCache, Boolean>> = GiganticEffect.values()
             .map { effect ->
                 effect to

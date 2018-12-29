@@ -46,7 +46,6 @@ class Apostol : Miner(), SpellCaster {
         player.manipulate(CatalogPlayerCache.EXP) {
             it.add(breakBlockSet.size.toBigDecimal(), ExpReason.SPELL_APOSTOL)
         }
-        player.transform(Keys.INCREASE_COMBO) { breakBlockSet.size.toLong() + it }
 
         PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 

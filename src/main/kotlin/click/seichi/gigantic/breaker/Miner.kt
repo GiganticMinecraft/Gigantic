@@ -44,7 +44,6 @@ open class Miner : Breaker {
         // 破壊対象ブロックをInvoker用に保存
         player.offer(Keys.BREAK_BLOCK, block)
 
-        player.offer(Keys.INCREASE_COMBO, 1L)
         // ヒール系
         when {
             Skill.HEAL.tryCast(player) -> {
@@ -53,14 +52,15 @@ open class Miner : Breaker {
             }
         }
         // 破壊系
+        var isCastApostol: Boolean = false
         when {
             !player.getOrPut(Keys.SPELL_TOGGLE) -> {
             }
             Spell.APOSTOL.tryCast(player) -> {
+                isCastApostol = true
             }
         }
 
-        val currentCombo = player.combo
         // 最終結果コンボ数
         Skill.MINE_COMBO.tryCast(player)
 
@@ -73,9 +73,7 @@ open class Miner : Breaker {
                     SkillSounds.MINE_BURST_ON_BREAK(player.combo).playOnly(player)
                     SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
                 }
-                // 破壊数が1の時
-                player.combo - currentCombo == 1L -> PlayerSounds.OBTAIN_EXP(player.combo).playOnly(player)
-                // 複数破壊の時
+                !isCastApostol -> PlayerSounds.OBTAIN_EXP(player.combo).playOnly(player)
                 else -> {
                 }
             }

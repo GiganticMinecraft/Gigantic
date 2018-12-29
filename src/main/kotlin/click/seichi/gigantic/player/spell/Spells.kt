@@ -1,6 +1,5 @@
 package click.seichi.gigantic.player.spell
 
-import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SpellAnimations
 import click.seichi.gigantic.breaker.spells.Apostol
 import click.seichi.gigantic.cache.key.Keys
@@ -26,7 +25,6 @@ object Spells {
     // 読み:ステラ・クレア
     val STELLA_CLAIR = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!Achievement.SPELL_STELLA_CLAIR.isGranted(player)) return null
             if (Config.SPELL_STELLA_CLAIR_PROBABILITY < Random.nextInt(100)) return null
             if (player.mana >= player.maxMana) return null
             return Consumer { p ->
@@ -50,6 +48,7 @@ object Spells {
     val APOSTOL = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!player.hasMana(BigDecimal.ZERO)) return null
+            if (player.getOrPut(Keys.APOSTOL_BREAK_AREA).calcBreakNum() <= 1) return null
             return Consumer { p ->
                 val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 Apostol().cast(p, b)
