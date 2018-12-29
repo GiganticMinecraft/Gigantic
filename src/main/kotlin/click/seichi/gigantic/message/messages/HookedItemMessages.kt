@@ -1,8 +1,8 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.enchantLevel
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.player.skill.SkillParameters
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -71,11 +71,11 @@ object HookedItemMessages {
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.AQUA}" +
-                            "持続時間: ${SkillParameters.MINE_BURST_DURATION}秒"
+                            "持続時間: ${Config.SKILL_MINE_BURST_DURATION}秒"
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.AQUA}" +
-                            "クールタイム: ${SkillParameters.MINE_BURST_COOLTIME}秒"
+                            "クールタイム: ${Config.SKILL_MINE_BURST_COOLTIME}秒"
             )
     )
 
@@ -94,7 +94,7 @@ object HookedItemMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "クールタイム: ${SkillParameters.FLASH_COOLTIME}秒"
+                                    "クールタイム: ${Config.SKILL_FLASH_COOLTIME}秒"
                     )
             )
 

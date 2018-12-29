@@ -1,8 +1,8 @@
 package click.seichi.gigantic.message.messages.menu
 
 import click.seichi.gigantic.breaker.BreakArea
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.player.spell.SpellParameters
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -44,7 +44,7 @@ object ApostolMenuMessages {
     val LIMIT_SIZE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "各パラメーターは " +
-                    "${ChatColor.RED}${ChatColor.BOLD}" + SpellParameters.APOSTOL_LIMIT_SIZE +
+                    "${ChatColor.RED}${ChatColor.BOLD}" + Config.SPELL_APOSTOL_LIMIT_SIZE +
                     " ${ChatColor.RESET}${ChatColor.YELLOW}" +
                     "より小さくしよう"
     )

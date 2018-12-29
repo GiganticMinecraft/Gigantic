@@ -1,11 +1,12 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.player.skill.SkillParameters
 import click.seichi.gigantic.quest.Quest
 import org.bukkit.ChatColor
+import java.math.RoundingMode
 import java.util.*
 
 /**
@@ -71,7 +72,7 @@ object AchievementMessages {
                 it to "${ChatColor.YELLOW}" +
                         "回復魔法: ステラ・クレア を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: ブロックを破壊で最大マナの${SkillParameters.HEAL_AMOUNT_PERCENT}% を回復!!\n" +
+                        "パッシブ効果: ブロックを破壊で最大マナの${Config.SKILL_HEAL_RATIO.toBigDecimal().setScale(1, RoundingMode.HALF_UP)}% を回復!!\n" +
                         "通常破壊時に一定確率で発動する\n"
             }
     ))

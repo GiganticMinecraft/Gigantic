@@ -5,18 +5,31 @@ import click.seichi.gigantic.breaker.SpellCaster
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.player.spell.SpellParameters
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 /**
  * @author tar0ss
  */
 class Apostol : Miner(), SpellCaster {
+
+    companion object {
+        // 最大同時破壊数 = maxMana * (5/100) / 2
+        fun calcLimitOfBreakNumOfApostol(maxMana: BigDecimal): Int {
+            return maxMana
+                    .divide(100.toBigDecimal(), RoundingMode.HALF_UP)
+                    .times(5.toBigDecimal())
+                    .divide(Config.SPELL_APOSTOL_MANA_PER_BLOCK.toBigDecimal(), 10, RoundingMode.HALF_UP)
+                    .coerceAtMost(Math.pow(Config.SPELL_APOSTOL_LIMIT_SIZE.toDouble(), 3.0).toBigDecimal())
+                    .toInt()
+        }
+    }
 
     override fun cast(player: Player, base: Block) {
         // この時点で既に破壊ブロックが存在しない可能性あり
@@ -164,7 +177,7 @@ class Apostol : Miner(), SpellCaster {
     }
 
     override fun calcConsumeMana(player: Player, breakBlockSet: Set<Block>): BigDecimal {
-        return SpellParameters.APOSTOL_MANA.toBigDecimal() * breakBlockSet.size.toBigDecimal()
+        return Config.SPELL_APOSTOL_MANA_PER_BLOCK.toBigDecimal() * breakBlockSet.size.toBigDecimal()
     }
 
     override fun onBreakBlock(player: Player?, block: Block) {

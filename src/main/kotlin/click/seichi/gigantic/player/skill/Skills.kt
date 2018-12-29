@@ -3,6 +3,7 @@ package click.seichi.gigantic.player.skill
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.event.events.ComboEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
@@ -26,8 +27,8 @@ object Skills {
 
     val MINE_BURST = object : Invokable {
 
-        val duration = SkillParameters.MINE_BURST_DURATION
-        val coolTime = SkillParameters.MINE_BURST_COOLTIME
+        val duration = Config.SKILL_MINE_BURST_DURATION
+        val coolTime = Config.SKILL_MINE_BURST_COOLTIME
 
         override fun findInvokable(player: Player): Consumer<Player>? {
             val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
@@ -66,7 +67,7 @@ object Skills {
 
         val maxDistance = 50
 
-        val coolTime = SkillParameters.FLASH_COOLTIME
+        val coolTime = Config.SKILL_FLASH_COOLTIME
 
         override fun findInvokable(player: Player): Consumer<Player>? {
             val flash = player.getOrPut(Keys.SKILL_FLASH)
@@ -106,14 +107,14 @@ object Skills {
 
     val HEAL = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (SkillParameters.HEAL_PROBABILITY_PERCENT < Random.nextInt(100)) return null
+            if (Config.SKILL_HEAL_PROBABILITY < Random.nextInt(100)) return null
             if (player.wrappedHealth >= player.wrappedMaxHealth) return null
 
             return Consumer { p ->
                 val block = p.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 var wrappedAmount = 0L
                 p.manipulate(CatalogPlayerCache.HEALTH) {
-                    wrappedAmount = it.increase(it.max.div(100L).times(SkillParameters.HEAL_AMOUNT_PERCENT))
+                    wrappedAmount = it.increase(it.max.div(100.0).times(Config.SKILL_HEAL_RATIO).toLong())
                 }
 
                 SkillAnimations.HEAL.absorb(p, block.centralLocation)

@@ -5,6 +5,7 @@ import click.seichi.gigantic.animation.animations.SpellAnimations
 import click.seichi.gigantic.breaker.spells.Apostol
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Invokable
@@ -26,14 +27,14 @@ object Spells {
     val STELLA_CLAIR = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!Achievement.SPELL_STELLA_CLAIR.isGranted(player)) return null
-            if (SpellParameters.STELLA_CLAIR_PROBABILITY_PERCENT < Random.nextInt(100)) return null
+            if (Config.SPELL_STELLA_CLAIR_PROBABILITY < Random.nextInt(100)) return null
             if (player.mana >= player.maxMana) return null
             return Consumer { p ->
                 val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 var wrappedAmount = 0.toBigDecimal()
 
                 p.manipulate(CatalogPlayerCache.MANA) {
-                    wrappedAmount = it.increase(it.max.divide(100.toBigDecimal(), 10, RoundingMode.HALF_UP).times(SpellParameters.STELLA_CLAIR_AMOUNT_PERCENT.toBigDecimal()))
+                    wrappedAmount = it.increase(it.max.divide(100.toBigDecimal(), 10, RoundingMode.HALF_UP).times(Config.SPELL_STELLA_CLAIR_RATIO.toBigDecimal()))
                 }
 
                 SpellAnimations.STELLA_CLAIR.absorb(p, block.centralLocation)

@@ -1,8 +1,9 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.player.skill.SkillParameters
 import org.bukkit.ChatColor
+import java.math.RoundingMode
 import java.util.*
 
 /**
@@ -30,11 +31,11 @@ object SkillMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "持続時間: ${SkillParameters.MINE_BURST_DURATION}秒"
+                                    "持続時間: ${Config.SKILL_MINE_BURST_DURATION}秒"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "クールタイム: ${SkillParameters.MINE_BURST_COOLTIME}秒"
+                                    "クールタイム: ${Config.SKILL_MINE_BURST_COOLTIME}秒"
                     )
             )
 
@@ -46,7 +47,7 @@ object SkillMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "クールタイム: ${SkillParameters.FLASH_COOLTIME}秒"
+                                    "クールタイム: ${Config.SKILL_FLASH_COOLTIME}秒"
                     )
             )
 
@@ -58,11 +59,11 @@ object SkillMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "発動確率: ${SkillParameters.HEAL_PROBABILITY_PERCENT} %"
+                                    "発動確率: ${Config.SKILL_HEAL_PROBABILITY.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} %"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "回復量: 最大体力の${SkillParameters.HEAL_AMOUNT_PERCENT} %"
+                                    "回復量: 最大体力の${Config.SKILL_HEAL_RATIO.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} %"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
@@ -83,11 +84,11 @@ object SkillMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "コンボ継続時間: ${SkillParameters.COMBO_CONTINUATION_SECONDS}秒"
+                                    "コンボ継続時間: ${Config.SKILL_MINE_COMBO_CONTINUATION_SECONDS.toBigDecimal().setScale(1, RoundingMode.HALF_UP)}秒"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "コンボが途切れると${SkillParameters.COMBO_DECREASE_INTERVAL}秒おきに" +
+                                    "コンボが途切れると${Config.SKILL_MINE_COMBO_DECREASE_INTERVAL.toBigDecimal().setScale(1, RoundingMode.HALF_UP)}秒おきに" +
                                     "コンボ数が1割減少"
                     )
             )

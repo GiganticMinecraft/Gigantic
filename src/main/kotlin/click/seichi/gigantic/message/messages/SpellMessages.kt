@@ -1,8 +1,9 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.player.spell.SpellParameters
 import org.bukkit.ChatColor
+import java.math.RoundingMode
 import java.util.*
 
 /**
@@ -22,11 +23,11 @@ object SpellMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "発動確率: ${SpellParameters.STELLA_CLAIR_PROBABILITY_PERCENT} %"
+                                    "発動確率: ${Config.SPELL_STELLA_CLAIR_PROBABILITY.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} %"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "回復量: 最大マナの${SpellParameters.STELLA_CLAIR_AMOUNT_PERCENT} %"
+                                    "回復量: 最大マナの${Config.SPELL_STELLA_CLAIR_RATIO.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} %"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +

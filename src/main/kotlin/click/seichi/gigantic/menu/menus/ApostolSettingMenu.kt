@@ -1,13 +1,14 @@
 package click.seichi.gigantic.menu.menus
 
+import click.seichi.gigantic.breaker.spells.Apostol
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.BackButton
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.ApostolMenuMessages
-import click.seichi.gigantic.player.spell.SpellParameters
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -37,7 +38,7 @@ object ApostolSettingMenu : Menu() {
                     setDisplayName(ApostolMenuMessages.CURRENT_AREA.asSafety(player.wrappedLocale))
 
                     val breakArea = player.getOrPut(Keys.APOSTOL_BREAK_AREA)
-                    val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
+                    val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
 
                     setLore(*ApostolMenuMessages.CURRENT_AREA_LORE(breakArea)
                             .map { it.asSafety(player.wrappedLocale) }
@@ -69,7 +70,7 @@ object ApostolSettingMenu : Menu() {
                 return ItemStack(Material.YELLOW_STAINED_GLASS_PANE).apply {
                     val breakArea = player.getOrPut(Keys.APOSTOL_BREAK_AREA)
                     val nextBreakArea = breakArea.add(2, 0, 0)
-                    val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
+                    val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
 
                     if (nextBreakArea.calcBreakNum() > limitOfBreakNum) {
                         setDisplayName(ApostolMenuMessages.LIMIT_OF_BREAK_NUM.asSafety(player.wrappedLocale))
@@ -83,8 +84,8 @@ object ApostolSettingMenu : Menu() {
             override fun onClick(player: Player, event: InventoryClickEvent) {
                 player.transform(Keys.APOSTOL_BREAK_AREA) { breakArea ->
                     val nextBreakArea = breakArea.add(2, 0, 0)
-                    val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
-                    if (nextBreakArea.width in 1..SpellParameters.APOSTOL_LIMIT_SIZE &&
+                    val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
+                    if (nextBreakArea.width in 1..Config.SPELL_APOSTOL_LIMIT_SIZE &&
                             nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
                         PlayerSounds.TOGGLE.playOnly(player)
                         nextBreakArea
@@ -130,7 +131,7 @@ object ApostolSettingMenu : Menu() {
                         return ItemStack(Material.ORANGE_STAINED_GLASS_PANE).apply {
                             val breakArea = player.getOrPut(Keys.APOSTOL_BREAK_AREA)
                             val nextBreakArea = breakArea.add(0, 1, 0)
-                            val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
+                            val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
 
                             if (nextBreakArea.calcBreakNum() > limitOfBreakNum) {
                                 setDisplayName(ApostolMenuMessages.LIMIT_OF_BREAK_NUM.asSafety(player.wrappedLocale))
@@ -143,8 +144,8 @@ object ApostolSettingMenu : Menu() {
                     override fun onClick(player: Player, event: InventoryClickEvent) {
                         player.transform(Keys.APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 1, 0)
-                            val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
-                            if (nextBreakArea.height in 1..SpellParameters.APOSTOL_LIMIT_SIZE && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
+                            val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
+                            if (nextBreakArea.height in 1..Config.SPELL_APOSTOL_LIMIT_SIZE && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
                                 PlayerSounds.TOGGLE.playOnly(player)
                                 nextBreakArea
                             } else {
@@ -189,7 +190,7 @@ object ApostolSettingMenu : Menu() {
                         return ItemStack(Material.MAGENTA_STAINED_GLASS_PANE).apply {
                             val breakArea = player.getOrPut(Keys.APOSTOL_BREAK_AREA)
                             val nextBreakArea = breakArea.add(0, 0, 1)
-                            val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
+                            val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
 
                             if (nextBreakArea.calcBreakNum() > limitOfBreakNum) {
                                 setDisplayName(ApostolMenuMessages.LIMIT_OF_BREAK_NUM.asSafety(player.wrappedLocale))
@@ -202,8 +203,8 @@ object ApostolSettingMenu : Menu() {
                     override fun onClick(player: Player, event: InventoryClickEvent) {
                         player.transform(Keys.APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 0, 1)
-                            val limitOfBreakNum = SpellParameters.calcLimitOfBreakNumOfApostol(player.maxMana)
-                            if (nextBreakArea.depth in 1..SpellParameters.APOSTOL_LIMIT_SIZE && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
+                            val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
+                            if (nextBreakArea.depth in 1..Config.SPELL_APOSTOL_LIMIT_SIZE && nextBreakArea.calcBreakNum() <= limitOfBreakNum) {
                                 PlayerSounds.TOGGLE.playOnly(player)
                                 nextBreakArea
                             } else {

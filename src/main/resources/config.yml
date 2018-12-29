@@ -5,11 +5,11 @@ player:
   #     lv11になるために合計で150必要
   # lv10で死亡したとき，
   # 失う経験値 = (150 - 100) * (death_penalty / 100)
-  death_penalty: 7
+  death_penalty: 7.0
 
   # この半径以内のブロック(y軸は無視)はプレイヤーしか破壊できない
   # GameModeがクリエイティブの時は無視
-  protect_radius: 8
+  protect_radius: 8.0
 
   # この値以上の重力がかかるブロックは破壊できない
   # 例えば，上に4つのブロックがあった場合，重力は4となる
@@ -21,6 +21,57 @@ world:
   # min(x,z) = -(side_length/2),-(side_length/2)
   # max(x,z) = side_length/2,side_length/2
   side_length: 20000.0
+
+# スキル
+# マナを用いずに発動可能な能力
+skill:
+  # 体力回復スキル
+  heal:
+    # 回復割合 (%)
+    ratio: 5.0
+    # 発動確率 (%)
+    probability: 20.0
+
+  # コンボスキル
+  mine_combo:
+    # 継続可能時間(秒)
+    continuation_seconds: 10.0
+    # コンボ減少間隔(秒)
+    # 1間隔につきコンボが1割減少する
+    decrease_interval: 10.0
+
+  # 瞬間移動スキル
+  flash:
+    # クールタイム(秒)
+    # 整数で指定
+    cooltime: 3
+
+  # 一時強化スキル
+  mine_burst:
+    # 強化時間(秒)
+    # 整数で指定
+    duration: 7
+    # クールタイム(秒)
+    # 整数で指定
+    cooltime: 30
+
+# スペル
+# マナを必ず用いる能力
+spell:
+  # マナ回復スキル
+  stella_clair:
+    # 回復割合(%)
+    ratio: 7.0
+    # 発動確率(%)
+    probability: 15.0
+
+  # 範囲破壊スキル
+  apostol:
+    # 1ブロック当たりのマナ消費量
+    mana_per_block: 2.0
+    # 幅，高さ，広さの最大値
+    # 整数で指定
+    limit_size: 5
 
 # TRUEの時debug.ymlに従う
 # データベースの書き込みは行わない
