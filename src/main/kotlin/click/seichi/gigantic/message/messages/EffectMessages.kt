@@ -10,6 +10,19 @@ import java.util.*
  */
 object EffectMessages {
 
+    val WITCH_SCENT = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                    "${ChatColor.BOLD}" +
+                    "魔女の残り香"
+    )
+
+    val WITCH_SCENT_LORE = setOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.WHITE}" +
+                            "心安らぐ香り"
+            )
+    )
+
     val FLAME = LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
                     "${ChatColor.BOLD}" +

@@ -36,4 +36,12 @@ object EffectSounds {
             0.4F,
             0.5F
     )
+
+    val WITCH_SCENT = DetailedSound(
+            Sound.ITEM_CHORUS_FRUIT_TELEPORT,
+            SoundCategory.BLOCKS,
+            0.4F,
+            1.5F
+    )
+
 }

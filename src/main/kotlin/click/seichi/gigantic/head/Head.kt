@@ -109,6 +109,8 @@ enum class Head(
     RUBY_JEWELLERY("http://textures.minecraft.net/texture/2aba74d812f3c5e97ad0f1e6cb1d24fc9e13788196cf1bc473211ff142beab"),
     EMERALD_JEWELLERY("http://textures.minecraft.net/texture/84ab77eefad0b0cdbdf3261a7a4729d5504d6f96d3c162832197443ebe346e6"),
     SAPPHIRE_JEWELLERY("http://textures.minecraft.net/texture/6183c88db98426c64c37e6d789d4ec1e3de43efaafe4be161961ef943dbe83"),
+    // effect heads
+    RAINBOW_WOOL("http://textures.minecraft.net/texture/44b03794b9b3e3b5d07e3be68b96af87df215c3752e54736c80f7d50bd3437a4"),
     ;
 
     companion object {

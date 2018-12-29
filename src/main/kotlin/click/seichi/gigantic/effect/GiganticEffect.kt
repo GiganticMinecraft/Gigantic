@@ -10,6 +10,7 @@ import click.seichi.gigantic.effect.effectors.ApostolEffectors
 import click.seichi.gigantic.effect.effectors.GeneralBreakEffectors
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.EffectMessages
 import org.bukkit.Material
@@ -78,8 +79,8 @@ enum class GiganticEffect(
     ),
     MAGIC(
             3,
-            2,
-            ItemStack(Material.RED_WOOL),
+            0 + 9,
+            Head.RAINBOW_WOOL.toItemStack(),
             Currency.DONATE_POINT,
             10,
             EffectMessages.MAGIC,
@@ -88,13 +89,23 @@ enum class GiganticEffect(
     ),
     FLAME(
             4,
-            3,
+            1 + 9,
             ItemStack(Material.NETHER_WART),
             Currency.DONATE_POINT,
-            10,
+            5,
             EffectMessages.FLAME,
             EffectMessages.FLAME_LORE,
             apostolEffector = ApostolEffectors.FLAME
+    ),
+    WITCH_SCENT(
+            5,
+            2 + 9,
+            ItemStack(Material.ENDER_PEARL),
+            Currency.DONATE_POINT,
+            5,
+            EffectMessages.WITCH_SCENT,
+            EffectMessages.WITCH_SCENT_LORE,
+            apostolEffector = ApostolEffectors.WITCH_SCENT
     ),
 
     ;
