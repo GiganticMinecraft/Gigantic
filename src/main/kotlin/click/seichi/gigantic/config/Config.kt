@@ -37,4 +37,6 @@ object Config : SimpleConfiguration("config") {
 
     val SPELL_APOSTOL_LIMIT_SIZE by lazy { getInt("spell.apostol.limit_size") }
 
+    val SPELL_APOSTOL_DELAY by lazy { getDouble("spell.apostol.delay") }
+
 }

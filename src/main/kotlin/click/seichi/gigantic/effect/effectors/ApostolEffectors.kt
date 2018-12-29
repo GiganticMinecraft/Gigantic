@@ -2,7 +2,7 @@ package click.seichi.gigantic.effect.effectors
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.effect.ApostolAnimations
-import click.seichi.gigantic.effect.EffectParameters
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.effect.effector.ApostolEffector
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.update
@@ -12,6 +12,7 @@ import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
+import kotlin.math.roundToLong
 
 /**
  * @author tar0ss
@@ -39,10 +40,9 @@ object ApostolEffectors {
                     target.type = Material.AIR
                 }
                 forEach { target ->
-                    if (Random.nextDouble() > EffectParameters.EXPLOSION_PROBABILITY.div(100.0)) return@forEach
                     ApostolAnimations.EXPLOSION.start(target.centralLocation)
-                    EffectSounds.EXPLOSION.play(target.centralLocation)
                 }
+                EffectSounds.EXPLOSION.play(base.centralLocation)
                 // 凍結，火成等の処理を最後にまとめる
                 forEach { target ->
                     target.update()
@@ -64,15 +64,14 @@ object ApostolEffectors {
                         target.type = Material.AIR
                     }
                     breakBlockSet.forEach { target ->
-                        if (Random.nextDouble() > EffectParameters.BLIZZARD_PROBABILITY.div(100.0)) return@forEach
                         ApostolAnimations.BLIZZARD.start(target.centralLocation)
-                        EffectSounds.BLIZZARD.play(target.centralLocation)
                     }
+                    EffectSounds.BLIZZARD.play(base.centralLocation)
                     breakBlockSet.forEach { target ->
                         target.update()
                     }
                 }
-            }.runTaskLater(Gigantic.PLUGIN, EffectParameters.BLIZZARD_TIME * 20L)
+            }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_APOSTOL_DELAY.times(20.0).roundToLong())
         }
     }
 
@@ -96,7 +95,7 @@ object ApostolEffectors {
                         target.update()
                     }
                 }
-            }.runTaskLater(Gigantic.PLUGIN, EffectParameters.BLIZZARD_TIME * 20L)
+            }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_APOSTOL_DELAY.times(20.0).roundToLong())
         }
     }
 

@@ -35,10 +35,10 @@ object MenuSounds {
     )
 
     val EFFECT_SELECT = DetailedSound(
-            Sound.BLOCK_BEACON_POWER_SELECT,
+            Sound.BLOCK_ENCHANTMENT_TABLE_USE,
             SoundCategory.BLOCKS,
-            pitch = 2.0F,
-            volume = 1.0F
+            pitch = 0.6F,
+            volume = 1.5F
     )
 
     val EFFECT_BUY = DetailedSound(

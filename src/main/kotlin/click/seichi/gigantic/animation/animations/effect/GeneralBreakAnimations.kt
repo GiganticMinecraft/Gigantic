@@ -9,7 +9,7 @@ import org.bukkit.Particle
 object GeneralBreakAnimations {
 
     val EXPLOSION = Animation(0) { location, _ ->
-        location.world.createExplosion(location, 0F, false)
+        location.world.spawnParticle(Particle.EXPLOSION_NORMAL, location, 1)
     }
 
     val BLIZZARD = Animation(0) { location, _ ->

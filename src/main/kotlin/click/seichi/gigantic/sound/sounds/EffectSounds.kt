@@ -19,7 +19,7 @@ object EffectSounds {
     val BLIZZARD = DetailedSound(
             Sound.BLOCK_GLASS_BREAK,
             SoundCategory.BLOCKS,
-            0.1F,
+            0.4F,
             1.0F
     )
 
