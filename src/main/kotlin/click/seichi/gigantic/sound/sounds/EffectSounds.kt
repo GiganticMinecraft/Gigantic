@@ -44,4 +44,11 @@ object EffectSounds {
             1.5F
     )
 
+    val EXPEL = DetailedSound(
+            Sound.ENTITY_VEX_AMBIENT,
+            SoundCategory.BLOCKS,
+            0.4F,
+            1.2F
+    )
+
 }

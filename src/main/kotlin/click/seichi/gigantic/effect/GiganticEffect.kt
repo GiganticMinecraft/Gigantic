@@ -107,6 +107,16 @@ enum class GiganticEffect(
             EffectMessages.WITCH_SCENT_LORE,
             apostolEffector = ApostolEffectors.WITCH_SCENT
     ),
+    EXPEL(
+            6,
+            3 + 9,
+            ItemStack(Material.GLASS_BOTTLE),
+            Currency.DONATE_POINT,
+            5,
+            EffectMessages.EXPEL,
+            EffectMessages.EXPEL_LORE,
+            apostolEffector = ApostolEffectors.EXPEL
+    ),
 
     ;
 
