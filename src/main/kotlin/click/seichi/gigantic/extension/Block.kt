@@ -164,7 +164,7 @@ fun Block.xzDistance(player: Player): Double {
 
 fun Block.firstOrNullOfNearPlayer(player: Player) = world.players
         .filter { it.isValid }
-        .filter { !it.isOp && it.gameMode == GameMode.SURVIVAL }
+        .filter { it.gameMode == GameMode.SURVIVAL }
         .filter { !it.isFlying && it.uniqueId != player.uniqueId }
         // TODO パーティモードをいれるならここに制約追加
         .firstOrNull { xzDistance(it) < Defaults.NOT_BREAK_DISTANCE }
