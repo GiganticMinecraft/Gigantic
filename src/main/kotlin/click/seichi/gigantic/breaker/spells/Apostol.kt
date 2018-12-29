@@ -153,6 +153,10 @@ class Apostol : Miner(), SpellCaster {
             if (!player.isSneaking) {
                 removeIf { it.isUnder(player) }
             }
+
+            // プレイヤーと近い場合は除外
+            removeIf { it.firstOrNullOfNearPlayer(player) != null }
+
             // 場所の制約
             val battle = player.findBattle()
             removeIf { it.findBattle() != battle }

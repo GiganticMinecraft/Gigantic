@@ -357,4 +357,12 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
+    @EventHandler(priority = EventPriority.HIGHEST)
+    fun cancelNearAnotherPlayer(event: BlockBreakEvent) {
+        val player = event.player ?: return
+        val block = event.block ?: return
+        val nearPlayer = block.firstOrNullOfNearPlayer(player) ?: return
+        PlayerMessages.NOT_BREAK_NEAR_ANOTHER_PLAYER.sendTo(player)
+        event.isCancelled = true
+    }
 }

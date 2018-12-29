@@ -98,6 +98,11 @@ object PlayerMessages {
                     "自分より低いブロックはスニークしながら破壊しよう"
     ))
 
+    val NOT_BREAK_NEAR_ANOTHER_PLAYER = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "他のプレイヤーと距離を取ろう"
+    ))
+
     val BATTLE_ANOTHER_PLAYER = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
                     "他のプレイヤーがバトル中"

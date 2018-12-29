@@ -21,4 +21,6 @@ object Defaults {
     const val PROFILE_UPDATE_TIME = 1L
     // 寄付履歴表示にかかる時間
     const val DONATE_HISTORY_LOAD_TIME = 1L
+    // 破壊できない距離(xzのみ)(ブロック単位)
+    const val NOT_BREAK_DISTANCE = 8
 }

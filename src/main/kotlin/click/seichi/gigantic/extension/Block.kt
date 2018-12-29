@@ -4,7 +4,9 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.breaker.Cutter
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -150,3 +152,19 @@ val BlockFace.leftFace: BlockFace
 
 val BlockFace.rightFace: BlockFace
     get() = leftFace.oppositeFace
+
+// そのブロックとplayerまでの距離を取得
+fun Block.xzDistance(player: Player): Double {
+    val central = centralLocation
+    return Math.sqrt(
+            Math.pow(central.x - player.location.x, 2.0) +
+                    Math.pow(central.z - player.location.z, 2.0)
+    )
+}
+
+fun Block.firstOrNullOfNearPlayer(player: Player) = world.players
+        .filter { it.isValid }
+        .filter { !it.isOp && it.gameMode == GameMode.SURVIVAL }
+        .filter { !it.isFlying && it.uniqueId != player.uniqueId }
+        // TODO パーティモードをいれるならここに制約追加
+        .firstOrNull { xzDistance(it) < Defaults.NOT_BREAK_DISTANCE }
