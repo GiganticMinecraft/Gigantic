@@ -29,4 +29,34 @@ object GeneralBreakEffectors {
         }
     }
 
+    val BLIZZARD = object : GeneralBreakEffector {
+        override fun generalBreak(player: Player, block: Block) {
+            GeneralBreakAnimations.BLIZZARD.start(block.centralLocation)
+        }
+    }
+
+    val MAGIC = object : GeneralBreakEffector {
+        override fun generalBreak(player: Player, block: Block) {
+            GeneralBreakAnimations.MAGIC.start(block.centralLocation)
+        }
+    }
+
+    val FLAME = object : GeneralBreakEffector {
+        override fun generalBreak(player: Player, block: Block) {
+            GeneralBreakAnimations.FLAME.start(block.centralLocation)
+        }
+    }
+
+    val WITCH_SCENT = object : GeneralBreakEffector {
+        override fun generalBreak(player: Player, block: Block) {
+            GeneralBreakAnimations.WITCH_SCENT.start(block.centralLocation)
+        }
+    }
+
+    val EXPEL = object : GeneralBreakEffector {
+        override fun generalBreak(player: Player, block: Block) {
+            GeneralBreakAnimations.EXPEL.start(block.centralLocation)
+        }
+    }
+
 }

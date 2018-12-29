@@ -75,6 +75,7 @@ enum class GiganticEffect(
             70,
             EffectMessages.BLIZZARD,
             EffectMessages.BLIZZARD_LORE,
+            generalEffector = GeneralBreakEffectors.BLIZZARD,
             apostolEffector = ApostolEffectors.BLIZZARD
     ),
     MAGIC(
@@ -85,6 +86,7 @@ enum class GiganticEffect(
             10,
             EffectMessages.MAGIC,
             EffectMessages.MAGIC_LORE,
+            generalEffector = GeneralBreakEffectors.MAGIC,
             apostolEffector = ApostolEffectors.MAGIC
     ),
     FLAME(
@@ -95,6 +97,7 @@ enum class GiganticEffect(
             5,
             EffectMessages.FLAME,
             EffectMessages.FLAME_LORE,
+            generalEffector = GeneralBreakEffectors.FLAME,
             apostolEffector = ApostolEffectors.FLAME
     ),
     WITCH_SCENT(
@@ -105,6 +108,7 @@ enum class GiganticEffect(
             5,
             EffectMessages.WITCH_SCENT,
             EffectMessages.WITCH_SCENT_LORE,
+            generalEffector = GeneralBreakEffectors.WITCH_SCENT,
             apostolEffector = ApostolEffectors.WITCH_SCENT
     ),
     EXPEL(
@@ -115,6 +119,7 @@ enum class GiganticEffect(
             5,
             EffectMessages.EXPEL,
             EffectMessages.EXPEL_LORE,
+            generalEffector = GeneralBreakEffectors.EXPEL,
             apostolEffector = ApostolEffectors.EXPEL
     ),
 
