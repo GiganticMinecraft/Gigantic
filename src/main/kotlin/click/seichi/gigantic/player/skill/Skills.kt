@@ -75,7 +75,7 @@ object Skills {
                 flash.coolTime = coolTime
                 flash.onStart {
                     val tpLocation = p.getTargetBlock(transparentMaterialSet, maxDistance).let { block ->
-                        if (block.type == Material.AIR) return@let null
+                        if (transparentMaterialSet.contains(block.type)) return@let null
                         var nextBlock = block ?: return@let null
                         while (!nextBlock.isSurface) {
                             nextBlock = nextBlock.getRelative(BlockFace.UP)

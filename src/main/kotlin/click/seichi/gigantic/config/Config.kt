@@ -11,6 +11,8 @@ object Config : SimpleConfiguration("config") {
 
     val PROTECT_RADIUS by lazy { getDouble("player.protect_radius") }
 
+    val MAX_BREAKABLE_GRAVITY by lazy { getInt("player.max_breakable_gravity") }
+
     val DEBUG_MODE by lazy { getBoolean("debug_mode") }
 
 }

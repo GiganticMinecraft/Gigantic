@@ -103,6 +103,11 @@ object PlayerMessages {
                     "他のプレイヤーと距離を取ろう"
     ))
 
+    val NOT_BREAK_OVER_GRAVITY = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "上から掘ろう"
+    ))
+
     val BATTLE_ANOTHER_PLAYER = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
                     "他のプレイヤーがバトル中"

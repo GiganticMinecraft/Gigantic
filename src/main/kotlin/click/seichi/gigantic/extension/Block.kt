@@ -39,6 +39,10 @@ val Block.isGrass
 val Block.isWaterPlant
     get() = Gigantic.WATER_PLANTS.contains(type)
 
+val Block.isAir
+    get() = Gigantic.AIRS.contains(type)
+
+
 val Block.isSurface
     get() = if (Gigantic.AIRS.contains(type)) false
     else (1..3).firstOrNull {
@@ -154,7 +158,7 @@ val BlockFace.rightFace: BlockFace
     get() = leftFace.oppositeFace
 
 // そのブロックとplayerまでの距離を取得
-fun Block.xzDistance(player: Player): Double {
+private fun Block.xzDistance(player: Player): Double {
     val central = centralLocation
     return Math.sqrt(
             Math.pow(central.x - player.location.x, 2.0) +
@@ -169,4 +173,8 @@ fun Block.firstOrNullOfNearPlayer(player: Player) = world.players
         // TODO パーティモードをいれるならここに制約追加
         .firstOrNull { xzDistance(it) < Config.PROTECT_RADIUS }
 
+fun Block.calcGravity(): Int = ((1 + Config.MAX_BREAKABLE_GRAVITY)..(255 - y))
+        .map { getRelative(BlockFace.UP, it) }
+        .filter { !it.isAir }
+        .size
 
