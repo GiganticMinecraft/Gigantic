@@ -320,7 +320,7 @@ class PlayerListener : Listener {
     fun cancelSpawnArea(event: BlockBreakEvent) {
         val player = event.player ?: return
         val block = event.block ?: return
-        if (player.gameMode == GameMode.CREATIVE) return
+        if (player.gameMode != GameMode.SURVIVAL) return
         if (!block.isSpawnArea) return
         PlayerMessages.SPAWN_PROTECT.sendTo(player)
         event.isCancelled = true
@@ -352,7 +352,9 @@ class PlayerListener : Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     fun cancelBrokenBlockBreak(event: BlockBreakEvent) {
+        val player = event.player ?: return
         val block = event.block ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
         if (!Gigantic.BROKEN_BLOCK_SET.contains(block)) return
         event.isCancelled = true
     }
@@ -361,8 +363,10 @@ class PlayerListener : Listener {
     fun cancelNearAnotherPlayer(event: BlockBreakEvent) {
         val player = event.player ?: return
         val block = event.block ?: return
-        val nearPlayer = block.firstOrNullOfNearPlayer(player) ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
+        block.firstOrNullOfNearPlayer(player) ?: return
         PlayerMessages.NOT_BREAK_NEAR_ANOTHER_PLAYER.sendTo(player)
         event.isCancelled = true
     }
+
 }

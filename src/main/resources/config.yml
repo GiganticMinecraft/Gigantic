@@ -7,6 +7,10 @@ player:
   # 失う経験値 = (150 - 100) * (death_penalty / 100)
   death_penalty: 7
 
+  # この半径以内のブロック(y軸は無視)はプレイヤーしか破壊できない
+  # GameModeがクリエイティブの時は無視
+  protect_radius: 8
+
 world:
   # 正方形の１辺の長さ
   # 実際には±0座標を中心とするので

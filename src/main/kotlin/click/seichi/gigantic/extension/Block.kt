@@ -4,7 +4,7 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.breaker.Cutter
-import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.GameMode
 import org.bukkit.Location
@@ -167,4 +167,6 @@ fun Block.firstOrNullOfNearPlayer(player: Player) = world.players
         .filter { it.gameMode == GameMode.SURVIVAL }
         .filter { !it.isFlying && it.uniqueId != player.uniqueId }
         // TODO パーティモードをいれるならここに制約追加
-        .firstOrNull { xzDistance(it) < Defaults.NOT_BREAK_DISTANCE }
+        .firstOrNull { xzDistance(it) < Config.PROTECT_RADIUS }
+
+

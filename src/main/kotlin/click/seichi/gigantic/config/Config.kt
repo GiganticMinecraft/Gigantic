@@ -9,6 +9,8 @@ object Config : SimpleConfiguration("config") {
 
     val WORLD_SIDE_LENGTH by lazy { getDouble("world.side_length") }
 
+    val PROTECT_RADIUS by lazy { getDouble("player.protect_radius") }
+
     val DEBUG_MODE by lazy { getBoolean("debug_mode") }
 
 }
