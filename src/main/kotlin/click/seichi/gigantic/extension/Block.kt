@@ -137,7 +137,7 @@ fun Block.findBattle() = BattleManager.findBattle(chunk)
 val Block.surfaceBlock: Block
     get() {
         var block = world.getBlockAt(x, 255, z)
-        while (!block.isSurface && block.y > 1) {
+        while (!block.isSurface && block.y > 0) {
             block = block.getRelative(BlockFace.DOWN)
         }
         return block

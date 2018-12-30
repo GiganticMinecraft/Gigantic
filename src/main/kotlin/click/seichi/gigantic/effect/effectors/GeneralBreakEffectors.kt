@@ -48,10 +48,4 @@ object GeneralBreakEffectors {
         }
     }
 
-    val EXPEL = object : GeneralBreakEffector {
-        override fun generalBreak(player: Player, block: Block) {
-            GeneralBreakAnimations.EXPEL.start(block.centralLocation)
-        }
-    }
-
 }

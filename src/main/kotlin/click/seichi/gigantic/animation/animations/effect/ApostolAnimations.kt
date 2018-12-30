@@ -29,8 +29,4 @@ object ApostolAnimations {
         location.world.spawnParticle(Particle.SPELL_WITCH, location, 3)
     }
 
-    val EXPEL = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.SPIT, location, 1)
-    }
-
 }

@@ -10,11 +10,9 @@ import click.seichi.gigantic.menu.menus.TeleportToPlayerMenu
 import click.seichi.gigantic.message.messages.menu.TeleportMessages
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.util.Random
-import org.bukkit.ChatColor
-import org.bukkit.Chunk
-import org.bukkit.GameMode
-import org.bukkit.Material
+import org.bukkit.*
 import org.bukkit.block.Biome
+import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
@@ -64,12 +62,16 @@ object TeleportButtons {
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
             var chunk: Chunk? = null
+            var location: Location? = null
             var count = 0
             while (chunk == null && count++ < 20) {
-                chunk = randomChunk(player).let {
+                chunk = randomChunk(player)
+                location = chunk.getSpawnableLocation()
+                chunk.let {
                     if (it.isBattled ||
                             it.isSpawnArea ||
-                            oceanBiomeSet.contains(it.getBlock(0, 0, 0).biome)
+                            oceanBiomeSet.contains(it.getBlock(0, 0, 0).biome) ||
+                            location.block.getRelative(BlockFace.DOWN).type == Material.BEDROCK
                     ) null else it
                 }
             }
@@ -77,8 +79,7 @@ object TeleportButtons {
             if (!chunk.isLoaded) {
                 if (chunk.load(true)) return
             }
-            val location = chunk.getSpawnableLocation()
-            player.teleport(location)
+            player.teleport(location!!)
             PlayerSounds.TELEPORT.play(location)
         }
 

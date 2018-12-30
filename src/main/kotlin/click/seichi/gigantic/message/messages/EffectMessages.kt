@@ -10,19 +10,6 @@ import java.util.*
  */
 object EffectMessages {
 
-    val EXPEL = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
-                    "${ChatColor.BOLD}" +
-                    "ニフラム"
-    )
-
-    val EXPEL_LORE = setOf(
-            LocalizedText(
-                    Locale.JAPANESE to "${ChatColor.WHITE}" +
-                            "別の空間へ消し去る"
-            )
-    )
-
     val WITCH_SCENT = LocalizedText(
             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                     "${ChatColor.BOLD}" +

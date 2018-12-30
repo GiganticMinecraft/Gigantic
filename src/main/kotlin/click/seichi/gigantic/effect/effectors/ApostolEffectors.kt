@@ -135,22 +135,4 @@ object ApostolEffectors {
         }
     }
 
-    val EXPEL = object : ApostolEffector {
-        override fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            breakBlockSet.run {
-                forEach { target ->
-                    target.type = Material.AIR
-                }
-                forEach { target ->
-                    ApostolAnimations.EXPEL.start(target.centralLocation)
-                }
-                EffectSounds.EXPEL.play(base.centralLocation)
-                // 凍結，火成等の処理を最後にまとめる
-                forEach { target ->
-                    target.update()
-                }
-            }
-        }
-    }
-
 }
