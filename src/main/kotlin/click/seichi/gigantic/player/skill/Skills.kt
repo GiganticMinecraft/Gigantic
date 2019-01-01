@@ -107,6 +107,7 @@ object Skills {
 
     val HEAL = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
+            player.getOrPut(Keys.BREAK_BLOCK) ?: return null
             if (Config.SKILL_HEAL_PROBABILITY < Random.nextInt(100)) return null
             if (player.wrappedHealth >= player.wrappedMaxHealth) return null
 
@@ -130,6 +131,7 @@ object Skills {
     // sound 処理は[Miner]で纏めてある
     val MINE_COMBO = object : Invokable {
         override fun findInvokable(p: Player): Consumer<Player>? {
+            p.getOrPut(Keys.BREAK_BLOCK) ?: return null
             return Consumer { player ->
                 val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
                 val currentCombo = player.combo

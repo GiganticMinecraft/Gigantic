@@ -570,7 +570,7 @@ object Keys {
     /**
      * 破壊スキルの破壊範囲
      */
-    val APOSTOL_BREAK_AREA = object : DatabaseKey<PlayerCache, BreakArea> {
+    val SPELL_APOSTOL_BREAK_AREA = object : DatabaseKey<PlayerCache, BreakArea> {
 
         override val default: BreakArea
             get() = BreakArea(1, 1, 1)
@@ -811,6 +811,14 @@ object Keys {
         }
     }
 
+    val SPELL_APOSTOL_BREAK_BLOCKS = object : Key<PlayerCache, Set<Block>> {
+        override val default: Set<Block>
+            get() = setOf()
+
+        override fun satisfyWith(value: Set<Block>): Boolean {
+            return true
+        }
+    }
 
 
 }

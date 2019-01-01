@@ -111,6 +111,17 @@ enum class GiganticEffect(
             generalEffector = GeneralBreakEffectors.WITCH_SCENT,
             apostolEffector = ApostolEffectors.WITCH_SCENT
     ),
+    SLIME(
+            6,
+            3 + 9,
+            ItemStack(Material.SLIME_BALL),
+            Currency.DONATE_POINT,
+            5,
+            EffectMessages.SLIME,
+            EffectMessages.SLIME_LORE,
+            generalEffector = GeneralBreakEffectors.SLIME,
+            apostolEffector = ApostolEffectors.SLIME
+    )
 
     ;
 

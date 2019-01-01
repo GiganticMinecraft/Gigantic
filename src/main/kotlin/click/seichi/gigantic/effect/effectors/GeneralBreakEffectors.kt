@@ -48,4 +48,10 @@ object GeneralBreakEffectors {
         }
     }
 
+    val SLIME = object : GeneralBreakEffector {
+        override fun generalBreak(player: Player, block: Block) {
+            GeneralBreakAnimations.SLIME.start(block.centralLocation)
+        }
+    }
+
 }

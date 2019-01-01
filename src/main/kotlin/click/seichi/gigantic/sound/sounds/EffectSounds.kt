@@ -44,4 +44,11 @@ object EffectSounds {
             1.5F
     )
 
+    val SLIME = DetailedSound(
+            Sound.BLOCK_SLIME_BLOCK_BREAK,
+            SoundCategory.BLOCKS,
+            0.6F,
+            1.4F
+    )
+
 }

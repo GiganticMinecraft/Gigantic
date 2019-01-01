@@ -52,7 +52,7 @@ open class Miner : Breaker {
             }
         }
         // 破壊系
-        var isCastApostol: Boolean = false
+        var isCastApostol = false
         when {
             !player.getOrPut(Keys.SPELL_TOGGLE) -> {
             }
