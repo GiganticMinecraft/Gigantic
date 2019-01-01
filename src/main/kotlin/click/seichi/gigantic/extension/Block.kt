@@ -176,4 +176,5 @@ fun Block.firstOrNullOfNearPlayer(player: Player) = world.players
 fun Block.calcGravity() = ((1 + Config.MAX_BREAKABLE_GRAVITY)..(255 - y))
         .map { getRelative(BlockFace.UP, it) }
         .filter { !it.isAir }
+        .filter { !it.isTree }
         .size
