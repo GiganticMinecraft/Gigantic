@@ -10,6 +10,19 @@ import java.util.*
  */
 object EffectMessages {
 
+    val BUBBLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GREEN}" +
+                    "${ChatColor.BOLD}" +
+                    "泡沫の夢"
+    )
+
+    val BUBBLE_LORE = setOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.WHITE}" +
+                            "Σ(‘A`)ハッ！なんだ夢か..."
+            )
+    )
+
     val SLIME = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GREEN}" +
                     "${ChatColor.BOLD}" +

@@ -32,4 +32,8 @@ object GeneralBreakAnimations {
         location.world.spawnParticle(Particle.SLIME, location, 1)
     }
 
+    val BUBBLE = Animation(0) { location, _ ->
+        location.world.spawnParticle(Particle.BUBBLE_POP, location, 1)
+    }
+
 }

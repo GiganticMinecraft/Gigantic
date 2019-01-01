@@ -121,6 +121,16 @@ enum class GiganticEffect(
             EffectMessages.SLIME_LORE,
             generalEffector = GeneralBreakEffectors.SLIME,
             apostolEffector = ApostolEffectors.SLIME
+    ),
+    BUBBLE(
+            7,
+            4 + 9,
+            ItemStack(Material.TUBE_CORAL),
+            Currency.DONATE_POINT,
+            5,
+            EffectMessages.BUBBLE,
+            EffectMessages.BUBBLE_LORE,
+            apostolEffector = ApostolEffectors.BUBBLE
     )
 
     ;

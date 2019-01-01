@@ -135,7 +135,6 @@ object ApostolEffectors {
         }
     }
 
-
     val SLIME = object : ApostolEffector {
         override fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
             Gigantic.BROKEN_BLOCK_SET.addAll(breakBlockSet)
@@ -152,6 +151,35 @@ object ApostolEffectors {
                         ApostolAnimations.SLIME.start(target.centralLocation)
                     }
                     EffectSounds.SLIME.play(base.centralLocation)
+                    breakBlockSet.forEach { target ->
+                        target.update()
+                    }
+                }
+            }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_APOSTOL_DELAY.times(20.0).roundToLong())
+        }
+    }
+
+    val BUBBLE = object : ApostolEffector {
+        override fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
+            Gigantic.BROKEN_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.BROKEN_BLOCK_SET.add(base)
+            breakBlockSet.forEach { target ->
+                target.type = Material.WATER
+            }
+            base.type = Material.WATER
+            object : BukkitRunnable() {
+                override fun run() {
+                    Gigantic.BROKEN_BLOCK_SET.removeAll(breakBlockSet)
+                    Gigantic.BROKEN_BLOCK_SET.remove(base)
+                    breakBlockSet.forEach { target ->
+                        target.type = Material.AIR
+                    }
+                    base.type = Material.AIR
+                    breakBlockSet.forEach { target ->
+                        ApostolAnimations.BUBBLE.start(target.centralLocation)
+                    }
+                    ApostolAnimations.BUBBLE.start(base.centralLocation)
+                    EffectSounds.BUBBLE.play(base.centralLocation)
                     breakBlockSet.forEach { target ->
                         target.update()
                     }

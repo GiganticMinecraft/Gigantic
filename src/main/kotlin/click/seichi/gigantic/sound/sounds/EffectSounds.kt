@@ -51,4 +51,11 @@ object EffectSounds {
             1.4F
     )
 
+    val BUBBLE = DetailedSound(
+            Sound.AMBIENT_UNDERWATER_ENTER,
+            SoundCategory.BLOCKS,
+            0.5F,
+            1.4F
+    )
+
 }
