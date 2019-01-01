@@ -11,9 +11,9 @@ import java.util.*
 object EffectMessages {
 
     val BUBBLE = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.GREEN}" +
+            Locale.JAPANESE to "${ChatColor.AQUA}" +
                     "${ChatColor.BOLD}" +
-                    "泡沫の夢"
+                    "泡沫(うたかた)の夢"
     )
 
     val BUBBLE_LORE = setOf(
