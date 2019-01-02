@@ -1,13 +1,11 @@
 package click.seichi.gigantic.menu.menus
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.items.menu.OfflinePlayerHeadButton
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.BagMessages
 import org.bukkit.entity.Player
 import org.bukkit.inventory.meta.SkullMeta
-import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 
 /**
@@ -36,20 +34,14 @@ object SpecialThanksMenu : Menu() {
 
     init {
         var index = 0
-
-        object : BukkitRunnable() {
-
-            override fun run() {
-                playerMap.values.forEach { uuidString ->
-                    val uuid = UUID.fromString(uuidString) ?: return@forEach
-                    val button = OfflinePlayerHeadButton(uuid)
-                    val offlinePlayer = (button.getItemStack()?.itemMeta as? SkullMeta)?.owningPlayer ?: return@forEach
-                    if (offlinePlayer.name == null) return@forEach
-                    registerButton(index, button)
-                    index++
-                }
-            }
-        }.runTask(Gigantic.PLUGIN)
+        playerMap.values.forEach { uuidString ->
+            val uuid = UUID.fromString(uuidString) ?: return@forEach
+            val button = OfflinePlayerHeadButton(uuid)
+            val offlinePlayer = (button.getItemStack()?.itemMeta as? SkullMeta)?.owningPlayer ?: return@forEach
+            if (offlinePlayer.name == null) return@forEach
+            registerButton(index, button)
+            index++
+        }
     }
 
 }
