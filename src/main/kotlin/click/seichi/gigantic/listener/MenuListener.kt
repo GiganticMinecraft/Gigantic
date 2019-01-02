@@ -8,8 +8,10 @@ import click.seichi.gigantic.menu.Menu
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.block.Action
 import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.player.PlayerInteractEvent
 
 /**
  * @author tar0ss
@@ -48,6 +50,17 @@ class MenuListener : Listener {
             is BookMenu -> holder.getButton(player, event.slot)?.onClick(player, event)
             is Menu -> holder.getButton(event.slot)?.onClick(player, event)
         }
+    }
+
+    @EventHandler
+    fun onInteract(event: PlayerInteractEvent) {
+        val player = event.player ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
+        val belt = player.getOrPut(Keys.BELT)
+        if (event.action == Action.PHYSICAL) return
+        val slot = player.inventory.heldItemSlot
+        belt.findItem(slot)?.onInteract(player, event)
+        belt.offHandItem?.onInteract(player, event)
     }
 
 }

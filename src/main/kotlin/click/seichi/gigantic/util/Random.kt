@@ -9,6 +9,7 @@ import org.bukkit.Material
 
 /**
  * @author unicroak
+ * @author tar0ss
  */
 internal object Random {
 

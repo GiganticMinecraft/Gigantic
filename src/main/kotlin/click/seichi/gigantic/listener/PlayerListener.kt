@@ -27,7 +27,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
-import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockMultiPlaceEvent
 import org.bukkit.event.block.BlockPlaceEvent
@@ -144,17 +143,6 @@ class PlayerListener : Listener {
     fun onPlayerItemConsume(event: PlayerItemConsumeEvent) {
         if (event.player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
-    }
-
-    @EventHandler
-    fun onInteract(event: PlayerInteractEvent) {
-        val player = event.player ?: return
-        if (player.gameMode != GameMode.SURVIVAL) return
-        val belt = player.getOrPut(Keys.BELT)
-        if (event.action == Action.PHYSICAL) return
-        val slot = player.inventory.heldItemSlot
-        belt.findItem(slot)?.onInteract(player, event)
-        belt.offHandItem?.onInteract(player, event)
     }
 
     @EventHandler

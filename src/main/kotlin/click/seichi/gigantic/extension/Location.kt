@@ -9,6 +9,7 @@ import org.bukkit.entity.Firework
 
 /**
  * @author unicroak
+ * @author tar0ss
  */
 
 fun Location.noised(noiseData: NoiseData): Location = this.clone().add(
