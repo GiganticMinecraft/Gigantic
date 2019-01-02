@@ -12,7 +12,7 @@ object EffectSounds {
     val EXPLOSION = DetailedSound(
             Sound.ENTITY_GENERIC_EXPLODE,
             SoundCategory.BLOCKS,
-            0.1F,
+            0.6F,
             1.0F
     )
 

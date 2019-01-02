@@ -3,16 +3,12 @@ package click.seichi.gigantic.battle
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.BattleMonsterAnimations
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
-import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
-import click.seichi.gigantic.message.messages.DeathMessages
-import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.ai.AttackBlock
 import click.seichi.gigantic.monster.ai.SoulMonsterState
-import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SoulMonsterSounds
 import click.seichi.gigantic.topbar.bars.BattleBars
 import org.bukkit.Bukkit
@@ -242,8 +238,8 @@ class BattleMonster(
             if (!attackBlocks.remove(attackBlock)) return@scheduleSyncDelayedTask
             if (block.isEmpty) return@scheduleSyncDelayedTask
 
-            // health
-            player.manipulate(CatalogPlayerCache.HEALTH) { health ->
+            // TODO implements
+            /*player.manipulate(CatalogPlayerCache.HEALTH) { health ->
                 health.decrease(monster.parameter.power)
                 if (health.isZero) {
                     player.offer(Keys.DEATH_MESSAGE, DeathMessages.BY_MONSTER(player.name, monster))
@@ -252,7 +248,7 @@ class BattleMonster(
                 BattleMessages.DAMAGE(monster, monster.parameter.power).sendTo(player)
             }
 
-            PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
+            PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)*/
 
             if (!SoulMonster.ZOMBIE_VILLAGER.isDefeatedBy(player)) {
                 BattleMessages.FIRST_DAMAGE.sendTo(player)

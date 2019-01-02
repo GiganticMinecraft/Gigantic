@@ -100,11 +100,6 @@ class PlayerListener : Listener {
         if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
             PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
-        player.manipulate(CatalogPlayerCache.HEALTH) {
-            it.updateMaxHealth(player.level)
-        }
-        PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
-
         player.saturation = Float.MAX_VALUE
         player.foodLevel = 20
         // 4秒間無敵付与
@@ -181,18 +176,8 @@ class PlayerListener : Listener {
             PlayerMessages.LEVEL_UP_MANA(prevMax, it.max).sendTo(player)
         }
 
-        player.manipulate(CatalogPlayerCache.HEALTH) {
-            val prevMax = it.max
-            it.updateMaxHealth(event.level)
-            it.increase(it.max)
-            if (prevMax == it.max) return@manipulate
-            PlayerMessages.LEVEL_UP_HEALTH(prevMax, it.max).sendTo(player)
-        }
-
         if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
             PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
-
-        PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
 
     }
 
@@ -265,14 +250,9 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
             if (!player.isValid) return@scheduleSyncDelayedTask
-            player.manipulate(CatalogPlayerCache.HEALTH) {
-                it.increase(it.max.div(10.0).times(3.0).toLong())
-            }
-            PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)
-
+            player.health = 6.0
             player.updateBag()
         }, 1L)
-
     }
 
     @EventHandler

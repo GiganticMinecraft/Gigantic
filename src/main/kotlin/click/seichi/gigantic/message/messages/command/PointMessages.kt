@@ -9,11 +9,11 @@ import java.util.*
  */
 object PointMessages {
 
-    val NO_USER = { uuid: UUID ->
+    val NO_USER = { playerName: String ->
         LocalizedText(
                 Locale.JAPANESE to "${ChatColor.RED}" +
                         "指定されたユーザーは見つかりません．\n" +
-                        "uuid:$uuid"
+                        "player name:$playerName"
         )
     }
 

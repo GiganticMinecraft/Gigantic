@@ -18,8 +18,6 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var mana by UserTable.mana
 
-    var health by UserTable.health
-
     var toolId by UserTable.toolId
 
     var beltId by UserTable.beltId
@@ -47,5 +45,4 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt
-
 }

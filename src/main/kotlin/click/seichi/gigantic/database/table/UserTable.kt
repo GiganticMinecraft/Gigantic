@@ -18,8 +18,6 @@ object UserTable : IdTable<UUID>("users") {
 
     val mana = decimal("mana", 30, 6).default(Defaults.MANA.toBigDecimal())
 
-    val health = long("health").default(Defaults.HEALTH)
-
     val toolId = integer("tool_id").default(Defaults.TOOL_ID)
 
     val beltId = integer("belt_id").default(Defaults.BELT_ID)

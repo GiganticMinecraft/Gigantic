@@ -67,12 +67,6 @@ val Player.wrappedExp: BigDecimal
         source + getOrPut(Keys.EXP_MAP[reason]!!)
     }
 
-val Player.wrappedHealth: Long
-    get() = getOrPut(Keys.HEALTH)
-
-val Player.wrappedMaxHealth: Long
-    get() = getOrPut(Keys.MAX_HEALTH)
-
 val Player.mana: BigDecimal
     get() = getOrPut(Keys.MANA)
 

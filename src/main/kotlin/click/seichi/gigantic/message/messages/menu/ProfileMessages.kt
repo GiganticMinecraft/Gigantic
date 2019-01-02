@@ -53,12 +53,6 @@ object ProfileMessages {
         }
     }
 
-    val PROFILE_HEALTH = { health: Long, maxHealth: Long ->
-        LocalizedText(
-                Locale.JAPANESE to "${ChatColor.GREEN}体力: ${ChatColor.WHITE}$health / $maxHealth"
-        )
-    }
-
     val PROFILE_MANA = { mana: BigDecimal, maxMana: BigDecimal ->
         LocalizedText(
                 Locale.JAPANESE to "${ChatColor.GREEN}マナ: ${ChatColor.WHITE}${mana.setScale(1, RoundingMode.HALF_UP)} / ${maxMana.setScale(1, RoundingMode.HALF_UP)}"

@@ -34,9 +34,6 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.MANA.let {
                     offer(it, it.read(user))
                 }
-                Keys.HEALTH.let {
-                    offer(it, it.read(user))
-                }
                 Keys.TOOL.let {
                     offer(it, it.read(user))
                 }
@@ -121,9 +118,6 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.MANA.let {
                     it.store(user, getOrDefault(it))
                 }
-                Keys.HEALTH.let {
-                    it.store(user, getOrDefault(it))
-                }
                 Keys.TOOL.let {
                     it.store(user, getOrDefault(it))
                 }
@@ -187,9 +181,10 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
     inner class UserEntityData(uniqueId: UUID, playerName: String) {
 
         val user = User.findById(uniqueId)?.apply {
-            name = playerName
+            name = playerName.toLowerCase()
+            updatedDate = DateTime.now()
         } ?: User.new(uniqueId) {
-            name = playerName
+            name = playerName.toLowerCase()
         }
 
         val userWillMap = Will.values().map { will ->

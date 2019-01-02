@@ -109,20 +109,18 @@ object Skills {
         override fun findInvokable(player: Player): Consumer<Player>? {
             player.getOrPut(Keys.BREAK_BLOCK) ?: return null
             if (Config.SKILL_HEAL_PROBABILITY < Random.nextInt(100)) return null
-            if (player.wrappedHealth >= player.wrappedMaxHealth) return null
+            if (player.health >= player.healthScale) return null
 
             return Consumer { p ->
                 val block = p.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
-                var wrappedAmount = 0L
-                p.manipulate(CatalogPlayerCache.HEALTH) {
-                    wrappedAmount = it.increase(it.max.div(100.0).times(Config.SKILL_HEAL_RATIO).toLong())
-                }
+                val inc = p.healthScale.div(100.0).times(Config.SKILL_HEAL_RATIO)
+                val nextHealth = inc.plus(p.health).coerceAtMost(p.healthScale)
+                val diff = nextHealth - p.health
+                p.health = nextHealth
 
                 SkillAnimations.HEAL.absorb(p, block.centralLocation)
-                SkillPops.HEAL(wrappedAmount).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
+                SkillPops.HEAL(diff).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
                 SkillSounds.HEAL.play(block.centralLocation)
-
-                PlayerMessages.HEALTH_DISPLAY(p.wrappedHealth, p.wrappedMaxHealth).sendTo(p)
             }
         }
 

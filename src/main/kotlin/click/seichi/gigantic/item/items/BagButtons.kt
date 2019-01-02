@@ -49,7 +49,6 @@ object BagButtons {
                 lore.addAll(listOf(
                         ProfileMessages.PROFILE_LEVEL(player.wrappedLevel),
                         ProfileMessages.PROFILE_EXP(player.wrappedLevel, player.wrappedExp),
-                        ProfileMessages.PROFILE_HEALTH(player.wrappedHealth, player.wrappedMaxHealth),
                         ProfileMessages.PROFILE_VOTE_POINT(player.votePoint),
                         // TODO Pomme実装後に実装
 //                        ProfileMessages.PROFILE_POMME(player.pomme),

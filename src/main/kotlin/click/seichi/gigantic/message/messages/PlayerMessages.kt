@@ -21,13 +21,6 @@ object PlayerMessages {
         LevelMessage(level, (exp - expToLevel).setScale(2, RoundingMode.FLOOR).divide((expToNextLevel - expToLevel), 10, RoundingMode.HALF_UP).toFloat().coerceAtLeast(Float.MIN_VALUE))
     }
 
-    val HEALTH_DISPLAY = { health: Long, maxHealth: Long ->
-        val interval = maxHealth.div(20.0)
-        val healthAmount = health.div(interval)
-        HealthMessage(healthAmount)
-    }
-
-
     val OBTAIN_WILL_APTITUDE = { will: Will ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE.let { it to "${ChatColor.AQUA}新しく${will.localizedName.asSafety(it)}の遺志と交感できるようになった" }

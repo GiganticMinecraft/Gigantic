@@ -19,8 +19,6 @@ object CatalogPlayerCache {
 
     val MINE_COMBO = MineCombo::class.java
 
-    val HEALTH = Health::class.java
-
     val TOOL_SWITCHER = ToolSwitcher::class.java
 
     val BELT_SWITCHER = BeltSwitcher::class.java

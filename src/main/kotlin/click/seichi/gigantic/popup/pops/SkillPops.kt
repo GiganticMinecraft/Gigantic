@@ -4,6 +4,7 @@ import click.seichi.gigantic.extension.toRainbow
 import click.seichi.gigantic.popup.PopUp
 import click.seichi.gigantic.util.Random
 import org.bukkit.ChatColor
+import java.math.RoundingMode
 
 /**
  * @author tar0ss
@@ -48,9 +49,9 @@ object SkillPops {
 
     }
 
-    val HEAL = { amount: Long ->
+    val HEAL = { amount: Double ->
         PopUp(
-                "${ChatColor.LIGHT_PURPLE}$amount HP",
+                "${ChatColor.LIGHT_PURPLE}${amount.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} HP",
                 PopUp.PopPattern.POP_LONG
         )
     }

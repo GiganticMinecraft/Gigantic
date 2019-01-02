@@ -240,7 +240,6 @@ class Gigantic : JavaPlugin() {
                 PlayerLevelConfig,
                 DatabaseConfig,
                 DebugConfig,
-                HealthConfig,
                 ManaConfig
         )
 

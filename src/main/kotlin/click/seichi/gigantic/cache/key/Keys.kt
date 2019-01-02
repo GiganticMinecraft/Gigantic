@@ -105,38 +105,6 @@ object Keys {
 
     }
 
-    val HEALTH = object : DatabaseKey<PlayerCache, Long> {
-
-        override val default: Long
-            get() = 100L
-
-        override fun read(entity: Entity<*>): Long {
-            val user = entity as User
-            return user.health
-        }
-
-        override fun store(entity: Entity<*>, value: Long) {
-            val user = entity as User
-            user.health = value
-        }
-
-        override fun satisfyWith(value: Long): Boolean {
-            return value >= 0
-        }
-
-    }
-
-    val MAX_HEALTH = object : Key<PlayerCache, Long> {
-
-        override val default: Long
-            get() = 100L
-
-        override fun satisfyWith(value: Long): Boolean {
-            return value >= 0
-        }
-
-    }
-
     val EXP_MAP: Map<ExpReason, DatabaseKey<PlayerCache, BigDecimal>> = ExpReason.values()
             .map {
                 it to object : DatabaseKey<PlayerCache, BigDecimal> {
