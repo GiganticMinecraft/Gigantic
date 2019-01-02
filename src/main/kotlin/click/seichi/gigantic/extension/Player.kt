@@ -82,7 +82,11 @@ val Player.maxCombo: Long
 val Player.comboRank: Int
     get() = MineCombo.calcComboRank(combo)
 
-// 累計
+// 累計投票数
+val Player.vote: Int
+    get() = getOrPut(Keys.VOTE)
+
+// 累計投票ポイント(投票数*10)
 val Player.votePoint: Int
     get() = Currency.VOTE_POINT.getAmount(this)
 // 累計

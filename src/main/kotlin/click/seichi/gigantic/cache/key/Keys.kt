@@ -695,7 +695,7 @@ object Keys {
     }
 
     // データの読み込みしか行わない特殊なケース
-    val VOTE_POINT = object : DatabaseKey<PlayerCache, Int> {
+    val VOTE = object : DatabaseKey<PlayerCache, Int> {
         override val default: Int
             get() = 0
 
@@ -707,12 +707,12 @@ object Keys {
         override fun store(entity: Entity<*>, value: Int) {
             // データベースが書き換えられていた場合，上書き削除してしまうので
             // 書き込まなくてよい．ポイントは減ることもないし増えることもない．
-            Gigantic.PLUGIN.logger.warning("投票pのデータベース書き込みは禁止されています")
+            Gigantic.PLUGIN.logger.warning("投票数のデータベース書き込みは禁止されています")
         }
 
         override fun satisfyWith(value: Int): Boolean {
             // 強制的に書き換えを拒否
-            Gigantic.PLUGIN.logger.warning("投票pの書き換えは禁止されています")
+            Gigantic.PLUGIN.logger.warning("投票数の書き換えは禁止されています")
             return false
         }
     }

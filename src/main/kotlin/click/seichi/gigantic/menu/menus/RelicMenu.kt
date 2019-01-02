@@ -25,7 +25,7 @@ object RelicMenu : BookMenu() {
     private val prevButton = PrevButton(this)
 
     override fun getMaxPage(player: Player): Int {
-        return Relic.getDroppedList(player).size.div(numOfContentsPerPage + 1).plus(1)
+        return Relic.getDroppedList(player).size.minus(1).div(numOfContentsPerPage).plus(1).coerceAtLeast(1)
     }
 
     override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {

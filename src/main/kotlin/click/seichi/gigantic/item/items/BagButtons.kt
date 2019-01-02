@@ -4,7 +4,6 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.DonateTicket
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.database.dao.DonateHistory
 import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.database.table.DonateHistoryTable
@@ -49,7 +48,7 @@ object BagButtons {
                 lore.addAll(listOf(
                         ProfileMessages.PROFILE_LEVEL(player.wrappedLevel),
                         ProfileMessages.PROFILE_EXP(player.wrappedLevel, player.wrappedExp),
-                        ProfileMessages.PROFILE_VOTE_POINT(player.votePoint),
+                        ProfileMessages.PROFILE_VOTE_POINT(player.vote),
                         // TODO Pomme実装後に実装
 //                        ProfileMessages.PROFILE_POMME(player.pomme),
                         ProfileMessages.PROFILE_DONATION(player.donation)
@@ -59,12 +58,11 @@ object BagButtons {
                     lore.add(ProfileMessages.PROFILE_MANA(player.mana, player.maxMana).asSafety(player.wrappedLocale))
                 }
 
-                player.manipulate(CatalogPlayerCache.APTITUDE) { aptitude ->
-                    lore.addAll(listOf(
-                            ProfileMessages.PROFILE_MAX_COMBO(player.maxCombo).asSafety(player.wrappedLocale),
-                            *ProfileMessages.PROFILE_WILL_APTITUDE(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray())
-                    )
-                }
+                lore.addAll(listOf(
+                        ProfileMessages.PROFILE_MAX_COMBO(player.maxCombo).asSafety(player.wrappedLocale)
+                        // TODO 意志実装後に実装
+//                        *ProfileMessages.PROFILE_WILL_APTITUDE(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
+                ))
 
                 setLore(*lore.toTypedArray())
 
@@ -94,7 +92,7 @@ object BagButtons {
                             if (!player.isValid) return
 
                             votePoint?.let {
-                                player.force(Keys.VOTE_POINT, it)
+                                player.force(Keys.VOTE, it)
                             }
                             pomme?.let {
                                 player.force(Keys.POMME, it)

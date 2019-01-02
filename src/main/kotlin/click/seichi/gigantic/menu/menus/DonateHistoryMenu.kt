@@ -30,7 +30,7 @@ object DonateHistoryMenu : BookMenu() {
     private val prevButton = PrevButton(this)
 
     override fun getMaxPage(player: Player): Int {
-        return player.getOrPut(Keys.DONATE_TICKET_LIST).size.div(numOfContentsPerPage).plus(1)
+        return player.getOrPut(Keys.DONATE_TICKET_LIST).size.minus(1).div(numOfContentsPerPage).plus(1).coerceAtLeast(1)
     }
 
     override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {

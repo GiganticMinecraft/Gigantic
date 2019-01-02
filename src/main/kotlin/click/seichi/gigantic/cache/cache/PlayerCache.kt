@@ -52,7 +52,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 Keys.EFFECT.let {
                     offer(it, it.read(user))
                 }
-                Keys.VOTE_POINT.let {
+                Keys.VOTE.let {
                     force(it, it.read(user))
                 }
                 Keys.POMME.let {

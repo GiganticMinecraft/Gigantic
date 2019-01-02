@@ -18,7 +18,7 @@ enum class Currency {
     // 投票
     VOTE_POINT {
         override fun getAmount(player: Player): Int {
-            return player.getOrPut(Keys.VOTE_POINT).times(10)
+            return player.getOrPut(Keys.VOTE).times(10)
         }
     },
     // Spade 通貨
