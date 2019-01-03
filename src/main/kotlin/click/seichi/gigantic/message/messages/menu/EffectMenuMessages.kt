@@ -67,7 +67,7 @@ object EffectMenuMessages {
 
     val VOTE_POINT_DESCRIPTION = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GRAY}" +
-                    "JMSから投票することで1投票ポイント獲得できる"
+                    "JMSから投票することで10投票ポイント獲得できる"
     )
 
     val POMME_DESCRIPTION = LocalizedText(
