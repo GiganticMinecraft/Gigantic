@@ -61,35 +61,37 @@ open class LingeringTimer : Timer {
 
     override fun canStart() = !duringCoolTime()
 
-
     override fun start() {
+        isCancelled = false
         remainTimeToCool = duration
         onStart()
         object : BukkitRunnable() {
             var elapsedSeconds = 0L
             override fun run() {
-                remainTimeToCool = duration.minus(elapsedSeconds)
+                // 前に分岐を置くことでExceptionでの無限ループ発生を回避
+                if (elapsedSeconds++ >= duration || isCancelled) {
+                    cancel()
+                    remainTimeToCool = 0L
+                    remainTimeToFire = coolTime
+                    onCompleteFire()
+
+                    object : BukkitRunnable() {
+                        var elapsedSeconds = 0L
+                        override fun run() {
+                            // 前に分岐を置くことでExceptionでの無限ループ発生を回避
+                            if (elapsedSeconds++ >= coolTime || isCancelled) {
+                                cancel()
+                                end()
+                                return
+                            }
+                            remainTimeToFire = coolTime.minus(elapsedSeconds).plus(1)
+                            onCooldown(remainTimeToFire)
+                        }
+                    }.runTaskTimer(Gigantic.PLUGIN, 0L, 20L)
+                    return
+                }
+                remainTimeToCool = duration.minus(elapsedSeconds).plus(1)
                 onFire(remainTimeToCool)
-                elapsedSeconds++
-
-                if (elapsedSeconds <= duration && !isCancelled) return
-                cancel()
-
-                remainTimeToCool = 0L
-                remainTimeToFire = coolTime
-                onCompleteFire()
-
-                object : BukkitRunnable() {
-                    var elapsedSeconds = 0L
-                    override fun run() {
-                        remainTimeToFire = coolTime.minus(elapsedSeconds)
-                        onCooldown(remainTimeToFire)
-                        elapsedSeconds++
-                        if (elapsedSeconds <= coolTime && !isCancelled) return
-                        cancel()
-                        end()
-                    }
-                }.runTaskTimer(Gigantic.PLUGIN, 0L, 20L)
             }
         }.runTaskTimer(Gigantic.PLUGIN, 0L, 20L)
     }

@@ -37,18 +37,23 @@ object Skills {
                 mineBurst.coolTime = coolTime
                 mineBurst.duration = duration
                 mineBurst.onStart {
+                    if (!p.isValid) return@onStart
                     p.removePotionEffect(PotionEffectType.FAST_DIGGING)
                     p.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 100, 2, true, false))
                     SkillSounds.MINE_BURST_ON_FIRE.play(player.eyeLocation)
                     p.updateBelt(true, false)
                     p.fixHandToTool()
                 }.onFire {
+                    if (!p.isValid) return@onFire
                     p.updateBelt(false, false)
                 }.onCompleteFire {
+                    if (!p.isValid) return@onCompleteFire
                     p.updateBelt(true, false)
                 }.onCooldown {
+                    if (!p.isValid) return@onCooldown
                     p.updateBelt(false, false)
                 }.onCompleteCooldown {
+                    if (!p.isValid) return@onCompleteCooldown
                     p.updateBelt(true, false)
                 }.start()
             }
@@ -75,6 +80,7 @@ object Skills {
             return Consumer { p ->
                 flash.coolTime = coolTime
                 flash.onStart {
+                    if (!p.isValid) return@onStart
                     val tpLocation = p.getTargetBlock(transparentMaterialSet, maxDistance).let { block ->
                         if (transparentMaterialSet.contains(block.type)) return@let null
                         var nextBlock = block ?: return@let null
@@ -96,8 +102,10 @@ object Skills {
                     }
                     p.updateBelt(true, false)
                 }.onCooldown {
+                    if (!p.isValid) return@onCooldown
                     p.updateBelt(false, false)
                 }.onCompleteCooldown {
+                    if (!p.isValid) return@onCompleteCooldown
                     p.updateBelt(true, false)
                 }.start()
             }
