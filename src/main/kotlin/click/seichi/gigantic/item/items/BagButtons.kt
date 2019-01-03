@@ -225,6 +225,7 @@ object BagButtons {
                         player.teleport(afkLocation)
                     }
                     player.closeInventory()
+                    player.updateBag()
                     PlayerSounds.TELEPORT_AFK.play(player.location)
                 }
                 else -> {

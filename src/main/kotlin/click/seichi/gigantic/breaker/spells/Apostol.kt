@@ -138,6 +138,7 @@ class Apostol : Miner(), SpellCaster {
                 // 場所の制約
                 !it.isSpawnArea
             }.filter {
+                // 重力値の制約
                 it.calcGravity() == 0
             }.toMutableSet().apply {
                 // 場所の制約
