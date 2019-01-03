@@ -137,6 +137,8 @@ class Apostol : Miner(), SpellCaster {
             }.filter {
                 // 場所の制約
                 !it.isSpawnArea
+            }.filter {
+                it.calcGravity() == 0
             }.toMutableSet().apply {
                 // 場所の制約
                 if (!player.isSneaking) {
