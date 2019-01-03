@@ -66,17 +66,22 @@ private fun Block.fallUpperCrustBlock() {
         override fun run() {
             val target = getRelative(BlockFace.UP) ?: return
             when {
+                target.y > 255 -> {
+                    return
+                }
                 Gigantic.BROKEN_BLOCK_SET.contains(target) -> {
+                    target.update()
                 }
                 target.isCrust -> {
                     target.fall()
+                    target.update()
                 }
                 target.isLog -> {
                     Cutter().breakRelationalBlock(target, false)
                     return
                 }
             }
-            target.update()
+
         }
     }.runTaskLater(Gigantic.PLUGIN, 2L)
 }
