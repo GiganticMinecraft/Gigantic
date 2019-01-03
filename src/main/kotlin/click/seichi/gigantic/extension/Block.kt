@@ -58,10 +58,10 @@ val Block.centralLocation: Location
 fun Block.update() {
     changeRelativeBedrock()
     condenseRelativeLiquid()
-    fallUpperCrustBlock()
+    clearUpperCrustBlock()
 }
 
-private fun Block.fallUpperCrustBlock() {
+private fun Block.clearUpperCrustBlock() {
     object : BukkitRunnable() {
         override fun run() {
             val target = getRelative(BlockFace.UP) ?: return
@@ -69,7 +69,7 @@ private fun Block.fallUpperCrustBlock() {
                 Gigantic.BROKEN_BLOCK_SET.contains(target) -> {
                 }
                 target.isCrust -> {
-                    target.fall()
+                    target.type = Material.AIR
                 }
                 target.isLog -> {
                     Cutter().breakRelationalBlock(target, false)
@@ -79,15 +79,6 @@ private fun Block.fallUpperCrustBlock() {
             target.update()
         }
     }.runTaskLater(Gigantic.PLUGIN, 2L)
-}
-
-
-private fun Block.fall() {
-    location.world.spawnFallingBlock(
-            location.central.subtract(0.0, 0.5, 0.0),
-            blockData
-    )
-    type = Material.AIR
 }
 
 private val faceSet = setOf(
@@ -175,6 +166,5 @@ fun Block.firstOrNullOfNearPlayer(player: Player) = world.players
 
 fun Block.calcGravity() = ((1 + Config.MAX_BREAKABLE_GRAVITY)..(255 - y))
         .map { getRelative(BlockFace.UP, it) }
-        .filter { !it.isAir }
-        .filter { !it.isTree }
+        .filter { it.isCrust }
         .size
