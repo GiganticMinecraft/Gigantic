@@ -22,7 +22,7 @@ object ApostolAnimations {
     }
 
     val FLAME = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.FLAME, location, 10)
+        location.world.spawnParticle(Particle.FLAME, location, 4)
     }
 
     val WITCH_SCENT = Animation(0) { location, _ ->

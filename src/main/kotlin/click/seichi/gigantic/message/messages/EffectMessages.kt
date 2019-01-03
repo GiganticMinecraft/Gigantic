@@ -50,7 +50,7 @@ object EffectMessages {
     )
 
     val FLAME = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.RED}" +
+            Locale.JAPANESE to "${ChatColor.GOLD}" +
                     "${ChatColor.BOLD}" +
                     "フレイム"
     )
@@ -58,7 +58,7 @@ object EffectMessages {
     val FLAME_LORE = setOf(
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.WHITE}" +
-                            "ぐつぐつと燃える"
+                            "燃え散る"
             )
     )
 

@@ -113,7 +113,10 @@ class PlayerListener : Listener {
         Achievement.update(player, isForced = true)
     }
 
-    // プレイヤーのメニュー以外のインベントリーオープンをキャンセル
+    /**
+     * プレイヤーのメニュー以外のインベントリーオープンをキャンセル
+     * プレイヤーインベントリのオープンは検知されない．あれはクライアントサイドのみ
+     */
     @EventHandler
     fun onInventoryOpen(event: InventoryOpenEvent) {
         if (event.player !is Player) return
