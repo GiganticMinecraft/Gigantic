@@ -61,18 +61,23 @@ object TeleportButtons {
         )
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
+            if (player.gameMode != GameMode.SURVIVAL) {
+                player.sendMessage(TeleportMessages.IN_BREAK_TIME.asSafety(player.wrappedLocale))
+                return
+            }
             var chunk: Chunk? = null
             var location: Location? = null
             var count = 0
-            while (chunk == null && count++ < 20) {
+            // 適用可能か ダメならfalse
+            var isValid = false
+            while (!isValid && count++ < 20) {
                 chunk = randomChunk(player)
                 location = chunk.getSpawnableLocation()
-                chunk.let {
-                    if (it.isBattled ||
+                isValid = chunk.let {
+                    !(it.isBattled ||
                             it.isSpawnArea ||
                             oceanBiomeSet.contains(it.getBlock(0, 0, 0).biome) ||
-                            location.block.getRelative(BlockFace.DOWN).type == Material.BEDROCK
-                    ) null else it
+                            location.block.getRelative(BlockFace.DOWN).type == Material.BEDROCK)
                 }
             }
             if (chunk == null) return
@@ -102,6 +107,10 @@ object TeleportButtons {
 
         override fun onClick(player: Player, event: InventoryClickEvent) {
             if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return
+            if (player.gameMode != GameMode.SURVIVAL) {
+                player.sendMessage(TeleportMessages.IN_BREAK_TIME.asSafety(player.wrappedLocale))
+                return
+            }
             val chunk = player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return
             chunk.load(true)
             val location = chunk.getSpawnableLocation()
