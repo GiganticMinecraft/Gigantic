@@ -58,6 +58,7 @@ abstract class BookMenu : Menu() {
     }
 
     private fun open(player: Player, page: Int, isFirstOpen: Boolean, playSound: Boolean) {
+        if (isFirstOpen) init(player)
         player.offer(Keys.MENU_PAGE, page)
         player.openInventory(createInventory(player))
         if (playSound) {
@@ -67,6 +68,8 @@ abstract class BookMenu : Menu() {
                 pageChangeSound.playOnly(player)
         }
     }
+
+    protected open fun init(player: Player) {}
 
     override fun createInventory(player: Player): Inventory {
         val page = player.getOrPut(Keys.MENU_PAGE)

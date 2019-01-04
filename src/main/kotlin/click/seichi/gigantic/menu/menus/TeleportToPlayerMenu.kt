@@ -1,5 +1,8 @@
 package click.seichi.gigantic.menu.menus
 
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.NextButton
@@ -25,18 +28,21 @@ object TeleportToPlayerMenu : BookMenu() {
     private val nextButton = NextButton(this)
     private val prevButton = PrevButton(this)
 
-    private fun getTeleportPlayerList(player: Player): List<Player> {
-        return Bukkit.getOnlinePlayers().toMutableList().apply {
-            remove(player)
-        }
+    override fun getMaxPage(player: Player): Int {
+        return player.getOrPut(Keys.TELEPORT_LIST).size.minus(1).div(numOfPlayerPerPage).plus(1).coerceAtLeast(1)
     }
 
-    override fun getMaxPage(player: Player): Int {
-        return Bukkit.getOnlinePlayers().size.minus(1).div(numOfPlayerPerPage).plus(1).coerceAtLeast(1)
+    override fun init(player: Player) {
+        player.offer(
+                Keys.TELEPORT_LIST,
+                Bukkit.getOnlinePlayers().toMutableList().apply {
+                    remove(player)
+                }
+        )
     }
 
     override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {
-        val playerList = getTeleportPlayerList(player)
+        val playerList = player.getOrPut(Keys.TELEPORT_LIST)
         val start = (page - 1) * numOfPlayerPerPage
         val end = page * numOfPlayerPerPage
         (start until end)
@@ -57,7 +63,7 @@ object TeleportToPlayerMenu : BookMenu() {
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
-        val playerList = getTeleportPlayerList(player)
+        val playerList = player.getOrPut(Keys.TELEPORT_LIST)
         val index = (page - 1) * numOfPlayerPerPage + slot
         val to = playerList.getOrNull(index) ?: return null
         return when (slot) {

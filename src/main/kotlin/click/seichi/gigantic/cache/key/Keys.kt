@@ -29,6 +29,7 @@ import click.seichi.gigantic.will.Will
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.block.Block
+import org.bukkit.entity.Player
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.joda.time.DateTime
@@ -489,6 +490,15 @@ object Keys {
             get() = mapOf()
 
         override fun satisfyWith(value: Map<Int, UUID>): Boolean {
+            return true
+        }
+    }
+
+    val TELEPORT_LIST = object : Key<PlayerCache, List<Player>> {
+        override val default: List<Player>
+            get() = listOf()
+
+        override fun satisfyWith(value: List<Player>): Boolean {
             return true
         }
     }

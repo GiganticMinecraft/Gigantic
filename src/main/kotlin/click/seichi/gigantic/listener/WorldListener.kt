@@ -58,7 +58,7 @@ class WorldListener : Listener {
                     }
                 }
             }
-        }.runTaskAsynchronously(Gigantic.PLUGIN)
+        }.runTaskLaterAsynchronously(Gigantic.PLUGIN, 3 * 20L)
 
     }
 
