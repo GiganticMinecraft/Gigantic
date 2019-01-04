@@ -65,11 +65,11 @@ class WorldListener : Listener {
                                     targetSize + SystemMessages.PEOPLE.asSafety(Gigantic.DEFAULT_LOCALE))
                     Bukkit.getServer().consoleSender
                             .sendMessage(SystemMessages.SAVE_COMPLETE.asSafety(Gigantic.DEFAULT_LOCALE) +
-                                    successSet + SystemMessages.PEOPLE.asSafety(Gigantic.DEFAULT_LOCALE))
+                                    successSet.size + SystemMessages.PEOPLE.asSafety(Gigantic.DEFAULT_LOCALE))
                     if (failSet.isNotEmpty()) {
                         Bukkit.getServer().consoleSender
                                 .sendMessage(SystemMessages.SAVE_FAIL.asSafety(Gigantic.DEFAULT_LOCALE) +
-                                        failSet + SystemMessages.PEOPLE.asSafety(Gigantic.DEFAULT_LOCALE))
+                                        failSet.size + SystemMessages.PEOPLE.asSafety(Gigantic.DEFAULT_LOCALE))
                     }
                     Bukkit.getServer().consoleSender
                             .sendMessage(SystemMessages.REGULAR_PLAYER_CACHE_SAVE_COMPLETE.asSafety(Gigantic.DEFAULT_LOCALE))
