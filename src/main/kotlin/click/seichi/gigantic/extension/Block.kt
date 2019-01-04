@@ -80,6 +80,9 @@ private fun Block.fallUpperCrustBlock() {
                     Cutter().breakRelationalBlock(target, false)
                     return
                 }
+                else -> {
+                    target.update()
+                }
             }
 
         }
