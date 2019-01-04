@@ -494,7 +494,7 @@ object Keys {
         }
     }
 
-    val TELEPORT_LIST = object : Key<PlayerCache, List<Player>> {
+    val PLAYER_LIST = object : Key<PlayerCache, List<Player>> {
         override val default: List<Player>
             get() = listOf()
 

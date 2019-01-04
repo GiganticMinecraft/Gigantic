@@ -110,6 +110,16 @@ fun Player.hasAptitude(will: Will) = getOrPut(Keys.APTITUDE_MAP[will]!!)
 
 fun Player.memory(will: Will) = getOrPut(Keys.MEMORY_MAP[will]!!)
 
+fun Player.isFollow(uniqueId: UUID) = getOrPut(Keys.FOLLOW_SET).contains(uniqueId)
+
+fun Player.follow(uniqueId: UUID) = transform(Keys.FOLLOW_SET) {
+    setOf(*it.toTypedArray(), uniqueId)
+}
+
+fun Player.unFollow(uniqueId: UUID) = transform(Keys.FOLLOW_SET) {
+    it.toMutableSet().apply { remove(uniqueId) }
+}
+
 /**
  * プレイヤーが向いている方向の[BlockFace]を取得する
  */

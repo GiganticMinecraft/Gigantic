@@ -378,18 +378,18 @@ object BagButtons {
 
     }
 
-    val PLAYER_LIST = object : Button {
+    val FOLLOW_SETTING = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.PHANTOM_MEMBRANE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
-                        + PlayerListMenuMessages.TITLE.asSafety(player.wrappedLocale))
+                        + FollowSettingMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (event.inventory.holder === PlayerListMenu) return false
-            PlayerListMenu.open(player)
+            if (event.inventory.holder === FollowSettingMenu) return false
+            FollowSettingMenu.open(player)
             return true
         }
 
