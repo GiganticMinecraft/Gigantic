@@ -121,13 +121,4 @@ object AchievementMessages {
             }
     ))
 
-    val EFFECT = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE.let {
-                it to "${ChatColor.YELLOW}" +
-                        "エフェクトを購入できるようになった\n" +
-                        "${ChatColor.GRAY}" +
-                        "メニューから選択!!\n"
-            }
-    ))
-
 }

@@ -98,6 +98,9 @@ class PlayerListener : Listener {
             it.updateMaxMana(player.level)
         }
 
+        // ここで実績を確認する．これ以前では実績を使ってはいけない
+        Achievement.update(player, isForced = true)
+
         if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
             PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
@@ -111,7 +114,6 @@ class PlayerListener : Listener {
                 false
         ))
 
-        Achievement.update(player, isForced = true)
     }
 
     /**

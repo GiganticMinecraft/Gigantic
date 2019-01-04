@@ -362,7 +362,6 @@ object BagButtons {
     val EFFECT = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
-            if (!Achievement.EFFECT.isGranted(player)) return null
             return ItemStack(Material.ENCHANTING_TABLE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + EffectMenuMessages.TITLE.asSafety(player.wrappedLocale))
@@ -370,7 +369,6 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (!Achievement.EFFECT.isGranted(player)) return false
             if (event.inventory.holder === EffectMenu) return false
             EffectMenu.open(player)
             return true

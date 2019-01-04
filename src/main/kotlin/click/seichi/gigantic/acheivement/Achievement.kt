@@ -49,9 +49,6 @@ enum class Achievement(
     TELEPORT_LAST_DEATH(103, {
         it.wrappedLevel >= 7
     }, grantMessage = AchievementMessages.TELEPORT_LAST_DEATH),
-    EFFECT(104, {
-        it.wrappedLevel >= 15
-    }, grantMessage = AchievementMessages.EFFECT),
 
     // skills
     SKILL_FLASH(200, {
