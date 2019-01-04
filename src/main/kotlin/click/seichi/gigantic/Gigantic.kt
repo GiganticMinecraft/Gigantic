@@ -29,6 +29,7 @@ import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 import kotlin.properties.Delegates
@@ -267,7 +268,20 @@ class Gigantic : JavaPlugin() {
                 "donate" to DonateCommand()
         )
 
-        prepareDatabase()
+        prepareDatabase(
+                UserTable,
+                UserWillTable,
+                UserExpTable,
+                UserMonsterTable,
+                UserRelicTable,
+                UserAchievementTable,
+                UserToolTable,
+                UserBeltTable,
+                UserQuestTable,
+                UserEffectTable,
+                DonateHistoryTable,
+                UserFollowTable
+        )
 
         // reflectionを使うので先に生成
         Head.values().forEach { it.toItemStack() }
@@ -314,7 +328,7 @@ class Gigantic : JavaPlugin() {
 
     private fun bindCommands(vararg commands: Pair<String, CommandExecutor>) = commands.toMap().forEach { id, executor -> executor.bind(id) }
 
-    private fun prepareDatabase() {
+    private fun prepareDatabase(vararg tables: Table) {
         //connect MySQL
         Database.connect("jdbc:mysql://${DatabaseConfig.HOST}/${DatabaseConfig.DATABASE}",
                 "com.mysql.jdbc.Driver", DatabaseConfig.USER, DatabaseConfig.PASSWORD)
@@ -323,17 +337,7 @@ class Gigantic : JavaPlugin() {
         transaction {
             // プレイヤー用のテーブルを作成
             SchemaUtils.createMissingTablesAndColumns(
-                    UserTable,
-                    UserWillTable,
-                    UserExpTable,
-                    UserMonsterTable,
-                    UserRelicTable,
-                    UserAchievementTable,
-                    UserToolTable,
-                    UserBeltTable,
-                    UserQuestTable,
-                    UserEffectTable,
-                    DonateHistoryTable
+                    *tables
             )
         }
     }

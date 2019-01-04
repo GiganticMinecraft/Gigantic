@@ -9,6 +9,6 @@ object UserFollowTable : IntIdTable("users_follows") {
 
     val userId = reference("unique_id", UserTable).primaryKey()
 
-    val followId = integer("follow_id").primaryKey()
+    val followId = reference("follow_id", UserTable).primaryKey()
 
 }

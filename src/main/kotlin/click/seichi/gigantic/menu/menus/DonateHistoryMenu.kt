@@ -58,7 +58,7 @@ object DonateHistoryMenu : BookMenu() {
                                 "${ChatColor.BOLD}" +
                                 "${ticket.amount}円")
                         setLore("${ChatColor.WHITE}" +
-                                ticket.date.toString("yyyy/MM/dd kk:mm:ss"))
+                                ticket.date.toString("yyyy年MM月dd日 kk時mm分ss秒"))
                     }
                     inventory.setItem(index, itemStack)
                 }

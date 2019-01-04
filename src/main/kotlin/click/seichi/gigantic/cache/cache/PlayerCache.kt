@@ -268,6 +268,10 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             })
         }.toMap()
 
+        val userFollowList = UserFollow
+                .find { UserFollowTable.userId eq uniqueId }
+                .toList()
+
     }
 
 }
