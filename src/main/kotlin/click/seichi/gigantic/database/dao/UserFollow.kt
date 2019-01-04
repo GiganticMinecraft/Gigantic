@@ -13,6 +13,6 @@ class UserFollow(id: EntityID<Int>) : IntEntity(id) {
 
     var user by User referencedOn UserFollowTable.userId
 
-    var followId by User referencedOn UserFollowTable.followId
+    var follow by User referencedOn UserFollowTable.followId
 
 }

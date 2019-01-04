@@ -10,6 +10,9 @@ import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.database.UserEntity
+import click.seichi.gigantic.database.dao.User
+import click.seichi.gigantic.database.dao.UserFollow
+import click.seichi.gigantic.database.table.UserFollowTable
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.monster.SoulMonster
@@ -25,6 +28,8 @@ import click.seichi.gigantic.will.Will
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.block.Block
+import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.deleteWhere
 import org.joda.time.DateTime
 import java.math.BigDecimal
 import java.util.*
@@ -783,6 +788,46 @@ object Keys {
             get() = setOf()
 
         override fun satisfyWith(value: Set<Block>): Boolean {
+            return true
+        }
+    }
+
+    val FOLLOW_SET = object : DatabaseKey<PlayerCache, Set<UUID>> {
+        override val default: Set<UUID>
+            get() = setOf()
+
+        override fun read(entity: UserEntity): Set<UUID> {
+            return entity.userFollowList.map { it.follow.id.value }.toSet()
+        }
+
+        override fun store(entity: UserEntity, value: Set<UUID>) {
+            val oldSet = read(entity)
+            // 新規フォロワーを登録
+            value.forEach { followId ->
+                // 既にフォローしていたら終了
+                if (oldSet.contains(followId)) return@forEach
+                // フォローするユーザーを検索
+                val followUser = User.findById(followId) ?: return@forEach
+                // 存在すれば追加
+                UserFollow.new {
+                    user = entity.user
+                    follow = followUser
+                }
+            }
+            // フォローを外したプレイヤーを削除
+            oldSet.forEach { followId ->
+                // フォローしているなら終了
+                if (value.contains(followId)) return@forEach
+                // 削除するユーザーを検索
+                val followedUser = User.findById(followId) ?: return@forEach
+                // 存在すれば削除
+                UserFollowTable.deleteWhere {
+                    (UserFollowTable.userId eq entity.user.id).and(UserFollowTable.followId eq followedUser.id)
+                }
+            }
+        }
+
+        override fun satisfyWith(value: Set<UUID>): Boolean {
             return true
         }
     }

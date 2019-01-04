@@ -50,6 +50,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.DONATION.let {
                 force(it, it.read(entity))
             }
+            Keys.FOLLOW_SET.let {
+                offer(it, it.read(entity))
+            }
             Keys.EXP_MAP.forEach { reason, key ->
                 offer(key, key.read(entity))
             }
@@ -89,7 +92,6 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.EFFECT_BOUGHT_TIME_MAP.forEach { effect, key ->
                 offer(key, key.read(entity))
             }
-
         }
     }
 
@@ -123,6 +125,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 it.store(entity, getOrDefault(it))
             }
             Keys.EFFECT.let {
+                it.store(entity, getOrDefault(it))
+            }
+            Keys.FOLLOW_SET.let {
                 it.store(entity, getOrDefault(it))
             }
             Keys.EXP_MAP.forEach { reason, key ->
