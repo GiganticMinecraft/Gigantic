@@ -78,11 +78,13 @@ class WorldListener : Listener {
                 }
                 uniqueIdSet.remove(uniqueId)
 
+                // 既にプレイヤーが存在しない場合は終了
                 if (!PlayerCacheMemory.contains(uniqueId)) {
                     successSet.add(uniqueId)
                     return
                 }
 
+                // 保存処理
                 try {
                     PlayerCacheMemory.write(uniqueId, false)
                     successSet.add(uniqueId)
