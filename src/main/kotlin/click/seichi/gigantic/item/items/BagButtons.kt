@@ -136,6 +136,7 @@ object BagButtons {
                     transaction {
                         DonateHistory
                                 .find { DonateHistoryTable.userId eq uniqueId }
+                                .notForUpdate()
                                 .map { DonateTicket(it.createdAt, it.amount) }
                                 .toList().let {
                                     donateList.addAll(it)
@@ -359,6 +360,7 @@ object BagButtons {
 
     }
 
+
     val EFFECT = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
@@ -376,4 +378,20 @@ object BagButtons {
 
     }
 
+    val PLAYER_LIST = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.PHANTOM_MEMBRANE).apply {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + PlayerListMenuMessages.TITLE.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === PlayerListMenu) return false
+            PlayerListMenu.open(player)
+            return true
+        }
+
+    }
 }

@@ -52,6 +52,7 @@ class PlayerListener : Listener {
     // プレイヤーデータのロード
     @EventHandler
     fun onPlayerPreLoginAsync(event: AsyncPlayerPreLoginEvent) {
+        // データロード完了までログインをブロック
         runBlocking {
             /**
              * 複数サーバで動かすと，ログアウト時の書き込みよりもログイン時の読込の方が早くなってしまい，
@@ -76,7 +77,7 @@ class PlayerListener : Listener {
             player.gameMode = GameMode.SURVIVAL
         }
         val uniqueId = player.uniqueId
-        PlayerCacheMemory.writeThenRemoved(uniqueId, true)
+        PlayerCacheMemory.writeThenRemoved(uniqueId, false)
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

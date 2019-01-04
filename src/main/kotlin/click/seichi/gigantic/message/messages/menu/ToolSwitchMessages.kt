@@ -10,7 +10,7 @@ import java.util.*
 object ToolSwitchMessages {
 
     val TITLE = LocalizedText(
-            Locale.JAPANESE to "ツール切り替え詳細設定"
+            Locale.JAPANESE to "ツール切り替え設定"
     )
 
     val TOOL_SWITCHER_SETTING_BUTTON_LORE = { canSwitch: Boolean ->

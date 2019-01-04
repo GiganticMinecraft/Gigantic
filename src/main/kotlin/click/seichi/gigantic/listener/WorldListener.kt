@@ -1,6 +1,5 @@
 package click.seichi.gigantic.listener
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.config.Config
 import org.bukkit.Bukkit
@@ -41,11 +40,9 @@ class WorldListener : Listener {
 
     @EventHandler
     fun onWorldSave(event: WorldSaveEvent) {
-        Bukkit.getScheduler().runTask(Gigantic.PLUGIN, Runnable {
-            Bukkit.getOnlinePlayers().forEach {
-                PlayerCacheMemory.write(it.uniqueId, false)
-            }
-        })
+        Bukkit.getOnlinePlayers().forEach {
+            PlayerCacheMemory.write(it.uniqueId, false)
+        }
     }
 
 }

@@ -24,6 +24,7 @@ import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
 import click.seichi.gigantic.timer.LingeringTimer
 import click.seichi.gigantic.timer.SimpleTimer
 import click.seichi.gigantic.tool.Tool
+import click.seichi.gigantic.util.RefineItem
 import click.seichi.gigantic.will.Will
 import org.bukkit.Chunk
 import org.bukkit.Location
@@ -483,6 +484,26 @@ object Keys {
 
     }
 
+    val PLAYER_LIST_MENU_MAP = object : Key<PlayerCache, Map<Int, UUID>> {
+        override val default: Map<Int, UUID>
+            get() = mapOf()
+
+        override fun satisfyWith(value: Map<Int, UUID>): Boolean {
+            return true
+        }
+    }
+
+    val REFINE_ITEM_MAP: Map<RefineItem, Key<PlayerCache, Boolean>> = RefineItem.values()
+            .map {
+                it to object : Key<PlayerCache, Boolean> {
+                    override val default: Boolean
+                        get() = false
+
+                    override fun satisfyWith(value: Boolean): Boolean {
+                        return true
+                    }
+                }
+            }.toMap()
 
     val QUEST_MAP: Map<Quest, DatabaseKey<PlayerCache, QuestClient?>> = Quest.values()
             .map {

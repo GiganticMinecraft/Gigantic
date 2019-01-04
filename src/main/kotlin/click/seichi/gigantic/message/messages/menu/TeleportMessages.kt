@@ -12,7 +12,7 @@ import java.util.*
 object TeleportMessages {
 
     val TITLE = LocalizedText(
-            Locale.JAPANESE to "プレイヤーを選択"
+            Locale.JAPANESE to "テレポート先を選択"
     )
 
     val TELEPORT_TO_PLAYER = LocalizedText(

@@ -32,11 +32,9 @@ object PlayerCacheMemory {
     }
 
     private fun write(playerCache: PlayerCache, isAsync: Boolean) {
-        playerCache.run {
-            if (Gigantic.IS_DEBUG) return@run
-            if (isAsync) writeAsync()
-            else write()
-        }
+        if (Gigantic.IS_DEBUG) return
+        if (isAsync) playerCache.writeAsync()
+        else playerCache.write()
     }
 
 }
