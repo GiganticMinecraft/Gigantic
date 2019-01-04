@@ -39,6 +39,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import org.bukkit.scheduler.BukkitRunnable
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.concurrent.TimeUnit
@@ -77,7 +78,12 @@ class PlayerListener : Listener {
             player.gameMode = GameMode.SURVIVAL
         }
         val uniqueId = player.uniqueId
-        PlayerCacheMemory.writeThenRemoved(uniqueId, false)
+
+        object : BukkitRunnable() {
+            override fun run() {
+                PlayerCacheMemory.writeThenRemoved(uniqueId)
+            }
+        }.runTaskAsynchronously(Gigantic.PLUGIN)
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

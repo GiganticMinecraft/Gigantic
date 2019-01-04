@@ -23,17 +23,16 @@ object PlayerCacheMemory {
         playerCacheMap[uniqueId] = newCache
     }
 
-    fun write(uniqueId: UUID, isAsync: Boolean) {
-        write(playerCacheMap[uniqueId] ?: return, isAsync)
+    fun write(uniqueId: UUID) {
+        write(playerCacheMap[uniqueId] ?: return)
     }
 
-    fun writeThenRemoved(uniqueId: UUID, isAsync: Boolean) {
-        write(playerCacheMap.remove(uniqueId) ?: return, isAsync)
+    fun writeThenRemoved(uniqueId: UUID) {
+        write(playerCacheMap.remove(uniqueId) ?: return)
     }
 
-    private fun write(playerCache: PlayerCache, isAsync: Boolean) {
+    private fun write(playerCache: PlayerCache) {
         if (Gigantic.IS_DEBUG) return
-        if (isAsync) playerCache.writeAsync()
         else playerCache.write()
     }
 

@@ -43,32 +43,22 @@ class WorldListener : Listener {
     @EventHandler
     fun onWorldSave(event: WorldSaveEvent) {
 
-        val uniqueIdSet = Bukkit.getOnlinePlayers().map { it.uniqueId }.toMutableSet()
+        val onlineIdSet = Bukkit.getOnlinePlayers().map { it.uniqueId }.toMutableSet()
 
-        if (uniqueIdSet.isEmpty()) return
+        if (onlineIdSet.isEmpty()) return
 
         object : BukkitRunnable() {
             override fun run() {
-                val uniqueId = uniqueIdSet.firstOrNull()
-                if (uniqueId == null) {
-                    cancel()
-                    return
+                onlineIdSet.forEach { uniqueId ->
+                    // 保存処理
+                    try {
+                        PlayerCacheMemory.write(uniqueId)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
-                uniqueIdSet.remove(uniqueId)
-
-                // 既にプレイヤーが存在しない場合は終了
-                if (!PlayerCacheMemory.contains(uniqueId)) return
-
-
-                // 保存処理
-                try {
-                    PlayerCacheMemory.write(uniqueId, false)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
             }
-        }.runTaskTimer(Gigantic.PLUGIN, 0L, 1L)
+        }.runTaskAsynchronously(Gigantic.PLUGIN)
 
     }
 

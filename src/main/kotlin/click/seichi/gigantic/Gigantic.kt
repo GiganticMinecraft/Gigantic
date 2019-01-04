@@ -313,7 +313,7 @@ class Gigantic : JavaPlugin() {
                 player.gameMode = GameMode.SURVIVAL
             }
             try {
-                PlayerCacheMemory.writeThenRemoved(player.uniqueId, false)
+                PlayerCacheMemory.writeThenRemoved(player.uniqueId)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
