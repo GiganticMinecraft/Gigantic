@@ -61,15 +61,16 @@ object QuestButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent) {
+            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                 client.isProcessed = !client.isProcessed
 
                 PlayerSounds.TOGGLE.playOnly(player)
                 QuestSelectMenu.reopen(player)
 
-                if (client.isProcessed) return
+                if (client.isProcessed) return false
 
                 BattleManager.findBattle(player)?.end()
+                return true
             }
 
         }

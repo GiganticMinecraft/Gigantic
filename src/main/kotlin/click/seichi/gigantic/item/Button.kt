@@ -12,7 +12,9 @@ interface Button : Item {
     /**
      * クリック時に実行されます
      *
-     * @param event クリック時のInventoryClickEvent
+     * @param player プレイヤー
+     * @param event クリック時の[InventoryClickEvent]
+     * @return 何かしら実行した場合TRUE,それ以外はFALSE
      */
-    fun onClick(player: Player, event: InventoryClickEvent)
+    fun onClick(player: Player, event: InventoryClickEvent): Boolean
 }

@@ -24,4 +24,5 @@ class EntityListener : Listener {
         if (event.damager.type != EntityType.FIREWORK) return
         event.isCancelled = true
     }
+
 }

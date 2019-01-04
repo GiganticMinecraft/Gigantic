@@ -38,7 +38,8 @@ object SkillMenu : Menu() {
                     }
                 }
 
-                override fun onClick(player: Player, event: InventoryClickEvent) {
+                override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                    return true
                 }
 
             }

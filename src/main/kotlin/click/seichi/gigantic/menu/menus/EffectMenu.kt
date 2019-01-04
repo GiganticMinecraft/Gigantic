@@ -65,8 +65,8 @@ object EffectMenu : Menu() {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent) {
-
+            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                return false
             }
 
         })
@@ -83,7 +83,8 @@ object EffectMenu : Menu() {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent) {
+            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                return false
             }
         })
 
@@ -105,11 +106,12 @@ object EffectMenu : Menu() {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent) {
+            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                 val current = player.getOrPut(Keys.EFFECT)
-                if (current == effect) return
+                if (current == effect) return false
                 player.offer(Keys.EFFECT, effect)
                 reopen(player)
+                return true
             }
 
         })
@@ -172,10 +174,10 @@ object EffectMenu : Menu() {
                     }
                 }
 
-                override fun onClick(player: Player, event: InventoryClickEvent) {
+                override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                     if (effect.isBought(player)) {
                         // 購入されている場合
-                        if (effect.isSelected(player)) return
+                        if (effect.isSelected(player)) return false
                         // 選択処理
                         effect.select(player)
                         MenuSounds.EFFECT_SELECT.playOnly(player)
@@ -184,12 +186,13 @@ object EffectMenu : Menu() {
                         // 購入されていない場合
 
                         // 購入可否判定
-                        if (!effect.canBuy(player)) return
+                        if (!effect.canBuy(player)) return false
                         // 購入処理
                         effect.buy(player)
                         MenuSounds.EFFECT_BUY.playOnly(player)
                         reopen(player)
                     }
+                    return true
                 }
 
             }

@@ -8,7 +8,13 @@ import org.bukkit.event.player.PlayerInteractEvent
  */
 interface HandItem : Button {
 
-    // プレイヤーが行動したときに呼び出される
-    fun onInteract(player: Player, event: PlayerInteractEvent)
+    /**
+     * プレイヤーが行動したときに呼び出される
+     *
+     * @param player プレイヤー
+     * @param event クリック時の[PlayerInteractEvent]
+     * @return 何かしら実行した場合TRUE,それ以外はFALSE
+     */
+    fun onInteract(player: Player, event: PlayerInteractEvent): Boolean
 
 }

@@ -38,10 +38,12 @@ object SpellMenu : Menu() {
                     }
                 }
 
-                override fun onClick(player: Player, event: InventoryClickEvent) {
+                override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                     if (spell == Spell.APOSTOL) {
                         ApostolSettingMenu.open(player)
+                        return true
                     }
+                    return false
                 }
 
             })

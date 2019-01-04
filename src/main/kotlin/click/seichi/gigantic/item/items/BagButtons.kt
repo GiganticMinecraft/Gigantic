@@ -69,8 +69,8 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (player.getOrPut(Keys.PROFILE_IS_UPDATING)) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (player.getOrPut(Keys.PROFILE_IS_UPDATING)) return false
             PlayerSounds.TOGGLE.playOnly(player)
             player.offer(Keys.PROFILE_IS_UPDATING, true)
             player.updateBag()
@@ -106,7 +106,7 @@ object BagButtons {
                     }.runTaskLater(Gigantic.PLUGIN, Defaults.PROFILE_UPDATE_TIME * 20)
                 }
             }.runTaskAsynchronously(Gigantic.PLUGIN)
-
+            return true
         }
 
     }
@@ -121,8 +121,8 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (event.inventory.holder === DonateHistoryMenu) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === DonateHistoryMenu) return false
             //寄付履歴のリストを作成した後に表示
             // 一旦寄付履歴を全て削除
             player.offer(Keys.DONATE_TICKET_LIST, listOf())
@@ -154,6 +154,7 @@ object BagButtons {
                     }.runTaskLater(Gigantic.PLUGIN, Defaults.DONATE_HISTORY_LOAD_TIME * 20)
                 }
             }.runTaskAsynchronously(Gigantic.PLUGIN)
+            return true
         }
 
     }
@@ -168,9 +169,10 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (event.inventory.holder === SkillMenu) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === SkillMenu) return false
             SkillMenu.open(player)
+            return true
         }
 
     }
@@ -185,10 +187,11 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!Achievement.MANA_STONE.isGranted(player)) return
-            if (event.inventory.holder === SpellMenu) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (!Achievement.MANA_STONE.isGranted(player)) return false
+            if (event.inventory.holder === SpellMenu) return false
             SpellMenu.open(player)
+            return true
         }
 
     }
@@ -209,7 +212,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
             val afkLocation = player.getOrPut(Keys.AFK_LOCATION)
             when (player.gameMode) {
                 GameMode.SURVIVAL -> {
@@ -218,6 +221,7 @@ object BagButtons {
                     // 見えなくなるバグのため
                     player.showPlayer(Gigantic.PLUGIN, player)
                     player.updateBag()
+                    return true
                 }
                 GameMode.SPECTATOR -> {
                     player.gameMode = GameMode.SURVIVAL
@@ -227,8 +231,10 @@ object BagButtons {
                     player.closeInventory()
                     player.updateBag()
                     PlayerSounds.TELEPORT_AFK.play(player.location)
+                    return true
                 }
                 else -> {
+                    return false
                 }
             }
         }
@@ -251,9 +257,10 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (event.inventory.holder === SpecialThanksMenu) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === SpecialThanksMenu) return false
             SpecialThanksMenu.open(player)
+            return true
         }
 
     }
@@ -279,10 +286,11 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (Quest.getOrderedList(player).isEmpty()) return
-            if (event.inventory.holder === QuestSelectMenu) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (Quest.getOrderedList(player).isEmpty()) return false
+            if (event.inventory.holder === QuestSelectMenu) return false
             QuestSelectMenu.open(player)
+            return true
         }
 
     }
@@ -307,10 +315,11 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (Relic.getDroppedList(player).isEmpty()) return
-            if (event.inventory.holder === RelicMenu) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (Relic.getDroppedList(player).isEmpty()) return false
+            if (event.inventory.holder === RelicMenu) return false
             RelicMenu.open(player)
+            return true
         }
 
     }
@@ -324,9 +333,10 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (event.inventory.holder === TeleportMenu) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === TeleportMenu) return false
             TeleportMenu.open(player)
+            return true
         }
 
     }
@@ -341,9 +351,10 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (event.inventory.holder === ToolSwitchSettingMenu) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === ToolSwitchSettingMenu) return false
             ToolSwitchSettingMenu.open(player)
+            return true
         }
 
     }
@@ -358,10 +369,11 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!Achievement.EFFECT.isGranted(player)) return
-            if (event.inventory.holder === EffectMenu) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (!Achievement.EFFECT.isGranted(player)) return false
+            if (event.inventory.holder === EffectMenu) return false
             EffectMenu.open(player)
+            return true
         }
 
     }

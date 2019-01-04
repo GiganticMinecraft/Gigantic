@@ -23,7 +23,8 @@ class PrevButton(private val menu: BookMenu) : Button {
         }
     }
 
-    override fun onClick(player: Player, event: InventoryClickEvent) {
+    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
         menu.prevPage(player)
+        return true
     }
 }

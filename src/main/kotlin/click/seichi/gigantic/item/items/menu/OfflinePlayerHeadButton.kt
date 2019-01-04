@@ -20,7 +20,8 @@ class OfflinePlayerHeadButton(private val uuid: UUID) : Button {
         return Head.getOfflinePlayerHead(uuid)?.clone()
     }
 
-    override fun onClick(player: Player, event: InventoryClickEvent) {
+    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        return false
     }
 
 }

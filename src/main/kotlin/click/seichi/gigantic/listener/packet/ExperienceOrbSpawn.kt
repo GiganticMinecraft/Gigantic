@@ -1,16 +1,16 @@
 package click.seichi.gigantic.listener.packet
 
+import click.seichi.gigantic.Gigantic
 import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.events.ListenerPriority
 import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketEvent
-import org.bukkit.plugin.java.JavaPlugin
 
 /**
  * @author unicroak
  */
-class ExperienceOrbSpawn(instance: JavaPlugin) : PacketAdapter(
-        instance,
+class ExperienceOrbSpawn : PacketAdapter(
+        Gigantic.PLUGIN,
         ListenerPriority.LOW,
         PacketType.Play.Server.SPAWN_ENTITY_EXPERIENCE_ORB
 ) {

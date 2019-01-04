@@ -38,13 +38,14 @@ object ToolSwitchSettingMenu : Menu() {
                     }
                 }
 
-                override fun onClick(player: Player, event: InventoryClickEvent) {
+                override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                     if (!tool.toggle(player)) {
                         player.switchTool()
                         PlayerSounds.SWITCH.playOnly(player)
                     }
                     player.updateBelt(true, true)
                     ToolSwitchSettingMenu.reopen(player)
+                    return true
                 }
 
             })

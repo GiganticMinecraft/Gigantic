@@ -37,10 +37,12 @@ object HandItems {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
         }
 
-        override fun onInteract(player: Player, event: PlayerInteractEvent) {
+        override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
+            return false
         }
     }
 
@@ -57,10 +59,12 @@ object HandItems {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
         }
 
-        override fun onInteract(player: Player, event: PlayerInteractEvent) {
+        override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
+            return false
         }
     }
 
@@ -77,10 +81,12 @@ object HandItems {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
         }
 
-        override fun onInteract(player: Player, event: PlayerInteractEvent) {
+        override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
+            return false
         }
     }
 
@@ -109,15 +115,16 @@ object HandItems {
             else ItemStack(Material.AIR)
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
         }
 
-        override fun onInteract(player: Player, event: PlayerInteractEvent) {
-            if (!Achievement.MANA_STONE.isGranted(player)) return
-            val action = event.action ?: return
-            if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return
+        override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
+            if (!Achievement.MANA_STONE.isGranted(player)) return false
+            val action = event.action ?: return false
+            if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return false
             val coolTime = !player.getOrPut(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN)
-            if (coolTime) return
+            if (coolTime) return false
             player.offer(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN, false)
             Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
                 if (!player.isValid) return@scheduleSyncDelayedTask
@@ -130,6 +137,7 @@ object HandItems {
                 next
             }
             player.updateBelt(false, true)
+            return true
         }
 
     }
@@ -139,7 +147,7 @@ object HandItems {
 
         override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.SKILL_MINE_BURST.isGranted(player)) return null
-            val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST) ?: return null
+            val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
             return when {
                 mineBurst.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
                     mineBurst.run {
@@ -162,11 +170,12 @@ object HandItems {
             }
         }
 
-        override fun onInteract(player: Player, event: PlayerInteractEvent) {
-            Skill.MINE_BURST.tryCast(player)
+        override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
+            return Skill.MINE_BURST.tryCast(player)
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
         }
 
     }
@@ -175,7 +184,7 @@ object HandItems {
 
         override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.SKILL_FLASH.isGranted(player)) return null
-            val flash = player.getOrPut(Keys.SKILL_FLASH) ?: return null
+            val flash = player.getOrPut(Keys.SKILL_FLASH)
             return when {
                 flash.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
                     flash.run {
@@ -192,11 +201,12 @@ object HandItems {
             }
         }
 
-        override fun onInteract(player: Player, event: PlayerInteractEvent) {
-            Skill.FLASH.tryCast(player)
+        override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
+            return Skill.FLASH.tryCast(player)
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
         }
 
     }

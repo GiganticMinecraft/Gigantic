@@ -23,7 +23,8 @@ class NextButton(private val menu: BookMenu) : Button {
         }
     }
 
-    override fun onClick(player: Player, event: InventoryClickEvent) {
+    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
         menu.nextPage(player)
+        return true
     }
 }

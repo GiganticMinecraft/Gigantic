@@ -31,10 +31,11 @@ object TeleportButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (event.inventory.holder === TeleportToPlayerMenu) return
-            if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === TeleportToPlayerMenu) return false
+            if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return false
             TeleportToPlayerMenu.open(player)
+            return true
         }
 
     }
@@ -60,10 +61,10 @@ object TeleportButtons {
                 Biome.WARM_OCEAN
         )
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
             if (player.gameMode != GameMode.SURVIVAL) {
                 player.sendMessage(TeleportMessages.IN_BREAK_TIME.asSafety(player.wrappedLocale))
-                return
+                return false
             }
             var chunk: Chunk? = null
             var location: Location? = null
@@ -80,12 +81,13 @@ object TeleportButtons {
                             location.block.getRelative(BlockFace.DOWN).type == Material.BEDROCK)
                 }
             }
-            if (chunk == null) return
+            if (chunk == null) return false
             if (!chunk.isLoaded) {
-                if (chunk.load(true)) return
+                if (chunk.load(true)) return false
             }
             player.teleport(location!!)
             PlayerSounds.TELEPORT.play(location)
+            return true
         }
 
         private fun randomChunk(player: Player): Chunk {
@@ -105,18 +107,19 @@ object TeleportButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return false
             if (player.gameMode != GameMode.SURVIVAL) {
                 player.sendMessage(TeleportMessages.IN_BREAK_TIME.asSafety(player.wrappedLocale))
-                return
+                return false
             }
-            val chunk = player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return
+            val chunk = player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return false
             chunk.load(true)
             val location = chunk.getSpawnableLocation()
             player.teleport(location)
             PlayerSounds.TELEPORT.play(location)
             player.offer(Keys.LAST_DEATH_CHUNK, null)
+            return true
         }
 
     }
@@ -139,11 +142,12 @@ object TeleportButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
-            if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return false
             player.transform(Keys.TELEPORT_TOGGLE) { !it }
             PlayerSounds.TOGGLE.playOnly(player)
             TeleportMenu.reopen(player)
+            return true
         }
 
     }
@@ -197,14 +201,15 @@ object TeleportButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent) {
-                if (!to.isValid) return
-                if (!to.getOrPut(Keys.TELEPORT_TOGGLE)) return
-                if (to.gameMode != GameMode.SURVIVAL) return
-                if (to.world != player.world) return
-                if (to.isFlying) return
+            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                if (!to.isValid) return false
+                if (!to.getOrPut(Keys.TELEPORT_TOGGLE)) return false
+                if (to.gameMode != GameMode.SURVIVAL) return false
+                if (to.world != player.world) return false
+                if (to.isFlying) return false
                 player.teleport(to)
                 PlayerSounds.TELEPORT.play(to.location)
+                return true
             }
 
         }

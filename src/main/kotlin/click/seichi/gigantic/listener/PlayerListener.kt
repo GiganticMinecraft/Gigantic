@@ -23,6 +23,7 @@ import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.GameMode
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -139,6 +140,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerItemConsume(event: PlayerItemConsumeEvent) {
+        if (event.item.type == Material.FIREWORK_ROCKET) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
     }

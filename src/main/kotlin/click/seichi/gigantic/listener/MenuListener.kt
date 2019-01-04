@@ -41,14 +41,14 @@ class MenuListener : Listener {
                 if (event.isBeltSlot) player.getOrPut(Keys.BELT).findItem(event.slot)?.onClick(player, event)
                 // Bag
                 else player.getOrPut(Keys.BAG).getButton(event.slot)?.onClick(player, event)
-                return
             }
-        }
-
-        // Menu
-        when (holder) {
-            is BookMenu -> holder.getButton(player, event.slot)?.onClick(player, event)
-            is Menu -> holder.getButton(event.slot)?.onClick(player, event)
+            else -> {
+                // Menu
+                when (holder) {
+                    is BookMenu -> holder.getButton(player, event.slot)?.onClick(player, event)
+                    is Menu -> holder.getButton(event.slot)?.onClick(player, event)
+                }
+            }
         }
     }
 
@@ -59,8 +59,8 @@ class MenuListener : Listener {
         val belt = player.getOrPut(Keys.BELT)
         if (event.action == Action.PHYSICAL) return
         val slot = player.inventory.heldItemSlot
-        belt.findItem(slot)?.onInteract(player, event)
-        belt.offHandItem?.onInteract(player, event)
+        if (belt.findItem(slot)?.onInteract(player, event) == true) return
+        if (belt.offHandItem?.onInteract(player, event) == true) return
     }
 
 }

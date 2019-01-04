@@ -24,8 +24,9 @@ class BackButton(private val currentMenu: Menu, private val menu: Menu) : Button
         }
     }
 
-    override fun onClick(player: Player, event: InventoryClickEvent) {
+    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
         currentMenu.back(menu, player)
+        return true
     }
 
 }

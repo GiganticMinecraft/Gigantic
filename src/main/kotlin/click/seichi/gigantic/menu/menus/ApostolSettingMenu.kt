@@ -58,8 +58,9 @@ object ApostolSettingMenu : Menu() {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent) {
+            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                 reopen(player)
+                return true
             }
 
         })
@@ -81,7 +82,7 @@ object ApostolSettingMenu : Menu() {
             }
 
 
-            override fun onClick(player: Player, event: InventoryClickEvent) {
+            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                 player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                     val nextBreakArea = breakArea.add(2, 0, 0)
                     val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
@@ -95,6 +96,7 @@ object ApostolSettingMenu : Menu() {
                     }
                 }
                 reopen(player)
+                return true
             }
 
         })
@@ -108,7 +110,7 @@ object ApostolSettingMenu : Menu() {
                         }
                     }
 
-                    override fun onClick(player: Player, event: InventoryClickEvent) {
+                    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                         player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(-2, 0, 0)
                             if (nextBreakArea.width > 0) {
@@ -120,6 +122,7 @@ object ApostolSettingMenu : Menu() {
                             }
                         }
                         reopen(player)
+                        return true
                     }
 
                 })
@@ -141,7 +144,7 @@ object ApostolSettingMenu : Menu() {
                         }
                     }
 
-                    override fun onClick(player: Player, event: InventoryClickEvent) {
+                    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                         player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 1, 0)
                             val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
@@ -154,6 +157,7 @@ object ApostolSettingMenu : Menu() {
                             }
                         }
                         reopen(player)
+                        return true
                     }
 
                 })
@@ -167,7 +171,7 @@ object ApostolSettingMenu : Menu() {
                         }
                     }
 
-                    override fun onClick(player: Player, event: InventoryClickEvent) {
+                    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                         player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, -1, 0)
                             if (nextBreakArea.height > 0) {
@@ -179,6 +183,7 @@ object ApostolSettingMenu : Menu() {
                             }
                         }
                         reopen(player)
+                        return true
                     }
 
                 })
@@ -200,7 +205,7 @@ object ApostolSettingMenu : Menu() {
                         }
                     }
 
-                    override fun onClick(player: Player, event: InventoryClickEvent) {
+                    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                         player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 0, 1)
                             val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
@@ -213,6 +218,7 @@ object ApostolSettingMenu : Menu() {
                             }
                         }
                         reopen(player)
+                        return true
                     }
 
                 })
@@ -226,7 +232,7 @@ object ApostolSettingMenu : Menu() {
                         }
                     }
 
-                    override fun onClick(player: Player, event: InventoryClickEvent) {
+                    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                         player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 0, -1)
                             if (nextBreakArea.depth > 0) {
@@ -238,6 +244,7 @@ object ApostolSettingMenu : Menu() {
                             }
                         }
                         reopen(player)
+                        return true
                     }
 
                 })

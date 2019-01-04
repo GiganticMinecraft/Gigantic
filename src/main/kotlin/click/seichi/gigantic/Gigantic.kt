@@ -259,7 +259,7 @@ class Gigantic : JavaPlugin() {
         )
 
         registerPacketListeners(
-                ExperienceOrbSpawn(this)
+                ExperienceOrbSpawn()
         )
 
         bindCommands(

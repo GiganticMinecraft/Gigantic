@@ -40,7 +40,8 @@ object Armors {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
         }
 
     }
@@ -67,7 +68,8 @@ object Armors {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
         }
 
     }
@@ -94,7 +96,8 @@ object Armors {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
         }
 
     }
@@ -121,7 +124,8 @@ object Armors {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent) {
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
         }
 
     }
