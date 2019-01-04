@@ -9,7 +9,7 @@ import click.seichi.gigantic.breaker.BreakArea
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.config.PlayerLevelConfig
-import click.seichi.gigantic.database.dao.*
+import click.seichi.gigantic.database.UserEntity
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.monster.SoulMonster
@@ -25,7 +25,6 @@ import click.seichi.gigantic.will.Will
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.block.Block
-import org.jetbrains.exposed.dao.Entity
 import org.joda.time.DateTime
 import java.math.BigDecimal
 import java.util.*
@@ -39,13 +38,13 @@ object Keys {
         override val default: Long
             get() = 0L
 
-        override fun read(entity: Entity<*>): Long {
-            val user = entity as User
+        override fun read(entity: UserEntity): Long {
+            val user = entity.user
             return user.maxCombo
         }
 
-        override fun store(entity: Entity<*>, value: Long) {
-            val user = entity as User
+        override fun store(entity: UserEntity, value: Long) {
+            val user = entity.user
             user.maxCombo = value
         }
 
@@ -59,13 +58,13 @@ object Keys {
         override val default
             get() = Locale.JAPANESE
 
-        override fun read(entity: Entity<*>): Locale {
-            val user = entity as User
+        override fun read(entity: UserEntity): Locale {
+            val user = entity.user
             return Locale(user.localeString)
         }
 
-        override fun store(entity: Entity<*>, value: Locale) {
-            val user = entity as User
+        override fun store(entity: UserEntity, value: Locale) {
+            val user = entity.user
             user.localeString = value.language.substringBefore("_")
         }
 
@@ -79,13 +78,13 @@ object Keys {
         override val default: BigDecimal
             get() = Defaults.MANA.toBigDecimal()
 
-        override fun read(entity: Entity<*>): BigDecimal {
-            val user = entity as User
+        override fun read(entity: UserEntity): BigDecimal {
+            val user = entity.user
             return user.mana
         }
 
-        override fun store(entity: Entity<*>, value: BigDecimal) {
-            val user = entity as User
+        override fun store(entity: UserEntity, value: BigDecimal) {
+            val user = entity.user
             user.mana = value
         }
 
@@ -111,13 +110,13 @@ object Keys {
                     override val default: BigDecimal
                         get() = BigDecimal.ZERO
 
-                    override fun read(entity: Entity<*>): BigDecimal {
-                        val userExp = entity as UserExp
+                    override fun read(entity: UserEntity): BigDecimal {
+                        val userExp = entity.userExpMap[it]!!
                         return userExp.exp
                     }
 
-                    override fun store(entity: Entity<*>, value: BigDecimal) {
-                        val userExp = entity as UserExp
+                    override fun store(entity: UserEntity, value: BigDecimal) {
+                        val userExp = entity.userExpMap[it]!!
                         userExp.exp = value
                     }
 
@@ -136,13 +135,13 @@ object Keys {
                     override val default: Long
                         get() = 0L
 
-                    override fun read(entity: Entity<*>): Long {
-                        val userWill = entity as UserWill
+                    override fun read(entity: UserEntity): Long {
+                        val userWill = entity.userWillMap[it]!!
                         return userWill.memory
                     }
 
-                    override fun store(entity: Entity<*>, value: Long) {
-                        val userWill = entity as UserWill
+                    override fun store(entity: UserEntity, value: Long) {
+                        val userWill = entity.userWillMap[it]!!
                         userWill.memory = value
                     }
 
@@ -160,13 +159,13 @@ object Keys {
                     override val default: Boolean
                         get() = false
 
-                    override fun read(entity: Entity<*>): Boolean {
-                        val userWill = entity as UserWill
+                    override fun read(entity: UserEntity): Boolean {
+                        val userWill = entity.userWillMap[it]!!
                         return userWill.hasAptitude
                     }
 
-                    override fun store(entity: Entity<*>, value: Boolean) {
-                        val userWill = entity as UserWill
+                    override fun store(entity: UserEntity, value: Boolean) {
+                        val userWill = entity.userWillMap[it]!!
                         userWill.hasAptitude = value
                     }
 
@@ -184,13 +183,13 @@ object Keys {
                     override val default: Long
                         get() = 0L
 
-                    override fun read(entity: Entity<*>): Long {
-                        val userMonster = entity as UserMonster
+                    override fun read(entity: UserEntity): Long {
+                        val userMonster = entity.userMonsterMap[it]!!
                         return userMonster.defeat
                     }
 
-                    override fun store(entity: Entity<*>, value: Long) {
-                        val userMonster = entity as UserMonster
+                    override fun store(entity: UserEntity, value: Long) {
+                        val userMonster = entity.userMonsterMap[it]!!
                         userMonster.defeat = value
                     }
 
@@ -208,13 +207,13 @@ object Keys {
                     override val default: Long
                         get() = 0L
 
-                    override fun read(entity: Entity<*>): Long {
-                        val userRelic = entity as UserRelic
+                    override fun read(entity: UserEntity): Long {
+                        val userRelic = entity.userRelicMap[it]!!
                         return userRelic.amount
                     }
 
-                    override fun store(entity: Entity<*>, value: Long) {
-                        val userRelic = entity as UserRelic
+                    override fun store(entity: UserEntity, value: Long) {
+                        val userRelic = entity.userRelicMap[it]!!
                         userRelic.amount = value
                     }
 
@@ -232,13 +231,13 @@ object Keys {
                     override val default: Boolean
                         get() = false
 
-                    override fun read(entity: Entity<*>): Boolean {
-                        val userAchievement = entity as UserAchievement
+                    override fun read(entity: UserEntity): Boolean {
+                        val userAchievement = entity.userAchievementMap[it]!!
                         return userAchievement.hasUnlocked
                     }
 
-                    override fun store(entity: Entity<*>, value: Boolean) {
-                        val userAchievement = entity as UserAchievement
+                    override fun store(entity: UserEntity, value: Boolean) {
+                        val userAchievement = entity.userAchievementMap[it]!!
                         userAchievement.hasUnlocked = value
                     }
 
@@ -256,13 +255,13 @@ object Keys {
                     override val default: Boolean
                         get() = false
 
-                    override fun read(entity: Entity<*>): Boolean {
-                        val userBelt = entity as UserBelt
+                    override fun read(entity: UserEntity): Boolean {
+                        val userBelt = entity.userBeltMap[it]!!
                         return userBelt.canSwitch
                     }
 
-                    override fun store(entity: Entity<*>, value: Boolean) {
-                        val userBelt = entity as UserBelt
+                    override fun store(entity: UserEntity, value: Boolean) {
+                        val userBelt = entity.userBeltMap[it]!!
                         userBelt.canSwitch = value
                     }
 
@@ -280,13 +279,13 @@ object Keys {
                     override val default: Boolean
                         get() = false
 
-                    override fun read(entity: Entity<*>): Boolean {
-                        val userBelt = entity as UserBelt
+                    override fun read(entity: UserEntity): Boolean {
+                        val userBelt = entity.userBeltMap[it]!!
                         return userBelt.isUnlocked
                     }
 
-                    override fun store(entity: Entity<*>, value: Boolean) {
-                        val userBelt = entity as UserBelt
+                    override fun store(entity: UserEntity, value: Boolean) {
+                        val userBelt = entity.userBeltMap[it]!!
                         userBelt.isUnlocked = value
                     }
 
@@ -312,13 +311,13 @@ object Keys {
         override val default: Belt
             get() = Belt.findById(Defaults.BELT_ID)!!
 
-        override fun read(entity: Entity<*>): Belt {
-            val user = entity as User
+        override fun read(entity: UserEntity): Belt {
+            val user = entity.user
             return Belt.findById(user.beltId) ?: default
         }
 
-        override fun store(entity: Entity<*>, value: Belt) {
-            val user = entity as User
+        override fun store(entity: UserEntity, value: Belt) {
+            val user = entity.user
             user.beltId = value.id
         }
 
@@ -332,13 +331,13 @@ object Keys {
         override val default: Tool
             get() = Tool.findById(Defaults.TOOL_ID)!!
 
-        override fun read(entity: Entity<*>): Tool {
-            val user = entity as User
+        override fun read(entity: UserEntity): Tool {
+            val user = entity.user
             return Tool.findById(user.toolId) ?: default
         }
 
-        override fun store(entity: Entity<*>, value: Tool) {
-            val user = entity as User
+        override fun store(entity: UserEntity, value: Tool) {
+            val user = entity.user
             user.toolId = value.id
         }
 
@@ -354,13 +353,13 @@ object Keys {
                     override val default: Boolean
                         get() = false
 
-                    override fun read(entity: Entity<*>): Boolean {
-                        val userTool = entity as UserTool
+                    override fun read(entity: UserEntity): Boolean {
+                        val userTool = entity.userToolMap[it]!!
                         return userTool.canSwitch
                     }
 
-                    override fun store(entity: Entity<*>, value: Boolean) {
-                        val userTool = entity as UserTool
+                    override fun store(entity: UserEntity, value: Boolean) {
+                        val userTool = entity.userToolMap[it]!!
                         userTool.canSwitch = value
                     }
 
@@ -378,13 +377,13 @@ object Keys {
                     override val default: Boolean
                         get() = false
 
-                    override fun read(entity: Entity<*>): Boolean {
-                        val userTool = entity as UserTool
+                    override fun read(entity: UserEntity): Boolean {
+                        val userTool = entity.userToolMap[it]!!
                         return userTool.isUnlocked
                     }
 
-                    override fun store(entity: Entity<*>, value: Boolean) {
-                        val userTool = entity as UserTool
+                    override fun store(entity: UserEntity, value: Boolean) {
+                        val userTool = entity.userToolMap[it]!!
                         userTool.isUnlocked = value
                     }
 
@@ -421,13 +420,13 @@ object Keys {
         override val default: Boolean
             get() = false
 
-        override fun read(entity: Entity<*>): Boolean {
-            val user = entity as User
+        override fun read(entity: UserEntity): Boolean {
+            val user = entity.user
             return user.spellToggle
         }
 
-        override fun store(entity: Entity<*>, value: Boolean) {
-            val user = entity as User
+        override fun store(entity: UserEntity, value: Boolean) {
+            val user = entity.user
             user.spellToggle = value
         }
 
@@ -441,13 +440,13 @@ object Keys {
         override val default: Boolean
             get() = true
 
-        override fun read(entity: Entity<*>): Boolean {
-            val user = entity as User
+        override fun read(entity: UserEntity): Boolean {
+            val user = entity.user
             return user.teleportToggle
         }
 
-        override fun store(entity: Entity<*>, value: Boolean) {
-            val user = entity as User
+        override fun store(entity: UserEntity, value: Boolean) {
+            val user = entity.user
             user.teleportToggle = value
         }
 
@@ -486,8 +485,8 @@ object Keys {
                     override val default: QuestClient?
                         get() = null
 
-                    override fun read(entity: Entity<*>): QuestClient? {
-                        val userQuest = entity as UserQuest
+                    override fun read(entity: UserEntity): QuestClient? {
+                        val userQuest = entity.userQuestMap[it]!!
                         return QuestClient(
                                 it,
                                 userQuest.isOrdered,
@@ -499,9 +498,9 @@ object Keys {
 
                     }
 
-                    override fun store(entity: Entity<*>, value: QuestClient?) {
+                    override fun store(entity: UserEntity, value: QuestClient?) {
                         value ?: return
-                        val userQuest = entity as UserQuest
+                        val userQuest = entity.userQuestMap[it]!!
                         userQuest.isOrdered = value.isOrdered
                         userQuest.orderedAt = value.orderedAt
                         userQuest.isProcessed = value.isProcessed
@@ -543,8 +542,8 @@ object Keys {
         override val default: BreakArea
             get() = BreakArea(1, 1, 1)
 
-        override fun read(entity: Entity<*>): BreakArea {
-            val user = entity as User
+        override fun read(entity: UserEntity): BreakArea {
+            val user = entity.user
             return BreakArea(
                     user.apostolWidth,
                     user.apostolHeight,
@@ -552,8 +551,8 @@ object Keys {
             )
         }
 
-        override fun store(entity: Entity<*>, value: BreakArea) {
-            val user = entity as User
+        override fun store(entity: UserEntity, value: BreakArea) {
+            val user = entity.user
             user.run {
                 apostolWidth = value.width
                 apostolHeight = value.height
@@ -633,13 +632,13 @@ object Keys {
                             override val default: Boolean
                                 get() = false
 
-                            override fun read(entity: Entity<*>): Boolean {
-                                val userEffect = entity as UserEffect
+                            override fun read(entity: UserEntity): Boolean {
+                                val userEffect = entity.userEffectMap[effect]!!
                                 return userEffect.isBought
                             }
 
-                            override fun store(entity: Entity<*>, value: Boolean) {
-                                val userEffect = entity as UserEffect
+                            override fun store(entity: UserEntity, value: Boolean) {
+                                val userEffect = entity.userEffectMap[effect]!!
                                 userEffect.isBought = value
                             }
 
@@ -658,13 +657,13 @@ object Keys {
                             override val default: DateTime
                                 get() = DateTime.now()
 
-                            override fun read(entity: Entity<*>): DateTime {
-                                val userEffect = entity as UserEffect
+                            override fun read(entity: UserEntity): DateTime {
+                                val userEffect = entity.userEffectMap[effect]!!
                                 return userEffect.boughtAt
                             }
 
-                            override fun store(entity: Entity<*>, value: DateTime) {
-                                val userEffect = entity as UserEffect
+                            override fun store(entity: UserEntity, value: DateTime) {
+                                val userEffect = entity.userEffectMap[effect]!!
                                 userEffect.boughtAt = value
                             }
 
@@ -679,13 +678,13 @@ object Keys {
         override val default: GiganticEffect
             get() = GiganticEffect.DEFAULT
 
-        override fun read(entity: Entity<*>): GiganticEffect {
-            val user = entity as User
+        override fun read(entity: UserEntity): GiganticEffect {
+            val user = entity.user
             return GiganticEffect.findById(user.effectId) ?: default
         }
 
-        override fun store(entity: Entity<*>, value: GiganticEffect) {
-            val user = entity as User
+        override fun store(entity: UserEntity, value: GiganticEffect) {
+            val user = entity.user
             user.effectId = value.id
         }
 
@@ -699,12 +698,12 @@ object Keys {
         override val default: Int
             get() = 0
 
-        override fun read(entity: Entity<*>): Int {
-            val user = entity as User
+        override fun read(entity: UserEntity): Int {
+            val user = entity.user
             return user.vote
         }
 
-        override fun store(entity: Entity<*>, value: Int) {
+        override fun store(entity: UserEntity, value: Int) {
             // データベースが書き換えられていた場合，上書き削除してしまうので
             // 書き込まなくてよい．ポイントは減ることもないし増えることもない．
             Gigantic.PLUGIN.logger.warning("投票数のデータベース書き込みは禁止されています")
@@ -721,12 +720,12 @@ object Keys {
         override val default: Int
             get() = 0
 
-        override fun read(entity: Entity<*>): Int {
-            val user = entity as User
+        override fun read(entity: UserEntity): Int {
+            val user = entity.user
             return user.pomme
         }
 
-        override fun store(entity: Entity<*>, value: Int) {
+        override fun store(entity: UserEntity, value: Int) {
             // データベースが書き換えられていた場合，上書き削除してしまうので
             // 書き込まなくてよい．ポイントは減ることもないし増えることもない．
             Gigantic.PLUGIN.logger.warning("ポムのデータベース書き込みは禁止されています")
@@ -743,12 +742,12 @@ object Keys {
         override val default: Int
             get() = 0
 
-        override fun read(entity: Entity<*>): Int {
-            val user = entity as User
+        override fun read(entity: UserEntity): Int {
+            val user = entity.user
             return user.donation
         }
 
-        override fun store(entity: Entity<*>, value: Int) {
+        override fun store(entity: UserEntity, value: Int) {
             // データベースが書き換えられていた場合，上書き削除してしまうので
             // 書き込まなくてよい．ポイントは減ることもないし増えることもない．
             Gigantic.PLUGIN.logger.warning("寄付金のデータベース書き込みは禁止されています")
