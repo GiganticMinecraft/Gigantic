@@ -4,6 +4,7 @@ import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
@@ -66,6 +67,7 @@ open class Miner : Breaker {
 
         // play sounds
         val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
+        val effect = player.getOrPut(Keys.EFFECT)
         if (Achievement.SKILL_MINE_COMBO.isGranted(player)) {
             // Sounds
             when {
@@ -73,9 +75,10 @@ open class Miner : Breaker {
                     SkillSounds.MINE_BURST_ON_BREAK(player.combo).playOnly(player)
                     SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
                 }
-                !isCastApostol -> PlayerSounds.OBTAIN_EXP(player.combo).playOnly(player)
-                else -> {
+                // TODO 音があるかないかで判断すること
+                isCastApostol && effect != GiganticEffect.DEFAULT -> {
                 }
+                else -> PlayerSounds.OBTAIN_EXP(player.combo).playOnly(player)
             }
         }
 
