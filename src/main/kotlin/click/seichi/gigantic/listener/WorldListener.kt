@@ -43,7 +43,7 @@ class WorldListener : Listener {
     @EventHandler
     fun onWorldSave(event: WorldSaveEvent) {
 
-        val onlineIdSet = Bukkit.getOnlinePlayers().map { it.uniqueId }.toMutableSet()
+        val onlineIdSet = Bukkit.getOnlinePlayers().map { it.uniqueId }.toSet()
 
         if (onlineIdSet.isEmpty()) return
 

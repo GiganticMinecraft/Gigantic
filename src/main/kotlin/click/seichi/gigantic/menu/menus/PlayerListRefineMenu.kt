@@ -4,8 +4,8 @@ import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.items.menu.BackButton
 import click.seichi.gigantic.item.items.menu.PlayerListMenuButtons
 import click.seichi.gigantic.menu.Menu
+import click.seichi.gigantic.menu.RefineItem
 import click.seichi.gigantic.message.messages.menu.PlayerListMenuMessages
-import click.seichi.gigantic.util.RefineItem
 import org.bukkit.entity.Player
 
 /**

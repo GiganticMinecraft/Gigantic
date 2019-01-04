@@ -8,8 +8,8 @@ import click.seichi.gigantic.item.items.menu.NextButton
 import click.seichi.gigantic.item.items.menu.PlayerListMenuButtons
 import click.seichi.gigantic.item.items.menu.PrevButton
 import click.seichi.gigantic.menu.BookMenu
+import click.seichi.gigantic.menu.RefineItem
 import click.seichi.gigantic.message.messages.menu.TeleportMessages
-import click.seichi.gigantic.util.RefineItem
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory

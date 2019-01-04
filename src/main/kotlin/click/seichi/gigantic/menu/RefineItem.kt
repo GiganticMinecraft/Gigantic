@@ -1,12 +1,11 @@
-package click.seichi.gigantic.util
+package click.seichi.gigantic.menu
 
 /**
  * プレイヤーリストの絞り込み項目
- * slotは1..8を指定すること
+ * @param slot 1..9
  * @author tar0ss
  */
 enum class RefineItem(val slot: Int) {
-    // オンラインプレイヤーのみを絞り込む
     ONLINE(1),
     ;
 }
