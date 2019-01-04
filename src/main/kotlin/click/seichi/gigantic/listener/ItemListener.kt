@@ -11,7 +11,7 @@ import org.bukkit.event.entity.ItemSpawnEvent
 class ItemListener : Listener {
 
     // 全てのアイテムスポーンをキャンセル
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onItemSpawn(event: ItemSpawnEvent) {
         event.isCancelled = true
     }

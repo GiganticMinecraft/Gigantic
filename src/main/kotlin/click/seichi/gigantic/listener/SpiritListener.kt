@@ -13,7 +13,7 @@ import org.bukkit.event.block.BlockBreakEvent
  */
 class SpiritListener : Listener {
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onBlockBreak(event: BlockBreakEvent) {
         if (event.isCancelled) return
         val player = event.player ?: return

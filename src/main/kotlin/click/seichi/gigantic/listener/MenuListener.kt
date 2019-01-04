@@ -7,6 +7,7 @@ import click.seichi.gigantic.menu.BookMenu
 import click.seichi.gigantic.menu.Menu
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.inventory.InventoryAction
@@ -26,7 +27,7 @@ class MenuListener : Listener {
     )
 
     // メニュー、ベルト、バッグに使用
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     fun onInventoryClick(event: InventoryClickEvent) {
         val player = event.whoClicked as? org.bukkit.entity.Player ?: return
         if (player.gameMode != GameMode.SURVIVAL && player.gameMode != GameMode.SPECTATOR) return

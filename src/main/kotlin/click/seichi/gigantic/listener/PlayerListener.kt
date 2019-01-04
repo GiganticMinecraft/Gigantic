@@ -79,7 +79,7 @@ class PlayerListener : Listener {
         PlayerCacheMemory.writeThenRemoved(uniqueId, true)
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
         /**
@@ -120,7 +120,7 @@ class PlayerListener : Listener {
      * プレイヤーのメニュー以外のインベントリーオープンをキャンセル
      * プレイヤーインベントリのオープンは検知されない．あれはクライアントサイドのみ
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onInventoryOpen(event: InventoryOpenEvent) {
         if (event.player !is Player) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
@@ -128,26 +128,26 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onPlayerArmorStandManipulate(event: PlayerArmorStandManipulateEvent) {
         if (event.player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
     }
 
     // プレイヤーの全てのドロップをキャンセル
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onDropItem(event: PlayerDropItemEvent) {
         event.isCancelled = true
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onPlayerItemConsume(event: PlayerItemConsumeEvent) {
         if (event.item.type == Material.FIREWORK_ROCKET) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
         val player = event.player ?: return
         event.isCancelled = true
@@ -193,12 +193,12 @@ class PlayerListener : Listener {
         event.player.updateTool()
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onChangeFoodLevel(event: FoodLevelChangeEvent) {
         event.isCancelled = true
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onDamage(event: EntityDamageEvent) {
         if (event.entity !is Player) return
         if (event.cause == EntityDamageEvent.DamageCause.STARVATION) {
@@ -209,7 +209,7 @@ class PlayerListener : Listener {
             event.damage = Double.MAX_VALUE
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onRegainHealth(event: EntityRegainHealthEvent) {
         if (event.entity !is Player) return
         if (event.regainReason == EntityRegainHealthEvent.RegainReason.SATIATED) {
@@ -276,14 +276,14 @@ class PlayerListener : Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onPlaceBlock(event: BlockPlaceEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onMultiPlaceBlock(event: BlockMultiPlaceEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
@@ -291,7 +291,7 @@ class PlayerListener : Listener {
     }
 
     // スポーン付近を破壊した場合問答無用でキャンセル
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelSpawnArea(event: BlockBreakEvent) {
         val player = event.player ?: return
         val block = event.block ?: return
@@ -302,7 +302,7 @@ class PlayerListener : Listener {
     }
 
     // ツール以外で破壊したときキャンセル
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelNotToolBreaking(event: BlockBreakEvent) {
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
@@ -314,7 +314,7 @@ class PlayerListener : Listener {
     }
 
     // ツール以外で破壊したときキャンセル
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelNotSneakingUnderBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
         val block = event.block ?: return
@@ -325,7 +325,8 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    // スキルで破壊中のブロックを破壊したときキャンセル
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelBrokenBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return
         val block = event.block ?: return
@@ -334,7 +335,8 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    // プレイヤーの近くを破壊したときキャンセル
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelNearAnotherPlayer(event: BlockBreakEvent) {
         val player = event.player ?: return
         val block = event.block ?: return
@@ -344,7 +346,8 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    // 重力が１を超えた時キャンセル
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelOverGravity(event: BlockBreakEvent) {
         val player = event.player ?: return
         val block = event.block ?: return
