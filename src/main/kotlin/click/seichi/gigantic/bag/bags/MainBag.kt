@@ -17,7 +17,7 @@ object MainBag : Bag() {
 //        registerButton(21, BagButtons.RELIC)
         registerButton(23, BagButtons.TELEPORT_DOOR)
         registerButton(25, BagButtons.AFK)
-        registerButton(27, BagButtons.PLAYER_LIST)
+        //registerButton(27, BagButtons.PLAYER_LIST)
         registerButton(33, BagButtons.TOOL_SWITCH_SETTING)
         registerButton(35, BagButtons.SPECIAL_THANKS)
     }
