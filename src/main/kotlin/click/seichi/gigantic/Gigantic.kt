@@ -143,7 +143,13 @@ class Gigantic : JavaPlugin() {
                 Material.DARK_PRISMARINE,
                 Material.PACKED_ICE,
                 Material.BLUE_ICE,
-                Material.MAGMA_BLOCK
+                Material.MAGMA_BLOCK,
+                Material.INFESTED_CHISELED_STONE_BRICKS,
+                Material.INFESTED_COBBLESTONE,
+                Material.INFESTED_CRACKED_STONE_BRICKS,
+                Material.INFESTED_MOSSY_STONE_BRICKS,
+                Material.INFESTED_STONE,
+                Material.INFESTED_STONE_BRICKS
         )
 
         val LOGS = setOf(
