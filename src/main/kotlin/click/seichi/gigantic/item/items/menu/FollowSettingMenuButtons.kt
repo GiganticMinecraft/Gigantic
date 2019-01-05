@@ -109,7 +109,7 @@ object FollowSettingMenuButtons {
     val FOLLOW_ONLINE = object : Button {
         override fun findItemStack(player: Player): ItemStack? {
             return ItemStack(Material.PURPLE_DYE).apply {
-                setDisplayName("${ChatColor.GOLD}" +
+                setDisplayName("${ChatColor.LIGHT_PURPLE}" +
                         "${ChatColor.BOLD}" +
                         FollowSettingMenuMessages.FOLLOW_ONLINE.asSafety(player.wrappedLocale))
             }
