@@ -120,6 +120,9 @@ fun Player.unFollow(uniqueId: UUID) = transform(Keys.FOLLOW_SET) {
     it.toMutableSet().apply { remove(uniqueId) }
 }
 
+val Player.follows: Int
+    get() = getOrPut(Keys.FOLLOW_SET).size
+
 /**
  * プレイヤーが向いている方向の[BlockFace]を取得する
  */

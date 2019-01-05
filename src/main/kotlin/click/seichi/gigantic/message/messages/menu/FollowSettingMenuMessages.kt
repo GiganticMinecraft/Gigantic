@@ -13,7 +13,7 @@ object FollowSettingMenuMessages {
     )
 
     val FOLLOW = LocalizedText(
-            Locale.JAPANESE to "フォロー一覧"
+            Locale.JAPANESE to "フォロー一覧（オンラインのみ）"
     )
 
     val CLICK_TO_UNFOLLOW = LocalizedText(
@@ -21,7 +21,7 @@ object FollowSettingMenuMessages {
     )
 
     val FOLLOWER = LocalizedText(
-            Locale.JAPANESE to "フォロワー一覧"
+            Locale.JAPANESE to "フォロワー一覧（オンラインのみ）"
     )
 
     val CLICK_TO_FOLLOW = LocalizedText(
@@ -29,11 +29,15 @@ object FollowSettingMenuMessages {
     )
 
     val FOLLOW_ONLINE = LocalizedText(
-            Locale.JAPANESE to "フォローする"
+            Locale.JAPANESE to "フォローする（オンラインのみ）"
     )
 
     val FOLLOW_EXCHANGE = LocalizedText(
             Locale.JAPANESE to "相互フォロー中"
+    )
+
+    val MAX_FOLLOW = LocalizedText(
+            Locale.JAPANESE to "フォローできる最大人数を超えています"
     )
 
     val FOLLOWER_NOW = LocalizedText(

@@ -1,6 +1,7 @@
 package click.seichi.gigantic.item.items.menu
 
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.RefineItem
@@ -84,14 +85,20 @@ object FollowSettingMenuButtons {
                             "${ChatColor.BOLD}" +
                             to.name)
                     clearLore()
-                    if (player.isFollow(to.uniqueId)) return@apply
-                    addLore("${ChatColor.GREEN}" +
-                            FollowSettingMenuMessages.CLICK_TO_FOLLOW.asSafety(player.wrappedLocale))
+                    when {
+                        player.isFollow(to.uniqueId) -> addLore("${ChatColor.LIGHT_PURPLE}" +
+                                FollowSettingMenuMessages.FOLLOW_EXCHANGE.asSafety(player.wrappedLocale))
+                        player.follows < Config.PLAYER_MAX_FOLLOW -> addLore("${ChatColor.GREEN}" +
+                                FollowSettingMenuMessages.CLICK_TO_FOLLOW.asSafety(player.wrappedLocale))
+                        else -> addLore("${ChatColor.RED}" +
+                                FollowSettingMenuMessages.MAX_FOLLOW.asSafety(player.wrappedLocale))
+                    }
                 }
             }
 
             override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                 if (player.isFollow(to.uniqueId)) return true
+                if (player.follows >= Config.PLAYER_MAX_FOLLOW) return true
                 player.follow(to.uniqueId)
                 FollowerMenu.reopen(player)
                 return true
@@ -122,16 +129,19 @@ object FollowSettingMenuButtons {
                             "${ChatColor.BOLD}" +
                             to.name)
                     clearLore()
-                    if (to.follow(player.uniqueId)) {
-                        addLore("${ChatColor.GOLD}" +
+                    when {
+                        to.follow(player.uniqueId) -> addLore("${ChatColor.GOLD}" +
                                 FollowSettingMenuMessages.FOLLOWER_NOW.asSafety(player.wrappedLocale))
+                        player.follows < Config.PLAYER_MAX_FOLLOW -> addLore("${ChatColor.GREEN}" +
+                                FollowSettingMenuMessages.CLICK_TO_FOLLOW.asSafety(player.wrappedLocale))
+                        else -> addLore("${ChatColor.RED}" +
+                                FollowSettingMenuMessages.MAX_FOLLOW.asSafety(player.wrappedLocale))
                     }
-                    setLore("${ChatColor.GREEN}" +
-                            FollowSettingMenuMessages.CLICK_TO_FOLLOW.asSafety(player.wrappedLocale))
                 }
             }
 
             override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                if (player.follows >= Config.PLAYER_MAX_FOLLOW) return true
                 player.follow(to.uniqueId)
                 FollowPlayerMenu.reopen(player)
                 return true

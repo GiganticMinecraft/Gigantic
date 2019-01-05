@@ -9,6 +9,8 @@ object Config : SimpleConfiguration("config") {
 
     val PLAYER_DEATH_PENALTY by lazy { getDouble("player.death_penalty") }
 
+    val PLAYER_MAX_FOLLOW by lazy { getInt("player.max_follow") }
+
     val PROTECT_RADIUS by lazy { getDouble("player.protect_radius") }
 
     val MAX_BREAKABLE_GRAVITY by lazy { getInt("player.max_breakable_gravity") }
