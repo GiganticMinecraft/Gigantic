@@ -31,6 +31,10 @@ object TeleportMessages {
             Locale.JAPANESE to "最後に死亡した場所へ"
     )
 
+    val TELEPORT_TO_LAST_BREAK = LocalizedText(
+            Locale.JAPANESE to "最後に整地した場所へ"
+    )
+
     val TELEPORT_TO_PLAYER_TITLE = LocalizedText(
             Locale.JAPANESE to "テレポートするプレイヤーを選ぶ"
     )

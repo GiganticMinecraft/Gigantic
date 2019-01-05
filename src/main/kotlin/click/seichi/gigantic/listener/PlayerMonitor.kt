@@ -2,9 +2,11 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.breaker.Cutter
 import click.seichi.gigantic.breaker.Miner
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.enchantment.ToolEnchantment
 import click.seichi.gigantic.extension.effect
 import click.seichi.gigantic.extension.isLog
+import click.seichi.gigantic.extension.offer
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -30,6 +32,8 @@ class PlayerMonitor : Listener {
         Miner().onBreakBlock(player, block)
 
         player.effect.generalBreak(player, block)
+
+        player.offer(Keys.LAST_BREAK_CHUNK, block.chunk)
     }
 
 }

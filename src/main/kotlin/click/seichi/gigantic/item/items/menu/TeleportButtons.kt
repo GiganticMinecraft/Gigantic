@@ -232,4 +232,25 @@ object TeleportButtons {
 
     }
 
+    val TELEPORT_TO_LAST_BREAK_CHUNK = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            player.getOrPut(Keys.LAST_BREAK_CHUNK) ?: return null
+            return ItemStack(Material.DIAMOND_PICKAXE).apply {
+                setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_LAST_BREAK.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            val chunk = player.getOrPut(Keys.LAST_BREAK_CHUNK) ?: return false
+            chunk.load(true)
+            val location = chunk.getSpawnableLocation()
+            player.teleport(location)
+            if (player.gameMode == GameMode.SURVIVAL)
+                PlayerSounds.TELEPORT.play(location)
+            return true
+        }
+
+    }
+
 }

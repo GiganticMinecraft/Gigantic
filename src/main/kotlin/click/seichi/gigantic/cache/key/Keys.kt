@@ -893,4 +893,13 @@ object Keys {
         }
     }
 
+    val LAST_BREAK_CHUNK = object : Key<PlayerCache, Chunk?> {
+        override val default: Chunk?
+            get() = null
+
+        override fun satisfyWith(value: Chunk?): Boolean {
+            return true
+        }
+    }
+
 }

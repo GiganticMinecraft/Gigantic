@@ -36,6 +36,6 @@ val Chunk.isSpawnArea: Boolean
 fun Chunk.getSpawnableLocation(): Location {
     val x = Random.nextInt(15)
     val z = Random.nextInt(15)
-    var block: Block = getBlock(x, 255, z)
+    val block: Block = getBlock(x, 255, z)
     return block.surfaceBlock.centralLocation.add(0.0, 2.0, 0.0)
 }
