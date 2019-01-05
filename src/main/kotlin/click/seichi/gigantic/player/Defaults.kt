@@ -21,4 +21,7 @@ object Defaults {
     const val PROFILE_UPDATE_TIME = 1L
     // 寄付履歴表示にかかる時間（秒）
     const val DONATE_HISTORY_LOAD_TIME = 1L
+    // Elytra Settings
+    const val ELYTRA_BASE_SPEED = 0.05
+    const val ELYTRA_BASE_LAUNCH = 3
 }

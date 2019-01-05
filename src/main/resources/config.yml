@@ -18,6 +18,20 @@ player:
   # フォローできる最大人数
   max_follow: 100
 
+elytra:
+  # Time it takes to charge up a jump in ticks
+  # 1 second = 20 ticks
+  # default = 60 ticks = 3 seconds
+  chargeup_time: 60
+
+  # Elytra gliding speed multiplier
+  # default = 1.0
+  speed_multiplier: 1.0
+
+  # Launch strength multiplier
+  # default = 1.0
+  launch_multiplier: 1.0
+
 world:
   # 正方形の１辺の長さ
   # 実際には±0座標を中心とするので

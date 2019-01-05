@@ -13,6 +13,12 @@ object Config : SimpleConfiguration("config") {
 
     val PROTECT_RADIUS by lazy { getDouble("player.protect_radius") }
 
+    val ELYTRA_CHARGE_UP_TIME by lazy { getLong("elytra.charge_up_time") }
+
+    val ELYTRA_SPEED_MULTIPLIER by lazy { getDouble("elytra.speed_multiplier") }
+
+    val ELYTRA_LAUNCH_MULTIPLIER by lazy { getDouble("elytra.launch_multiplier") }
+
     val MAX_BREAKABLE_GRAVITY by lazy { getInt("player.max_breakable_gravity") }
 
     val DEBUG_MODE by lazy { getBoolean("debug_mode") }

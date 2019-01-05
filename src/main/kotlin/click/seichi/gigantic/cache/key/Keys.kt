@@ -902,4 +902,13 @@ object Keys {
         }
     }
 
+    val ELYTRA_CHARGE_UP_TICKS = object : Key<PlayerCache, Long> {
+        override val default: Long
+            get() = -1L
+
+        override fun satisfyWith(value: Long): Boolean {
+            return true
+        }
+    }
+
 }

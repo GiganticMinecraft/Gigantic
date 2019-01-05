@@ -8,6 +8,7 @@ import click.seichi.gigantic.command.TellCommand
 import click.seichi.gigantic.command.VoteCommand
 import click.seichi.gigantic.config.*
 import click.seichi.gigantic.database.table.*
+import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.extension.bind
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.register
@@ -29,6 +30,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.entity.ArmorStand
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.scheduler.BukkitRunnable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
@@ -258,7 +260,8 @@ class Gigantic : JavaPlugin() {
                 WorldListener(),
                 EntityListener(),
                 ChunkListener(),
-                BattleListener()
+                BattleListener(),
+                ElytraListener()
         )
 
         registerPacketListeners(
@@ -291,6 +294,13 @@ class Gigantic : JavaPlugin() {
         Head.values().forEach { it.toItemStack() }
 
         SpiritManager.onEnabled()
+
+        // 20秒後にTickEventを毎tick発火
+        object : BukkitRunnable() {
+            override fun run() {
+                Bukkit.getServer().pluginManager.callEvent(TickEvent())
+            }
+        }.runTaskTimer(this, 20 * 20L, 1)
 
         logger.info("Gigantic is enabled!!")
     }
