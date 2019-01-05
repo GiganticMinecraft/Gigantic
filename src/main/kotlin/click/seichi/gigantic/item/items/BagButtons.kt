@@ -381,7 +381,7 @@ object BagButtons {
     val FOLLOW_SETTING = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.PHANTOM_MEMBRANE).apply {
+            return ItemStack(Material.ROSE_BUSH).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + FollowSettingMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
