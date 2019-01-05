@@ -180,7 +180,7 @@ fun Block.firstOrNullOfNearPlayer(player: Player) = world.players
         .filter { it.gameMode == GameMode.SURVIVAL }
         .filter { !it.isFlying && it.uniqueId != player.uniqueId }
         // フォローされていれば除外
-        .filter { it.follow(player.uniqueId) }
+        .filter { it.isFollow(player.uniqueId) }
         .firstOrNull { xzDistance(it) < Config.PROTECT_RADIUS }
 
 fun Block.calcGravity() = ((1 + Config.MAX_BREAKABLE_GRAVITY)..(255 - y))

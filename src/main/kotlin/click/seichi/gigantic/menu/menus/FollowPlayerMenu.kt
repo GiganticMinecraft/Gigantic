@@ -1,8 +1,8 @@
 package click.seichi.gigantic.menu.menus
 
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.extension.follow
 import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.isFollow
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
@@ -39,7 +39,7 @@ object FollowPlayerMenu : BookMenu() {
                 Keys.PLAYER_LIST,
                 Bukkit.getOnlinePlayers().toMutableList()
                         .filter { player != it }
-                        .filter { player.follow(it.uniqueId) }
+                        .filter { player.isFollow(it.uniqueId) }
         )
     }
 
