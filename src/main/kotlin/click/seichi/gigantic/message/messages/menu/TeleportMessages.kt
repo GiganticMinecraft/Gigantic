@@ -23,6 +23,10 @@ object TeleportMessages {
             Locale.JAPANESE to "ランダムな場所へ"
     )
 
+    val TELEPORT_TO_SPAWN = LocalizedText(
+            Locale.JAPANESE to "初期地点に戻る"
+    )
+
     val TELEPORT_TO_LAST_DEATH = LocalizedText(
             Locale.JAPANESE to "最後に死亡した場所へ"
     )
@@ -94,9 +98,9 @@ object TeleportMessages {
             Locale.JAPANESE to "${ChatColor.RED}他プレイヤーのテレポートを常に拒否"
     )
 
-    val IN_BREAK_TIME = LocalizedText(
+    val RANDOM_TELEPORT_IN_BREAK_TIME = LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
-                    "休憩中はテレポートできません"
+                    "休憩中はランダムテレポートできません"
     )
 
 }

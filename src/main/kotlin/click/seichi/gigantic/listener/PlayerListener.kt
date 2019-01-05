@@ -120,6 +120,8 @@ class PlayerListener : Listener {
                 false,
                 false
         ))
+        // player list name レベル表記を更新
+        player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(player.wrappedLevel).plus(player.name)
 
     }
 
@@ -193,6 +195,8 @@ class PlayerListener : Listener {
         if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
             PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
+        // player list name レベル表記を更新
+        player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(event.level).plus(player.name)
     }
 
     @EventHandler

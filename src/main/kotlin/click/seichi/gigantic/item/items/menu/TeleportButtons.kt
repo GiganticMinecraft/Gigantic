@@ -63,7 +63,7 @@ object TeleportButtons {
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
             if (player.gameMode != GameMode.SURVIVAL) {
-                player.sendMessage(TeleportMessages.IN_BREAK_TIME.asSafety(player.wrappedLocale))
+                player.sendMessage(TeleportMessages.RANDOM_TELEPORT_IN_BREAK_TIME.asSafety(player.wrappedLocale))
                 return false
             }
             var chunk: Chunk? = null
@@ -109,15 +109,12 @@ object TeleportButtons {
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
             if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return false
-            if (player.gameMode != GameMode.SURVIVAL) {
-                player.sendMessage(TeleportMessages.IN_BREAK_TIME.asSafety(player.wrappedLocale))
-                return false
-            }
             val chunk = player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return false
             chunk.load(true)
             val location = chunk.getSpawnableLocation()
             player.teleport(location)
-            PlayerSounds.TELEPORT.play(location)
+            if (player.gameMode == GameMode.SURVIVAL)
+                PlayerSounds.TELEPORT.play(location)
             player.offer(Keys.LAST_DEATH_CHUNK, null)
             return true
         }
@@ -208,10 +205,29 @@ object TeleportButtons {
                 if (to.world != player.world) return false
                 if (to.isFlying) return false
                 player.teleport(to)
-                PlayerSounds.TELEPORT.play(to.location)
+                if (player.gameMode == GameMode.SURVIVAL)
+                    PlayerSounds.TELEPORT.play(to.location)
                 return true
             }
 
         }
     }
+
+    val TELEPORT_TO_SPAWN = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.OAK_SAPLING).apply {
+                setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_SPAWN.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            player.teleport(player.world.spawnLocation)
+            if (player.gameMode == GameMode.SURVIVAL)
+                PlayerSounds.TELEPORT.play(player.world.spawnLocation)
+            return true
+        }
+
+    }
+
 }

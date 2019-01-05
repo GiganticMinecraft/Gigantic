@@ -14,6 +14,10 @@ import java.util.*
  */
 object PlayerMessages {
 
+    val PLAYER_LIST_NAME_PREFIX = { level: Int ->
+        "[$level]"
+    }
+
     val EXP_BAR_DISPLAY = { level: Int, exp: BigDecimal ->
         val expToLevel = PlayerLevelConfig.LEVEL_MAP[level] ?: BigDecimal.ZERO
         val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level + 1]
