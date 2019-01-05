@@ -6,6 +6,7 @@ import org.bukkit.entity.Mob
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityCombustEvent
 import org.bukkit.event.entity.EntityDamageByBlockEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntitySpawnEvent
@@ -31,8 +32,15 @@ class EntityListener : Listener {
 
     // マグマブロックのダメージをキャンセル
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    fun onDamageByEntity(event: EntityDamageByBlockEvent) {
+    fun onDamageByBlock(event: EntityDamageByBlockEvent) {
+        event.damager ?: return
         if (event.damager.type != Material.MAGMA_BLOCK) return
+        event.isCancelled = true
+    }
+
+    //発火をキャンセル
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    fun onCombust(event: EntityCombustEvent) {
         event.isCancelled = true
     }
 
