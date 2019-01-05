@@ -295,12 +295,12 @@ class Gigantic : JavaPlugin() {
 
         SpiritManager.onEnabled()
 
-        // 20秒後にTickEventを毎tick発火
+        // 3秒後にTickEventを毎tick発火
         object : BukkitRunnable() {
             override fun run() {
                 Bukkit.getServer().pluginManager.callEvent(TickEvent())
             }
-        }.runTaskTimer(this, 20 * 20L, 1)
+        }.runTaskTimer(this, 3 * 20L, 1)
 
         logger.info("Gigantic is enabled!!")
     }

@@ -6,6 +6,7 @@ import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.item.items.HandItems
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.sound.sounds.ElytraSounds
 import org.bukkit.Bukkit
@@ -32,7 +33,7 @@ class ElytraListener : Listener {
                 .filter { it.isValid }
                 .filter { it.gameMode == GameMode.SURVIVAL }
                 .filter { it.isOnGround }
-                .filter { it.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS) >= 0 }
+                .filter { it.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS) >= 0L }
                 .forEach { player ->
                     var ticks = player.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS)
                     ticks++
@@ -42,7 +43,7 @@ class ElytraListener : Listener {
                     ElytraAnimations.CHARGING.start(player.location)
                     if (ticks % 3L == 0L) {
                         ElytraSounds.CHARGING.play(player.location)
-                        if (ticks >= 60L) {
+                        if (ticks >= chargeUpTime) {
                             ElytraAnimations.READY_TO_JUMP.start(player.location)
                             ElytraSounds.READY_TO_JUMP.play(player.location)
                         }
@@ -63,12 +64,15 @@ class ElytraListener : Listener {
     fun onToggleSneak(event: PlayerToggleSneakEvent) {
         val player = event.player ?: return
         if (!player.isOnGround) return
+        val slot = player.inventory.heldItemSlot
+        if (player.getOrPut(Keys.BELT).findItem(slot) != HandItems.FLASH) return
 
         // チャージ開始
         if (event.isSneaking) {
             player.offer(Keys.ELYTRA_CHARGE_UP_TICKS, 0L)
         } else {
             if (player.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS) >= chargeUpTime) {
+                // 発射
                 val dir = player.location.direction.add(Vector(0.0, launchStrength, 0.0))
 
                 player.velocity = player.velocity.add(dir)
@@ -76,7 +80,7 @@ class ElytraListener : Listener {
                 ElytraAnimations.JUMP.start(player.location)
                 ElytraSounds.JUMP.play(player.location)
             }
-            player.offer(Keys.ELYTRA_CHARGE_UP_TICKS, -1)
+            player.offer(Keys.ELYTRA_CHARGE_UP_TICKS, -1L)
         }
 
     }
