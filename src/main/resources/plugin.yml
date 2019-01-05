@@ -23,7 +23,7 @@ commands:
     permission-message: You don't have <permission>
   tell:
     description: This is tell command.
-    usage: /tell <playername> <msg>
+    usage: /w <playername> <msg>
     aliases: [w,msg]
     default: default
     permission: gigantic.tell

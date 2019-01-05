@@ -18,6 +18,24 @@ object PlayerMessages {
         "[Lv$level]"
     }
 
+    val PLAYER_LIST_HEADER = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.WHITE}" +
+                    "======" +
+                    "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
+                    "整地鯖(春)" +
+                    "${ChatColor.WHITE}" +
+                    "======"
+    )
+
+    val PLAYER_LIST_FOOTER = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.WHITE}" +
+                    "======" +
+                    "${ChatColor.AQUA}${ChatColor.BOLD}" +
+                    "整地専用サーバー" +
+                    "${ChatColor.WHITE}" +
+                    "======"
+    )
+
     val EXP_BAR_DISPLAY = { level: Int, exp: BigDecimal ->
         val expToLevel = PlayerLevelConfig.LEVEL_MAP[level] ?: BigDecimal.ZERO
         val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level + 1]

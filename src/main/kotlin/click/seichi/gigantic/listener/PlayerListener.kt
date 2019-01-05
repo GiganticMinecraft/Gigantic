@@ -120,9 +120,10 @@ class PlayerListener : Listener {
                 false,
                 false
         ))
-        // player list name レベル表記を更新
+        // レベル表記を更新
         player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(player.wrappedLevel).plus(player.name)
-
+        player.playerListHeader = PlayerMessages.PLAYER_LIST_HEADER.asSafety(player.wrappedLocale)
+        player.playerListFooter = PlayerMessages.PLAYER_LIST_FOOTER.asSafety(player.wrappedLocale)
     }
 
     /**
