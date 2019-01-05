@@ -131,9 +131,6 @@ class Apostol : Miner(), SpellCaster {
             }
 
             return allBlockSet.filter {
-                // 種類の制約
-                it.isCrust || it.isLiquid
-            }.filter {
                 // 因果の制約
                 it != base
             }.filter {
@@ -154,7 +151,16 @@ class Apostol : Miner(), SpellCaster {
                 // 場所の制約
                 val battle = player.findBattle()
                 removeIf { it.findBattle() != battle }
-            }
+
+                // 先にブロックを変換
+                forEach {
+                    it.changeBedrock()
+                    it.condenseLiquid()
+                }
+            }.filter {
+                // 種類の制約
+                it.isCrust
+            }.toSet()
         }
     }
 

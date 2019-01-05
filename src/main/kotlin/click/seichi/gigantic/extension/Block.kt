@@ -109,32 +109,39 @@ private val faceSet = setOf(
 
 private fun Block.changeRelativeBedrock() {
     faceSet.map { getRelative(it) }
-            .filter { !Gigantic.BROKEN_BLOCK_SET.contains(it) }
-            .filter { it.type == Material.BEDROCK && it.y != 0 }
-            .forEach { it.type = Material.STONE }
+            .forEach { it.changeBedrock() }
+}
+
+fun Block.changeBedrock() {
+    if (Gigantic.BROKEN_BLOCK_SET.contains(this)) return
+    if (type != Material.BEDROCK) return
+    if (y == 0) return
+    type = Material.STONE
 }
 
 
 private fun Block.condenseRelativeLiquid() {
     faceSet.map { getRelative(it) }
-            .filter { !Gigantic.BROKEN_BLOCK_SET.contains(it) }
-            .filter { it.isLiquid || it.isWaterPlant }
             .forEach {
-                when {
-                    it.type == Material.WATER || it.isWaterPlant -> {
-                        PlayerSounds.ON_CONDENSE_WATER.play(it.centralLocation)
-                        PlayerAnimations.ON_CONDENSE_WATER.start(it.centralLocation)
-                        it.type = Material.PACKED_ICE
-                    }
-                    it.type == Material.LAVA -> {
-                        PlayerSounds.ON_CONDENSE_LAVA.play(it.centralLocation)
-                        PlayerAnimations.ON_CONDENSE_LAVA.start(it.centralLocation)
-                        it.type = Material.MAGMA_BLOCK
-                    }
-                    else -> {
-                    }
-                }
+                it.condenseLiquid()
             }
+}
+
+fun Block.condenseLiquid() {
+    if (Gigantic.BROKEN_BLOCK_SET.contains(this)) return
+    if (!isLiquid && !isWaterPlant) return
+    when {
+        type == Material.WATER || isWaterPlant -> {
+            PlayerSounds.ON_CONDENSE_WATER.play(centralLocation)
+            PlayerAnimations.ON_CONDENSE_WATER.start(centralLocation)
+            type = Material.PACKED_ICE
+        }
+        type == Material.LAVA -> {
+            PlayerSounds.ON_CONDENSE_LAVA.play(centralLocation)
+            PlayerAnimations.ON_CONDENSE_LAVA.start(centralLocation)
+            type = Material.MAGMA_BLOCK
+        }
+    }
 }
 
 val Block.isSpawnArea: Boolean
