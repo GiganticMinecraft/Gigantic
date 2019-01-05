@@ -24,8 +24,12 @@ object FollowSettingMenuMessages {
             Locale.JAPANESE to "フォロワー一覧（オンラインのみ）"
     )
 
-    val CLICK_TO_FOLLOW = LocalizedText(
+    val CLICK_TO_EXCHANGE = LocalizedText(
             Locale.JAPANESE to "クリックして相互フォロー"
+    )
+
+    val CLICK_TO_FOLLOW = LocalizedText(
+            Locale.JAPANESE to "クリックしてフォロー"
     )
 
     val FOLLOW_ONLINE = LocalizedText(

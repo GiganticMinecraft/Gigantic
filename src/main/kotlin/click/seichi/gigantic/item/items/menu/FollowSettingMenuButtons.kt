@@ -57,6 +57,7 @@ object FollowSettingMenuButtons {
             override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                 player.unFollow(to.uniqueId)
                 FollowMenu.reopen(player)
+                PlayerSounds.TOGGLE.playOnly(player)
                 return true
             }
         }
@@ -89,7 +90,7 @@ object FollowSettingMenuButtons {
                         player.isFollow(to.uniqueId) -> addLore("${ChatColor.LIGHT_PURPLE}" +
                                 FollowSettingMenuMessages.FOLLOW_EXCHANGE.asSafety(player.wrappedLocale))
                         player.follows < Config.PLAYER_MAX_FOLLOW -> addLore("${ChatColor.GREEN}" +
-                                FollowSettingMenuMessages.CLICK_TO_FOLLOW.asSafety(player.wrappedLocale))
+                                FollowSettingMenuMessages.CLICK_TO_EXCHANGE.asSafety(player.wrappedLocale))
                         else -> addLore("${ChatColor.RED}" +
                                 FollowSettingMenuMessages.MAX_FOLLOW.asSafety(player.wrappedLocale))
                     }
@@ -101,6 +102,7 @@ object FollowSettingMenuButtons {
                 if (player.follows >= Config.PLAYER_MAX_FOLLOW) return true
                 player.follow(to.uniqueId)
                 FollowerMenu.reopen(player)
+                PlayerSounds.TOGGLE.playOnly(player)
                 return true
             }
         }
@@ -129,9 +131,11 @@ object FollowSettingMenuButtons {
                             "${ChatColor.BOLD}" +
                             to.name)
                     clearLore()
-                    when {
-                        to.isFollow(player.uniqueId) -> addLore("${ChatColor.GOLD}" +
+                    if (to.isFollow(player.uniqueId)) {
+                        addLore("${ChatColor.GOLD}" +
                                 FollowSettingMenuMessages.FOLLOWER_NOW.asSafety(player.wrappedLocale))
+                    }
+                    when {
                         player.follows < Config.PLAYER_MAX_FOLLOW -> addLore("${ChatColor.GREEN}" +
                                 FollowSettingMenuMessages.CLICK_TO_FOLLOW.asSafety(player.wrappedLocale))
                         else -> addLore("${ChatColor.RED}" +
@@ -144,6 +148,7 @@ object FollowSettingMenuButtons {
                 if (player.follows >= Config.PLAYER_MAX_FOLLOW) return true
                 player.follow(to.uniqueId)
                 FollowPlayerMenu.reopen(player)
+                PlayerSounds.TOGGLE.playOnly(player)
                 return true
             }
         }

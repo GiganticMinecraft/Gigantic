@@ -3,6 +3,7 @@ package click.seichi.gigantic.command
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.command.TellMessages
 import org.bukkit.Bukkit
@@ -60,6 +61,8 @@ class ReplyCommand : TabExecutor {
         sender.sendMessage("${ChatColor.GRAY}" +
                 to.name + TellMessages.TELL_PREFIX.asSafety(sender.wrappedLocale) +
                 " " + msg)
+
+        to.offer(Keys.LAST_TELL_ID, sender.uniqueId)
 
         return true
     }
