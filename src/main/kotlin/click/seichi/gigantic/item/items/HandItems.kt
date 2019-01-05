@@ -2,16 +2,12 @@ package click.seichi.gigantic.item.items
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.animation.animations.ElytraAnimations
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.enchantment.ToolEnchantment
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.HandItem
 import click.seichi.gigantic.message.messages.HookedItemMessages
-import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.skill.Skill
-import click.seichi.gigantic.sound.sounds.ElytraSounds
 import click.seichi.gigantic.sound.sounds.SpellSounds
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -22,7 +18,6 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
-import org.bukkit.util.Vector
 
 /**
  * @author tar0ss
@@ -218,8 +213,6 @@ object HandItems {
 
     val JUMP = object : HandItem {
 
-        private val launchStrength = Config.ELYTRA_LAUNCH_MULTIPLIER.times(Defaults.ELYTRA_BASE_LAUNCH)
-
         override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.JUMP.isGranted(player)) return null
             return ItemStack(Material.PHANTOM_MEMBRANE).apply {
@@ -232,16 +225,7 @@ object HandItems {
         }
 
         override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
-            if (!Achievement.JUMP.isGranted(player)) return false
-            if (!player.isOnGround) return true
-            // 発射
-            val dir = player.location.direction.add(Vector(0.0, launchStrength, 0.0))
-
-            player.velocity = player.velocity.add(dir)
-
-            ElytraAnimations.JUMP.start(player.location)
-            ElytraSounds.JUMP.play(player.location)
-            return true
+            return false
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {

@@ -19,6 +19,10 @@ player:
   max_follow: 100
 
 elytra:
+  # Time it takes to charge up a jump in ticks
+  # 1 second = 20 ticks
+  # default = 60 ticks = 3 seconds
+  charge_up_time: 60
 
   # Elytra gliding speed multiplier
   # default = 1.0

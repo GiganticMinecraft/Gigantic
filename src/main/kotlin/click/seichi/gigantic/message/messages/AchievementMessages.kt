@@ -126,7 +126,7 @@ object AchievementMessages {
                 it to "${ChatColor.YELLOW}" +
                         "大きくジャンプできるようになった!!\n" +
                         "${ChatColor.GRAY}" +
-                        "ジャンプアイテムを持ってクリックしてみよう\n"
+                        "ジャンプアイテムを持ってスニークしてみよう!!\n"
             }
     ))
 

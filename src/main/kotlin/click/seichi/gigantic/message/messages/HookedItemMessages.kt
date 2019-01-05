@@ -86,7 +86,12 @@ object HookedItemMessages {
     val JUMP_LORE = listOf(
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.GRAY}" +
-                            "大きくジャンプする"
+                            "これを持って" +
+                            "${Config.ELYTRA_CHARGE_UP_TIME.div(20)}秒間スニークすると，"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "大きく飛び立てるぞ！落ちるなよ！"
             )
     )
 
