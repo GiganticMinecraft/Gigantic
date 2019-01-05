@@ -28,3 +28,10 @@ commands:
     default: default
     permission: gigantic.tell
     permission-message: You don't have <permission>
+  reply:
+    description: This is reply command.
+    usage: /r
+    aliases: [r]
+    default: default
+    permission: gigantic.reply
+    permission-message: You don't have <permission>

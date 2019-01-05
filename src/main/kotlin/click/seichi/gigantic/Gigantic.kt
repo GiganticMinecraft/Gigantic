@@ -3,6 +3,7 @@ package click.seichi.gigantic
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.command.DonateCommand
+import click.seichi.gigantic.command.ReplyCommand
 import click.seichi.gigantic.command.TellCommand
 import click.seichi.gigantic.command.VoteCommand
 import click.seichi.gigantic.config.*
@@ -267,7 +268,8 @@ class Gigantic : JavaPlugin() {
         bindCommands(
                 "vote" to VoteCommand(),
                 "donate" to DonateCommand(),
-                "tell" to TellCommand()
+                "tell" to TellCommand(),
+                "reply" to ReplyCommand()
         )
 
         prepareDatabase(

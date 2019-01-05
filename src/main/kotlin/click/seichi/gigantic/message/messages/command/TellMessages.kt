@@ -16,6 +16,10 @@ object TellMessages {
             Locale.JAPANESE to "プレイヤーが存在しません"
     )
 
+    val NO_ID = LocalizedText(
+            Locale.JAPANESE to "返信先が見つかりません"
+    )
+
     val TELL_PREFIX = LocalizedText(
             Locale.JAPANESE to "にささやかれました:"
     )

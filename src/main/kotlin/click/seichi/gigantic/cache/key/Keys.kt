@@ -884,4 +884,13 @@ object Keys {
         }
     }
 
+    val LAST_TELL_ID = object : Key<PlayerCache, UUID?> {
+        override val default: UUID?
+            get() = null
+
+        override fun satisfyWith(value: UUID?): Boolean {
+            return true
+        }
+    }
+
 }
