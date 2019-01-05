@@ -52,7 +52,10 @@ class TellCommand : TabExecutor {
         }
 
         to.sendMessage("${ChatColor.GRAY}" +
-                sender.name + TellMessages.TELL_PREFIX.asSafety(to.wrappedLocale) +
+                sender.name + TellMessages.TOLD_PREFIX.asSafety(to.wrappedLocale) +
+                " " + msg)
+        sender.sendMessage("${ChatColor.GRAY}" +
+                to.name + TellMessages.TELL_PREFIX.asSafety(sender.wrappedLocale) +
                 " " + msg)
 
         to.offer(Keys.LAST_TELL_ID, sender.uniqueId)

@@ -30,7 +30,7 @@ commands:
     permission-message: You don't have <permission>
   reply:
     description: This is reply command.
-    usage: /r
+    usage: /r <msg>
     aliases: [r]
     default: default
     permission: gigantic.reply

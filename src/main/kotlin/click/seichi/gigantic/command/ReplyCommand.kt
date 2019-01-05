@@ -23,8 +23,10 @@ class ReplyCommand : TabExecutor {
             label: String,
             args: Array<out String>
     ): Boolean {
-        // 引数なしでなければ除外
+        // 引数なしであれば除外
         if (args.isEmpty()) return false
+        // 引数が1個でなければ除外
+        if (args.size != 1) return false
         // consoleなら除外
         if (sender !is Player) {
             sender.sendMessage("${ChatColor.GRAY}" +
@@ -43,7 +45,7 @@ class ReplyCommand : TabExecutor {
         // 送り先を取得
         val to = Bukkit.getPlayer(id)
         // メッセージ
-        val msg = args[1]
+        val msg = args[0]
 
         // 存在しない場合は除外
         if (to == null || !to.isValid) {
@@ -53,7 +55,10 @@ class ReplyCommand : TabExecutor {
         }
 
         to.sendMessage("${ChatColor.GRAY}" +
-                sender.name + TellMessages.TELL_PREFIX.asSafety(to.wrappedLocale) +
+                sender.name + TellMessages.TOLD_PREFIX.asSafety(to.wrappedLocale) +
+                " " + msg)
+        sender.sendMessage("${ChatColor.GRAY}" +
+                to.name + TellMessages.TELL_PREFIX.asSafety(sender.wrappedLocale) +
                 " " + msg)
 
         return true

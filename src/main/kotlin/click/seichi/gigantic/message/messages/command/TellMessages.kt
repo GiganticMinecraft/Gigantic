@@ -21,6 +21,10 @@ object TellMessages {
     )
 
     val TELL_PREFIX = LocalizedText(
+            Locale.JAPANESE to "にささやきました:"
+    )
+
+    val TOLD_PREFIX = LocalizedText(
             Locale.JAPANESE to "にささやかれました:"
     )
 
