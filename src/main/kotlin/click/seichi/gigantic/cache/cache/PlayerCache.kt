@@ -163,7 +163,12 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.QUEST_MAP.forEach { quest, key ->
                 key.store(entity, getOrDefault(key))
             }
-
+            Keys.EFFECT_BOUGHT_MAP.forEach { effect, key ->
+                key.store(entity, getOrDefault(key))
+            }
+            Keys.EFFECT_BOUGHT_TIME_MAP.forEach { effect, key ->
+                key.store(entity, getOrDefault(key))
+            }
         }
     }
 

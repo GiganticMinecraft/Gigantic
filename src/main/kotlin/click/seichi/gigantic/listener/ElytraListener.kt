@@ -14,7 +14,6 @@ class ElytraListener : Listener {
 
     private val speed = Config.ELYTRA_SPEED_MULTIPLIER.times(Defaults.ELYTRA_BASE_SPEED)
 
-
     @EventHandler(ignoreCancelled = true)
     fun onMove(event: PlayerMoveEvent) {
         val player = event.player ?: return

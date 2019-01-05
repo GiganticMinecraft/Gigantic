@@ -39,7 +39,7 @@ object FollowPlayerMenu : BookMenu() {
                 Keys.PLAYER_LIST,
                 Bukkit.getOnlinePlayers().toMutableList()
                         .filter { player != it }
-                        .filter { player.isFollow(it.uniqueId) }
+                        .filter { !player.isFollow(it.uniqueId) }
         )
     }
 
