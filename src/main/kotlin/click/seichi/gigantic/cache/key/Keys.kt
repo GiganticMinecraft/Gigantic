@@ -863,4 +863,25 @@ object Keys {
         }
     }
 
+
+    val FOLLOWER_SET = object : DatabaseKey<PlayerCache, Set<UUID>> {
+        override val default: Set<UUID>
+            get() = setOf()
+
+        override fun read(entity: UserEntity): Set<UUID> {
+            return entity.userFollowList.map { it.user.id.value }.toSet()
+        }
+
+        override fun store(entity: UserEntity, value: Set<UUID>) {
+            // 書き込まなくてよい．
+            Gigantic.PLUGIN.logger.warning("フォロワーのデータベース書き込みは禁止されています")
+        }
+
+        override fun satisfyWith(value: Set<UUID>): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("フォロワーの書き換えは禁止されています")
+            return false
+        }
+    }
+
 }

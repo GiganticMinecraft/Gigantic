@@ -114,4 +114,8 @@ class UserEntity(uniqueId: UUID, playerName: String) {
             .find { UserFollowTable.userId eq uniqueId }
             .toList()
 
+    val userFollowerList = UserFollow
+            .find { UserFollowTable.followId eq uniqueId }
+            .toList()
+
 }

@@ -339,9 +339,8 @@ class Gigantic : JavaPlugin() {
         Database.connect("jdbc:mysql://${DatabaseConfig.HOST}/${DatabaseConfig.DATABASE}",
                 "com.mysql.jdbc.Driver", DatabaseConfig.USER, DatabaseConfig.PASSWORD)
 
-        //create Tables
+        // create Tables
         transaction {
-            // プレイヤー用のテーブルを作成
             SchemaUtils.createMissingTablesAndColumns(
                     *tables
             )
