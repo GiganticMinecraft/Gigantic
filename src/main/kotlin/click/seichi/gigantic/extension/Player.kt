@@ -129,10 +129,12 @@ val Player.follows: Int
 private const val UP_PITCH_MAX = -60
 private const val DOWN_PITCH_MIN = 60
 
-fun Player.calcBreakFace(): BlockFace {
-    when (location.pitch.roundToInt()) {
-        in -90..UP_PITCH_MAX -> return BlockFace.UP
-        in DOWN_PITCH_MIN..90 -> return BlockFace.DOWN
+fun Player.calcBreakFace(ignorePitch: Boolean = false): BlockFace {
+    if (!ignorePitch) {
+        when (location.pitch.roundToInt()) {
+            in -90..UP_PITCH_MAX -> return BlockFace.UP
+            in DOWN_PITCH_MIN..90 -> return BlockFace.DOWN
+        }
     }
     var rot = (location.yaw + 180) % 360
     if (rot < 0) rot += 360
@@ -143,7 +145,6 @@ fun Player.calcBreakFace(): BlockFace {
         in 225 until 315 -> BlockFace.WEST
         else -> BlockFace.NORTH
     }
-
 }
 
 fun Player.sendActionBar(message: String) = spigot().sendMessage(ChatMessageType.ACTION_BAR, ComponentSerializer.parse("{\"text\": \"$message\"}")[0])

@@ -91,15 +91,17 @@ class Apostol : Miner(), SpellCaster {
                 }
                 BlockFace.UP, BlockFace.DOWN -> {
 
-                    // breakFaceの上下左右方向にブロックを取得，その後breakFace方向に奥行だけブロックを取得
+                    val rotFace = player.calcBreakFace(true)
+
+                    // breakFaceの上下左右方向にブロックを取得，その後breakFace方向に高さだけブロックを取得
                     // 上下ブロック
                     val columnBlockSet = mutableSetOf<Block>()
 
                     columnBlockSet.add(base)
 
                     (1..breakArea.width.minus(1).div(2)).forEach {
-                        columnBlockSet.add(base.getRelative(BlockFace.NORTH, it))
-                        columnBlockSet.add(base.getRelative(BlockFace.SOUTH, it))
+                        columnBlockSet.add(base.getRelative(rotFace.leftFace, it))
+                        columnBlockSet.add(base.getRelative(rotFace.rightFace, it))
                     }
 
                     // プレイヤーの正面に当たるブロックセット
@@ -109,9 +111,9 @@ class Apostol : Miner(), SpellCaster {
 
                     // 左右に振る
                     columnBlockSet.forEach { columnBase ->
-                        (1..breakArea.width.minus(1).div(2)).forEach {
-                            facingBlockSet.add(columnBase.getRelative(BlockFace.WEST, it))
-                            facingBlockSet.add(columnBase.getRelative(BlockFace.EAST, it))
+                        (1..breakArea.depth.minus(1).div(2)).forEach {
+                            facingBlockSet.add(columnBase.getRelative(rotFace, it))
+                            facingBlockSet.add(columnBase.getRelative(rotFace.oppositeFace, it))
                         }
                     }
 
