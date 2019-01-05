@@ -15,7 +15,7 @@ import java.util.*
 object PlayerMessages {
 
     val PLAYER_LIST_NAME_PREFIX = { level: Int ->
-        "[$level]"
+        "[Lv$level]"
     }
 
     val EXP_BAR_DISPLAY = { level: Int, exp: BigDecimal ->
