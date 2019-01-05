@@ -77,6 +77,18 @@ object HookedItemMessages {
                             "クールタイム: ${Config.SKILL_MINE_BURST_COOLTIME}秒"
             )
     )
+    val JUMP = LocalizedText(
+            Locale.JAPANESE to
+                    "${ChatColor.BLUE}" +
+                    "ジャンプ"
+    )
+
+    val JUMP_LORE = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "大きくジャンプする"
+            )
+    )
 
 
     val FLASH = LocalizedText(

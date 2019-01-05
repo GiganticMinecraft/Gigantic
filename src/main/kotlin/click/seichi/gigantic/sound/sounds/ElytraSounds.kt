@@ -26,7 +26,7 @@ object ElytraSounds {
     val JUMP = DetailedSound(
             Sound.ENTITY_ENDER_DRAGON_FLAP,
             SoundCategory.PLAYERS,
-            0.1F,
+            0.6F,
             2.0F
     )
 

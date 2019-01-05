@@ -238,6 +238,7 @@ object TeleportButtons {
             player.getOrPut(Keys.LAST_BREAK_CHUNK) ?: return null
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_LAST_BREAK.asSafety(player.wrappedLocale))
+                hideAllFlag()
             }
         }
 

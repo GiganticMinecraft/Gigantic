@@ -121,4 +121,13 @@ object AchievementMessages {
             }
     ))
 
+    val JUMP = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "大きくジャンプできるようになった!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "ジャンプアイテムを持ってクリックしてみよう\n"
+            }
+    ))
+
 }
