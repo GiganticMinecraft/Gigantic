@@ -16,6 +16,7 @@
 以下の不具合を修正いたしました．
 
 :diamond_shape_with_a_dot_inside: 魔法アポストルを岩盤近くで発動したときにブロックが残ってしまう不具合
-:diamond_shape_with_a_dot_inside:  水を氷塊に変えた時の音が大きすぎて，氷塊の破壊音が打ち消されていた不具合
+:diamond_shape_with_a_dot_inside: 水を氷塊に変えた時の音が大きすぎて，氷塊の破壊音が打ち消されていた不具合
+:diamond_shape_with_a_dot_inside: 各種虫食い石が魔法アポストルで破壊できない不具合
 
 更新日時: 2019/XXXX
