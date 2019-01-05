@@ -175,10 +175,12 @@ private fun Block.xzDistance(player: Player): Double {
 }
 
 fun Block.firstOrNullOfNearPlayer(player: Player) = world.players
+        .filterNotNull()
         .filter { it.isValid }
         .filter { it.gameMode == GameMode.SURVIVAL }
         .filter { !it.isFlying && it.uniqueId != player.uniqueId }
-        // TODO パーティモードをいれるならここに制約追加
+        // フォローされていれば除外
+        .filter { it.follow(player.uniqueId) }
         .firstOrNull { xzDistance(it) < Config.PROTECT_RADIUS }
 
 fun Block.calcGravity() = ((1 + Config.MAX_BREAKABLE_GRAVITY)..(255 - y))

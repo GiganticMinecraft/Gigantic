@@ -21,3 +21,10 @@ commands:
     default: op
     permission: gigantic.donate
     permission-message: You don't have <permission>
+  tell:
+    description: This is tell command.
+    usage: /tell <playername> <msg>
+    aliases: [w,msg]
+    default: default
+    permission: gigantic.tell
+    permission-message: You don't have <permission>

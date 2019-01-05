@@ -342,7 +342,7 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
-    // プレイヤーの近くを破壊したときキャンセル
+    // プレイヤーの近くを破壊したときキャンセル,ただし相互フォローなら良し
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelNearAnotherPlayer(event: BlockBreakEvent) {
         val player = event.player ?: return
