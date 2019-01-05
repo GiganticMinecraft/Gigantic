@@ -72,7 +72,7 @@ object PlayerSounds {
             Sound.BLOCK_GLASS_PLACE,
             SoundCategory.BLOCKS,
             pitch = (1.5 + Random.nextGaussian(variance = 0.2)).toFloat(),
-            volume = 0.5F
+            volume = 0.1F
     )
 
     val ON_CONDENSE_LAVA = DetailedSound(

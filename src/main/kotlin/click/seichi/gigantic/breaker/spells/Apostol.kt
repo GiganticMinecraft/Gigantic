@@ -155,7 +155,7 @@ class Apostol : Miner(), SpellCaster {
                 // 先にブロックを変換
                 forEach {
                     it.changeBedrock()
-                    it.condenseLiquid()
+                    it.condenseLiquid(false, true)
                 }
             }.filter {
                 // 種類の制約

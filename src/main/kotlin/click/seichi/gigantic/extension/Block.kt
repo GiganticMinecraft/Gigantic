@@ -127,18 +127,22 @@ private fun Block.condenseRelativeLiquid() {
             }
 }
 
-fun Block.condenseLiquid() {
+fun Block.condenseLiquid(playSound: Boolean = true, playAnimation: Boolean = true) {
     if (Gigantic.BROKEN_BLOCK_SET.contains(this)) return
     if (!isLiquid && !isWaterPlant) return
     when {
         type == Material.WATER || isWaterPlant -> {
-            PlayerSounds.ON_CONDENSE_WATER.play(centralLocation)
-            PlayerAnimations.ON_CONDENSE_WATER.start(centralLocation)
+            if (playSound)
+                PlayerSounds.ON_CONDENSE_WATER.play(centralLocation)
+            if (playAnimation)
+                PlayerAnimations.ON_CONDENSE_WATER.start(centralLocation)
             type = Material.PACKED_ICE
         }
         type == Material.LAVA -> {
-            PlayerSounds.ON_CONDENSE_LAVA.play(centralLocation)
-            PlayerAnimations.ON_CONDENSE_LAVA.start(centralLocation)
+            if (playSound)
+                PlayerSounds.ON_CONDENSE_LAVA.play(centralLocation)
+            if (playAnimation)
+                PlayerAnimations.ON_CONDENSE_LAVA.start(centralLocation)
             type = Material.MAGMA_BLOCK
         }
     }
