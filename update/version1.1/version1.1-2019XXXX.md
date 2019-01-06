@@ -3,7 +3,9 @@
 
 
 
-:eyeglasses: **__その他の細かい変更点__** :eyeglasses:  
+:eyeglasses: **__その他の細かい変更点__** :eyeglasses:
+
+:diamond_shape_with_a_dot_inside: 丸石を魔法アポストルで破壊できるようになりました．
 
 
 :bow: **__不具合修正__** :bow: 
