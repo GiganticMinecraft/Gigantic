@@ -139,7 +139,10 @@ object BagButtons {
                                 .find { DonateHistoryTable.userId eq uniqueId }
                                 .notForUpdate()
                                 .map { DonateTicket(it.createdAt, it.amount) }
-                                .toList().let {
+                                .toList()
+                                .sortedByDescending {
+                                    it.date.millis
+                                }.let {
                                     donateList.addAll(it)
                                 }
                     }
