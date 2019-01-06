@@ -11,7 +11,7 @@
 :bow: **__不具合修正__** :bow: 
 以下の不具合を修正いたしました．
 
-:diamond_shape_with_a_dot_inside: 
+:diamond_shape_with_a_dot_inside: 泡の出る水ブロックが凍るようになりました．
 
 作成者: tar0ss
 

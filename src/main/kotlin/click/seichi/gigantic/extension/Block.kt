@@ -42,6 +42,12 @@ val Block.isWaterPlant
 val Block.isAir
     get() = Gigantic.AIRS.contains(type)
 
+val Block.isWater
+    get() = Gigantic.WATERS.contains(type)
+
+val Block.isLava
+    get() = type == Material.LAVA
+
 
 val Block.isSurface
     get() = if (Gigantic.AIRS.contains(type)) false
@@ -129,16 +135,16 @@ private fun Block.condenseRelativeLiquid() {
 
 fun Block.condenseLiquid(playSound: Boolean = true, playAnimation: Boolean = true) {
     if (Gigantic.BROKEN_BLOCK_SET.contains(this)) return
-    if (!isLiquid && !isWaterPlant) return
+    if (!isWater && !isLava) return
     when {
-        type == Material.WATER || isWaterPlant -> {
+        isWater -> {
             if (playSound)
                 PlayerSounds.ON_CONDENSE_WATER.play(centralLocation)
             if (playAnimation)
                 PlayerAnimations.ON_CONDENSE_WATER.start(centralLocation)
             type = Material.PACKED_ICE
         }
-        type == Material.LAVA -> {
+        isLava -> {
             if (playSound)
                 PlayerSounds.ON_CONDENSE_LAVA.play(centralLocation)
             if (playAnimation)
