@@ -42,6 +42,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var donation by UserTable.donation
 
+    var isOnline by UserTable.isOnline
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt

@@ -42,6 +42,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val donation = integer("donation").default(0)
 
+    val isOnline = bool("is_online").default(false)
+
     val createdAt = datetime("created_at").default(DateTime.now())
 
     val updatedAt = datetime("updated_at").default(DateTime.now())

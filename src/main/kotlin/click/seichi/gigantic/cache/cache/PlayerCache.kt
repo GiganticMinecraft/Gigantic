@@ -11,9 +11,28 @@ import java.util.*
  */
 class PlayerCache(private val uniqueId: UUID, private val playerName: String) : Cache<PlayerCache>() {
 
+    fun canRead(): Boolean {
+        var ans = false
+        transaction {
+            // オフラインならTRUE
+            UserEntity(uniqueId, playerName).user.run {
+                ans = !isOnline
+            }
+        }
+        return ans
+    }
+
     override fun read() {
         transaction {
             val entity = UserEntity(uniqueId, playerName)
+
+            // 初期読み込み時の更新
+            entity.user.run {
+                isOnline = true
+                name = playerName.toLowerCase()
+                updatedDate = DateTime.now()
+            }
+
             Keys.MAX_COMBO.let {
                 offer(it, it.read(entity))
             }
@@ -92,12 +111,14 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.EFFECT_BOUGHT_TIME_MAP.forEach { effect, key ->
                 offer(key, key.read(entity))
             }
+
         }
     }
 
     override fun write() {
         transaction {
             val entity = UserEntity(uniqueId, playerName)
+            entity.user.isOnline = false
             // 更新時間を記録
             entity.user.updatedDate = DateTime.now()
             Keys.MAX_COMBO.let {

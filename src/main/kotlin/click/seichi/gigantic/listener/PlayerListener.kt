@@ -18,7 +18,6 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.popup.pops.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.tool.Tool
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -42,7 +41,6 @@ import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.util.concurrent.TimeUnit
 
 
 /**
@@ -57,10 +55,9 @@ class PlayerListener : Listener {
         runBlocking {
             /**
              * 複数サーバで動かすと，ログアウト時の書き込みよりもログイン時の読込の方が早くなってしまい，
-             * データが消失するので，ある程度余裕を持って３秒delay．
-             * このためだけのcolumn用意するべきかも
+             * データが消失するので，1秒間隔で読み込み可能かチェックする．
+             * [Config.LOAD_TIME]秒で強制的に読み込む
              */
-            delay(TimeUnit.SECONDS.convert(3L, TimeUnit.MILLISECONDS))
             PlayerCacheMemory.add(event.uniqueId, event.name)
         }
     }
