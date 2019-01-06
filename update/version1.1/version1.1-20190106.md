@@ -1,5 +1,5 @@
 @everyone 
-:cherry_blossom:  **__整地鯖(春) バージョン1.2  アップデート情報__** :cherry_blossom:
+:cherry_blossom:  **__整地鯖(春) バージョン1.1  追加アップデート情報__** :cherry_blossom:
 
 
 :butterfly: **__大いなる力には大いなる責任が伴う__** :butterfly: 
@@ -24,4 +24,4 @@
 
 
 
-更新日時: 2019/XXXX
+更新日時: 2019/01/06/ 16:06
