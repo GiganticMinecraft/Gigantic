@@ -13,6 +13,7 @@
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:  
 
 :diamond_shape_with_a_dot_inside: 魔法アポストルで水や溶岩を消した際のアニメーションを追加しました．
+:diamond_shape_with_a_dot_inside: 丸石を魔法アポストルで破壊できるようにしました．(追記:2019/01/06 19:11)
 
 
 :bow: **__不具合修正__** :bow: 
@@ -23,6 +24,7 @@
 :diamond_shape_with_a_dot_inside: 各種虫食い石が魔法アポストルで破壊できない不具合
 :diamond_shape_with_a_dot_inside: マナの値がマイナスになってしまう不具合(追記:2019/01/06 17:41)
 :diamond_shape_with_a_dot_inside: ジャンプチャージ中にスロットを変更すると，無限にチャージしてしまう不具合(追記:2019/01/06 17:41)
+:diamond_shape_with_a_dot_inside: 死亡したときにクールタイムが正しく表示されない不具合(追記:2019/01/06 19:11)
 
 
 作成者: tar0ss
