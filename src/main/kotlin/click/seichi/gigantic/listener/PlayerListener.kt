@@ -122,6 +122,7 @@ class PlayerListener : Listener {
         ))
         // レベル表記を更新
         player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(player.wrappedLevel).plus(player.name)
+        player.displayName = PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name)
         player.playerListHeader = PlayerMessages.PLAYER_LIST_HEADER.asSafety(player.wrappedLocale)
         player.playerListFooter = PlayerMessages.PLAYER_LIST_FOOTER.asSafety(player.wrappedLocale)
     }
@@ -198,6 +199,7 @@ class PlayerListener : Listener {
 
         // player list name レベル表記を更新
         player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(event.level).plus(player.name)
+        player.displayName = PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name)
     }
 
     @EventHandler

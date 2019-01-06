@@ -17,6 +17,9 @@ object PlayerMessages {
     val PLAYER_LIST_NAME_PREFIX = { level: Int ->
         "[Lv$level]"
     }
+    val DISPLAY_NAME_PREFIX = { level: Int ->
+        "[Lv$level]"
+    }
 
     val PLAYER_LIST_HEADER = LocalizedText(
             Locale.JAPANESE to "${ChatColor.WHITE}" +
