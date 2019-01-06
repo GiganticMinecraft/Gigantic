@@ -148,7 +148,9 @@ class Gigantic : JavaPlugin() {
                 Material.INFESTED_MOSSY_STONE_BRICKS,
                 Material.INFESTED_STONE,
                 Material.INFESTED_STONE_BRICKS,
-                Material.COBBLESTONE
+                Material.COBBLESTONE,
+                Material.PUMPKIN,
+                Material.MELON
         )
 
         val LOGS = setOf(
