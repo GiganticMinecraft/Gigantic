@@ -262,6 +262,7 @@ class PlayerListener : Listener {
         }
 
         player.updateLevel()
+        player.updateDisplay(true, true)
     }
 
     @EventHandler
