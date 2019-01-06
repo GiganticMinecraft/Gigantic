@@ -2,7 +2,7 @@
 :cherry_blossom:  **__整地鯖(春) バージョン1.2  アップデート情報__** :cherry_blossom:
 
 
-:butterfly: **__大いなる力には大いなる責任が伴うということ__** :butterfly: 
+:butterfly: **__大いなる力には大いなる責任が伴う__** :butterfly: 
 前回追加したジャンプ機能ですが，使い勝手が悪かったのでいくつか改修を行いました．
 
 :diamond_shape_with_a_dot_inside:  ジャンプアイテムをクリックするのではなく，持った状態でスニークする方式に変更しました．
