@@ -6,6 +6,7 @@
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:
 
 :diamond_shape_with_a_dot_inside: かぼちゃとスイカブロックを魔法アポストルで破壊できるようにしました．
+:diamond_shape_with_a_dot_inside: コンボの色が変更するコンボ数を変更しました．
 
 
 :bow: **__不具合修正__** :bow: 
