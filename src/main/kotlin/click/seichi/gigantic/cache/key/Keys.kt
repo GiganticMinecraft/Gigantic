@@ -445,7 +445,7 @@ object Keys {
 
     val TELEPORT_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
         override val default: Boolean
-            get() = true
+            get() = false
 
         override fun read(entity: UserEntity): Boolean {
             val user = entity.user

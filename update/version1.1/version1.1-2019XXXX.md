@@ -7,6 +7,7 @@
 
 :diamond_shape_with_a_dot_inside: かぼちゃとスイカブロックを魔法アポストルで破壊できるようにしました．
 :diamond_shape_with_a_dot_inside: コンボの色が変更するコンボ数を変更しました．
+:diamond_shape_with_a_dot_inside: プレイヤーテレポート機能が解禁された際，テレポート許可設定の初期値を拒否状態に変更しました．
 
 
 :bow: **__不具合修正__** :bow: 

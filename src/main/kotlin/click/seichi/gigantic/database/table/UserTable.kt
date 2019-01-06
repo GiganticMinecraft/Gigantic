@@ -32,7 +32,7 @@ object UserTable : IdTable<UUID>("users") {
 
     val apostolDepth = integer("apostol_depth").default(1)
 
-    val teleportToggle = bool("teleport_toggle").default(true)
+    val teleportToggle = bool("teleport_toggle").default(false)
 
     val effectId = integer("effect_id").default(Defaults.EFFECT_ID)
 
