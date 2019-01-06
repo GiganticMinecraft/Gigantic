@@ -353,6 +353,7 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         val block = event.block ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
+        if (Gigantic.IS_LIVE) return
         block.firstOrNullOfNearPlayer(player) ?: return
         PlayerMessages.NOT_BREAK_NEAR_ANOTHER_PLAYER.sendTo(player)
         event.isCancelled = true

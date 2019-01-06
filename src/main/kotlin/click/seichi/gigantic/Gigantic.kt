@@ -2,10 +2,7 @@ package click.seichi.gigantic
 
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.command.DonateCommand
-import click.seichi.gigantic.command.ReplyCommand
-import click.seichi.gigantic.command.TellCommand
-import click.seichi.gigantic.command.VoteCommand
+import click.seichi.gigantic.command.*
 import click.seichi.gigantic.config.*
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.event.events.TickEvent
@@ -52,6 +49,7 @@ class Gigantic : JavaPlugin() {
             private set
         var IS_DEBUG: Boolean by Delegates.notNull()
             private set
+        var IS_LIVE = false
 
         val DEFAULT_LOCALE = Locale.JAPANESE!!
 
@@ -278,7 +276,8 @@ class Gigantic : JavaPlugin() {
                 "vote" to VoteCommand(),
                 "donate" to DonateCommand(),
                 "tell" to TellCommand(),
-                "reply" to ReplyCommand()
+                "reply" to ReplyCommand(),
+                "live" to LiveCommand()
         )
 
         prepareDatabase(

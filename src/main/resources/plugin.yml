@@ -35,3 +35,10 @@ commands:
     default: default
     permission: gigantic.reply
     permission-message: You don't have <permission>
+  live:
+    description: This is reply command.
+    usage: /live <on/off>
+    aliases: [l,live]
+    default: op
+    permission: gigantic.live
+    permission-message: You don't have <permission>
