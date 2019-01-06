@@ -9,8 +9,7 @@
 :bow: **__不具合修正__** :bow: 
 以下の不具合を修正いたしました．
 
-:diamond_shape_with_a_dot_inside: マナの値がマイナスになってしまう不具合
-
+:diamond_shape_with_a_dot_inside: 
 
 作成者: tar0ss
 

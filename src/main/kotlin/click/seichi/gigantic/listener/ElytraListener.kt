@@ -14,6 +14,7 @@ import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerItemHeldEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerToggleSneakEvent
 import org.bukkit.util.Vector
@@ -34,7 +35,10 @@ class ElytraListener : Listener {
                 .filter { it.isValid }
                 .filter { it.gameMode == GameMode.SURVIVAL }
                 .filter { it.isOnGround }
+                .filter { it.isSneaking }
                 .filter { it.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS) >= 0L }
+                .filter { it.getOrPut(Keys.BELT).findItem(it.inventory.heldItemSlot) == HandItems.JUMP }
+                .filter { Achievement.JUMP.isGranted(it) }
                 .forEach { player ->
                     var ticks = player.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS)
                     ticks++
@@ -59,6 +63,16 @@ class ElytraListener : Listener {
         // 飛行中の加速
         val unitVector = Vector(0.0, player.location.direction.y, 0.0)
         player.velocity = player.velocity.add(unitVector.multiply(speed))
+    }
+
+    // チャージをキャンセル
+    @EventHandler
+    fun onChangeItemHeld(event: PlayerItemHeldEvent) {
+        val slot = event.newSlot
+        val player = event.player ?: return
+        if (player.getOrPut(Keys.BELT).findItem(slot) == HandItems.JUMP) return
+        if (player.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS) < 0) return
+        player.offer(Keys.ELYTRA_CHARGE_UP_TICKS, -1)
     }
 
     @EventHandler(ignoreCancelled = true)

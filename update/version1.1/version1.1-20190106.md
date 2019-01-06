@@ -21,10 +21,11 @@
 :diamond_shape_with_a_dot_inside: 魔法アポストルを岩盤近くで発動したときにブロックが残ってしまう不具合
 :diamond_shape_with_a_dot_inside: 水を氷塊に変えた時の音が大きすぎて，氷塊の破壊音が打ち消されていた不具合
 :diamond_shape_with_a_dot_inside: 各種虫食い石が魔法アポストルで破壊できない不具合
-
+:diamond_shape_with_a_dot_inside: マナの値がマイナスになってしまう不具合(追記:2019/01/06 17:41)
+:diamond_shape_with_a_dot_inside: ジャンプチャージ中にスロットを変更すると，無限にチャージしてしまう不具合(追記:2019/01/06 17:41)
 
 
 作成者: tar0ss
 
 作成日時: 2019/01/06 16:06
-更新日時: 2019/01/06 16:06
+更新日時: 2019/01/06 17:41
