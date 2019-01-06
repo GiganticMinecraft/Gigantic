@@ -26,6 +26,7 @@ import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.math.BigDecimal
 
 /**
  * @author tar0ss
@@ -55,7 +56,7 @@ object BagButtons {
                 ).map { it.asSafety(player.wrappedLocale) }
                 )
                 if (Achievement.MANA_STONE.isGranted(player)) {
-                    lore.add(ProfileMessages.PROFILE_MANA(player.mana, player.maxMana).asSafety(player.wrappedLocale))
+                    lore.add(ProfileMessages.PROFILE_MANA(player.mana.coerceAtLeast(BigDecimal.ZERO), player.maxMana).asSafety(player.wrappedLocale))
                 }
 
                 lore.addAll(listOf(

@@ -1,6 +1,7 @@
 @everyone 
 :cherry_blossom:  **__整地鯖(春) バージョン1.1 アップデート情報__** :cherry_blossom:
 
+
 :rose: **__フォローミー！！__** :rose:
 
 :diamond_shape_with_a_dot_inside: オンラインのプレイヤーのみ ，フォローすることが可能になりました．
