@@ -185,7 +185,8 @@ private fun Block.xzDistance(player: Player): Double {
     )
 }
 
-fun Block.firstOrNullOfNearPlayer(player: Player) = world.players
+fun Block.firstOrNullOfNearPlayer(player: Player) = if (Gigantic.IS_LIVE) null
+else world.players
         .filterNotNull()
         .filter { it.isValid }
         .filter { it.gameMode == GameMode.SURVIVAL }
