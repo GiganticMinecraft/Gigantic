@@ -1,4 +1,4 @@
-@everyone 
+@everyone   
 :cherry_blossom:  **__整地鯖(春) バージョン1.1  追加アップデート情報__** :cherry_blossom:  
 
 
