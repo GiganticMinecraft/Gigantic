@@ -17,7 +17,7 @@ object WillSpiritSounds {
 
 
     val SENSED = DetailedSound(
-            Sound.ITEM_ARMOR_EQUIP_TURTLE,
+            Sound.ITEM_ARMOR_EQUIP_CHAIN,
             SoundCategory.BLOCKS,
             pitch = 0.3F
     )

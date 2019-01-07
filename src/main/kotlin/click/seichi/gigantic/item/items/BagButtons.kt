@@ -60,9 +60,8 @@ object BagButtons {
                 }
 
                 lore.addAll(listOf(
-                        ProfileMessages.PROFILE_MAX_COMBO(player.maxCombo).asSafety(player.wrappedLocale)
-                        // TODO 意志実装後に実装
-//                        *ProfileMessages.PROFILE_WILL_APTITUDE(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
+                        ProfileMessages.PROFILE_MAX_COMBO(player.maxCombo).asSafety(player.wrappedLocale),
+                        *ProfileMessages.PROFILE_WILL_APTITUDE(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
                 ))
 
                 setLore(*lore.toTypedArray())

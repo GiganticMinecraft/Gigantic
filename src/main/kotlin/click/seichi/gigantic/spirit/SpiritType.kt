@@ -37,7 +37,9 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
                 val will = Will.values()
                         .filter { player.hasAptitude(it) }
                         .filter { it.canSpawn(player, block) }
-                        .toSet().random()
+                        .toSet().apply {
+                            if (isEmpty()) return@RandomSummonCase
+                        }.random()
                 spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, player))
             }
     ),

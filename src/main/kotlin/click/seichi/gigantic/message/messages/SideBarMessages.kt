@@ -22,16 +22,21 @@ object SideBarMessages {
         SideBarMessage(
                 "memory",
                 LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.DARK_GREEN}" +
+                        Locale.JAPANESE to "${ChatColor.DARK_GREEN}${ChatColor.BOLD}" +
                                 "遺志の記憶"
                 ),
-                willMap.keys.map { will ->
+                willMap.keys.filter {
+                    willMap[it]!! > 0
+                }.map { will ->
                     SideBarRow.getRowById(will.id) to LocalizedText(
-                            Locale.JAPANESE.let {
-                                it to "${ChatColor.GREEN}" +
-                                        "${will.localizedName.asSafety(it)} : " +
-                                        "${ChatColor.RESET}${ChatColor.WHITE}" +
-                                        "${willMap[will] ?: 0}個${ChatColor.RESET}"
+                            Locale.JAPANESE.let { locale ->
+                                locale to "${ChatColor.GREEN}${ChatColor.BOLD}" +
+                                        "${will.localizedName.asSafety(locale).let {
+                                            if (it.length == 2) it
+                                            else " $it "
+                                        }}:" +
+                                        "${ChatColor.WHITE}" +
+                                        "${willMap[will]!!.coerceAtMost(9999)}".padStart(4, ' ')
                             }
                     )
                 }.toMap()

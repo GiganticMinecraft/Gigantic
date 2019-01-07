@@ -2,7 +2,6 @@ package click.seichi.gigantic.spirit.spirits
 
 import click.seichi.gigantic.animation.animations.WillSpiritAnimations
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.extension.hasAptitude
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
@@ -35,7 +34,6 @@ class WillSpirit(
             { player ->
                 player ?: return@Sensor false
                 when {
-                    player.hasAptitude(will).not() -> false
                     targetPlayer == null -> true
                     player.uniqueId == targetPlayer.uniqueId -> true
                     else -> false

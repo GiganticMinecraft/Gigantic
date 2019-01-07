@@ -16,7 +16,6 @@ import org.bukkit.event.player.PlayerJoinEvent
  */
 class AchievementListener : Listener {
 
-
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player ?: return

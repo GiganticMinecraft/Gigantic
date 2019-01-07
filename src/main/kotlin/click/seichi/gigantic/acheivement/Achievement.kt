@@ -346,8 +346,7 @@ enum class Achievement(
             else canGranting(player)
 
     fun isGranted(player: Player) =
-            if (DebugConfig.ACHIEVEMENT_UNLOCK && Config.DEBUG_MODE) true
-            else canGrant(player) && Keys.ACHIEVEMENT_MAP[this]?.let { player.getOrPut(it) } ?: false
+            canGrant(player) && Keys.ACHIEVEMENT_MAP[this]?.let { player.getOrPut(it) } ?: false
 
 
 }
