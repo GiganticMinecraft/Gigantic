@@ -64,6 +64,9 @@ val Block.centralLocation: Location
 fun Block.update() {
     changeRelativeBedrock()
     condenseRelativeLiquid()
+    // 最悪空中に残ってしまった時のために，ここで保険
+    clearRelativeFloatingBlock()
+
     fallUpperCrustBlock()
 }
 
@@ -108,9 +111,8 @@ private val faceSet = setOf(
         BlockFace.NORTH,
         BlockFace.EAST,
         BlockFace.SOUTH,
-        BlockFace.WEST,
-        BlockFace.UP,
-        BlockFace.DOWN
+        BlockFace.WEST
+        // どっちにしろ一番上まで探索するので，UP,DOWNは除外
 )
 
 private fun Block.changeRelativeBedrock() {
@@ -152,6 +154,17 @@ fun Block.condenseLiquid(playSound: Boolean = true, playAnimation: Boolean = tru
             type = Material.MAGMA_BLOCK
         }
     }
+}
+
+private fun Block.clearRelativeFloatingBlock() {
+    faceSet.map { getRelative(it) }
+            .forEach { it.clearFloatingBlock() }
+}
+
+private fun Block.clearFloatingBlock() {
+    if (isCrust) return
+    if (isLog) return
+    type = Material.AIR
 }
 
 val Block.isSpawnArea: Boolean

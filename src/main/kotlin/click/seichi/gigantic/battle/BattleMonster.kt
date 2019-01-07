@@ -4,6 +4,7 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.BattleMonsterAnimations
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
 import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.isAir
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.monster.SoulMonster
@@ -214,7 +215,7 @@ class BattleMonster(
 
                 if (!entity.isValid || !player.isValid) return
 
-                if (block.isEmpty || !attackBlocks.contains(attackBlock)) {
+                if (block.isAir || !attackBlocks.contains(attackBlock)) {
                     player.sendBlockChange(block.location, block.blockData)
                     return
                 }
@@ -236,7 +237,7 @@ class BattleMonster(
             if (!entity.isValid || !player.isValid || player.isDead) return@scheduleSyncDelayedTask
 
             if (!attackBlocks.remove(attackBlock)) return@scheduleSyncDelayedTask
-            if (block.isEmpty) return@scheduleSyncDelayedTask
+            if (block.isAir) return@scheduleSyncDelayedTask
 
             // TODO implements
             /*player.manipulate(CatalogPlayerCache.HEALTH) { health ->

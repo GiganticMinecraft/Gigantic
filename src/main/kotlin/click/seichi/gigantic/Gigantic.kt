@@ -8,6 +8,7 @@ import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.extension.bind
 import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.isAir
 import click.seichi.gigantic.extension.register
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
@@ -327,7 +328,7 @@ class Gigantic : JavaPlugin() {
         server.scheduler.cancelTasks(this)
 
         //全ての破壊済ブロックを確認し，破壊されていなければ消す
-        BROKEN_BLOCK_SET.filter { !it.isEmpty }.also {
+        BROKEN_BLOCK_SET.filter { !it.isAir }.also {
             logger.info("破壊されているはずのブロックが${it.size}個 破壊されていなかったため，削除しました．")
         }.forEach {
             it.type = Material.AIR
