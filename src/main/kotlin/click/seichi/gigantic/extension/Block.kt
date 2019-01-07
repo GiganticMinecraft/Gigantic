@@ -346,6 +346,7 @@ private fun Block.clearRelativeFloatingBlock() {
 private fun Block.clearFloatingBlock() {
     if (isCrust) return
     if (isLog) return
+    if (y == 0) return
     type = Material.AIR
 }
 
