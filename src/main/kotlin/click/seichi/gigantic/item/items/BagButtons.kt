@@ -17,6 +17,8 @@ import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor
 import org.bukkit.GameMode
 import org.bukkit.Material
@@ -59,10 +61,22 @@ object BagButtons {
                     lore.add(ProfileMessages.PROFILE_MANA(player.mana.coerceAtLeast(BigDecimal.ZERO), player.maxMana).asSafety(player.wrappedLocale))
                 }
 
-                lore.addAll(listOf(
-                        ProfileMessages.PROFILE_MAX_COMBO(player.maxCombo).asSafety(player.wrappedLocale),
-                        *ProfileMessages.PROFILE_WILL_APTITUDE(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
-                ))
+                lore.add(
+                        ProfileMessages.PROFILE_MAX_COMBO(player.maxCombo).asSafety(player.wrappedLocale)
+                )
+
+                if (Will.values().filter { it.grade == WillGrade.BASIC }
+                                .firstOrNull { player.hasAptitude(it) } != null) {
+                    lore.addAll(listOf(
+                            *ProfileMessages.PROFILE_WILL_APTITUDE_BASIC(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
+                    ))
+                }
+                if (Will.values().filter { it.grade == WillGrade.ADVANCED }
+                                .firstOrNull { player.hasAptitude(it) } != null) {
+                    lore.addAll(listOf(
+                            *ProfileMessages.PROFILE_WILL_APTITUDE_ADVANCED(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
+                    ))
+                }
 
                 setLore(*lore.toTypedArray())
 

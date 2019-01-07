@@ -22,7 +22,7 @@ object SideBarMessages {
         SideBarMessage(
                 "memory",
                 LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.DARK_GREEN}${ChatColor.BOLD}" +
+                        Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.BOLD}" +
                                 "遺志の記憶"
                 ),
                 willMap.keys.filter {
@@ -31,8 +31,8 @@ object SideBarMessages {
                     SideBarRow.getRowById(will.id) to LocalizedText(
                             Locale.JAPANESE.let { locale ->
                                 locale to "${ChatColor.GREEN}${ChatColor.BOLD}" +
-                                        "${will.localizedName.asSafety(locale).let {
-                                            if (it.length == 2) it
+                                        "${will.getName(locale).let {
+                                            if (it.length == 4) it
                                             else " $it "
                                         }}:" +
                                         "${ChatColor.WHITE}" +

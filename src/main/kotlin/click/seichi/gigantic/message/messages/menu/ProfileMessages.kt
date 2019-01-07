@@ -83,8 +83,8 @@ object ProfileMessages {
         )
     }
 
-    val PROFILE_WILL_APTITUDE = { player: Player ->
-        arrayOf(
+    val PROFILE_WILL_APTITUDE_BASIC = { player: Player ->
+        mutableListOf(
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.GREEN}適正遺志"
                 ),
@@ -94,27 +94,28 @@ object ProfileMessages {
                                     .filter { it.grade == WillGrade.BASIC }
                                     .joinToString(" ") {
                                         if (player.hasAptitude(it))
-                                            "${ChatColor.WHITE}${it.localizedName.asSafety(locale)}"
-                                        else
-                                            "${ChatColor.DARK_GRAY}${it.localizedName.asSafety(locale)}"
+                                            it.getName(locale)
+                                        else "  "
                                     }
                         }
-                ),
+                )
+        )
+    }
+
+    val PROFILE_WILL_APTITUDE_ADVANCED = { player: Player ->
+        mutableListOf(
                 LocalizedText(
                         Locale.JAPANESE.let { locale ->
                             locale to Will.values()
                                     .filter { it.grade == WillGrade.ADVANCED }
                                     .joinToString(" ") {
                                         if (player.hasAptitude(it))
-                                            "${ChatColor.WHITE}${it.localizedName.asSafety(locale)}"
-                                        else
-                                            "${ChatColor.DARK_GRAY}${it.localizedName.asSafety(locale)}"
+                                            it.getName(locale)
+                                        else "  "
                                     }
                         }
                 )
-
         )
     }
-
 
 }

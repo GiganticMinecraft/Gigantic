@@ -143,9 +143,12 @@ object AchievementMessages {
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE.let {
                     it to "${ChatColor.YELLOW}" +
-                            "新しく" +
-                            will.localizedName.asSafety(it) +
-                            "の意志と交感できるようになった!!"
+                            "新しく " +
+                            "${ChatColor.BOLD}" +
+                            will.getName(it) +
+                            "の意志 " +
+                            "${ChatColor.RESET}${ChatColor.YELLOW}" +
+                            "と交感できるようになった!!"
                 }
         ))
     }

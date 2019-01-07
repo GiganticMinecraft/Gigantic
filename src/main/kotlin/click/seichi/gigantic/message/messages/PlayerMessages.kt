@@ -3,7 +3,6 @@ package click.seichi.gigantic.message.messages
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.*
 import click.seichi.gigantic.player.Defaults
-import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -44,12 +43,6 @@ object PlayerMessages {
         val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level + 1]
                 ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
         LevelMessage(level, (exp - expToLevel).setScale(2, RoundingMode.FLOOR).divide((expToNextLevel - expToLevel), 10, RoundingMode.HALF_UP).toFloat().coerceAtLeast(Float.MIN_VALUE))
-    }
-
-    val OBTAIN_WILL_APTITUDE = { will: Will ->
-        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-                Locale.JAPANESE.let { it to "${ChatColor.AQUA}新しく${will.localizedName.asSafety(it)}の遺志と交感できるようになった" }
-        ))
     }
 
     val LEVEL_UP_LEVEL = { level: Int ->
