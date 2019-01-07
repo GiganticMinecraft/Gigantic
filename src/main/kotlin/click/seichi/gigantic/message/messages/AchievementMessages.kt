@@ -5,6 +5,7 @@ import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.quest.Quest
+import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.math.RoundingMode
 import java.util.*
@@ -137,5 +138,16 @@ object AchievementMessages {
                         "剣を扱えるようになった!!"
             }
     ))
+
+    val WILL = { will: Will ->
+        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "${ChatColor.YELLOW}" +
+                            "新しく" +
+                            will.localizedName.asSafety(it) +
+                            "の意志と交感できるようになった!!"
+                }
+        ))
+    }
 
 }

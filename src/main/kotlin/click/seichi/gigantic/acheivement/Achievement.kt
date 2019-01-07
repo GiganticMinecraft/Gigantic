@@ -8,6 +8,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.tool.Tool
+import click.seichi.gigantic.will.Will
 import org.bukkit.entity.Player
 
 /**
@@ -206,6 +207,58 @@ enum class Achievement(
     }, action = {
         Quest.ENDER_MAN.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),*/
+
+    // will
+    WILL_AQUA(501, {
+        false
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.AQUA]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.AQUA)),
+    WILL_IGNIS(502, {
+        false
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.IGNIS]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.IGNIS)),
+    WILL_AER(503, {
+        false
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.AER]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.AER)),
+    WILL_TERRA(504, {
+        false
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.TERRA]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.TERRA)),
+    WILL_NATURA(505, {
+        false
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.NATURA]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.NATURA)),
+    WILL_GLACIES(506, {
+        false
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.GLACIES]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.GLACIES)),
+    WILL_LUX(507, {
+        false
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.LUX]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.LUX)),
+    WILL_SOLUM(508, {
+        false
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.SOLUM]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.SOLUM)),
+    WILL_UMBRA(509, {
+        false
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.UMBRA]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.UMBRA)),
+    WILL_VENTUS(510, {
+        false
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.VENTUS]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.VENTUS)),
     ;
 
     /**1から順に [update] される**/
