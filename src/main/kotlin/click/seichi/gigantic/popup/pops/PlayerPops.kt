@@ -1,6 +1,6 @@
 package click.seichi.gigantic.popup.pops
 
-import click.seichi.gigantic.popup.PopUp
+import click.seichi.gigantic.popup.StillPopUp
 import org.bukkit.ChatColor
 
 /**
@@ -8,10 +8,9 @@ import org.bukkit.ChatColor
  */
 object PlayerPops {
 
-    val LEVEL_UP = PopUp(
+    val LEVEL_UP = StillPopUp(
             "${ChatColor.AQUA} レベルアップ",
-            popPattern = PopUp.PopPattern.STILL,
-            duration = 60L
+            lifeTime = 60L
     )
 
 }

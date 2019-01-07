@@ -1,6 +1,6 @@
 package click.seichi.gigantic.popup.pops
 
-import click.seichi.gigantic.popup.PopUp
+import click.seichi.gigantic.popup.LongPopUp
 import org.bukkit.ChatColor
 
 /**
@@ -9,10 +9,7 @@ import org.bukkit.ChatColor
 object BattlePops {
 
     val BATTLE_DAMAGE = { damage: Long ->
-        PopUp(
-                "${ChatColor.RED}$damage ATK",
-                PopUp.PopPattern.POP_LONG
-        )
+        LongPopUp("${ChatColor.RED}$damage ATK")
     }
 
 }

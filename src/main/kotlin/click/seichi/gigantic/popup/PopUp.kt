@@ -1,94 +1,25 @@
 package click.seichi.gigantic.popup
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.popup.PopUp.PopPattern
-import click.seichi.gigantic.util.Random
-import org.bukkit.Bukkit
+import click.seichi.gigantic.extension.noised
+import click.seichi.gigantic.util.NoiseData
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Entity
-import org.bukkit.scheduler.BukkitRunnable
-import org.bukkit.util.Vector
 
 /**
  * @author tar0ss
+ * @author unicroak
  */
-class PopUp(
-        private val text: String? = null,
+sealed class PopUp(private val text: String?,
+                   private val popping: (ArmorStand) -> Unit) {
 
-        private val popPattern: PopPattern = PopPattern.STILL,
-        /**
-         * この値は[PopPattern]がSTILLの時のみ使用されます
-         */
-        private val duration: Long = 5L,
-        private val popping: (ArmorStand) -> Unit = {}
-) {
-    enum class PopPattern {
-        // 静止
-        STILL,
-        // 飛び出る
-        POP,
-        // 飛び出る（長く残る
-        POP_LONG,
-        ;
-    }
+    abstract val lifeTime: Long
 
-    fun pop(location: Location, diffX: Double = 0.0, diffY: Double = 0.0, diffZ: Double = 0.0): ArmorStand {
-        return location.world.spawn(location.clone().add(
-                Random.nextDouble() * diffX,
-                Random.nextDouble() * diffY,
-                Random.nextDouble() * diffZ
-        ), ArmorStand::class.java) {
-            it.run {
-                isVisible = false
-                setBasePlate(false)
-                setArms(true)
-                isMarker = true
-                isInvulnerable = true
-                canPickupItems = false
-                setGravity(true)
-                if (text != null) {
-                    isCustomNameVisible = true
-                    customName = text
-                } else {
-                    isCustomNameVisible = false
-                }
-                isSmall = true
-                when (popPattern) {
-                    PopUp.PopPattern.STILL -> {
-                        setGravity(false)
-                    }
-                    PopUp.PopPattern.POP ->
-                        velocity = Vector(
-                                Random.nextGaussian(variance = 0.03),
-                                0.24,
-                                Random.nextGaussian(variance = 0.03)
-                        )
-                    PopUp.PopPattern.POP_LONG ->
-                        velocity = Vector(
-                                Random.nextGaussian(variance = 0.03),
-                                0.24,
-                                Random.nextGaussian(variance = 0.03)
-                        )
-                }
-                popping(this)
-            }
-        }.apply {
-            if (popPattern == PopPattern.POP_LONG) {
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
-                    setGravity(false)
-                }, 5L)
-            }
-
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
-                if (!isValid) return@scheduleSyncDelayedTask
-                remove()
-            }, when (popPattern) {
-                PopUp.PopPattern.STILL -> duration
-                PopUp.PopPattern.POP -> 5L
-                PopUp.PopPattern.POP_LONG -> 15L
-            }
-            )
+    open fun pop(location: Location, noise: NoiseData = NoiseData()): ArmorStand {
+        return location.world.spawn(location.noised(noise), ArmorStand::class.java) {
+            it.modelAsPop(text, popping)
+            Gigantic.PLUGIN.apply { server.scheduler.runTaskLater(this@apply, { _ -> if (it.isValid) it.remove() }, lifeTime) }
         }
     }
 
@@ -96,54 +27,63 @@ class PopUp(
                meanX: Double = 0.0,
                meanY: Double = 0.0,
                meanZ: Double = 0.0,
-               diffX: Double = 0.0,
-               diffY: Double = 0.0,
-               diffZ: Double = 0.0
-    ): ArmorStand {
-        return entity.world.spawn(entity.location.clone().add(
-                meanX + Random.nextDouble() * diffX,
-                meanY + Random.nextDouble() * diffY,
-                meanZ + Random.nextDouble() * diffZ
-        ), ArmorStand::class.java) {
-            it.run {
-                isVisible = false
-                setBasePlate(false)
-                setArms(true)
-                isMarker = true
-                isInvulnerable = true
-                canPickupItems = false
-                setGravity(false)
-                if (text != null) {
-                    isCustomNameVisible = true
-                    customName = text
-                } else {
-                    isCustomNameVisible = false
-                }
-                popping(this)
+               noise: NoiseData = NoiseData()): ArmorStand {
+        val entityLocation = entity.location
+        val armorStand = entity.world.spawn(
+                entityLocation.noised(noise).add(meanX, meanY, meanZ),
+                ArmorStand::class.java
+        ) { it.modelAsPop(text, popping) }
+
+        fun followEntity(ticks: Long) {
+            if (!armorStand.isValid || ticks > lifeTime) {
+                armorStand.remove()
+            } else {
+                armorStand.teleport(entityLocation.noised(noise).add(meanX, meanY, meanZ))
+                Gigantic.PLUGIN.apply { server.scheduler.runTaskLater(this@apply, { _ -> followEntity(ticks + 1) }, 1L) }
             }
-        }.apply {
-            object : BukkitRunnable() {
-                var t = 0L
-                override fun run() {
-                    if (!isValid) {
-                        remove()
-                        cancel()
-                        return
-                    }
-                    teleport(
-                            entity.location.clone().add(
-                                    meanX + Random.nextDouble() * diffX,
-                                    meanY + Random.nextDouble() * diffY,
-                                    meanZ + Random.nextDouble() * diffZ
-                            )
-                    )
-                    t++
-                    if (t > duration) {
-                        remove()
-                        cancel()
-                    }
-                }
-            }.runTaskTimer(Gigantic.PLUGIN, 0L, 1L)
+        }
+
+        followEntity(0L)
+
+        return armorStand
+    }
+
+    private fun ArmorStand.modelAsPop(text: String?, popping: (ArmorStand) -> Unit) {
+        isVisible = false
+        setBasePlate(false)
+        setArms(true)
+        isMarker = true
+        isInvulnerable = true
+        canPickupItems = false
+        setGravity(true)
+        isSmall = true
+        customName = text ?: ""
+        isCustomNameVisible = text != null
+
+        popping(this)
+    }
+
+}
+
+class StillPopUp(text: String? = null,
+                 popping: (ArmorStand) -> Unit = {},
+                 override val lifeTime: Long) : PopUp(text, popping)
+
+class SimplePopUp(text: String? = null,
+                  popping: (ArmorStand) -> Unit = {}) : PopUp(text, popping) {
+
+    override val lifeTime = 5L
+
+}
+
+class LongPopUp(text: String? = null,
+                popping: (ArmorStand) -> Unit = {}) : PopUp(text, popping) {
+
+    override val lifeTime = 15L
+
+    override fun pop(location: Location, noise: NoiseData): ArmorStand {
+        return super.pop(location, noise).also { armorStand ->
+            Gigantic.PLUGIN.apply { server.scheduler.runTaskLater(this@apply, { _ -> armorStand.setGravity(false) }, 5L) }
         }
     }
 

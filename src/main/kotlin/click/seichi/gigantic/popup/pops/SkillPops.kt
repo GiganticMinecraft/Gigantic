@@ -1,7 +1,8 @@
 package click.seichi.gigantic.popup.pops
 
 import click.seichi.gigantic.extension.toRainbow
-import click.seichi.gigantic.popup.PopUp
+import click.seichi.gigantic.popup.LongPopUp
+import click.seichi.gigantic.popup.SimplePopUp
 import click.seichi.gigantic.util.Random
 import org.bukkit.ChatColor
 import java.math.RoundingMode
@@ -26,34 +27,17 @@ object SkillPops {
             else -> ChatColor.WHITE
         }
 
-        when (rank) {
-            in 1..9 -> {
-                PopUp(
-                        "$color$combo Combo",
-                        PopUp.PopPattern.POP
-                )
-            }
-            10 -> {
-                PopUp(
-                        "${Random.nextChatColor()}$combo Combo",
-                        PopUp.PopPattern.POP
-                )
-            }
-            else -> {
-                PopUp(
-                        "$combo Combo".toRainbow(),
-                        PopUp.PopPattern.POP
-                )
-            }
+        val comboText = when (rank) {
+            in 1..9 -> "$color$combo Combo"
+            10 -> "${Random.nextChatColor()}$combo Combo"
+            else -> "$combo Combo".toRainbow()
         }
 
+        SimplePopUp(comboText)
     }
 
     val HEAL = { amount: Double ->
-        PopUp(
-                "${ChatColor.LIGHT_PURPLE}${amount.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} HP",
-                PopUp.PopPattern.POP_LONG
-        )
+        LongPopUp("${ChatColor.LIGHT_PURPLE}${amount.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} HP")
     }
 
 }

@@ -13,6 +13,7 @@ import click.seichi.gigantic.popup.pops.BattlePops
 import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.sound.sounds.BattleSounds
+import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
 import org.bukkit.Chunk
 import org.bukkit.GameMode
@@ -111,7 +112,7 @@ class Battle internal constructor(
         val battler = battlers.find { it.equals(player) } ?: return
         val damage = 1L
         val trueDamage = enemy.damageByPlayer(player, damage)
-        BattlePops.BATTLE_DAMAGE(trueDamage).pop(block.centralLocation, diffY = PopUpParameters.BATTLE_DAMAGE_DIFF)
+        BattlePops.BATTLE_DAMAGE(trueDamage).pop(block.centralLocation, NoiseData(sizeY = PopUpParameters.BATTLE_DAMAGE_DIFF))
     }
 
     private fun win() {
