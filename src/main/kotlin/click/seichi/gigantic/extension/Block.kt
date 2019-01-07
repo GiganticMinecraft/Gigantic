@@ -286,8 +286,9 @@ private val faceSet = setOf(
         BlockFace.NORTH,
         BlockFace.EAST,
         BlockFace.SOUTH,
-        BlockFace.WEST
-        // どっちにしろ一番上まで探索するので，UP,DOWNは除外
+        BlockFace.WEST,
+        BlockFace.DOWN
+        // どっちにしろ一番上まで探索するので，UPは除外
 )
 
 private fun Block.changeRelativeBedrock() {
