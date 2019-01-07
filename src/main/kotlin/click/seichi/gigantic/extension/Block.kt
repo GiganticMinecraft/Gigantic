@@ -72,7 +72,6 @@ val CRUSTS = setOf(
         Material.DARK_OAK_PLANKS,
         Material.SPONGE,
         Material.WET_SPONGE,
-        Material.COBWEB,
         Material.WHITE_TERRACOTTA,
         Material.ORANGE_TERRACOTTA,
         Material.MAGENTA_TERRACOTTA,

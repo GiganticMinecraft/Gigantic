@@ -123,14 +123,12 @@ enum class Tool(
                 Material.STRIPPED_SPRUCE_LOG,
                 Material.MUSHROOM_STEM,
                 Material.RED_MUSHROOM_BLOCK,
-                Material.BROWN_MUSHROOM_BLOCK -> Tool.AXE
-
+                Material.BROWN_MUSHROOM_BLOCK,
                 Material.PUMPKIN,
-                Material.MELON -> Tool.SWORD
+                Material.MELON -> Tool.AXE
 
                 Material.SPONGE,
-                Material.WET_SPONGE,
-                Material.COBWEB -> null
+                Material.WET_SPONGE -> null
                 else -> null
             }
         }
