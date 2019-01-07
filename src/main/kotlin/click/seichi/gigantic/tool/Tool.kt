@@ -96,9 +96,9 @@ enum class Tool(
                 Material.INFESTED_MOSSY_STONE_BRICKS,
                 Material.INFESTED_STONE,
                 Material.INFESTED_STONE_BRICKS,
-                Material.COBBLESTONE -> Tool.PICKEL
+                Material.COBBLESTONE,
+                Material.GRANITE -> Tool.PICKEL
 
-                Material.GRANITE,
                 Material.RED_SAND,
                 Material.DIRT,
                 Material.GRASS_BLOCK,
