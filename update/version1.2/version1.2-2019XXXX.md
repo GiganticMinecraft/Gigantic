@@ -4,7 +4,7 @@
 
 :fleur_de_lis: **__意志と共にあらんことを__** :fleur_de_lis:   
 
-:diamond_shape_with_a_dot_inside: ある条件を満たすと「意志」との適正が得られ，後述する「意志の記憶」を獲得できます．
+:diamond_shape_with_a_dot_inside: ある条件を満たすと「意志」との適正が得られ，後述する「意志の記憶」を獲得できます
 :diamond_shape_with_a_dot_inside: ブロック破壊時に一定確率で「意志」が出現するようになります．
 :diamond_shape_with_a_dot_inside: 意志にはいくつか種類があり，種類によって出現条件が異なります．  
 :diamond_shape_with_a_dot_inside: 意志はプレイヤーに「意志の記憶」を与えます．   

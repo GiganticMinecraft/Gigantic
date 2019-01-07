@@ -195,6 +195,12 @@ val WATERS = setOf(
 
 val TREES = setOf(*LOGS.toTypedArray(), *LEAVES.toTypedArray())
 
+val DIRTS = setOf(
+        Material.DIRT,
+        Material.GRASS_BLOCK,
+        Material.GRAVEL
+)
+
 // Not contain log blocks
 val Block.isCrust
     get() = CRUSTS.contains(type)
