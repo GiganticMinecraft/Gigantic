@@ -25,6 +25,7 @@ class PlayerMonitor : Listener {
         val player = event.player ?: return
         val block = event.block ?: return
 
+
         if (block.isLog && ToolEnchantment.CUTTER.has(player)) {
             Cutter().breakRelationalBlock(block, true)
         }

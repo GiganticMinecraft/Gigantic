@@ -1,7 +1,6 @@
 package click.seichi.gigantic.will
 
-import click.seichi.gigantic.extension.isOcean
-import click.seichi.gigantic.extension.isRiver
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.WillMessages
 import org.bukkit.Color
@@ -19,63 +18,78 @@ enum class Will(
         val localizedName: LocalizedText
 ) {
 
+    /**
+     * スポーン条件は以下のいずれかによって分けること
+     * * バイオーム
+     * * 気温
+     * * 高度
+     *
+     */
     AQUA(1, Color.fromRGB(0, 0, 128), WillGrade.BASIC, WillMessages.AQUA) {
-        // 海，川等のバイオームであること
+        // 高度が30以上62以下であり，かつ海，川等のバイオームであること
         override fun canSpawn(player: Player, block: Block): Boolean {
             val biome = block.biome ?: return false
-            return biome.isOcean || biome.isRiver
+            if (!biome.isOcean && !biome.isRiver) return false
+            return block.y in 30..62
         }
     },
     IGNIS(2, Color.fromRGB(255, 69, 0), WillGrade.BASIC, WillMessages.IGNIS) {
-        // 高度が40以下であり，かつ海，川等のバイオームではないこと
+        // 高度が29以下であること
         override fun canSpawn(player: Player, block: Block): Boolean {
-            val biome = block.biome ?: return false
-            if (biome.isOcean || biome.isRiver) return false
-            return block.y <= 20
+            return block.y <= 29
         }
     },
     AER(3, Color.fromRGB(240, 248, 255), WillGrade.BASIC, WillMessages.AER) {
-        // 高度が65以上であること，かつ海，川等のバイオームではないこと
+        // 高度が85以上であること
         override fun canSpawn(player: Player, block: Block): Boolean {
-            val biome = block.biome ?: return false
-            if (biome.isOcean || biome.isRiver) return false
-            return block.y >= 65
+            return block.y >= 85
         }
     },
     TERRA(4, Color.fromRGB(124, 83, 53), WillGrade.BASIC, WillMessages.TERRA) {
-        // 土系のブロックであること
+        // 高度が30以上62以下であり，かつ海，川等のバイオームではないこと
         override fun canSpawn(player: Player, block: Block): Boolean {
-            return false
+            val biome = block.biome ?: return false
+            if (biome.isOcean || biome.isRiver) return false
+            return block.y in 30..62
         }
     },
     NATURA(5, Color.fromRGB(0, 255, 0), WillGrade.BASIC, WillMessages.NATURA) {
+        // 高度が63以上84以下であること
         override fun canSpawn(player: Player, block: Block): Boolean {
-            return false
+            return block.y in 63..84
         }
     },
     GLACIES(6, Color.fromRGB(127, 255, 255), WillGrade.ADVANCED, WillMessages.GLACIES) {
+        // 温度が0以下であること
         override fun canSpawn(player: Player, block: Block): Boolean {
-            return false
+            return block.temperature <= 0
         }
     },
     LUX(7, Color.fromRGB(255, 255, 77), WillGrade.ADVANCED, WillMessages.LUX) {
+        // 温度が1.2以上であること
         override fun canSpawn(player: Player, block: Block): Boolean {
-            return false
+            return block.temperature >= 1.2
         }
     },
     SOLUM(8, Color.fromRGB(105, 105, 105), WillGrade.ADVANCED, WillMessages.SOLUM) {
+        // 山岳バイオームであること
         override fun canSpawn(player: Player, block: Block): Boolean {
-            return false
+            val biome = block.biome ?: return false
+            return biome.isMountain
         }
     },
     UMBRA(9, Color.fromRGB(148, 0, 211), WillGrade.ADVANCED, WillMessages.UMBRA) {
+        // 森林バイオームであること
         override fun canSpawn(player: Player, block: Block): Boolean {
-            return false
+            val biome = block.biome ?: return false
+            return biome.isForest
         }
     },
     VENTUS(10, Color.fromRGB(123, 104, 238), WillGrade.ADVANCED, WillMessages.VENTUS) {
+        // 丘陵
         override fun canSpawn(player: Player, block: Block): Boolean {
-            return false
+            val biome = block.biome ?: return false
+            return biome.isHill
         }
     }
     ;
