@@ -1,9 +1,9 @@
 package click.seichi.gigantic.spirit.spirits
 
 import click.seichi.gigantic.animation.animations.WillSpiritAnimations
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.hasAptitude
-import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
 import click.seichi.gigantic.sound.sounds.WillSpiritSounds
@@ -52,9 +52,7 @@ class WillSpirit(
                 player ?: return@Sensor
                 WillMessages.SENSED_WILL(this).sendTo(player)
                 WillSpiritSounds.SENSED.playOnly(player)
-                player.manipulate(CatalogPlayerCache.MEMORY) {
-                    it.add(will, willSize.memory.toLong())
-                }
+                addMemory(player, will, willSize.memory)
                 SideBarMessages.MEMORY_SIDEBAR(
                         player,
                         false
@@ -66,6 +64,8 @@ class WillSpirit(
             },
             60
     )
+
+    private fun addMemory(player: Player, will: Will, amount: Long) = player.transform(Keys.MEMORY_MAP[will]!!) { it + amount }
 
     override val lifespan = -1
 

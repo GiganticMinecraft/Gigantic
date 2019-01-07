@@ -8,7 +8,12 @@ import org.bukkit.Color
  * @author unicroak
  * @author tar0ss
  */
-enum class Will(val id: Int, val color: Color, val grade: WillGrade, val localizedName: LocalizedText) {
+enum class Will(
+        val id: Int,
+        val color: Color,
+        val grade: WillGrade,
+        val localizedName: LocalizedText
+) {
 
     AQUA(1, Color.fromRGB(0, 0, 128), WillGrade.BASIC, WillMessages.AQUA),
     IGNIS(2, Color.fromRGB(255, 69, 0), WillGrade.BASIC, WillMessages.IGNIS),

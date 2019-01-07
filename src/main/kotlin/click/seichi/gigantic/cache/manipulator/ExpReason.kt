@@ -11,6 +11,7 @@ enum class ExpReason(val id: Int) {
     DEATH_PENALTY(2),
     DEBUG(3),
     SPELL_APOSTOL(4),
+    RELIC_BONUS(5),
     ;
 
     companion object {
