@@ -5,10 +5,13 @@
 
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:  
 
+:diamond_shape_with_a_dot_inside: 
 
 
 :bow: **__不具合修正__** :bow:   
 以下の不具合を修正いたしました．  
+
+:diamond_shape_with_a_dot_inside: 草や花などが破壊できずに空中に残ってしまう不具合
 
 
 
