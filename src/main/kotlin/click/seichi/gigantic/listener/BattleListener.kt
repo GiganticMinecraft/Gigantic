@@ -47,9 +47,8 @@ class BattleListener : Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun attack(event: BlockBreakEvent) {
-        if (event.isCancelled) return
         val block = event.block ?: return
         val player = event.player ?: return
         if (!block.isCrust) return

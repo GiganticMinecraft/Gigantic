@@ -160,6 +160,30 @@ object Keys {
             }
             .toMap()
 
+    val WILL_SECRET_MAP: Map<Will, DatabaseKey<PlayerCache, Long>> = Will.values()
+            .map {
+                it to object : DatabaseKey<PlayerCache, Long> {
+                    override val default: Long
+                        get() = 0L
+
+                    override fun read(entity: UserEntity): Long {
+                        val userWill = entity.userWillMap[it]!!
+                        return userWill.secretAmount
+                    }
+
+                    override fun store(entity: UserEntity, value: Long) {
+                        val userWill = entity.userWillMap[it]!!
+                        userWill.secretAmount = value
+                    }
+
+                    override fun satisfyWith(value: Long): Boolean {
+                        return value >= 0L
+                    }
+
+                }
+            }
+            .toMap()
+
     val APTITUDE_MAP: Map<Will, DatabaseKey<PlayerCache, Boolean>> = Will.values()
             .map {
                 it to object : DatabaseKey<PlayerCache, Boolean> {
@@ -926,6 +950,15 @@ object Keys {
         }
 
         override fun satisfyWith(value: Boolean): Boolean {
+            return true
+        }
+    }
+
+    val UPDATE_COUNT = object : Key<PlayerCache, Int> {
+        override val default: Int
+            get() = 0
+
+        override fun satisfyWith(value: Int): Boolean {
             return true
         }
     }

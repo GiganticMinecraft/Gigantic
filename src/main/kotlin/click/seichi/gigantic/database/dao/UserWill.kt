@@ -19,4 +19,6 @@ class UserWill(id: EntityID<Int>) : IntEntity(id) {
 
     var hasAptitude by UserWillTable.hasAptitude
 
+    var secretAmount by UserWillTable.secretAmount
+
 }

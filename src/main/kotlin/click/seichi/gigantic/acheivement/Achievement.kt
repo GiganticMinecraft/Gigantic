@@ -7,8 +7,10 @@ import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.will.WillGrade
 import org.bukkit.entity.Player
 
 /**
@@ -209,53 +211,72 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.QUEST_ORDER),*/
 
     // will
+    WILL_BASIC(500, {
+        it.wrappedLevel >= WillGrade.BASIC.unlockLevel
+    }, priority = UpdatePriority.HIGH),
+
     WILL_AQUA(501, {
-        false
+        WILL_BASIC.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.AQUA]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
     }, action = {
         it.offer(Keys.APTITUDE_MAP[Will.AQUA]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.AQUA)),
     WILL_IGNIS(502, {
-        false
+        WILL_BASIC.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.IGNIS]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
     }, action = {
         it.offer(Keys.APTITUDE_MAP[Will.IGNIS]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.IGNIS)),
     WILL_AER(503, {
-        false
+        WILL_BASIC.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.AER]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
     }, action = {
         it.offer(Keys.APTITUDE_MAP[Will.AER]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.AER)),
     WILL_TERRA(504, {
-        false
+        WILL_BASIC.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.TERRA]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
     }, action = {
         it.offer(Keys.APTITUDE_MAP[Will.TERRA]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.TERRA)),
     WILL_NATURA(505, {
-        false
+        WILL_BASIC.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.NATURA]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
     }, action = {
         it.offer(Keys.APTITUDE_MAP[Will.NATURA]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.NATURA)),
-    WILL_GLACIES(506, {
-        false
+
+
+    WILL_ADVANCED(550, {
+        it.wrappedLevel >= WillGrade.ADVANCED.unlockLevel
+    }, priority = UpdatePriority.HIGH),
+    WILL_GLACIES(551, {
+        WILL_ADVANCED.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.GLACIES]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
     }, action = {
         it.offer(Keys.APTITUDE_MAP[Will.GLACIES]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.GLACIES)),
-    WILL_LUX(507, {
-        false
+    WILL_LUX(552, {
+        WILL_ADVANCED.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.LUX]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
     }, action = {
         it.offer(Keys.APTITUDE_MAP[Will.LUX]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.LUX)),
-    WILL_SOLUM(508, {
-        false
+    WILL_SOLUM(553, {
+        WILL_ADVANCED.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.SOLUM]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
     }, action = {
         it.offer(Keys.APTITUDE_MAP[Will.SOLUM]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.SOLUM)),
-    WILL_UMBRA(509, {
-        false
+    WILL_UMBRA(554, {
+        WILL_ADVANCED.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.UMBRA]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
     }, action = {
         it.offer(Keys.APTITUDE_MAP[Will.UMBRA]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.UMBRA)),
-    WILL_VENTUS(510, {
-        false
+    WILL_VENTUS(555, {
+        WILL_ADVANCED.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.VENTUS]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
     }, action = {
         it.offer(Keys.APTITUDE_MAP[Will.VENTUS]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.VENTUS)),

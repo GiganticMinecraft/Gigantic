@@ -96,7 +96,9 @@ class Gigantic : JavaPlugin() {
                 ChunkListener(),
                 BattleListener(),
                 ElytraListener(),
-                ToolListener()
+                ToolListener(),
+                WillListener(),
+                AchievementListener()
         )
 
         registerPacketListeners(

@@ -15,4 +15,6 @@ object UserWillTable : IntIdTable("users_wills") {
 
     val hasAptitude = bool("has_aptitude").default(false)
 
+    val secretAmount = long("secret_amount").default(0L)
+
 }

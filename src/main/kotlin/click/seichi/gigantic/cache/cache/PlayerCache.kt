@@ -81,6 +81,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.MEMORY_MAP.forEach { will, key ->
                 offer(key, key.read(entity))
             }
+            Keys.WILL_SECRET_MAP.forEach { will, key ->
+                offer(key, key.read(entity))
+            }
             Keys.APTITUDE_MAP.forEach { will, key ->
                 offer(key, key.read(entity))
             }
@@ -161,6 +164,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 key.store(entity, getOrDefault(key))
             }
             Keys.MEMORY_MAP.forEach { will, key ->
+                key.store(entity, getOrDefault(key))
+            }
+            Keys.WILL_SECRET_MAP.forEach { will, key ->
                 key.store(entity, getOrDefault(key))
             }
             Keys.APTITUDE_MAP.forEach { will, key ->

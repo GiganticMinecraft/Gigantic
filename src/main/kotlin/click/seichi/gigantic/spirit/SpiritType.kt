@@ -30,11 +30,14 @@ import org.bukkit.event.block.BlockBreakEvent
 enum class SpiritType(vararg summonCases: SummonCase<*>) {
 
     WILL(
-            RandomSummonCase(0.05, BlockBreakEvent::class.java) { event ->
+            RandomSummonCase(0.01, BlockBreakEvent::class.java) { event ->
                 val player = event.player ?: return@RandomSummonCase
-                if (!event.block.isCrust && !event.block.isTree) return@RandomSummonCase
-                val aptitudeSet = Will.values().filter { player.hasAptitude(it) }.toSet()
-                val will = aptitudeSet.shuffled().firstOrNull() ?: return@RandomSummonCase
+                val block = event.block ?: return@RandomSummonCase
+                if (!block.isCrust && !block.isTree) return@RandomSummonCase
+                val will = Will.values()
+                        .filter { player.hasAptitude(it) }
+                        .filter { it.canSpawn(player, block) }
+                        .toSet().random()
                 spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, player))
             }
     ),
