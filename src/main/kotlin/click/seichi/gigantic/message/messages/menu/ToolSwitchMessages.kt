@@ -42,4 +42,12 @@ object ToolSwitchMessages {
         }
     }
 
+    val AUTO_SWITCH = LocalizedText(
+            Locale.JAPANESE to "自動切り替えモード: "
+    )
+
+    val CLICK_TO_TOGGLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.WHITE}${ChatColor.UNDERLINE}クリックで切り替え"
+    )
+
 }

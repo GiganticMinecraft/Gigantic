@@ -4,6 +4,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.transform
+import click.seichi.gigantic.extension.updateTool
 import click.seichi.gigantic.item.Armor
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.HandItem
@@ -64,7 +65,7 @@ enum class Belt(
                 )
             }
             if (applyTool)
-                player.getOrPut(Keys.TOOL).update(player)
+                player.updateTool()
             inv.helmet = helmet?.findItemStack(player) ?: ItemStack(Material.AIR)
             inv.chestplate = chestPlate?.findItemStack(player) ?: ItemStack(Material.AIR)
             inv.leggings = leggings?.findItemStack(player) ?: ItemStack(Material.AIR)

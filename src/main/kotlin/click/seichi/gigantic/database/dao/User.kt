@@ -44,6 +44,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var isOnline by UserTable.isOnline
 
+    var autoSwitch by UserTable.autoSwitch
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt

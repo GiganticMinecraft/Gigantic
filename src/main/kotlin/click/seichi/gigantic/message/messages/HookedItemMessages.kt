@@ -57,6 +57,21 @@ object HookedItemMessages {
             )
     ).toList()
 
+    val SWORD = LocalizedText(
+            Locale.JAPANESE to "不思議な剣"
+    )
+
+    val SWORD_LORE = mutableListOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.WHITE}" +
+                            "どんなに使っても折れない"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                            "\"f\" キー を押してツールを変更"
+            )
+    ).toList()
+
     val MINE_BURST = LocalizedText(
             Locale.JAPANESE to
                     "${ChatColor.BLUE}" +

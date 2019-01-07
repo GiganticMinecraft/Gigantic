@@ -44,6 +44,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val isOnline = bool("is_online").default(false)
 
+    val autoSwitch = bool("auto_switch").default(true)
+
     val createdAt = datetime("created_at").default(DateTime.now())
 
     val updatedAt = datetime("updated_at").default(DateTime.now())

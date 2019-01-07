@@ -17,7 +17,6 @@ import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.popup.pops.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
-import click.seichi.gigantic.tool.Tool
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -153,21 +152,6 @@ class PlayerListener : Listener {
         if (event.item.type == Material.FIREWORK_ROCKET) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
-        val player = event.player ?: return
-        event.isCancelled = true
-        var current: Tool? = null
-        player.manipulate(CatalogPlayerCache.TOOL_SWITCHER) {
-            current = it.current
-            it.switch()
-        }
-        val nextTool = player.getOrPut(Keys.TOOL)
-        if (current == nextTool) return
-        nextTool.update(player)
-        PlayerSounds.SWITCH.playOnly(player)
     }
 
     @EventHandler

@@ -24,7 +24,8 @@ object AchievementMessages {
     val FIRST_LEVEL_UP = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "\"f\" キー を押してツールを入れ替えよう"
+                        "ツールは破壊するブロックによって自動で切り替えられる!!\n" +
+                        "手動で切り替えたいときは\"f\" キー を押してみよう!!"
             }
     ))
 
@@ -127,6 +128,13 @@ object AchievementMessages {
                         "大きくジャンプできるようになった!!\n" +
                         "${ChatColor.GRAY}" +
                         "ジャンプアイテムを持ってスニークしてみよう!!\n"
+            }
+    ))
+
+    val SWORD = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "剣を扱えるようになった!!"
             }
     ))
 

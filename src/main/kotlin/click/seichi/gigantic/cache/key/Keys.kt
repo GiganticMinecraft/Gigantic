@@ -358,7 +358,7 @@ object Keys {
             .map {
                 it to object : DatabaseKey<PlayerCache, Boolean> {
                     override val default: Boolean
-                        get() = false
+                        get() = true
 
                     override fun read(entity: UserEntity): Boolean {
                         val userTool = entity.userToolMap[it]!!
@@ -907,6 +907,25 @@ object Keys {
             get() = -1L
 
         override fun satisfyWith(value: Long): Boolean {
+            return true
+        }
+    }
+
+    val AUTO_SWITCH = object : DatabaseKey<PlayerCache, Boolean> {
+        override val default: Boolean
+            get() = true
+
+        override fun read(entity: UserEntity): Boolean {
+            val user = entity.user
+            return user.autoSwitch
+        }
+
+        override fun store(entity: UserEntity, value: Boolean) {
+            val user = entity.user
+            user.autoSwitch = value
+        }
+
+        override fun satisfyWith(value: Boolean): Boolean {
             return true
         }
     }

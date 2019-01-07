@@ -44,6 +44,18 @@ class ToolSwitcher : Manipulator<ToolSwitcher, PlayerCache> {
 
     private fun canSwitch(tool: Tool) = Config.DEBUG_MODE || ((map[tool] ?: false) && (unlockMap[tool] ?: false))
 
+    /**
+     * ツール変更を試みる
+     *
+     * @param tool 変更したいツール
+     * @return 変更成功ならTRUE
+     */
+    fun setTool(tool: Tool): Boolean {
+        if (!canSwitch(tool)) return false
+        current = tool
+        return true
+    }
+
     fun switch(): Tool {
         current = nextTool()
         return current

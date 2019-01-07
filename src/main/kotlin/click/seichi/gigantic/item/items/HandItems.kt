@@ -89,6 +89,27 @@ object HandItems {
             return false
         }
     }
+    val SWORD = object : HandItem {
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.DIAMOND_SWORD).apply {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
+                        HookedItemMessages.SWORD.asSafety(player.wrappedLocale))
+                modifyItemMeta(this@apply, player)
+                addLore(*HookedItemMessages.SWORD_LORE
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
+        }
+
+        override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
+            return false
+        }
+    }
 
     private fun modifyItemMeta(itemStack: ItemStack, player: Player) {
         itemStack.run {

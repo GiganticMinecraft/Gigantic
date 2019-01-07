@@ -18,17 +18,17 @@ import org.bukkit.entity.Player
 enum class Achievement(
         val id: Int,
         private val canGranting: (Player) -> Boolean,
-        // 毎Login時とアンロック時に処理される
+        // アンロック時に処理される
         val action: (Player) -> Unit = {},
         val grantMessage: ChatMessage? = null,
         private val priority: UpdatePriority = UpdatePriority.NORMAL
 ) {
     // messages
-    JOIN_SERVER(0, { true }, action = { player ->
-        Tool.PICKEL.grant(player)
-        Tool.SHOVEL.grant(player)
-        Tool.AXE.grant(player)
-        Belt.DEFAULT.grant(player)
+    JOIN_SERVER(0, { true }, action = {
+        Tool.PICKEL.grant(it)
+        Tool.SHOVEL.grant(it)
+        Tool.AXE.grant(it)
+        Belt.DEFAULT.grant(it)
     }, grantMessage = AchievementMessages.FIRST_JOIN),
     FIRST_LEVEL_UP(1, {
         it.wrappedLevel >= 2
@@ -52,6 +52,13 @@ enum class Achievement(
     JUMP(104, {
         it.wrappedLevel >= 15
     }, grantMessage = AchievementMessages.JUMP),
+    // 使用するまで保留
+    /*SWORD(105,            {
+        it.wrappedLevel >= 17
+    },action = {
+        Tool.SWORD.grant(it)
+        it.offer(Keys.TOOL_TOGGLE_MAP[Tool.SWORD]!!,false)
+    }, grantMessage = AchievementMessages.SWORD),*/
 
     // skills
     SKILL_FLASH(200, {
