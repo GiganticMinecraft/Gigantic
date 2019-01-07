@@ -10,7 +10,6 @@
 :diamond_shape_with_a_dot_inside: 「自動切換え」がONになっていても，今まで通り手動で切り替えることは可能です．  
 
 
-
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:  
 
 :diamond_shape_with_a_dot_inside: 葉ブロックは直下のブロックを破壊することで消えるようになりました．  
