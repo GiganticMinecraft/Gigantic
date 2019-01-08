@@ -34,7 +34,7 @@ class QuestMonsterSpirit(
         val quest: Quest
 ) : Spirit(spawnReason, chunk) {
 
-    private val senseDuration = 60
+    private val senseDuration = 3 * 20L
 
     // モンスターのボスバー
     private val bossBar: BossBar = Gigantic.createInvisibleBossBar()
@@ -48,7 +48,7 @@ class QuestMonsterSpirit(
 
     private lateinit var sensor: Sensor
 
-    override val lifespan = -1
+    override val lifespan = 30 * 20L
     override val spiritType = SpiritType.MONSTER
 
     override fun onSpawn() {
@@ -91,7 +91,7 @@ class QuestMonsterSpirit(
                     val nextProgress = count.div(senseDuration.toDouble())
                     BattleBars.SEAL(nextProgress, monster, spawner.wrappedLocale).show(bossBar)
                     MonsterSpiritAnimations.AWAKE.start(entity.eyeLocation.add(0.0, 0.9, 0.0))
-                    if (count % 10 == 0)
+                    if (count % 10 == 0L)
                         SoulMonsterSounds.SENSE_SUB.playOnly(player)
                 },
                 { player ->

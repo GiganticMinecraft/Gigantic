@@ -94,7 +94,7 @@ object ProfileMessages {
                                     .filter { it.grade == WillGrade.BASIC }
                                     .joinToString(" ") {
                                         if (player.hasAptitude(it))
-                                            it.getName(locale)
+                                            "${it.chatColor}${ChatColor.BOLD}" + it.getName(locale)
                                         else "  "
                                     }
                         }
@@ -110,7 +110,7 @@ object ProfileMessages {
                                     .filter { it.grade == WillGrade.ADVANCED }
                                     .joinToString(" ") {
                                         if (player.hasAptitude(it))
-                                            it.getName(locale)
+                                            "${it.chatColor}${ChatColor.BOLD}" + it.getName(locale)
                                         else "  "
                                     }
                         }

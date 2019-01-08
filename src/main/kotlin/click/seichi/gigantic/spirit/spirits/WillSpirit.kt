@@ -2,6 +2,7 @@ package click.seichi.gigantic.spirit.spirits
 
 import click.seichi.gigantic.animation.animations.WillSpiritAnimations
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.extension.isAir
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
@@ -34,6 +35,11 @@ class WillSpirit(
             { player ->
                 player ?: return@Sensor false
                 when {
+                    // 距離の制約
+                    player.location.distance(location) >= 10 -> false
+                    // 物理的な制約
+                    !location.block.isAir -> false
+                    // プレイヤーの制約
                     targetPlayer == null -> true
                     player.uniqueId == targetPlayer.uniqueId -> true
                     else -> false
@@ -42,7 +48,7 @@ class WillSpirit(
             { player, count ->
                 player ?: return@Sensor
                 WillSpiritAnimations.SENSE(will.color).link(player, location, meanY = 0.9)
-                if (count % 10 == 0) {
+                if (count % 10 == 0L) {
                     WillSpiritSounds.SENSE_SUB.playOnly(player)
                 }
             },
@@ -65,13 +71,22 @@ class WillSpirit(
 
     private fun addMemory(player: Player, will: Will, amount: Long) = player.transform(Keys.MEMORY_MAP[will]!!) { it + amount }
 
-    override val lifespan = -1
+    override val lifespan = 60 * 20L
 
     override val spiritType: SpiritType = SpiritType.WILL
 
+    private val speed = 6 + Random.nextGaussian()
+
+    private val multiplier = 0.18 + Random.nextGaussian(variance = 0.05)
+
     override fun onRender() {
         sensor.update()
-        WillSpiritAnimations.RENDER(willSize.renderingData, will.color, lifeExpectancy).start(location)
+        val renderLocation = location.clone().add(
+                0.0,
+                Math.sin(Math.toRadians(lifeExpectancy.times(speed) % 360.0)) * multiplier,
+                0.0
+        )
+        WillSpiritAnimations.RENDER(willSize.renderingData, will.color, lifeExpectancy).start(renderLocation)
     }
 
     override fun onSpawn() {

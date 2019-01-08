@@ -101,7 +101,7 @@ enum class Will(
 
     override fun toString(): String = name.toLowerCase()
 
-    fun getName(locale: Locale) = "$chatColor" + localizedName.asSafety(locale)
+    fun getName(locale: Locale) = localizedName.asSafety(locale)
 
     companion object {
         private val idMap = values().map { it.id to it }.toMap()

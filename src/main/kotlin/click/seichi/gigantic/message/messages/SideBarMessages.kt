@@ -30,12 +30,13 @@ object SideBarMessages {
                 }.map { will ->
                     SideBarRow.getRowById(will.id) to LocalizedText(
                             Locale.JAPANESE.let { locale ->
-                                locale to "${ChatColor.GREEN}${ChatColor.BOLD}" +
+                                locale to "${will.chatColor}${ChatColor.BOLD}" +
                                         "${will.getName(locale).let {
-                                            if (it.length == 4) it
+                                            if (it.length == 2) it
                                             else " $it "
                                         }}:" +
-                                        "${ChatColor.WHITE}" +
+                                        "${ChatColor.RESET}" +
+                                        "${will.chatColor}" +
                                         "${willMap[will]!!.coerceAtMost(9999)}".padStart(4, ' ')
                             }
                     )

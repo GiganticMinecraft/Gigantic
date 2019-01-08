@@ -79,9 +79,9 @@ object WillMessages {
         ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
                 Locale.JAPANESE.let {
                     it to "${ChatColor.GREEN}${sizePrefix.asSafety(it)}" +
-                            "${willSpirit.will.getName(it)}の遺志" +
+                            "${willSpirit.will.chatColor}${willSpirit.will.getName(it)}の遺志" +
                             "${ChatColor.RESET}${ChatColor.GREEN}" +
-                            "から${memory}の記憶を享受した"
+                            "から${memory}の記憶を獲得"
                 }
         ))
     }

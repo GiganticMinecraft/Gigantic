@@ -26,7 +26,7 @@ class Animation(
         object : BukkitRunnable() {
             var t = 0L
             override fun run() {
-                rendering(location, t++)
+                rendering(location.clone(), t++)
                 if (t > ticks) cancel()
             }
         }.runTaskTimer(Gigantic.PLUGIN, 0L, 1L)

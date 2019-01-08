@@ -3,6 +3,8 @@ package click.seichi.gigantic.spirit
 
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.config.Config
+import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.spirit.SpiritManager.spawn
@@ -30,7 +32,11 @@ import org.bukkit.event.block.BlockBreakEvent
 enum class SpiritType(vararg summonCases: SummonCase<*>) {
 
     WILL(
-            RandomSummonCase(0.01, BlockBreakEvent::class.java) { event ->
+            RandomSummonCase(
+                    if (Config.DEBUG_MODE && DebugConfig.WILL_SPIRIT) 1.00
+                    else 0.01,
+                    BlockBreakEvent::class.java
+            ) { event ->
                 val player = event.player ?: return@RandomSummonCase
                 val block = event.block ?: return@RandomSummonCase
                 if (!block.isCrust && !block.isTree) return@RandomSummonCase
@@ -40,7 +46,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
                         .toSet().apply {
                             if (isEmpty()) return@RandomSummonCase
                         }.random()
-                spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, player))
+                spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation.add(0.0, 0.3, 0.0), will, player))
             }
     ),
     MONSTER(

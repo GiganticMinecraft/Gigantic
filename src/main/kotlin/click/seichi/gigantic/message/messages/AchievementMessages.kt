@@ -144,6 +144,7 @@ object AchievementMessages {
                 Locale.JAPANESE.let {
                     it to "${ChatColor.YELLOW}" +
                             "新しく " +
+                            will.chatColor +
                             "${ChatColor.BOLD}" +
                             will.getName(it) +
                             "の意志 " +

@@ -12,12 +12,12 @@ import org.bukkit.Color
  */
 object WillSpiritAnimations {
 
-    val RENDER = { renderingData: WillRenderingData, color: Color, lifeExpectancy: Int ->
+    val RENDER = { renderingData: WillRenderingData, color: Color, lifeExpectancy: Long ->
         Animation(0) { location, ticks ->
             location.world.spawnColoredParticleSpherically(
                     location,
                     color,
-                    if (lifeExpectancy < 10 * 20 && (renderingData.beatTiming == 0 || lifeExpectancy % renderingData.beatTiming == 0)) {
+                    if (lifeExpectancy < 10 * 20 && (renderingData.beatTiming == 0 || lifeExpectancy % renderingData.beatTiming == 0L)) {
                         renderingData.min
                     } else {
                         renderingData.max
