@@ -15,7 +15,6 @@ import click.seichi.gigantic.database.dao.UserFollow
 import click.seichi.gigantic.database.table.UserFollowTable
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.menu.RefineItem
-import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.quest.Quest
@@ -401,16 +400,6 @@ object Keys {
                 }
             }
             .toMap()
-
-    val DEATH_MESSAGE = object : Key<PlayerCache, LocalizedText?> {
-        override val default: LocalizedText?
-            get() = null
-
-        override fun satisfyWith(value: LocalizedText?): Boolean {
-            return true
-        }
-
-    }
 
     val BREAK_BLOCK = object : Key<PlayerCache, Block?> {
         override val default: Block?

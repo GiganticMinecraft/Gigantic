@@ -19,7 +19,6 @@ import click.seichi.gigantic.popup.pops.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -39,7 +38,7 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 import java.math.BigDecimal
-import java.math.RoundingMode
+import java.math.BigInteger
 
 
 /**
@@ -215,14 +214,10 @@ class PlayerListener : Listener {
     @EventHandler
     fun onDeath(event: PlayerDeathEvent) {
         val player = event.entity ?: return
+        event.deathMessage = null
         event.keepInventory = true
         event.keepLevel = true
         player.offer(Keys.LAST_DEATH_CHUNK, player.location.chunk)
-        player.getOrPut(Keys.DEATH_MESSAGE)?.asSafety(player.wrappedLocale)?.let { deathMessage ->
-            event.deathMessage = "${ChatColor.RED}" + deathMessage
-        }
-        player.offer(Keys.DEATH_MESSAGE, null)
-
         if (Achievement.TELEPORT_LAST_DEATH.isGranted(player)) {
             DeathMessages.DEATH_TELEPORT.sendTo(player)
         }
@@ -234,12 +229,12 @@ class PlayerListener : Listener {
                 val maxPenalty = player.wrappedExp.minus(expToCurrentLevel)
 
                 val penaltyMineBlock = expToNextLevel.minus(expToCurrentLevel)
-                        .divide(100.toBigDecimal(), 10, RoundingMode.HALF_UP)
+                        .divide(100.toBigDecimal())
                         .times(Config.PLAYER_DEATH_PENALTY.toBigDecimal())
                         .coerceAtMost(maxPenalty)
 
                 it.add(penaltyMineBlock.times((-1).toBigDecimal()), ExpReason.DEATH_PENALTY)
-                if (penaltyMineBlock != BigDecimal.ZERO)
+                if (penaltyMineBlock.toBigInteger() != BigInteger.ZERO)
                     PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
             }
         }
