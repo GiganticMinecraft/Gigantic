@@ -108,7 +108,7 @@ fun Player.hasMana(other: BigDecimal) = mana >= other
 
 fun Player.hasAptitude(will: Will) = getOrPut(Keys.APTITUDE_MAP[will]!!)
 
-fun Player.memory(will: Will) = getOrPut(Keys.MEMORY_MAP[will]!!)
+fun Player.ethel(will: Will) = getOrPut(Keys.ETHEL_MAP[will]!!)
 
 fun Player.isFollow(uniqueId: UUID) = getOrPut(Keys.FOLLOW_SET).contains(uniqueId)
 

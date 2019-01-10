@@ -135,7 +135,7 @@ object Keys {
             }
             .toMap()
 
-    val MEMORY_MAP: Map<Will, DatabaseKey<PlayerCache, Long>> = Will.values()
+    val ETHEL_MAP: Map<Will, DatabaseKey<PlayerCache, Long>> = Will.values()
             .map {
                 it to object : DatabaseKey<PlayerCache, Long> {
                     override val default: Long
@@ -143,12 +143,12 @@ object Keys {
 
                     override fun read(entity: UserEntity): Long {
                         val userWill = entity.userWillMap[it]!!
-                        return userWill.memory
+                        return userWill.ethel
                     }
 
                     override fun store(entity: UserEntity, value: Long) {
                         val userWill = entity.userWillMap[it]!!
-                        userWill.memory = value
+                        userWill.ethel = value
                     }
 
                     override fun satisfyWith(value: Long): Boolean {

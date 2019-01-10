@@ -56,7 +56,7 @@ class WillSpirit(
                 player ?: return@Sensor
                 WillMessages.SENSED_WILL(this).sendTo(player)
                 WillSpiritSounds.SENSED.playOnly(player)
-                addMemory(player, will, willSize.memory)
+                addEthel(player, will, willSize.memory)
                 SideBarMessages.MEMORY_SIDEBAR(
                         player,
                         false
@@ -69,7 +69,7 @@ class WillSpirit(
             60
     )
 
-    private fun addMemory(player: Player, will: Will, amount: Long) = player.transform(Keys.MEMORY_MAP[will]!!) { it + amount }
+    private fun addEthel(player: Player, will: Will, amount: Long) = player.transform(Keys.ETHEL_MAP[will]!!) { it + amount }
 
     override val lifespan = 60 * 20L
 

@@ -1,7 +1,7 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.extension.ethel
 import click.seichi.gigantic.extension.hasAptitude
-import click.seichi.gigantic.extension.memory
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.SideBarMessage
 import click.seichi.gigantic.util.SideBarRow
@@ -18,9 +18,9 @@ object SideBarMessages {
     val MEMORY_SIDEBAR = { player: Player, isForced: Boolean ->
         val willMap = Will.values()
                 .filter { player.hasAptitude(it) }
-                .map { it to player.memory(it) }.toMap()
+                .map { it to player.ethel(it) }.toMap()
         SideBarMessage(
-                "memory",
+                "ethel",
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.BOLD}" +
                                 "エーテル"
