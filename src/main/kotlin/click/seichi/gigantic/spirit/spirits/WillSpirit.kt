@@ -36,7 +36,7 @@ class WillSpirit(
                 player ?: return@Sensor false
                 when {
                     // 距離の制約
-                    player.location.distance(location) >= 10 -> false
+                    player.location.distance(location) >= 3 -> false
                     // 物理的な制約
                     !location.block.isAir -> false
                     // プレイヤーの制約

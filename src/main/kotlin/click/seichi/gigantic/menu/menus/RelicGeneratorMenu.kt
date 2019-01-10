@@ -18,9 +18,9 @@ object RelicGeneratorMenu : Menu() {
         get() = 5 * 9
 
     override val openSound: DetailedSound
-        get() = MenuSounds.SPECIAL_MENU_OPEN
+        get() = MenuSounds.RELIC_MENU_OPEN
     override val closeSound: DetailedSound
-        get() = MenuSounds.SPECIAL_MENU_CLOSE
+        get() = MenuSounds.RELIC_MENU_CLOSE
 
     override fun getTitle(player: Player): String {
         return RelicGeneratorMenuMessages.TITLE.asSafety(player.wrappedLocale)
@@ -37,6 +37,8 @@ object RelicGeneratorMenu : Menu() {
         registerButton(26, RelicGeneratorButtons.SELECT_ETHEL(Will.VENTUS))
         registerButton(34, RelicGeneratorButtons.SELECT_ETHEL(Will.LUX))
         registerButton(42, RelicGeneratorButtons.SELECT_ETHEL(Will.UMBRA))
+
+        registerButton(40, RelicGeneratorButtons.GENERATE)
     }
 
 }

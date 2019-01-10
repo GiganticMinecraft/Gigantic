@@ -78,10 +78,18 @@ object WillMessages {
 
         ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
                 Locale.JAPANESE.let {
-                    it to "${ChatColor.GREEN}${sizePrefix.asSafety(it)}" +
-                            "${willSpirit.will.chatColor}${willSpirit.will.getName(it)}の意志" +
-                            "${ChatColor.RESET}${ChatColor.GREEN}" +
-                            "から${memory}つエーテルを獲得"
+                    it to "${ChatColor.GREEN}" +
+                            "${willSpirit.will.chatColor}${ChatColor.BOLD}" +
+                            sizePrefix.asSafety(it) +
+                            willSpirit.will.getName(it) +
+                            "の意志" +
+                            "${ChatColor.RESET}${ChatColor.WHITE}" +
+                            "から" +
+                            "${willSpirit.will.chatColor}${ChatColor.BOLD}" +
+                            willSpirit.will.getName(it) +
+                            "のエーテル($memory)" +
+                            "${ChatColor.RESET}${ChatColor.WHITE}" +
+                            "を獲得"
                 }
         ))
     }

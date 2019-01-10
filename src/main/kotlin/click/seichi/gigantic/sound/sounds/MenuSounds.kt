@@ -34,13 +34,26 @@ object MenuSounds {
             volume = 0.6F
     )
 
-    val SPECIAL_MENU_OPEN = DetailedSound(
+    val RELIC_MENU_OPEN = DetailedSound(
             Sound.BLOCK_ENDER_CHEST_OPEN,
             SoundCategory.BLOCKS,
             pitch = 0.1F
     )
-    val SPECIAL_MENU_CLOSE = DetailedSound(
+
+    val RELIC_MENU_CLOSE = DetailedSound(
             Sound.BLOCK_ENDER_CHEST_CLOSE,
+            SoundCategory.BLOCKS,
+            pitch = 0.1F
+    )
+
+    val WILL_SELECT = DetailedSound(
+            Sound.BLOCK_END_PORTAL_FRAME_FILL,
+            SoundCategory.BLOCKS,
+            volume = 0.6F
+    )
+
+    val RELIC_GENERATE = DetailedSound(
+            Sound.BLOCK_ANVIL_USE,
             SoundCategory.BLOCKS,
             pitch = 0.1F
     )

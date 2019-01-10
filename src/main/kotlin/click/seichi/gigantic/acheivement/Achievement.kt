@@ -36,6 +36,10 @@ enum class Achievement(
     FIRST_LEVEL_UP(1, {
         it.wrappedLevel >= 2
     }, grantMessage = AchievementMessages.FIRST_LEVEL_UP),
+    FIRST_WILL(2, {
+        Will.values().firstOrNull { will -> it.hasAptitude(will) } != null
+    }, grantMessage = AchievementMessages.FIRST_WILL
+            , priority = UpdatePriority.LOWEST),
 
     //TODO 一度すべてのクエストを隠蔽しているので実装時は一気にやる
     // systems

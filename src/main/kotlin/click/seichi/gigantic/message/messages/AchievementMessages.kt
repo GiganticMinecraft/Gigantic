@@ -142,9 +142,7 @@ object AchievementMessages {
     val WILL = { will: Will ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE.let {
-                    it to "${ChatColor.YELLOW}" +
-                            "新しく " +
-                            will.chatColor +
+                    it to "" + will.chatColor +
                             "${ChatColor.BOLD}" +
                             will.getName(it) +
                             "の意志 " +
@@ -153,5 +151,14 @@ object AchievementMessages {
                 }
         ))
     }
+
+    val FIRST_WILL = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.GRAY}" +
+                        "ブロックを破壊すると，稀に意志が出現する!!\n" +
+                        "意志が出現したら近付いてエーテルを獲得してみよう!!\n" +
+                        "エーテルを100個集めたら，メニューにあるレリック生成器を使って\nレリックを獲得できるぞ!!"
+            }
+    ))
 
 }
