@@ -86,7 +86,7 @@ object ProfileMessages {
     val PROFILE_WILL_APTITUDE_BASIC = { player: Player ->
         mutableListOf(
                 LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GREEN}適正遺志"
+                        Locale.JAPANESE to "${ChatColor.GREEN}適正意志"
                 ),
                 LocalizedText(
                         Locale.JAPANESE.let { locale ->

@@ -23,7 +23,7 @@ object SideBarMessages {
                 "memory",
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.BOLD}" +
-                                "遺志の記憶"
+                                "エーテル"
                 ),
                 willMap.keys.filter {
                     willMap[it]!! > 0

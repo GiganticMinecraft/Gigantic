@@ -8,6 +8,10 @@ import java.util.*
  */
 object RelicGeneratorMenuMessages {
     val TITLE = LocalizedText(
-            Locale.JAPANESE to "遺物生成器"
+            Locale.JAPANESE to "レリック生成器"
+    )
+
+    val SELECT_WILL = LocalizedText(
+            Locale.JAPANESE to "のエーテル"
     )
 }

@@ -952,4 +952,13 @@ object Keys {
         }
     }
 
+    val SELECTED_WILL = object : Key<PlayerCache, Will?> {
+        override val default: Will?
+            get() = null
+
+        override fun satisfyWith(value: Will?): Boolean {
+            return true
+        }
+    }
+
 }
