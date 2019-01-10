@@ -415,7 +415,7 @@ object BagButtons {
     val RELIC_GENERATOR = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.HOPPER).apply {
+            return ItemStack(Material.END_PORTAL_FRAME).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + RelicGeneratorMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
