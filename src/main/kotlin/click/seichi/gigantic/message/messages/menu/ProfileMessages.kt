@@ -92,10 +92,9 @@ object ProfileMessages {
                         Locale.JAPANESE.let { locale ->
                             locale to Will.values()
                                     .filter { it.grade == WillGrade.BASIC }
+                                    .filter { player.hasAptitude(it) }
                                     .joinToString(" ") {
-                                        if (player.hasAptitude(it))
                                             "${it.chatColor}${ChatColor.BOLD}" + it.getName(locale)
-                                        else "  "
                                     }
                         }
                 )
@@ -108,10 +107,9 @@ object ProfileMessages {
                         Locale.JAPANESE.let { locale ->
                             locale to Will.values()
                                     .filter { it.grade == WillGrade.ADVANCED }
+                                    .filter { player.hasAptitude(it) }
                                     .joinToString(" ") {
-                                        if (player.hasAptitude(it))
-                                            "${it.chatColor}${ChatColor.BOLD}" + it.getName(locale)
-                                        else "  "
+                                        "${it.chatColor}${ChatColor.BOLD}" + it.getName(locale)
                                     }
                         }
                 )
