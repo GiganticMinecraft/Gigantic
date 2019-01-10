@@ -411,4 +411,22 @@ object BagButtons {
         }
 
     }
+
+    val RELIC_GENERATOR = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.HOPPER).apply {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + RelicGeneratorMenuMessages.TITLE.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === RelicGeneratorMenu) return false
+            RelicGeneratorMenu.open(player)
+            return true
+        }
+
+    }
+
 }

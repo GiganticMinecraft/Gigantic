@@ -56,7 +56,7 @@ enum class Achievement(
         it.wrappedLevel >= 15
     }, grantMessage = AchievementMessages.JUMP),
     // 使用するまで保留
-    /*SWORD(105,            {
+    /*SWORD(XXX,{
         it.wrappedLevel >= 17
     },action = {
         Tool.SWORD.grant(it)
