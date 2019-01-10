@@ -46,7 +46,8 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
                         .toSet().apply {
                             if (isEmpty()) return@RandomSummonCase
                         }.random()
-                spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation.add(0.0, 0.3, 0.0), will, player))
+                val spawnLocation = event.block.centralLocation.add(0.0, 0.3, 0.0)
+                spawn(WillSpirit(WillSpawnReason.AWAKE, spawnLocation, will, player))
             }
     ),
     MONSTER(

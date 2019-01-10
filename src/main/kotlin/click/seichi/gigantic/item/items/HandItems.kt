@@ -30,10 +30,10 @@ object HandItems {
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
-                modifyItemMeta(this@apply, player)
                 addLore(*HookedItemMessages.PICKEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
+                modifyItemMeta(this@apply, player)
             }
         }
 
@@ -51,11 +51,11 @@ object HandItems {
             return ItemStack(Material.DIAMOND_SHOVEL).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         HookedItemMessages.SHOVEL.asSafety(player.wrappedLocale))
-                modifyItemMeta(this@apply, player)
                 addLore(*HookedItemMessages.SHOVEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
+                modifyItemMeta(this@apply, player)
             }
         }
 
@@ -73,11 +73,11 @@ object HandItems {
             return ItemStack(Material.DIAMOND_AXE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         HookedItemMessages.AXE.asSafety(player.wrappedLocale))
-                modifyItemMeta(this@apply, player)
                 addLore(*HookedItemMessages.AXE_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
+                modifyItemMeta(this@apply, player)
             }
         }
 
@@ -94,11 +94,11 @@ object HandItems {
             return ItemStack(Material.DIAMOND_SWORD).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         HookedItemMessages.SWORD.asSafety(player.wrappedLocale))
-                modifyItemMeta(this@apply, player)
                 addLore(*HookedItemMessages.SWORD_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
+                modifyItemMeta(this@apply, player)
             }
         }
 
