@@ -29,4 +29,7 @@ object Defaults {
     // achievement Settings
     // ブロック破壊による実績更新の間隔（ブロック数）
     const val ACHIEVEMENT_BLOCK_BREAK_UPDATE_COUNT = 10
+
+    // レリック生成に必要なエーテル数
+    const val RELIC_GENERATOR_REQUIRE_ETHEL = 100
 }

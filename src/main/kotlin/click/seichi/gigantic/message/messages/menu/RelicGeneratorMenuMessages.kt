@@ -11,7 +11,16 @@ object RelicGeneratorMenuMessages {
             Locale.JAPANESE to "レリック生成器"
     )
 
-    val SELECT_WILL = LocalizedText(
+    val SELECT_ETHEL = LocalizedText(
             Locale.JAPANESE to "のエーテル"
     )
+
+    val ETHEL_AMOUNT = LocalizedText(
+            Locale.JAPANESE to "手に入れた数: "
+    )
+
+    val LOST_OF_ETHEL = LocalizedText(
+            Locale.JAPANESE to "必要なエーテルが足りません"
+    )
+
 }

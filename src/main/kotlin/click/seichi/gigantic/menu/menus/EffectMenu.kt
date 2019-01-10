@@ -8,8 +8,8 @@ import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.EffectMenuMessages
-import click.seichi.gigantic.sound.DetailedSound
 import click.seichi.gigantic.sound.sounds.MenuSounds
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -23,12 +23,6 @@ object EffectMenu : Menu() {
 
     override val size: Int
         get() = 54
-
-    override val openSound: DetailedSound
-        get() = MenuSounds.EFFECT_MENU
-
-    override val closeSound: DetailedSound
-        get() = MenuSounds.EFFECT_MENU
 
     override fun getTitle(player: Player): String {
         return EffectMenuMessages.TITLE.asSafety(player.wrappedLocale)
@@ -180,7 +174,7 @@ object EffectMenu : Menu() {
                         if (effect.isSelected(player)) return false
                         // 選択処理
                         effect.select(player)
-                        MenuSounds.EFFECT_SELECT.playOnly(player)
+                        PlayerSounds.TOGGLE.playOnly(player)
                         reopen(player)
                     } else {
                         // 購入されていない場合

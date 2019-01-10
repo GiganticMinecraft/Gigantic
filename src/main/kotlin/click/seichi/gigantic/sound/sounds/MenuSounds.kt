@@ -27,25 +27,23 @@ object MenuSounds {
             pitch = 4.0F
     )
 
-    val EFFECT_MENU = DetailedSound(
+    val EFFECT_BUY = DetailedSound(
             Sound.BLOCK_ENCHANTMENT_TABLE_USE,
             SoundCategory.BLOCKS,
             pitch = 0.6F,
             volume = 0.6F
     )
 
-    val EFFECT_SELECT = DetailedSound(
-            Sound.BLOCK_ENCHANTMENT_TABLE_USE,
+    val SPECIAL_MENU_OPEN = DetailedSound(
+            Sound.BLOCK_ENDER_CHEST_OPEN,
             SoundCategory.BLOCKS,
-            pitch = 0.6F,
-            volume = 1.5F
+            pitch = 0.1F
+    )
+    val SPECIAL_MENU_CLOSE = DetailedSound(
+            Sound.BLOCK_ENDER_CHEST_CLOSE,
+            SoundCategory.BLOCKS,
+            pitch = 0.1F
     )
 
-    val EFFECT_BUY = DetailedSound(
-            Sound.BLOCK_ANVIL_USE,
-            SoundCategory.BLOCKS,
-            pitch = 0.5F,
-            volume = 1.0F
-    )
 
 }
