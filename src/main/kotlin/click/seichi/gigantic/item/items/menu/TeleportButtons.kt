@@ -153,14 +153,14 @@ object TeleportButtons {
         object : Button {
             override fun findItemStack(player: Player): ItemStack? {
                 return when {
-                    !to.isValid -> ItemStack(Material.BLACK_STAINED_GLASS_PANE).apply {
+                    !to.isValid -> ItemStack(Material.GRAY_STAINED_GLASS_PANE).apply {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_INVALID_LORE
                                 .map { it.asSafety(player.wrappedLocale) }
                                 .toTypedArray())
                     }
                     !to.getOrPut(Keys.TELEPORT_TOGGLE) &&
-                            !to.isFollow(player.uniqueId) -> ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE).apply {
+                            !to.isFollow(player.uniqueId) -> ItemStack(Material.PURPLE_STAINED_GLASS_PANE).apply {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_TOGGLE_OFF_LORE
                                 .map { it.asSafety(player.wrappedLocale) }
@@ -184,7 +184,7 @@ object TeleportButtons {
                                 .map { it.asSafety(player.wrappedLocale) }
                                 .toTypedArray())
                     }
-                    to.isFlying -> ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE).apply {
+                    to.isFlying -> ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE).apply {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_FLYING_LORE
                                 .map { it.asSafety(player.wrappedLocale) }

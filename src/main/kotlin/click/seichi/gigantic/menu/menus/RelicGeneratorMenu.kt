@@ -10,6 +10,9 @@ import org.bukkit.entity.Player
  */
 object RelicGeneratorMenu : Menu() {
 
+    override val size: Int
+        get() = 5 * 9
+
     override fun getTitle(player: Player): String {
         return RelicGeneratorMenuMessages.TITLE.asSafety(player.wrappedLocale)
     }
