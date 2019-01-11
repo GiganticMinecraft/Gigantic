@@ -27,7 +27,6 @@ open class Miner : Breaker {
         block.type = Material.AIR
     }
 
-
     open fun onBreakBlock(player: Player?, block: Block) {
 
         if (!block.isCrust && !block.isTree) {
