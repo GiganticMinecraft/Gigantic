@@ -57,8 +57,16 @@ object RelicButtons {
                             "($amount)")
                     setLore(*relic.getLore(player.wrappedLocale).map { "${ChatColor.GRAY}" + it }.toTypedArray())
                     addLore("${ChatColor.WHITE}" + MenuMessages.LINE)
-                    // TODO 条件を紹介
-                    addLore()
+                    val bonusLore = willRelic.getLore(player.wrappedLocale)
+                    bonusLore.forEachIndexed { index, s ->
+                        if (index == 0) {
+                            addLore("${ChatColor.YELLOW}" +
+                                    RelicMenuMessages.CONDITIONS.asSafety(player.wrappedLocale) +
+                                    s)
+                        } else {
+                            addLore(s)
+                        }
+                    }
                 }
             }
 

@@ -24,4 +24,8 @@ object RelicMenuMessages {
             Locale.JAPANESE to "レリック一覧"
     )
 
+    val CONDITIONS = LocalizedText(
+            Locale.JAPANESE to "条件: "
+    )
+
 }
