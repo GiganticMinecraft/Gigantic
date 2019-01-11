@@ -29,6 +29,7 @@ val CRUSTS = setOf(
         Material.MOSSY_STONE_BRICKS,
         Material.RED_SAND,
         Material.SANDSTONE,
+        Material.RED_SANDSTONE,
         Material.CHISELED_RED_SANDSTONE,
         Material.CHISELED_SANDSTONE,
         Material.CUT_RED_SANDSTONE,
