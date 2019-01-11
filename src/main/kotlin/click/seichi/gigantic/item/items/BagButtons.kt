@@ -15,7 +15,6 @@ import click.seichi.gigantic.message.messages.BagMessages
 import click.seichi.gigantic.message.messages.menu.*
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.quest.Quest
-import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
@@ -317,13 +316,8 @@ object BagButtons {
 
         override fun findItemStack(player: Player): ItemStack? {
             return Head.JEWELLERY_BOX.toItemStack().apply {
-                if (Relic.getDroppedList(player).isEmpty()) {
-                    setDisplayName("${ChatColor.GRAY}${ChatColor.UNDERLINE}"
-                            + BagMessages.NO_RELIC.asSafety(player.wrappedLocale))
-                } else {
                     setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                             + BagMessages.RELIC.asSafety(player.wrappedLocale))
-                }
                 clearLore()
                 itemMeta = itemMeta.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -334,7 +328,6 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (Relic.getDroppedList(player).isEmpty()) return false
             if (event.inventory.holder === RelicMenu) return false
             RelicMenu.open(player)
             return true

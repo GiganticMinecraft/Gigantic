@@ -203,6 +203,22 @@ val DIRTS = setOf(
         Material.GRAVEL
 )
 
+val INFESTEDS = setOf(
+        Material.INFESTED_STONE,
+        Material.INFESTED_STONE_BRICKS,
+        Material.INFESTED_MOSSY_STONE_BRICKS,
+        Material.INFESTED_CRACKED_STONE_BRICKS,
+        Material.INFESTED_COBBLESTONE,
+        Material.INFESTED_CHISELED_STONE_BRICKS
+)
+
+val MOSSIES = setOf(
+        Material.MOSSY_COBBLESTONE,
+        Material.MOSSY_COBBLESTONE_WALL,
+        Material.MOSSY_STONE_BRICKS,
+        Material.INFESTED_MOSSY_STONE_BRICKS
+)
+
 // Not contain log blocks
 val Block.isCrust
     get() = CRUSTS.contains(type)
@@ -231,6 +247,11 @@ val Block.isWater
 val Block.isLava
     get() = type == Material.LAVA
 
+val Block.isInfested
+    get() = INFESTEDS.contains(type)
+
+val Block.isMossy
+    get() = MOSSIES.contains(type)
 
 val Block.isSurface
     get() = if (isAir) false

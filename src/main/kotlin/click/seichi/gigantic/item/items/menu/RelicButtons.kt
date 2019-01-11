@@ -1,12 +1,15 @@
 package click.seichi.gigantic.item.items.menu
 
 import click.seichi.gigantic.extension.addLore
-import click.seichi.gigantic.extension.clearLore
 import click.seichi.gigantic.extension.setDisplayName
+import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
+import click.seichi.gigantic.menu.Menu
+import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.RelicMenuMessages
-import click.seichi.gigantic.relic.Relic
+import click.seichi.gigantic.relic.WillRelic
+import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -17,29 +20,53 @@ import org.bukkit.inventory.ItemStack
  */
 object RelicButtons {
 
-    val RELIC: (Relic) -> Button = { relic ->
+    val WILL: (Will, Menu) -> Button = { will, menu ->
         object : Button {
             override fun findItemStack(player: Player): ItemStack? {
-                return relic.getIcon().apply {
-                    setDisplayName("${ChatColor.WHITE}${ChatColor.BOLD}" +
-                            relic.getName(player.wrappedLocale))
-                    clearLore()
-                    addLore("${ChatColor.GREEN}" +
-                            RelicMenuMessages.NUM.asSafety(player.wrappedLocale) +
-                            " : " + relic.getDroppedNum(player))
-                    // 説明文
-                    relic.getLore(player.wrappedLocale)?.map { "${ChatColor.GRAY}" + it }
-                            ?.let {
-                                addLore(*it.toTypedArray())
-                            }
+                return ItemStack(will.material).apply {
+                    setDisplayName("" + will.chatColor +
+                            "${ChatColor.BOLD}" +
+                            will.getName(player.wrappedLocale) +
+                            RelicMenuMessages.WILL.asSafety(player.wrappedLocale) +
+                            " " +
+                            "${ChatColor.RESET}${ChatColor.BLACK}" +
+                            RelicMenuMessages.RELICS.asSafety(player.wrappedLocale)
+                    )
                 }
             }
 
             override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
-                return false
+                menu.open(player)
+                return true
+            }
+        }
+    }
+
+    val WILL_RELIC: (WillRelic) -> Button = { willRelic ->
+        val relic = willRelic.relic
+        val will = willRelic.will
+        object : Button {
+            override fun findItemStack(player: Player): ItemStack? {
+                val amount = relic.getDroppedNum(player)
+                // TODO remove
+//                if(amount == 0L)return null
+                return ItemStack(willRelic.material).apply {
+                    setDisplayName("${ChatColor.RESET}" +
+                            will.chatColor + "${ChatColor.BOLD}" +
+                            relic.getName(player.wrappedLocale) +
+                            "($amount)")
+                    setLore(*relic.getLore(player.wrappedLocale).map { "${ChatColor.GRAY}" + it }.toTypedArray())
+                    addLore("${ChatColor.WHITE}" + MenuMessages.LINE)
+                    // TODO 条件を紹介
+                    addLore()
+                }
             }
 
+            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                return true
+            }
         }
+
     }
 
 }
