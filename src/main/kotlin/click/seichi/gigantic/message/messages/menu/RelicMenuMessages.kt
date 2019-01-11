@@ -28,4 +28,12 @@ object RelicMenuMessages {
             Locale.JAPANESE to "条件: "
     )
 
+    val BONUS_EXP = LocalizedText(
+            Locale.JAPANESE to "ボーナス経験値: "
+    )
+
+    val BREAK_MUL = LocalizedText(
+            Locale.JAPANESE to "整地量 x "
+    )
+
 }

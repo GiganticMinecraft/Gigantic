@@ -14,6 +14,7 @@ import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
+import java.math.RoundingMode
 
 /**
  * @author tar0ss
@@ -57,14 +58,20 @@ object RelicButtons {
                             "($amount)")
                     setLore(*relic.getLore(player.wrappedLocale).map { "${ChatColor.GRAY}" + it }.toTypedArray())
                     addLore("${ChatColor.WHITE}" + MenuMessages.LINE)
+                    val multiplier = willRelic.calcMultiplier(player)
+                    addLore("${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                            RelicMenuMessages.BONUS_EXP.asSafety(player.wrappedLocale) +
+                            "${ChatColor.RESET}${ChatColor.WHITE}" +
+                            RelicMenuMessages.BREAK_MUL.asSafety(player.wrappedLocale) +
+                            multiplier.toBigDecimal().setScale(2, RoundingMode.HALF_UP))
                     val bonusLore = willRelic.getLore(player.wrappedLocale)
                     bonusLore.forEachIndexed { index, s ->
                         if (index == 0) {
-                            addLore("${ChatColor.YELLOW}" +
+                            addLore("${ChatColor.YELLOW}${ChatColor.BOLD}" +
                                     RelicMenuMessages.CONDITIONS.asSafety(player.wrappedLocale) +
-                                    s)
+                                    "${ChatColor.RESET}${ChatColor.WHITE}" + s)
                         } else {
-                            addLore(s)
+                            addLore("${ChatColor.RESET}${ChatColor.WHITE}" + s)
                         }
                     }
                 }
