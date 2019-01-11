@@ -37,7 +37,7 @@ object SideBarMessages {
                                         }}:" +
                                         "${ChatColor.RESET}" +
                                         "${will.chatColor}" +
-                                        "${willMap[will]!!.coerceAtMost(9999)}".padStart(4, ' ')
+                                        "${willMap[will]!!.coerceAtMost(999)}".padStart(4, ' ')
                             }
                     )
                 }.toMap()

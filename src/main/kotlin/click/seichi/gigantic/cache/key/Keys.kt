@@ -8,6 +8,8 @@ import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.breaker.BreakArea
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.manipulator.ExpReason
+import click.seichi.gigantic.config.Config
+import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.database.UserEntity
 import click.seichi.gigantic.database.dao.User
@@ -20,6 +22,7 @@ import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
+import click.seichi.gigantic.relic.WillRelic
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
 import click.seichi.gigantic.timer.LingeringTimer
 import click.seichi.gigantic.timer.SimpleTimer
@@ -143,7 +146,8 @@ object Keys {
 
                     override fun read(entity: UserEntity): Long {
                         val userWill = entity.userWillMap[it]!!
-                        return userWill.ethel
+
+                        return if (Config.DEBUG_MODE && DebugConfig.WILL_SPIRIT) 1000 else userWill.ethel
                     }
 
                     override fun store(entity: UserEntity, value: Long) {
@@ -957,6 +961,15 @@ object Keys {
             get() = null
 
         override fun satisfyWith(value: Will?): Boolean {
+            return true
+        }
+    }
+
+    val GENERETED_WILL_RELIC = object : Key<PlayerCache, WillRelic?> {
+        override val default: WillRelic?
+            get() = null
+
+        override fun satisfyWith(value: WillRelic?): Boolean {
             return true
         }
     }

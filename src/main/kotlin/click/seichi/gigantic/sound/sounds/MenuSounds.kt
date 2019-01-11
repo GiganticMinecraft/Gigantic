@@ -55,7 +55,8 @@ object MenuSounds {
     val RELIC_GENERATE = DetailedSound(
             Sound.BLOCK_ANVIL_USE,
             SoundCategory.BLOCKS,
-            pitch = 0.1F
+            pitch = 2.0F,
+            volume = 0.4F
     )
 
 

@@ -4,5 +4,5 @@ level: 1
 achievement_unlock: true
 # GiganticEffectを一時的にすべて利用可能にする
 effect_unlock: true
-# willを必ず出現させる
+# willを必ず出現させる(かつエーテルを1000持ってる状態にする)
 will_spirit: true

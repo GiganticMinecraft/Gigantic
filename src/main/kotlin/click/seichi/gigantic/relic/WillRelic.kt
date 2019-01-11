@@ -485,6 +485,14 @@ enum class WillRelic(
 
     ;
 
+    companion object {
+        fun calcMultiplier(player: Player, block: Block) = values().filter {
+            it.relic.has(player)
+        }.filter {
+            it.isBonusTarget(block)
+        }.map { it.calcMultiplier(player) }.sum()
+    }
+
     abstract fun isBonusTarget(block: Block): Boolean
 
     fun getLore(locale: Locale) = localizedLore.map { it.asSafety(locale) }

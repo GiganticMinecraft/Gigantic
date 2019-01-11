@@ -8,6 +8,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
@@ -40,6 +41,9 @@ enum class Achievement(
         Will.values().firstOrNull { will -> it.hasAptitude(will) } != null
     }, grantMessage = AchievementMessages.FIRST_WILL
             , priority = UpdatePriority.LOWEST),
+    FIRST_RELIC(3, {
+        Relic.values().firstOrNull { relic -> relic.has(it) } != null
+    }, grantMessage = AchievementMessages.FIRST_RELIC),
 
     //TODO 一度すべてのクエストを隠蔽しているので実装時は一気にやる
     // systems

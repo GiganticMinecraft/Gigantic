@@ -38,6 +38,7 @@ object RelicGeneratorMenu : Menu() {
         registerButton(34, RelicGeneratorButtons.SELECT_ETHEL(Will.LUX))
         registerButton(42, RelicGeneratorButtons.SELECT_ETHEL(Will.UMBRA))
 
+        registerButton(22, RelicGeneratorButtons.GENERATED)
         registerButton(40, RelicGeneratorButtons.GENERATE)
     }
 

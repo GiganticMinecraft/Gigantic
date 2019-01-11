@@ -161,4 +161,11 @@ object AchievementMessages {
             }
     ))
 
+    val FIRST_RELIC = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.GRAY}" +
+                        "メニューから手に入れたレリックを確認しよう!!"
+            }
+    ))
+
 }

@@ -3,11 +3,13 @@ package click.seichi.gigantic.breaker
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
+import click.seichi.gigantic.relic.WillRelic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Material
@@ -38,8 +40,12 @@ open class Miner : Breaker {
             return
         }
 
+
+        val bonus = 1.0.times(WillRelic.calcMultiplier(player, block))
+
         player.manipulate(CatalogPlayerCache.EXP) {
             it.inc()
+            it.add(bonus.toBigDecimal(), reason = ExpReason.RELIC_BONUS)
         }
 
         // 破壊対象ブロックをInvoker用に保存

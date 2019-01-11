@@ -49,8 +49,7 @@ object RelicButtons {
         object : Button {
             override fun findItemStack(player: Player): ItemStack? {
                 val amount = relic.getDroppedNum(player)
-                // TODO remove
-//                if(amount == 0L)return null
+                if (amount == 0L) return null
                 return ItemStack(willRelic.material).apply {
                     setDisplayName("${ChatColor.RESET}" +
                             will.chatColor + "${ChatColor.BOLD}" +

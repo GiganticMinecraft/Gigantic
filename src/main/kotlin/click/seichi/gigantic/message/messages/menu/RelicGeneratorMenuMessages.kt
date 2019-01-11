@@ -43,4 +43,8 @@ object RelicGeneratorMenuMessages {
                     "生成する"
     )
 
+    val GENERATED = LocalizedText(
+            Locale.JAPANESE to "が生成されました"
+    )
+
 }

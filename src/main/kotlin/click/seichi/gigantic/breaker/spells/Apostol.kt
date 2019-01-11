@@ -8,6 +8,7 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.relic.WillRelic
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
@@ -177,8 +178,11 @@ class Apostol : Miner(), SpellCaster {
             it.decrease(calcConsumeMana(player, breakBlockSet))
         }
 
+        val bonus = breakBlockSet.size.times(WillRelic.calcMultiplier(player, base))
+
         player.manipulate(CatalogPlayerCache.EXP) {
             it.add(breakBlockSet.size.toBigDecimal(), ExpReason.SPELL_APOSTOL)
+            it.add(bonus.toBigDecimal(), reason = ExpReason.RELIC_BONUS)
         }
 
         PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)

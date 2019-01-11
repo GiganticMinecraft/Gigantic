@@ -315,6 +315,7 @@ object BagButtons {
     val RELIC = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
+            if (!Achievement.FIRST_RELIC.isGranted(player)) return null
             return Head.JEWELLERY_BOX.toItemStack().apply {
                     setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                             + BagMessages.RELIC.asSafety(player.wrappedLocale))
@@ -328,6 +329,7 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (!Achievement.FIRST_RELIC.isGranted(player)) return false
             if (event.inventory.holder === RelicMenu) return false
             RelicMenu.open(player)
             return true
