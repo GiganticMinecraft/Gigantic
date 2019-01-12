@@ -142,4 +142,11 @@ object PlayerMessages {
         ))
     }
 
+    val BONUS_EXP = { bonus: Double ->
+        ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                        "ボーナス経験値 ${bonus.toBigDecimal().setScale(2, RoundingMode.HALF_UP)} exp/block"
+        ))
+    }
+
 }

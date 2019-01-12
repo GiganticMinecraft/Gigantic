@@ -7,6 +7,7 @@ import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.relic.WillRelic
@@ -85,6 +86,12 @@ open class Miner : Breaker {
                 }
                 else -> PlayerSounds.OBTAIN_EXP(player.combo).playOnly(player)
             }
+        }
+
+        // actionbar
+
+        if (bonus > 0.0) {
+            PlayerMessages.BONUS_EXP(bonus).sendTo(player)
         }
 
         player.updateLevel()
