@@ -32,4 +32,7 @@ object Defaults {
 
     // レリック生成に必要なエーテル数
     const val RELIC_GENERATOR_REQUIRE_ETHEL = 100
+
+    const val RELIC_MUL_DIFFX = 0.7
+    const val RELIC_MUL_BASE = 1.7
 }

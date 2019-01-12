@@ -4,6 +4,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.RelicMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.will.Will
 import org.bukkit.Material
 import org.bukkit.block.Biome
@@ -17,7 +18,7 @@ import java.util.*
 enum class WillRelic(
         val will: Will,
         val relic: Relic,
-        val multiplier: Double,
+        private val multiplier: Double,
         val material: Material,
         val localizedLore: List<LocalizedText>
 ) {
@@ -497,6 +498,11 @@ enum class WillRelic(
 
     fun getLore(locale: Locale) = localizedLore.map { it.asSafety(locale) }
 
-    fun calcMultiplier(player: Player) = player.getOrPut(Keys.RELIC_MAP[relic]!!).times(multiplier)
+    fun calcMultiplier(player: Player): Double {
+        return kotlin.math.log(
+                player.getOrPut(Keys.RELIC_MAP[relic]!!)
+                        .plus(Defaults.RELIC_MUL_DIFFX), Defaults.RELIC_MUL_BASE
+        ).times(multiplier)
+    }
 
 }
