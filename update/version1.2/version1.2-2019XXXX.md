@@ -13,7 +13,7 @@
 
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
-:diamond_shape_with_a_dot_inside:   
+:diamond_shape_with_a_dot_inside: 死亡時のメッセージが無くなりました    
 
 
 :bow: **__不具合修正__** :bow:   
@@ -25,5 +25,5 @@
 
 作成者: tar0ss  
 
-作成日時: 2019/01/05 20:24  
-更新日時: 2019/01/06 16:06  
+作成日時: 2019/01/12 13:30  
+更新日時: 2019/01/12 13:30  
