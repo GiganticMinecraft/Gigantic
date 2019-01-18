@@ -97,7 +97,17 @@ enum class Tool(
                 Material.INFESTED_STONE,
                 Material.INFESTED_STONE_BRICKS,
                 Material.COBBLESTONE,
-                Material.GRANITE -> Tool.PICKEL
+                Material.GRANITE,
+                Material.TUBE_CORAL_BLOCK,
+                Material.HORN_CORAL_BLOCK,
+                Material.FIRE_CORAL_BLOCK,
+                Material.BUBBLE_CORAL_BLOCK,
+                Material.BRAIN_CORAL_BLOCK,
+                Material.DEAD_TUBE_CORAL_BLOCK,
+                Material.DEAD_HORN_CORAL_BLOCK,
+                Material.DEAD_FIRE_CORAL_BLOCK,
+                Material.DEAD_BUBBLE_CORAL_BLOCK,
+                Material.DEAD_BRAIN_CORAL_BLOCK -> Tool.PICKEL
 
                 Material.RED_SAND,
                 Material.DIRT,

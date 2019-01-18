@@ -105,7 +105,17 @@ val CRUSTS = setOf(
         Material.PUMPKIN,
         Material.MELON,
         Material.MYCELIUM,
-        Material.SNOW_BLOCK
+        Material.SNOW_BLOCK,
+        Material.TUBE_CORAL_BLOCK,
+        Material.HORN_CORAL_BLOCK,
+        Material.FIRE_CORAL_BLOCK,
+        Material.BUBBLE_CORAL_BLOCK,
+        Material.BRAIN_CORAL_BLOCK,
+        Material.DEAD_TUBE_CORAL_BLOCK,
+        Material.DEAD_HORN_CORAL_BLOCK,
+        Material.DEAD_FIRE_CORAL_BLOCK,
+        Material.DEAD_BUBBLE_CORAL_BLOCK,
+        Material.DEAD_BRAIN_CORAL_BLOCK
 )
 
 val LOGS = setOf(
