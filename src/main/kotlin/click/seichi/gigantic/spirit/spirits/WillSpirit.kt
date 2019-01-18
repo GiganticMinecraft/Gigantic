@@ -6,6 +6,7 @@ import click.seichi.gigantic.extension.isCrust
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
+import click.seichi.gigantic.relic.WillRelic
 import click.seichi.gigantic.sound.sounds.WillSpiritSounds
 import click.seichi.gigantic.spirit.Sensor
 import click.seichi.gigantic.spirit.Spirit
@@ -30,13 +31,20 @@ class WillSpirit(
         val willSize: WillSize = Random.nextWillSizeWithRegularity()
 ) : Spirit(spawnReason, location.chunk) {
 
+    companion object {
+        val relicTypeMap = WillRelic.values().groupBy { it.will }
+    }
+
+    var maxDistance: Double? = null
+        private set
+
     private val sensor = Sensor(
             location,
             { player ->
                 player ?: return@Sensor false
                 when {
-                    // 距離の制約
-                    player.location.distance(location) >= 3 -> false
+                    // 距離の制約(無ければ無限)
+                    player.location.distance(location) >= maxDistance ?: Double.MAX_VALUE -> false
                     // 物理的な制約
                     location.block.isCrust -> false
                     // プレイヤーの制約
@@ -56,7 +64,7 @@ class WillSpirit(
                 player ?: return@Sensor
                 WillMessages.SENSED_WILL(this).sendTo(player)
                 WillSpiritSounds.SENSED.playOnly(player)
-                addEthel(player, will, willSize.memory)
+                addEthel(player, willSize.memory)
                 SideBarMessages.MEMORY_SIDEBAR(
                         player,
                         false
@@ -69,7 +77,7 @@ class WillSpirit(
             60
     )
 
-    private fun addEthel(player: Player, will: Will, amount: Long) = player.transform(Keys.ETHEL_MAP[will]!!) { it + amount }
+    private fun addEthel(player: Player, amount: Long) = player.transform(Keys.ETHEL_MAP[will]!!) { it + amount }
 
     override val lifespan = 60 * 20L
 
@@ -97,7 +105,32 @@ class WillSpirit(
 
     override fun onSpawn() {
         targetPlayer ?: return
+        maxDistance = calcMaxDistance(targetPlayer)
         WillSpiritSounds.SPAWN.playOnly(targetPlayer)
+    }
+
+    private fun calcMaxDistance(player: Player): Double {
+        // 持っているレリック
+        val pRelicList = relicTypeMap[will]!!.filter { it.relic.has(player) }
+        val allNum = pRelicList.fold(0L) { source, willRelic ->
+            source + willRelic.relic.getDroppedNum(player)
+        }
+        // コンプリート
+        return if (pRelicList.size == relicTypeMap[will]!!.size) {
+            when {
+                // かつ総数が100以上
+                allNum >= 100 -> Double.MAX_VALUE
+                allNum >= 25 -> 14.0
+                else -> 8.0
+            }
+        } else {
+            when {
+                // 持っているレリックの種類が７つ以上
+                pRelicList.size >= 7 -> 5.5
+                pRelicList.size >= 5 -> 4.0
+                else -> 3.0
+            }
+        }
     }
 
 }
