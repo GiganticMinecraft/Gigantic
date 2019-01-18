@@ -107,7 +107,8 @@ enum class Tool(
                 Material.GRAVEL,
                 Material.CLAY,
                 Material.COARSE_DIRT,
-                Material.PODZOL -> Tool.SHOVEL
+                Material.PODZOL,
+                Material.SNOW_BLOCK -> Tool.SHOVEL
 
                 Material.BIRCH_LOG,
                 Material.ACACIA_LOG,

@@ -104,7 +104,8 @@ val CRUSTS = setOf(
         Material.COBBLESTONE,
         Material.PUMPKIN,
         Material.MELON,
-        Material.MYCELIUM
+        Material.MYCELIUM,
+        Material.SNOW_BLOCK
 )
 
 val LOGS = setOf(
