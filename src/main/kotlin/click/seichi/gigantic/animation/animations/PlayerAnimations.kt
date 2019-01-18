@@ -24,7 +24,7 @@ object PlayerAnimations {
     }
 
     val ON_CONDENSE_WATER = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.WATER_SPLASH, location, 5,
+        location.world.spawnParticle(Particle.WATER_SPLASH, location, 2,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3)
@@ -32,7 +32,7 @@ object PlayerAnimations {
     }
 
     val ON_CONDENSE_LAVA = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.LAVA, location, 5,
+        location.world.spawnParticle(Particle.LAVA, location, 1,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3)

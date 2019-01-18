@@ -142,10 +142,21 @@ object PlayerMessages {
         ))
     }
 
-    val BONUS_EXP = { bonus: Double ->
+    val EXP = { count: Int ->
         ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
-                Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
-                        "ボーナス経験値 ${bonus.toBigDecimal().setScale(2, RoundingMode.HALF_UP)} exp/block"
+                Locale.JAPANESE to "${ChatColor.GRAY}${ChatColor.BOLD}" +
+                        "経験値を $count 獲得"
+        ))
+    }
+
+    val EXP_AND_BONUS = { count: Int, bonus: Double ->
+        ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GRAY}${ChatColor.BOLD}" +
+                        "経験値を $count " +
+                        "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                        "+ ${bonus.toBigDecimal().setScale(2, RoundingMode.HALF_UP)}" +
+                        "${ChatColor.GRAY}${ChatColor.BOLD}" +
+                        " 獲得"
         ))
     }
 

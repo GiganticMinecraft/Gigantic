@@ -974,4 +974,22 @@ object Keys {
         }
     }
 
+    val BREAK_COUNT = object : Key<PlayerCache, Int> {
+        override val default: Int
+            get() = 0
+
+        override fun satisfyWith(value: Int): Boolean {
+            return true
+        }
+    }
+
+    val RELIC_BONUS = object : Key<PlayerCache, Double> {
+        override val default: Double
+            get() = 0.0
+
+        override fun satisfyWith(value: Double): Boolean {
+            return true
+        }
+    }
+
 }

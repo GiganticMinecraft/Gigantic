@@ -41,7 +41,7 @@ open class Miner : Breaker {
         }
 
 
-        val bonus = 1.0.times(WillRelic.calcMultiplier(player, block))
+        var bonus = WillRelic.calcMultiplier(player, block)
 
         player.manipulate(CatalogPlayerCache.EXP) {
             it.inc()
@@ -50,6 +50,10 @@ open class Miner : Breaker {
 
         // 破壊対象ブロックをInvoker用に保存
         player.offer(Keys.BREAK_BLOCK, block)
+        // 現時点での破壊数を保存
+        player.offer(Keys.BREAK_COUNT, 1)
+        // 現時点でのボーナス経験値を保存
+        player.offer(Keys.RELIC_BONUS, bonus)
 
         // ヒール系
         when {
@@ -88,11 +92,19 @@ open class Miner : Breaker {
             }
         }
 
-        // actionbar
 
-        if (bonus > 0.0) {
-            PlayerMessages.BONUS_EXP(bonus).sendTo(player)
-        }
+        // 全てのスキルを通して破壊したブロック数を取得
+        val count = player.getOrPut(Keys.BREAK_COUNT)
+
+        // 全てのスキルを通して得たボーナス経験値を取得
+        bonus = player.getOrPut(Keys.RELIC_BONUS)
+
+        // actionbar
+        if (bonus > 0.0)
+            PlayerMessages.EXP_AND_BONUS(count, bonus).sendTo(player)
+        else
+            PlayerMessages.EXP(count).sendTo(player)
+
 
         player.updateLevel()
 

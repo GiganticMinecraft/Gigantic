@@ -178,12 +178,17 @@ class Apostol : Miner(), SpellCaster {
             it.decrease(calcConsumeMana(player, breakBlockSet))
         }
 
-        val bonus = breakBlockSet.size.times(WillRelic.calcMultiplier(player, base))
+        val bonus = breakBlockSet.fold(0.0) { source, b ->
+            source.plus(WillRelic.calcMultiplier(player, b))
+        }
 
         player.manipulate(CatalogPlayerCache.EXP) {
             it.add(breakBlockSet.size.toBigDecimal(), ExpReason.SPELL_APOSTOL)
             it.add(bonus.toBigDecimal(), reason = ExpReason.RELIC_BONUS)
         }
+
+        player.transform(Keys.BREAK_COUNT) { it + breakBlockSet.size }
+        player.transform(Keys.RELIC_BONUS) { it + bonus }
 
         PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
