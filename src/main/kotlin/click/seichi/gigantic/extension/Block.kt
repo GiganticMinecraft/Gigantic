@@ -193,11 +193,31 @@ val WATER_PLANTS = setOf(
         Material.FIRE_CORAL,
         Material.HORN_CORAL,
         Material.TUBE_CORAL,
+        Material.DEAD_BRAIN_CORAL,
+        Material.DEAD_BUBBLE_CORAL,
+        Material.DEAD_FIRE_CORAL,
+        Material.DEAD_HORN_CORAL,
+        Material.DEAD_TUBE_CORAL,
         Material.BRAIN_CORAL_FAN,
         Material.BUBBLE_CORAL_FAN,
         Material.FIRE_CORAL_FAN,
         Material.HORN_CORAL_FAN,
-        Material.TUBE_CORAL_FAN
+        Material.TUBE_CORAL_FAN,
+        Material.DEAD_BRAIN_CORAL_FAN,
+        Material.DEAD_BUBBLE_CORAL_FAN,
+        Material.DEAD_FIRE_CORAL_FAN,
+        Material.DEAD_HORN_CORAL_FAN,
+        Material.DEAD_TUBE_CORAL_FAN,
+        Material.BRAIN_CORAL_WALL_FAN,
+        Material.BUBBLE_CORAL_WALL_FAN,
+        Material.FIRE_CORAL_WALL_FAN,
+        Material.HORN_CORAL_WALL_FAN,
+        Material.TUBE_CORAL_WALL_FAN,
+        Material.DEAD_BRAIN_CORAL_WALL_FAN,
+        Material.DEAD_BUBBLE_CORAL_WALL_FAN,
+        Material.DEAD_FIRE_CORAL_WALL_FAN,
+        Material.DEAD_HORN_CORAL_WALL_FAN,
+        Material.DEAD_TUBE_CORAL_WALL_FAN
 )
 
 val WATERS = setOf(

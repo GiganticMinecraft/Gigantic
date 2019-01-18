@@ -15,6 +15,7 @@
 
 :diamond_shape_with_a_dot_inside: 雪ブロックが魔法で破壊できない不具合  
 :diamond_shape_with_a_dot_inside: 雪ブロックがツール自動切換え機能に反応しない不具合  
+:diamond_shape_with_a_dot_inside: 珊瑚ブロックと珊瑚が正しく破壊できない不具合  
 
 
 
