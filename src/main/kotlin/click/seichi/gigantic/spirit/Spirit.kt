@@ -5,6 +5,7 @@ import org.bukkit.Chunk
 
 /**
  * @author unicroak
+ * @author tar0ss
  */
 abstract class Spirit(val spawnReason: SpawnReason, val spawnChunk: Chunk) {
 

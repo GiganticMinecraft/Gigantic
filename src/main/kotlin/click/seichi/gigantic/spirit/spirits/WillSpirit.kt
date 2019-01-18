@@ -2,7 +2,7 @@ package click.seichi.gigantic.spirit.spirits
 
 import click.seichi.gigantic.animation.animations.WillSpiritAnimations
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.extension.isAir
+import click.seichi.gigantic.extension.isCrust
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
@@ -38,7 +38,7 @@ class WillSpirit(
                     // 距離の制約
                     player.location.distance(location) >= 3 -> false
                     // 物理的な制約
-                    !location.block.isAir -> false
+                    location.block.isCrust -> false
                     // プレイヤーの制約
                     targetPlayer == null -> true
                     player.uniqueId == targetPlayer.uniqueId -> true
@@ -80,6 +80,12 @@ class WillSpirit(
     private val multiplier = 0.18 + Random.nextGaussian(variance = 0.05)
 
     override fun onRender() {
+        // 意志がブロックの中に入った場合は終了
+        if (location.block.isCrust) {
+            remove()
+            return
+        }
+
         sensor.update()
         val renderLocation = location.clone().add(
                 0.0,
