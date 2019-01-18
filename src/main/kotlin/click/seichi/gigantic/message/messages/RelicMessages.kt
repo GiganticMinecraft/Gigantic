@@ -346,7 +346,7 @@ object RelicMessages {
     val BROKEN_TRAP_LORE = listOf(LocalizedText(Locale.JAPANESE to "昔の遺跡に仕掛けられたものだろうか", Locale.JAPANESE to "トラバサミによく似ている"))
     val RAINBOW_CLAY_LORE = listOf(LocalizedText(Locale.JAPANESE to "長い年月をかけ虹色になった"))
     val SHADE_ARMOR_LORE = listOf(LocalizedText(Locale.JAPANESE to "闇の精の装備品", Locale.JAPANESE to "見るだけで震えが止まらない…"))
-    val CLAY_IMAGE_LORE = listOf(LocalizedText(Locale.JAPANESE to "上質な堅焼き粘土で出来ている", Locale.JAPANESE to ""))
+    val CLAY_IMAGE_LORE = listOf(LocalizedText(Locale.JAPANESE to "上質な堅焼き粘土で出来ている"))
     val BIG_FUNG_LORE = listOf(LocalizedText(Locale.JAPANESE to "キバの持ち主は", Locale.JAPANESE to "想像がつかないほど大きいだろう"))
     val FLUX_FOSSIL_LORE = listOf(LocalizedText(Locale.JAPANESE to "フンの化石"))
     val BITTEN_LEATHER_BOOT_LORE = listOf(LocalizedText(Locale.JAPANESE to "まさか動物が食べようとしたのだろうか"))

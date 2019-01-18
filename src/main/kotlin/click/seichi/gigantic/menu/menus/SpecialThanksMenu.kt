@@ -29,7 +29,8 @@ object SpecialThanksMenu : Menu() {
             "Neko_emon" to "2b4791d3-b71f-4e73-9891-33aeaa3a5ae4",
             "unicroak" to "0c578f76-d354-4727-a881-281edf77e186",
             "Mon_chi" to "4d84f609-0287-4db1-84e5-89e62e68396d",
-            "kamui0429" to "8e62e785-24e8-45cc-bd16-5496e8b9f504"
+            "kamui0429" to "8e62e785-24e8-45cc-bd16-5496e8b9f504",
+            "Lucky3028" to "0ea34656-b1c7-45c0-8b89-1ec55a70fe17"
     )
 
     init {
