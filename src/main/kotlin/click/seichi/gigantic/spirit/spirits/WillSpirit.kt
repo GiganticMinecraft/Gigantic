@@ -2,11 +2,12 @@ package click.seichi.gigantic.spirit.spirits
 
 import click.seichi.gigantic.animation.animations.WillSpiritAnimations
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.isCrust
+import click.seichi.gigantic.extension.relationship
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
-import click.seichi.gigantic.relic.WillRelic
 import click.seichi.gigantic.sound.sounds.WillSpiritSounds
 import click.seichi.gigantic.spirit.Sensor
 import click.seichi.gigantic.spirit.Spirit
@@ -15,6 +16,7 @@ import click.seichi.gigantic.spirit.spawnreason.SpawnReason
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillSize
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
@@ -31,20 +33,13 @@ class WillSpirit(
         val willSize: WillSize = Random.nextWillSizeWithRegularity()
 ) : Spirit(spawnReason, location.chunk) {
 
-    companion object {
-        val relicTypeMap = WillRelic.values().groupBy { it.will }
-    }
-
-    var maxDistance: Double? = null
-        private set
-
     private val sensor = Sensor(
             location,
             { player ->
                 player ?: return@Sensor false
                 when {
                     // 距離の制約(無ければ無限)
-                    player.location.distance(location) >= maxDistance ?: Double.MAX_VALUE -> false
+                    player.location.distance(location) >= player.relationship(will).maxDistance -> false
                     // 物理的な制約
                     location.block.isCrust -> false
                     // プレイヤーの制約
@@ -65,6 +60,7 @@ class WillSpirit(
                 WillMessages.SENSED_WILL(this).sendTo(player)
                 WillSpiritSounds.SENSED.playOnly(player)
                 addEthel(player, willSize.memory)
+                Bukkit.getPluginManager().callEvent(SenseEvent(will, player, willSize.memory))
                 SideBarMessages.MEMORY_SIDEBAR(
                         player,
                         false
@@ -105,32 +101,7 @@ class WillSpirit(
 
     override fun onSpawn() {
         targetPlayer ?: return
-        maxDistance = calcMaxDistance(targetPlayer)
         WillSpiritSounds.SPAWN.playOnly(targetPlayer)
-    }
-
-    private fun calcMaxDistance(player: Player): Double {
-        // 持っているレリック
-        val pRelicList = relicTypeMap[will]!!.filter { it.relic.has(player) }
-        val allNum = pRelicList.fold(0L) { source, willRelic ->
-            source + willRelic.relic.getDroppedNum(player)
-        }
-        // コンプリート
-        return if (pRelicList.size == relicTypeMap[will]!!.size) {
-            when {
-                // かつ総数が100以上
-                allNum >= 100 -> Double.MAX_VALUE
-                allNum >= 25 -> 14.0
-                else -> 8.0
-            }
-        } else {
-            when {
-                // 持っているレリックの種類が７つ以上
-                pRelicList.size >= 7 -> 5.5
-                pRelicList.size >= 5 -> 4.0
-                else -> 3.0
-            }
-        }
     }
 
 }

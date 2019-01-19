@@ -17,10 +17,13 @@ import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
+import click.seichi.gigantic.message.messages.WillMessages
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.will.WillRelationship
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.chat.ComponentSerializer
 import org.bukkit.*
@@ -122,6 +125,8 @@ fun Player.unFollow(uniqueId: UUID) = transform(Keys.FOLLOW_SET) {
 
 val Player.follows: Int
     get() = getOrPut(Keys.FOLLOW_SET).size
+
+fun Player.relationship(will: Will) = player.getOrPut(Keys.WILL_RELATIONSHIP_MAP[will]!!)
 
 /**
  * プレイヤーが向いている方向の[BlockFace]を取得する
@@ -237,4 +242,17 @@ fun Player.switchTool(): Tool? {
         tool = it.switch()
     }
     return tool
+}
+
+fun Player.updateWillRelationship(isOnLogin: Boolean = false) {
+    Will.values().forEach { will ->
+        this.transform(Keys.WILL_RELATIONSHIP_MAP[will]!!) { prev ->
+            val next = WillRelationship.calcRelationship(this, will)
+            if (prev != next && !isOnLogin) {
+                WillMessages.NEXT_RELATIONSHIP(will, next.getName(wrappedLocale)).sendTo(this)
+                PlayerSounds.LEVEL_UP.playOnly(this)
+            }
+            return@transform next
+        }
+    }
 }

@@ -3,6 +3,7 @@ package click.seichi.gigantic.item.items.menu
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.event.events.RelicGenerateEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.RelicGeneratorMenu
@@ -14,6 +15,7 @@ import click.seichi.gigantic.relic.WillRelic
 import click.seichi.gigantic.sound.sounds.MenuSounds
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -34,8 +36,7 @@ object RelicGeneratorButtons {
                 if (!player.hasAptitude(will)) return null
                 val selected = player.getOrPut(Keys.SELECTED_WILL)
                 return ItemStack(will.material).apply {
-
-                    setDisplayName("${ChatColor.RESET}${ChatColor.WHITE}" +
+                    setDisplayName("${ChatColor.WHITE}" +
                             (if (selected == will) RelicGeneratorMenuMessages.SELECTED.asSafety(player.wrappedLocale)
                             else "") +
                             will.chatColor + "${ChatColor.BOLD}" +
@@ -44,6 +45,11 @@ object RelicGeneratorButtons {
                             "(${player.ethel(will)})"
                     )
                     clearLore()
+                    addLore("${ChatColor.GRAY}" +
+                            RelicMenuMessages.RELATIONSHIP.asSafety(player.wrappedLocale) +
+                            "${ChatColor.GREEN}${ChatColor.BOLD}" +
+                            player.relationship(will).getName(player.wrappedLocale)
+                    )
                     if (player.getOrPut(Keys.SELECTED_WILL) == will) {
                         setEnchanted(true)
                     }
@@ -122,6 +128,8 @@ object RelicGeneratorButtons {
             Achievement.update(player, isForced = true)
             // 再度開く
             RelicGeneratorMenu.reopen(player)
+
+            Bukkit.getPluginManager().callEvent(RelicGenerateEvent(player, willRelic))
 
             // 更新後にすぐに削除
             object : BukkitRunnable() {

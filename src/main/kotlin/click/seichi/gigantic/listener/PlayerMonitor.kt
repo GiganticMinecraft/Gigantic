@@ -8,6 +8,8 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.enchantment.ToolEnchantment
 import click.seichi.gigantic.event.events.LevelUpEvent
+import click.seichi.gigantic.event.events.RelicGenerateEvent
+import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.popup.pops.PlayerPops
@@ -29,6 +31,8 @@ class PlayerMonitor : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
+
+        player.updateDisplay(true, true)
 
         if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
             PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
@@ -93,6 +97,16 @@ class PlayerMonitor : Listener {
         // player list name レベル表記を更新
         player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(event.level).plus(player.name)
         player.displayName = PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name)
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    fun onSense(event: SenseEvent) {
+        event.player.updateWillRelationship()
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    fun onGenerate(event: RelicGenerateEvent) {
+        event.player.updateWillRelationship()
     }
 
 }

@@ -50,8 +50,9 @@ object RelicMenuMessages {
                     Locale.JAPANESE to "」を手に入れた!!"
             )
 
-
-
+    val RELATIONSHIP = LocalizedText(
+            Locale.JAPANESE to "あなたとの関係: "
+    )
 
 
 }

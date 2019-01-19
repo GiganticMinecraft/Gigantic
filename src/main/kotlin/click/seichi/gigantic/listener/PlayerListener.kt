@@ -93,6 +93,8 @@ class PlayerListener : Listener {
         player.manipulate(CatalogPlayerCache.MANA) {
             it.updateMaxMana(player.level)
         }
+
+        player.updateWillRelationship(true)
     }
 
     /**

@@ -4,6 +4,7 @@ import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.spirit.spirits.WillSpirit
+import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -93,5 +94,49 @@ object WillMessages {
                 }
         ))
     }
+
+    val NEXT_RELATIONSHIP = { will: Will, relation: String ->
+        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "${will.chatColor}${ChatColor.BOLD}" +
+                            will.getName(it) +
+                            "の意志" +
+                            "${ChatColor.RESET}${ChatColor.WHITE}" +
+                            "と" +
+                            "${will.chatColor}${ChatColor.BOLD}" +
+                            relation +
+                            "${ChatColor.RESET}${ChatColor.WHITE}" +
+                            "になった"
+                }
+        ))
+    }
+
+    val FRESH = LocalizedText(
+            Locale.JAPANESE to "新友"
+    )
+
+    val HOMIE = LocalizedText(
+            Locale.JAPANESE to "普友"
+    )
+
+    val FRIEND = LocalizedText(
+            Locale.JAPANESE to "深友"
+    )
+
+    val BESTIE = LocalizedText(
+            Locale.JAPANESE to "親友"
+    )
+
+    val BFF = LocalizedText(
+            Locale.JAPANESE to "臣友"
+    )
+
+    val SOULMATE = LocalizedText(
+            Locale.JAPANESE to "心友"
+    )
+
+    val PARTNER = LocalizedText(
+            Locale.JAPANESE to "神友"
+    )
 
 }

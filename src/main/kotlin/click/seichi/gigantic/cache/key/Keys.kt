@@ -28,6 +28,7 @@ import click.seichi.gigantic.timer.LingeringTimer
 import click.seichi.gigantic.timer.SimpleTimer
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.will.WillRelationship
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.block.Block
@@ -991,5 +992,17 @@ object Keys {
             return true
         }
     }
+
+    val WILL_RELATIONSHIP_MAP: Map<Will, Key<PlayerCache, WillRelationship>> = Will.values().map { will ->
+        will to
+                object : Key<PlayerCache, WillRelationship> {
+                    override val default: WillRelationship
+                        get() = WillRelationship.FRESH
+
+                    override fun satisfyWith(value: WillRelationship): Boolean {
+                        return true
+                    }
+                }
+    }.toMap()
 
 }

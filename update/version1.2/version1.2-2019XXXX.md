@@ -4,9 +4,9 @@
 
 :fleur_de_lis: **__優しく丁寧に，さすれば与えられん__** :fleur_de_lis:   
 
-:diamond_shape_with_a_dot_inside: 意志が落下ブロックによって潰されるようになりました．  
-:diamond_shape_with_a_dot_inside: レリックの数や種類によって，意志と交感できる距離が伸びるようになりました．  
-:diamond_shape_with_a_dot_inside: 距離の変化はプレイヤーに通知されることはありません．  
+:diamond_shape_with_a_dot_inside: 意志が落下ブロックによって潰されるようになります．  
+:diamond_shape_with_a_dot_inside: レリックの数や種類によって，意志との関係が変わります．  
+:diamond_shape_with_a_dot_inside: 意志との関係によって交感できる距離が増えるようになります．  
 
 
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
