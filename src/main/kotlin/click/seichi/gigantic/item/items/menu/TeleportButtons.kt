@@ -61,6 +61,10 @@ object TeleportButtons {
                 Biome.WARM_OCEAN
         )
 
+        private val deathMaterialSet = setOf(
+                Material.LAVA
+        )
+
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
             if (player.gameMode != GameMode.SURVIVAL) {
                 player.sendMessage(TeleportMessages.RANDOM_TELEPORT_IN_BREAK_TIME.asSafety(player.wrappedLocale))
@@ -74,11 +78,13 @@ object TeleportButtons {
             while (!isValid && count++ < 20) {
                 chunk = randomChunk(player)
                 location = chunk.getSpawnableLocation()
-                isValid = chunk.let {
-                    !(it.isBattled ||
-                            it.isSpawnArea ||
-                            oceanBiomeSet.contains(it.getBlock(0, 0, 0).biome) ||
-                            location.block.getRelative(BlockFace.DOWN).type == Material.BEDROCK)
+                isValid = when {
+                    chunk.isBattled -> false
+                    chunk.isSpawnArea -> false
+                    oceanBiomeSet.contains(location.block.biome) -> false
+                    location.block.getRelative(BlockFace.DOWN).type == Material.BEDROCK -> false
+                    deathMaterialSet.contains(location.block.getRelative(BlockFace.DOWN).type) -> false
+                    else -> true
                 }
             }
             if (chunk == null) return false

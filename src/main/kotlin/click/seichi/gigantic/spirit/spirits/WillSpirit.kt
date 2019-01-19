@@ -84,7 +84,7 @@ class WillSpirit(
     private val multiplier = 0.18 + Random.nextGaussian(variance = 0.05)
 
     override fun onRender() {
-        // 意志がブロックの中に入った場合は終了
+        // 意志がブロックの中に入った場合は終了前処理
         if (location.block.isCrust) {
             remove()
             return
