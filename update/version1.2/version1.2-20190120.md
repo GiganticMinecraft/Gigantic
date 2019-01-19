@@ -6,7 +6,7 @@
 
 :diamond_shape_with_a_dot_inside: 意志が落下ブロックによって潰されるようになります．  
 :diamond_shape_with_a_dot_inside: レリックの数や種類によって，意志との関係が変わります．  
-:diamond_shape_with_a_dot_inside: 意志との関係によって交感できる距離が増えるようになります．
+:diamond_shape_with_a_dot_inside: 意志との関係によって交感できる距離が増えるようになります．  
 :diamond_shape_with_a_dot_inside: 意志が落下ブロックに潰されてもすぐに死なないようになりました．(追記:2019/01/20 03:50)    
 :diamond_shape_with_a_dot_inside: 意志が死亡した時の音を追加しました．(追記:2019/01/20 03:50)    
 
