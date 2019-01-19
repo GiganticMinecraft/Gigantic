@@ -106,7 +106,8 @@ object WillMessages {
                             "${will.chatColor}${ChatColor.BOLD}" +
                             relation +
                             "${ChatColor.RESET}${ChatColor.WHITE}" +
-                            "になった"
+                            "になった\n" +
+                            "交感できる距離が伸びた!!"
                 }
         ))
     }

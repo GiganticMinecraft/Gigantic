@@ -1,6 +1,9 @@
 package click.seichi.gigantic.item.items.menu
 
-import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.extension.addLore
+import click.seichi.gigantic.extension.setDisplayName
+import click.seichi.gigantic.extension.setLore
+import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
@@ -30,12 +33,12 @@ object RelicButtons {
                             "${ChatColor.RESET}${ChatColor.WHITE}" +
                             RelicMenuMessages.RELICS.asSafety(player.wrappedLocale)
                     )
-                    clearLore()
-                    addLore("${ChatColor.GRAY}" +
-                            RelicMenuMessages.RELATIONSHIP.asSafety(player.wrappedLocale) +
-                            "${ChatColor.GREEN}${ChatColor.BOLD}" +
-                            player.relationship(will).getName(player.wrappedLocale)
-                    )
+//                    clearLore()
+//                    addLore("${ChatColor.GRAY}" +
+//                            RelicMenuMessages.RELATIONSHIP.asSafety(player.wrappedLocale) +
+//                            "${ChatColor.GREEN}${ChatColor.BOLD}" +
+//                            player.relationship(will).getName(player.wrappedLocale)
+//                    )
                 }
             }
 
