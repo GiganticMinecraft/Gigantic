@@ -26,6 +26,10 @@ object Defaults {
     const val WILL_BASIC_UNLOCK_AMOUNT = 1000
     const val WILL_ADVANCED_UNLOCK_AMOUNT = 4000
 
+    // will spirit Settings
+    // 意志が消滅するまでの時間
+    const val WILL_SPIRIT_DEATH_DURATION = 30L
+
     // achievement Settings
     // ブロック破壊による実績更新の間隔（ブロック数）
     const val ACHIEVEMENT_BLOCK_BREAK_UPDATE_COUNT = 10

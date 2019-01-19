@@ -8,6 +8,7 @@ import click.seichi.gigantic.extension.relationship
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.sound.sounds.WillSpiritSounds
 import click.seichi.gigantic.spirit.Sensor
 import click.seichi.gigantic.spirit.Spirit
@@ -83,12 +84,19 @@ class WillSpirit(
 
     private val multiplier = 0.18 + Random.nextGaussian(variance = 0.05)
 
+    private var deathCount = 0L
+
     override fun onRender() {
+        targetPlayer ?: return
         // 意志がブロックの中に入った場合は終了前処理
         if (location.block.isCrust) {
-            remove()
-            return
-        }
+            deathCount++
+            if (deathCount > Defaults.WILL_SPIRIT_DEATH_DURATION) {
+                WillSpiritSounds.DEATH.playOnly(targetPlayer)
+                remove()
+                return
+            }
+        } else deathCount = 0L
 
         sensor.update()
         val renderLocation = location.clone().add(
