@@ -19,11 +19,6 @@
 :diamond_shape_with_a_dot_inside: コンボが減少するとき，一定時間おきに最大100コンボまでしか減少しなくなりました．  
 
 
-:bow: **__不具合修正__** :bow:   
-以下の不具合を修正しました．  
-
-:diamond_shape_with_a_dot_inside:   
-
 
 
 作成者: tar0ss  
