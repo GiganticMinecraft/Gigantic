@@ -9,7 +9,7 @@
 
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
-:diamond_shape_with_a_dot_inside: コンボが減少するとき，一定時間おきにで最大100コンボまでしか減少しなくなりました．  
+:diamond_shape_with_a_dot_inside: コンボが減少するとき，一定時間おきに最大100コンボまでしか減少しなくなりました．  
 
 
 :bow: **__不具合修正__** :bow:   
