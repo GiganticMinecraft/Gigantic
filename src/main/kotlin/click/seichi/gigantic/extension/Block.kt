@@ -369,7 +369,7 @@ private fun Block.setTorchIfNeeded() {
             type = Material.TORCH
             world.playEffect(location, Effect.STEP_SOUND, Material.TORCH)
         }
-    }.runTaskLater(Gigantic.PLUGIN, 10L)
+    }.runTaskLater(Gigantic.PLUGIN, 20L)
 }
 
 private fun Block.fallUpperCrustBlock() {

@@ -6,9 +6,10 @@
 
 :diamond_shape_with_a_dot_inside: 時間が進むようになります．   
 :diamond_shape_with_a_dot_inside: ブロック破壊時に自動で松明を置けるようになります．   
+:diamond_shape_with_a_dot_inside: 最深部のブロックが岩盤から滑らかな石になります．   
 
 
-:timer: **__氷結世界から海の世界へ__** :timer:   
+:snowflake: **__氷結世界から海の世界へ__** :snowflake:    
 
 :diamond_shape_with_a_dot_inside: 水が凍った時，氷ではなく，プリズマリン系ブロックになります．   
 

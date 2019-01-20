@@ -6,6 +6,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
+import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.relic.WillRelic
@@ -138,6 +139,9 @@ class Apostol : Miner(), SpellCaster {
                 // 場所の制約
                 !it.isSpawnArea
             }.filter {
+                // 高さの制約
+                it.y > 0
+            }.filter {
                 // 重力値の制約
                 it.calcGravity() == 0
             }.toMutableSet().apply {
@@ -175,8 +179,10 @@ class Apostol : Miner(), SpellCaster {
         // onBreak処理（先にやっておくことで，途中でサーバーが終了したときに対応）
         // すべてのエフェクトの実行速度に影響を与えないようにする．
 
-        player.manipulate(CatalogPlayerCache.MANA) {
-            it.decrease(calcConsumeMana(player, breakBlockSet))
+        if (!Config.DEBUG_MODE || !DebugConfig.SPELL_INFINITY) {
+            player.manipulate(CatalogPlayerCache.MANA) {
+                it.decrease(calcConsumeMana(player, breakBlockSet))
+            }
         }
 
         val bonus = breakBlockSet.fold(0.0) { source, b ->

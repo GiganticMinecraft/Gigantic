@@ -6,3 +6,5 @@ achievement_unlock: true
 effect_unlock: true
 # willを必ず出現させる(かつエーテルを1000持ってる状態にする)
 will_spirit: true
+# manaの消費を失くす
+spell_infinity: true
