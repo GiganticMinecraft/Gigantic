@@ -296,4 +296,15 @@ class PlayerListener : Listener {
         event.isCancelled = true
     }
 
+    // ｙ座標が0ならキャンセル
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    fun cancelFloorBlock(event: BlockBreakEvent) {
+        val player = event.player ?: return
+        val block = event.block ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
+        if (block.y != 0) return
+        PlayerMessages.FLOOR_BLOCK.sendTo(player)
+        event.isCancelled = true
+    }
+
 }

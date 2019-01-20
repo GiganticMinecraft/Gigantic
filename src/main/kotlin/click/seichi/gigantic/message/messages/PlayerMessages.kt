@@ -118,6 +118,11 @@ object PlayerMessages {
                     "上から掘ろう"
     ))
 
+    val FLOOR_BLOCK = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "これ以上深く掘れない"
+    ))
+
     val BATTLE_ANOTHER_PLAYER = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
                     "他のプレイヤーがバトル中"

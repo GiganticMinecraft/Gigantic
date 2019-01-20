@@ -120,7 +120,8 @@ val CRUSTS = setOf(
         Material.NETHER_BRICKS,
         Material.NETHERRACK,
         Material.GLOWSTONE,
-        Material.SEA_LANTERN
+        Material.SEA_LANTERN,
+        Material.SMOOTH_STONE
 )
 
 val LOGS = setOf(
@@ -425,8 +426,8 @@ private fun Block.changeRelativeBedrock() {
 
 fun Block.changeBedrock() {
     if (type != Material.BEDROCK) return
-    if (y == 0) return
-    type = Material.STONE
+    type = if (y == 0) Material.SMOOTH_STONE
+    else Material.STONE
 }
 
 private fun Block.changeRelativeCrustBlock() {
@@ -484,7 +485,7 @@ fun Block.condenseLiquid(playSound: Boolean = true) {
 
 private fun Block.nextCondenseMaterial(): Material {
     return when (Random.nextDouble()) {
-        in 0.00..0.20 -> Material.DARK_PRISMARINE
+//        in 0.00..0.20 -> Material.DARK_PRISMARINE
         in 0.20..0.60 -> Material.PRISMARINE_BRICKS
         else -> Material.PRISMARINE
     }
