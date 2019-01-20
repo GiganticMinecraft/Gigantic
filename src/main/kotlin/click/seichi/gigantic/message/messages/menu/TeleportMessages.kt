@@ -1,5 +1,7 @@
 package click.seichi.gigantic.message.messages.menu
 
+import click.seichi.gigantic.message.ChatMessage
+import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import org.bukkit.ChatColor
 import org.bukkit.World
@@ -10,6 +12,10 @@ import java.util.*
  * @author tar0ss
  */
 object TeleportMessages {
+
+    val CANT_TELEPORT = ChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(Locale.JAPANESE to "${ChatColor.RED}" +
+                    "テレポートできる場所がありません"))
 
     val TITLE = LocalizedText(
             Locale.JAPANESE to "テレポート先を選択"

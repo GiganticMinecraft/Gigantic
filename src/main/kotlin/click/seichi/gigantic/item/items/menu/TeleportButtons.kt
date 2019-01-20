@@ -22,6 +22,10 @@ import org.bukkit.inventory.ItemStack
  */
 object TeleportButtons {
 
+    private val deathMaterialSet = setOf(
+            Material.LAVA
+    )
+
     val TELEPORT_TO_PLAYER = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
@@ -61,10 +65,6 @@ object TeleportButtons {
                 Biome.WARM_OCEAN
         )
 
-        private val deathMaterialSet = setOf(
-                Material.LAVA
-        )
-
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
             if (player.gameMode != GameMode.SURVIVAL) {
                 player.sendMessage(TeleportMessages.RANDOM_TELEPORT_IN_BREAK_TIME.asSafety(player.wrappedLocale))
@@ -82,14 +82,18 @@ object TeleportButtons {
                     chunk.isBattled -> false
                     chunk.isSpawnArea -> false
                     oceanBiomeSet.contains(location.block.biome) -> false
-                    location.block.getRelative(BlockFace.DOWN).type == Material.BEDROCK -> false
-                    deathMaterialSet.contains(location.block.getRelative(BlockFace.DOWN).type) -> false
+                    location.block.getRelative(BlockFace.DOWN, 2).type == Material.BEDROCK -> false
+                    deathMaterialSet.contains(location.block.getRelative(BlockFace.DOWN, 2).type) -> false
                     else -> true
                 }
             }
-            if (chunk == null) return false
+            if (!isValid) {
+                PlayerSounds.FAIL.playOnly(player)
+                return true
+            }
+            if (chunk == null) return true
             if (!chunk.isLoaded) {
-                if (chunk.load(true)) return false
+                if (chunk.load(true)) return true
             }
             player.teleport(location!!)
             PlayerSounds.TELEPORT.play(location)
@@ -117,10 +121,25 @@ object TeleportButtons {
             if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return false
             val chunk = player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return false
             chunk.load(true)
-            val location = chunk.getSpawnableLocation()
+            var location: Location? = null
+            var count = 0
+            // 適用可能か ダメならfalse
+            var isValid = false
+            while (!isValid && count++ < 20) {
+                location = chunk.getSpawnableLocation()
+                isValid = when {
+                    deathMaterialSet.contains(location.block.getRelative(BlockFace.DOWN, 2).type) -> false
+                    else -> true
+                }
+            }
+            if (!isValid) {
+                TeleportMessages.CANT_TELEPORT.sendTo(player)
+                PlayerSounds.FAIL.playOnly(player)
+                return true
+            }
             player.teleport(location)
             if (player.gameMode == GameMode.SURVIVAL)
-                PlayerSounds.TELEPORT.play(location)
+                PlayerSounds.TELEPORT.play(location!!)
             player.offer(Keys.LAST_DEATH_CHUNK, null)
             return true
         }
@@ -251,10 +270,25 @@ object TeleportButtons {
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
             val chunk = player.getOrPut(Keys.LAST_BREAK_CHUNK) ?: return false
             chunk.load(true)
-            val location = chunk.getSpawnableLocation()
+            var location: Location? = null
+            var count = 0
+            // 適用可能か ダメならfalse
+            var isValid = false
+            while (!isValid && count++ < 20) {
+                location = chunk.getSpawnableLocation()
+                isValid = when {
+                    deathMaterialSet.contains(location.block.getRelative(BlockFace.DOWN, 2).type) -> false
+                    else -> true
+                }
+            }
+            if (!isValid) {
+                TeleportMessages.CANT_TELEPORT.sendTo(player)
+                PlayerSounds.FAIL.playOnly(player)
+                return true
+            }
             player.teleport(location)
             if (player.gameMode == GameMode.SURVIVAL)
-                PlayerSounds.TELEPORT.play(location)
+                PlayerSounds.TELEPORT.play(location!!)
             return true
         }
 

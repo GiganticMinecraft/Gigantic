@@ -216,7 +216,9 @@ class PlayerListener : Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onPlaceBlock(event: BlockPlaceEvent) {
         val player = event.player ?: return
+        val block = event.block ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
+        if (block.type == Material.TORCH) return
         event.isCancelled = true
     }
 

@@ -6,6 +6,7 @@ import click.seichi.gigantic.breaker.Cutter
 import click.seichi.gigantic.breaker.Miner
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.enchantment.ToolEnchantment
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.event.events.RelicGenerateEvent
@@ -14,6 +15,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.popup.pops.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -59,6 +61,9 @@ class PlayerMonitor : Listener {
 
         val player = event.player ?: return
         val block = event.block ?: return
+
+        if (Config.DEBUG_MODE)
+            player.sendMessage("tasks: ${Bukkit.getScheduler().pendingTasks.size}")
 
 
         if (block.isLog && ToolEnchantment.CUTTER.has(player)) {
