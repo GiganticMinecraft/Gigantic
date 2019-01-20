@@ -61,7 +61,7 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
             }
         } else {
             // コンボ継続不能な場合
-            // 時間経過[COMBO_DECREASE_INTERVAL]秒ごとにコンボ1割減少する
+            // 時間経過[COMBO_DECREASE_INTERVAL]秒ごとにコンボ1割減少する(最大で100コンボ減少する)
             // 減少パーセント
             val decreaseRate = elapsedTime.div(1000)
                     .minus(Config.SKILL_MINE_COMBO_CONTINUATION_SECONDS)
@@ -71,7 +71,7 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
                     .coerceAtMost(100.0)
             val decreaseCombo = currentCombo.toDouble()
                     .div(100.0)
-                    .times(decreaseRate).toInt()
+                    .times(decreaseRate).toInt().coerceAtMost(100)
             if (decreaseRate >= 100 || decreaseCombo >= currentCombo) {
                 currentCombo = count
             } else {
