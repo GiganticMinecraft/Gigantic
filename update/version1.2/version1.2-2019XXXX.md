@@ -2,9 +2,15 @@
 :cherry_blossom:  **__整地鯖(春) バージョン1.2 追加アップデート情報(2019/XXXX)__** :cherry_blossom:  
 
 
-:fleur_de_lis: **__意志だって強いんだから!!__** :fleur_de_lis:   
+:timer: **__明と暗の世界__** :timer:   
 
-:diamond_shape_with_a_dot_inside:    
+:diamond_shape_with_a_dot_inside: 時間が進むようになります．   
+:diamond_shape_with_a_dot_inside: ブロック破壊時に自動で松明を置けるようになります．   
+
+
+:timer: **__氷結世界から海の世界へ__** :timer:   
+
+:diamond_shape_with_a_dot_inside: 水が凍った時，氷ではなく，プリズマリン系ブロックになります．   
 
 
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
