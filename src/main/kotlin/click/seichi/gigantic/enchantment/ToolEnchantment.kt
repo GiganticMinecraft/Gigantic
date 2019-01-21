@@ -40,8 +40,8 @@ enum class ToolEnchantment(
             return true
         }
     },
-    FROZEN_BREAK(
-            LocalizedText(Locale.JAPANESE to "氷結")
+    HARDEN_WATER(
+            LocalizedText(Locale.JAPANESE to "水成")
     ) {
         override fun isMatch(player: Player, itemStack: ItemStack): Boolean {
             return true
@@ -51,7 +51,7 @@ enum class ToolEnchantment(
             return 1
         }
     },
-    HARDEN_BREAK(
+    HARDEN_LAVA(
             LocalizedText(Locale.JAPANESE to "火成")
     ) {
         override fun isMatch(player: Player, itemStack: ItemStack): Boolean {
