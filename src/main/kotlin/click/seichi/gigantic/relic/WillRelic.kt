@@ -207,47 +207,47 @@ enum class WillRelic(
             return block.biome == Biome.LUKEWARM_OCEAN
         }
     },
-    CACAO_WATERMELON(Will.NATURA, Relic.CACAO_WATERMELON, 0.2, Material.OAK_SAPLING, RelicMessages.CACAO_WATERMELON_BONUS_LORE) {
+    CACAO_WATERMELON(Will.NATURA, Relic.CACAO_WATERMELON, 0.2, Material.FERN, RelicMessages.CACAO_WATERMELON_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.JUNGLE
         }
     },
-    SUMMER_DAY(Will.NATURA, Relic.SUMMER_DAY, 0.1, Material.OAK_SAPLING, RelicMessages.SUMMER_DAY_BONUS_LORE) {
+    SUMMER_DAY(Will.NATURA, Relic.SUMMER_DAY, 0.1, Material.FERN, RelicMessages.SUMMER_DAY_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.temperature in 1.0..1.5
         }
     },
-    BIRCH_MUSHROOM(Will.NATURA, Relic.BIRCH_MUSHROOM, 0.2, Material.OAK_SAPLING, RelicMessages.BIRCH_MUSHROOM_BONUS_LORE) {
+    BIRCH_MUSHROOM(Will.NATURA, Relic.BIRCH_MUSHROOM, 0.2, Material.FERN, RelicMessages.BIRCH_MUSHROOM_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.BIRCH_FOREST
         }
     },
-    EGGPLANT(Will.NATURA, Relic.EGGPLANT, 0.2, Material.OAK_SAPLING, RelicMessages.EGGPLANT_BONUS_LORE) {
+    EGGPLANT(Will.NATURA, Relic.EGGPLANT, 0.2, Material.FERN, RelicMessages.EGGPLANT_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.WOODED_MOUNTAINS
         }
     },
-    WHITE_FLOWER(Will.NATURA, Relic.WHITE_FLOWER, 0.2, Material.OAK_SAPLING, RelicMessages.WHITE_FLOWER_BONUS_LORE) {
+    WHITE_FLOWER(Will.NATURA, Relic.WHITE_FLOWER, 0.2, Material.FERN, RelicMessages.WHITE_FLOWER_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.SNOWY_TUNDRA
         }
     },
-    BANANA_SKIN(Will.NATURA, Relic.BANANA_SKIN, 0.2, Material.OAK_SAPLING, RelicMessages.BANANA_SKIN_BONUS_LORE) {
+    BANANA_SKIN(Will.NATURA, Relic.BANANA_SKIN, 0.2, Material.FERN, RelicMessages.BANANA_SKIN_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.MODIFIED_JUNGLE
         }
     },
-    INSECT_HORN(Will.NATURA, Relic.INSECT_HORN, 0.2, Material.OAK_SAPLING, RelicMessages.INSECT_HORN_BONUS_LORE) {
+    INSECT_HORN(Will.NATURA, Relic.INSECT_HORN, 0.2, Material.FERN, RelicMessages.INSECT_HORN_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.TALL_BIRCH_FOREST
         }
     },
-    BROWN_SAP(Will.NATURA, Relic.BROWN_SAP, 0.2, Material.OAK_SAPLING, RelicMessages.BROWN_SAP_BONUS_LORE) {
+    BROWN_SAP(Will.NATURA, Relic.BROWN_SAP, 0.2, Material.FERN, RelicMessages.BROWN_SAP_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.TALL_BIRCH_HILLS
         }
     },
-    DOWN_TREE(Will.NATURA, Relic.DOWN_TREE, 0.2, Material.OAK_SAPLING, RelicMessages.DOWN_TREE_BONUS_LORE) {
+    DOWN_TREE(Will.NATURA, Relic.DOWN_TREE, 0.2, Material.FERN, RelicMessages.DOWN_TREE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.SNOWY_TAIGA_MOUNTAINS
         }

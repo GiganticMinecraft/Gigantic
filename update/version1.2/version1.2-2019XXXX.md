@@ -6,12 +6,13 @@
 
 :diamond_shape_with_a_dot_inside: 経験値取得量が1expの場合は表示しないようになりました．  
 :diamond_shape_with_a_dot_inside: マインコンボの説明文を現在の仕様通りに書き換えました．  
+:diamond_shape_with_a_dot_inside: ある意志のレリックの表示アイテムを変更しました．レリック自体の変更はありません．  
 
 
 :bow: **__不具合修正__** :bow:   
 以下の不具合を修正しました．  
 
-:diamond_shape_with_a_dot_inside: 
+:diamond_shape_with_a_dot_inside: 休憩時に遺志と交換できてしまう不具合  
 
 
 

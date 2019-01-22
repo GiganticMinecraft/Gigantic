@@ -18,6 +18,7 @@ import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillSize
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
@@ -43,6 +44,8 @@ class WillSpirit(
                     player.location.distance(location) >= player.relationship(will).maxDistance -> false
                     // 物理的な制約
                     location.block.isCrust -> false
+                    // ゲームモード制約
+                    player.gameMode != GameMode.SURVIVAL -> false
                     // プレイヤーの制約
                     targetPlayer == null -> true
                     player.uniqueId == targetPlayer.uniqueId -> true
