@@ -102,7 +102,7 @@ open class Miner : Breaker {
         // actionbar
         if (bonus > 0.0)
             PlayerMessages.EXP_AND_BONUS(count, bonus).sendTo(player)
-        else
+        else if (count > 1)
             PlayerMessages.EXP(count).sendTo(player)
 
 
