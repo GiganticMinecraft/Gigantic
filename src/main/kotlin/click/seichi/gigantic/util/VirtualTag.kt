@@ -14,7 +14,8 @@ import java.util.*
 class VirtualTag(var location: Location,
                  private val text: String,
                  private val id: Int = Random.nextInt(Int.MAX_VALUE),
-                 private val uuid: UUID = UUID.randomUUID()) {
+                 private val uuid: UUID = UUID.randomUUID(),
+                 private var noGravity: Boolean = true) {
 
     companion object {
         private const val BIT_IS_SMALL = 0x01
@@ -49,8 +50,8 @@ class VirtualTag(var location: Location,
             setObject(createDataWatcherObject<Byte>(0), BIT_INVISIBLE)
             setObject(createDataWatcherObject<Byte>(2), BIT_IS_SMALL + BIT_NO_BASE_PLATE + BIT_SET_MARKER)
             setObject(createDataWatcherObject<String>(2), text)
-            setObject(createDataWatcherObject<Boolean>(1), true) // SILENT
-            setObject(createDataWatcherObject<Boolean>(2), true) // NO_GRAVITY
+            setObject(createDataWatcherObject<Boolean>(1), true)      // SILENT
+            setObject(createDataWatcherObject<Boolean>(2), noGravity) // NO_GRAVITY
         }
 
         protocolManager.sendServerPacket(player, packet)
@@ -97,6 +98,18 @@ class VirtualTag(var location: Location,
 
         packet.integerArrays.apply {
             write(0, arrayOf(1).toIntArray())
+        }
+
+        protocolManager.sendServerPacket(player, packet)
+    }
+
+    fun sendChangeGravity(player: Player, noGravity: Boolean) {
+        val packet = protocolManager.createPacket(PacketType.Play.Server.ENTITY_STATUS)
+
+        this.noGravity = noGravity
+
+        packet.dataWatcherModifier.values[0].apply {
+            setObject(createDataWatcherObject<Boolean>(2), noGravity)
         }
 
         protocolManager.sendServerPacket(player, packet)
