@@ -69,6 +69,9 @@ class Gigantic : JavaPlugin() {
         PLUGIN = this
         PROTOCOL_MG = ProtocolLibrary.getProtocolManager()
 
+        Bukkit.getServer().messenger.registerOutgoingPluginChannel(this, "BungeeCord")
+        Bukkit.getServer().messenger.registerIncomingPluginChannel(this, "BungeeCord", GiganticMessageListener())
+
         server.worlds.forEach { world ->
             // Remove all armor stands
             world.getEntitiesByClass(ArmorStand::class.java).forEach { it.remove() }

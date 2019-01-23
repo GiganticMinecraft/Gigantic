@@ -1005,4 +1005,15 @@ object Keys {
                 }
     }.toMap()
 
+    val SERVER_NAME = object : Key<PlayerCache, String?> {
+        override val default: String?
+            get() = null
+
+        override fun satisfyWith(value: String?): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("サーバーネームの書き換えは禁止されています")
+            return false
+        }
+    }
+
 }

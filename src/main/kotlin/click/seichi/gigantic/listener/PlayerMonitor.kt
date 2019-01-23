@@ -1,5 +1,6 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.breaker.Cutter
@@ -15,6 +16,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.popup.pops.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import com.google.common.io.ByteStreams
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
@@ -53,6 +55,12 @@ class PlayerMonitor : Listener {
         player.displayName = PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name)
         player.playerListHeader = PlayerMessages.PLAYER_LIST_HEADER.asSafety(player.wrappedLocale)
         player.playerListFooter = PlayerMessages.PLAYER_LIST_FOOTER.asSafety(player.wrappedLocale)
+
+        // サーバー名を受信
+        val out = ByteStreams.newDataOutput().apply {
+            writeUTF("GetServer")
+        }
+        player.sendPluginMessage(Gigantic.PLUGIN, "BungeeCord", out.toByteArray())
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
