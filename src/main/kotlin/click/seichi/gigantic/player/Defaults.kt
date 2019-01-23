@@ -39,4 +39,7 @@ object Defaults {
 
     const val RELIC_MUL_DIFFX = 0.7
     const val RELIC_MUL_BASE = 1.7
+
+    // ホームポイントの最大数
+    const val MAX_HOME = 5
 }

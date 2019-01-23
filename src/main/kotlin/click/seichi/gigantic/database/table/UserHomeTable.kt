@@ -11,7 +11,8 @@ object UserHomeTable : IntIdTable("users_homes") {
 
     val homeId = integer("home_id").primaryKey()
 
-    val serverName = varchar("server_name", 10)
+    // TODO サーバー間移動も可能にする
+//    val serverName = varchar("server_name", 10)
 
     val worldId = uuid("world_id")
 
@@ -20,4 +21,7 @@ object UserHomeTable : IntIdTable("users_homes") {
     val y = double("y")
 
     val z = double("z")
+
+    val name = varchar("name", 20)
+
 }

@@ -29,6 +29,26 @@ object TeleportMessages {
             Locale.JAPANESE to "ホームを選択"
     )
 
+    val REGISTER_HOME = LocalizedText(
+            Locale.JAPANESE to "ホームを登録する"
+    )
+
+    val CLICK_TO_TELEPORT_HOME = LocalizedText(
+            Locale.JAPANESE to "クリックしてテレポート"
+    )
+
+    val CHANGE_NAME_LORE = LocalizedText(
+            Locale.JAPANESE to "で名前を変更可能"
+    )
+
+    val HOME_DELETE_LORE = LocalizedText(
+            Locale.JAPANESE to "右クリック2回で削除"
+    )
+
+    val HOME_DELETE = LocalizedText(
+            Locale.JAPANESE to "もう一度右クリックで削除"
+    )
+
     val TELEPORT_TO_RANDOM_CHUNK = LocalizedText(
             Locale.JAPANESE to "ランダムな場所へ"
     )

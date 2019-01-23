@@ -113,7 +113,8 @@ class Gigantic : JavaPlugin() {
                 "donate" to DonateCommand(),
                 "tell" to TellCommand(),
                 "reply" to ReplyCommand(),
-                "live" to LiveCommand()
+                "live" to LiveCommand(),
+                "home" to HomeCommand()
         )
 
         prepareDatabase(
@@ -128,7 +129,8 @@ class Gigantic : JavaPlugin() {
                 UserQuestTable,
                 UserEffectTable,
                 DonateHistoryTable,
-                UserFollowTable
+                UserFollowTable,
+                UserHomeTable
         )
 
         // reflectionを使うので先に生成

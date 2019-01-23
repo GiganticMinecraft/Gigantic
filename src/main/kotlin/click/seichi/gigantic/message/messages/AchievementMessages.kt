@@ -101,7 +101,7 @@ object AchievementMessages {
     val TELEPORT_HOME = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "好きな場所をホームとしてテレポート先として登録したり，テレポートができるようになった!!\n" +
+                        "好きな場所をホームとしてテレポート先として登録できるようになった!!\n" +
                         "${ChatColor.GRAY}" +
                         "メニューから選択!!\n"
             }

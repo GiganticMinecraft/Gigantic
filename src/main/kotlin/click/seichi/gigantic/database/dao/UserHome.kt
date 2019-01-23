@@ -15,7 +15,7 @@ class UserHome(id: EntityID<Int>) : IntEntity(id) {
 
     var homeId by UserHomeTable.homeId
 
-    var serverName by UserHomeTable.serverName
+//    var serverName by UserHomeTable.serverName
 
     var worldId by UserHomeTable.worldId
 
@@ -24,5 +24,7 @@ class UserHome(id: EntityID<Int>) : IntEntity(id) {
     var y by UserHomeTable.y
 
     var z by UserHomeTable.z
+
+    var name by UserHomeTable.name
 
 }

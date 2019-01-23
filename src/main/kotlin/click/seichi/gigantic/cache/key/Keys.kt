@@ -14,11 +14,14 @@ import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.database.UserEntity
 import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.database.dao.UserFollow
+import click.seichi.gigantic.database.dao.UserHome
 import click.seichi.gigantic.database.table.UserFollowTable
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.menu.RefineItem
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.DonateTicket
+import click.seichi.gigantic.player.Home
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
@@ -29,6 +32,7 @@ import click.seichi.gigantic.timer.SimpleTimer
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillRelationship
+import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.block.Block
@@ -1013,6 +1017,39 @@ object Keys {
             // 強制的に書き換えを拒否
             Gigantic.PLUGIN.logger.warning("サーバーネームの書き換えは禁止されています")
             return false
+        }
+    }
+
+    val HOME_MAP = object : DatabaseKey<PlayerCache, Map<Int, Home>> {
+        override val default: Map<Int, Home>
+            get() = mapOf()
+
+        override fun read(entity: UserEntity): Map<Int, Home> {
+            val userHomeList = entity.userHomeList
+            return userHomeList.map {
+                it.homeId to Home(
+                        it.homeId,
+                        Location(Bukkit.getWorld(it.worldId), it.x, it.y, it.z)
+                )
+            }.toMap()
+        }
+
+        override fun store(entity: UserEntity, value: Map<Int, Home>) {
+            value.forEach { homeId, home ->
+                UserHome.new {
+                    this.user = entity.user
+                    this.homeId = homeId
+                    this.worldId = home.location.world.uid
+                    this.x = home.location.x
+                    this.y = home.location.y
+                    this.z = home.location.z
+                    this.name = home.name
+                }
+            }
+        }
+
+        override fun satisfyWith(value: Map<Int, Home>): Boolean {
+            return true
         }
     }
 
