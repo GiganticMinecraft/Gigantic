@@ -11,7 +11,7 @@
 :diamond_shape_with_a_dot_inside: 右クリックを2回押してホームを削除できます．  
 
 
-:confetti_ball: 夢に見たリソースパック!! :confetti_ball: 
+:confetti_ball: 夢に見たリソースパック!! :confetti_ball:   
 shirotubu氏，nubasu氏より，テクスチャを提供頂きました！ありがとうございます！！
 
 :diamond_shape_with_a_dot_inside: テクスチャがかっこよくなりました．  
