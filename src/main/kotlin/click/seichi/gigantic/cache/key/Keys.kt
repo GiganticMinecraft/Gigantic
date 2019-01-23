@@ -1029,7 +1029,8 @@ object Keys {
             return userHomeList.map {
                 it.homeId to Home(
                         it.homeId,
-                        Location(Bukkit.getWorld(it.worldId), it.x, it.y, it.z)
+                        Location(Bukkit.getWorld(it.worldId), it.x, it.y, it.z),
+                        it.name
                 )
             }.toMap()
         }
