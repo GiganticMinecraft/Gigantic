@@ -36,6 +36,9 @@ class PlayerMonitor : Listener {
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
 
+        // ここで実績を確認する．これ以前では実績を使ってはいけない
+        Achievement.update(player, isForced = true)
+
         player.updateDisplay(true, true)
 
         if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
@@ -88,6 +91,8 @@ class PlayerMonitor : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onLevelUp(event: LevelUpEvent) {
         val player = event.player
+
+        Achievement.update(event.player)
 
         PlayerMessages.LEVEL_UP_LEVEL(event.level).sendTo(player)
         PlayerMessages.LEVEL_UP_TITLE(event.level).sendTo(player)
