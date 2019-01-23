@@ -63,6 +63,9 @@ enum class Achievement(
     JUMP(104, {
         it.wrappedLevel >= 15
     }, grantMessage = AchievementMessages.JUMP),
+    TELEPORT_HOME(105, {
+        it.wrappedLevel >= 6
+    }, grantMessage = AchievementMessages.TELEPORT_HOME),
     // 使用するまで保留
     /*SWORD(XXX,{
         it.wrappedLevel >= 17

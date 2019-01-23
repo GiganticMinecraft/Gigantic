@@ -31,12 +31,12 @@ object FollowPlayerMenu : BookMenu() {
     private val backButton = BackButton(this, FollowSettingMenu)
 
     override fun getMaxPage(player: Player): Int {
-        return player.getOrPut(Keys.PLAYER_LIST).size.minus(1).div(numOfPlayerPerPage).plus(1).coerceAtLeast(1)
+        return player.getOrPut(Keys.MENU_PLAYER_LIST).size.minus(1).div(numOfPlayerPerPage).plus(1).coerceAtLeast(1)
     }
 
     override fun init(player: Player) {
         player.offer(
-                Keys.PLAYER_LIST,
+                Keys.MENU_PLAYER_LIST,
                 Bukkit.getOnlinePlayers().toMutableList()
                         .filter { player != it }
                         .filter { !player.isFollow(it.uniqueId) }
@@ -44,7 +44,7 @@ object FollowPlayerMenu : BookMenu() {
     }
 
     override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {
-        val playerList = player.getOrPut(Keys.PLAYER_LIST)
+        val playerList = player.getOrPut(Keys.MENU_PLAYER_LIST)
         val start = (page - 1) * numOfPlayerPerPage
         val end = page * numOfPlayerPerPage
         (start until end)
@@ -66,7 +66,7 @@ object FollowPlayerMenu : BookMenu() {
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
-        val playerList = player.getOrPut(Keys.PLAYER_LIST)
+        val playerList = player.getOrPut(Keys.MENU_PLAYER_LIST)
         val index = (page - 1) * numOfPlayerPerPage + slot
         return when (slot) {
             numOfPlayerPerPage -> backButton

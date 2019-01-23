@@ -512,7 +512,7 @@ object Keys {
         }
     }
 
-    val PLAYER_LIST = object : Key<PlayerCache, List<Player>> {
+    val MENU_PLAYER_LIST = object : Key<PlayerCache, List<Player>> {
         override val default: List<Player>
             get() = listOf()
 
