@@ -291,7 +291,7 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         val block = event.block ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
-        if (block.calcGravity() == 0) return
+        if (block.calcGravity() <= Config.MAX_BREAKABLE_GRAVITY) return
         PlayerMessages.NOT_BREAK_OVER_GRAVITY.sendTo(player)
         event.isCancelled = true
     }

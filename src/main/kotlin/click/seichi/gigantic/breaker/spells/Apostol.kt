@@ -143,7 +143,7 @@ class Apostol : Miner(), SpellCaster {
                 it.y > 0
             }.filter {
                 // 重力値の制約
-                it.calcGravity() == 0
+                it.calcGravity() <= Config.MAX_BREAKABLE_GRAVITY
             }.toMutableSet().apply {
                 // 場所の制約
                 if (!player.isSneaking) {

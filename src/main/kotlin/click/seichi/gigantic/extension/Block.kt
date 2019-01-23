@@ -358,12 +358,14 @@ fun Block.update() {
 private fun Block.setTorchIfNeeded() {
     val under = getRelative(BlockFace.DOWN)
     if (!under.isCrust) return
+    // 破壊中のブロックが1残ってるので1
+    if (under.calcGravity() > 1) return
+    if (x % 4 != 0) return
+    if (z % 4 != 0) return
     object : BukkitRunnable() {
         override fun run() {
             if (!under.isCrust) return
             if (!under.isSurface) return
-            if (x % 4 != 0) return
-            if (z % 4 != 0) return
             if (isCrust) return
             if (isTree) return
             type = Material.TORCH
@@ -551,7 +553,7 @@ else world.players
         .filter { !it.isFollow(player.uniqueId) }
         .firstOrNull { xzDistance(it) < Config.PROTECT_RADIUS }
 
-fun Block.calcGravity() = ((1 + Config.MAX_BREAKABLE_GRAVITY)..(255 - y))
+fun Block.calcGravity() = (1..(255 - y))
         .map { getRelative(BlockFace.UP, it) }
         .filter { it.isCrust }
         .size

@@ -1,6 +1,7 @@
 @everyone 
 :cherry_blossom:  **__整地鯖(春) バージョン1.2 追加アップデート情報(2019/01/22)__** :cherry_blossom:  
 
+
 :homes: お気に入りの場所 :homes:
 
 :diamond_shape_with_a_dot_inside: ホームポイントが使えるようになりました．  
@@ -16,6 +17,7 @@
 :diamond_shape_with_a_dot_inside: マインコンボの説明文を現在の仕様通りに書き換えました．  
 :diamond_shape_with_a_dot_inside: ある意志のレリックの表示アイテムを変更しました．レリック自体の変更はありません．  
 :diamond_shape_with_a_dot_inside: テレポート先プレイヤーを選択する画面にテレポートメニューに戻るボタンを追加しました．  
+:diamond_shape_with_a_dot_inside: トーチを設置する際，上に1ブロックでもあれば設置しなくなりました．  
 
 
 :bow: **__不具合修正__** :bow:   
