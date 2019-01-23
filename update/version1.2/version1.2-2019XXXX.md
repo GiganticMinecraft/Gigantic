@@ -11,6 +11,14 @@
 :diamond_shape_with_a_dot_inside: 右クリックを2回押してホームを削除できます．  
 
 
+:confetti_ball: 夢に見たリソースパック!! :confetti_ball: 
+shirotubu氏，nubasu氏より，テクスチャを提供頂きました！ありがとうございます！！
+
+:diamond_shape_with_a_dot_inside: テクスチャがかっこよくなりました．  
+:diamond_shape_with_a_dot_inside: テクスチャがかっこよくなりました．  
+:diamond_shape_with_a_dot_inside: テクスチャがかっこよくなりました．  
+
+
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
 :diamond_shape_with_a_dot_inside: 経験値取得量が1expの場合は表示しないようになりました．  
