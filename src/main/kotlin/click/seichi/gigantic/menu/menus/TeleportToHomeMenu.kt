@@ -84,8 +84,12 @@ object TeleportToHomeMenu : Menu() {
                 }
 
                 override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+
+                    val home = player.getOrPut(Keys.HOME_MAP)[homeId]
+
                     // 削除
                     if (event.isRightClick) {
+                        if (home == null) return true
                         val deleteHomeId = deleteMap.remove(player.uniqueId)
                         if (deleteHomeId == null || deleteHomeId != homeId) {
                             deleteMap[player.uniqueId] = homeId
@@ -109,7 +113,6 @@ object TeleportToHomeMenu : Menu() {
                     }
 
                     // 設定もしくはテレポート
-                    val home = player.getOrPut(Keys.HOME_MAP)[homeId]
 
                     if (home == null) {
                         // ホームを設定
