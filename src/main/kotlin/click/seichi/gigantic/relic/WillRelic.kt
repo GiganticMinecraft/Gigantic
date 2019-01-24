@@ -387,47 +387,47 @@ enum class WillRelic(
             return block.biome == Biome.WOODED_BADLANDS_PLATEAU
         }
     },
-    ELIXIR(Will.LUX, Relic.ELIXIR, 0.1, Material.DANDELION, RelicMessages.ELIXIR_BONUS_LORE) {
+    ELIXIR(Will.LUX, Relic.ELIXIR, 0.1, Material.SUNFLOWER, RelicMessages.ELIXIR_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.temperature in 0.15..1.0
         }
     },
-    OLD_MESSAGE_BOTTLE(Will.LUX, Relic.OLD_MESSAGE_BOTTLE, 0.2, Material.DANDELION, RelicMessages.OLD_MESSAGE_BOTTLE_BONUS_LORE) {
+    OLD_MESSAGE_BOTTLE(Will.LUX, Relic.OLD_MESSAGE_BOTTLE, 0.2, Material.SUNFLOWER, RelicMessages.OLD_MESSAGE_BOTTLE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.STONE_SHORE
         }
     },
-    WHITE_APPLE(Will.LUX, Relic.WHITE_APPLE, 0.2, Material.DANDELION, RelicMessages.WHITE_APPLE_BONUS_LORE) {
+    WHITE_APPLE(Will.LUX, Relic.WHITE_APPLE, 0.2, Material.SUNFLOWER, RelicMessages.WHITE_APPLE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.BIRCH_FOREST_HILLS
         }
     },
-    BUDDHIST_STATUE(Will.LUX, Relic.BUDDHIST_STATUE, 0.2, Material.DANDELION, RelicMessages.BUDDHIST_STATUE_BONUS_LORE) {
+    BUDDHIST_STATUE(Will.LUX, Relic.BUDDHIST_STATUE, 0.2, Material.SUNFLOWER, RelicMessages.BUDDHIST_STATUE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.MOUNTAINS
         }
     },
-    TREASURE_CASKET(Will.LUX, Relic.TREASURE_CASKET, 0.2, Material.DANDELION, RelicMessages.TREASURE_CASKET_BONUS_LORE) {
+    TREASURE_CASKET(Will.LUX, Relic.TREASURE_CASKET, 0.2, Material.SUNFLOWER, RelicMessages.TREASURE_CASKET_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.DEEP_OCEAN
         }
     },
-    JIZO(Will.LUX, Relic.JIZO, 0.2, Material.DANDELION, RelicMessages.JIZO_BONUS_LORE) {
+    JIZO(Will.LUX, Relic.JIZO, 0.2, Material.SUNFLOWER, RelicMessages.JIZO_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.GRAVELLY_MOUNTAINS
         }
     },
-    LIGHTNING_MOSS(Will.LUX, Relic.LIGHTNING_MOSS, 0.2, Material.DANDELION, RelicMessages.LIGHTNING_MOSS_BONUS_LORE) {
+    LIGHTNING_MOSS(Will.LUX, Relic.LIGHTNING_MOSS, 0.2, Material.SUNFLOWER, RelicMessages.LIGHTNING_MOSS_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.GIANT_SPRUCE_TAIGA_HILLS
         }
     },
-    RED_DUST(Will.LUX, Relic.RED_DUST, 1.4, Material.DANDELION, RelicMessages.RED_DUST_BONUS_LORE) {
+    RED_DUST(Will.LUX, Relic.RED_DUST, 1.4, Material.SUNFLOWER, RelicMessages.RED_DUST_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.type == Material.REDSTONE_ORE
         }
     },
-    BLUE_DUST(Will.LUX, Relic.BLUE_DUST, 1.4, Material.DANDELION, RelicMessages.BLUE_DUST_BONUS_LORE) {
+    BLUE_DUST(Will.LUX, Relic.BLUE_DUST, 1.4, Material.SUNFLOWER, RelicMessages.BLUE_DUST_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.type == Material.LAPIS_ORE
         }

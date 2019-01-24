@@ -7,7 +7,6 @@ import click.seichi.gigantic.database.dao.DonateHistory
 import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.database.table.DonateHistoryTable
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.BagMessages
@@ -179,7 +178,7 @@ object BagButtons {
     val SKILL = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.FLINT_AND_STEEL).apply {
+            return ItemStack(Material.BONE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}" +
                         SkillMenuMessages.TITLE.asSafety(player.wrappedLocale))
                 hideAllFlag()
@@ -316,7 +315,7 @@ object BagButtons {
 
         override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.FIRST_RELIC.isGranted(player)) return null
-            return Head.JEWELLERY_BOX.toItemStack().apply {
+            return ItemStack(Material.ENDER_CHEST).apply {
                     setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                             + BagMessages.RELIC.asSafety(player.wrappedLocale))
                 clearLore()
