@@ -61,12 +61,18 @@ class Apostol : Miner(), SpellCaster {
                             (1..(breakArea.height - 2)).forEach {
                                 columnBlockSet.add(base.getRelative(BlockFace.UP, it))
                             }
+                            // スニークしていないかつbaseの高さがプレイヤーより1ブロック低い時
+                            if (!player.isSneaking && player.location.blockY == base.y) {
+                                columnBlockSet.add(base.getRelative(BlockFace.UP, breakArea.height - 1))
+                            }
                         }
 
                         // 下は1ブロック
                         if (breakArea.height > 1) {
                             columnBlockSet.add(base.getRelative(BlockFace.DOWN))
                         }
+
+
                     }
 
                     // プレイヤーの正面に当たるブロックセット

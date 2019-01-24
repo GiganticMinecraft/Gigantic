@@ -355,13 +355,31 @@ fun Block.update() {
     fallUpperCrustBlock()
 }
 
+fun Block.update(others: Set<Block>) {
+    others.forEach { it.changeRelativeBedrock() }
+    others.forEach { it.changeRelativeCrustBlock() }
+    others.forEach { it.condenseRelativeLiquid() }
+    others.forEach { it.clearRelativeFloatingBlock() }
+    val minY = others.minBy { it.y }?.y
+    if (minY == null) {
+        others.forEach { it.setTorchIfNeeded() }
+        others.forEach { it.fallUpperCrustBlock() }
+    } else {
+        others.filter { it.y == minY }.let { minSet ->
+            minSet.forEach { it.setTorchIfNeeded() }
+            minSet.forEach { it.fallUpperCrustBlock() }
+        }
+    }
+
+}
+
 private fun Block.setTorchIfNeeded() {
     val under = getRelative(BlockFace.DOWN)
     if (!under.isCrust) return
-    // 破壊中のブロックが1残ってるので1
-    if (under.calcGravity() > 1) return
     if (x % 4 != 0) return
     if (z % 4 != 0) return
+    // 破壊中のブロックが1残ってるので1
+    if (under.calcGravity() > 1) return
     object : BukkitRunnable() {
         override fun run() {
             if (!under.isCrust) return
@@ -495,6 +513,7 @@ private fun Block.nextCondenseMaterial(): Material {
 
 private fun Block.clearRelativeFloatingBlock() {
     faceSet.map { getRelative(it) }
+            .filterNot { Gigantic.BROKEN_BLOCK_SET.contains(it) }
             .forEach { it.clearFloatingBlock() }
 }
 
@@ -545,6 +564,7 @@ private fun Block.xzDistance(player: Player): Double {
 
 fun Block.firstOrNullOfNearPlayer(player: Player) = if (Gigantic.IS_LIVE) null
 else world.players
+        .asSequence()
         .filterNotNull()
         .filter { it.isValid }
         .filter { it.gameMode == GameMode.SURVIVAL }
@@ -556,4 +576,5 @@ else world.players
 fun Block.calcGravity() = (1..(255 - y))
         .map { getRelative(BlockFace.UP, it) }
         .filter { it.isCrust }
+        .filterNot { Gigantic.BROKEN_BLOCK_SET.contains(it) }
         .size
