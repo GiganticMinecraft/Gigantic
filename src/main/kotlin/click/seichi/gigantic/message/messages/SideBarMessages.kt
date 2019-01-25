@@ -26,7 +26,7 @@ object SideBarMessages {
                                 "エーテル"
                 ),
                 willMap.keys.filter {
-                    willMap[it]!! > 0
+                    willMap.getValue(it) > 0
                 }.map { will ->
                     SideBarRow.getRowById(will.id) to LocalizedText(
                             Locale.JAPANESE.let { locale ->
@@ -37,7 +37,7 @@ object SideBarMessages {
                                         }}:" +
                                         "${ChatColor.RESET}" +
                                         "${will.chatColor}" +
-                                        "${willMap[will]!!.coerceAtMost(999)}".padStart(4, ' ')
+                                        "${willMap.getValue(will).coerceAtMost(999)}".padStart(4, ' ')
                             }
                     )
                 }.toMap()

@@ -4,7 +4,8 @@
 
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
-:diamond_shape_with_a_dot_inside: レリックから得られるボーナス値を一部変更しました．
+:diamond_shape_with_a_dot_inside: レリックから得られるボーナス値を一部変更しました．  
+:diamond_shape_with_a_dot_inside: 松明の設置音を消しました．
 
 
 :bow: **__不具合修正__** :bow:   
