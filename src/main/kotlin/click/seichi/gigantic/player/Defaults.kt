@@ -27,8 +27,8 @@ object Defaults {
     const val WILL_ADVANCED_UNLOCK_AMOUNT = 4000
 
     // will spirit Settings
-    // 意志が消滅するまでの時間
-    const val WILL_SPIRIT_DEATH_DURATION = 30L
+    // 意志が消滅するまでの時間(ticks)
+    const val WILL_SPIRIT_DEATH_DURATION = 100L
 
     // achievement Settings
     // ブロック破壊による実績更新の間隔（ブロック数）
@@ -42,4 +42,7 @@ object Defaults {
 
     // ホームポイントの最大数
     const val MAX_HOME = 5
+
+    // スカイウォークで設置されるブロック
+    val SKY_WALK_MATERIAL = Material.GLASS
 }

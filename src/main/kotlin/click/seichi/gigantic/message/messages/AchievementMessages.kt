@@ -94,7 +94,8 @@ object AchievementMessages {
                 it to "${ChatColor.YELLOW}" +
                         "補助魔法: スカイ・ウォーク を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: プレイヤーの移動を補助する足場を生成!!\n"
+                        "パッシブ効果: プレイヤーの移動を補助する足場を生成!!\n" +
+                        "スニークやジャンプを上手く使おう!!\n"
             }
     ))
 

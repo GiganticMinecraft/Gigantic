@@ -98,9 +98,9 @@ spell:
   # 足場補助スキル
   sky_walk:
     # 1ブロック当たりのマナ消費量
-    mana_per_block: 1.0
+    mana_per_block: 0.2
     # 半径
-    radius: 3
+    radius: 1
 
 
 # TRUEの時debug.ymlに従う

@@ -75,7 +75,7 @@ object SpellMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "スニークで一時停止"
+                                    "スニーク:下降 ジャンプ:上昇"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +

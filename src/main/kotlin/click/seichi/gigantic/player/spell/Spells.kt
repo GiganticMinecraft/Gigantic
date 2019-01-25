@@ -6,8 +6,10 @@ import click.seichi.gigantic.breaker.spells.Apostol
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
+import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.Invokable
 import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.popup.pops.SpellPops
@@ -71,7 +73,6 @@ object Spells {
 
     val SKY_WALK = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!player.hasMana(BigDecimal.ZERO)) return null
             return Consumer { p ->
                 // 前回設置したガラスブロック
                 val prevSet = p.getOrPut(Keys.SPELL_SKY_WALK_PLACE_BLOCKS)
@@ -79,7 +80,8 @@ object Spells {
                 // もし続行不可能なら以前のガラスブロックを削除しておく
                 if (p.gameMode != GameMode.SURVIVAL ||
                         p.isSneaking ||
-                        !p.getOrPut(Keys.SPELL_SKY_WALK_TOGGLE)) {
+                        !p.getOrPut(Keys.SPELL_SKY_WALK_TOGGLE) ||
+                        !player.hasMana(BigDecimal.ZERO)) {
                     Gigantic.SKILLED_BLOCK_SET.removeAll(prevSet)
                     prevSet.forEach { block ->
                         block.type = Material.AIR
@@ -89,7 +91,6 @@ object Spells {
                     return@Consumer
                 }
 
-                // 周囲3ブロックの落とし穴
                 val placeBlockSet = calcPlaceBlockSet(p)
                 // 以前の不要なブロックを削除
                 prevSet.filterNot {
@@ -104,25 +105,37 @@ object Spells {
                 // 足場設置
                 placeBlockSet.filterNot {
                     prevSet.contains(it)
-                }.forEach { block ->
-                    block.type = Material.GLASS
-                    p.playSound(block.centralLocation, Sound.BLOCK_GLASS_PLACE, SoundCategory.BLOCKS, 0.2F, 0.5F)
+                }.apply {
+                    if (size == 0) return@apply
+                    val consumeMana = calcConsumeMana(size)
+                    if (!Config.DEBUG_MODE || !DebugConfig.SPELL_INFINITY) {
+                        player.manipulate(CatalogPlayerCache.MANA) {
+                            it.decrease(consumeMana)
+                        }
+                    }
+                    if (consumeMana > BigDecimal.ZERO) {
+                        PlayerMessages.MANA_DISPLAY(p.mana, p.maxMana).sendTo(p)
+                    }
+                    forEach { block ->
+                        block.type = Defaults.SKY_WALK_MATERIAL
+                        p.playSound(block.centralLocation, Sound.BLOCK_GLASS_PLACE, SoundCategory.BLOCKS, 0.2F, 0.5F)
+                    }
                 }
-                // ガラスブロックを保存
+                // 設置ブロックを保存
                 p.offer(Keys.SPELL_SKY_WALK_PLACE_BLOCKS, placeBlockSet)
                 // globalでも保存
                 Gigantic.SKILLED_BLOCK_SET.addAll(placeBlockSet)
+
             }
         }
+
+        fun calcConsumeMana(num: Int) = num.times(Config.SPELL_SKY_WALK_MANA_PER_BLOCK)
+                .toBigDecimal()
 
         fun calcPlaceBlockSet(player: Player): Set<Block> {
             val prevSet = player.getOrPut(Keys.SPELL_SKY_WALK_PLACE_BLOCKS)
             val pLocBlock = player.location.block
-
-            val base = when {
-                !player.isOnGround && prevSet.isNotEmpty() -> player.world.getBlockAt(pLocBlock.x, prevSet.first().y, pLocBlock.z)
-                else -> pLocBlock.getRelative(BlockFace.DOWN)
-            } ?: return setOf()
+            val base = pLocBlock.getRelative(BlockFace.DOWN) ?: return setOf()
 
             val columnSet = mutableSetOf(base)
             (1..Config.SPELL_SKY_WALK_RADIUS).forEach { length ->

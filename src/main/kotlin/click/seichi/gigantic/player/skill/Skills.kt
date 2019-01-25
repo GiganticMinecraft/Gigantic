@@ -7,6 +7,7 @@ import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.event.events.ComboEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.Invokable
 import click.seichi.gigantic.popup.pops.PopUpParameters
 import click.seichi.gigantic.popup.pops.SkillPops
@@ -67,7 +68,8 @@ object Skills {
                 Material.CAVE_AIR,
                 Material.VOID_AIR,
                 Material.WATER,
-                Material.LAVA
+                Material.LAVA,
+                Defaults.SKY_WALK_MATERIAL
         )
 
         val maxDistance = 50
