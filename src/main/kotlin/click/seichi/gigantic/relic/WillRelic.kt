@@ -47,7 +47,7 @@ enum class WillRelic(
             return block.biome == Biome.BADLANDS
         }
     },
-    MAMMMOTH_RAW_MEET(Will.TERRA, Relic.MAMMMOTH_RAW_MEET, 0.2, Material.RED_TULIP, RelicMessages.MAMMMOTH_RAW_MEET_BONUS_LORE) {
+    MAMMMOTH_RAW_MEET(Will.TERRA, Relic.MAMMMOTH_RAW_MEET, 0.25, Material.RED_TULIP, RelicMessages.MAMMMOTH_RAW_MEET_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.SNOWY_TAIGA
         }
@@ -62,7 +62,7 @@ enum class WillRelic(
             return block.biome == Biome.MODIFIED_BADLANDS_PLATEAU
         }
     },
-    SPHINX(Will.TERRA, Relic.SPHINX, 0.2, Material.RED_TULIP, RelicMessages.SPHINX_BONUS_LORE) {
+    SPHINX(Will.TERRA, Relic.SPHINX, 0.3, Material.RED_TULIP, RelicMessages.SPHINX_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.DESERT_LAKES
         }
@@ -87,7 +87,7 @@ enum class WillRelic(
             return block.biome == Biome.OCEAN
         }
     },
-    MUSH_FISH(Will.AQUA, Relic.MUSH_FISH, 0.2, Material.TUBE_CORAL_FAN, RelicMessages.MUSH_FISH_BONUS_LORE) {
+    MUSH_FISH(Will.AQUA, Relic.MUSH_FISH, 0.25, Material.TUBE_CORAL_FAN, RelicMessages.MUSH_FISH_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.MUSHROOM_FIELDS
         }
@@ -107,7 +107,7 @@ enum class WillRelic(
             return block.type == Material.MELON
         }
     },
-    CUTE_WATERING_POT(Will.AQUA, Relic.CUTE_WATERING_POT, 0.2, Material.TUBE_CORAL_FAN, RelicMessages.CUTE_WATERING_POT_BONUS_LORE) {
+    CUTE_WATERING_POT(Will.AQUA, Relic.CUTE_WATERING_POT, 0.25, Material.TUBE_CORAL_FAN, RelicMessages.CUTE_WATERING_POT_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.SUNFLOWER_PLAINS
         }
@@ -137,7 +137,7 @@ enum class WillRelic(
             return block.biome == Biome.DESERT
         }
     },
-    CAMP_FIRE_TRACE(Will.IGNIS, Relic.CAMP_FIRE_TRACE, 0.2, Material.POPPY, RelicMessages.CAMP_FIRE_TRACE_BONUS_LORE) {
+    CAMP_FIRE_TRACE(Will.IGNIS, Relic.CAMP_FIRE_TRACE, 0.25, Material.POPPY, RelicMessages.CAMP_FIRE_TRACE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.TAIGA_HILLS
         }
@@ -162,7 +162,7 @@ enum class WillRelic(
             return block.y in 63..84
         }
     },
-    TIME_CAPSEL(Will.AER, Relic.TIME_CAPSEL, 0.2, Material.AZURE_BLUET, RelicMessages.TIME_CAPSEL_BONUS_LORE) {
+    TIME_CAPSEL(Will.AER, Relic.TIME_CAPSEL, 0.25, Material.AZURE_BLUET, RelicMessages.TIME_CAPSEL_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.FLOWER_FOREST
         }
@@ -177,12 +177,12 @@ enum class WillRelic(
             return block.biome == Biome.SAVANNA_PLATEAU
         }
     },
-    BROKEN_LEAD(Will.AER, Relic.BROKEN_LEAD, 0.2, Material.AZURE_BLUET, RelicMessages.BROKEN_LEAD_BONUS_LORE) {
+    BROKEN_LEAD(Will.AER, Relic.BROKEN_LEAD, 0.25, Material.AZURE_BLUET, RelicMessages.BROKEN_LEAD_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.WOODED_HILLS
         }
     },
-    OLD_AXE(Will.AER, Relic.OLD_AXE, 0.2, Material.AZURE_BLUET, RelicMessages.OLD_AXE_BONUS_LORE) {
+    OLD_AXE(Will.AER, Relic.OLD_AXE, 0.25, Material.AZURE_BLUET, RelicMessages.OLD_AXE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.TAIGA
         }
@@ -192,12 +192,12 @@ enum class WillRelic(
             return block.biome == Biome.COLD_OCEAN
         }
     },
-    ACID_GEAR(Will.AER, Relic.ACID_GEAR, 0.2, Material.AZURE_BLUET, RelicMessages.ACID_GEAR_BONUS_LORE) {
+    ACID_GEAR(Will.AER, Relic.ACID_GEAR, 0.3, Material.AZURE_BLUET, RelicMessages.ACID_GEAR_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.JUNGLE_HILLS
         }
     },
-    SLICED_ROPE(Will.AER, Relic.SLICED_ROPE, 0.2, Material.AZURE_BLUET, RelicMessages.SLICED_ROPE_BONUS_LORE) {
+    SLICED_ROPE(Will.AER, Relic.SLICED_ROPE, 0.25, Material.AZURE_BLUET, RelicMessages.SLICED_ROPE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.TAIGA_MOUNTAINS
         }
@@ -207,7 +207,7 @@ enum class WillRelic(
             return block.biome == Biome.LUKEWARM_OCEAN
         }
     },
-    CACAO_WATERMELON(Will.NATURA, Relic.CACAO_WATERMELON, 0.2, Material.FERN, RelicMessages.CACAO_WATERMELON_BONUS_LORE) {
+    CACAO_WATERMELON(Will.NATURA, Relic.CACAO_WATERMELON, 0.3, Material.FERN, RelicMessages.CACAO_WATERMELON_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.JUNGLE
         }
@@ -217,42 +217,42 @@ enum class WillRelic(
             return block.temperature in 1.0..1.5
         }
     },
-    BIRCH_MUSHROOM(Will.NATURA, Relic.BIRCH_MUSHROOM, 0.2, Material.FERN, RelicMessages.BIRCH_MUSHROOM_BONUS_LORE) {
+    BIRCH_MUSHROOM(Will.NATURA, Relic.BIRCH_MUSHROOM, 0.25, Material.FERN, RelicMessages.BIRCH_MUSHROOM_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.BIRCH_FOREST
         }
     },
-    EGGPLANT(Will.NATURA, Relic.EGGPLANT, 0.2, Material.FERN, RelicMessages.EGGPLANT_BONUS_LORE) {
+    EGGPLANT(Will.NATURA, Relic.EGGPLANT, 0.25, Material.FERN, RelicMessages.EGGPLANT_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.WOODED_MOUNTAINS
         }
     },
-    WHITE_FLOWER(Will.NATURA, Relic.WHITE_FLOWER, 0.2, Material.FERN, RelicMessages.WHITE_FLOWER_BONUS_LORE) {
+    WHITE_FLOWER(Will.NATURA, Relic.WHITE_FLOWER, 0.25, Material.FERN, RelicMessages.WHITE_FLOWER_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.SNOWY_TUNDRA
         }
     },
-    BANANA_SKIN(Will.NATURA, Relic.BANANA_SKIN, 0.2, Material.FERN, RelicMessages.BANANA_SKIN_BONUS_LORE) {
+    BANANA_SKIN(Will.NATURA, Relic.BANANA_SKIN, 0.3, Material.FERN, RelicMessages.BANANA_SKIN_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.MODIFIED_JUNGLE
         }
     },
-    INSECT_HORN(Will.NATURA, Relic.INSECT_HORN, 0.2, Material.FERN, RelicMessages.INSECT_HORN_BONUS_LORE) {
+    INSECT_HORN(Will.NATURA, Relic.INSECT_HORN, 0.28, Material.FERN, RelicMessages.INSECT_HORN_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.TALL_BIRCH_FOREST
         }
     },
-    BROWN_SAP(Will.NATURA, Relic.BROWN_SAP, 0.2, Material.FERN, RelicMessages.BROWN_SAP_BONUS_LORE) {
+    BROWN_SAP(Will.NATURA, Relic.BROWN_SAP, 0.28, Material.FERN, RelicMessages.BROWN_SAP_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.TALL_BIRCH_HILLS
         }
     },
-    DOWN_TREE(Will.NATURA, Relic.DOWN_TREE, 0.2, Material.FERN, RelicMessages.DOWN_TREE_BONUS_LORE) {
+    DOWN_TREE(Will.NATURA, Relic.DOWN_TREE, 0.25, Material.FERN, RelicMessages.DOWN_TREE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.SNOWY_TAIGA_MOUNTAINS
         }
     },
-    FROSTED_PINECONE(Will.GLACIES, Relic.FROSTED_PINECONE, 0.2, Material.BLUE_ORCHID, RelicMessages.FROSTED_PINECONE_BONUS_LORE) {
+    FROSTED_PINECONE(Will.GLACIES, Relic.FROSTED_PINECONE, 0.28, Material.BLUE_ORCHID, RelicMessages.FROSTED_PINECONE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.GIANT_TREE_TAIGA
         }
@@ -282,7 +282,7 @@ enum class WillRelic(
             return block.biome.isSnowy
         }
     },
-    FROSTED_WHEEL(Will.GLACIES, Relic.FROSTED_WHEEL, 0.2, Material.BLUE_ORCHID, RelicMessages.FROSTED_WHEEL_BONUS_LORE) {
+    FROSTED_WHEEL(Will.GLACIES, Relic.FROSTED_WHEEL, 0.28, Material.BLUE_ORCHID, RelicMessages.FROSTED_WHEEL_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.GIANT_TREE_TAIGA_HILLS
         }
@@ -292,7 +292,7 @@ enum class WillRelic(
             return block.biome == Biome.ICE_SPIKES
         }
     },
-    CRAMPONS(Will.GLACIES, Relic.CRAMPONS, 0.2, Material.BLUE_ORCHID, RelicMessages.CRAMPONS_BONUS_LORE) {
+    CRAMPONS(Will.GLACIES, Relic.CRAMPONS, 0.25, Material.BLUE_ORCHID, RelicMessages.CRAMPONS_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.SNOWY_TAIGA_HILLS
         }
@@ -312,12 +312,12 @@ enum class WillRelic(
             return block.biome == Biome.FROZEN_OCEAN
         }
     },
-    FROSTED_ORE(Will.SOLUM, Relic.FROSTED_ORE, 0.2, Material.QUARTZ, RelicMessages.FROSTED_ORE_BONUS_LORE) {
+    FROSTED_ORE(Will.SOLUM, Relic.FROSTED_ORE, 0.4, Material.QUARTZ, RelicMessages.FROSTED_ORE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.type == Material.BLUE_ICE
         }
     },
-    MYCELIUM_PICKAXE(Will.SOLUM, Relic.MYCELIUM_PICKAXE, 0.2, Material.QUARTZ, RelicMessages.MYCELIUM_PICKAXE_BONUS_LORE) {
+    MYCELIUM_PICKAXE(Will.SOLUM, Relic.MYCELIUM_PICKAXE, 0.28, Material.QUARTZ, RelicMessages.MYCELIUM_PICKAXE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.MUSHROOM_FIELD_SHORE
         }
@@ -362,27 +362,27 @@ enum class WillRelic(
             return block.biome.isWormed
         }
     },
-    SYLPH_LEAFE(Will.VENTUS, Relic.SYLPH_LEAFE, 0.2, Material.LILAC, RelicMessages.SYLPH_LEAFE_BONUS_LORE) {
+    SYLPH_LEAFE(Will.VENTUS, Relic.SYLPH_LEAFE, 0.25, Material.LILAC, RelicMessages.SYLPH_LEAFE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.FOREST
         }
     },
-    TENT_CLOTH(Will.VENTUS, Relic.TENT_CLOTH, 0.2, Material.LILAC, RelicMessages.TENT_CLOTH_BONUS_LORE) {
+    TENT_CLOTH(Will.VENTUS, Relic.TENT_CLOTH, 0.25, Material.LILAC, RelicMessages.TENT_CLOTH_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.SNOWY_MOUNTAINS
         }
     },
-    PRICKLE(Will.VENTUS, Relic.PRICKLE, 0.2, Material.LILAC, RelicMessages.PRICKLE_BONUS_LORE) {
+    PRICKLE(Will.VENTUS, Relic.PRICKLE, 0.23, Material.LILAC, RelicMessages.PRICKLE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.MODIFIED_WOODED_BADLANDS_PLATEAU
         }
     },
-    WING(Will.VENTUS, Relic.WING, 0.2, Material.LILAC, RelicMessages.WING_BONUS_LORE) {
+    WING(Will.VENTUS, Relic.WING, 0.22, Material.LILAC, RelicMessages.WING_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.MODIFIED_GRAVELLY_MOUNTAINS
         }
     },
-    NIDUS_AVIS(Will.VENTUS, Relic.NIDUS_AVIS, 0.2, Material.LILAC, RelicMessages.NIDUS_AVIS_BONUS_LORE) {
+    NIDUS_AVIS(Will.VENTUS, Relic.NIDUS_AVIS, 0.23, Material.LILAC, RelicMessages.NIDUS_AVIS_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.WOODED_BADLANDS_PLATEAU
         }
@@ -392,17 +392,17 @@ enum class WillRelic(
             return block.temperature in 0.15..1.0
         }
     },
-    OLD_MESSAGE_BOTTLE(Will.LUX, Relic.OLD_MESSAGE_BOTTLE, 0.2, Material.SUNFLOWER, RelicMessages.OLD_MESSAGE_BOTTLE_BONUS_LORE) {
+    OLD_MESSAGE_BOTTLE(Will.LUX, Relic.OLD_MESSAGE_BOTTLE, 0.22, Material.SUNFLOWER, RelicMessages.OLD_MESSAGE_BOTTLE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.STONE_SHORE
         }
     },
-    WHITE_APPLE(Will.LUX, Relic.WHITE_APPLE, 0.2, Material.SUNFLOWER, RelicMessages.WHITE_APPLE_BONUS_LORE) {
+    WHITE_APPLE(Will.LUX, Relic.WHITE_APPLE, 0.25, Material.SUNFLOWER, RelicMessages.WHITE_APPLE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.BIRCH_FOREST_HILLS
         }
     },
-    BUDDHIST_STATUE(Will.LUX, Relic.BUDDHIST_STATUE, 0.2, Material.SUNFLOWER, RelicMessages.BUDDHIST_STATUE_BONUS_LORE) {
+    BUDDHIST_STATUE(Will.LUX, Relic.BUDDHIST_STATUE, 0.23, Material.SUNFLOWER, RelicMessages.BUDDHIST_STATUE_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.MOUNTAINS
         }
@@ -412,12 +412,12 @@ enum class WillRelic(
             return block.biome == Biome.DEEP_OCEAN
         }
     },
-    JIZO(Will.LUX, Relic.JIZO, 0.2, Material.SUNFLOWER, RelicMessages.JIZO_BONUS_LORE) {
+    JIZO(Will.LUX, Relic.JIZO, 0.22, Material.SUNFLOWER, RelicMessages.JIZO_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.GRAVELLY_MOUNTAINS
         }
     },
-    LIGHTNING_MOSS(Will.LUX, Relic.LIGHTNING_MOSS, 0.2, Material.SUNFLOWER, RelicMessages.LIGHTNING_MOSS_BONUS_LORE) {
+    LIGHTNING_MOSS(Will.LUX, Relic.LIGHTNING_MOSS, 0.28, Material.SUNFLOWER, RelicMessages.LIGHTNING_MOSS_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.GIANT_SPRUCE_TAIGA_HILLS
         }
@@ -452,7 +452,7 @@ enum class WillRelic(
             return block.type == Material.MYCELIUM
         }
     },
-    SHADE_ARMOR(Will.UMBRA, Relic.SHADE_ARMOR, 0.2, Material.ALLIUM, RelicMessages.SHADE_ARMOR_BONUS_LORE) {
+    SHADE_ARMOR(Will.UMBRA, Relic.SHADE_ARMOR, 0.24, Material.ALLIUM, RelicMessages.SHADE_ARMOR_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.DARK_FOREST_HILLS
         }
@@ -462,7 +462,7 @@ enum class WillRelic(
             return block.y < 29
         }
     },
-    DARK_MATTER(Will.UMBRA, Relic.DARK_MATTER, 0.2, Material.ALLIUM, RelicMessages.DARK_MATTER_BONUS_LORE) {
+    DARK_MATTER(Will.UMBRA, Relic.DARK_MATTER, 0.28, Material.ALLIUM, RelicMessages.DARK_MATTER_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.GIANT_SPRUCE_TAIGA
         }
@@ -477,7 +477,7 @@ enum class WillRelic(
             return block.biome == Biome.ERODED_BADLANDS
         }
     },
-    RLYEH_TEXT(Will.UMBRA, Relic.RLYEH_TEXT, 0.2, Material.ALLIUM, RelicMessages.RLYEH_TEXT_BONUS_LORE) {
+    RLYEH_TEXT(Will.UMBRA, Relic.RLYEH_TEXT, 0.24, Material.ALLIUM, RelicMessages.RLYEH_TEXT_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.DARK_FOREST
         }
