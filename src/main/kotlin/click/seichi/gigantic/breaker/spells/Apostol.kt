@@ -34,7 +34,7 @@ class Apostol : Miner(), SpellCaster {
 
         fun calcBreakBlockSet(player: Player, base: Block): Set<Block> {
             // プレイヤーの向いている方向を取得
-            val breakFace = player.calcBreakFace()
+            val breakFace = player.calcFace()
             // プレイヤーが選択している破壊範囲を取得
             val breakArea = player.getOrPut(Keys.SPELL_APOSTOL_BREAK_AREA)
 
@@ -99,7 +99,7 @@ class Apostol : Miner(), SpellCaster {
                 }
                 BlockFace.UP, BlockFace.DOWN -> {
 
-                    val rotFace = player.calcBreakFace(true)
+                    val rotFace = player.calcFace(true)
 
                     // breakFaceの上下左右方向にブロックを取得，その後breakFace方向に高さだけブロックを取得
                     // 上下ブロック

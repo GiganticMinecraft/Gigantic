@@ -134,7 +134,7 @@ fun Player.relationship(will: Will) = player.getOrPut(Keys.WILL_RELATIONSHIP_MAP
 private const val UP_PITCH_MAX = -60
 private const val DOWN_PITCH_MIN = 60
 
-fun Player.calcBreakFace(ignorePitch: Boolean = false): BlockFace {
+fun Player.calcFace(ignorePitch: Boolean = false): BlockFace {
     if (!ignorePitch) {
         when (location.pitch.roundToInt()) {
             in -90..UP_PITCH_MAX -> return BlockFace.UP

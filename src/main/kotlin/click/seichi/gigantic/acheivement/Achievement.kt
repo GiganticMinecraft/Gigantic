@@ -92,6 +92,9 @@ enum class Achievement(
     SPELL_APOSTOL(301, {
         MANA_STONE.isGranted(it)
     }, grantMessage = AchievementMessages.UNLOCK_SPELL_APOSTOLUS),
+    SPELL_SKY_WALK(302, {
+        MANA_STONE.isGranted(it) && it.wrappedLevel >= 18
+    }, grantMessage = AchievementMessages.UNLOCK_SPELL_SKY_WALK),
 
     // quest order
 

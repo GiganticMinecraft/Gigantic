@@ -1054,4 +1054,14 @@ object Keys {
         }
     }
 
+
+    val SPELL_SKY_WALK_PLACE_BLOCKS = object : Key<PlayerCache, Set<Block>> {
+        override val default: Set<Block>
+            get() = setOf()
+
+        override fun satisfyWith(value: Set<Block>): Boolean {
+            return true
+        }
+    }
+
 }

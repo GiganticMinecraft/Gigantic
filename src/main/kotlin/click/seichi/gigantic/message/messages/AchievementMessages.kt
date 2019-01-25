@@ -89,6 +89,15 @@ object AchievementMessages {
             }
     ))
 
+    val UNLOCK_SPELL_SKY_WALK = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "補助魔法: スカイ・ウォーク を覚えた!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "パッシブ効果: プレイヤーの移動を補助する足場を生成!!\n"
+            }
+    ))
+
     val TELEPORT_PLAYER = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +

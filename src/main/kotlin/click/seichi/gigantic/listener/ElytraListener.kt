@@ -31,6 +31,7 @@ class ElytraListener : Listener {
     @EventHandler
     fun onTick(event: TickEvent) {
         Bukkit.getOnlinePlayers()
+                .asSequence()
                 .filterNotNull()
                 .filter { it.isValid }
                 .filter { it.gameMode == GameMode.SURVIVAL }
@@ -39,6 +40,7 @@ class ElytraListener : Listener {
                 .filter { it.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS) >= 0L }
                 .filter { it.getOrPut(Keys.BELT).findItem(it.inventory.heldItemSlot) == HandItems.JUMP }
                 .filter { Achievement.JUMP.isGranted(it) }
+                .toList()
                 .forEach { player ->
                     var ticks = player.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS)
                     ticks++

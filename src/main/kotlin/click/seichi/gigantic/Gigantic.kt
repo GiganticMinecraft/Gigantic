@@ -54,7 +54,7 @@ class Gigantic : JavaPlugin() {
 
         val DEFAULT_LOCALE = Locale.JAPANESE!!
 
-        val BROKEN_BLOCK_SET = mutableSetOf<Block>()
+        val SKILLED_BLOCK_SET = mutableSetOf<Block>()
 
         fun createInvisibleBossBar(): BossBar = Bukkit.createBossBar(
                 "title",
@@ -101,7 +101,8 @@ class Gigantic : JavaPlugin() {
                 ElytraListener(),
                 ToolListener(),
                 WillListener(),
-                AchievementListener()
+                AchievementListener(),
+                SkyWalkListener()
         )
 
         registerPacketListeners(
@@ -156,7 +157,7 @@ class Gigantic : JavaPlugin() {
         server.scheduler.cancelTasks(this)
 
         //全ての破壊済ブロックを確認し，破壊されていなければ消す
-        BROKEN_BLOCK_SET.filter { !it.isAir }.also {
+        SKILLED_BLOCK_SET.filter { !it.isAir }.also {
             logger.info("破壊されているはずのブロックが${it.size}個 破壊されていなかったため，削除しました．")
         }.forEach {
             it.type = Material.AIR

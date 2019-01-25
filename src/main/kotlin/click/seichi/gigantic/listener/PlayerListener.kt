@@ -270,7 +270,7 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         val block = event.block ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
-        if (!Gigantic.BROKEN_BLOCK_SET.contains(block)) return
+        if (!Gigantic.SKILLED_BLOCK_SET.contains(block)) return
         event.isCancelled = true
     }
 

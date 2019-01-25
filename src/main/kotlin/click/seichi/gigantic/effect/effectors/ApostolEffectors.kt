@@ -53,13 +53,13 @@ object ApostolEffectors {
         private val blockData = Bukkit.createBlockData(Material.PACKED_ICE)
 
         override fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.BROKEN_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
             breakBlockSet.forEach { target ->
                 player.sendBlockChange(target.location, blockData)
             }
             object : BukkitRunnable() {
                 override fun run() {
-                    Gigantic.BROKEN_BLOCK_SET.removeAll(breakBlockSet)
+                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
                     breakBlockSet.forEach { target ->
                         target.type = Material.AIR
                     }
@@ -75,13 +75,13 @@ object ApostolEffectors {
 
     val MAGIC = object : ApostolEffector {
         override fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.BROKEN_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
             breakBlockSet.forEach { target ->
                 player.sendBlockChange(target.location, Random.nextWoolBlockData())
             }
             object : BukkitRunnable() {
                 override fun run() {
-                    Gigantic.BROKEN_BLOCK_SET.removeAll(breakBlockSet)
+                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
                     breakBlockSet.forEach { target ->
                         target.type = Material.AIR
                     }
@@ -132,13 +132,13 @@ object ApostolEffectors {
         private val blockData = Bukkit.createBlockData(Material.SLIME_BLOCK)
 
         override fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.BROKEN_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
             breakBlockSet.forEach { target ->
                 player.sendBlockChange(target.location, blockData)
             }
             object : BukkitRunnable() {
                 override fun run() {
-                    Gigantic.BROKEN_BLOCK_SET.removeAll(breakBlockSet)
+                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
                     breakBlockSet.forEach { target ->
                         target.type = Material.AIR
                     }
@@ -157,15 +157,15 @@ object ApostolEffectors {
         private val blockData = Bukkit.createBlockData(Material.WATER)
 
         override fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.BROKEN_BLOCK_SET.addAll(breakBlockSet)
-            Gigantic.BROKEN_BLOCK_SET.add(base)
+            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.SKILLED_BLOCK_SET.add(base)
             breakBlockSet.forEach { target ->
                 player.sendBlockChange(target.location, blockData)
             }
             object : BukkitRunnable() {
                 override fun run() {
-                    Gigantic.BROKEN_BLOCK_SET.removeAll(breakBlockSet)
-                    Gigantic.BROKEN_BLOCK_SET.remove(base)
+                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                    Gigantic.SKILLED_BLOCK_SET.remove(base)
                     breakBlockSet.forEach { target ->
                         target.type = Material.AIR
                     }

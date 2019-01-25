@@ -404,7 +404,7 @@ private fun Block.fallUpperCrustBlock() {
                 target.y > 255 -> {
                     return
                 }
-                Gigantic.BROKEN_BLOCK_SET.contains(target) -> {
+                Gigantic.SKILLED_BLOCK_SET.contains(target) -> {
                     target.update()
                 }
                 target.isCrust -> {
@@ -444,7 +444,7 @@ private val faceSet = setOf(
 
 private fun Block.changeRelativeBedrock() {
     faceSet.map { getRelative(it) }
-            .filterNot { Gigantic.BROKEN_BLOCK_SET.contains(it) }
+            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
             .forEach { it.changeBedrock() }
 }
 
@@ -456,7 +456,7 @@ fun Block.changeBedrock() {
 
 private fun Block.changeRelativeCrustBlock() {
     faceSet.map { getRelative(it) }
-            .filterNot { Gigantic.BROKEN_BLOCK_SET.contains(it) }
+            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
             .forEach { it.changeCrustBlock() }
 }
 
@@ -485,7 +485,7 @@ fun Block.changeCrustBlock() {
 
 private fun Block.condenseRelativeLiquid() {
     faceSet.map { getRelative(it) }
-            .filterNot { Gigantic.BROKEN_BLOCK_SET.contains(it) }
+            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
             .forEach {
                 it.condenseLiquid()
             }
@@ -517,7 +517,7 @@ private fun Block.nextCondenseMaterial(): Material {
 
 private fun Block.clearRelativeFloatingBlock() {
     faceSet.map { getRelative(it) }
-            .filterNot { Gigantic.BROKEN_BLOCK_SET.contains(it) }
+            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
             .forEach { it.clearFloatingBlock() }
 }
 
@@ -580,5 +580,5 @@ else world.players
 fun Block.calcGravity() = (1..(255 - y))
         .map { getRelative(BlockFace.UP, it) }
         .filter { it.isCrust }
-        .filterNot { Gigantic.BROKEN_BLOCK_SET.contains(it) }
+        .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
         .size
