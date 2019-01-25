@@ -3,7 +3,6 @@ package click.seichi.gigantic.util
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import click.seichi.gigantic.will.WillSize
-import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Color
 import org.bukkit.Material
@@ -76,11 +75,7 @@ internal object Random {
             Material.YELLOW_WOOL
     )
 
-    private val woolBlockDataSet = woolSet.map { Bukkit.createBlockData(it) }.toSet()
-
     fun nextWool() = woolSet.random(generator.asKotlinRandom())
-
-    fun nextWoolBlockData() = woolBlockDataSet.random(generator.asKotlinRandom())
 
     private val eggSet = setOf(
             Material.BAT_SPAWN_EGG,

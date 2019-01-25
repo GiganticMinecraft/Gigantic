@@ -71,8 +71,15 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
                     .coerceAtMost(100.0)
             val decreaseCombo = currentCombo.toDouble()
                     .div(100.0)
-                    .times(decreaseRate).toInt().coerceAtMost(100)
-            if (decreaseRate >= 100 || decreaseCombo >= currentCombo) {
+                    .times(decreaseRate)
+                    .toInt()
+                    .coerceAtMost(100
+                            .times(
+                                    decreaseRate
+                                            .div(Config.SKILL_MINE_COMBO_DECREASE_INTERVAL)
+                                            .toInt()
+                            ))
+            if (decreaseCombo >= currentCombo) {
                 currentCombo = count
             } else {
                 currentCombo -= decreaseCombo
