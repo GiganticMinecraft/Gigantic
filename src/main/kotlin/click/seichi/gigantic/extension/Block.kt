@@ -356,21 +356,26 @@ fun Block.update() {
 }
 
 fun Block.update(others: Set<Block>) {
+    if (others.isEmpty()) return
     others.forEach { it.changeRelativeBedrock() }
     others.forEach { it.changeRelativeCrustBlock() }
     others.forEach { it.condenseRelativeLiquid() }
     others.forEach { it.clearRelativeFloatingBlock() }
-    val minY = others.minBy { it.y }?.y
-    if (minY == null) {
-        others.forEach { it.setTorchIfNeeded() }
-        others.forEach { it.fallUpperCrustBlock() }
-    } else {
-        others.filter { it.y == minY }.let { minSet ->
-            minSet.forEach { it.setTorchIfNeeded() }
-            minSet.forEach { it.fallUpperCrustBlock() }
+    val xzMap = others.groupBy { Pair(it.x, it.z) }
+
+    // トーチ処理
+    xzMap.forEach { _, blockList ->
+        blockList.minBy { it.y }?.run {
+            setTorchIfNeeded()
         }
     }
 
+    // 落下処理
+    xzMap.forEach { _, blockList ->
+        blockList.maxBy { it.y }?.run {
+            fallUpperCrustBlock()
+        }
+    }
 }
 
 private fun Block.setTorchIfNeeded() {
