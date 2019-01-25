@@ -73,6 +73,17 @@ enum class ToolEnchantment(
             return 1
         }
     },
+    AUTORCH(
+            LocalizedText(Locale.JAPANESE to "松明")
+    ) {
+        override fun isMatch(player: Player, itemStack: ItemStack): Boolean {
+            return true
+        }
+
+        override fun calcLevel(player: Player, itemStack: ItemStack): Int {
+            return 1
+        }
+    },
     ;
 
     protected abstract fun isMatch(player: Player, itemStack: ItemStack): Boolean
