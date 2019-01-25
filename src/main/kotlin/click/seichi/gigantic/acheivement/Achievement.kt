@@ -1,5 +1,6 @@
 package click.seichi.gigantic.acheivement
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
@@ -344,7 +345,7 @@ enum class Achievement(
                         if (!player.isValid) return
                         grantMessage?.sendTo(player)
                     }
-                }
+                }.runTaskLater(Gigantic.PLUGIN, 1L)
             }
             true
         }
