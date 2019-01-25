@@ -6,6 +6,7 @@ import click.seichi.gigantic.breaker.Cutter
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.util.Random
+import org.bukkit.Effect
 import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.Material
@@ -391,7 +392,7 @@ fun Block.setTorchIfNeeded() {
             if (isCrust) return
             if (isTree) return
             type = Material.TORCH
-//            world.playEffect(location, Effect.STEP_SOUND, Material.TORCH)
+            world.playEffect(location, Effect.STEP_SOUND, Material.TORCH)
         }
     }.runTaskLater(Gigantic.PLUGIN, 20L)
 }

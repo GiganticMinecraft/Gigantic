@@ -15,7 +15,6 @@
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
 :diamond_shape_with_a_dot_inside: レリックから得られるボーナス値を一部変更しました．  
-:diamond_shape_with_a_dot_inside: 松明の設置音を消しました．  
 :diamond_shape_with_a_dot_inside: 意志が潰されてから消滅するまでの時間を以前より長くしました．  
 
 
