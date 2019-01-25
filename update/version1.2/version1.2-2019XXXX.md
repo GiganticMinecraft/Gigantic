@@ -11,11 +11,11 @@
 :diamond_shape_with_a_dot_inside: スニーク中はスカイウォークを一時的に中断できます．  
 
 
-
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
 :diamond_shape_with_a_dot_inside: レリックから得られるボーナス値を一部変更しました．  
 :diamond_shape_with_a_dot_inside: 意志が潰されてから消滅するまでの時間を以前より長くしました．  
+:diamond_shape_with_a_dot_inside: テクスチャがいくつか変更されました．  
 
 
 :bow: **__不具合修正__** :bow:   
