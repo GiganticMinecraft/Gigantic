@@ -1,5 +1,6 @@
 package click.seichi.gigantic.acheivement
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
@@ -13,6 +14,7 @@ import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.entity.Player
+import org.bukkit.scheduler.BukkitRunnable
 
 /**
  * @author tar0ss
@@ -305,7 +307,7 @@ enum class Achievement(
         // 強制的にプレイヤー表示部分を更新したい場合は[isForced]をtrueに設定
         fun update(player: Player, isForced: Boolean = false) {
             var isChanged = false
-            values().sortedBy { it -> it.priority.amount }
+            values().sortedBy { it.priority.amount }
                     .forEach {
                         if (it.update(player)) {
                             isChanged = true
@@ -341,7 +343,12 @@ enum class Achievement(
         player.transform(Keys.ACHIEVEMENT_MAP[this] ?: return) { hasUnlocked ->
             if (!hasUnlocked) {
                 action(player)
-                grantMessage?.sendTo(player)
+                object : BukkitRunnable() {
+                    override fun run() {
+                        if (!player.isValid) return
+                        grantMessage?.sendTo(player)
+                    }
+                }.runTaskLater(Gigantic.PLUGIN, 1L)
             }
             true
         }

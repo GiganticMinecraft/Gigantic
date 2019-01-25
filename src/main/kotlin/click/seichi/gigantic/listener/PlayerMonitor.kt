@@ -5,6 +5,7 @@ import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.breaker.Cutter
 import click.seichi.gigantic.breaker.Miner
+import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
@@ -35,6 +36,10 @@ class PlayerMonitor : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player ?: return
+
+        if (!PlayerCacheMemory.contains(player.uniqueId)) {
+            return
+        }
 
         // ここで実績を確認する．これ以前では実績を使ってはいけない
         Achievement.update(player, isForced = true)
