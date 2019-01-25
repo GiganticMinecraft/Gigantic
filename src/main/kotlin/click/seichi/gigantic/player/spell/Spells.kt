@@ -152,6 +152,8 @@ object Spells {
             val additiveSet = prevSet.filter { allSet.contains(it) }.toSet()
             return allSet.filter { it.isPassable || it.isAir }
                     .filterNot { it.isWater || it.isLava }
+                    .filterNot { it.isSpawnArea }
+                    .filterNot { it.y == 0 }
                     .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
                     .toMutableSet().apply {
                         addAll(additiveSet)
