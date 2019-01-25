@@ -71,7 +71,11 @@ object SpellMessages {
             listOf(
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.GRAY}" +
-                                    "パッシブ効果: 足場生成"
+                                    "パッシブ効果: 補助足場生成"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "スニークで一時停止"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +

@@ -377,7 +377,7 @@ fun Block.update(others: Set<Block>) {
     }
 }
 
-private fun Block.setTorchIfNeeded() {
+fun Block.setTorchIfNeeded() {
     val under = getRelative(BlockFace.DOWN)
     if (!under.isCrust) return
     if (x % 4 != 0) return

@@ -60,6 +60,14 @@ class PlayerListener : Listener {
         if (!PlayerCacheMemory.contains(player.uniqueId)) {
             return
         }
+        // 全ての設置ブロックを削除
+        player.getOrPut(Keys.SPELL_SKY_WALK_PLACE_BLOCKS).apply {
+            forEach {
+                it.type = Material.AIR
+            }
+            Gigantic.SKILLED_BLOCK_SET.removeAll(this)
+        }
+
         if (player.gameMode == GameMode.SPECTATOR) {
             player.getOrPut(Keys.AFK_LOCATION)?.let {
                 player.teleport(it)
@@ -195,7 +203,7 @@ class PlayerListener : Listener {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
             if (!player.isValid) return@scheduleSyncDelayedTask
             player.health = 6.0
-            player.updateBag()
+            player.updateDisplay(true, true)
         }, 1L)
     }
 

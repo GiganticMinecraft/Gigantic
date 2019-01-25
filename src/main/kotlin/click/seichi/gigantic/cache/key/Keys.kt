@@ -1064,4 +1064,23 @@ object Keys {
         }
     }
 
+    val SPELL_SKY_WALK_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
+        override val default: Boolean
+            get() = false
+
+        override fun read(entity: UserEntity): Boolean {
+            val user = entity.user
+            return user.skyWalkToggle
+        }
+
+        override fun store(entity: UserEntity, value: Boolean) {
+            val user = entity.user
+            user.skyWalkToggle = value
+        }
+
+        override fun satisfyWith(value: Boolean): Boolean {
+            return true
+        }
+    }
+
 }

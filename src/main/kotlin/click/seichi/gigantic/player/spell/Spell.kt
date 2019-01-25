@@ -42,7 +42,7 @@ enum class Spell(
     SKY_WALK(
             2,
             2,
-            ItemStack(Material.GLASS),
+            ItemStack(Material.SUGAR),
             SpellMessages.SKY_WALK,
             SpellMessages.SKY_WALK_LORE,
             Achievement.SPELL_SKY_WALK,

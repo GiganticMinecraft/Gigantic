@@ -46,6 +46,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var autoSwitch by UserTable.autoSwitch
 
+    var skyWalkToggle by UserTable.skyWalkToggle
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt

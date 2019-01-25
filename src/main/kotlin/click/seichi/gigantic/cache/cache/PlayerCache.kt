@@ -78,6 +78,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.HOME_MAP.let {
                 offer(it, it.read(entity))
             }
+            Keys.SPELL_SKY_WALK_TOGGLE.let {
+                offer(it, it.read(entity))
+            }
             Keys.EXP_MAP.forEach { reason, key ->
                 offer(key, key.read(entity))
             }
@@ -163,6 +166,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 it.store(entity, getOrDefault(it))
             }
             Keys.HOME_MAP.let {
+                it.store(entity, getOrDefault(it))
+            }
+            Keys.SPELL_SKY_WALK_TOGGLE.let {
                 it.store(entity, getOrDefault(it))
             }
             Keys.EXP_MAP.forEach { reason, key ->
