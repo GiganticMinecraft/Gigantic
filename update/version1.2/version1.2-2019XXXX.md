@@ -7,6 +7,8 @@
 :diamond_shape_with_a_dot_inside: 新しい魔法「スカイ・ウォーク」を実装しました．  
 :diamond_shape_with_a_dot_inside: レベル18より解放されます．  
 :diamond_shape_with_a_dot_inside: 発動中は落下死を防ぐことができます(用法・用量を正しく守った場合に限ります)．  
+:diamond_shape_with_a_dot_inside: スニークで下降，ジャンプで上昇できます．  
+:diamond_shape_with_a_dot_inside: スニーク中はスカイウォークを一時的に中断できます．  
 
 
 
