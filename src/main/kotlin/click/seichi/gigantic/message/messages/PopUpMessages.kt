@@ -1,16 +1,19 @@
-package click.seichi.gigantic.popup.pops
+package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.extension.toRainbow
-import click.seichi.gigantic.popup.LongPopUp
-import click.seichi.gigantic.popup.SimplePopUp
 import click.seichi.gigantic.util.Random
 import org.bukkit.ChatColor
+import java.math.BigDecimal
 import java.math.RoundingMode
 
 /**
  * @author tar0ss
  */
-object SkillPops {
+object PopUpMessages {
+
+    val BATTLE_DAMAGE = { damage: Long -> "${ChatColor.RED}$damage ATK" }
+
+    val LEVEL_UP = { "${ChatColor.AQUA} レベルアップ" }
 
     val MINE_COMBO = { combo: Long, rank: Int ->
         val color = when (rank) {
@@ -27,17 +30,15 @@ object SkillPops {
             else -> ChatColor.WHITE
         }
 
-        val comboText = when (rank) {
+        when (rank) {
             in 1..9 -> "$color$combo Combo"
             10 -> "${Random.nextChatColor()}$combo Combo"
             else -> "$combo Combo".toRainbow()
         }
-
-        SimplePopUp(comboText)
     }
 
-    val HEAL = { amount: Double ->
-        LongPopUp("${ChatColor.LIGHT_PURPLE}${amount.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} HP")
-    }
+    val HEAL = { amount: Double -> "${ChatColor.LIGHT_PURPLE}${amount.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} HP" }
+
+    val STELLA_CLAIR = { amount: BigDecimal -> "${ChatColor.AQUA}${amount.setScale(1, RoundingMode.HALF_UP)} Mana" }
 
 }

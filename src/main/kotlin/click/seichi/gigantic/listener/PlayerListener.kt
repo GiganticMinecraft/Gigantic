@@ -15,8 +15,11 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.popup.pops.PlayerPops
+import click.seichi.gigantic.message.messages.PopUpMessages
+import click.seichi.gigantic.popup.PopUp
+import click.seichi.gigantic.popup.StillAnimation
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import click.seichi.gigantic.util.NoiseData
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -160,7 +163,8 @@ class PlayerListener : Listener {
 
         PlayerMessages.LEVEL_UP_LEVEL(event.level).sendTo(player)
         PlayerMessages.LEVEL_UP_TITLE(event.level).sendTo(player)
-        PlayerPops.LEVEL_UP.follow(player, meanY = 3.7)
+        PopUp(StillAnimation(60L), player.location.noised(NoiseData(sizeY = 3.7)), PopUpMessages.LEVEL_UP())
+                .pop()
         PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
         PlayerSounds.LEVEL_UP.play(player.location)
 

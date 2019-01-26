@@ -49,7 +49,7 @@ object LongAnimation : PopAnimation(15L) {
         ))
 
         Gigantic.PLUGIN.apply {
-            server.scheduler.runTaskLater(this@apply, { _ -> virtualTag.sendChangeGravity(player, false) }, 5L)
+            server.scheduler.runTaskLater(this@apply, { _ -> virtualTag.sendMovePacket(player, Vector(0.0, 1.0, 0.0)) }, 5L)
         }
     }
 

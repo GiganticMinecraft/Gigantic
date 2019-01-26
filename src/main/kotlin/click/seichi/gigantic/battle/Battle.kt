@@ -3,14 +3,16 @@ package click.seichi.gigantic.battle
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.noised
 import click.seichi.gigantic.extension.updateDisplay
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
+import click.seichi.gigantic.message.messages.PopUpMessages
 import click.seichi.gigantic.message.messages.RelicMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.ai.SoulMonsterState
-import click.seichi.gigantic.popup.pops.BattlePops
-import click.seichi.gigantic.popup.pops.PopUpParameters
+import click.seichi.gigantic.popup.LongAnimation
+import click.seichi.gigantic.popup.PopUp
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.sound.sounds.BattleSounds
 import click.seichi.gigantic.util.NoiseData
@@ -112,7 +114,9 @@ class Battle internal constructor(
         val battler = battlers.find { it.equals(player) } ?: return
         val damage = 1L
         val trueDamage = enemy.damageByPlayer(player, damage)
-        BattlePops.BATTLE_DAMAGE(trueDamage).pop(block.centralLocation, NoiseData(sizeY = PopUpParameters.BATTLE_DAMAGE_DIFF))
+
+        PopUp(LongAnimation, block.centralLocation.noised(NoiseData(sizeY = 0.5)), PopUpMessages.BATTLE_DAMAGE(trueDamage))
+                .pop()
     }
 
     private fun win() {

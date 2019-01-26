@@ -20,7 +20,7 @@ class PopUp(private val animation: PopAnimation,
 
     fun pop() {
         location.world.players
-                .filter { player -> player.location.distanceSquared(location) > SEND_DISTANCE }
+                .filter { player -> player.location.distanceSquared(location) < SEND_DISTANCE }
                 .forEach { player ->
                     animation.animate(player, virtualTag, location)
 
