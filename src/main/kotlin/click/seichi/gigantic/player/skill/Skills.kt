@@ -7,11 +7,14 @@ import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.event.events.ComboEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.message.messages.PopUpMessages
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.Invokable
-import click.seichi.gigantic.popup.pops.PopUpParameters
-import click.seichi.gigantic.popup.pops.SkillPops
+import click.seichi.gigantic.popup.LongAnimation
+import click.seichi.gigantic.popup.PopUp
+import click.seichi.gigantic.popup.SimpleAnimation
 import click.seichi.gigantic.sound.sounds.SkillSounds
+import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -129,7 +132,8 @@ object Skills {
                 p.health = nextHealth
 
                 SkillAnimations.HEAL.absorb(p, block.centralLocation)
-                SkillPops.HEAL(diff).pop(block.centralLocation.add(0.0, PopUpParameters.HEAL_SKILL_DIFF, 0.0))
+                PopUp(LongAnimation, block.centralLocation.noised(NoiseData(sizeY = 0.2)), PopUpMessages.HEAL(diff))
+                        .pop()
                 SkillSounds.HEAL.play(block.centralLocation)
             }
         }
@@ -165,9 +169,8 @@ object Skills {
                 Bukkit.getPluginManager().callEvent(ComboEvent(player.combo, player))
 
                 // 現在のコンボ数をプレイヤーに告知
-                SkillPops.MINE_COMBO(player.combo, player.comboRank).pop(
-                        block.centralLocation.add(0.0, PopUpParameters.MINE_COMBO_DIFF, 0.0)
-                )
+                PopUp(SimpleAnimation, block.centralLocation, PopUpMessages.MINE_COMBO(player.combo, player.comboRank))
+                        .pop()
             }
         }
 
