@@ -15,7 +15,6 @@ import click.seichi.gigantic.event.events.RelicGenerateEvent
 import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.popup.pops.PlayerPops
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import com.google.common.io.ByteStreams
 import org.bukkit.Bukkit
@@ -101,7 +100,6 @@ class PlayerMonitor : Listener {
 
         PlayerMessages.LEVEL_UP_LEVEL(event.level).sendTo(player)
         PlayerMessages.LEVEL_UP_TITLE(event.level).sendTo(player)
-        PlayerPops.LEVEL_UP.follow(player, meanY = 3.7)
         PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
         PlayerSounds.LEVEL_UP.play(player.location)
 

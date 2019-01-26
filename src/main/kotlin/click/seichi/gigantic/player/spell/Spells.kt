@@ -12,10 +12,9 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.PopUpMessages
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.Invokable
-import click.seichi.gigantic.popup.LongAnimation
 import click.seichi.gigantic.popup.PopUp
+import click.seichi.gigantic.popup.SimpleAnimation
 import click.seichi.gigantic.sound.sounds.SpellSounds
-import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
 import org.bukkit.GameMode
 import org.bukkit.Material
@@ -48,7 +47,7 @@ object Spells {
                 }
 
                 SpellAnimations.STELLA_CLAIR.absorb(p, block.centralLocation)
-                PopUp(LongAnimation, block.centralLocation.noised(NoiseData(sizeY = 0.2)), PopUpMessages.STELLA_CLAIR(wrappedAmount))
+                PopUp(SimpleAnimation, block.centralLocation.add(0.0, 0.2, 0.0), PopUpMessages.STELLA_CLAIR(wrappedAmount))
                         .pop()
                 SpellSounds.STELLA_CLAIR.play(block.centralLocation)
 

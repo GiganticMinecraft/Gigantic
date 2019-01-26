@@ -10,11 +10,9 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.PopUpMessages
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.Invokable
-import click.seichi.gigantic.popup.LongAnimation
 import click.seichi.gigantic.popup.PopUp
 import click.seichi.gigantic.popup.SimpleAnimation
 import click.seichi.gigantic.sound.sounds.SkillSounds
-import click.seichi.gigantic.util.NoiseData
 import click.seichi.gigantic.util.Random
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -132,7 +130,7 @@ object Skills {
                 p.health = nextHealth
 
                 SkillAnimations.HEAL.absorb(p, block.centralLocation)
-                PopUp(LongAnimation, block.centralLocation.noised(NoiseData(sizeY = 0.2)), PopUpMessages.HEAL(diff))
+                PopUp(SimpleAnimation, block.centralLocation.add(0.0, 0.2, 0.0), PopUpMessages.HEAL(diff))
                         .pop()
                 SkillSounds.HEAL.play(block.centralLocation)
             }
