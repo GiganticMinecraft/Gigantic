@@ -11,10 +11,6 @@ object CatalogPlayerCache {
 
     val MANA = Mana::class.java
 
-    val MEMORY = Memory::class.java
-
-    val APTITUDE = WillAptitude::class.java
-
     val EXP = Exp::class.java
 
     val MINE_COMBO = MineCombo::class.java

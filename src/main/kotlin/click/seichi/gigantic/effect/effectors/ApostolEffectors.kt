@@ -26,9 +26,7 @@ object ApostolEffectors {
                     target.type = Material.AIR
                 }
                 // 凍結，火成等の処理を最後にまとめる
-                forEach { target ->
-                    target.update()
-                }
+                base.update(breakBlockSet)
             }
         }
     }
@@ -44,22 +42,21 @@ object ApostolEffectors {
                 }
                 EffectSounds.EXPLOSION.play(base.centralLocation)
                 // 凍結，火成等の処理を最後にまとめる
-                forEach { target ->
-                    target.update()
-                }
+                base.update(breakBlockSet)
             }
         }
     }
 
     val BLIZZARD = object : ApostolEffector {
+
         override fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.BROKEN_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
             breakBlockSet.forEach { target ->
                 target.type = Material.PACKED_ICE
             }
             object : BukkitRunnable() {
                 override fun run() {
-                    Gigantic.BROKEN_BLOCK_SET.removeAll(breakBlockSet)
+                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
                     breakBlockSet.forEach { target ->
                         target.type = Material.AIR
                     }
@@ -67,9 +64,7 @@ object ApostolEffectors {
                         ApostolAnimations.BLIZZARD.start(target.centralLocation)
                     }
                     EffectSounds.BLIZZARD.play(base.centralLocation)
-                    breakBlockSet.forEach { target ->
-                        target.update()
-                    }
+                    base.update(breakBlockSet)
                 }
             }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_APOSTOL_DELAY.times(20.0).roundToLong())
         }
@@ -77,13 +72,13 @@ object ApostolEffectors {
 
     val MAGIC = object : ApostolEffector {
         override fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.BROKEN_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
             breakBlockSet.forEach { target ->
                 target.type = Random.nextWool()
             }
             object : BukkitRunnable() {
                 override fun run() {
-                    Gigantic.BROKEN_BLOCK_SET.removeAll(breakBlockSet)
+                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
                     breakBlockSet.forEach { target ->
                         target.type = Material.AIR
                     }
@@ -91,9 +86,7 @@ object ApostolEffectors {
                         ApostolAnimations.MAGIC.start(target.centralLocation)
                     }
                     EffectSounds.MAGIC.play(base.centralLocation)
-                    breakBlockSet.forEach { target ->
-                        target.update()
-                    }
+                    base.update(breakBlockSet)
                 }
             }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_APOSTOL_DELAY.times(20.0).roundToLong())
         }
@@ -110,9 +103,7 @@ object ApostolEffectors {
                 }
                 EffectSounds.FLAME.play(base.centralLocation)
                 // 凍結，火成等の処理を最後にまとめる
-                forEach { target ->
-                    target.update()
-                }
+                base.update(breakBlockSet)
             }
         }
     }
@@ -128,22 +119,21 @@ object ApostolEffectors {
                 }
                 EffectSounds.WITCH_SCENT.play(base.centralLocation)
                 // 凍結，火成等の処理を最後にまとめる
-                forEach { target ->
-                    target.update()
-                }
+                base.update(breakBlockSet)
             }
         }
     }
 
     val SLIME = object : ApostolEffector {
+
         override fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.BROKEN_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
             breakBlockSet.forEach { target ->
                 target.type = Material.SLIME_BLOCK
             }
             object : BukkitRunnable() {
                 override fun run() {
-                    Gigantic.BROKEN_BLOCK_SET.removeAll(breakBlockSet)
+                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
                     breakBlockSet.forEach { target ->
                         target.type = Material.AIR
                     }
@@ -151,26 +141,25 @@ object ApostolEffectors {
                         ApostolAnimations.SLIME.start(target.centralLocation)
                     }
                     EffectSounds.SLIME.play(base.centralLocation)
-                    breakBlockSet.forEach { target ->
-                        target.update()
-                    }
+                    base.update(breakBlockSet)
                 }
             }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_APOSTOL_DELAY.times(20.0).roundToLong())
         }
     }
 
     val BUBBLE = object : ApostolEffector {
+
         override fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.BROKEN_BLOCK_SET.addAll(breakBlockSet)
-            Gigantic.BROKEN_BLOCK_SET.add(base)
+            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.SKILLED_BLOCK_SET.add(base)
             breakBlockSet.forEach { target ->
                 target.type = Material.WATER
             }
             base.type = Material.WATER
             object : BukkitRunnable() {
                 override fun run() {
-                    Gigantic.BROKEN_BLOCK_SET.removeAll(breakBlockSet)
-                    Gigantic.BROKEN_BLOCK_SET.remove(base)
+                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                    Gigantic.SKILLED_BLOCK_SET.remove(base)
                     breakBlockSet.forEach { target ->
                         target.type = Material.AIR
                     }
@@ -178,11 +167,8 @@ object ApostolEffectors {
                     breakBlockSet.forEach { target ->
                         ApostolAnimations.BUBBLE.start(target.centralLocation)
                     }
-                    ApostolAnimations.BUBBLE.start(base.centralLocation)
                     EffectSounds.BUBBLE.play(base.centralLocation)
-                    breakBlockSet.forEach { target ->
-                        target.update()
-                    }
+                    base.update(breakBlockSet)
                 }
             }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_APOSTOL_DELAY.times(20.0).roundToLong())
         }

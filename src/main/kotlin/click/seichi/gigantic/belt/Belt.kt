@@ -37,6 +37,7 @@ enum class Belt(
             Armors.BOOTS,
             1 to HandItems.FLASH,
             2 to HandItems.MINE_BURST,
+            3 to HandItems.SKY_WALK,
             8 to HandItems.JUMP
     ),
     ;

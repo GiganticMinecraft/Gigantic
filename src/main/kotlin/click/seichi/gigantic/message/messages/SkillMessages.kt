@@ -89,7 +89,7 @@ object SkillMessages {
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
                                     "コンボが途切れると${Config.SKILL_MINE_COMBO_DECREASE_INTERVAL.toBigDecimal().setScale(1, RoundingMode.HALF_UP)}秒おきに" +
-                                    "コンボ数が1割減少"
+                                    "最大で100Combo減少する"
                     )
             )
 }

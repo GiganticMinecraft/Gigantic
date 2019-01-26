@@ -8,6 +8,8 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.HandItem
 import click.seichi.gigantic.message.messages.HookedItemMessages
 import click.seichi.gigantic.player.skill.Skill
+import click.seichi.gigantic.player.spell.Spell
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SpellSounds
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -18,6 +20,8 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
+import org.bukkit.scheduler.BukkitRunnable
+import java.util.*
 
 /**
  * @author tar0ss
@@ -30,10 +34,10 @@ object HandItems {
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
-                modifyItemMeta(this@apply, player)
                 addLore(*HookedItemMessages.PICKEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
+                modifyItemMeta(this@apply, player)
             }
         }
 
@@ -51,11 +55,11 @@ object HandItems {
             return ItemStack(Material.DIAMOND_SHOVEL).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         HookedItemMessages.SHOVEL.asSafety(player.wrappedLocale))
-                modifyItemMeta(this@apply, player)
                 addLore(*HookedItemMessages.SHOVEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
+                modifyItemMeta(this@apply, player)
             }
         }
 
@@ -73,11 +77,11 @@ object HandItems {
             return ItemStack(Material.DIAMOND_AXE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         HookedItemMessages.AXE.asSafety(player.wrappedLocale))
-                modifyItemMeta(this@apply, player)
                 addLore(*HookedItemMessages.AXE_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
+                modifyItemMeta(this@apply, player)
             }
         }
 
@@ -94,11 +98,11 @@ object HandItems {
             return ItemStack(Material.DIAMOND_SWORD).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         HookedItemMessages.SWORD.asSafety(player.wrappedLocale))
-                modifyItemMeta(this@apply, player)
                 addLore(*HookedItemMessages.SWORD_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
+                modifyItemMeta(this@apply, player)
             }
         }
 
@@ -167,7 +171,7 @@ object HandItems {
     val MINE_BURST = object : HandItem {
 
         override fun findItemStack(player: Player): ItemStack? {
-            if (!Achievement.SKILL_MINE_BURST.isGranted(player)) return null
+            if (!Skill.MINE_BURST.isGranted(player)) return null
             val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
             return when {
                 mineBurst.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
@@ -204,7 +208,7 @@ object HandItems {
     val FLASH = object : HandItem {
 
         override fun findItemStack(player: Player): ItemStack? {
-            if (!Achievement.SKILL_FLASH.isGranted(player)) return null
+            if (!Skill.FLASH.isGranted(player)) return null
             val flash = player.getOrPut(Keys.SKILL_FLASH)
             return when {
                 flash.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
@@ -247,6 +251,47 @@ object HandItems {
 
         override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
             return false
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            return false
+        }
+
+    }
+
+    val SKY_WALK = object : HandItem {
+
+        private val coolMap = mutableMapOf<UUID, Boolean>()
+
+        override fun findItemStack(player: Player): ItemStack? {
+            if (!Spell.SKY_WALK.isGranted(player)) return null
+            return ItemStack(Material.SUGAR).apply {
+                val toggle = player.getOrPut(Keys.SPELL_SKY_WALK_TOGGLE)
+                setDisplayName(
+                        HookedItemMessages.SKY_WALK.asSafety(player.wrappedLocale) +
+                                ": " +
+                                if (toggle) "ON" else "OFF"
+                )
+                if (toggle) {
+                    setEnchanted(true)
+                }
+            }
+        }
+
+        override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
+            if (!Spell.SKY_WALK.isGranted(player)) return true
+            if (coolMap.getOrDefault(player.uniqueId, false)) return true
+            coolMap[player.uniqueId] = true
+            object : BukkitRunnable() {
+                override fun run() {
+                    if (!player.isValid) return
+                    coolMap[player.uniqueId] = false
+                }
+            }.runTaskLater(Gigantic.PLUGIN, 5L)
+            player.transform(Keys.SPELL_SKY_WALK_TOGGLE) { !it }
+            PlayerSounds.TOGGLE.playOnly(player)
+            player.updateBelt(false, false)
+            return true
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {

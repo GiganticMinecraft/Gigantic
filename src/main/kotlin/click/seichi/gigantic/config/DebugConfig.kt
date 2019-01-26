@@ -10,4 +10,8 @@ object DebugConfig : SimpleConfiguration("debug") {
     val ACHIEVEMENT_UNLOCK by lazy { getBoolean("achievement_unlock") }
 
     val EFFECT_UNLOCK by lazy { getBoolean("effect_unlock") }
+
+    val WILL_SPIRIT by lazy { getBoolean("will_spirit") }
+
+    val SPELL_INFINITY by lazy { getBoolean("spell_infinity") }
 }

@@ -15,8 +15,10 @@ class UserWill(id: EntityID<Int>) : IntEntity(id) {
 
     var willId by UserWillTable.willId
 
-    var memory by UserWillTable.memory
+    var ethel by UserWillTable.ethel
 
     var hasAptitude by UserWillTable.hasAptitude
+
+    var secretAmount by UserWillTable.secretAmount
 
 }

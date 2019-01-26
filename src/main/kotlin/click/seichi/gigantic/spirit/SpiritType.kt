@@ -3,13 +3,18 @@ package click.seichi.gigantic.spirit
 
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.config.Config
+import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.spirit.SpiritManager.spawn
 import click.seichi.gigantic.spirit.spawnreason.MonsterSpawnReason
+import click.seichi.gigantic.spirit.spawnreason.WillSpawnReason
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
+import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.spirit.summoncase.RandomSummonCase
 import click.seichi.gigantic.spirit.summoncase.SummonCase
+import click.seichi.gigantic.will.Will
 import org.bukkit.event.Event
 import org.bukkit.event.block.BlockBreakEvent
 
@@ -27,14 +32,22 @@ import org.bukkit.event.block.BlockBreakEvent
 enum class SpiritType(vararg summonCases: SummonCase<*>) {
 
     WILL(
-            RandomSummonCase(0.05, BlockBreakEvent::class.java) { event ->
+            RandomSummonCase(
+                    if (Config.DEBUG_MODE && DebugConfig.WILL_SPIRIT) 1.00
+                    else 0.01,
+                    BlockBreakEvent::class.java
+            ) { event ->
                 val player = event.player ?: return@RandomSummonCase
-                if (!event.block.isCrust && !event.block.isTree) return@RandomSummonCase
-                return@RandomSummonCase
-                // TODO implements
-                /*val aptitudeSet = player.find(CatalogPlayerCache.APTITUDE)?.copySet() ?: return@RandomSummonCase
-                val will = aptitudeSet.shuffled().firstOrNull() ?: return@RandomSummonCase
-                spawn(WillSpirit(WillSpawnReason.AWAKE, event.block.centralLocation, will, player))*/
+                val block = event.block ?: return@RandomSummonCase
+                if (!block.isCrust && !block.isTree) return@RandomSummonCase
+                val will = Will.values()
+                        .filter { player.hasAptitude(it) }
+                        .filter { it.canSpawn(player, block) }
+                        .toSet().apply {
+                            if (isEmpty()) return@RandomSummonCase
+                        }.random()
+                val spawnLocation = event.block.centralLocation.add(0.0, 0.3, 0.0)
+                spawn(WillSpirit(WillSpawnReason.AWAKE, spawnLocation, will, player))
             }
     ),
     MONSTER(

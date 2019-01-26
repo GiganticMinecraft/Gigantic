@@ -6,6 +6,7 @@ import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.TeleportMenu
+import click.seichi.gigantic.menu.menus.TeleportToHomeMenu
 import click.seichi.gigantic.menu.menus.TeleportToPlayerMenu
 import click.seichi.gigantic.message.messages.menu.TeleportMessages
 import click.seichi.gigantic.sound.sounds.PlayerSounds
@@ -21,6 +22,10 @@ import org.bukkit.inventory.ItemStack
  * @author tar0ss
  */
 object TeleportButtons {
+
+    private val deathMaterialSet = setOf(
+            Material.LAVA
+    )
 
     val TELEPORT_TO_PLAYER = object : Button {
 
@@ -74,16 +79,22 @@ object TeleportButtons {
             while (!isValid && count++ < 20) {
                 chunk = randomChunk(player)
                 location = chunk.getSpawnableLocation()
-                isValid = chunk.let {
-                    !(it.isBattled ||
-                            it.isSpawnArea ||
-                            oceanBiomeSet.contains(it.getBlock(0, 0, 0).biome) ||
-                            location.block.getRelative(BlockFace.DOWN).type == Material.BEDROCK)
+                isValid = when {
+                    chunk.isBattled -> false
+                    chunk.isSpawnArea -> false
+                    oceanBiomeSet.contains(location.block.biome) -> false
+                    location.block.getRelative(BlockFace.DOWN, 2).type == Material.BEDROCK -> false
+                    deathMaterialSet.contains(location.block.getRelative(BlockFace.DOWN, 2).type) -> false
+                    else -> true
                 }
             }
-            if (chunk == null) return false
+            if (!isValid) {
+                PlayerSounds.FAIL.playOnly(player)
+                return true
+            }
+            if (chunk == null) return true
             if (!chunk.isLoaded) {
-                if (chunk.load(true)) return false
+                if (chunk.load(true)) return true
             }
             player.teleport(location!!)
             PlayerSounds.TELEPORT.play(location)
@@ -111,10 +122,25 @@ object TeleportButtons {
             if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return false
             val chunk = player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return false
             chunk.load(true)
-            val location = chunk.getSpawnableLocation()
+            var location: Location? = null
+            var count = 0
+            // 適用可能か ダメならfalse
+            var isValid = false
+            while (!isValid && count++ < 20) {
+                location = chunk.getSpawnableLocation()
+                isValid = when {
+                    deathMaterialSet.contains(location.block.getRelative(BlockFace.DOWN, 2).type) -> false
+                    else -> true
+                }
+            }
+            if (!isValid) {
+                TeleportMessages.CANT_TELEPORT.sendTo(player)
+                PlayerSounds.FAIL.playOnly(player)
+                return true
+            }
             player.teleport(location)
             if (player.gameMode == GameMode.SURVIVAL)
-                PlayerSounds.TELEPORT.play(location)
+                PlayerSounds.TELEPORT.play(location!!)
             player.offer(Keys.LAST_DEATH_CHUNK, null)
             return true
         }
@@ -153,14 +179,14 @@ object TeleportButtons {
         object : Button {
             override fun findItemStack(player: Player): ItemStack? {
                 return when {
-                    !to.isValid -> ItemStack(Material.BLACK_STAINED_GLASS_PANE).apply {
+                    !to.isValid -> ItemStack(Material.GRAY_STAINED_GLASS_PANE).apply {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_INVALID_LORE
                                 .map { it.asSafety(player.wrappedLocale) }
                                 .toTypedArray())
                     }
                     !to.getOrPut(Keys.TELEPORT_TOGGLE) &&
-                            !to.isFollow(player.uniqueId) -> ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE).apply {
+                            !to.isFollow(player.uniqueId) -> ItemStack(Material.PURPLE_STAINED_GLASS_PANE).apply {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_TOGGLE_OFF_LORE
                                 .map { it.asSafety(player.wrappedLocale) }
@@ -184,7 +210,7 @@ object TeleportButtons {
                                 .map { it.asSafety(player.wrappedLocale) }
                                 .toTypedArray())
                     }
-                    to.isFlying -> ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE).apply {
+                    to.isFlying -> ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE).apply {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_FLYING_LORE
                                 .map { it.asSafety(player.wrappedLocale) }
@@ -245,10 +271,44 @@ object TeleportButtons {
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
             val chunk = player.getOrPut(Keys.LAST_BREAK_CHUNK) ?: return false
             chunk.load(true)
-            val location = chunk.getSpawnableLocation()
+            var location: Location? = null
+            var count = 0
+            // 適用可能か ダメならfalse
+            var isValid = false
+            while (!isValid && count++ < 20) {
+                location = chunk.getSpawnableLocation()
+                isValid = when {
+                    deathMaterialSet.contains(location.block.getRelative(BlockFace.DOWN, 2).type) -> false
+                    else -> true
+                }
+            }
+            if (!isValid) {
+                TeleportMessages.CANT_TELEPORT.sendTo(player)
+                PlayerSounds.FAIL.playOnly(player)
+                return true
+            }
             player.teleport(location)
             if (player.gameMode == GameMode.SURVIVAL)
-                PlayerSounds.TELEPORT.play(location)
+                PlayerSounds.TELEPORT.play(location!!)
+            return true
+        }
+
+    }
+
+
+    val TELEPORT_TO_HOME = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            if (!Achievement.TELEPORT_HOME.isGranted(player)) return null
+            return ItemStack(Material.RED_BED).apply {
+                setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_HOME.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === TeleportToHomeMenu) return false
+            if (!Achievement.TELEPORT_HOME.isGranted(player)) return false
+            TeleportToHomeMenu.open(player)
             return true
         }
 

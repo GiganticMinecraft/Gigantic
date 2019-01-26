@@ -38,6 +38,15 @@ enum class Spell(
             SpellMessages.APOSTOL_LORE,
             Achievement.SPELL_APOSTOL,
             Spells.APOSTOL
+    ),
+    SKY_WALK(
+            2,
+            2,
+            ItemStack(Material.SUGAR),
+            SpellMessages.SKY_WALK,
+            SpellMessages.SKY_WALK_LORE,
+            Achievement.SPELL_SKY_WALK,
+            Spells.SKY_WALK
     )
     ;
 

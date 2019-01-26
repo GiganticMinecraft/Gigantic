@@ -1,11 +1,14 @@
 package click.seichi.gigantic.spirit.spirits
 
 import click.seichi.gigantic.animation.animations.WillSpiritAnimations
-import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
-import click.seichi.gigantic.extension.hasAptitude
-import click.seichi.gigantic.extension.manipulate
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.event.events.SenseEvent
+import click.seichi.gigantic.extension.isCrust
+import click.seichi.gigantic.extension.relationship
+import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.sound.sounds.WillSpiritSounds
 import click.seichi.gigantic.spirit.Sensor
 import click.seichi.gigantic.spirit.Spirit
@@ -14,6 +17,8 @@ import click.seichi.gigantic.spirit.spawnreason.SpawnReason
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillSize
+import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
@@ -35,7 +40,13 @@ class WillSpirit(
             { player ->
                 player ?: return@Sensor false
                 when {
-                    player.hasAptitude(will).not() -> false
+                    // 距離の制約(無ければ無限)
+                    player.location.distance(location) >= player.relationship(will).maxDistance -> false
+                    // 物理的な制約
+                    location.block.isCrust -> false
+                    // ゲームモード制約
+                    player.gameMode != GameMode.SURVIVAL -> false
+                    // プレイヤーの制約
                     targetPlayer == null -> true
                     player.uniqueId == targetPlayer.uniqueId -> true
                     else -> false
@@ -44,7 +55,7 @@ class WillSpirit(
             { player, count ->
                 player ?: return@Sensor
                 WillSpiritAnimations.SENSE(will.color).link(player, location, meanY = 0.9)
-                if (count % 10 == 0) {
+                if (count % 10 == 0L) {
                     WillSpiritSounds.SENSE_SUB.playOnly(player)
                 }
             },
@@ -52,9 +63,8 @@ class WillSpirit(
                 player ?: return@Sensor
                 WillMessages.SENSED_WILL(this).sendTo(player)
                 WillSpiritSounds.SENSED.playOnly(player)
-                player.manipulate(CatalogPlayerCache.MEMORY) {
-                    it.add(will, willSize.memory.toLong())
-                }
+                addEthel(player, willSize.memory)
+                Bukkit.getPluginManager().callEvent(SenseEvent(will, player, willSize.memory))
                 SideBarMessages.MEMORY_SIDEBAR(
                         player,
                         false
@@ -67,13 +77,37 @@ class WillSpirit(
             60
     )
 
-    override val lifespan = -1
+    private fun addEthel(player: Player, amount: Long) = player.transform(Keys.ETHEL_MAP[will]!!) { it + amount }
+
+    override val lifespan = 60 * 20L
 
     override val spiritType: SpiritType = SpiritType.WILL
 
+    private val speed = 6 + Random.nextGaussian()
+
+    private val multiplier = 0.18 + Random.nextGaussian(variance = 0.05)
+
+    private var deathCount = 0L
+
     override fun onRender() {
+        targetPlayer ?: return
+        // 意志がブロックの中に入った場合は終了前処理
+        if (location.block.isCrust) {
+            deathCount++
+            if (deathCount > Defaults.WILL_SPIRIT_DEATH_DURATION) {
+                WillSpiritSounds.DEATH.playOnly(targetPlayer)
+                remove()
+                return
+            }
+        } else deathCount = 0L
+
         sensor.update()
-        WillSpiritAnimations.RENDER(willSize.renderingData, will.color, lifeExpectancy).start(location)
+        val renderLocation = location.clone().add(
+                0.0,
+                Math.sin(Math.toRadians(lifeExpectancy.times(speed) % 360.0)) * multiplier,
+                0.0
+        )
+        WillSpiritAnimations.RENDER(willSize.renderingData, will.color, lifeExpectancy).start(renderLocation)
     }
 
     override fun onSpawn() {

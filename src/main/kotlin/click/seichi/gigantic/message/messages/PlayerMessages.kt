@@ -3,7 +3,6 @@ package click.seichi.gigantic.message.messages
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.*
 import click.seichi.gigantic.player.Defaults
-import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -44,12 +43,6 @@ object PlayerMessages {
         val expToNextLevel = PlayerLevelConfig.LEVEL_MAP[level + 1]
                 ?: PlayerLevelConfig.LEVEL_MAP[PlayerLevelConfig.MAX]!!
         LevelMessage(level, (exp - expToLevel).setScale(2, RoundingMode.FLOOR).divide((expToNextLevel - expToLevel), 10, RoundingMode.HALF_UP).toFloat().coerceAtLeast(Float.MIN_VALUE))
-    }
-
-    val OBTAIN_WILL_APTITUDE = { will: Will ->
-        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-                Locale.JAPANESE.let { it to "${ChatColor.AQUA}新しく${will.localizedName.asSafety(it)}の遺志と交感できるようになった" }
-        ))
     }
 
     val LEVEL_UP_LEVEL = { level: Int ->
@@ -94,7 +87,6 @@ object PlayerMessages {
         ))
     }
 
-
     val MANA_DISPLAY = { mana: BigDecimal, maxMana: BigDecimal ->
         val interval = maxMana.divide(Defaults.MANA_BAR_NUM.toBigDecimal(), 10, RoundingMode.HALF_UP)
         val amount = mana.divide(interval, 10, RoundingMode.HALF_UP)
@@ -126,6 +118,11 @@ object PlayerMessages {
                     "上から掘ろう"
     ))
 
+    val FLOOR_BLOCK = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "これ以上深く掘れない"
+    ))
+
     val BATTLE_ANOTHER_PLAYER = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
             Locale.JAPANESE to "${ChatColor.RED}" +
                     "他のプレイヤーがバトル中"
@@ -147,6 +144,24 @@ object PlayerMessages {
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.YELLOW}" +
                         "最大コンボ数更新!! ($prevmaxCombo → $maxCombo)"
+        ))
+    }
+
+    val EXP = { count: Int ->
+        ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GRAY}${ChatColor.BOLD}" +
+                        "経験値を $count 獲得"
+        ))
+    }
+
+    val EXP_AND_BONUS = { count: Int, bonus: Double ->
+        ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GRAY}${ChatColor.BOLD}" +
+                        "経験値を $count " +
+                        "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                        "+ ${bonus.toBigDecimal().setScale(2, RoundingMode.HALF_UP)}" +
+                        "${ChatColor.GRAY}${ChatColor.BOLD}" +
+                        " 獲得"
         ))
     }
 

@@ -83,38 +83,37 @@ object ProfileMessages {
         )
     }
 
-    val PROFILE_WILL_APTITUDE = { player: Player ->
-        arrayOf(
+    val PROFILE_WILL_APTITUDE_BASIC = { player: Player ->
+        mutableListOf(
                 LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GREEN}適正遺志"
+                        Locale.JAPANESE to "${ChatColor.GREEN}適正意志"
                 ),
                 LocalizedText(
                         Locale.JAPANESE.let { locale ->
                             locale to Will.values()
                                     .filter { it.grade == WillGrade.BASIC }
+                                    .filter { player.hasAptitude(it) }
                                     .joinToString(" ") {
-                                        if (player.hasAptitude(it))
-                                            "${ChatColor.WHITE}${it.localizedName.asSafety(locale)}"
-                                        else
-                                            "${ChatColor.DARK_GRAY}${it.localizedName.asSafety(locale)}"
+                                            "${it.chatColor}${ChatColor.BOLD}" + it.getName(locale)
                                     }
                         }
-                ),
+                )
+        )
+    }
+
+    val PROFILE_WILL_APTITUDE_ADVANCED = { player: Player ->
+        mutableListOf(
                 LocalizedText(
                         Locale.JAPANESE.let { locale ->
                             locale to Will.values()
                                     .filter { it.grade == WillGrade.ADVANCED }
+                                    .filter { player.hasAptitude(it) }
                                     .joinToString(" ") {
-                                        if (player.hasAptitude(it))
-                                            "${ChatColor.WHITE}${it.localizedName.asSafety(locale)}"
-                                        else
-                                            "${ChatColor.DARK_GRAY}${it.localizedName.asSafety(locale)}"
+                                        "${it.chatColor}${ChatColor.BOLD}" + it.getName(locale)
                                     }
                         }
                 )
-
         )
     }
-
 
 }

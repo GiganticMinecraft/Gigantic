@@ -1,11 +1,12 @@
 package click.seichi.gigantic.extension
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.breaker.Cutter
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import click.seichi.gigantic.util.Random
+import org.bukkit.Effect
 import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.Material
@@ -29,6 +30,7 @@ val CRUSTS = setOf(
         Material.MOSSY_STONE_BRICKS,
         Material.RED_SAND,
         Material.SANDSTONE,
+        Material.RED_SANDSTONE,
         Material.CHISELED_RED_SANDSTONE,
         Material.CHISELED_SANDSTONE,
         Material.CUT_RED_SANDSTONE,
@@ -51,8 +53,6 @@ val CRUSTS = setOf(
         Material.DIAMOND_ORE,
         Material.COAL_ORE,
         Material.REDSTONE_ORE,
-        Material.NETHER_QUARTZ_ORE,
-        Material.NETHERRACK,
         Material.SAND,
         Material.GRAVEL,
         Material.END_STONE,
@@ -102,7 +102,26 @@ val CRUSTS = setOf(
         Material.INFESTED_STONE_BRICKS,
         Material.COBBLESTONE,
         Material.PUMPKIN,
-        Material.MELON
+        Material.MELON,
+        Material.MYCELIUM,
+        Material.SNOW_BLOCK,
+        Material.TUBE_CORAL_BLOCK,
+        Material.HORN_CORAL_BLOCK,
+        Material.FIRE_CORAL_BLOCK,
+        Material.BUBBLE_CORAL_BLOCK,
+        Material.BRAIN_CORAL_BLOCK,
+        Material.DEAD_TUBE_CORAL_BLOCK,
+        Material.DEAD_HORN_CORAL_BLOCK,
+        Material.DEAD_FIRE_CORAL_BLOCK,
+        Material.DEAD_BUBBLE_CORAL_BLOCK,
+        Material.DEAD_BRAIN_CORAL_BLOCK,
+        Material.RED_NETHER_BRICKS,
+        Material.NETHER_QUARTZ_ORE,
+        Material.NETHER_BRICKS,
+        Material.NETHERRACK,
+        Material.GLOWSTONE,
+        Material.SEA_LANTERN,
+        Material.SMOOTH_STONE
 )
 
 val LOGS = setOf(
@@ -180,20 +199,90 @@ val WATER_PLANTS = setOf(
         Material.FIRE_CORAL,
         Material.HORN_CORAL,
         Material.TUBE_CORAL,
+        Material.DEAD_BRAIN_CORAL,
+        Material.DEAD_BUBBLE_CORAL,
+        Material.DEAD_FIRE_CORAL,
+        Material.DEAD_HORN_CORAL,
+        Material.DEAD_TUBE_CORAL,
         Material.BRAIN_CORAL_FAN,
         Material.BUBBLE_CORAL_FAN,
         Material.FIRE_CORAL_FAN,
         Material.HORN_CORAL_FAN,
-        Material.TUBE_CORAL_FAN
+        Material.TUBE_CORAL_FAN,
+        Material.DEAD_BRAIN_CORAL_FAN,
+        Material.DEAD_BUBBLE_CORAL_FAN,
+        Material.DEAD_FIRE_CORAL_FAN,
+        Material.DEAD_HORN_CORAL_FAN,
+        Material.DEAD_TUBE_CORAL_FAN,
+        Material.BRAIN_CORAL_WALL_FAN,
+        Material.BUBBLE_CORAL_WALL_FAN,
+        Material.FIRE_CORAL_WALL_FAN,
+        Material.HORN_CORAL_WALL_FAN,
+        Material.TUBE_CORAL_WALL_FAN,
+        Material.DEAD_BRAIN_CORAL_WALL_FAN,
+        Material.DEAD_BUBBLE_CORAL_WALL_FAN,
+        Material.DEAD_FIRE_CORAL_WALL_FAN,
+        Material.DEAD_HORN_CORAL_WALL_FAN,
+        Material.DEAD_TUBE_CORAL_WALL_FAN
 )
 
 val WATERS = setOf(
         Material.WATER,
         Material.BUBBLE_COLUMN,
-        *WATER_PLANTS.toTypedArray()
+        *WATER_PLANTS.toTypedArray(),
+        Material.ICE
 )
 
 val TREES = setOf(*LOGS.toTypedArray(), *LEAVES.toTypedArray())
+
+val DIRTS = setOf(
+        Material.DIRT,
+        Material.GRASS_BLOCK,
+        Material.COARSE_DIRT,
+        Material.GRASS_PATH
+)
+
+val INFESTEDS = setOf(
+        Material.INFESTED_STONE,
+        Material.INFESTED_STONE_BRICKS,
+        Material.INFESTED_MOSSY_STONE_BRICKS,
+        Material.INFESTED_CRACKED_STONE_BRICKS,
+        Material.INFESTED_COBBLESTONE,
+        Material.INFESTED_CHISELED_STONE_BRICKS
+)
+
+val MOSSIES = setOf(
+        Material.MOSSY_COBBLESTONE,
+        Material.MOSSY_COBBLESTONE_WALL,
+        Material.MOSSY_STONE_BRICKS,
+        Material.INFESTED_MOSSY_STONE_BRICKS
+)
+
+val ORES = setOf(
+        Material.NETHER_QUARTZ_ORE,
+        Material.LAPIS_ORE,
+        Material.REDSTONE_ORE,
+        Material.DIAMOND_ORE,
+        Material.COAL_ORE,
+        Material.IRON_ORE,
+        Material.EMERALD_ORE,
+        Material.GOLD_ORE
+)
+
+val STONES = setOf(
+        Material.GRANITE,
+        Material.DIORITE,
+        Material.ANDESITE,
+        Material.STONE
+)
+
+val NETHERS = setOf(
+        Material.RED_NETHER_BRICKS,
+        Material.NETHER_QUARTZ_ORE,
+        Material.NETHER_BRICKS,
+        Material.NETHERRACK,
+        Material.GLOWSTONE
+)
 
 // Not contain log blocks
 val Block.isCrust
@@ -223,6 +312,20 @@ val Block.isWater
 val Block.isLava
     get() = type == Material.LAVA
 
+val Block.isInfested
+    get() = INFESTEDS.contains(type)
+
+val Block.isMossy
+    get() = MOSSIES.contains(type)
+
+val Block.isOre
+    get() = ORES.contains(type)
+
+val Block.isStone
+    get() = STONES.contains(type)
+
+val Block.isNether
+    get() = NETHERS.contains(type)
 
 val Block.isSurface
     get() = if (isAir) false
@@ -238,11 +341,60 @@ val Block.centralLocation: Location
 
 fun Block.update() {
     changeRelativeBedrock()
+    // ブロックに多様性を持たせるテスト
+    changeRelativeCrustBlock()
+
     condenseRelativeLiquid()
+
     // 最悪空中に残ってしまった時のために，ここで保険
     clearRelativeFloatingBlock()
 
+    // 松明をセット
+    setTorchIfNeeded()
+
     fallUpperCrustBlock()
+}
+
+fun Block.update(others: Set<Block>) {
+    if (others.isEmpty()) return
+    others.forEach { it.changeRelativeBedrock() }
+    others.forEach { it.changeRelativeCrustBlock() }
+    others.forEach { it.condenseRelativeLiquid() }
+    others.forEach { it.clearRelativeFloatingBlock() }
+    val xzMap = others.groupBy { Pair(it.x, it.z) }
+
+    // トーチ処理
+    xzMap.forEach { _, blockList ->
+        blockList.minBy { it.y }?.run {
+            setTorchIfNeeded()
+        }
+    }
+
+    // 落下処理
+    xzMap.forEach { _, blockList ->
+        blockList.maxBy { it.y }?.run {
+            fallUpperCrustBlock()
+        }
+    }
+}
+
+fun Block.setTorchIfNeeded() {
+    val under = getRelative(BlockFace.DOWN)
+    if (!under.isCrust) return
+    if (x % 4 != 0) return
+    if (z % 4 != 0) return
+    // 破壊中のブロックが1残ってるので1
+    if (under.calcGravity() > 1) return
+    object : BukkitRunnable() {
+        override fun run() {
+            if (!under.isCrust) return
+            if (!under.isSurface) return
+            if (isCrust) return
+            if (isTree) return
+            type = Material.TORCH
+            world.playEffect(location, Effect.STEP_SOUND, Material.TORCH)
+        }
+    }.runTaskLater(Gigantic.PLUGIN, 20L)
 }
 
 private fun Block.fallUpperCrustBlock() {
@@ -253,7 +405,7 @@ private fun Block.fallUpperCrustBlock() {
                 target.y > 255 -> {
                     return
                 }
-                Gigantic.BROKEN_BLOCK_SET.contains(target) -> {
+                Gigantic.SKILLED_BLOCK_SET.contains(target) -> {
                     target.update()
                 }
                 target.isCrust -> {
@@ -293,53 +445,87 @@ private val faceSet = setOf(
 
 private fun Block.changeRelativeBedrock() {
     faceSet.map { getRelative(it) }
+            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
             .forEach { it.changeBedrock() }
 }
 
 fun Block.changeBedrock() {
-    if (Gigantic.BROKEN_BLOCK_SET.contains(this)) return
     if (type != Material.BEDROCK) return
-    if (y == 0) return
-    type = Material.STONE
+    type = if (y == 0) Material.SMOOTH_STONE
+    else Material.STONE
 }
 
+private fun Block.changeRelativeCrustBlock() {
+    faceSet.map { getRelative(it) }
+            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
+            .forEach { it.changeCrustBlock() }
+}
+
+fun Block.changeCrustBlock() {
+    if (!isCrust) return
+    // 鉱石が無くなってしまうので一旦コメントアウト
+//    type = when {
+//        y in 1..29 && !isNether -> when (Random.nextDouble()) {
+//            in 0.00..0.02 -> Material.NETHER_QUARTZ_ORE
+//            in 0.06..0.16 -> Material.RED_NETHER_BRICKS
+//            in 0.16..0.36 -> Material.NETHER_BRICKS
+//            else -> Material.NETHERRACK
+//        }
+//        y in 30..45 && isStone -> {
+//            when (Random.nextDouble()) {
+//                in 0.00..0.01 -> Material.BONE_BLOCK
+//                in 0.01..0.03 -> Material.CHISELED_STONE_BRICKS
+//                in 0.03..0.05 -> Material.CRACKED_STONE_BRICKS
+//                in 0.05..0.07 -> Material.MOSSY_STONE_BRICKS
+//                else -> Material.STONE_BRICKS
+//            }
+//        }
+//        else -> type
+//    }
+}
 
 private fun Block.condenseRelativeLiquid() {
     faceSet.map { getRelative(it) }
+            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
             .forEach {
                 it.condenseLiquid()
             }
 }
 
-fun Block.condenseLiquid(playSound: Boolean = true, playAnimation: Boolean = true) {
-    if (Gigantic.BROKEN_BLOCK_SET.contains(this)) return
+fun Block.condenseLiquid(playSound: Boolean = true) {
     if (!isWater && !isLava) return
     when {
         isWater -> {
             if (playSound)
                 PlayerSounds.ON_CONDENSE_WATER.play(centralLocation)
-            if (playAnimation)
-                PlayerAnimations.ON_CONDENSE_WATER.start(centralLocation)
-            type = Material.PACKED_ICE
+            type = nextCondenseMaterial()
         }
         isLava -> {
             if (playSound)
                 PlayerSounds.ON_CONDENSE_LAVA.play(centralLocation)
-            if (playAnimation)
-                PlayerAnimations.ON_CONDENSE_LAVA.start(centralLocation)
             type = Material.MAGMA_BLOCK
         }
     }
 }
 
+private fun Block.nextCondenseMaterial(): Material {
+    return when (Random.nextDouble()) {
+//        in 0.00..0.20 -> Material.DARK_PRISMARINE
+        in 0.20..0.60 -> Material.PRISMARINE_BRICKS
+        else -> Material.PRISMARINE
+    }
+}
+
 private fun Block.clearRelativeFloatingBlock() {
     faceSet.map { getRelative(it) }
+            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
             .forEach { it.clearFloatingBlock() }
 }
 
 private fun Block.clearFloatingBlock() {
     if (isCrust) return
     if (isLog) return
+    if (type == Material.TORCH) return
     if (y == 0) return
     type = Material.AIR
 }
@@ -383,6 +569,7 @@ private fun Block.xzDistance(player: Player): Double {
 
 fun Block.firstOrNullOfNearPlayer(player: Player) = if (Gigantic.IS_LIVE) null
 else world.players
+        .asSequence()
         .filterNotNull()
         .filter { it.isValid }
         .filter { it.gameMode == GameMode.SURVIVAL }
@@ -391,7 +578,8 @@ else world.players
         .filter { !it.isFollow(player.uniqueId) }
         .firstOrNull { xzDistance(it) < Config.PROTECT_RADIUS }
 
-fun Block.calcGravity() = ((1 + Config.MAX_BREAKABLE_GRAVITY)..(255 - y))
+fun Block.calcGravity() = (1..(255 - y))
         .map { getRelative(BlockFace.UP, it) }
         .filter { it.isCrust }
+        .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
         .size

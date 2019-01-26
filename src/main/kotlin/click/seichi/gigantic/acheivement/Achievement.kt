@@ -1,5 +1,6 @@
 package click.seichi.gigantic.acheivement
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
@@ -7,8 +8,13 @@ import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
+import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.tool.Tool
+import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.will.WillGrade
 import org.bukkit.entity.Player
+import org.bukkit.scheduler.BukkitRunnable
 
 /**
  * @author tar0ss
@@ -33,6 +39,13 @@ enum class Achievement(
     FIRST_LEVEL_UP(1, {
         it.wrappedLevel >= 2
     }, grantMessage = AchievementMessages.FIRST_LEVEL_UP),
+    FIRST_WILL(2, {
+        Will.values().firstOrNull { will -> it.hasAptitude(will) } != null
+    }, grantMessage = AchievementMessages.FIRST_WILL
+            , priority = UpdatePriority.LOWEST),
+    FIRST_RELIC(3, {
+        Relic.values().firstOrNull { relic -> relic.has(it) } != null
+    }, grantMessage = AchievementMessages.FIRST_RELIC),
 
     //TODO 一度すべてのクエストを隠蔽しているので実装時は一気にやる
     // systems
@@ -52,8 +65,11 @@ enum class Achievement(
     JUMP(104, {
         it.wrappedLevel >= 15
     }, grantMessage = AchievementMessages.JUMP),
+    TELEPORT_HOME(105, {
+        it.wrappedLevel >= 6
+    }, grantMessage = AchievementMessages.TELEPORT_HOME),
     // 使用するまで保留
-    /*SWORD(105,            {
+    /*SWORD(XXX,{
         it.wrappedLevel >= 17
     },action = {
         Tool.SWORD.grant(it)
@@ -78,6 +94,9 @@ enum class Achievement(
     SPELL_APOSTOL(301, {
         MANA_STONE.isGranted(it)
     }, grantMessage = AchievementMessages.UNLOCK_SPELL_APOSTOLUS),
+    SPELL_SKY_WALK(302, {
+        MANA_STONE.isGranted(it) && it.wrappedLevel >= 18
+    }, grantMessage = AchievementMessages.UNLOCK_SPELL_SKY_WALK),
 
     // quest order
 
@@ -206,6 +225,77 @@ enum class Achievement(
     }, action = {
         Quest.ENDER_MAN.order(it)
     }, grantMessage = AchievementMessages.QUEST_ORDER),*/
+
+    // will
+    WILL_BASIC(500, {
+        it.wrappedLevel >= WillGrade.BASIC.unlockLevel
+    }, priority = UpdatePriority.HIGH),
+
+    WILL_AQUA(501, {
+        WILL_BASIC.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.AQUA]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.AQUA]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.AQUA)),
+    WILL_IGNIS(502, {
+        WILL_BASIC.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.IGNIS]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.IGNIS]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.IGNIS)),
+    WILL_AER(503, {
+        WILL_BASIC.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.AER]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.AER]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.AER)),
+    WILL_TERRA(504, {
+        WILL_BASIC.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.TERRA]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.TERRA]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.TERRA)),
+    WILL_NATURA(505, {
+        WILL_BASIC.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.NATURA]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.NATURA]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.NATURA)),
+
+
+    WILL_ADVANCED(550, {
+        it.wrappedLevel >= WillGrade.ADVANCED.unlockLevel
+    }, priority = UpdatePriority.HIGH),
+    WILL_GLACIES(551, {
+        WILL_ADVANCED.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.GLACIES]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.GLACIES]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.GLACIES)),
+    WILL_LUX(552, {
+        WILL_ADVANCED.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.LUX]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.LUX]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.LUX)),
+    WILL_SOLUM(553, {
+        WILL_ADVANCED.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.SOLUM]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.SOLUM]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.SOLUM)),
+    WILL_UMBRA(554, {
+        WILL_ADVANCED.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.UMBRA]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.UMBRA]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.UMBRA)),
+    WILL_VENTUS(555, {
+        WILL_ADVANCED.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.VENTUS]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.VENTUS]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.VENTUS)),
     ;
 
     /**1から順に [update] される**/
@@ -217,7 +307,7 @@ enum class Achievement(
         // 強制的にプレイヤー表示部分を更新したい場合は[isForced]をtrueに設定
         fun update(player: Player, isForced: Boolean = false) {
             var isChanged = false
-            values().sortedBy { it -> it.priority.amount }
+            values().sortedBy { it.priority.amount }
                     .forEach {
                         if (it.update(player)) {
                             isChanged = true
@@ -253,7 +343,12 @@ enum class Achievement(
         player.transform(Keys.ACHIEVEMENT_MAP[this] ?: return) { hasUnlocked ->
             if (!hasUnlocked) {
                 action(player)
-                grantMessage?.sendTo(player)
+                object : BukkitRunnable() {
+                    override fun run() {
+                        if (!player.isValid) return
+                        grantMessage?.sendTo(player)
+                    }
+                }.runTaskLater(Gigantic.PLUGIN, 1L)
             }
             true
         }
@@ -272,8 +367,7 @@ enum class Achievement(
             else canGranting(player)
 
     fun isGranted(player: Player) =
-            if (DebugConfig.ACHIEVEMENT_UNLOCK && Config.DEBUG_MODE) true
-            else canGrant(player) && Keys.ACHIEVEMENT_MAP[this]?.let { player.getOrPut(it) } ?: false
+            canGrant(player) && Keys.ACHIEVEMENT_MAP[this]?.let { player.getOrPut(it) } ?: false
 
 
 }

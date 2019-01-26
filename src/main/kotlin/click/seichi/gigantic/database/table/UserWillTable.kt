@@ -11,8 +11,10 @@ object UserWillTable : IntIdTable("users_wills") {
 
     val willId = integer("will_id").primaryKey()
 
-    val memory = long("memory").default(0L)
+    val ethel = long("ethel").default(0L)
 
     val hasAptitude = bool("has_aptitude").default(false)
+
+    val secretAmount = long("secret_amount").default(0L)
 
 }

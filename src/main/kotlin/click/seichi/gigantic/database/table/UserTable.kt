@@ -46,6 +46,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val autoSwitch = bool("auto_switch").default(true)
 
+    val skyWalkToggle = bool("sky_walk_toggle").default(false)
+
     val createdAt = datetime("created_at").default(DateTime.now())
 
     val updatedAt = datetime("updated_at").default(DateTime.now())

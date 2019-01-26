@@ -2,21 +2,21 @@ package click.seichi.gigantic.item.items
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.cache.key.DonateTicket
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.database.dao.DonateHistory
 import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.database.table.DonateHistoryTable
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.BagMessages
 import click.seichi.gigantic.message.messages.menu.*
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.DonateTicket
 import click.seichi.gigantic.quest.Quest
-import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor
 import org.bukkit.GameMode
 import org.bukkit.Material
@@ -59,11 +59,22 @@ object BagButtons {
                     lore.add(ProfileMessages.PROFILE_MANA(player.mana.coerceAtLeast(BigDecimal.ZERO), player.maxMana).asSafety(player.wrappedLocale))
                 }
 
-                lore.addAll(listOf(
+                lore.add(
                         ProfileMessages.PROFILE_MAX_COMBO(player.maxCombo).asSafety(player.wrappedLocale)
-                        // TODO 意志実装後に実装
-//                        *ProfileMessages.PROFILE_WILL_APTITUDE(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
-                ))
+                )
+
+                if (Will.values().filter { it.grade == WillGrade.BASIC }
+                                .firstOrNull { player.hasAptitude(it) } != null) {
+                    lore.addAll(listOf(
+                            *ProfileMessages.PROFILE_WILL_APTITUDE_BASIC(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
+                    ))
+                }
+                if (Will.values().filter { it.grade == WillGrade.ADVANCED }
+                                .firstOrNull { player.hasAptitude(it) } != null) {
+                    lore.addAll(listOf(
+                            *ProfileMessages.PROFILE_WILL_APTITUDE_ADVANCED(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
+                    ))
+                }
 
                 setLore(*lore.toTypedArray())
 
@@ -167,7 +178,7 @@ object BagButtons {
     val SKILL = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.FLINT_AND_STEEL).apply {
+            return ItemStack(Material.BONE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}" +
                         SkillMenuMessages.TITLE.asSafety(player.wrappedLocale))
                 hideAllFlag()
@@ -303,14 +314,10 @@ object BagButtons {
     val RELIC = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
-            return Head.JEWELLERY_BOX.toItemStack().apply {
-                if (Relic.getDroppedList(player).isEmpty()) {
-                    setDisplayName("${ChatColor.GRAY}${ChatColor.UNDERLINE}"
-                            + BagMessages.NO_RELIC.asSafety(player.wrappedLocale))
-                } else {
+            if (!Achievement.FIRST_RELIC.isGranted(player)) return null
+            return ItemStack(Material.ENDER_CHEST).apply {
                     setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                             + BagMessages.RELIC.asSafety(player.wrappedLocale))
-                }
                 clearLore()
                 itemMeta = itemMeta.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -321,7 +328,7 @@ object BagButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (Relic.getDroppedList(player).isEmpty()) return false
+            if (!Achievement.FIRST_RELIC.isGranted(player)) return false
             if (event.inventory.holder === RelicMenu) return false
             RelicMenu.open(player)
             return true
@@ -398,4 +405,24 @@ object BagButtons {
         }
 
     }
+
+    val RELIC_GENERATOR = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            if (!Achievement.FIRST_WILL.isGranted(player)) return null
+            return ItemStack(Material.END_PORTAL_FRAME).apply {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + RelicGeneratorMenuMessages.TITLE.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (!Achievement.FIRST_WILL.isGranted(player)) return false
+            if (event.inventory.holder === RelicGeneratorMenu) return false
+            RelicGeneratorMenu.open(player)
+            return true
+        }
+
+    }
+
 }

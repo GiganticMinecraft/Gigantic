@@ -17,7 +17,7 @@ object WillSpiritSounds {
 
 
     val SENSED = DetailedSound(
-            Sound.ITEM_ARMOR_EQUIP_TURTLE,
+            Sound.ITEM_ARMOR_EQUIP_CHAIN,
             SoundCategory.BLOCKS,
             pitch = 0.3F
     )
@@ -26,6 +26,12 @@ object WillSpiritSounds {
             Sound.ENTITY_ENDER_EYE_DEATH,
             SoundCategory.BLOCKS,
             pitch = 1.8F
+    )
+
+    val DEATH = DetailedSound(
+            Sound.ENTITY_ENDER_EYE_LAUNCH,
+            SoundCategory.BLOCKS,
+            pitch = 0.6F
     )
 
 }

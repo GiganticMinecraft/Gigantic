@@ -4,6 +4,7 @@ import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.spirit.spirits.WillSpirit
+import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -75,12 +76,68 @@ object WillMessages {
     val SENSED_WILL = { willSpirit: WillSpirit ->
         val sizePrefix = willSpirit.willSize.prefix
         val memory = willSpirit.willSize.memory
-        val name = willSpirit.will.localizedName
 
         ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
-                Locale.JAPANESE.let { it to "${ChatColor.GREEN}${sizePrefix.asSafety(it)}${name.asSafety(it)}の遺志から${memory}の記憶を享受した" },
-                Locale.ENGLISH.let { it to "${ChatColor.GREEN}$memory memory from ${sizePrefix.asSafety(it)}${name.asSafety(it)} will " }
+                Locale.JAPANESE.let {
+                    it to "${ChatColor.GREEN}" +
+                            "${willSpirit.will.chatColor}${ChatColor.BOLD}" +
+                            sizePrefix.asSafety(it) +
+                            willSpirit.will.getName(it) +
+                            "の意志" +
+                            "${ChatColor.RESET}${ChatColor.WHITE}" +
+                            "から" +
+                            "${willSpirit.will.chatColor}${ChatColor.BOLD}" +
+                            willSpirit.will.getName(it) +
+                            "のエーテル($memory)" +
+                            "${ChatColor.RESET}${ChatColor.WHITE}" +
+                            "を獲得"
+                }
         ))
     }
+
+    val NEXT_RELATIONSHIP = { will: Will, relation: String ->
+        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "${will.chatColor}${ChatColor.BOLD}" +
+                            will.getName(it) +
+                            "の意志" +
+                            "${ChatColor.RESET}${ChatColor.WHITE}" +
+                            "と" +
+                            "${will.chatColor}${ChatColor.BOLD}" +
+                            relation +
+                            "${ChatColor.RESET}${ChatColor.WHITE}" +
+                            "になった\n" +
+                            "交感できる距離が伸びた!!"
+                }
+        ))
+    }
+
+    val FRESH = LocalizedText(
+            Locale.JAPANESE to "新友"
+    )
+
+    val HOMIE = LocalizedText(
+            Locale.JAPANESE to "普友"
+    )
+
+    val FRIEND = LocalizedText(
+            Locale.JAPANESE to "深友"
+    )
+
+    val BESTIE = LocalizedText(
+            Locale.JAPANESE to "親友"
+    )
+
+    val BFF = LocalizedText(
+            Locale.JAPANESE to "臣友"
+    )
+
+    val SOULMATE = LocalizedText(
+            Locale.JAPANESE to "心友"
+    )
+
+    val PARTNER = LocalizedText(
+            Locale.JAPANESE to "神友"
+    )
 
 }

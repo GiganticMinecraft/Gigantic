@@ -7,7 +7,7 @@ import click.seichi.gigantic.message.messages.WillMessages
  * @author tar0ss
  * @author unicroak
  */
-enum class WillSize(val memory: Int, val probability: Double, val prefix: LocalizedText, val renderingData: WillRenderingData) {
+enum class WillSize(val memory: Long, val probability: Double, val prefix: LocalizedText, val renderingData: WillRenderingData) {
 
     TINY(1, 0.2, WillMessages.PREFIX_TINY_WILL, WillRenderingData(0.1, 1, 2, 40)),
 

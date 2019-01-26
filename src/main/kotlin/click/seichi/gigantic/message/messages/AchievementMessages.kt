@@ -5,6 +5,7 @@ import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.quest.Quest
+import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import java.math.RoundingMode
 import java.util.*
@@ -88,12 +89,31 @@ object AchievementMessages {
             }
     ))
 
+    val UNLOCK_SPELL_SKY_WALK = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "補助魔法: スカイ・ウォーク を覚えた!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "パッシブ効果: プレイヤーの移動を補助する足場を生成!!\n" +
+                        "スニークやジャンプを上手く使おう!!\n"
+            }
+    ))
+
     val TELEPORT_PLAYER = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "プレイヤーテレポートが使えるようになった!!\n" +
                         "${ChatColor.GRAY}" +
                         "メニューからテレポート先を選択!!\n"
+            }
+    ))
+
+    val TELEPORT_HOME = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "好きな場所をテレポート先として登録できるようになった!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "テレポートメニューからホームを選択!!\n"
             }
     ))
 
@@ -135,6 +155,35 @@ object AchievementMessages {
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "剣を扱えるようになった!!"
+            }
+    ))
+
+    val WILL = { will: Will ->
+        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "" + will.chatColor +
+                            "${ChatColor.BOLD}" +
+                            will.getName(it) +
+                            "の意志 " +
+                            "${ChatColor.RESET}${ChatColor.YELLOW}" +
+                            "と交感できるようになった!!"
+                }
+        ))
+    }
+
+    val FIRST_WILL = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.GRAY}" +
+                        "ブロックを破壊すると，稀に意志が出現する!!\n" +
+                        "意志が出現したら近付いてエーテルを獲得してみよう!!\n" +
+                        "エーテルを100個集めたら，メニューにあるレリック生成器を使って\nレリックを獲得できるぞ!!"
+            }
+    ))
+
+    val FIRST_RELIC = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.GRAY}" +
+                        "メニューから手に入れたレリックを確認しよう!!"
             }
     ))
 

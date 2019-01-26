@@ -22,7 +22,6 @@ import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.util.NoiseData
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -38,11 +37,9 @@ import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
-import org.bukkit.potion.PotionEffect
-import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 import java.math.BigDecimal
-import java.math.RoundingMode
+import java.math.BigInteger
 
 
 /**
@@ -70,6 +67,14 @@ class PlayerListener : Listener {
         if (!PlayerCacheMemory.contains(player.uniqueId)) {
             return
         }
+        // 全ての設置ブロックを削除
+        player.getOrPut(Keys.SPELL_SKY_WALK_PLACE_BLOCKS).apply {
+            forEach {
+                it.type = Material.AIR
+            }
+            Gigantic.SKILLED_BLOCK_SET.removeAll(this)
+        }
+
         if (player.gameMode == GameMode.SPECTATOR) {
             player.getOrPut(Keys.AFK_LOCATION)?.let {
                 player.teleport(it)
@@ -104,26 +109,7 @@ class PlayerListener : Listener {
             it.updateMaxMana(player.level)
         }
 
-        // ここで実績を確認する．これ以前では実績を使ってはいけない
-        Achievement.update(player, isForced = true)
-
-        if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
-            PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
-
-        player.saturation = Float.MAX_VALUE
-        player.foodLevel = 20
-        // 4秒間無敵付与
-        player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,
-                80,
-                5,
-                false,
-                false
-        ))
-        // レベル表記を更新
-        player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(player.wrappedLevel).plus(player.name)
-        player.displayName = PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name)
-        player.playerListHeader = PlayerMessages.PLAYER_LIST_HEADER.asSafety(player.wrappedLocale)
-        player.playerListFooter = PlayerMessages.PLAYER_LIST_FOOTER.asSafety(player.wrappedLocale)
+        player.updateWillRelationship(true)
     }
 
     /**
@@ -219,14 +205,10 @@ class PlayerListener : Listener {
     @EventHandler
     fun onDeath(event: PlayerDeathEvent) {
         val player = event.entity ?: return
+        event.deathMessage = null
         event.keepInventory = true
         event.keepLevel = true
         player.offer(Keys.LAST_DEATH_CHUNK, player.location.chunk)
-        player.getOrPut(Keys.DEATH_MESSAGE)?.asSafety(player.wrappedLocale)?.let { deathMessage ->
-            event.deathMessage = "${ChatColor.RED}" + deathMessage
-        }
-        player.offer(Keys.DEATH_MESSAGE, null)
-
         if (Achievement.TELEPORT_LAST_DEATH.isGranted(player)) {
             DeathMessages.DEATH_TELEPORT.sendTo(player)
         }
@@ -238,12 +220,12 @@ class PlayerListener : Listener {
                 val maxPenalty = player.wrappedExp.minus(expToCurrentLevel)
 
                 val penaltyMineBlock = expToNextLevel.minus(expToCurrentLevel)
-                        .divide(100.toBigDecimal(), 10, RoundingMode.HALF_UP)
+                        .divide(100.toBigDecimal())
                         .times(Config.PLAYER_DEATH_PENALTY.toBigDecimal())
                         .coerceAtMost(maxPenalty)
 
                 it.add(penaltyMineBlock.times((-1).toBigDecimal()), ExpReason.DEATH_PENALTY)
-                if (penaltyMineBlock != BigDecimal.ZERO)
+                if (penaltyMineBlock.toBigInteger() != BigInteger.ZERO)
                     PlayerMessages.DEATH_PENALTY(penaltyMineBlock).sendTo(player)
             }
         }
@@ -258,7 +240,7 @@ class PlayerListener : Listener {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
             if (!player.isValid) return@scheduleSyncDelayedTask
             player.health = 6.0
-            player.updateBag()
+            player.updateDisplay(true, true)
         }, 1L)
     }
 
@@ -279,7 +261,9 @@ class PlayerListener : Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onPlaceBlock(event: BlockPlaceEvent) {
         val player = event.player ?: return
+        val block = event.block ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
+        if (block.type == Material.TORCH) return
         event.isCancelled = true
     }
 
@@ -331,7 +315,7 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         val block = event.block ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
-        if (!Gigantic.BROKEN_BLOCK_SET.contains(block)) return
+        if (!Gigantic.SKILLED_BLOCK_SET.contains(block)) return
         event.isCancelled = true
     }
 
@@ -352,8 +336,19 @@ class PlayerListener : Listener {
         val player = event.player ?: return
         val block = event.block ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
-        if (block.calcGravity() == 0) return
+        if (block.calcGravity() <= Config.MAX_BREAKABLE_GRAVITY) return
         PlayerMessages.NOT_BREAK_OVER_GRAVITY.sendTo(player)
+        event.isCancelled = true
+    }
+
+    // ｙ座標が0ならキャンセル
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    fun cancelFloorBlock(event: BlockBreakEvent) {
+        val player = event.player ?: return
+        val block = event.block ?: return
+        if (player.gameMode != GameMode.SURVIVAL) return
+        if (block.y != 0) return
+        PlayerMessages.FLOOR_BLOCK.sendTo(player)
         event.isCancelled = true
     }
 

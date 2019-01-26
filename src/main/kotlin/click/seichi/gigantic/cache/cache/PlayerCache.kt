@@ -75,10 +75,19 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.AUTO_SWITCH.let {
                 offer(it, it.read(entity))
             }
+            Keys.HOME_MAP.let {
+                offer(it, it.read(entity))
+            }
+            Keys.SPELL_SKY_WALK_TOGGLE.let {
+                offer(it, it.read(entity))
+            }
             Keys.EXP_MAP.forEach { reason, key ->
                 offer(key, key.read(entity))
             }
-            Keys.MEMORY_MAP.forEach { will, key ->
+            Keys.ETHEL_MAP.forEach { will, key ->
+                offer(key, key.read(entity))
+            }
+            Keys.WILL_SECRET_MAP.forEach { will, key ->
                 offer(key, key.read(entity))
             }
             Keys.APTITUDE_MAP.forEach { will, key ->
@@ -114,7 +123,6 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.EFFECT_BOUGHT_TIME_MAP.forEach { effect, key ->
                 offer(key, key.read(entity))
             }
-
         }
     }
 
@@ -157,10 +165,19 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.AUTO_SWITCH.let {
                 it.store(entity, getOrDefault(it))
             }
+            Keys.HOME_MAP.let {
+                it.store(entity, getOrDefault(it))
+            }
+            Keys.SPELL_SKY_WALK_TOGGLE.let {
+                it.store(entity, getOrDefault(it))
+            }
             Keys.EXP_MAP.forEach { reason, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.MEMORY_MAP.forEach { will, key ->
+            Keys.ETHEL_MAP.forEach { will, key ->
+                key.store(entity, getOrDefault(key))
+            }
+            Keys.WILL_SECRET_MAP.forEach { will, key ->
                 key.store(entity, getOrDefault(key))
             }
             Keys.APTITUDE_MAP.forEach { will, key ->

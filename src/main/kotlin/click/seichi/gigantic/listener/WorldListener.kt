@@ -23,10 +23,9 @@ class WorldListener : Listener {
         world.setSpawnFlags(false, false)
         world.pvp = false
         world.difficulty = Difficulty.NORMAL
-        world.time = 6000
         world.isAutoSave = true
         world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false)
-        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false)
+        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true)
         world.setGameRule(GameRule.DO_WEATHER_CYCLE, false)
         world.setGameRule(GameRule.SPECTATORS_GENERATE_CHUNKS, false)
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false)

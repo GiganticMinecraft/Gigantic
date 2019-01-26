@@ -89,4 +89,11 @@ object PlayerSounds {
             volume = 1.0F
     )
 
+    val REMOVE = DetailedSound(
+            Sound.BLOCK_SAND_BREAK,
+            SoundCategory.BLOCKS,
+            pitch = 0.6F,
+            volume = 1.0F
+    )
+
 }

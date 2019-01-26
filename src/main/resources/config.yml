@@ -95,6 +95,14 @@ spell:
     # 遅延エフェクトの遅延時間(秒)
     delay: 0.2
 
+  # 足場補助スキル
+  sky_walk:
+    # 1ブロック当たりのマナ消費量
+    mana_per_block: 0.1
+    # 半径
+    radius: 2
+
+
 # TRUEの時debug.ymlに従う
 # データベースの書き込みは行わない
 debug_mode: false

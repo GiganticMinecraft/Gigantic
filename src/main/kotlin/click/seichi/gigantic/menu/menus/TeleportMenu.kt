@@ -21,10 +21,12 @@ object TeleportMenu : Menu() {
     init {
         registerButton(0, TeleportButtons.TELEPORT_TO_RANDOM_CHUNK)
         registerButton(2, TeleportButtons.TELEPORT_TO_SPAWN)
-        registerButton(4, TeleportButtons.TELEPORT_TO_LAST_BREAK_CHUNK)
-        registerButton(10, TeleportButtons.TELEPORT_TO_PLAYER)
+        registerButton(4, TeleportButtons.TELEPORT_TO_PLAYER)
+        registerButton(6, TeleportButtons.TELEPORT_TO_HOME)
+        registerButton(8, TeleportButtons.TELEPORT_TOGGLE)
+
+        registerButton(10, TeleportButtons.TELEPORT_TO_LAST_BREAK_CHUNK)
         registerButton(12, TeleportButtons.TELEPORT_TO_DEATH_CHUNK)
-        registerButton(17, TeleportButtons.TELEPORT_TOGGLE)
     }
 
 }

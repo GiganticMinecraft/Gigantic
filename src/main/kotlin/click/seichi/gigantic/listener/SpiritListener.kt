@@ -15,7 +15,6 @@ class SpiritListener : Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onBlockBreak(event: BlockBreakEvent) {
-        if (event.isCancelled) return
         val player = event.player ?: return
         if (player.gameMode != GameMode.SURVIVAL) return
         event.summonSpirit()

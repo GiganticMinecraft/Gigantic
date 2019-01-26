@@ -8,12 +8,10 @@ import org.bukkit.inventory.ItemStack
  */
 object Defaults {
     const val MANA = 0
-    const val MAX_MANA = 100L
     const val MANA_BAR_NUM = 10
     const val MANA_CHAR = "★"
     const val MANA_LOST_CHAR = "☆"
     val ITEM = ItemStack(Material.AIR)
-    const val HEALTH = 100L
     const val TOOL_ID = 2
     const val BELT_ID = 1
     const val EFFECT_ID = 0
@@ -24,4 +22,27 @@ object Defaults {
     // Elytra Settings
     const val ELYTRA_BASE_SPEED = 0.05
     const val ELYTRA_BASE_LAUNCH = 3
+    // will Settings
+    const val WILL_BASIC_UNLOCK_AMOUNT = 1000
+    const val WILL_ADVANCED_UNLOCK_AMOUNT = 4000
+
+    // will spirit Settings
+    // 意志が消滅するまでの時間(ticks)
+    const val WILL_SPIRIT_DEATH_DURATION = 100L
+
+    // achievement Settings
+    // ブロック破壊による実績更新の間隔（ブロック数）
+    const val ACHIEVEMENT_BLOCK_BREAK_UPDATE_COUNT = 10
+
+    // レリック生成に必要なエーテル数
+    const val RELIC_GENERATOR_REQUIRE_ETHEL = 100
+
+    const val RELIC_MUL_DIFFX = 0.7
+    const val RELIC_MUL_BASE = 1.7
+
+    // ホームポイントの最大数
+    const val MAX_HOME = 5
+
+    // スカイウォークで設置されるブロック
+    val SKY_WALK_MATERIAL = Material.GLASS
 }

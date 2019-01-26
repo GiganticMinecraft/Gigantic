@@ -1,5 +1,7 @@
 package click.seichi.gigantic.message.messages.menu
 
+import click.seichi.gigantic.message.ChatMessage
+import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import org.bukkit.ChatColor
 import org.bukkit.World
@@ -11,12 +13,40 @@ import java.util.*
  */
 object TeleportMessages {
 
+    val CANT_TELEPORT = ChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(Locale.JAPANESE to "${ChatColor.RED}" +
+                    "テレポートできる場所がありません"))
+
     val TITLE = LocalizedText(
             Locale.JAPANESE to "テレポート先を選択"
     )
 
     val TELEPORT_TO_PLAYER = LocalizedText(
             Locale.JAPANESE to "プレイヤーを選択"
+    )
+
+    val TELEPORT_TO_HOME = LocalizedText(
+            Locale.JAPANESE to "ホームを選択"
+    )
+
+    val REGISTER_HOME = LocalizedText(
+            Locale.JAPANESE to "ホームを登録する"
+    )
+
+    val CLICK_TO_TELEPORT_HOME = LocalizedText(
+            Locale.JAPANESE to "クリックしてテレポート"
+    )
+
+    val CHANGE_NAME_LORE = LocalizedText(
+            Locale.JAPANESE to "で名前を変更可能"
+    )
+
+    val HOME_DELETE_LORE = LocalizedText(
+            Locale.JAPANESE to "右クリック2回で削除"
+    )
+
+    val HOME_DELETE = LocalizedText(
+            Locale.JAPANESE to "もう一度右クリックで削除"
     )
 
     val TELEPORT_TO_RANDOM_CHUNK = LocalizedText(

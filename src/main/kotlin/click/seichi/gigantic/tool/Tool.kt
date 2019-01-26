@@ -21,7 +21,7 @@ enum class Tool(
     PICKEL(1, HandItems.PICKEL),
     SHOVEL(2, HandItems.SHOVEL),
     AXE(3, HandItems.AXE),
-    SWORD(4, HandItems.SWORD)
+    //SWORD(4, HandItems.SWORD)
     ;
 
     companion object {
@@ -97,7 +97,17 @@ enum class Tool(
                 Material.INFESTED_STONE,
                 Material.INFESTED_STONE_BRICKS,
                 Material.COBBLESTONE,
-                Material.GRANITE -> Tool.PICKEL
+                Material.GRANITE,
+                Material.TUBE_CORAL_BLOCK,
+                Material.HORN_CORAL_BLOCK,
+                Material.FIRE_CORAL_BLOCK,
+                Material.BUBBLE_CORAL_BLOCK,
+                Material.BRAIN_CORAL_BLOCK,
+                Material.DEAD_TUBE_CORAL_BLOCK,
+                Material.DEAD_HORN_CORAL_BLOCK,
+                Material.DEAD_FIRE_CORAL_BLOCK,
+                Material.DEAD_BUBBLE_CORAL_BLOCK,
+                Material.DEAD_BRAIN_CORAL_BLOCK -> Tool.PICKEL
 
                 Material.RED_SAND,
                 Material.DIRT,
@@ -107,7 +117,8 @@ enum class Tool(
                 Material.GRAVEL,
                 Material.CLAY,
                 Material.COARSE_DIRT,
-                Material.PODZOL -> Tool.SHOVEL
+                Material.PODZOL,
+                Material.SNOW_BLOCK -> Tool.SHOVEL
 
                 Material.BIRCH_LOG,
                 Material.ACACIA_LOG,

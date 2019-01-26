@@ -6,8 +6,10 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
+import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.relic.WillRelic
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
@@ -32,7 +34,7 @@ class Apostol : Miner(), SpellCaster {
 
         fun calcBreakBlockSet(player: Player, base: Block): Set<Block> {
             // プレイヤーの向いている方向を取得
-            val breakFace = player.calcBreakFace()
+            val breakFace = player.calcFace()
             // プレイヤーが選択している破壊範囲を取得
             val breakArea = player.getOrPut(Keys.SPELL_APOSTOL_BREAK_AREA)
 
@@ -59,12 +61,18 @@ class Apostol : Miner(), SpellCaster {
                             (1..(breakArea.height - 2)).forEach {
                                 columnBlockSet.add(base.getRelative(BlockFace.UP, it))
                             }
+                            // スニークしていないかつbaseの高さがプレイヤーより1ブロック低い時
+                            if (!player.isSneaking && player.location.blockY == base.y) {
+                                columnBlockSet.add(base.getRelative(BlockFace.UP, breakArea.height - 1))
+                            }
                         }
 
                         // 下は1ブロック
                         if (breakArea.height > 1) {
                             columnBlockSet.add(base.getRelative(BlockFace.DOWN))
                         }
+
+
                     }
 
                     // プレイヤーの正面に当たるブロックセット
@@ -91,7 +99,7 @@ class Apostol : Miner(), SpellCaster {
                 }
                 BlockFace.UP, BlockFace.DOWN -> {
 
-                    val rotFace = player.calcBreakFace(true)
+                    val rotFace = player.calcFace(true)
 
                     // breakFaceの上下左右方向にブロックを取得，その後breakFace方向に高さだけブロックを取得
                     // 上下ブロック
@@ -137,8 +145,11 @@ class Apostol : Miner(), SpellCaster {
                 // 場所の制約
                 !it.isSpawnArea
             }.filter {
+                // 高さの制約
+                it.y > 0
+            }.filter {
                 // 重力値の制約
-                it.calcGravity() == 0
+                it.calcGravity() <= Config.MAX_BREAKABLE_GRAVITY
             }.toMutableSet().apply {
                 // 場所の制約
                 if (!player.isSneaking) {
@@ -155,7 +166,8 @@ class Apostol : Miner(), SpellCaster {
                 // 先にブロックを変換
                 forEach {
                     it.changeBedrock()
-                    it.condenseLiquid(false, true)
+                    it.changeCrustBlock()
+                    it.condenseLiquid(false)
                 }
             }.filter {
                 // 種類の制約
@@ -173,13 +185,23 @@ class Apostol : Miner(), SpellCaster {
         // onBreak処理（先にやっておくことで，途中でサーバーが終了したときに対応）
         // すべてのエフェクトの実行速度に影響を与えないようにする．
 
-        player.manipulate(CatalogPlayerCache.MANA) {
-            it.decrease(calcConsumeMana(player, breakBlockSet))
+        if (!Config.DEBUG_MODE || !DebugConfig.SPELL_INFINITY) {
+            player.manipulate(CatalogPlayerCache.MANA) {
+                it.decrease(calcConsumeMana(player, breakBlockSet))
+            }
+        }
+
+        val bonus = breakBlockSet.fold(0.0) { source, b ->
+            source.plus(WillRelic.calcMultiplier(player, b))
         }
 
         player.manipulate(CatalogPlayerCache.EXP) {
             it.add(breakBlockSet.size.toBigDecimal(), ExpReason.SPELL_APOSTOL)
+            it.add(bonus.toBigDecimal(), reason = ExpReason.RELIC_BONUS)
         }
+
+        player.transform(Keys.BREAK_COUNT) { it + breakBlockSet.size }
+        player.transform(Keys.RELIC_BONUS) { it + bonus }
 
         PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 

@@ -36,9 +36,16 @@ commands:
     permission: gigantic.reply
     permission-message: You don't have <permission>
   live:
-    description: This is reply command.
+    description: This is live command.
     usage: /live <on/off>
     aliases: [l,live]
     default: op
     permission: gigantic.live
+    permission-message: You don't have <permission>
+  home:
+    description: This is home command.
+    usage: /home <id> <name>
+    aliases: [home,h]
+    default: default
+    permission: gigantic.home
     permission-message: You don't have <permission>

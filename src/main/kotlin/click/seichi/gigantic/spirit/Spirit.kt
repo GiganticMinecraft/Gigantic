@@ -5,11 +5,12 @@ import org.bukkit.Chunk
 
 /**
  * @author unicroak
+ * @author tar0ss
  */
 abstract class Spirit(val spawnReason: SpawnReason, val spawnChunk: Chunk) {
 
     val lifeExpectancy
-        get() = if (lifespan == -1) Int.MAX_VALUE else lifespan - count
+        get() = lifespan - count
 
     val isAlive
         get() = isSummoned && 0 < lifeExpectancy
@@ -17,24 +18,19 @@ abstract class Spirit(val spawnReason: SpawnReason, val spawnChunk: Chunk) {
     var isSummoned = false
         private set
 
-    private var count = 0
+    private var count = 0L
 
-    /**
-     *  ticks
-     *  if lifespan = -1 infinity
-     **/
-    abstract val lifespan: Int
+    // ticks
+    abstract val lifespan: Long
     abstract val spiritType: SpiritType
 
     fun render() {
+        count++
         if (!isAlive) {
             remove()
             return
         }
-        if (spawnChunk.isLoaded)
-            onRender()
-
-        count++
+        onRender()
     }
 
     fun spawn() {

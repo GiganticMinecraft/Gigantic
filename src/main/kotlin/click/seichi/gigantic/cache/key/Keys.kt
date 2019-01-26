@@ -8,24 +8,31 @@ import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.breaker.BreakArea
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.manipulator.ExpReason
+import click.seichi.gigantic.config.Config
+import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.database.UserEntity
 import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.database.dao.UserFollow
+import click.seichi.gigantic.database.dao.UserHome
 import click.seichi.gigantic.database.table.UserFollowTable
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.menu.RefineItem
-import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.DonateTicket
+import click.seichi.gigantic.player.Home
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
+import click.seichi.gigantic.relic.WillRelic
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
 import click.seichi.gigantic.timer.LingeringTimer
 import click.seichi.gigantic.timer.SimpleTimer
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.will.WillRelationship
+import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.block.Block
@@ -136,7 +143,7 @@ object Keys {
             }
             .toMap()
 
-    val MEMORY_MAP: Map<Will, DatabaseKey<PlayerCache, Long>> = Will.values()
+    val ETHEL_MAP: Map<Will, DatabaseKey<PlayerCache, Long>> = Will.values()
             .map {
                 it to object : DatabaseKey<PlayerCache, Long> {
                     override val default: Long
@@ -144,12 +151,37 @@ object Keys {
 
                     override fun read(entity: UserEntity): Long {
                         val userWill = entity.userWillMap[it]!!
-                        return userWill.memory
+
+                        return if (Config.DEBUG_MODE && DebugConfig.WILL_SPIRIT) 1000 else userWill.ethel
                     }
 
                     override fun store(entity: UserEntity, value: Long) {
                         val userWill = entity.userWillMap[it]!!
-                        userWill.memory = value
+                        userWill.ethel = value
+                    }
+
+                    override fun satisfyWith(value: Long): Boolean {
+                        return value >= 0L
+                    }
+
+                }
+            }
+            .toMap()
+
+    val WILL_SECRET_MAP: Map<Will, DatabaseKey<PlayerCache, Long>> = Will.values()
+            .map {
+                it to object : DatabaseKey<PlayerCache, Long> {
+                    override val default: Long
+                        get() = 0L
+
+                    override fun read(entity: UserEntity): Long {
+                        val userWill = entity.userWillMap[it]!!
+                        return userWill.secretAmount
+                    }
+
+                    override fun store(entity: UserEntity, value: Long) {
+                        val userWill = entity.userWillMap[it]!!
+                        userWill.secretAmount = value
                     }
 
                     override fun satisfyWith(value: Long): Boolean {
@@ -402,16 +434,6 @@ object Keys {
             }
             .toMap()
 
-    val DEATH_MESSAGE = object : Key<PlayerCache, LocalizedText?> {
-        override val default: LocalizedText?
-            get() = null
-
-        override fun satisfyWith(value: LocalizedText?): Boolean {
-            return true
-        }
-
-    }
-
     val BREAK_BLOCK = object : Key<PlayerCache, Block?> {
         override val default: Block?
             get() = null
@@ -494,7 +516,7 @@ object Keys {
         }
     }
 
-    val PLAYER_LIST = object : Key<PlayerCache, List<Player>> {
+    val MENU_PLAYER_LIST = object : Key<PlayerCache, List<Player>> {
         override val default: List<Player>
             get() = listOf()
 
@@ -923,6 +945,137 @@ object Keys {
         override fun store(entity: UserEntity, value: Boolean) {
             val user = entity.user
             user.autoSwitch = value
+        }
+
+        override fun satisfyWith(value: Boolean): Boolean {
+            return true
+        }
+    }
+
+    val UPDATE_COUNT = object : Key<PlayerCache, Int> {
+        override val default: Int
+            get() = 0
+
+        override fun satisfyWith(value: Int): Boolean {
+            return true
+        }
+    }
+
+    val SELECTED_WILL = object : Key<PlayerCache, Will?> {
+        override val default: Will?
+            get() = null
+
+        override fun satisfyWith(value: Will?): Boolean {
+            return true
+        }
+    }
+
+    val GENERETED_WILL_RELIC = object : Key<PlayerCache, WillRelic?> {
+        override val default: WillRelic?
+            get() = null
+
+        override fun satisfyWith(value: WillRelic?): Boolean {
+            return true
+        }
+    }
+
+    val BREAK_COUNT = object : Key<PlayerCache, Int> {
+        override val default: Int
+            get() = 0
+
+        override fun satisfyWith(value: Int): Boolean {
+            return true
+        }
+    }
+
+    val RELIC_BONUS = object : Key<PlayerCache, Double> {
+        override val default: Double
+            get() = 0.0
+
+        override fun satisfyWith(value: Double): Boolean {
+            return true
+        }
+    }
+
+    val WILL_RELATIONSHIP_MAP: Map<Will, Key<PlayerCache, WillRelationship>> = Will.values().map { will ->
+        will to
+                object : Key<PlayerCache, WillRelationship> {
+                    override val default: WillRelationship
+                        get() = WillRelationship.FRESH
+
+                    override fun satisfyWith(value: WillRelationship): Boolean {
+                        return true
+                    }
+                }
+    }.toMap()
+
+    val SERVER_NAME = object : Key<PlayerCache, String?> {
+        override val default: String?
+            get() = null
+
+        override fun satisfyWith(value: String?): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("サーバーネームの書き換えは禁止されています")
+            return false
+        }
+    }
+
+    val HOME_MAP = object : DatabaseKey<PlayerCache, Map<Int, Home>> {
+        override val default: Map<Int, Home>
+            get() = mapOf()
+
+        override fun read(entity: UserEntity): Map<Int, Home> {
+            val userHomeList = entity.userHomeList
+            return userHomeList.map {
+                it.homeId to Home(
+                        it.homeId,
+                        Location(Bukkit.getWorld(it.worldId), it.x, it.y, it.z),
+                        it.name
+                )
+            }.toMap()
+        }
+
+        override fun store(entity: UserEntity, value: Map<Int, Home>) {
+            value.forEach { homeId, home ->
+                UserHome.new {
+                    this.user = entity.user
+                    this.homeId = homeId
+                    this.worldId = home.location.world.uid
+                    this.x = home.location.x
+                    this.y = home.location.y
+                    this.z = home.location.z
+                    this.name = home.name
+                }
+            }
+        }
+
+        override fun satisfyWith(value: Map<Int, Home>): Boolean {
+            return true
+        }
+    }
+
+
+    val SPELL_SKY_WALK_PLACE_BLOCKS = object : Key<PlayerCache, Set<Block>> {
+        override val default: Set<Block>
+            get() = setOf()
+
+        override fun satisfyWith(value: Set<Block>): Boolean {
+            return true
+        }
+    }
+
+    val SPELL_SKY_WALK_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
+        override val default: Boolean
+            get() = false
+
+        override fun read(entity: UserEntity): Boolean {
+            val user = entity.user
+            return user.skyWalkToggle
+        }
+
+        override fun store(entity: UserEntity, value: Boolean) {
+            val user = entity.user
+            user.skyWalkToggle = value
         }
 
         override fun satisfyWith(value: Boolean): Boolean {

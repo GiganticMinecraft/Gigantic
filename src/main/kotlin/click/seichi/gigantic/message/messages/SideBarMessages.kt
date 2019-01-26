@@ -1,7 +1,7 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.extension.ethel
 import click.seichi.gigantic.extension.hasAptitude
-import click.seichi.gigantic.extension.memory
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.SideBarMessage
 import click.seichi.gigantic.util.SideBarRow
@@ -18,20 +18,26 @@ object SideBarMessages {
     val MEMORY_SIDEBAR = { player: Player, isForced: Boolean ->
         val willMap = Will.values()
                 .filter { player.hasAptitude(it) }
-                .map { it to player.memory(it) }.toMap()
+                .map { it to player.ethel(it) }.toMap()
         SideBarMessage(
-                "memory",
+                "ethel",
                 LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.DARK_GREEN}" +
-                                "遺志の記憶"
+                        Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.BOLD}" +
+                                "エーテル"
                 ),
-                willMap.keys.map { will ->
+                willMap.keys.filter {
+                    willMap.getValue(it) > 0
+                }.map { will ->
                     SideBarRow.getRowById(will.id) to LocalizedText(
-                            Locale.JAPANESE.let {
-                                it to "${ChatColor.GREEN}" +
-                                        "${will.localizedName.asSafety(it)} : " +
-                                        "${ChatColor.RESET}${ChatColor.WHITE}" +
-                                        "${willMap[will] ?: 0}個${ChatColor.RESET}"
+                            Locale.JAPANESE.let { locale ->
+                                locale to "${will.chatColor}${ChatColor.BOLD}" +
+                                        "${will.getName(locale).let {
+                                            if (it.length == 2) it
+                                            else " $it "
+                                        }}:" +
+                                        "${ChatColor.RESET}" +
+                                        "${will.chatColor}" +
+                                        "${willMap.getValue(will).coerceAtMost(999)}".padStart(4, ' ')
                             }
                     )
                 }.toMap()

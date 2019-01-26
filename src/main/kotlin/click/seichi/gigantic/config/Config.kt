@@ -49,4 +49,8 @@ object Config : SimpleConfiguration("config") {
 
     val SPELL_APOSTOL_DELAY by lazy { getDouble("spell.apostol.delay") }
 
+    val SPELL_SKY_WALK_MANA_PER_BLOCK by lazy { getDouble("spell.sky_walk.mana_per_block") }
+
+    val SPELL_SKY_WALK_RADIUS by lazy { getInt("spell.sky_walk.radius") }
+
 }

@@ -14,7 +14,7 @@ import kotlin.random.asKotlinRandom
  */
 internal object Random {
 
-    private val generator = java.util.Random()
+    val generator = java.util.Random()
 
     fun nextBoolean() = generator.nextBoolean()
 
