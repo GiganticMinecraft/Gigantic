@@ -38,14 +38,14 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
 
     override fun from(cache: Cache<PlayerCache>): MineCombo? {
         maxCombo = cache.getOrPut(Keys.MAX_COMBO)
-        currentCombo = cache.getOrPut(Keys.MINE_COMBO)
+        currentCombo = cache.getOrPut(Keys.COMBO)
         lastComboTime = cache.getOrPut(Keys.LAST_COMBO_TIME)
         return this
     }
 
     override fun set(cache: Cache<PlayerCache>): Boolean {
         cache.offer(Keys.MAX_COMBO, maxCombo)
-        cache.offer(Keys.MINE_COMBO, currentCombo)
+        cache.offer(Keys.COMBO, currentCombo)
         cache.offer(Keys.LAST_COMBO_TIME, lastComboTime)
         return true
     }

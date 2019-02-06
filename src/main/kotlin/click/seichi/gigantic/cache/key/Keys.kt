@@ -662,7 +662,7 @@ object Keys {
 
     }
 
-    val MINE_COMBO = object : DatabaseKey<PlayerCache, Long> {
+    val COMBO = object : DatabaseKey<PlayerCache, Long> {
         override val default: Long
             get() = 0L
 

@@ -77,7 +77,7 @@ val Player.maxMana: BigDecimal
     get() = getOrPut(Keys.MAX_MANA)
 
 val Player.combo: Long
-    get() = getOrPut(Keys.MINE_COMBO)
+    get() = getOrPut(Keys.COMBO)
 
 val Player.maxCombo: Long
     get() = getOrPut(Keys.MAX_COMBO)
