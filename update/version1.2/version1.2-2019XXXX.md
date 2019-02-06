@@ -16,6 +16,7 @@
 :diamond_shape_with_a_dot_inside: スキル「ジャンプ」がスキルメニューになかった不具合  
 :diamond_shape_with_a_dot_inside: 休憩中にホームポイントを設定できてしまう不具合  
 :diamond_shape_with_a_dot_inside: 菌糸ブロックがツール切り替えに対応していなかった不具合  
+:diamond_shape_with_a_dot_inside: 一定条件下で魔法「スカイウォーク」の切り替えが出来なくなる不具合  
 
 
 

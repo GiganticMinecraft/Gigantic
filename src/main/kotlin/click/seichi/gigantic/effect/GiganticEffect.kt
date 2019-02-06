@@ -80,7 +80,7 @@ enum class GiganticEffect(
     ),
     MAGIC(
             3,
-            3 + 9,
+            4 + 9,
             Head.RAINBOW_WOOL.toItemStack(),
             Currency.DONATE_POINT,
             50,
@@ -102,7 +102,7 @@ enum class GiganticEffect(
     ),
     WITCH_SCENT(
             5,
-            2 + 9,
+            3 + 9,
             ItemStack(Material.ENDER_PEARL),
             Currency.DONATE_POINT,
             30,
@@ -132,16 +132,16 @@ enum class GiganticEffect(
             EffectMessages.BUBBLE_LORE,
             multiEffector = MultiBreakEffectors.BUBBLE
     ),
-//    ALCHEMIA(
-//    8,
-//    4 + 9,
-//    ItemStack(Material.REDSTONE),
-//    Currency.DONATE_POINT,
-//    20,
-//    EffectMessages.ALCHEMIA,
-//    EffectMessages.ALCHEMIA_LORE,
-//    multiEffector = MultiBreakEffectors.ALCHEMIA
-//    ),
+    ALCHEMIA(
+            8,
+            2 + 9,
+            ItemStack(Material.REDSTONE),
+            Currency.DONATE_POINT,
+            20,
+            EffectMessages.ALCHEMIA,
+            EffectMessages.ALCHEMIA_LORE,
+            multiEffector = MultiBreakEffectors.ALCHEMIA
+    ),
 
     ;
 

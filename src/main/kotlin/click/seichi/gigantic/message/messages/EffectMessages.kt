@@ -14,7 +14,7 @@ object EffectMessages {
     val ALCHEMIA = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GREEN}" +
                     "${ChatColor.BOLD}" +
-                    "錬金"
+                    "アルケミア"
     )
 
     val ALCHEMIA_LORE = setOf(

@@ -178,10 +178,10 @@ object MultiBreakEffectors {
     val ALCHEMIA = object : MultiBreakEffector {
 
         private val alchemySet = setOf(
-                Material.IRON_BLOCK,
-                Material.GOLD_BLOCK,
-                Material.DIAMOND_BLOCK,
-                Material.EMERALD_BLOCK
+                Material.GOLD_ORE,
+                Material.DIAMOND_ORE,
+                Material.LAPIS_ORE,
+                Material.REDSTONE_ORE
         )
 
         fun randomMaterial() = alchemySet.random()
@@ -191,15 +191,22 @@ object MultiBreakEffectors {
             breakBlockSet.forEach { target ->
                 target.type = randomMaterial()
             }
+            // ブロックのtypeを取得するために1tick早めに処理
+            object : BukkitRunnable() {
+                override fun run() {
+                    breakBlockSet.forEach { target ->
+                        MultiBreakAnimations.ALCHEMIA.start(target.centralLocation)
+                    }
+                }
+            }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong().minus(1))
+
             object : BukkitRunnable() {
                 override fun run() {
                     Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
                     breakBlockSet.forEach { target ->
                         target.type = Material.AIR
                     }
-                    breakBlockSet.forEach { target ->
-                        MultiBreakAnimations.ALCHEMIA.start(target.centralLocation)
-                    }
+                    EffectSounds.ALCHEMIA.play(base.centralLocation)
                     base.update(breakBlockSet)
                 }
             }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
