@@ -174,4 +174,13 @@ object Skills {
 
     }
 
+    /**
+     * 参照:[click.seichi.gigantic.listenerElytraListener]
+     */
+    val JUMP = object : Invokable {
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            return null
+        }
+    }
+
 }

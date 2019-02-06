@@ -79,10 +79,10 @@ object AchievementMessages {
             }
     ))
 
-    val UNLOCK_SPELL_APOSTOLUS = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_SPELL_MULTI_BREAK = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "破壊魔法: アポストル を覚えた!!\n" +
+                        "破壊魔法: マルチ・ブレイク を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "アクティブ効果: ブロック破壊時に，周囲のブロックも同時に破壊する!!\n" +
                         "通常破壊時に発動する\n"

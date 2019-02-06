@@ -30,14 +30,14 @@ enum class Spell(
             Achievement.SPELL_STELLA_CLAIR,
             Spells.STELLA_CLAIR
     ),
-    APOSTOL(
+    MULTI_BREAK(
             1,
             1,
             ItemStack(Material.FIRE_CHARGE),
-            SpellMessages.APOSTOL,
-            SpellMessages.APOSTOL_LORE,
-            Achievement.SPELL_APOSTOL,
-            Spells.APOSTOL
+            SpellMessages.MULTI_BREAK,
+            SpellMessages.MULTI_BREAK_LORE,
+            Achievement.SPELL_MULTI_BREAK,
+            Spells.MULTI_BREAK
     ),
     SKY_WALK(
             2,

@@ -7,7 +7,7 @@ import org.bukkit.Particle
 /**
  * @author tar0ss
  */
-object ApostolAnimations {
+object MultiBreakAnimations {
 
     val EXPLOSION = Animation(0) { location, _ ->
         location.world.spawnParticle(Particle.EXPLOSION_NORMAL, location, 1)

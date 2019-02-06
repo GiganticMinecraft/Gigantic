@@ -6,7 +6,7 @@ import org.bukkit.entity.Player
 /**
  * @author tar0ss
  */
-interface ApostolEffector {
+interface MultiBreakEffector {
 
-    fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>)
+    fun multiBreak(player: Player, base: Block, breakBlockSet: Set<Block>)
 }

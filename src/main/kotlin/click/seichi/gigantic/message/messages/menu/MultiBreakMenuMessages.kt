@@ -9,10 +9,10 @@ import java.util.*
 /**
  * @author tar0ss
  */
-object ApostolMenuMessages {
+object MultiBreakMenuMessages {
 
     val TITLE = LocalizedText(
-            Locale.JAPANESE to "アポストル詳細設定"
+            Locale.JAPANESE to "マルチ・ブレイク詳細設定"
     )
 
     val CURRENT_AREA = LocalizedText(
@@ -44,7 +44,7 @@ object ApostolMenuMessages {
     val LIMIT_SIZE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "各パラメーターは " +
-                    "${ChatColor.RED}${ChatColor.BOLD}" + Config.SPELL_APOSTOL_LIMIT_SIZE +
+                    "${ChatColor.RED}${ChatColor.BOLD}" + Config.SPELL_MULTI_BREAK_LIMIT_SIZE +
                     " ${ChatColor.RESET}${ChatColor.YELLOW}" +
                     "より小さくしよう"
     )

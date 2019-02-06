@@ -2,7 +2,7 @@ package click.seichi.gigantic.player.spell
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.SpellAnimations
-import click.seichi.gigantic.breaker.spells.Apostol
+import click.seichi.gigantic.breaker.spells.MultiBreaker
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
@@ -57,17 +57,17 @@ object Spells {
         }
     }
 
-    val APOSTOL = object : Invokable {
+    val MULTI_BREAK = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
             if (!player.hasMana(BigDecimal.ZERO)) return null
-            if (player.getOrPut(Keys.SPELL_APOSTOL_BREAK_AREA).calcBreakNum() <= 1) return null
+            if (player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA).calcBreakNum() <= 1) return null
             val base = player.getOrPut(Keys.BREAK_BLOCK) ?: return null
-            val breakBlockSet = Apostol.calcBreakBlockSet(player, base)
+            val breakBlockSet = MultiBreaker.calcBreakBlockSet(player, base)
             if (breakBlockSet.isEmpty()) return null
-            player.offer(Keys.SPELL_APOSTOL_BREAK_BLOCKS, breakBlockSet)
+            player.offer(Keys.SPELL_MULTI_BREAK_BLOCKS, breakBlockSet)
             return Consumer { p ->
                 val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
-                Apostol().cast(p, b)
+                MultiBreaker().cast(p, b)
             }
         }
     }

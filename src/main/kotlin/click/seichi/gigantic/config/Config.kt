@@ -43,11 +43,11 @@ object Config : SimpleConfiguration("config") {
 
     val SPELL_STELLA_CLAIR_PROBABILITY by lazy { getDouble("spell.stella_clair.probability") }
 
-    val SPELL_APOSTOL_MANA_PER_BLOCK by lazy { getDouble("spell.apostol.mana_per_block") }
+    val SPELL_MULTI_BREAK_MANA_PER_BLOCK by lazy { getDouble("spell.multi_break.mana_per_block") }
 
-    val SPELL_APOSTOL_LIMIT_SIZE by lazy { getInt("spell.apostol.limit_size") }
+    val SPELL_MULTI_BREAK_LIMIT_SIZE by lazy { getInt("spell.multi_break.limit_size") }
 
-    val SPELL_APOSTOL_DELAY by lazy { getDouble("spell.apostol.delay") }
+    val SPELL_MULTI_BREAK_DELAY by lazy { getDouble("spell.multi_break.delay") }
 
     val SPELL_SKY_WALK_MANA_PER_BLOCK by lazy { getDouble("spell.sky_walk.mana_per_block") }
 

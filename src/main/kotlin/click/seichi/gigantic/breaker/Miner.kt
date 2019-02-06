@@ -63,12 +63,12 @@ open class Miner : Breaker {
             }
         }
         // 破壊系
-        var isCastApostol = false
+        var isCastMultiBreak = false
         when {
             !player.getOrPut(Keys.SPELL_TOGGLE) -> {
             }
-            Spell.APOSTOL.tryCast(player) -> {
-                isCastApostol = true
+            Spell.MULTI_BREAK.tryCast(player) -> {
+                isCastMultiBreak = true
             }
         }
 
@@ -86,7 +86,7 @@ open class Miner : Breaker {
                     SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
                 }
                 // TODO 音があるかないかで判断すること
-                isCastApostol && effect != GiganticEffect.DEFAULT -> {
+                isCastMultiBreak && effect != GiganticEffect.DEFAULT -> {
                 }
                 else -> PlayerSounds.OBTAIN_EXP(player.combo).playOnly(player)
             }

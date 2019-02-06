@@ -595,7 +595,7 @@ object Keys {
     /**
      * 破壊スキルの破壊範囲
      */
-    val SPELL_APOSTOL_BREAK_AREA = object : DatabaseKey<PlayerCache, BreakArea> {
+    val SPELL_MULTI_BREAK_AREA = object : DatabaseKey<PlayerCache, BreakArea> {
 
         override val default: BreakArea
             get() = BreakArea(1, 1, 1)
@@ -603,18 +603,18 @@ object Keys {
         override fun read(entity: UserEntity): BreakArea {
             val user = entity.user
             return BreakArea(
-                    user.apostolWidth,
-                    user.apostolHeight,
-                    user.apostolDepth
+                    user.multiBreakWidth,
+                    user.multiBreakHeight,
+                    user.multiBreakDepth
             )
         }
 
         override fun store(entity: UserEntity, value: BreakArea) {
             val user = entity.user
             user.run {
-                apostolWidth = value.width
-                apostolHeight = value.height
-                apostolDepth = value.depth
+                multiBreakWidth = value.width
+                multiBreakHeight = value.height
+                multiBreakDepth = value.depth
             }
         }
 
@@ -836,7 +836,7 @@ object Keys {
         }
     }
 
-    val SPELL_APOSTOL_BREAK_BLOCKS = object : Key<PlayerCache, Set<Block>> {
+    val SPELL_MULTI_BREAK_BLOCKS = object : Key<PlayerCache, Set<Block>> {
         override val default: Set<Block>
             get() = setOf()
 

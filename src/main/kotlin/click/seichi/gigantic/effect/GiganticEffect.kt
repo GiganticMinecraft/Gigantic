@@ -4,10 +4,10 @@ import click.seichi.gigantic.Currency
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
-import click.seichi.gigantic.effect.effector.ApostolEffector
 import click.seichi.gigantic.effect.effector.GeneralBreakEffector
-import click.seichi.gigantic.effect.effectors.ApostolEffectors
+import click.seichi.gigantic.effect.effector.MultiBreakEffector
 import click.seichi.gigantic.effect.effectors.GeneralBreakEffectors
+import click.seichi.gigantic.effect.effectors.MultiBreakEffectors
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.head.Head
@@ -39,8 +39,8 @@ enum class GiganticEffect(
         private val localizedLore: Set<LocalizedText>,
         // 通常破壊のエフェクト
         private val generalEffector: GeneralBreakEffector? = null,
-        //        // Apostolのエフェクト
-        private val apostolEffector: ApostolEffector? = null
+        // マルチブレイクのエフェクト
+        private val multiEffector: MultiBreakEffector? = null
 ) {
     DEFAULT(
             0,
@@ -53,7 +53,7 @@ enum class GiganticEffect(
             EffectMessages.DEFAULT,
             EffectMessages.DEFAULT_LORE,
             GeneralBreakEffectors.DEFAULT,
-            ApostolEffectors.DEFAULT
+            MultiBreakEffectors.DEFAULT
 
     ),
     EXPLOSION(
@@ -65,7 +65,7 @@ enum class GiganticEffect(
             EffectMessages.EXPLOSION,
             EffectMessages.EXPLOSION_LORE,
             GeneralBreakEffectors.EXPLOSION,
-            ApostolEffectors.EXPLOSION
+            MultiBreakEffectors.EXPLOSION
     ),
     BLIZZARD(
             2,
@@ -76,7 +76,7 @@ enum class GiganticEffect(
             EffectMessages.BLIZZARD,
             EffectMessages.BLIZZARD_LORE,
             generalEffector = GeneralBreakEffectors.BLIZZARD,
-            apostolEffector = ApostolEffectors.BLIZZARD
+            multiEffector = MultiBreakEffectors.BLIZZARD
     ),
     MAGIC(
             3,
@@ -87,7 +87,7 @@ enum class GiganticEffect(
             EffectMessages.MAGIC,
             EffectMessages.MAGIC_LORE,
             generalEffector = GeneralBreakEffectors.MAGIC,
-            apostolEffector = ApostolEffectors.MAGIC
+            multiEffector = MultiBreakEffectors.MAGIC
     ),
     FLAME(
             4,
@@ -98,7 +98,7 @@ enum class GiganticEffect(
             EffectMessages.FLAME,
             EffectMessages.FLAME_LORE,
             generalEffector = GeneralBreakEffectors.FLAME,
-            apostolEffector = ApostolEffectors.FLAME
+            multiEffector = MultiBreakEffectors.FLAME
     ),
     WITCH_SCENT(
             5,
@@ -109,7 +109,7 @@ enum class GiganticEffect(
             EffectMessages.WITCH_SCENT,
             EffectMessages.WITCH_SCENT_LORE,
             generalEffector = GeneralBreakEffectors.WITCH_SCENT,
-            apostolEffector = ApostolEffectors.WITCH_SCENT
+            multiEffector = MultiBreakEffectors.WITCH_SCENT
     ),
     SLIME(
             6,
@@ -120,7 +120,7 @@ enum class GiganticEffect(
             EffectMessages.SLIME,
             EffectMessages.SLIME_LORE,
             generalEffector = GeneralBreakEffectors.SLIME,
-            apostolEffector = ApostolEffectors.SLIME
+            multiEffector = MultiBreakEffectors.SLIME
     ),
     BUBBLE(
             7,
@@ -130,7 +130,7 @@ enum class GiganticEffect(
             10,
             EffectMessages.BUBBLE,
             EffectMessages.BUBBLE_LORE,
-            apostolEffector = ApostolEffectors.BUBBLE
+            multiEffector = MultiBreakEffectors.BUBBLE
     )
 
     ;
@@ -142,14 +142,14 @@ enum class GiganticEffect(
 
     val hasGeneralBreakEffect = generalEffector != null
 
-    val hasApostolEffect = apostolEffector != null
+    val hasMultiBreakEffect = multiEffector != null
 
     fun generalBreak(player: Player, block: Block) {
         (generalEffector ?: DEFAULT.generalEffector)!!.generalBreak(player, block)
     }
 
-    fun apostolBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-        (apostolEffector ?: DEFAULT.apostolEffector)!!.apostolBreak(player, base, breakBlockSet)
+    fun multiBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
+        (multiEffector ?: DEFAULT.multiEffector)!!.multiBreak(player, base, breakBlockSet)
     }
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)

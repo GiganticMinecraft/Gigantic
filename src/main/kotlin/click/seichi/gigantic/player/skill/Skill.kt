@@ -60,15 +60,22 @@ enum class Skill(
             SkillMessages.MINE_COMBO_LORE,
             Achievement.SKILL_MINE_COMBO,
             Skills.MINE_COMBO
-    )
+    ),
+    JUMP(
+            5,
+            4,
+            ItemStack(Material.PHANTOM_MEMBRANE),
+            SkillMessages.JUMP,
+            SkillMessages.JUMP_LORE,
+            Achievement.JUMP,
+            Skills.JUMP
+    ),
     ;
 
     fun tryCast(player: Player) = if (isGranted(player)) invoker.tryInvoke(player) else false
 
     fun isGranted(player: Player) = achievement?.isGranted(player) ?: true
 
-    // 解禁条件を表示するためにplayerを引数に
-    // TODO [player] を用いて解禁条件文を追記
     fun getIcon(player: Player) = icon.clone()
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)

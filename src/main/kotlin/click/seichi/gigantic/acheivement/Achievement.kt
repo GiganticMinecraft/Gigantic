@@ -91,9 +91,9 @@ enum class Achievement(
     SPELL_STELLA_CLAIR(300, {
         MANA_STONE.isGranted(it)
     }, grantMessage = AchievementMessages.UNLOCK_SPELL_STELLA_CLAIR),
-    SPELL_APOSTOL(301, {
+    SPELL_MULTI_BREAK(301, {
         MANA_STONE.isGranted(it)
-    }, grantMessage = AchievementMessages.UNLOCK_SPELL_APOSTOLUS),
+    }, grantMessage = AchievementMessages.UNLOCK_SPELL_MULTI_BREAK),
     SPELL_SKY_WALK(302, {
         MANA_STONE.isGranted(it) && it.wrappedLevel >= 18
     }, grantMessage = AchievementMessages.UNLOCK_SPELL_SKY_WALK),

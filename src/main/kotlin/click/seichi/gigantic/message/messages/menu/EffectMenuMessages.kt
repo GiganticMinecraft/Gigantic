@@ -98,10 +98,10 @@ object EffectMenuMessages {
                     "通常破壊 :"
     )
 
-    val APOSTOL = LocalizedText(
+    val MULTI_BREAK = LocalizedText(
             Locale.JAPANESE to "${ChatColor.AQUA}" +
                     "${ChatColor.BOLD}" +
-                    "アポストル :"
+                    "複数破壊 :"
     )
 
 }

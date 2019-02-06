@@ -54,7 +54,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.TELEPORT_TOGGLE.let {
                 offer(it, it.read(entity))
             }
-            Keys.SPELL_APOSTOL_BREAK_AREA.let {
+            Keys.SPELL_MULTI_BREAK_AREA.let {
                 offer(it, it.read(entity))
             }
             Keys.EFFECT.let {
@@ -153,7 +153,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.TELEPORT_TOGGLE.let {
                 it.store(entity, getOrDefault(it))
             }
-            Keys.SPELL_APOSTOL_BREAK_AREA.let {
+            Keys.SPELL_MULTI_BREAK_AREA.let {
                 it.store(entity, getOrDefault(it))
             }
             Keys.EFFECT.let {

@@ -35,11 +35,11 @@ object SpellMessages {
                     )
             )
 
-    val APOSTOL = LocalizedText(
-            Locale.JAPANESE to "アポストル"
+    val MULTI_BREAK = LocalizedText(
+            Locale.JAPANESE to "マルチ・ブレイク"
     )
 
-    val APOSTOL_LORE =
+    val MULTI_BREAK_LORE =
             listOf(
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.GRAY}" +
@@ -47,7 +47,7 @@ object SpellMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "消費: ${Config.SPELL_APOSTOL_MANA_PER_BLOCK}マナ/ブロック"
+                                    "消費: ${Config.SPELL_MULTI_BREAK_MANA_PER_BLOCK}マナ/ブロック"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +

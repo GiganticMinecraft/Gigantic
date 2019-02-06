@@ -71,7 +71,6 @@ object SkillMessages {
                     )
             )
 
-
     val MINE_COMBO = LocalizedText(
             Locale.JAPANESE to "マイン・コンボ"
     )
@@ -90,6 +89,40 @@ object SkillMessages {
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
                                     "コンボが途切れると${Config.SKILL_MINE_COMBO_DECREASE_INTERVAL.toBigDecimal().setScale(1, RoundingMode.HALF_UP)}秒おきに" +
                                     "最大で100Combo減少する"
+                    )
+            )
+
+    val JUMP = LocalizedText(
+            Locale.JAPANESE to "ジャンプ"
+    )
+
+    val JUMP_LORE =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "アクティブ効果: スニークしながら" +
+                                    "${ChatColor.LIGHT_PURPLE}" +
+                                    "${Config.ELYTRA_CHARGE_UP_TIME.div(20)}秒" +
+                                    "${ChatColor.GRAY}" +
+                                    "チャージ後"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "スニークを離すと飛び立てる!!"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.RED}" +
+                                    ""
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "落下中にスペースを押すと滑空できます"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.RED}" +
+                                    "落下死" +
+                                    "${ChatColor.GRAY}" +
+                                    "に注意してください．"
                     )
             )
 }

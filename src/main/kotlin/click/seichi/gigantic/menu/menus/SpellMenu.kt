@@ -39,8 +39,8 @@ object SpellMenu : Menu() {
                 }
 
                 override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
-                    if (spell == Spell.APOSTOL) {
-                        ApostolSettingMenu.open(player)
+                    if (spell == Spell.MULTI_BREAK) {
+                        MultiBreakSettingMenu.open(player)
                         return true
                     }
                     return false
