@@ -27,6 +27,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.math.BigDecimal
+import java.util.*
 
 /**
  * @author tar0ss
@@ -40,7 +41,7 @@ object BagButtons {
                 val lore = mutableListOf<String>()
 
                 lore.add(when {
-                    player.getOrPut(Keys.PROFILE_IS_UPDATING) -> ProfileMessages.UPDATING
+                    isCoolTime(player) -> ProfileMessages.UPDATING
                     else -> ProfileMessages.UPDATE
                 }.asSafety(player.wrappedLocale))
 
@@ -81,12 +82,24 @@ object BagButtons {
             }
         }
 
+        private val coolTimeSet = mutableSetOf<UUID>()
+
+        fun isCoolTime(player: Player) = coolTimeSet.contains(player.uniqueId)
+
+        fun setCoolTime(uniqueId: UUID, isCoolTime: Boolean) {
+            if (isCoolTime) {
+                coolTimeSet.add(uniqueId)
+            } else {
+                coolTimeSet.remove(uniqueId)
+            }
+        }
+
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (player.getOrPut(Keys.PROFILE_IS_UPDATING)) return false
+            if (isCoolTime(player)) return true
             PlayerSounds.TOGGLE.playOnly(player)
-            player.offer(Keys.PROFILE_IS_UPDATING, true)
-            player.updateBag()
             val uniqueId = player.uniqueId
+            setCoolTime(uniqueId, true)
+            player.updateBag()
             // 投票，ポム，寄付系のポイントをデータベースから取得後更新
             object : BukkitRunnable() {
                 override fun run() {
@@ -101,8 +114,8 @@ object BagButtons {
                     }
                     object : BukkitRunnable() {
                         override fun run() {
+                            setCoolTime(uniqueId, false)
                             if (!player.isValid) return
-
                             votePoint?.let {
                                 player.force(Keys.VOTE, it)
                             }
@@ -112,7 +125,6 @@ object BagButtons {
                             donation?.let {
                                 player.force(Keys.DONATION, it)
                             }
-                            player.offer(Keys.PROFILE_IS_UPDATING, false)
                             player.updateBag()
                         }
                     }.runTaskLater(Gigantic.PLUGIN, Defaults.PROFILE_UPDATE_TIME * 20)

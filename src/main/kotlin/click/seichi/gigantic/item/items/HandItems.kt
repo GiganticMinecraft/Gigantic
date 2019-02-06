@@ -144,17 +144,29 @@ object HandItems {
             return false
         }
 
+        private val coolTimeSet = mutableSetOf<UUID>()
+
+        fun isCoolTime(player: Player) = coolTimeSet.contains(player.uniqueId)
+
+        fun setCoolTime(uniqueId: UUID, isCoolTime: Boolean) {
+            if (isCoolTime) {
+                coolTimeSet.add(uniqueId)
+            } else {
+                coolTimeSet.remove(uniqueId)
+            }
+        }
+
         override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
             if (!Achievement.MANA_STONE.isGranted(player)) return false
             if (player.inventory.heldItemSlot != player.getOrPut(Keys.BELT).toolSlot) return false
             val action = event.action ?: return false
             if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return false
-            val coolTime = !player.getOrPut(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN)
-            if (coolTime) return false
-            player.offer(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN, false)
+            if (isCoolTime(player)) return false
+
+            val uniqueId = player.uniqueId
+            setCoolTime(uniqueId, true)
             Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
-                if (!player.isValid) return@scheduleSyncDelayedTask
-                player.offer(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN, true)
+                setCoolTime(uniqueId, false)
             }, 5L)
             player.transform(Keys.SPELL_TOGGLE) { spellToggle ->
                 val next = !spellToggle
@@ -285,7 +297,6 @@ object HandItems {
             coolMap[player.uniqueId] = true
             object : BukkitRunnable() {
                 override fun run() {
-                    if (!player.isValid) return
                     coolMap[player.uniqueId] = false
                 }
             }.runTaskLater(Gigantic.PLUGIN, 5L)

@@ -485,18 +485,6 @@ object Keys {
 
     }
 
-
-    val IS_MANA_STONE_TOGGLE_COOLDOWN = object : Key<PlayerCache, Boolean> {
-
-        override val default: Boolean
-            get() = true
-
-        override fun satisfyWith(value: Boolean): Boolean {
-            return true
-        }
-
-    }
-
     val MENU_PAGE = object : Key<PlayerCache, Int> {
         override val default: Int
             get() = 1
@@ -835,15 +823,6 @@ object Keys {
             // 強制的に書き換えを拒否
             Gigantic.PLUGIN.logger.warning("寄付金の書き換えは禁止されています")
             return false
-        }
-    }
-
-    val PROFILE_IS_UPDATING = object : Key<PlayerCache, Boolean> {
-        override val default: Boolean
-            get() = false
-
-        override fun satisfyWith(value: Boolean): Boolean {
-            return true
         }
     }
 
