@@ -24,6 +24,10 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var maxCombo by UserTable.maxCombo
 
+    var combo by UserTable.combo
+
+    var lastComboTime by UserTable.lastComboTime
+
     var spellToggle by UserTable.spellToggle
 
     var multiBreakWidth by UserTable.multiBreakWidth

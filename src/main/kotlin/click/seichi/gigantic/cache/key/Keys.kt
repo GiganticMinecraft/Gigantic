@@ -662,9 +662,19 @@ object Keys {
 
     }
 
-    val MINE_COMBO = object : Key<PlayerCache, Long> {
+    val MINE_COMBO = object : DatabaseKey<PlayerCache, Long> {
         override val default: Long
             get() = 0L
+
+        override fun read(entity: UserEntity): Long {
+            val user = entity.user
+            return user.combo
+        }
+
+        override fun store(entity: UserEntity, value: Long) {
+            val user = entity.user
+            user.combo = value
+        }
 
         override fun satisfyWith(value: Long): Boolean {
             return value >= 0L
@@ -672,9 +682,19 @@ object Keys {
 
     }
 
-    val LAST_COMBO_TIME = object : Key<PlayerCache, Long> {
+    val LAST_COMBO_TIME = object : DatabaseKey<PlayerCache, Long> {
         override val default: Long
             get() = System.currentTimeMillis()
+
+        override fun read(entity: UserEntity): Long {
+            val user = entity.user
+            return user.lastComboTime
+        }
+
+        override fun store(entity: UserEntity, value: Long) {
+            val user = entity.user
+            user.lastComboTime = value
+        }
 
         override fun satisfyWith(value: Long): Boolean {
             return true

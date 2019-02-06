@@ -24,6 +24,10 @@ object UserTable : IdTable<UUID>("users") {
 
     val maxCombo = long("max_combo").default(0L)
 
+    val combo = long("combo").default(0L)
+
+    val lastComboTime = long("last_combo_time").default(System.currentTimeMillis())
+
     val spellToggle = bool("spell_toggle").default(false)
 
     val multiBreakWidth = integer("multi_break_width").default(1)
