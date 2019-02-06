@@ -131,7 +131,17 @@ enum class GiganticEffect(
             EffectMessages.BUBBLE,
             EffectMessages.BUBBLE_LORE,
             multiEffector = MultiBreakEffectors.BUBBLE
-    )
+    ),
+//    ALCHEMIA(
+//    8,
+//    4 + 9,
+//    ItemStack(Material.REDSTONE),
+//    Currency.DONATE_POINT,
+//    20,
+//    EffectMessages.ALCHEMIA,
+//    EffectMessages.ALCHEMIA_LORE,
+//    multiEffector = MultiBreakEffectors.ALCHEMIA
+//    ),
 
     ;
 

@@ -10,6 +10,20 @@ import java.util.*
  */
 object EffectMessages {
 
+
+    val ALCHEMIA = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GREEN}" +
+                    "${ChatColor.BOLD}" +
+                    "錬金"
+    )
+
+    val ALCHEMIA_LORE = setOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.WHITE}" +
+                            "禁忌に触れるもの"
+            )
+    )
+
     val BUBBLE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.AQUA}" +
                     "${ChatColor.BOLD}" +

@@ -174,4 +174,36 @@ object MultiBreakEffectors {
         }
     }
 
+
+    val ALCHEMIA = object : MultiBreakEffector {
+
+        private val alchemySet = setOf(
+                Material.IRON_BLOCK,
+                Material.GOLD_BLOCK,
+                Material.DIAMOND_BLOCK,
+                Material.EMERALD_BLOCK
+        )
+
+        fun randomMaterial() = alchemySet.random()
+
+        override fun multiBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
+            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
+            breakBlockSet.forEach { target ->
+                target.type = randomMaterial()
+            }
+            object : BukkitRunnable() {
+                override fun run() {
+                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                    breakBlockSet.forEach { target ->
+                        target.type = Material.AIR
+                    }
+                    breakBlockSet.forEach { target ->
+                        MultiBreakAnimations.ALCHEMIA.start(target.centralLocation)
+                    }
+                    base.update(breakBlockSet)
+                }
+            }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
+        }
+    }
+
 }

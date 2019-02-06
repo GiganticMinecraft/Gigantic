@@ -37,5 +37,9 @@ object MultiBreakAnimations {
         location.world.spawnParticle(Particle.BUBBLE_POP, location, 1)
     }
 
+    val ALCHEMIA = Animation(0) { location, _ ->
+        location.world.spawnParticle(Particle.PORTAL, location, 1)
+    }
+
 
 }
