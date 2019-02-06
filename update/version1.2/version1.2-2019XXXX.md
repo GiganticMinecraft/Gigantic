@@ -8,8 +8,8 @@
 :diamond_shape_with_a_dot_inside: 魔法「スカイ・ウォーク」を発動していれば，水・溶岩の上でも歩けるようになりました 
 :diamond_shape_with_a_dot_inside: マナストーンはツールを持って右クリックしたときのみ切り替えられるようになりました 
 :diamond_shape_with_a_dot_inside: コンボがログアウト中でも継続されるようになりました※通常通りコンボ減少があります 
-:diamond_shape_with_a_dot_inside: 新しいエフェクト「アルケミア」を追加しました  
-:diamond_shape_with_a_dot_inside: エフェクト「フレイム」の細かい視覚効果を変更しました．  
+:diamond_shape_with_a_dot_inside: 新しいエフェクト「アルケミア」を追加しました，寄付により獲得することができます  
+:diamond_shape_with_a_dot_inside: エフェクト「フレイム」の細かい視覚効果を変更しました． 
 
 
 :bow: **__不具合修正__** :bow:   
