@@ -45,6 +45,10 @@ object TeleportMessages {
             Locale.JAPANESE to "右クリック2回で削除"
     )
 
+    val HOME_NOT_SURVIVAL = LocalizedText(
+            Locale.JAPANESE to "休憩中は操作不可"
+    )
+
     val HOME_DELETE = LocalizedText(
             Locale.JAPANESE to "もう一度右クリックで削除"
     )
