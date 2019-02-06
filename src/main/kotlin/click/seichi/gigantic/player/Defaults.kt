@@ -44,5 +44,7 @@ object Defaults {
     const val MAX_HOME = 5
 
     // スカイウォークで設置されるブロック
-    val SKY_WALK_MATERIAL = Material.GLASS
+    val SKY_WALK_AIR_MATERIAL = Material.LIGHT_GRAY_STAINED_GLASS
+    val SKY_WALK_WATER_MATERIAL = Material.BLUE_STAINED_GLASS
+    val SKY_WALK_LAVA_MATERIAL = Material.RED_STAINED_GLASS
 }

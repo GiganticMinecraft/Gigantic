@@ -5,6 +5,7 @@
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
 :diamond_shape_with_a_dot_inside: 魔法「アポストル」の名称を **マルチブレイク** に変更しました． 
+:diamond_shape_with_a_dot_inside: 魔法「スカイ・ウォーク」を発動していれば，水・溶岩の上でも歩けるようになります． 
 
 
 :bow: **__不具合修正__** :bow:   

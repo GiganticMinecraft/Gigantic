@@ -391,6 +391,7 @@ fun Block.setTorchIfNeeded() {
             if (!under.isSurface) return
             if (isCrust) return
             if (isTree) return
+            if (!isAir) return
             type = Material.TORCH
             world.playEffect(location, Effect.STEP_SOUND, Material.TORCH)
         }
