@@ -6,6 +6,7 @@
 
 :diamond_shape_with_a_dot_inside: 魔法「アポストル」の名称を **マルチブレイク** に変更しました． 
 :diamond_shape_with_a_dot_inside: 魔法「スカイ・ウォーク」を発動していれば，水・溶岩の上でも歩けるようになります． 
+:diamond_shape_with_a_dot_inside: マナストーンはツールを持って右クリックしたときのみ切り替えられるようになります． 
 
 
 :bow: **__不具合修正__** :bow:   
@@ -13,6 +14,7 @@
 
 :diamond_shape_with_a_dot_inside: スキル「ジャンプ」がスキルメニューになかった不具合  
 :diamond_shape_with_a_dot_inside: 休憩中にホームポイントを設定できてしまう不具合  
+:diamond_shape_with_a_dot_inside: 菌糸ブロックがツール切り替えに対応していなかった不具合  
 
 
 

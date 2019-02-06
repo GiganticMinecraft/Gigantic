@@ -146,6 +146,7 @@ object HandItems {
 
         override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
             if (!Achievement.MANA_STONE.isGranted(player)) return false
+            if (player.inventory.heldItemSlot != player.getOrPut(Keys.BELT).toolSlot) return false
             val action = event.action ?: return false
             if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return false
             val coolTime = !player.getOrPut(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN)
