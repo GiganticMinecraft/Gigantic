@@ -2,7 +2,6 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
@@ -10,16 +9,10 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.ComboEvent
-import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.message.messages.PopUpMessages
-import click.seichi.gigantic.popup.PopUp
-import click.seichi.gigantic.popup.StillAnimation
-import click.seichi.gigantic.sound.sounds.PlayerSounds
-import click.seichi.gigantic.util.NoiseData
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -141,36 +134,6 @@ class PlayerListener : Listener {
         if (event.item.type == Material.FIREWORK_ROCKET) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
-    }
-
-    @EventHandler
-    fun onLevelUp(event: LevelUpEvent) {
-        val player = event.player
-
-        PlayerMessages.LEVEL_UP_LEVEL(event.level).sendTo(player)
-        PlayerMessages.LEVEL_UP_TITLE(event.level).sendTo(player)
-        PopUp(StillAnimation(60L), player.location.noised(NoiseData(sizeY = 3.7)), PopUpMessages.LEVEL_UP())
-                .pop()
-        PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
-        PlayerSounds.LEVEL_UP.play(player.location)
-
-        Achievement.update(player)
-
-        player.manipulate(CatalogPlayerCache.MANA) {
-            val prevMax = it.max
-            it.updateMaxMana(event.level)
-            it.increase(it.max, true)
-            if (prevMax == it.max) return@manipulate
-            if (!Achievement.MANA_STONE.isGranted(player)) return@manipulate
-            PlayerMessages.LEVEL_UP_MANA(prevMax, it.max).sendTo(player)
-        }
-
-        if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
-            PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
-
-        // player list name レベル表記を更新
-        player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(event.level).plus(player.name)
-        player.displayName = PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name)
     }
 
     @EventHandler
