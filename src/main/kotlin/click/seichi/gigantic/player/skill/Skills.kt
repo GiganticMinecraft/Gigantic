@@ -92,7 +92,7 @@ object Skills {
                         while (!nextBlock.isSurface) {
                             nextBlock = nextBlock.getRelative(BlockFace.UP)
                         }
-                        nextBlock.centralLocation.add(0.0, 1.75, 0.0).apply {
+                        nextBlock.centralLocation.add(0.0, 0.75, 0.0).apply {
                             direction = p.location.direction
                         }
                     }
