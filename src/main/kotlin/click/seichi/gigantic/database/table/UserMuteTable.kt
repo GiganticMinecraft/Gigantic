@@ -5,7 +5,7 @@ import org.jetbrains.exposed.dao.IntIdTable
 /**
  * @author tar0ss
  */
-object UserMuteTable : IntIdTable("users_follows") {
+object UserMuteTable : IntIdTable("users_mutes") {
 
     val userId = reference("unique_id", UserTable).primaryKey()
 

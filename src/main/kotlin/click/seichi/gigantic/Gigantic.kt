@@ -132,7 +132,8 @@ class Gigantic : JavaPlugin() {
                 UserEffectTable,
                 DonateHistoryTable,
                 UserFollowTable,
-                UserHomeTable
+                UserHomeTable,
+                UserMuteTable
         )
 
         // reflectionを使うので先に生成

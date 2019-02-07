@@ -11,6 +11,9 @@
 :diamond_shape_with_a_dot_inside: 新しいエフェクト「アルケミア」を追加しました，寄付により獲得することができます  
 :diamond_shape_with_a_dot_inside: エフェクト「フレイム」の細かい視覚効果を変更しました． 
 :diamond_shape_with_a_dot_inside: ログインしたときに足場が存在しなければ自動でテレポートするようになりました 
+:diamond_shape_with_a_dot_inside: ミュート機能を追加しました 
+:diamond_shape_with_a_dot_inside: ミュートしたプレイヤーのチャットは見えなくなります 
+:diamond_shape_with_a_dot_inside: ミュートしたプレイヤーは例えテレポートを許可する設定にしていてもテレポートできません 
 
 
 :bow: **__不具合修正__** :bow:   
