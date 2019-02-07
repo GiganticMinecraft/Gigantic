@@ -103,7 +103,7 @@ object SpellMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
-                                    "クリックで破壊範囲を設定"
+                                    "クリックで移動速度を設定"
                     )
             )
 

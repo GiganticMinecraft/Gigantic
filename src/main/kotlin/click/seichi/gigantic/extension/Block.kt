@@ -341,8 +341,6 @@ val Block.centralLocation: Location
 
 fun Block.update() {
     changeRelativeBedrock()
-    // ブロックに多様性を持たせるテスト
-    changeRelativeCrustBlock()
 
     condenseRelativeLiquid()
 
@@ -358,7 +356,6 @@ fun Block.update() {
 fun Block.update(others: Set<Block>) {
     if (others.isEmpty()) return
     others.forEach { it.changeRelativeBedrock() }
-    others.forEach { it.changeRelativeCrustBlock() }
     others.forEach { it.condenseRelativeLiquid() }
     others.forEach { it.clearRelativeFloatingBlock() }
     val xzMap = others.groupBy { Pair(it.x, it.z) }
@@ -456,41 +453,13 @@ fun Block.changeBedrock() {
     else Material.STONE
 }
 
-private fun Block.changeRelativeCrustBlock() {
-    faceSet.map { getRelative(it) }
-            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
-            .forEach { it.changeCrustBlock() }
-}
-
-fun Block.changeCrustBlock() {
-    if (!isCrust) return
-    // 鉱石が無くなってしまうので一旦コメントアウト
-//    type = when {
-//        y in 1..29 && !isNether -> when (Random.nextDouble()) {
-//            in 0.00..0.02 -> Material.NETHER_QUARTZ_ORE
-//            in 0.06..0.16 -> Material.RED_NETHER_BRICKS
-//            in 0.16..0.36 -> Material.NETHER_BRICKS
-//            else -> Material.NETHERRACK
-//        }
-//        y in 30..45 && isStone -> {
-//            when (Random.nextDouble()) {
-//                in 0.00..0.01 -> Material.BONE_BLOCK
-//                in 0.01..0.03 -> Material.CHISELED_STONE_BRICKS
-//                in 0.03..0.05 -> Material.CRACKED_STONE_BRICKS
-//                in 0.05..0.07 -> Material.MOSSY_STONE_BRICKS
-//                else -> Material.STONE_BRICKS
-//            }
-//        }
-//        else -> type
-//    }
-}
-
 private fun Block.condenseRelativeLiquid() {
     faceSet.map { getRelative(it) }
             .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
             .forEach {
                 it.condenseLiquid()
             }
+
 }
 
 fun Block.condenseLiquid(playSound: Boolean = true) {
