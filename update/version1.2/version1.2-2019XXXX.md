@@ -10,6 +10,7 @@
 :diamond_shape_with_a_dot_inside: コンボがログアウト中でも継続されるようになりました※通常通りコンボ減少があります 
 :diamond_shape_with_a_dot_inside: 新しいエフェクト「アルケミア」を追加しました，寄付により獲得することができます  
 :diamond_shape_with_a_dot_inside: エフェクト「フレイム」の細かい視覚効果を変更しました． 
+:diamond_shape_with_a_dot_inside: ログインしたときに足場が存在しなければ自動でテレポートするようになりました 
 
 
 :bow: **__不具合修正__** :bow:   
@@ -19,6 +20,7 @@
 :diamond_shape_with_a_dot_inside: 休憩中にホームポイントを設定できてしまう不具合  
 :diamond_shape_with_a_dot_inside: 菌糸ブロックがツール切り替えに対応していなかった不具合  
 :diamond_shape_with_a_dot_inside: 一定条件下で魔法「スカイウォーク」の切り替えが出来なくなる不具合  
+:diamond_shape_with_a_dot_inside: 魔法「スカイ・ウォーク」を使用中にスキル「フラッシュ」を使用した時に1段上に上がってしまう不具合  
 
 
 
