@@ -140,9 +140,9 @@ fun Player.unMute(uniqueId: UUID) = transform(Keys.MUTE_SET) {
 val Player.mutes: Int
     get() = getOrPut(Keys.MUTE_SET).size
 
-fun Player.relationship(will: Will) = player.getOrPut(Keys.WILL_RELATIONSHIP_MAP[will]!!)
+fun Player.relationship(will: Will) = getOrPut(Keys.WILL_RELATIONSHIP_MAP[will]!!)
 
-fun Player.hasRelic(relic: Relic) = relic.getDroppedNum(player) > 0
+fun Player.hasRelic(relic: Relic) = relic.getDroppedNum(this) > 0
 
 /**
  * プレイヤーが向いている方向の[BlockFace]を取得する
