@@ -108,7 +108,7 @@ object Spells {
                     if (size == 0) return@apply
                     val consumeMana = calcConsumeMana(size)
                     if (!Config.DEBUG_MODE || !DebugConfig.SPELL_INFINITY) {
-                        player.manipulate(CatalogPlayerCache.MANA) {
+                        p.manipulate(CatalogPlayerCache.MANA) {
                             it.decrease(consumeMana)
                         }
                     }
@@ -175,6 +175,14 @@ object Spells {
                     .toMutableSet().apply {
                         addAll(additiveSet)
                     }.toSet()
+        }
+    }
+
+    val LUNA_FLEX = object : Invokable {
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            return Consumer { p ->
+
+            }
         }
     }
 

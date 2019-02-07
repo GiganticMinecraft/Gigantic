@@ -278,7 +278,7 @@ object HandItems {
 
         override fun findItemStack(player: Player): ItemStack? {
             if (!Spell.SKY_WALK.isGranted(player)) return null
-            return ItemStack(Material.SUGAR).apply {
+            return ItemStack(Material.PRISMARINE_CRYSTALS).apply {
                 val toggle = player.getOrPut(Keys.SPELL_SKY_WALK_TOGGLE)
                 setDisplayName(
                         HookedItemMessages.SKY_WALK.asSafety(player.wrappedLocale) +

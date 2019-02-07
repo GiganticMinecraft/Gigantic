@@ -103,6 +103,9 @@ enum class Achievement(
     SPELL_SKY_WALK(302, {
         MANA_STONE.isGranted(it) && it.wrappedLevel >= 18
     }, grantMessage = AchievementMessages.UNLOCK_SPELL_SKY_WALK),
+    SPELL_LUNA_FLEX(303, {
+        MANA_STONE.isGranted(it) && it.wrappedLevel >= 28
+    }, grantMessage = AchievementMessages.UNLOCK_SPELL_LUNA_FLEX),
 
     // quest order
 

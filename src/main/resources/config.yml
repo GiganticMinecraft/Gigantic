@@ -105,6 +105,12 @@ spell:
     # 半径
     radius: 2
 
+  # 移動速度改変スキル
+  luna_flex:
+    # 1ブロック当たりのマナ消費量
+    mana_per_block: 1.4
+
+
 
 # TRUEの時debug.ymlに従う
 # データベースの書き込みは行わない

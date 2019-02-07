@@ -29,7 +29,7 @@ object SpellMenu : Menu() {
             registerButton(spell.slot, object : Button {
                 override fun findItemStack(player: Player): ItemStack? {
                     if (!spell.isGranted(player)) return null
-                    return spell.getIcon(player).apply {
+                    return spell.getIcon().apply {
                         setDisplayName(spell.getName(player.wrappedLocale))
                         spell.getLore(player.wrappedLocale)?.let {
                             setLore(*it.toTypedArray())

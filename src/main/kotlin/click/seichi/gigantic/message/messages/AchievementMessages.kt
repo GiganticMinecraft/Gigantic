@@ -85,7 +85,8 @@ object AchievementMessages {
                         "破壊魔法: マルチ・ブレイク を覚えた!!\n" +
                         "${ChatColor.GRAY}" +
                         "アクティブ効果: ブロック破壊時に，周囲のブロックも同時に破壊する!!\n" +
-                        "通常破壊時に発動する\n"
+                        "通常破壊時に発動する\n" +
+                        "魔法メニューから設定しよう!!"
             }
     ))
 
@@ -96,6 +97,16 @@ object AchievementMessages {
                         "${ChatColor.GRAY}" +
                         "パッシブ効果: プレイヤーの移動を補助する足場を生成!!\n" +
                         "スニークやジャンプを上手く使おう!!\n"
+            }
+    ))
+
+    val UNLOCK_SPELL_LUNA_FLEX = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "補助魔法: ルナ・フレックス を覚えた!!\n" +
+                        "${ChatColor.GRAY}" +
+                        "パッシブ効果: 自由に移動速度を変更!!\n" +
+                        "魔法メニューから設定しよう!!"
             }
     ))
 

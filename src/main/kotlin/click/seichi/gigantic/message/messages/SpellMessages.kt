@@ -83,5 +83,29 @@ object SpellMessages {
                     )
             )
 
+    val LUNA_FLEX = LocalizedText(
+            Locale.JAPANESE to "ルナ・フレックス"
+    )
+
+    val LUNA_FLEX_LORE =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "パッシブ効果: 移動速度変更"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "消費: ${Config.SPELL_LUNA_FLEX_MANA_PER_BLOCK.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} マナ/ブロック"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    ""
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
+                                    "クリックで破壊範囲を設定"
+                    )
+            )
+
 
 }
