@@ -102,7 +102,8 @@ class Gigantic : JavaPlugin() {
                 ToolListener(),
                 WillListener(),
                 AchievementListener(),
-                SkyWalkListener()
+                SkyWalkListener(),
+                ChatListener()
         )
 
         registerPacketListeners(

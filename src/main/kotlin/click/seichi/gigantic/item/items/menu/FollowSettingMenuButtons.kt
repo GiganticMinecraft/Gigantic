@@ -5,10 +5,7 @@ import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.RefineItem
-import click.seichi.gigantic.menu.menus.FollowMenu
-import click.seichi.gigantic.menu.menus.FollowPlayerMenu
-import click.seichi.gigantic.menu.menus.FollowerMenu
-import click.seichi.gigantic.menu.menus.PlayerListRefineMenu
+import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.menu.FollowSettingMenuMessages
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.ChatColor
@@ -28,6 +25,21 @@ object FollowSettingMenuButtons {
                 setDisplayName("${ChatColor.GRAY}" +
                         "${ChatColor.BOLD}" +
                         FollowSettingMenuMessages.FOLLOW.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            FollowMenu.open(player)
+            return true
+        }
+    }
+
+    val MUTE = object : Button {
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.GRAY_DYE).apply {
+                setDisplayName("${ChatColor.GRAY}" +
+                        "${ChatColor.BOLD}" +
+                        FollowSettingMenuMessages.MUTE.asSafety(player.wrappedLocale))
             }
         }
 
@@ -57,6 +69,28 @@ object FollowSettingMenuButtons {
             override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                 player.unFollow(to.uniqueId)
                 FollowMenu.reopen(player)
+                PlayerSounds.TOGGLE.playOnly(player)
+                return true
+            }
+        }
+    }
+
+    val MUTE_PLAYER: (Player) -> Button = { to: Player ->
+        object : Button {
+            override fun findItemStack(player: Player): ItemStack? {
+                return to.getHead().apply {
+                    setDisplayName("${ChatColor.WHITE}" +
+                            "${ChatColor.BOLD}" +
+                            to.name)
+                    clearLore()
+                    addLore("${ChatColor.GRAY}" +
+                            FollowSettingMenuMessages.CLICK_TO_UNMUTE.asSafety(player.wrappedLocale))
+                }
+            }
+
+            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                player.unMute(to.uniqueId)
+                MuteMenu.reopen(player)
                 PlayerSounds.TOGGLE.playOnly(player)
                 return true
             }
@@ -123,6 +157,21 @@ object FollowSettingMenuButtons {
         }
     }
 
+    val MUTE_ONLINE = object : Button {
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.PINK_DYE).apply {
+                setDisplayName("${ChatColor.LIGHT_PURPLE}" +
+                        "${ChatColor.BOLD}" +
+                        FollowSettingMenuMessages.MUTE_ONLINE.asSafety(player.wrappedLocale))
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            MutePlayerMenu.open(player)
+            return true
+        }
+    }
+
     val FOLLOW_ONLINE_PLAYER: (Player) -> Button = { to: Player ->
         object : Button {
             override fun findItemStack(player: Player): ItemStack? {
@@ -148,6 +197,33 @@ object FollowSettingMenuButtons {
                 if (player.follows >= Config.PLAYER_MAX_FOLLOW) return true
                 player.follow(to.uniqueId)
                 FollowPlayerMenu.reopen(player)
+                PlayerSounds.TOGGLE.playOnly(player)
+                return true
+            }
+        }
+    }
+
+    val MUTE_ONLINE_PLAYER: (Player) -> Button = { to: Player ->
+        object : Button {
+            override fun findItemStack(player: Player): ItemStack? {
+                return to.getHead().apply {
+                    setDisplayName("${ChatColor.WHITE}" +
+                            "${ChatColor.BOLD}" +
+                            to.name)
+                    clearLore()
+                    when {
+                        player.mutes < Config.PLAYER_MAX_MUTE -> addLore("${ChatColor.GREEN}" +
+                                FollowSettingMenuMessages.CLICK_TO_MUTE.asSafety(player.wrappedLocale))
+                        else -> addLore("${ChatColor.RED}" +
+                                FollowSettingMenuMessages.MAX_MUTE.asSafety(player.wrappedLocale))
+                    }
+                }
+            }
+
+            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                if (player.mutes >= Config.PLAYER_MAX_MUTE) return true
+                player.mute(to.uniqueId)
+                MutePlayerMenu.reopen(player)
                 PlayerSounds.TOGGLE.playOnly(player)
                 return true
             }

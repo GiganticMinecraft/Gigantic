@@ -72,6 +72,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.FOLLOW_SET.let {
                 offer(it, it.read(entity))
             }
+            Keys.MUTE_SET.let {
+                offer(it, it.read(entity))
+            }
             Keys.AUTO_SWITCH.let {
                 offer(it, it.read(entity))
             }
@@ -166,6 +169,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 it.store(entity, getOrDefault(it))
             }
             Keys.FOLLOW_SET.let {
+                it.store(entity, getOrDefault(it))
+            }
+            Keys.MUTE_SET.let {
                 it.store(entity, getOrDefault(it))
             }
             Keys.AUTO_SWITCH.let {

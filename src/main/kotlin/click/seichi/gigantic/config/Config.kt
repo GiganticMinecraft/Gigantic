@@ -11,6 +11,8 @@ object Config : SimpleConfiguration("config") {
 
     val PLAYER_MAX_FOLLOW by lazy { getInt("player.max_follow") }
 
+    val PLAYER_MAX_MUTE by lazy { getInt("player.max_mute") }
+
     val PROTECT_RADIUS by lazy { getDouble("player.protect_radius") }
 
     val LOAD_TIME by lazy { getInt("player.load_time") }

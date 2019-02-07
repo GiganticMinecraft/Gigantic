@@ -119,4 +119,7 @@ class UserEntity(uniqueId: UUID, playerName: String) {
             .find { UserHomeTable.userId eq uniqueId }
             .toList()
 
+    val userMuteList = UserMute
+            .find { UserMuteTable.userId eq uniqueId }
+            .toList()
 }

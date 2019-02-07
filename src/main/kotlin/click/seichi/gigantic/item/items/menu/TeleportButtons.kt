@@ -185,6 +185,14 @@ object TeleportButtons {
                                 .map { it.asSafety(player.wrappedLocale) }
                                 .toTypedArray())
                     }
+                    // ミュートされている時×
+                    to.isMute(player.uniqueId) -> ItemStack(Material.PURPLE_STAINED_GLASS_PANE).apply {
+                        setDisplayName("${ChatColor.RED}${to.name}")
+                        setLore(*TeleportMessages.TELEPORT_PLAYER_TOGGLE_OFF_LORE
+                                .map { it.asSafety(player.wrappedLocale) }
+                                .toTypedArray())
+                    }
+                    // テレポートできないかつフォローされていない時×
                     !to.getOrPut(Keys.TELEPORT_TOGGLE) &&
                             !to.isFollow(player.uniqueId) -> ItemStack(Material.PURPLE_STAINED_GLASS_PANE).apply {
                         setDisplayName("${ChatColor.RED}${to.name}")
@@ -227,12 +235,14 @@ object TeleportButtons {
 
             override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                 if (!to.isValid) return false
+                if (to.isMute(player.uniqueId)) return false
                 if (!to.getOrPut(Keys.TELEPORT_TOGGLE) &&
                         !to.isFollow(player.uniqueId)) return false
                 if (to.gameMode != GameMode.SURVIVAL) return false
                 if (to.world != player.world) return false
                 if (to.isFlying) return false
                 player.teleport(to)
+                // 休憩中にテレポートするときは音を消すため条件付き
                 if (player.gameMode == GameMode.SURVIVAL)
                     PlayerSounds.TELEPORT.play(to.location)
                 return true

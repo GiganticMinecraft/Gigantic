@@ -19,8 +19,15 @@ object FollowSettingMenu : Menu() {
     }
 
     init {
+        // フォロー一覧
         registerButton(0, FollowSettingMenuButtons.FOLLOW)
+        // フォロワー一覧
         registerButton(1, FollowSettingMenuButtons.FOLLOWER)
+        // フォローする
         registerButton(2, FollowSettingMenuButtons.FOLLOW_ONLINE)
+        // ミュート一覧
+        registerButton(6, FollowSettingMenuButtons.MUTE)
+        // ミュートする
+        registerButton(7, FollowSettingMenuButtons.MUTE_ONLINE)
     }
 }

@@ -905,6 +905,46 @@ object Keys {
         }
     }
 
+    val MUTE_SET = object : DatabaseKey<PlayerCache, Set<UUID>> {
+        override val default: Set<UUID>
+            get() = setOf()
+
+        override fun read(entity: UserEntity): Set<UUID> {
+            return entity.userMuteList.map { it.muteId.id.value }.toSet()
+        }
+
+        override fun store(entity: UserEntity, value: Set<UUID>) {
+            val oldSet = read(entity)
+            // 新規Muteを登録
+            value.forEach { muteId ->
+                // 既にMuteしていたら終了
+                if (oldSet.contains(muteId)) return@forEach
+                // ミュートするユーザーを検索
+                val muteUser = User.findById(muteId) ?: return@forEach
+                // 存在すれば追加
+                UserFollow.new {
+                    user = entity.user
+                    follow = muteUser
+                }
+            }
+            // ミュートを外したプレイヤーを削除
+            oldSet.forEach { muteId ->
+                // 現在ミュートしているなら終了
+                if (value.contains(muteId)) return@forEach
+                // 削除するユーザーを検索
+                val muteUser = User.findById(muteId) ?: return@forEach
+                // 存在すれば削除
+                UserFollowTable.deleteWhere {
+                    (UserFollowTable.userId eq entity.user.id).and(UserFollowTable.followId eq muteUser.id)
+                }
+            }
+        }
+
+        override fun satisfyWith(value: Set<UUID>): Boolean {
+            return true
+        }
+    }
+
     val LAST_TELL_ID = object : Key<PlayerCache, UUID?> {
         override val default: UUID?
             get() = null

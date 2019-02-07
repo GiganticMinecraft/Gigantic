@@ -126,6 +126,19 @@ fun Player.unFollow(uniqueId: UUID) = transform(Keys.FOLLOW_SET) {
 val Player.follows: Int
     get() = getOrPut(Keys.FOLLOW_SET).size
 
+fun Player.isMute(uniqueId: UUID) = getOrPut(Keys.MUTE_SET).contains(uniqueId)
+
+fun Player.mute(uniqueId: UUID) = transform(Keys.MUTE_SET) {
+    setOf(*it.toTypedArray(), uniqueId)
+}
+
+fun Player.unMute(uniqueId: UUID) = transform(Keys.MUTE_SET) {
+    it.toMutableSet().apply { remove(uniqueId) }
+}
+
+val Player.mutes: Int
+    get() = getOrPut(Keys.MUTE_SET).size
+
 fun Player.relationship(will: Will) = player.getOrPut(Keys.WILL_RELATIONSHIP_MAP[will]!!)
 
 /**
