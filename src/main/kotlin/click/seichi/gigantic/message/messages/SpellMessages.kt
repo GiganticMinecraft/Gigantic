@@ -95,7 +95,7 @@ object SpellMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "消費: ${Config.SPELL_LUNA_FLEX_MANA_PER_BLOCK.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} マナ/ブロック"
+                                    "消費: ${Config.SPELL_LUNA_FLEX_MANA_PER_DEGREE.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} マナ/段階"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +

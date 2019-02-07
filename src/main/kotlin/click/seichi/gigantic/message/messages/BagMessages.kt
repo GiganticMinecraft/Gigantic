@@ -106,7 +106,7 @@ object BagMessages {
     val VOTE_BONUS_FOR_ADVANCED_WILL = listOf(
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.GRAY}" +
-                            "- ${ChatColor.LIGHT_PURPLE}" +
+                            "- ${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
                             "${Defaults.VOTE_BONUS_ETHEL}エーテル x ${Defaults.VOTE_BONUS_ADVANCED_WILL_NUM}"
             ),
             LocalizedText(

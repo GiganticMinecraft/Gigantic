@@ -143,7 +143,6 @@ val Player.mutes: Int
 fun Player.relationship(will: Will) = getOrPut(Keys.WILL_RELATIONSHIP_MAP[will]!!)
 
 fun Player.hasRelic(relic: Relic) = relic.getDroppedNum(this) > 0
-
 /**
  * プレイヤーが向いている方向の[BlockFace]を取得する
  */

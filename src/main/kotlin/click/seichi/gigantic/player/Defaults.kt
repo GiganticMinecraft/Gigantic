@@ -27,7 +27,7 @@ object Defaults {
     const val WILL_ADVANCED_UNLOCK_AMOUNT = 4000
 
     // will spirit Settings
-    // 意志が消滅するまでの時間(ticks)
+    // 意志が埋まってから消滅するまでの時間(ticks)
     const val WILL_SPIRIT_DEATH_DURATION = 100L
 
     // achievement Settings
@@ -60,4 +60,9 @@ object Defaults {
     val VOTE_BONUS_BASIC_WILL_NUM = 3
     // 投票得点で高度意志をもらえる種類数
     val VOTE_BONUS_ADVANCED_WILL_NUM = 1
+
+    // 標準の移動速度
+    val WALK_SPEED = 0.2F
+    // ルナフレックスの最大段階
+    val LUNA_FLEX_MAX_DEGREE = 10.minus(WALK_SPEED.times(10).toInt())
 }

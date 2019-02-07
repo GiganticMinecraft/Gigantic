@@ -44,7 +44,7 @@ object FollowSettingMenuButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
-            FollowMenu.open(player)
+            MuteMenu.open(player)
             return true
         }
     }

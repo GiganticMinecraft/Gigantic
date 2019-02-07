@@ -107,8 +107,8 @@ spell:
 
   # 移動速度改変スキル
   luna_flex:
-    # 1ブロック当たりのマナ消費量
-    mana_per_block: 1.4
+    # １段階ごとの1ブロック当たりのマナ増加量
+    mana_per_degree: 0.5
 
 
 

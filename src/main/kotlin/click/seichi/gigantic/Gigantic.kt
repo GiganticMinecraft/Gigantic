@@ -102,7 +102,7 @@ class Gigantic : JavaPlugin() {
                 ToolListener(),
                 WillListener(),
                 AchievementListener(),
-                SkyWalkListener(),
+                SpellListener(),
                 ChatListener()
         )
 
@@ -143,8 +143,9 @@ class Gigantic : JavaPlugin() {
 
         // 3秒後にTickEventを毎tick発火
         object : BukkitRunnable() {
+            var ticks = 0L
             override fun run() {
-                Bukkit.getServer().pluginManager.callEvent(TickEvent())
+                Bukkit.getServer().pluginManager.callEvent(TickEvent(ticks++))
             }
         }.runTaskTimer(this, 3 * 20L, 1)
 

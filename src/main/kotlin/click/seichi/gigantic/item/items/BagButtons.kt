@@ -255,6 +255,7 @@ object BagButtons {
                     // 見えなくなるバグのため
                     player.showPlayer(Gigantic.PLUGIN, player)
                     player.updateBag()
+                    PlayerSounds.TELEPORT_AFK.play(player.location)
                     return true
                 }
                 GameMode.SPECTATOR -> {

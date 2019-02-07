@@ -55,6 +55,6 @@ object Config : SimpleConfiguration("config") {
 
     val SPELL_SKY_WALK_RADIUS by lazy { getInt("spell.sky_walk.radius") }
 
-    val SPELL_LUNA_FLEX_MANA_PER_BLOCK by lazy { getDouble("spell.luna_flex.mana_per_block") }
+    val SPELL_LUNA_FLEX_MANA_PER_DEGREE by lazy { getDouble("spell.luna_flex.mana_per_degree") }
 
 }

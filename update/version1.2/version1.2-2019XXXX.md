@@ -3,6 +3,18 @@
 
 
 
+:shaved_ice: 世界一高速で走れたとしても、人生を近道することはできないんだよ :shaved_ice:   
+マーベルのヒーロー **クイックシルバー** より
+
+:diamond_shape_with_a_dot_inside: 新魔法 **ルナ・フレックス** を追加しました   
+:diamond_shape_with_a_dot_inside: 音速を超える速度で歩くことができます(大嘘)   
+:diamond_shape_with_a_dot_inside: 走ると光速を超えて過去にタイムスリップできます()   
+:diamond_shape_with_a_dot_inside: 移動速度は設定画面で変更できます   
+:diamond_shape_with_a_dot_inside: レベル28で解放されます   
+:diamond_shape_with_a_dot_inside: 歩いた距離に応じてマナを消費します   
+:diamond_shape_with_a_dot_inside: 止まっているときはマナを消費しません   
+
+
 :airplane: __**押すなよ？絶対に押すなよ？**__ :airplane:  
 魔法「スカイ・ウォーク」を改良しました  
 
@@ -41,6 +53,7 @@
 :diamond_shape_with_a_dot_inside: コンボがログアウト中でも継続されるようになりました※通常通りコンボ減少があります  
 :diamond_shape_with_a_dot_inside: エフェクト「フレイム」の細かい視覚効果を変更しました．  
 :diamond_shape_with_a_dot_inside: ログインしたときに足場が存在しなければ自動でテレポートするようになりました  
+:diamond_shape_with_a_dot_inside: 休憩時の音を追加しました  
 
 
 :bow: **__不具合修正__** :bow:   

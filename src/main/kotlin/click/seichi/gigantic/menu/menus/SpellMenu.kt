@@ -40,7 +40,7 @@ object SpellMenu : Menu() {
 
                 override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
                     if (spell == Spell.MULTI_BREAK || spell == Spell.LUNA_FLEX) {
-                        MultiBreakSettingMenu.open(player)
+                        SpellSettingMenu.open(player)
                         return true
                     }
                     return false

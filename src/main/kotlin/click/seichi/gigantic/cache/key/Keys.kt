@@ -1150,4 +1150,32 @@ object Keys {
         }
     }
 
+    val WALK_SPEED = object : DatabaseKey<PlayerCache, Float> {
+        override val default: Float
+            get() = Defaults.WALK_SPEED
+
+        override fun read(entity: UserEntity): Float {
+            val user = entity.user
+            return user.walkSpeed
+        }
+
+        override fun store(entity: UserEntity, value: Float) {
+            val user = entity.user
+            user.walkSpeed = value
+        }
+
+        override fun satisfyWith(value: Float): Boolean {
+            return value in 0.2F..1.0F
+        }
+    }
+
+    val PREVIOUS_LOCATION = object : Key<PlayerCache, Location?> {
+        override val default: Location?
+            get() = null
+
+        override fun satisfyWith(value: Location?): Boolean {
+            return true
+        }
+    }
+
 }

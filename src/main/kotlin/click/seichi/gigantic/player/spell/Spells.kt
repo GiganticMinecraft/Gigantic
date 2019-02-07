@@ -181,7 +181,44 @@ object Spells {
     val LUNA_FLEX = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
             return Consumer { p ->
+                // 以前の場所を保存しておく(毎秒必ず実行する)
+                val prevLoc = p.getOrPut(Keys.PREVIOUS_LOCATION)
+                p.offer(Keys.PREVIOUS_LOCATION, p.location)
+                if (prevLoc == null) return@Consumer
 
+                // サバイバルでないまたはマナがない時終了
+                if (p.gameMode != GameMode.SURVIVAL ||
+                        !player.hasMana(BigDecimal.ZERO)) {
+                    return@Consumer
+                }
+                // 段階を取得
+                val degree = p.getOrPut(Keys.WALK_SPEED)
+                        .minus(Defaults.WALK_SPEED)
+                        .times(10)
+                        .toInt()
+                        .coerceIn(0..Defaults.LUNA_FLEX_MAX_DEGREE)
+
+                // 初期速度なら終了
+                if (degree <= 0) return@Consumer
+
+                // 移動距離を算出
+                val distance = p.location.distance(prevLoc)
+
+                // 移動していない時終了
+                if (distance == 0.0) return@Consumer
+
+                // マナを計算
+                val consumeMana = degree.toDouble()
+                        .times(Config.SPELL_LUNA_FLEX_MANA_PER_DEGREE)
+                        .times(distance)
+                        .toBigDecimal()
+
+                if (!Config.DEBUG_MODE || !DebugConfig.SPELL_INFINITY) {
+                    p.manipulate(CatalogPlayerCache.MANA) {
+                        it.decrease(consumeMana)
+                    }
+                }
+                PlayerMessages.MANA_DISPLAY(p.mana, p.maxMana).sendTo(p)
             }
         }
     }

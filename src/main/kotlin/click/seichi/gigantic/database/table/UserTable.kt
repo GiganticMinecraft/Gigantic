@@ -54,6 +54,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val skyWalkToggle = bool("sky_walk_toggle").default(false)
 
+    val walkSpeed = float("walk_speed").default(Defaults.WALK_SPEED)
+
     val createdAt = datetime("created_at").default(DateTime.now())
 
     val updatedAt = datetime("updated_at").default(DateTime.now())

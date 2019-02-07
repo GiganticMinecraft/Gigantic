@@ -167,7 +167,7 @@ object HookedItemMessages {
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.GRAY}" +
-                            "これを持っていると魔法が使える"
+                            "これを持っているとマルチ・ブレイクが使える"
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
