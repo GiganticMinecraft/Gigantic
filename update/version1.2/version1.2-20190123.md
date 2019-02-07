@@ -2,7 +2,7 @@
 :cherry_blossom:  **__整地鯖(春) バージョン1.2 追加アップデート情報(2019/01/23)__** :cherry_blossom:  
 
 
-:homes: お気に入りの場所 :homes:
+:homes: **__お気に入りの場所__** :homes:
 
 :diamond_shape_with_a_dot_inside: ホームポイントが使えるようになりました．  
 :diamond_shape_with_a_dot_inside: レベル6で解除されます．  
@@ -11,7 +11,7 @@
 :diamond_shape_with_a_dot_inside: 右クリックを2回押してホームを削除できます．  
 
 
-:confetti_ball: 夢に見たリソースパック!! :confetti_ball:   
+:confetti_ball: **__夢に見たリソースパック!!__** :confetti_ball:   
 @しろつぶ#4655 氏， @nubasu#0223 氏より，テクスチャを提供頂きました！ありがとうございます！！
 
 :diamond_shape_with_a_dot_inside: テクスチャがかっこよくなりました．  

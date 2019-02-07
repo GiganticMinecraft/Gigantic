@@ -46,6 +46,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var donation by UserTable.donation
 
+    var givenVoteBonus by UserTable.givenVoteBonus
+
     var isOnline by UserTable.isOnline
 
     var autoSwitch by UserTable.autoSwitch

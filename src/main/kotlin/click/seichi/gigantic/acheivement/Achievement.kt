@@ -46,6 +46,12 @@ enum class Achievement(
     FIRST_RELIC(3, {
         Relic.values().firstOrNull { relic -> it.hasRelic(relic) } != null
     }, grantMessage = AchievementMessages.FIRST_RELIC),
+    FIRST_ADVANCED_WILL(4, {
+        Will.values()
+                .filter { it.grade == WillGrade.ADVANCED }
+                .firstOrNull { will -> it.hasAptitude(will) } != null
+    }, grantMessage = AchievementMessages.FIRST_ADVANCED_WILL,
+            priority = UpdatePriority.LOWEST),
 
     //TODO 一度すべてのクエストを隠蔽しているので実装時は一気にやる
     // systems

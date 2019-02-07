@@ -90,7 +90,7 @@ val Player.comboRank: Int
 val Player.vote: Int
     get() = getOrPut(Keys.VOTE)
 
-// 累計投票ポイント(投票数*10)
+// 累計投票ポイント
 val Player.votePoint: Int
     get() = Currency.VOTE_POINT.getAmount(this)
 // 累計
@@ -99,7 +99,7 @@ val Player.pomme: Int
 // 累計寄付額
 val Player.donation: Int
     get() = getOrPut(Keys.DONATION)
-// 累計寄付p (寄付額/100)
+// 累計寄付p
 val Player.donatePoint: Int
     get() = Currency.DONATE_POINT.getAmount(this)
 

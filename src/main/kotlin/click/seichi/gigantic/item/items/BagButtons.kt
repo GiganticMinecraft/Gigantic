@@ -6,17 +6,23 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.database.dao.DonateHistory
 import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.database.table.DonateHistoryTable
+import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.BagMessages
+import click.seichi.gigantic.message.messages.MenuMessages
+import click.seichi.gigantic.message.messages.WillMessages
 import click.seichi.gigantic.message.messages.menu.*
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.DonateTicket
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import click.seichi.gigantic.sound.sounds.WillSpiritSounds
+import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.GameMode
 import org.bukkit.Material
@@ -328,8 +334,8 @@ object BagButtons {
         override fun findItemStack(player: Player): ItemStack? {
             if (!Achievement.FIRST_RELIC.isGranted(player)) return null
             return ItemStack(Material.ENDER_CHEST).apply {
-                    setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
-                            + BagMessages.RELIC.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.RELIC.asSafety(player.wrappedLocale))
                 clearLore()
                 itemMeta = itemMeta.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -432,6 +438,109 @@ object BagButtons {
             if (!Achievement.FIRST_WILL.isGranted(player)) return false
             if (event.inventory.holder === RelicGeneratorMenu) return false
             RelicGeneratorMenu.open(player)
+            return true
+        }
+
+    }
+
+    val VOTE_BONUS = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.GOLDEN_APPLE).apply {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.VOTE_BONUS.asSafety(player.wrappedLocale))
+                clearLore()
+
+                // もし先ほど獲得した特典があればそれを表示
+                player.getOrPut(Keys.GIVEN_WILL_SET)?.forEach { will ->
+                    addLore(WillMessages.GET_ETHEL_TEXT(will, Defaults.VOTE_BONUS_ETHEL).asSafety(player.wrappedLocale))
+                }
+
+                // クリックしたときの動作説明
+                val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
+                val voteNum = player.vote
+                val bonus = voteNum.minus(givenBonus)
+                if (bonus > 0) {
+                    addLore("${ChatColor.GREEN}${ChatColor.UNDERLINE}${ChatColor.BOLD}"
+                            + BagMessages.TAKE_BONUS.asSafety(player.wrappedLocale)
+                            + "($bonus)")
+                } else {
+                    addLore("${ChatColor.GRAY}${ChatColor.UNDERLINE}${ChatColor.BOLD}"
+                            + BagMessages.NO_BONUS.asSafety(player.wrappedLocale))
+                    addLore("${ChatColor.RED}"
+                            + BagMessages.TO_TAKE_BONUS.asSafety(player.wrappedLocale))
+                }
+                addLore(MenuMessages.LINE)
+                // 説明文
+                addLore(BagMessages.VOTE_BONUS_DESCRIPTION.asSafety(player.wrappedLocale))
+                addLore(*BagMessages.VOTE_BONUS_FOR_ALL_PLAYER.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                if (Achievement.FIRST_WILL.isGranted(player)) {
+                    addLore(*BagMessages.VOTE_BONUS_FOR_BASIC_WILL.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                } else {
+                    addLore(BagMessages.VOTE_BONUS_FOR_BASIC_WILL_HIDE.asSafety(player.wrappedLocale))
+                }
+                if (Achievement.FIRST_ADVANCED_WILL.isGranted(player)) {
+                    addLore(*BagMessages.VOTE_BONUS_FOR_ADVANCED_WILL.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                } else {
+                    addLore(BagMessages.VOTE_BONUS_FOR_ADVANCED_WILL_HIDE.asSafety(player.wrappedLocale))
+                }
+                if (Achievement.FIRST_WILL.isGranted(player) || Achievement.FIRST_ADVANCED_WILL.isGranted(player)) {
+                    addLore("")
+                    addLore(*BagMessages.VOTE_BONUS_CAUTION.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                }
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
+            val voteNum = player.vote
+            val bonus = voteNum.minus(givenBonus)
+            // ボーナスが無ければ終了
+            if (bonus <= 0) return false
+            // givenBonusを増やす
+            player.offer(Keys.GIVEN_VOTE_BONUS, givenBonus + 1)
+
+            val givenWillSet = mutableSetOf<Will>()
+            // 特典付与処理
+            // フリー特典は自動付与なので付ける必要なし．
+            // 通常意志特典
+            if (Achievement.FIRST_WILL.isGranted(player)) {
+                val willSet = Will.values()
+                        .filter { it.grade == WillGrade.BASIC }
+                        .filter { player.hasAptitude(it) }
+                        .shuffled(Random.generator)
+                        .take(Defaults.VOTE_BONUS_BASIC_WILL_NUM)
+                        .toSet()
+                givenWillSet.addAll(willSet)
+                willSet.forEach {
+                    it.addEthel(player, Defaults.VOTE_BONUS_ETHEL)
+                    Bukkit.getPluginManager().callEvent(SenseEvent(it, player, Defaults.VOTE_BONUS_ETHEL))
+                }
+            }
+            // 高度意志特典
+            if (Achievement.FIRST_ADVANCED_WILL.isGranted(player)) {
+                val willSet = Will.values()
+                        .filter { it.grade == WillGrade.ADVANCED }
+                        .filter { player.hasAptitude(it) }
+                        .shuffled(Random.generator)
+                        .take(Defaults.VOTE_BONUS_ADVANCED_WILL_NUM)
+                        .toSet()
+                givenWillSet.addAll(willSet)
+                willSet.forEach {
+                    it.addEthel(player, Defaults.VOTE_BONUS_ETHEL)
+                    Bukkit.getPluginManager().callEvent(SenseEvent(it, player, Defaults.VOTE_BONUS_ETHEL))
+                }
+            }
+            player.offer(Keys.GIVEN_WILL_SET, givenWillSet)
+            object : BukkitRunnable() {
+                override fun run() {
+                    if (!player.isValid) return
+                    player.offer(Keys.GIVEN_WILL_SET, null)
+                }
+            }.runTaskLater(Gigantic.PLUGIN, 1L)
+            player.updateBag()
+            player.updateSideBar()
+            WillSpiritSounds.SENSED.playOnly(player)
             return true
         }
 

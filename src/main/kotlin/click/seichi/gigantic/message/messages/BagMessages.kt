@@ -1,6 +1,7 @@
 package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -37,10 +38,6 @@ object BagMessages {
             Locale.JAPANESE to "レリック"
     )
 
-    val NO_RELIC = LocalizedText(
-            Locale.JAPANESE to "レリックがありません"
-    )
-
     val TELEPORT = LocalizedText(
             Locale.JAPANESE to "テレポート"
     )
@@ -52,6 +49,86 @@ object BagMessages {
     val SWITCH_DETAIL_LORE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
                     "\"f\" キー を押してツールを変更"
+    )
+
+    val VOTE_BONUS = LocalizedText(
+            Locale.JAPANESE to "投票特典"
+    )
+
+    val TAKE_BONUS = LocalizedText(
+            Locale.JAPANESE to "クリックして特典を受け取る"
+    )
+
+    val NO_BONUS = LocalizedText(
+            Locale.JAPANESE to "受け取れる特典がありません"
+    )
+
+    val TO_TAKE_BONUS = LocalizedText(
+            Locale.JAPANESE to "反映されない場合はプロフィールを更新して下さい"
+    )
+
+    val VOTE_BONUS_DESCRIPTION = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                    "JMSで投票すると以下の特典が受け取れます"
+    )
+
+
+    val VOTE_BONUS_FOR_ALL_PLAYER = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "- ${ChatColor.WHITE}${ChatColor.BOLD}" +
+                            "${Defaults.VOTE_POINT_PER_VOTE}投票p"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "(エフェクトの購入に使用可能)"
+            )
+    )
+
+    val VOTE_BONUS_FOR_BASIC_WILL = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "- ${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                            "${Defaults.VOTE_BONUS_ETHEL}エーテル x ${Defaults.VOTE_BONUS_BASIC_WILL_NUM}"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "(土･水･火･自然･空の中から${Defaults.VOTE_BONUS_BASIC_WILL_NUM}種類)"
+            )
+    )
+
+    val VOTE_BONUS_FOR_BASIC_WILL_HIDE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                    "- ${ChatColor.YELLOW}" +
+                    "未解禁特典1(一定条件を満たすと解禁)"
+    )
+
+    val VOTE_BONUS_FOR_ADVANCED_WILL = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "- ${ChatColor.LIGHT_PURPLE}" +
+                            "${Defaults.VOTE_BONUS_ETHEL}エーテル x ${Defaults.VOTE_BONUS_ADVANCED_WILL_NUM}"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "(氷･地･風･光･闇の中から${Defaults.VOTE_BONUS_ADVANCED_WILL_NUM}種類)"
+            )
+    )
+
+    val VOTE_BONUS_FOR_ADVANCED_WILL_HIDE = LocalizedText(
+            Locale.JAPANESE to "- ${ChatColor.LIGHT_PURPLE}" +
+                    "未解禁特典2(一定条件を満たすと解禁)"
+    )
+
+    val VOTE_BONUS_CAUTION = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "※エーテルは交感できる意志の中から"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "ランダムに選択されます"
+            )
     )
 
 }

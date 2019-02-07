@@ -174,9 +174,21 @@ object AchievementMessages {
     val FIRST_WILL = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.GRAY}" +
+                        "初めての意志に出会った!!\n" +
                         "ブロックを破壊すると，稀に意志が出現する!!\n" +
                         "意志が出現したら近付いてエーテルを獲得してみよう!!\n" +
-                        "エーテルを100個集めたら，メニューにあるレリック生成器を使って\nレリックを獲得できるぞ!!"
+                        "エーテルを100個集めたら，メニューにあるレリック生成器を使って\nレリックを獲得できるぞ!!\n" +
+                        "${ChatColor.YELLOW}" +
+                        "投票特典が増えた!!"
+            }
+    ))
+
+    val FIRST_ADVANCED_WILL = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.GRAY}" +
+                        "より高度な意志に出会った!!\n" +
+                        "${ChatColor.YELLOW}" +
+                        "投票特典が増えた!!"
             }
     ))
 

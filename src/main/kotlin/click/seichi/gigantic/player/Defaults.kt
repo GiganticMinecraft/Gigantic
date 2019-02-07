@@ -47,4 +47,17 @@ object Defaults {
     val SKY_WALK_AIR_MATERIAL = Material.LIGHT_GRAY_STAINED_GLASS
     val SKY_WALK_WATER_MATERIAL = Material.BLUE_STAINED_GLASS
     val SKY_WALK_LAVA_MATERIAL = Material.RED_STAINED_GLASS
+
+    // 1回の投票でもらえる投票p
+    val VOTE_POINT_PER_VOTE = 10
+
+    // 寄付1p獲得に必要な寄付額
+    val DONATITON_PER_DONATE_POINT = 100
+
+    // 投票特典で1種類につき貰えるエーテル量
+    val VOTE_BONUS_ETHEL = 100L
+    // 投票得点で通常意志をもらえる種類数
+    val VOTE_BONUS_BASIC_WILL_NUM = 3
+    // 投票得点で高度意志をもらえる種類数
+    val VOTE_BONUS_ADVANCED_WILL_NUM = 1
 }

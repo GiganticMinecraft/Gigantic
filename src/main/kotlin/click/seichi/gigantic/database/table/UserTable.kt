@@ -46,6 +46,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val donation = integer("donation").default(0)
 
+    val givenVoteBonus = integer("given_vote_bonus").default(0)
+
     val isOnline = bool("is_online").default(false)
 
     val autoSwitch = bool("auto_switch").default(true)

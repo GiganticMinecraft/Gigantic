@@ -95,6 +95,18 @@ object WillMessages {
         ))
     }
 
+    val GET_ETHEL_TEXT = { will: Will, ethel: Long ->
+        LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "${will.chatColor}${ChatColor.BOLD}" +
+                            will.getName(it) +
+                            "のエーテル($ethel)" +
+                            "${ChatColor.RESET}${ChatColor.WHITE}" +
+                            "を獲得"
+                }
+        )
+    }
+
     val NEXT_RELATIONSHIP = { will: Will, relation: String ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE.let {

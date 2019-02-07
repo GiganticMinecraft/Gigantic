@@ -1122,4 +1122,32 @@ object Keys {
         }
     }
 
+    val GIVEN_VOTE_BONUS = object : DatabaseKey<PlayerCache, Int> {
+        override val default: Int
+            get() = 0
+
+        override fun read(entity: UserEntity): Int {
+            val user = entity.user
+            return user.givenVoteBonus
+        }
+
+        override fun store(entity: UserEntity, value: Int) {
+            val user = entity.user
+            user.givenVoteBonus = value
+        }
+
+        override fun satisfyWith(value: Int): Boolean {
+            return value >= 0
+        }
+    }
+
+    val GIVEN_WILL_SET = object : Key<PlayerCache, Set<Will>?> {
+        override val default: Set<Will>?
+            get() = null
+
+        override fun satisfyWith(value: Set<Will>?): Boolean {
+            return true
+        }
+    }
+
 }
