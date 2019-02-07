@@ -1,7 +1,6 @@
 package click.seichi.gigantic.menu.menus
 
 import click.seichi.gigantic.extension.wrappedLocale
-import click.seichi.gigantic.item.items.menu.BackButton
 import click.seichi.gigantic.item.items.menu.ToolSwitchSettingButtons
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.menu.ToolSwitchMessages
@@ -21,9 +20,9 @@ object ToolSwitchSettingMenu : Menu() {
     }
 
     init {
-        registerButton(0, BackButton(this, SettingMenu))
+//        registerButton(0, BackButton(this, SettingMenu))
         Tool.values().forEachIndexed { index, tool ->
-            registerButton(index + 1, ToolSwitchSettingButtons.TOOL(tool))
+            registerButton(index + 2, ToolSwitchSettingButtons.TOOL(tool))
         }
         registerButton(8, ToolSwitchSettingButtons.AUTO_SWITCH)
     }

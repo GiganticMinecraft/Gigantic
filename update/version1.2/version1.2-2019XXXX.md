@@ -1,12 +1,12 @@
 @here 
-:cherry_blossom:  **__整地鯖(春) バージョン1.2 追加アップデート情報(2019/01/26)__** :cherry_blossom:  
+:cherry_blossom:  **__整地鯖(春) バージョン1.2 追加アップデート情報(2019/02/07)__** :cherry_blossom:  
 
 
 
 :shaved_ice: 世界一高速で走れたとしても、人生を近道することはできないんだよ :shaved_ice:   
-マーベルのヒーロー **クイックシルバー** より
+MARVELの超高速ヒーロー **クイックシルバー** より
 
-:diamond_shape_with_a_dot_inside: 新魔法 **ルナ・フレックス** を追加しました   
+:diamond_shape_with_a_dot_inside: 新補助魔法 **ルナ・フレックス** を追加しました   
 :diamond_shape_with_a_dot_inside: 音速を超える速度で歩くことができます(大嘘)   
 :diamond_shape_with_a_dot_inside: 走ると光速を超えて過去にタイムスリップできます()   
 :diamond_shape_with_a_dot_inside: 移動速度は設定画面で変更できます   
@@ -62,10 +62,11 @@
 :diamond_shape_with_a_dot_inside: スキル「ジャンプ」がスキルメニューになかった不具合  
 :diamond_shape_with_a_dot_inside: 休憩中にホームポイントを設定できてしまう不具合  
 :diamond_shape_with_a_dot_inside: 菌糸ブロックがツール切り替えに対応していなかった不具合  
+:diamond_shape_with_a_dot_inside: レベルアップの表示が2回されていた不具合  
 
 
 
 作成者: tar0ss  
 
-作成日時: 2019/01/26 1:48  
-更新日時: 2019/01/26 1:48
+作成日時: 2019/02/07 23:59  
+更新日時: 2019/02/07 23:59
