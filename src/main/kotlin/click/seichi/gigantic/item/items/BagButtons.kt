@@ -446,6 +446,7 @@ object BagButtons {
                     addLore("${ChatColor.GREEN}${ChatColor.UNDERLINE}${ChatColor.BOLD}"
                             + BagMessages.TAKE_BONUS.asSafety(player.wrappedLocale)
                             + "($bonus)")
+                    setEnchanted(true)
                 } else {
                     addLore("${ChatColor.GRAY}${ChatColor.UNDERLINE}${ChatColor.BOLD}"
                             + BagMessages.NO_BONUS.asSafety(player.wrappedLocale))
