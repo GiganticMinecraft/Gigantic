@@ -371,24 +371,6 @@ object BagButtons {
 
     }
 
-    val TOOL_SWITCH_SETTING = object : Button {
-
-        override fun findItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.LADDER).apply {
-                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
-                        + BagMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
-                setLore(BagMessages.SWITCH_DETAIL_LORE.asSafety(player.wrappedLocale))
-            }
-        }
-
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (event.inventory.holder === ToolSwitchSettingMenu) return false
-            ToolSwitchSettingMenu.open(player)
-            return true
-        }
-
-    }
-
 
     val EFFECT = object : Button {
 
@@ -541,6 +523,29 @@ object BagButtons {
             player.updateBag()
             player.updateSideBar()
             WillSpiritSounds.SENSED.playOnly(player)
+            return true
+        }
+
+    }
+
+    val SETTINGS = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.STONE_BUTTON).apply {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + SettingMenuMessages.TITLE.asSafety(player.wrappedLocale))
+                clearLore()
+                itemMeta = itemMeta.apply {
+                    addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                    addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
+                }
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === SettingMenu) return false
+            SettingMenu.open(player)
             return true
         }
 
