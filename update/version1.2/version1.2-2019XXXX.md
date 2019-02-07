@@ -4,7 +4,7 @@
 
 
 :airplane: __**押すなよ？絶対に押すなよ？**__ :airplane:  
-魔法「スカイ・ウォーク」を改良!!
+魔法「スカイ・ウォーク」を改良しました  
 
 :diamond_shape_with_a_dot_inside: 発動中は水・溶岩の上でも歩けるようになりました    
 :diamond_shape_with_a_dot_inside: ガラスではなく色付きガラスを設置するようになりました  
@@ -14,9 +14,9 @@
 
 :mute: __**先生「みなさんが静かになるまで3分かかりました」**__ :mute:  
 
-:diamond_shape_with_a_dot_inside: ミュート機能を追加しました 
-:diamond_shape_with_a_dot_inside: ミュートしたプレイヤーのチャットは見えなくなります 
-:diamond_shape_with_a_dot_inside: ミュートしたプレイヤーは例えテレポートを許可する設定にしていてもテレポートできません 
+:diamond_shape_with_a_dot_inside: ミュート機能を追加しました  
+:diamond_shape_with_a_dot_inside: ミュートしたプレイヤーのチャットは見えなくなります   
+:diamond_shape_with_a_dot_inside: ミュートしたプレイヤーは例えテレポートを許可する設定にしていてもテレポートできません  
 
 
 :apple: __**投票してください！なんでもしますから！**__ :apple: 
@@ -49,6 +49,7 @@
 :diamond_shape_with_a_dot_inside: スキル「ジャンプ」がスキルメニューになかった不具合  
 :diamond_shape_with_a_dot_inside: 休憩中にホームポイントを設定できてしまう不具合  
 :diamond_shape_with_a_dot_inside: 菌糸ブロックがツール切り替えに対応していなかった不具合  
+
 
 
 作成者: tar0ss  
