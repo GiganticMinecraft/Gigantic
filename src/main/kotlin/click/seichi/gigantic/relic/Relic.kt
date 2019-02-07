@@ -190,8 +190,6 @@ enum class Relic(
 
     fun getIcon() = icon.clone()
 
-    fun has(player: Player) = getDroppedNum(player) > 0
-
     fun getDroppedNum(player: Player) = Keys.RELIC_MAP[this]?.let { player.getOrPut(it) } ?: 0L
 
     fun dropTo(player: Player) {

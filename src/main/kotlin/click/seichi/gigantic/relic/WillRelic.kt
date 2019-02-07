@@ -488,7 +488,7 @@ enum class WillRelic(
 
     companion object {
         fun calcMultiplier(player: Player, block: Block) = values().filter {
-            it.relic.has(player)
+            player.hasRelic(it.relic)
         }.filter {
             it.isBonusTarget(block)
         }.map { it.calcMultiplier(player) }.sum()

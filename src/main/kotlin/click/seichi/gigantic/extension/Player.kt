@@ -18,6 +18,7 @@ import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.util.NoiseData
@@ -140,6 +141,8 @@ val Player.mutes: Int
     get() = getOrPut(Keys.MUTE_SET).size
 
 fun Player.relationship(will: Will) = player.getOrPut(Keys.WILL_RELATIONSHIP_MAP[will]!!)
+
+fun Player.hasRelic(relic: Relic) = relic.getDroppedNum(player) > 0
 
 /**
  * プレイヤーが向いている方向の[BlockFace]を取得する

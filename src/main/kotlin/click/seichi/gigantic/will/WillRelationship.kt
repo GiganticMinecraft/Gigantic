@@ -1,5 +1,6 @@
 package click.seichi.gigantic.will
 
+import click.seichi.gigantic.extension.hasRelic
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.WillMessages
 import click.seichi.gigantic.relic.WillRelic
@@ -37,7 +38,7 @@ enum class WillRelationship(
         fun calcRelationship(player: Player, will: Will): WillRelationship {
 
             // 持っているレリック
-            val pRelicList = relicTypeMap[will]!!.filter { it.relic.has(player) }
+            val pRelicList = relicTypeMap.getValue(will).filter { player.hasRelic(it.relic) }
             val allNum = pRelicList.fold(0L) { source, willRelic ->
                 source + willRelic.relic.getDroppedNum(player)
             }

@@ -44,7 +44,7 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.FIRST_WILL
             , priority = UpdatePriority.LOWEST),
     FIRST_RELIC(3, {
-        Relic.values().firstOrNull { relic -> relic.has(it) } != null
+        Relic.values().firstOrNull { relic -> it.hasRelic(relic) } != null
     }, grantMessage = AchievementMessages.FIRST_RELIC),
 
     //TODO 一度すべてのクエストを隠蔽しているので実装時は一気にやる
