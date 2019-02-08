@@ -13,8 +13,6 @@ object PopUpMessages {
 
     val BATTLE_DAMAGE = { damage: Long -> "${ChatColor.RED}$damage ATK" }
 
-    val LEVEL_UP = { "${ChatColor.AQUA} レベルアップ" }
-
     val MINE_COMBO = { combo: Long, rank: Int ->
         val color = when (rank) {
             1 -> ChatColor.WHITE

@@ -20,8 +20,8 @@ object SettingMenu : Menu() {
 
     init {
         // アクションバーの表示設定
-        registerButton(0, SettingButtons.VISUAL_SETTING)
+        registerButton(0, SettingButtons.DISPLAY_SETTING)
         // ツール切り替え設定
-        registerButton(8, SettingButtons.TOOL_SWITCH_SETTING)
+        registerButton(7, SettingButtons.TOOL_SWITCH_SETTING)
     }
 }

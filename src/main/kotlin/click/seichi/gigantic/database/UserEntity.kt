@@ -7,6 +7,7 @@ import click.seichi.gigantic.database.dao.*
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.monster.SoulMonster
+import click.seichi.gigantic.player.Display
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.tool.Tool
@@ -104,6 +105,15 @@ class UserEntity(uniqueId: UUID, playerName: String) {
                 .firstOrNull() ?: UserEffect.new {
             user = this@UserEntity.user
             effectId = effect.id
+        })
+    }.toMap()
+
+    val userDisplayMap = Display.values().map { display ->
+        display to (UserDisplay
+                .find { (UserDisplayTable.userId eq uniqueId) and (UserDisplayTable.displayId eq display.id) }
+                .firstOrNull() ?: UserDisplay.new {
+            user = this@UserEntity.user
+            displayId = display.id
         })
     }.toMap()
 

@@ -65,4 +65,10 @@ object Defaults {
     val WALK_SPEED = 0.2F
     // ルナフレックスの最大段階
     val LUNA_FLEX_MAX_DEGREE = 10.minus(WALK_SPEED.times(10).toInt())
+
+
+    // コンボの1間隔ごとの最大減少コンボ数
+    val MAX_DECREASE_COMBO_PER_STEP = 100
+    // コンボの最大待ち時間（時間）
+    val MAX_COMBO_CONTINUATION_HOUR = 1
 }

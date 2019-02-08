@@ -13,7 +13,7 @@ object SettingMenuMessages {
             Locale.JAPANESE to "詳細設定"
     )
 
-    val VISUAL = LocalizedText(
+    val DISPLAY = LocalizedText(
             Locale.JAPANESE to "表示設定"
     )
 

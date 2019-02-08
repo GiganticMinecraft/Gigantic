@@ -533,7 +533,7 @@ object BagButtons {
     val SETTINGS = object : Button {
 
         override fun findItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.STONE_BUTTON).apply {
+            return ItemStack(Material.TRIPWIRE_HOOK).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + SettingMenuMessages.TITLE.asSafety(player.wrappedLocale))
                 clearLore()

@@ -103,7 +103,7 @@ enum class GiganticEffect(
     WITCH_SCENT(
             5,
             3 + 9,
-            ItemStack(Material.ENDER_PEARL),
+            ItemStack(Material.CHORUS_PLANT),
             Currency.DONATE_POINT,
             30,
             EffectMessages.WITCH_SCENT,

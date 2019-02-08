@@ -5,6 +5,7 @@ import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.config.Config
+import click.seichi.gigantic.player.Defaults
 import kotlin.properties.Delegates
 
 /**
@@ -61,7 +62,8 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
             }
         } else {
             // コンボ継続不能な場合
-            // 時間経過[COMBO_DECREASE_INTERVAL]秒ごとにコンボ1割減少する(最大で100コンボ減少する)
+            // 時間経過[COMBO_DECREASE_INTERVAL]秒ごとにコンボ1割減少する
+            // (最大で[Defaults.MAX_DECREASE_COMBO_PER_STEP]コンボ減少する)
             // 減少パーセント
             val decreaseRate = elapsedTime.div(1000)
                     .minus(Config.SKILL_MINE_COMBO_CONTINUATION_SECONDS)
@@ -73,13 +75,17 @@ class MineCombo : Manipulator<MineCombo, PlayerCache> {
                     .div(100.0)
                     .times(decreaseRate)
                     .toInt()
-                    .coerceAtMost(100
+                    .coerceAtMost(Defaults.MAX_DECREASE_COMBO_PER_STEP
                             .times(
                                     decreaseRate
                                             .div(Config.SKILL_MINE_COMBO_DECREASE_INTERVAL)
                                             .toInt()
                             ))
-            if (decreaseCombo >= currentCombo) {
+            // 経過時間を取得
+            val elapsedHour = elapsedTime.div(1000 * 60 * 60)
+
+            // [Defaults.MAX_COMBO_CONTINUATION_HOUR]時間後は強制的に終了
+            if (decreaseCombo >= currentCombo || elapsedHour >= Defaults.MAX_COMBO_CONTINUATION_HOUR) {
                 currentCombo = count
             } else {
                 currentCombo -= decreaseCombo

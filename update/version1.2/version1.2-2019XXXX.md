@@ -8,7 +8,10 @@
 :diamond_shape_with_a_dot_inside: 一部の文章が間違っていたため訂正しました
 :diamond_shape_with_a_dot_inside: 死亡時にマナが全て無くなるようになりました  
 :diamond_shape_with_a_dot_inside: マナストーン切り替え時にマナが足りないと警告がでるようになりました
-:diamond_shape_with_a_dot_inside: 魔法 **スカイウォーク** 切り替え時にマナが足りないと警告がでるようになりました  
+:diamond_shape_with_a_dot_inside: 魔法 **スカイ・ウォーク** 切り替え時にマナが足りないと警告がでるようになりました  
+:diamond_shape_with_a_dot_inside: 詳細設定でいくつかの表示を切り替えられるようになりました  
+:diamond_shape_with_a_dot_inside: スキル ** マイン・コンボ**の仕様を少しだけ変更しました  
+:diamond_shape_with_a_dot_inside: 1時間以上コンボが途切れると強制的にコンボがリセットされるようになりました．  
 
 
 :bow: **__不具合修正__** :bow:   

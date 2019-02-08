@@ -20,6 +20,7 @@ import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.menu.RefineItem
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.Display
 import click.seichi.gigantic.player.DonateTicket
 import click.seichi.gigantic.player.Home
 import click.seichi.gigantic.quest.Quest
@@ -1093,7 +1094,6 @@ object Keys {
         }
     }
 
-
     val SPELL_SKY_WALK_PLACE_BLOCKS = object : Key<PlayerCache, Set<Block>> {
         override val default: Set<Block>
             get() = setOf()
@@ -1177,5 +1177,26 @@ object Keys {
             return true
         }
     }
+
+    val DISPLAY_MAP: Map<Display, DatabaseKey<PlayerCache, Boolean>> = Display.values().map { display ->
+        display to object : DatabaseKey<PlayerCache, Boolean> {
+            override val default: Boolean
+                get() = true
+
+            override fun read(entity: UserEntity): Boolean {
+                val userDisplay = entity.userDisplayMap.getValue(display)
+                return userDisplay.isDisplay
+            }
+
+            override fun store(entity: UserEntity, value: Boolean) {
+                val userDisplay = entity.userDisplayMap.getValue(display)
+                userDisplay.isDisplay = value
+            }
+
+            override fun satisfyWith(value: Boolean): Boolean {
+                return true
+            }
+        }
+    }.toMap()
 
 }
