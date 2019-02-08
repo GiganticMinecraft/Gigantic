@@ -63,9 +63,9 @@ object Defaults {
     val VOTE_BONUS_ADVANCED_WILL_NUM = 1
 
     // 標準の移動速度
-    val WALK_SPEED = 0.2F
+    val WALK_SPEED = 0.2.toBigDecimal()
     // ルナフレックスの最大段階
-    val LUNA_FLEX_MAX_DEGREE = 10.minus(WALK_SPEED.times(10).toInt())
+    val LUNA_FLEX_MAX_DEGREE = 10.minus(WALK_SPEED.times(10.toBigDecimal()).toInt())
 
 
     // コンボの1間隔ごとの最大減少コンボ数

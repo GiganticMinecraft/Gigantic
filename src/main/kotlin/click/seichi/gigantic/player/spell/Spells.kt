@@ -191,19 +191,19 @@ object Spells {
                 if (p.gameMode != GameMode.SURVIVAL ||
                         !player.hasMana()) {
                     // 移動速度補正
-                    if (p.walkSpeed != Defaults.WALK_SPEED)
-                        p.walkSpeed = Defaults.WALK_SPEED
+                    if (p.walkSpeed != Defaults.WALK_SPEED.toFloat())
+                        p.walkSpeed = Defaults.WALK_SPEED.toFloat()
                     return@Consumer
                 }
 
                 //移動速度補正
-                if (p.walkSpeed != p.getOrPut(Keys.WALK_SPEED))
-                    p.walkSpeed = p.getOrPut(Keys.WALK_SPEED)
+                if (p.walkSpeed != p.getOrPut(Keys.WALK_SPEED).toFloat())
+                    p.walkSpeed = p.getOrPut(Keys.WALK_SPEED).toFloat()
 
                 // 段階を取得
                 val degree = p.getOrPut(Keys.WALK_SPEED)
                         .minus(Defaults.WALK_SPEED)
-                        .times(10)
+                        .times(10.toBigDecimal())
                         .toInt()
                         .coerceIn(0..Defaults.LUNA_FLEX_MAX_DEGREE)
 

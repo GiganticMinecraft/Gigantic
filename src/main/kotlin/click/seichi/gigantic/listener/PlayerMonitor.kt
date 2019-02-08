@@ -50,7 +50,7 @@ class PlayerMonitor : Listener {
         player.saturation = Float.MAX_VALUE
         player.foodLevel = 20
         // デフォルトのスピードに設定
-        player.walkSpeed = player.getOrPut(Keys.WALK_SPEED)
+        player.walkSpeed = player.getOrPut(Keys.WALK_SPEED).toFloat()
 
         // 安全な位置にテレポート
         if (player.location.block.getRelative(BlockFace.DOWN).isAir) {

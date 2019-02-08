@@ -237,7 +237,7 @@ object SpellSettingButtons {
             return ItemStack(Material.SUGAR).apply {
                 val degree = player.getOrPut(Keys.WALK_SPEED)
                         .minus(Defaults.WALK_SPEED)
-                        .times(10)
+                        .times(10.toBigDecimal())
                         .toInt()
                         .coerceIn(0..Defaults.LUNA_FLEX_MAX_DEGREE)
                 val consumeManaPerBlock = degree.toDouble()
@@ -266,7 +266,7 @@ object SpellSettingButtons {
             return ItemStack(Material.ORANGE_STAINED_GLASS_PANE).apply {
                 val degree = player.getOrPut(Keys.WALK_SPEED)
                         .minus(Defaults.WALK_SPEED)
-                        .times(10)
+                        .times(10.toBigDecimal())
                         .toInt()
                         .coerceIn(0..Defaults.LUNA_FLEX_MAX_DEGREE)
                 setDisplayName(SpellSettingMenuMessages.BIGGER_DEGREE(degree).asSafety(player.wrappedLocale))
@@ -280,13 +280,13 @@ object SpellSettingButtons {
             if (!Spell.LUNA_FLEX.isGranted(player)) return false
             val degree = player.getOrPut(Keys.WALK_SPEED)
                     .minus(Defaults.WALK_SPEED)
-                    .times(10)
+                    .times(10.toBigDecimal())
                     .toInt()
                     .coerceIn(0..Defaults.LUNA_FLEX_MAX_DEGREE)
             if (degree >= Defaults.LUNA_FLEX_MAX_DEGREE) return false
             player.transform(Keys.WALK_SPEED) {
-                it.plus(0.1F).coerceAtMost(1.0F).apply {
-                    player.walkSpeed = this
+                it.plus(0.1.toBigDecimal()).coerceAtMost(1.0.toBigDecimal()).apply {
+                    player.walkSpeed = this.toFloat()
                 }
             }
             PlayerSounds.TOGGLE.playOnly(player)
@@ -301,7 +301,7 @@ object SpellSettingButtons {
             return ItemStack(Material.PINK_STAINED_GLASS_PANE).apply {
                 val degree = player.getOrPut(Keys.WALK_SPEED)
                         .minus(Defaults.WALK_SPEED)
-                        .times(10)
+                        .times(10.toBigDecimal())
                         .toInt()
                         .coerceIn(0..Defaults.LUNA_FLEX_MAX_DEGREE)
                 setDisplayName(SpellSettingMenuMessages.SMALLER_DEGREE(degree).asSafety(player.wrappedLocale))
@@ -312,13 +312,13 @@ object SpellSettingButtons {
             if (!Spell.LUNA_FLEX.isGranted(player)) return false
             val degree = player.getOrPut(Keys.WALK_SPEED)
                     .minus(Defaults.WALK_SPEED)
-                    .times(10)
+                    .times(10.toBigDecimal())
                     .toInt()
                     .coerceIn(0..Defaults.LUNA_FLEX_MAX_DEGREE)
             if (degree <= 0) return false
             player.transform(Keys.WALK_SPEED) {
-                it.minus(0.1F).coerceAtLeast(Defaults.WALK_SPEED).apply {
-                    player.walkSpeed = this
+                it.minus(0.1.toBigDecimal()).coerceAtLeast(Defaults.WALK_SPEED).apply {
+                    player.walkSpeed = this.toFloat()
                 }
             }
             PlayerSounds.TOGGLE.playOnly(player)

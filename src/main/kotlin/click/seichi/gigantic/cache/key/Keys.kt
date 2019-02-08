@@ -1150,22 +1150,22 @@ object Keys {
         }
     }
 
-    val WALK_SPEED = object : DatabaseKey<PlayerCache, Float> {
-        override val default: Float
+    val WALK_SPEED = object : DatabaseKey<PlayerCache, BigDecimal> {
+        override val default: BigDecimal
             get() = Defaults.WALK_SPEED
 
-        override fun read(entity: UserEntity): Float {
+        override fun read(entity: UserEntity): BigDecimal {
             val user = entity.user
             return user.walkSpeed
         }
 
-        override fun store(entity: UserEntity, value: Float) {
+        override fun store(entity: UserEntity, value: BigDecimal) {
             val user = entity.user
             user.walkSpeed = value
         }
 
-        override fun satisfyWith(value: Float): Boolean {
-            return value in 0.2F..1.0F
+        override fun satisfyWith(value: BigDecimal): Boolean {
+            return value in 0.2.toBigDecimal()..1.0.toBigDecimal()
         }
     }
 
