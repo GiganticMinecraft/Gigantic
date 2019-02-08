@@ -59,7 +59,7 @@ MARVELの超高速ヒーロー **クイックシルバー** より
 :diamond_shape_with_a_dot_inside: マナストーン切り替え時にマナが足りないと警告がでるようになりました(追記:2019/02/08 22:25)  
 :diamond_shape_with_a_dot_inside: 魔法 **スカイ・ウォーク** 切り替え時にマナが足りないと警告がでるようになりました(追記:2019/02/08 22:25)   
 :diamond_shape_with_a_dot_inside: 詳細設定でいくつかの表示を切り替えられるようになりました(追記:2019/02/08 22:25)  
-:diamond_shape_with_a_dot_inside: スキル ** マイン・コンボ**の仕様を少しだけ変更しました(追記:2019/02/08 22:25)  
+:diamond_shape_with_a_dot_inside: スキル **マイン・コンボ**の仕様を少しだけ変更しました(追記:2019/02/08 22:25)  
 :diamond_shape_with_a_dot_inside: 1時間以上コンボが途切れると強制的にコンボがリセットされるようになりました(追記:2019/02/08 22:25)  
 :diamond_shape_with_a_dot_inside: tipsを実装しました(追記:2019/02/08 22:25)  
 

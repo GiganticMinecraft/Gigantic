@@ -58,7 +58,10 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "整地鯖(春)に関するお問い合わせを\nギガンティック☆整地鯖運営チームに行わないでください。" +
+                            "整地鯖(春)に関するお問い合わせを" +
+                            LinedChatMessage.NEW_LINE_SYMBOL + Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "ギガンティック☆整地鯖運営チームに行わないでください。" +
                             LinedChatMessage.NEW_LINE_SYMBOL + Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
                             "整地鯖(春)に関するご質問は" +
