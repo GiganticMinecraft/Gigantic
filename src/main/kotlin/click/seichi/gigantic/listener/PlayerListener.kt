@@ -13,6 +13,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.Defaults
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -62,8 +63,15 @@ class PlayerListener : Listener {
         }
         // 全ての設置ブロックを削除
         player.getOrPut(Keys.SPELL_SKY_WALK_PLACE_BLOCKS).apply {
-            forEach {
-                it.type = Material.AIR
+            forEach { block ->
+                // TODO sky walk 側が持つべき
+                if (block.isCondensedWaters || block.isCondensedLavas) return
+                block.type = when (block.type) {
+                    Defaults.SKY_WALK_WATER_MATERIAL -> Material.WATER
+                    Defaults.SKY_WALK_LAVA_MATERIAL -> Material.LAVA
+                    else -> Material.AIR
+                }
+                block.setTorchIfNeeded()
             }
             Gigantic.SKILLED_BLOCK_SET.removeAll(this)
         }
@@ -176,6 +184,7 @@ class PlayerListener : Listener {
             DeathMessages.DEATH_TELEPORT.sendTo(player)
         }
 
+
         player.manipulate(CatalogPlayerCache.LEVEL) { level ->
             player.manipulate(CatalogPlayerCache.EXP) {
                 val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: BigDecimal.ZERO
@@ -193,6 +202,8 @@ class PlayerListener : Listener {
             }
         }
 
+
+
         player.updateLevel()
         player.updateDisplay(true, true)
     }
@@ -200,11 +211,22 @@ class PlayerListener : Listener {
     @EventHandler
     fun onReSpawn(event: PlayerRespawnEvent) {
         val player = event.player ?: return
+
+
         Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
             if (!player.isValid) return@scheduleSyncDelayedTask
+
+            // HPを3割にする
             player.health = 6.0
             player.updateDisplay(true, true)
+
+            // マナをゼロにする
+            player.manipulate(CatalogPlayerCache.MANA) {
+                it.set(BigDecimal.ZERO)
+            }
+            PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
         }, 1L)
+
     }
 
     @EventHandler

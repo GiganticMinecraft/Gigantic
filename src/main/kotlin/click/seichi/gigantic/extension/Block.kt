@@ -4,6 +4,7 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.breaker.Cutter
 import click.seichi.gigantic.config.Config
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.util.Random
 import org.bukkit.Effect
@@ -284,6 +285,15 @@ val NETHERS = setOf(
         Material.GLOWSTONE
 )
 
+val CONDENSED_WATERS = setOf(
+        Material.PRISMARINE,
+        Material.PRISMARINE_BRICKS
+)
+
+val CONDENSED_LAVAS = setOf(
+        Material.MAGMA_BLOCK
+)
+
 // Not contain log blocks
 val Block.isCrust
     get() = CRUSTS.contains(type)
@@ -327,6 +337,12 @@ val Block.isStone
 val Block.isNether
     get() = NETHERS.contains(type)
 
+val Block.isCondensedWaters
+    get() = CONDENSED_WATERS.contains(type)
+
+val Block.isCondensedLavas
+    get() = CONDENSED_LAVAS.contains(type)
+
 val Block.isSurface
     get() = if (isAir) false
     else (1..3).firstOrNull {
@@ -344,6 +360,8 @@ fun Block.update() {
 
     condenseRelativeLiquid()
 
+    condenseRelativeSkyWalkBlock()
+
     // 最悪空中に残ってしまった時のために，ここで保険
     clearRelativeFloatingBlock()
 
@@ -357,6 +375,7 @@ fun Block.update(others: Set<Block>) {
     if (others.isEmpty()) return
     others.forEach { it.changeRelativeBedrock() }
     others.forEach { it.condenseRelativeLiquid() }
+    others.forEach { it.condenseRelativeSkyWalkBlock() }
     others.forEach { it.clearRelativeFloatingBlock() }
     val xzMap = others.groupBy { Pair(it.x, it.z) }
 
@@ -474,6 +493,34 @@ fun Block.condenseLiquid(playSound: Boolean = true) {
             if (playSound)
                 PlayerSounds.ON_CONDENSE_LAVA.play(centralLocation)
             type = Material.MAGMA_BLOCK
+        }
+    }
+}
+
+private fun Block.condenseRelativeSkyWalkBlock() {
+    faceSet.map { getRelative(it) }
+            .filter { Gigantic.SKILLED_BLOCK_SET.contains(it) }
+            .forEach {
+                it.condenseSkyWalkBlock()
+            }
+
+}
+
+fun Block.condenseSkyWalkBlock(playSound: Boolean = true) {
+    if (type != Defaults.SKY_WALK_WATER_MATERIAL &&
+            type != Defaults.SKY_WALK_LAVA_MATERIAL) return
+    when (type) {
+        Defaults.SKY_WALK_WATER_MATERIAL -> {
+            if (playSound)
+                PlayerSounds.ON_CONDENSE_WATER.play(centralLocation)
+            type = nextCondenseMaterial()
+        }
+        Defaults.SKY_WALK_LAVA_MATERIAL -> {
+            if (playSound)
+                PlayerSounds.ON_CONDENSE_LAVA.play(centralLocation)
+            type = Material.MAGMA_BLOCK
+        }
+        else -> {
         }
     }
 }

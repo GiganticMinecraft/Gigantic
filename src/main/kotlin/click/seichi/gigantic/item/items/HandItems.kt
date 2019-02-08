@@ -7,6 +7,7 @@ import click.seichi.gigantic.enchantment.ToolEnchantment
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.HandItem
 import click.seichi.gigantic.message.messages.HookedItemMessages
+import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.sound.sounds.PlayerSounds
@@ -168,12 +169,21 @@ object HandItems {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
                 setCoolTime(uniqueId, false)
             }, 5L)
-            player.transform(Keys.SPELL_TOGGLE) { spellToggle ->
-                val next = !spellToggle
-                if (next) SpellSounds.TOGGLE_ON.playOnly(player)
-                else SpellSounds.TOGGLE_OFF.playOnly(player)
-                next
+
+            // マナがない場合は強制的にOFF
+            if (!player.hasMana()) {
+                PlayerMessages.NO_MANA.sendTo(player)
+                player.offer(Keys.SPELL_TOGGLE, false)
+                PlayerSounds.FAIL.playOnly(player)
+            } else {
+                player.transform(Keys.SPELL_TOGGLE) { spellToggle ->
+                    val next = !spellToggle
+                    if (next) SpellSounds.TOGGLE_ON.playOnly(player)
+                    else SpellSounds.TOGGLE_OFF.playOnly(player)
+                    next
+                }
             }
+
             player.updateBelt(false, true)
             return true
         }
@@ -300,8 +310,15 @@ object HandItems {
                     coolMap[player.uniqueId] = false
                 }
             }.runTaskLater(Gigantic.PLUGIN, 5L)
-            player.transform(Keys.SPELL_SKY_WALK_TOGGLE) { !it }
-            PlayerSounds.TOGGLE.playOnly(player)
+            // マナがない場合は強制的にOFF
+            if (!player.hasMana()) {
+                PlayerMessages.NO_MANA.sendTo(player)
+                player.offer(Keys.SPELL_TOGGLE, false)
+                PlayerSounds.FAIL.playOnly(player)
+            } else {
+                player.transform(Keys.SPELL_SKY_WALK_TOGGLE) { !it }
+                PlayerSounds.TOGGLE.playOnly(player)
+            }
             player.updateBelt(false, false)
             return true
         }

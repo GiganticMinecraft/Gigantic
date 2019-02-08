@@ -166,8 +166,8 @@ class MultiBreaker : Miner(), SpellCaster {
                 // 先にブロックを変換
                 forEach {
                     it.changeBedrock()
-                    it.changeCrustBlock()
                     it.condenseLiquid(false)
+                    it.condenseSkyWalkBlock(false)
                 }
             }.filter {
                 // 種類の制約

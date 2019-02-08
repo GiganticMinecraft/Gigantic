@@ -59,7 +59,7 @@ object Spells {
 
     val MULTI_BREAK = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!player.hasMana(BigDecimal.ZERO)) return null
+            if (!player.hasMana()) return null
             if (player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA).calcBreakNum() <= 1) return null
             val base = player.getOrPut(Keys.BREAK_BLOCK) ?: return null
             val breakBlockSet = MultiBreaker.calcBreakBlockSet(player, base)
@@ -82,7 +82,7 @@ object Spells {
                 if (p.gameMode != GameMode.SURVIVAL ||
                         p.isSneaking ||
                         !p.getOrPut(Keys.SPELL_SKY_WALK_TOGGLE) ||
-                        !player.hasMana(BigDecimal.ZERO)) {
+                        !player.hasMana()) {
                     Gigantic.SKILLED_BLOCK_SET.removeAll(prevSet)
                     prevSet.forEach { block ->
                         revert(block)
@@ -128,6 +128,7 @@ object Spells {
         }
 
         fun revert(block: Block) {
+            if (block.isCondensedWaters || block.isCondensedLavas) return
             block.type = when (block.type) {
                 Defaults.SKY_WALK_WATER_MATERIAL -> Material.WATER
                 Defaults.SKY_WALK_LAVA_MATERIAL -> Material.LAVA
@@ -188,9 +189,17 @@ object Spells {
 
                 // サバイバルでないまたはマナがない時終了
                 if (p.gameMode != GameMode.SURVIVAL ||
-                        !player.hasMana(BigDecimal.ZERO)) {
+                        !player.hasMana()) {
+                    // 移動速度補正
+                    if (p.walkSpeed != Defaults.WALK_SPEED)
+                        p.walkSpeed = Defaults.WALK_SPEED
                     return@Consumer
                 }
+
+                //移動速度補正
+                if (p.walkSpeed != p.getOrPut(Keys.WALK_SPEED))
+                    p.walkSpeed = p.getOrPut(Keys.WALK_SPEED)
+
                 // 段階を取得
                 val degree = p.getOrPut(Keys.WALK_SPEED)
                         .minus(Defaults.WALK_SPEED)

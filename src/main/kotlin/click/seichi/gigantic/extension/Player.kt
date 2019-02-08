@@ -108,7 +108,7 @@ val Player.effect: GiganticEffect
 
 fun Player.isMaxMana() = mana >= maxMana
 
-fun Player.hasMana(other: BigDecimal) = mana >= other
+fun Player.hasMana() = mana > BigDecimal.ZERO
 
 fun Player.hasAptitude(will: Will) = getOrPut(Keys.APTITUDE_MAP[will]!!)
 
