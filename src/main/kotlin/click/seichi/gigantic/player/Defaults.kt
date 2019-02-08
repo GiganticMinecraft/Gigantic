@@ -71,4 +71,8 @@ object Defaults {
     val MAX_DECREASE_COMBO_PER_STEP = 100
     // コンボの最大待ち時間（時間）
     val MAX_COMBO_CONTINUATION_HOUR = 1
+
+    // tipsを流す間隔(分)
+    val TIPS_INTERVAL = 5L
+
 }

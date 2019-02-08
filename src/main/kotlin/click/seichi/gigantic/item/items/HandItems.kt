@@ -313,7 +313,7 @@ object HandItems {
             // マナがない場合は強制的にOFF
             if (!player.hasMana()) {
                 PlayerMessages.NO_MANA.sendTo(player)
-                player.offer(Keys.SPELL_TOGGLE, false)
+                player.offer(Keys.SPELL_SKY_WALK_TOGGLE, false)
                 PlayerSounds.FAIL.playOnly(player)
             } else {
                 player.transform(Keys.SPELL_SKY_WALK_TOGGLE) { !it }

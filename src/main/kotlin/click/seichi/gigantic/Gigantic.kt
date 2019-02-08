@@ -48,6 +48,13 @@ class Gigantic : JavaPlugin() {
             private set
         var IS_DEBUG: Boolean by Delegates.notNull()
             private set
+        /**
+         * ONにするとすべてのプレイヤーが近くのブロックを掘れるようになる
+         *
+         * コマンドでOn/Off可能
+         * 主に放送中に使用
+         *
+         */
         var IS_LIVE = false
 
         val DEFAULT_LOCALE = Locale.JAPANESE!!
@@ -101,7 +108,8 @@ class Gigantic : JavaPlugin() {
                 WillListener(),
                 AchievementListener(),
                 SpellListener(),
-                ChatListener()
+                ChatListener(),
+                TipsListener()
         )
 
         registerPacketListeners(
