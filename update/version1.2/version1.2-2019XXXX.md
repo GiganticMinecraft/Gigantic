@@ -12,6 +12,7 @@
 :diamond_shape_with_a_dot_inside: 詳細設定でいくつかの表示を切り替えられるようになりました  
 :diamond_shape_with_a_dot_inside: スキル ** マイン・コンボ**の仕様を少しだけ変更しました  
 :diamond_shape_with_a_dot_inside: 1時間以上コンボが途切れると強制的にコンボがリセットされるようになりました．  
+:diamond_shape_with_a_dot_inside: tipsを実装しました．  
 
 
 :bow: **__不具合修正__** :bow:   

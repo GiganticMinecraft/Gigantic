@@ -1,5 +1,6 @@
 package click.seichi.gigantic.player
 
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
@@ -72,7 +73,6 @@ object Defaults {
     // コンボの最大待ち時間（時間）
     val MAX_COMBO_CONTINUATION_HOUR = 1
 
-    // tipsを流す間隔(分)
-    val TIPS_INTERVAL = 5L
+    val TIPS_PREFIX = "${ChatColor.YELLOW}" + "[TIPS] " + "${ChatColor.RESET}"
 
 }

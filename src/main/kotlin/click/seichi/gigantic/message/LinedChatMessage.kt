@@ -18,14 +18,12 @@ class LinedChatMessage(
         const val NEW_LINE_SYMBOL = "%NEW_LINE%"
     }
 
-    private val instance by lazy { Gigantic.PLUGIN }
-
     override fun sendTo(player: Player) = messageText.asSafety(player.wrappedLocale)
             .split(NEW_LINE_SYMBOL)
             .mapIndexed { index, text -> text to interval * index }
             .forEach {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(
-                        instance,
+                        Gigantic.PLUGIN,
                         { if (player.isValid) protocol.sendTo(player, it.first) },
                         it.second
                 )

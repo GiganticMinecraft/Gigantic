@@ -1,8 +1,8 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.message.Tips
-import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.util.Random
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
@@ -20,7 +20,7 @@ class TipsListener : Listener {
 
     @EventHandler
     fun onTick(event: TickEvent) {
-        if (event.ticks.plus(10) % 20L.times(60L).times(Defaults.TIPS_INTERVAL) != 0L) return
+        if (event.ticks.plus(10) % 20L.times(60L).times(Config.TIPS_INTERVAL) != 0L) return
         // 一定間隔で呼び出す
 
         // 全て消費したら補充
@@ -35,7 +35,7 @@ class TipsListener : Listener {
         val message = tips[nextIndex]
 
         Bukkit.getServer().onlinePlayers
-                .filterNot { it.isValid }
+                .filter { it.isValid }
                 .forEach { player ->
                     message.sendTo(player)
                 }

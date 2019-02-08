@@ -1,3 +1,6 @@
+tips:
+  interval: 5
+
 player:
   # 死亡時に失う経験値割合(%)
   # ex)

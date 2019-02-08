@@ -5,6 +5,8 @@ package click.seichi.gigantic.config
  */
 object Config : SimpleConfiguration("config") {
 
+    val TIPS_INTERVAL by lazy { getLong("tips.interval") }
+
     val WORLD_SIDE_LENGTH by lazy { getDouble("world.side_length") }
 
     val PLAYER_DEATH_PENALTY by lazy { getDouble("player.death_penalty") }
