@@ -54,6 +54,15 @@ MARVELの超高速ヒーロー **クイックシルバー** より
 :diamond_shape_with_a_dot_inside: エフェクト「フレイム」の細かい視覚効果を変更しました．  
 :diamond_shape_with_a_dot_inside: ログインしたときに足場が存在しなければ自動でテレポートするようになりました  
 :diamond_shape_with_a_dot_inside: 休憩時の音を追加しました  
+:diamond_shape_with_a_dot_inside: 一部の文章が間違っていたため訂正しました(追記:2019/02/08 22:25)  
+:diamond_shape_with_a_dot_inside: 死亡時にマナが全て無くなるようになりました(追記:2019/02/08 22:25)  
+:diamond_shape_with_a_dot_inside: マナストーン切り替え時にマナが足りないと警告がでるようになりました(追記:2019/02/08 22:25)  
+:diamond_shape_with_a_dot_inside: 魔法 **スカイ・ウォーク** 切り替え時にマナが足りないと警告がでるようになりました(追記:2019/02/08 22:25)   
+:diamond_shape_with_a_dot_inside: 詳細設定でいくつかの表示を切り替えられるようになりました(追記:2019/02/08 22:25)  
+:diamond_shape_with_a_dot_inside: スキル ** マイン・コンボ**の仕様を少しだけ変更しました(追記:2019/02/08 22:25)  
+:diamond_shape_with_a_dot_inside: 1時間以上コンボが途切れると強制的にコンボがリセットされるようになりました(追記:2019/02/08 22:25)  
+:diamond_shape_with_a_dot_inside: tipsを実装しました(追記:2019/02/08 22:25)  
+
 
 
 :bow: **__不具合修正__** :bow:   
@@ -63,10 +72,13 @@ MARVELの超高速ヒーロー **クイックシルバー** より
 :diamond_shape_with_a_dot_inside: 休憩中にホームポイントを設定できてしまう不具合  
 :diamond_shape_with_a_dot_inside: 菌糸ブロックがツール切り替えに対応していなかった不具合  
 :diamond_shape_with_a_dot_inside: レベルアップの表示が2回されていた不具合  
+:diamond_shape_with_a_dot_inside: 魔法 **スカイ・ウォーク** で変化しているブロックが水成・火成を無視してしまう不具合(追記:2019/02/08 22:25)  
+:diamond_shape_with_a_dot_inside: 魔法 **スカイ・ウォーク** を発動しながらログアウトすると水や溶岩が消えてしまう不具合(追記:2019/02/08 22:25)  
+:diamond_shape_with_a_dot_inside: 魔法 **スカイ・ウォーク** を発動したままサーバー再起動すると水や溶岩が消えてしまう不具合(追記:2019/02/08 22:25)  
 
 
 
 作成者: tar0ss  
 
 作成日時: 2019/02/08 0:03  
-更新日時: 2019/02/08 0:03
+更新日時: 2019/02/08 22:25
