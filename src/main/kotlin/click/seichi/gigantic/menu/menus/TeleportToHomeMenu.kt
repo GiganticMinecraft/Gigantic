@@ -139,7 +139,7 @@ object TeleportToHomeMenu : Menu() {
                         PlayerSounds.TOGGLE.playOnly(player)
                     } else {
                         // クリックでテレポート
-                        player.teleport(home.location)
+                        player.teleportSafely(home.location)
                         PlayerSounds.TELEPORT.play(home.location)
                     }
                     reopen(player)

@@ -99,7 +99,7 @@ object Skills {
                     }
                     if (tpLocation != null) {
                         SkillAnimations.FLASH_FIRE.start(p.location)
-                        p.teleport(tpLocation)
+                        p.teleportSafely(tpLocation)
                         SkillAnimations.FLASH_FIRE.start(p.location)
                         SkillSounds.FLASH_FIRE.play(p.location)
                     } else {

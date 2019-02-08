@@ -55,7 +55,7 @@ class PlayerMonitor : Listener {
         // 安全な位置にテレポート
         if (player.location.block.getRelative(BlockFace.DOWN).isAir) {
             player.location.chunk.getSpawnableLocation().let {
-                player.teleport(it)
+                player.teleportSafely(it)
             }
         }
 

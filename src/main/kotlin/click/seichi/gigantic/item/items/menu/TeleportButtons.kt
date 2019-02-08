@@ -96,7 +96,7 @@ object TeleportButtons {
             if (!chunk.isLoaded) {
                 if (chunk.load(true)) return true
             }
-            player.teleport(location!!)
+            player.teleportSafely(location!!)
             PlayerSounds.TELEPORT.play(location)
             return true
         }
@@ -138,7 +138,7 @@ object TeleportButtons {
                 PlayerSounds.FAIL.playOnly(player)
                 return true
             }
-            player.teleport(location)
+            player.teleportSafely(location!!)
             if (player.gameMode == GameMode.SURVIVAL)
                 PlayerSounds.TELEPORT.play(location!!)
             player.offer(Keys.LAST_DEATH_CHUNK, null)
@@ -241,7 +241,7 @@ object TeleportButtons {
                 if (to.gameMode != GameMode.SURVIVAL) return false
                 if (to.world != player.world) return false
                 if (to.isFlying) return false
-                player.teleport(to)
+                player.teleportSafely(to.location)
                 // 休憩中にテレポートするときは音を消すため条件付き
                 if (player.gameMode == GameMode.SURVIVAL)
                     PlayerSounds.TELEPORT.play(to.location)
@@ -260,7 +260,7 @@ object TeleportButtons {
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
-            player.teleport(player.world.spawnLocation)
+            player.teleportSafely(player.world.spawnLocation)
             if (player.gameMode == GameMode.SURVIVAL)
                 PlayerSounds.TELEPORT.play(player.world.spawnLocation)
             return true
@@ -297,7 +297,7 @@ object TeleportButtons {
                 PlayerSounds.FAIL.playOnly(player)
                 return true
             }
-            player.teleport(location)
+            player.teleportSafely(location!!)
             if (player.gameMode == GameMode.SURVIVAL)
                 PlayerSounds.TELEPORT.play(location!!)
             return true

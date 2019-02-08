@@ -261,7 +261,7 @@ object BagButtons {
                 GameMode.SPECTATOR -> {
                     player.gameMode = GameMode.SURVIVAL
                     if (afkLocation != null) {
-                        player.teleport(afkLocation)
+                        player.teleportSafely(afkLocation)
                     }
                     player.closeInventory()
                     player.updateBag()

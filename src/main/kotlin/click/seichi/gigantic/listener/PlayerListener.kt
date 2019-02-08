@@ -79,7 +79,7 @@ class PlayerListener : Listener {
 
         if (player.gameMode == GameMode.SPECTATOR) {
             player.getOrPut(Keys.AFK_LOCATION)?.let {
-                player.teleport(it)
+                player.teleportSafely(it)
             }
             player.gameMode = GameMode.SURVIVAL
         }
