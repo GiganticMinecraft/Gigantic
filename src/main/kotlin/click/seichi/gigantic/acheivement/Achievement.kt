@@ -6,7 +6,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.message.ChatMessage
+import click.seichi.gigantic.message.LinedChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.relic.Relic
@@ -26,7 +26,7 @@ enum class Achievement(
         private val canGranting: (Player) -> Boolean,
         // アンロック時に処理される
         val action: (Player) -> Unit = {},
-        val grantMessage: ChatMessage? = null,
+        val grantMessage: LinedChatMessage? = null,
         private val priority: UpdatePriority = UpdatePriority.NORMAL
 ) {
     // messages
@@ -315,35 +315,24 @@ enum class Achievement(
     companion object {
         // 強制的にプレイヤー表示部分を更新したい場合は[isForced]をtrueに設定
         fun update(player: Player, isForced: Boolean = false) {
-            var isChanged = false
+            var isGranted = false
+            var delay = 0L
             values().sortedBy { it.priority.amount }
-                    .forEach {
-                        if (it.update(player)) {
-                            isChanged = true
-                        }
+                    .filter { it.canGrant(player) && !it.isGranted(player) }
+                    .apply {
+                        if (isNotEmpty()) isGranted = true
+                    }.forEach {
+                        object : BukkitRunnable() {
+                            override fun run() {
+                                it.grant(player)
+                            }
+                        }.runTaskLater(Gigantic.PLUGIN, delay)
+                        // メッセージ終了まで待機 + メッセージ間隔用45L
+                        delay += it.grantMessage?.duration?.plus(45L) ?: 0L
                     }
-            if (!isChanged && !isForced) return
+            if (!isGranted && !isForced) return
             player.updateDisplay(true, true)
         }
-    }
-
-
-    private fun update(player: Player): Boolean {
-        var isChanged = false
-        if (canGrant(player)) {
-            if (!isGranted(player)) {
-                // 現在も解除可能で解除していない時
-                grant(player)
-                isChanged = true
-            }
-        } else {
-            if (isGranted(player)) {
-                // 現在解除できないがすでに解除しているとき
-                revoke(player)
-                isChanged = true
-            }
-        }
-        return isChanged
     }
 
     // 与える
@@ -360,14 +349,6 @@ enum class Achievement(
                 }.runTaskLater(Gigantic.PLUGIN, 1L)
             }
             true
-        }
-    }
-
-    // はく奪する
-    private fun revoke(player: Player) {
-        // ロック処理
-        player.transform(Keys.ACHIEVEMENT_MAP[this] ?: return) {
-            false
         }
     }
 

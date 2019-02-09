@@ -1,8 +1,8 @@
 package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.config.Config
-import click.seichi.gigantic.message.ChatMessage
 import click.seichi.gigantic.message.ChatMessageProtocol
+import click.seichi.gigantic.message.LinedChatMessage
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.will.Will
@@ -15,162 +15,195 @@ import java.util.*
  */
 object AchievementMessages {
 
-    val FIRST_JOIN = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val FIRST_JOIN = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                    "ブロックを壊そう!!\n" +
+                    "ブロックを壊そう!!" +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
                     "${ChatColor.GRAY}" +
                     "メニューからランダムテレポートができるぞ!!\n"
-    ))
+    ), 45L)
 
-    val FIRST_LEVEL_UP = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val FIRST_LEVEL_UP = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "ツールは破壊するブロックによって自動で切り替えられる!!\n" +
+                        "ツールは破壊するブロックによって自動で切り替えられる!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.YELLOW}" +
                         "手動で切り替えたいときは\"f\" キー を押してみよう!!"
             }
-    ))
+    ), 45L)
 
-    val UNLOCK_SKILL_MINE_COMBO = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_SKILL_MINE_COMBO = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "バフスキル: マインコンボ解禁!!\n" +
+                        "バフスキル: マインコンボ解禁!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: ブロックを連続破壊してコンボが切れないようにしよう！\n" +
-                        "コンボ数によって採掘速度が上昇するぞ！\n"
+                        "パッシブ効果: ブロックを連続破壊してコンボが切れないようにしよう！" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
+                        "コンボ数によって採掘速度が上昇するぞ！"
             }
-    ))
+    ), 45L)
 
 
-    val UNLOCK_SKILL_MINE_BURST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_SKILL_MINE_BURST = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "バフスキル: マインバースト を覚えた!!\n" +
+                        "バフスキル: マインバースト を覚えた!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "アクティブ効果: 少しの間だけ掘る速度が上昇!!\n"
+                        "アクティブ効果: 少しの間だけ掘る速度が上昇!!"
             }
-    ))
+    ), 45L)
 
-    val UNLOCK_FLASH = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_FLASH = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "移動スキル: フラッシュ を覚えた!!\n" +
+                        "移動スキル: フラッシュ を覚えた!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "アクティブ効果: ブロックに向けて発動するとそのブロックの上にワープ!!\n"
+                        "アクティブ効果: ブロックに向けて発動するとそのブロックの上にワープ!!"
             }
-    ))
+    ), 45L)
 
-    val MANA_STONE = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val MANA_STONE = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.AQUA}" +
-                        "マナストーンを見つけた!!\n" +
+                        "マナストーンを見つけた!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "マナストーンを持った状態でマルチ・ブレイクが使えるようになった!!\n" +
-                        "右クリックでマナストーンを持ってみよう!!"
+                        "マナストーンを持った状態で魔法が使えるようになった!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.LIGHT_PURPLE}" +
+                        "ツールを持ちながら右クリックしてみよう"
             }
-    ))
+    ), 45L)
 
-    val UNLOCK_SPELL_STELLA_CLAIR = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_SPELL_STELLA_CLAIR = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "回復魔法: ステラ・クレア を覚えた!!\n" +
+                        "回復魔法: ステラ・クレア を覚えた!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: ブロックを破壊で最大マナの${Config.SKILL_HEAL_RATIO.toBigDecimal().setScale(1, RoundingMode.HALF_UP)}% を回復!!\n" +
-                        "通常破壊時に一定確率で発動する\n"
+                        "パッシブ効果: ブロックを破壊で最大マナの${Config.SKILL_HEAL_RATIO.toBigDecimal().setScale(1, RoundingMode.HALF_UP)}% を回復!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
+                        "通常破壊時に一定確率で発動する"
             }
-    ))
+    ), 45L)
 
-    val UNLOCK_SPELL_MULTI_BREAK = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_SPELL_MULTI_BREAK = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "破壊魔法: マルチ・ブレイク を覚えた!!\n" +
+                        "破壊魔法: マルチ・ブレイク を覚えた!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "アクティブ効果: ブロック破壊時に，周囲のブロックも同時に破壊する!!\n" +
-                        "通常破壊時に発動する\n" +
+                        "アクティブ効果: ブロック破壊時に，周囲のブロックも同時に破壊する!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
+                        "通常破壊時に発動する" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
                         "魔法メニューから設定しよう!!"
             }
-    ))
+    ), 45L)
 
-    val UNLOCK_SPELL_SKY_WALK = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_SPELL_SKY_WALK = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "補助魔法: スカイ・ウォーク を覚えた!!\n" +
+                        "補助魔法: スカイ・ウォーク を覚えた!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: プレイヤーの移動を補助する足場を生成!!\n" +
-                        "スニークやジャンプを上手く使おう!!\n"
+                        "パッシブ効果: プレイヤーの移動を補助する足場を生成!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
+                        "スニークやジャンプを上手く使おう!!"
             }
-    ))
+    ), 45L)
 
-    val UNLOCK_SPELL_LUNA_FLEX = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val UNLOCK_SPELL_LUNA_FLEX = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "補助魔法: ルナ・フレックス を覚えた!!\n" +
+                        "補助魔法: ルナ・フレックス を覚えた!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "パッシブ効果: 自由に移動速度を変更!!\n" +
+                        "パッシブ効果: 自由に移動速度を変更!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
                         "魔法メニューから設定しよう!!"
             }
-    ))
+    ), 45L)
 
-    val TELEPORT_PLAYER = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val TELEPORT_PLAYER = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "プレイヤーテレポートが使えるようになった!!\n" +
+                        "プレイヤーテレポートが使えるようになった!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "メニューからテレポート先を選択!!\n"
+                        "メニューからテレポート先を選択!!"
             }
-    ))
+    ), 45L)
 
-    val TELEPORT_HOME = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val TELEPORT_HOME = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "好きな場所をテレポート先として登録できるようになった!!\n" +
+                        "好きな場所をテレポート先として登録できるようになった!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "テレポートメニューからホームを選択!!\n"
+                        "テレポートメニューからホームを選択!!"
             }
-    ))
+    ), 45L)
 
-    val TELEPORT_LAST_DEATH = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val TELEPORT_LAST_DEATH = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "ラストデステレポートが使えるようになった!!\n" +
+                        "ラストデステレポートが使えるようになった!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "最後に死亡した場所に戻ることができる!!\n" +
-                        "メニューから選択!!\n"
+                        "最後に死亡した場所に戻ることができる!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
+                        "メニューから選択!!"
             }
-    ))
+    ), 45L)
 
-    val QUEST_ORDER = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val QUEST_ORDER = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${Quest.COLOR}" +
-                        "新しいクエストが届いた\n"
+                        "新しいクエストが届いた"
             }
-    ))
+    ), 45L)
 
-    val QUEST_ORDER_FIRST = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val QUEST_ORDER_FIRST = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${Quest.COLOR}" +
-                        "初めてのクエストが届いた\n" +
+                        "初めてのクエストが届いた" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${Quest.COLOR}" +
                         "メニューからクエストを受注しよう!!"
             }
-    ))
+    ), 45L)
 
-    val JUMP = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val JUMP = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
-                        "大きくジャンプできるようになった!!\n" +
+                        "大きくジャンプできるようになった!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "ジャンプアイテムを持ってスニークしてみよう!!\n"
+                        "ジャンプアイテムを持ってスニークしてみよう!!"
             }
-    ))
+    ), 45L)
 
-    val SWORD = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val SWORD = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +
                         "剣を扱えるようになった!!"
             }
-    ))
+    ), 45L)
 
     val WILL = { will: Will ->
-        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+        LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE.let {
                     it to "" + will.chatColor +
                             "${ChatColor.BOLD}" +
@@ -179,35 +212,46 @@ object AchievementMessages {
                             "${ChatColor.RESET}${ChatColor.YELLOW}" +
                             "と交感できるようになった!!"
                 }
-        ))
+        ), 45L)
     }
 
-    val FIRST_WILL = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val FIRST_WILL = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.GRAY}" +
-                        "初めての意志に出会った!!\n" +
-                        "ブロックを破壊すると，稀に意志が出現する!!\n" +
-                        "意志が出現したら近付いてエーテルを獲得してみよう!!\n" +
-                        "エーテルを100個集めたら，メニューにあるレリック生成器を使って\nレリックを獲得できるぞ!!\n" +
+                        "初めての意志に出会った!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
+                        "ブロックを破壊すると，稀に意志が出現する!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
+                        "意志が出現したら近付いてエーテルを獲得してみよう!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
+                        "エーテルを100個集めたら，メニューにあるレリック生成器を使って" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
+                        "レリックを獲得できるぞ!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.YELLOW}" +
                         "投票特典が増えた!!"
             }
-    ))
+    ), 45L)
 
-    val FIRST_ADVANCED_WILL = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val FIRST_ADVANCED_WILL = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.GRAY}" +
-                        "より高度な意志に出会った!!\n" +
+                        "より高度な意志に出会った!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.YELLOW}" +
                         "投票特典が増えた!!"
             }
-    ))
+    ), 45L)
 
-    val FIRST_RELIC = ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val FIRST_RELIC = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
-                it to "${ChatColor.GRAY}" +
+                it to "${ChatColor.AQUA}" +
                         "メニューから手に入れたレリックを確認しよう!!"
             }
-    ))
+    ), 45L)
 
 }
