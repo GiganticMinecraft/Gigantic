@@ -104,8 +104,8 @@ object AchievementMessages {
                         "${ChatColor.GRAY}" +
                         "通常破壊時に発動する" +
                         LinedChatMessage.NEW_LINE_SYMBOL +
-                        "${ChatColor.GRAY}" +
-                        "魔法メニューから設定しよう!!"
+                        "${ChatColor.AQUA}" +
+                        "破壊範囲は魔法メニューから設定しよう!!"
             }
     ), 45L)
 
@@ -131,7 +131,7 @@ object AchievementMessages {
                         "パッシブ効果: 自由に移動速度を変更!!" +
                         LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "魔法メニューから設定しよう!!"
+                        "移動速度は魔法メニューから設定しよう!!"
             }
     ), 45L)
 
