@@ -1,6 +1,7 @@
 package click.seichi.gigantic.message
 
 import click.seichi.gigantic.acheivement.Achievement
+import click.seichi.gigantic.extension.wrappedLevel
 import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
@@ -151,7 +152,95 @@ enum class Tips(
                             "${ChatColor.WHITE}" +
                             "お気に入りの場所を登録できるぞ！"
             ), 60L), { Achievement.TELEPORT_HOME.isGranted(it) }),
-
+    ADMIN_CAUTION(LinedChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(
+                    Locale.JAPANESE to Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "運営チームのなりすましにご注意ください。" +
+                            LinedChatMessage.NEW_LINE_SYMBOL + Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "運営チームのMinecraftIDは\n" +
+                            Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "公式Discord #はじめに に全て公開されています。"
+            ), 60L)),
+    FRIEND(LinedChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(
+                    Locale.JAPANESE to Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "友達と一緒に掘りたいときは，フォロー機能を使おう！！" +
+                            LinedChatMessage.NEW_LINE_SYMBOL + Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "相互フォローになれば，近くのブロックも掘れるようになるぞ!"
+            ), 60L)),
+    MUTE(LinedChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(
+                    Locale.JAPANESE to Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "暴言やスパムを行ったり，執拗に付き纏ってくる人には\n" +
+                            Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "ミュート機能を使おう!!" +
+                            LinedChatMessage.NEW_LINE_SYMBOL + Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "ミュートすると，自分へのテレポートを拒否できて，\n" +
+                            Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "その人のチャットを非表示にできるぞ!!"
+            ), 60L)),
+    SETTINGS(LinedChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(
+                    Locale.JAPANESE to Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "メニューの詳細設定→表示設定からいくつかの表示を切り替えられる!!"
+            ), 60L)),
+    STUCK(LinedChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(
+                    Locale.JAPANESE to Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "地形にハマって出られないときは，テレポートメニューから\n" +
+                            Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "初期スポーンに戻ろう!!"
+            ), 60L)),
+    VOTE_ON_NOT_LOGIN(LinedChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(
+                    Locale.JAPANESE to Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "ログインせずに投票しても特典は配布されます。"
+            ), 60L)),
+    LOBBY(LinedChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(
+                    Locale.JAPANESE to Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "ロビーサーバへの移動は" +
+                            "${ChatColor.AQUA}" +
+                            "/hub" +
+                            "${ChatColor.WHITE}" +
+                            "を使おう!!"
+            ), 60L)),
+    MULTI_BREAK(LinedChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(
+                    Locale.JAPANESE to Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "魔法 " +
+                            "${ChatColor.LIGHT_PURPLE}" +
+                            "マルチ・ブレイク" +
+                            "${ChatColor.WHITE}" +
+                            "が使えない?" +
+                            LinedChatMessage.NEW_LINE_SYMBOL + Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "☆マークが赤くなっていたらマナが不足しているよ!!" +
+                            LinedChatMessage.NEW_LINE_SYMBOL + Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "マナストーンは手に持ってるかな？\n" +
+                            Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "ツールを持ちながら右クリックしてみよう!!" +
+                            LinedChatMessage.NEW_LINE_SYMBOL + Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "破壊範囲の設定はしたかな？魔法メニューから設定しよう!!"
+            ), 60L), { Achievement.SPELL_MULTI_BREAK.isGranted(it) && it.wrappedLevel < 30 }),
 
     ;
 

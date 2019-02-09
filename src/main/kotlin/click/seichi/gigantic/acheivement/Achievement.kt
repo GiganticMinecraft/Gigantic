@@ -316,39 +316,31 @@ enum class Achievement(
         // 強制的にプレイヤー表示部分を更新したい場合は[isForced]をtrueに設定
         fun update(player: Player, isForced: Boolean = false) {
             var isGranted = false
-            var delay = 0L
+            var delay = 1L
             values().sortedBy { it.priority.amount }
                     .filter { it.canGrant(player) && !it.isGranted(player) }
                     .apply {
                         if (isNotEmpty()) isGranted = true
                     }.forEach {
+                        // 解除処理
+                        player.offer(Keys.ACHIEVEMENT_MAP.getValue(it), true)
+                        // 初期処理実行
+                        it.action(player)
+
+                        // メッセージ送信
                         object : BukkitRunnable() {
                             override fun run() {
-                                it.grant(player)
+                                if (!player.isValid) return
+                                it.grantMessage?.sendTo(player)
                             }
                         }.runTaskLater(Gigantic.PLUGIN, delay)
+
                         // メッセージ終了まで待機 + メッセージ間隔用45L
                         delay += it.grantMessage?.duration?.plus(45L) ?: 0L
                     }
             if (!isGranted && !isForced) return
             player.updateDisplay(true, true)
-        }
-    }
 
-    // 与える
-    private fun grant(player: Player) {
-        // 解除処理
-        player.transform(Keys.ACHIEVEMENT_MAP[this] ?: return) { hasUnlocked ->
-            if (!hasUnlocked) {
-                action(player)
-                object : BukkitRunnable() {
-                    override fun run() {
-                        if (!player.isValid) return
-                        grantMessage?.sendTo(player)
-                    }
-                }.runTaskLater(Gigantic.PLUGIN, 1L)
-            }
-            true
         }
     }
 
