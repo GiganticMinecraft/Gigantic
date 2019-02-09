@@ -11,7 +11,7 @@ import java.util.*
  */
 enum class Tips(
         private val linedMessage: LinedChatMessage,
-        private val achievement: Achievement? = null
+        private val sendingCondition: (Player) -> Boolean = { true }
 ) {
     DISCORD(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
@@ -31,7 +31,7 @@ enum class Tips(
                             "10秒" +
                             "${ChatColor.WHITE}" +
                             "経つと減少していっちゃうよ！気を付けよう！"
-            ), 60L), Achievement.SKILL_MINE_COMBO),
+            ), 60L), { Achievement.SKILL_MINE_COMBO.isGranted(it) }),
     ETHEL(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
@@ -44,7 +44,7 @@ enum class Tips(
                             LinedChatMessage.NEW_LINE_SYMBOL + Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
                             "たくさん変換して経験値効率を上げよう！"
-            ), 60L), Achievement.FIRST_WILL),
+            ), 60L), { Achievement.FIRST_WILL.isGranted(it) }),
     SERVER_MAP(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
@@ -142,12 +142,21 @@ enum class Tips(
                             "${ChatColor.AQUA}" +
                             "https://goo.gl/forms/8ZR3MJwtSeTDkGST2"
             ), 60L)),
+    HOME(LinedChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(
+                    Locale.JAPANESE to Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "ホーム機能を使ってみよう！" +
+                            LinedChatMessage.NEW_LINE_SYMBOL + Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "お気に入りの場所を登録できるぞ！"
+            ), 60L), { Achievement.TELEPORT_HOME.isGranted(it) }),
 
 
     ;
 
     fun sendTo(player: Player) {
-        if (achievement?.isGranted(player) != false)
+        if (sendingCondition(player))
             linedMessage.sendTo(player)
     }
 }
