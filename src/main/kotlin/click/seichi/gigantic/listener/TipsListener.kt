@@ -35,6 +35,8 @@ class TipsListener : Listener {
         val message = tips[nextIndex]
 
         Bukkit.getServer().onlinePlayers
+                .asSequence()
+                .filterNotNull()
                 .filter { it.isValid }
                 .forEach { player ->
                     message.sendTo(player)

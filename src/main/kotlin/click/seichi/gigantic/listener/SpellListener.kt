@@ -13,7 +13,7 @@ class SpellListener : Listener {
 
     @EventHandler
     fun onTick(event: TickEvent) {
-        Bukkit.getOnlinePlayers()
+        Bukkit.getServer().onlinePlayers
                 .asSequence()
                 .filterNotNull()
                 .filter { it.isValid }
