@@ -3,6 +3,7 @@ package click.seichi.gigantic.listener
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.message.Tips
+import click.seichi.gigantic.player.Display
 import click.seichi.gigantic.util.Random
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
@@ -39,7 +40,9 @@ class TipsListener : Listener {
                 .filterNotNull()
                 .filter { it.isValid }
                 .forEach { player ->
-                    message.sendTo(player)
+                    if (Display.TIPS.isDisplay(player)) {
+                        message.sendTo(player)
+                    }
                 }
     }
 

@@ -23,6 +23,9 @@ enum class Display(
     COMBO(2, LocalizedText(
             Locale.JAPANESE to "コンボ表示"
     )),
+    TIPS(3,LocalizedText(
+            Locale.JAPANESE to "TIPS表示"
+    ))
     ;
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)
