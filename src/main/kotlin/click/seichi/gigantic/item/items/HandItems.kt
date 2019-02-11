@@ -219,7 +219,8 @@ object HandItems {
         }
 
         override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
-            return Skill.MINE_BURST.tryCast(player)
+            Skill.MINE_BURST.tryCast(player)
+            return true
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
@@ -250,7 +251,8 @@ object HandItems {
         }
 
         override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
-            return Skill.FLASH.tryCast(player)
+            Skill.FLASH.tryCast(player)
+            return true
         }
 
         override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
