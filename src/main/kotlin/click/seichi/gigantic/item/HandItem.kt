@@ -15,6 +15,6 @@ interface HandItem : Button {
      * @param event クリック時の[PlayerInteractEvent]
      * @return 何かしら実行した場合TRUE,それ以外はFALSE
      */
-    fun onInteract(player: Player, event: PlayerInteractEvent): Boolean
+    fun tryInteract(player: Player, event: PlayerInteractEvent): Boolean = false
 
 }

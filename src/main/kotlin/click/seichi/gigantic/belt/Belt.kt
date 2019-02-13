@@ -62,18 +62,18 @@ enum class Belt(
             (0..8).forEach { slot ->
                 if (slot == toolSlot) return@forEach
                 inv.setItem(slot,
-                        buttonMap[slot]?.findItemStack(player) ?: ItemStack(Material.AIR)
+                        buttonMap[slot]?.toShownItemStack(player) ?: ItemStack(Material.AIR)
                 )
             }
             if (applyTool)
                 player.updateTool()
-            inv.helmet = helmet?.findItemStack(player) ?: ItemStack(Material.AIR)
-            inv.chestplate = chestPlate?.findItemStack(player) ?: ItemStack(Material.AIR)
-            inv.leggings = leggings?.findItemStack(player) ?: ItemStack(Material.AIR)
-            inv.boots = boots?.findItemStack(player) ?: ItemStack(Material.AIR)
+            inv.helmet = helmet?.toShownItemStack(player) ?: ItemStack(Material.AIR)
+            inv.chestplate = chestPlate?.toShownItemStack(player) ?: ItemStack(Material.AIR)
+            inv.leggings = leggings?.toShownItemStack(player) ?: ItemStack(Material.AIR)
+            inv.boots = boots?.toShownItemStack(player) ?: ItemStack(Material.AIR)
 
             if (!applyOffHandItem) return@let
-            inv.itemInOffHand = offHandItem?.findItemStack(player) ?: ItemStack(Material.AIR)
+            inv.itemInOffHand = offHandItem?.toShownItemStack(player) ?: ItemStack(Material.AIR)
         }
     }
 

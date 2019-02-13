@@ -145,7 +145,7 @@ enum class Tool(
         }
     }
 
-    fun findItemStack(player: Player) = tool.findItemStack(player)
+    fun findItemStack(player: Player) = tool.toShownItemStack(player)
 
     fun update(player: Player) {
         val slot = player.getOrPut(Keys.BELT).toolSlot

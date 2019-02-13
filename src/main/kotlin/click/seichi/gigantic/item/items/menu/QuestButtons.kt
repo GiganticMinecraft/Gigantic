@@ -21,7 +21,7 @@ object QuestButtons {
 
     val QUEST: (QuestClient) -> Button = { client ->
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return ItemStack(Material.ENCHANTED_BOOK).apply {
                     if (!client.isProcessed) {
                         type = Material.BOOK
@@ -61,7 +61,7 @@ object QuestButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 client.isProcessed = !client.isProcessed
 
                 PlayerSounds.TOGGLE.playOnly(player)

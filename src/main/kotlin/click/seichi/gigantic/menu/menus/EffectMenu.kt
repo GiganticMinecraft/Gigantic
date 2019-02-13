@@ -33,7 +33,7 @@ object EffectMenu : Menu() {
         // プレイヤー情報
         registerButton(9, object : Button {
 
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return player.getHead().apply {
                     setDisplayName(EffectMenuMessages.PLAYER.asSafety(player.wrappedLocale))
                     clearLore()
@@ -59,7 +59,7 @@ object EffectMenu : Menu() {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 return false
             }
 
@@ -67,7 +67,7 @@ object EffectMenu : Menu() {
 
         // 現在使用しているエフェクト
         registerButton(10, object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 val effect = player.getOrPut(Keys.EFFECT)
                 return effect.getIcon().apply {
                     setDisplayName(EffectMenuMessages.CURRENT_EFFECT.asSafety(player.wrappedLocale))
@@ -77,7 +77,7 @@ object EffectMenu : Menu() {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 return false
             }
         })
@@ -87,7 +87,7 @@ object EffectMenu : Menu() {
 
             val effect = GiganticEffect.DEFAULT
 
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return effect.getIcon().apply {
                     setDisplayName(effect.getName(player.wrappedLocale))
                     setLore(*effect.getLore(player.wrappedLocale).toTypedArray())
@@ -100,7 +100,7 @@ object EffectMenu : Menu() {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 val current = player.getOrPut(Keys.EFFECT)
                 if (current == effect) return false
                 player.offer(Keys.EFFECT, effect)
@@ -113,7 +113,7 @@ object EffectMenu : Menu() {
         // DEFAULT を抜いたエフェクト全て
         GiganticEffect.values().filter { it.id != 0 }.forEach { effect ->
             registerButton(effect.slot + 27, object : click.seichi.gigantic.item.Button {
-                override fun findItemStack(player: Player): ItemStack? {
+                override fun toShownItemStack(player: Player): ItemStack? {
                     val itemStack = when {
                         effect.isBought(player) -> effect.getIcon()
                         else -> ItemStack(Material.BEDROCK)
@@ -168,7 +168,7 @@ object EffectMenu : Menu() {
                     }
                 }
 
-                override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                     if (effect.isBought(player)) {
                         // 購入されている場合
                         if (effect.isSelected(player)) return false

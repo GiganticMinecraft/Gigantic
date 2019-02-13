@@ -34,7 +34,7 @@ import java.math.BigDecimal
 object BagButtons {
 
     val PROFILE = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return player.getHead().apply {
                 setDisplayName(BagMessages.PROFILE.asSafety(player.wrappedLocale))
                 val lore = mutableListOf<String>()
@@ -81,7 +81,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (player.getOrPut(Keys.PROFILE_IS_UPDATING)) return false
             PlayerSounds.TOGGLE.playOnly(player)
             player.offer(Keys.PROFILE_IS_UPDATING, true)
@@ -125,7 +125,7 @@ object BagButtons {
 
     val DONATE_HISTORY = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.PAPER).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}" +
                         DonateHistoryMessages.TITLE.asSafety(player.wrappedLocale))
@@ -133,7 +133,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === DonateHistoryMenu) return false
             //寄付履歴のリストを作成した後に表示
             // 一旦寄付履歴を全て削除
@@ -177,7 +177,7 @@ object BagButtons {
 
     val SKILL = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.BONE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}" +
                         SkillMenuMessages.TITLE.asSafety(player.wrappedLocale))
@@ -185,7 +185,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === SkillMenu) return false
             SkillMenu.open(player)
             return true
@@ -195,7 +195,7 @@ object BagButtons {
 
     val SPELL = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.MANA_STONE.isGranted(player)) return null
             return ItemStack(Material.LAPIS_LAZULI).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
@@ -203,7 +203,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (!Achievement.MANA_STONE.isGranted(player)) return false
             if (event.inventory.holder === SpellMenu) return false
             SpellMenu.open(player)
@@ -213,7 +213,7 @@ object BagButtons {
     }
 
     val AFK = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return when (player.gameMode) {
                 GameMode.SPECTATOR -> ItemStack(Material.POPPY, 1).apply {
                     setDisplayName(
@@ -228,7 +228,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             val afkLocation = player.getOrPut(Keys.AFK_LOCATION)
             when (player.gameMode) {
                 GameMode.SURVIVAL -> {
@@ -259,7 +259,7 @@ object BagButtons {
 
     val SPECIAL_THANKS = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.MUSIC_DISC_13).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale))
@@ -273,7 +273,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === SpecialThanksMenu) return false
             SpecialThanksMenu.open(player)
             return true
@@ -283,7 +283,7 @@ object BagButtons {
 
     val QUEST = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.QUEST.isGranted(player)) return null
             return ItemStack(Material.WRITABLE_BOOK).apply {
                 if (Quest.getOrderedList(player).isEmpty()) {
@@ -302,7 +302,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (Quest.getOrderedList(player).isEmpty()) return false
             if (event.inventory.holder === QuestSelectMenu) return false
             QuestSelectMenu.open(player)
@@ -313,7 +313,7 @@ object BagButtons {
 
     val RELIC = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.FIRST_RELIC.isGranted(player)) return null
             return ItemStack(Material.ENDER_CHEST).apply {
                     setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
@@ -327,7 +327,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (!Achievement.FIRST_RELIC.isGranted(player)) return false
             if (event.inventory.holder === RelicMenu) return false
             RelicMenu.open(player)
@@ -338,14 +338,14 @@ object BagButtons {
 
     val TELEPORT_DOOR = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DARK_OAK_DOOR).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.TELEPORT.asSafety(player.wrappedLocale))
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === TeleportMenu) return false
             TeleportMenu.open(player)
             return true
@@ -355,7 +355,7 @@ object BagButtons {
 
     val TOOL_SWITCH_SETTING = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.LADDER).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
@@ -363,7 +363,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === ToolSwitchSettingMenu) return false
             ToolSwitchSettingMenu.open(player)
             return true
@@ -374,14 +374,14 @@ object BagButtons {
 
     val EFFECT = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.ENCHANTING_TABLE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + EffectMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === EffectMenu) return false
             EffectMenu.open(player)
             return true
@@ -391,14 +391,14 @@ object BagButtons {
 
     val FOLLOW_SETTING = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.ROSE_BUSH).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + FollowSettingMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === FollowSettingMenu) return false
             FollowSettingMenu.open(player)
             return true
@@ -408,7 +408,7 @@ object BagButtons {
 
     val RELIC_GENERATOR = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.FIRST_WILL.isGranted(player)) return null
             return ItemStack(Material.END_PORTAL_FRAME).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
@@ -416,7 +416,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (!Achievement.FIRST_WILL.isGranted(player)) return false
             if (event.inventory.holder === RelicGeneratorMenu) return false
             RelicGeneratorMenu.open(player)

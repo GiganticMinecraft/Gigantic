@@ -28,7 +28,7 @@ abstract class Bag {
     }
 
     private fun forEachIndexed(player: Player, action: (Int, ItemStack?) -> Unit) {
-        slotRange.map { it to buttonMap[it]?.findItemStack(player) }
+        slotRange.map { it to buttonMap[it]?.toShownItemStack(player) }
                 .toMap()
                 .forEach(action)
     }

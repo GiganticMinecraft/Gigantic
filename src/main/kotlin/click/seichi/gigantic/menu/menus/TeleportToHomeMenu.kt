@@ -40,7 +40,7 @@ object TeleportToHomeMenu : Menu() {
         (0 until Defaults.MAX_HOME).forEach { homeId ->
             val slot = slotList.getOrNull(homeId) ?: return@forEach
             registerButton(slot, object : Button {
-                override fun findItemStack(player: Player): ItemStack? {
+                override fun toShownItemStack(player: Player): ItemStack? {
                     val home = player.getOrPut(Keys.HOME_MAP)[homeId]
                     return when (home) {
                         null -> ItemStack(Material.BEDROCK).apply {
@@ -83,7 +83,7 @@ object TeleportToHomeMenu : Menu() {
                     }
                 }
 
-                override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
 
                     val home = player.getOrPut(Keys.HOME_MAP)[homeId]
 

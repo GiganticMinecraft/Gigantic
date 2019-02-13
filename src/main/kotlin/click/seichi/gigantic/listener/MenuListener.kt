@@ -19,7 +19,7 @@ import org.bukkit.event.player.PlayerInteractEvent
  */
 class MenuListener : Listener {
 
-    val menuActionSet = setOf(
+    private val menuActionSet = setOf(
             InventoryAction.PICKUP_ALL,
             InventoryAction.PICKUP_SOME,
             InventoryAction.PICKUP_HALF,
@@ -39,15 +39,15 @@ class MenuListener : Listener {
         when (event.clickedInventory) {
             event.view.bottomInventory -> {
                 // Belt
-                if (event.isBeltSlot) player.getOrPut(Keys.BELT).findItem(event.slot)?.onClick(player, event)
+                if (event.isBeltSlot) player.getOrPut(Keys.BELT).findItem(event.slot)?.tryClick(player, event)
                 // Bag
-                else player.getOrPut(Keys.BAG).getButton(event.slot)?.onClick(player, event)
+                else player.getOrPut(Keys.BAG).getButton(event.slot)?.tryClick(player, event)
             }
             else -> {
                 // Menu
                 when (holder) {
-                    is BookMenu -> holder.getButton(player, event.slot)?.onClick(player, event)
-                    is Menu -> holder.getButton(event.slot)?.onClick(player, event)
+                    is BookMenu -> holder.getButton(player, event.slot)?.tryClick(player, event)
+                    is Menu -> holder.getButton(event.slot)?.tryClick(player, event)
                 }
             }
         }
@@ -55,13 +55,16 @@ class MenuListener : Listener {
 
     @EventHandler
     fun onInteract(event: PlayerInteractEvent) {
-        val player = event.player ?: return
-        if (player.gameMode != GameMode.SURVIVAL) return
-        val belt = player.getOrPut(Keys.BELT)
         if (event.action == Action.PHYSICAL) return
+
+        val player = event.player
+                ?.takeIf { it.gameMode == GameMode.SURVIVAL }
+                ?: return
+        val belt = player.getOrPut(Keys.BELT)
         val slot = player.inventory.heldItemSlot
-        if (belt.findItem(slot)?.onInteract(player, event) == true) return
-        if (belt.offHandItem?.onInteract(player, event) == true) return
+
+        if (belt.findItem(slot)?.tryInteract(player, event) == true) return
+        if (belt.offHandItem?.tryInteract(player, event) == true) return
     }
 
 }

@@ -32,7 +32,7 @@ object RelicGeneratorButtons {
 
     val SELECT_ETHEL: (Will) -> Button = { will ->
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 if (!player.hasAptitude(will)) return null
                 val selected = player.getOrPut(Keys.SELECTED_WILL)
                 return ItemStack(will.material).apply {
@@ -56,7 +56,7 @@ object RelicGeneratorButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 if (!player.hasAptitude(will)) return false
                 val selected = player.getOrPut(Keys.SELECTED_WILL)
                 if (selected != null && selected == will) return true
@@ -69,7 +69,7 @@ object RelicGeneratorButtons {
     }
 
     val GENERATE = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             val selected = player.getOrPut(Keys.SELECTED_WILL)
             val generated = player.getOrPut(Keys.GENERETED_WILL_RELIC)
             return ItemStack(Material.END_PORTAL_FRAME).apply {
@@ -110,7 +110,7 @@ object RelicGeneratorButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             val selected = player.getOrPut(Keys.SELECTED_WILL) ?: return true
             if (player.ethel(selected) < Defaults.RELIC_GENERATOR_REQUIRE_ETHEL) return true
             // 減算処理
@@ -143,7 +143,7 @@ object RelicGeneratorButtons {
     }
 
     val GENERATED = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             val generated = player.getOrPut(Keys.GENERETED_WILL_RELIC) ?: return null
             val will = generated.will
             val relic = generated.relic
@@ -173,7 +173,7 @@ object RelicGeneratorButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             return true
         }
     }

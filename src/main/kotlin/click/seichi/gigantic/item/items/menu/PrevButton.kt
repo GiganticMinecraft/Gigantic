@@ -1,7 +1,6 @@
 package click.seichi.gigantic.item.items.menu
 
 import click.seichi.gigantic.extension.setDisplayName
-import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.BookMenu
@@ -14,17 +13,18 @@ import org.bukkit.inventory.ItemStack
  * @author tar0ss
  */
 class PrevButton(private val menu: BookMenu) : Button {
-    override fun findItemStack(player: Player): ItemStack? {
+
+    override fun toShownItemStack(player: Player): ItemStack? {
         if (!menu.hasPrevPage(player)) return null
+
         return Head.PUMPKIN_LEFT_ARROW.toItemStack().apply {
-            setDisplayName(
-                    MenuMessages.PREV_BUTTON.asSafety(player.wrappedLocale)
-            )
+            setDisplayName(player, MenuMessages.PREV_BUTTON)
         }
     }
 
-    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+    override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
         menu.prevPage(player)
         return true
     }
+
 }

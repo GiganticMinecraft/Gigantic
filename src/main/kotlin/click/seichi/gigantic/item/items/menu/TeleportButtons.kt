@@ -29,14 +29,14 @@ object TeleportButtons {
 
     val TELEPORT_TO_PLAYER = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return null
             return ItemStack(Material.PLAYER_HEAD).apply {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_PLAYER.asSafety(player.wrappedLocale))
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === TeleportToPlayerMenu) return false
             if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return false
             TeleportToPlayerMenu.open(player)
@@ -47,7 +47,7 @@ object TeleportButtons {
 
     val TELEPORT_TO_RANDOM_CHUNK = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.CHORUS_FRUIT).apply {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_RANDOM_CHUNK.asSafety(player.wrappedLocale))
             }
@@ -66,7 +66,7 @@ object TeleportButtons {
                 Biome.WARM_OCEAN
         )
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (player.gameMode != GameMode.SURVIVAL) {
                 player.sendMessage(TeleportMessages.RANDOM_TELEPORT_IN_BREAK_TIME.asSafety(player.wrappedLocale))
                 return false
@@ -110,7 +110,7 @@ object TeleportButtons {
 
     val TELEPORT_TO_DEATH_CHUNK = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return null
             player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return null
             return ItemStack(Material.BONE).apply {
@@ -118,7 +118,7 @@ object TeleportButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return false
             val chunk = player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return false
             chunk.load(true)
@@ -149,7 +149,7 @@ object TeleportButtons {
 
     val TELEPORT_TOGGLE = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return null
             val toggle = player.getOrPut(Keys.TELEPORT_TOGGLE)
             return ItemStack(Material.DAYLIGHT_DETECTOR).apply {
@@ -165,7 +165,7 @@ object TeleportButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return false
             player.transform(Keys.TELEPORT_TOGGLE) { !it }
             PlayerSounds.TOGGLE.playOnly(player)
@@ -177,7 +177,7 @@ object TeleportButtons {
 
     val TELEPORT_PLAYER: (Player) -> Button = { to: Player ->
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return when {
                     !to.isValid -> ItemStack(Material.GRAY_STAINED_GLASS_PANE).apply {
                         setDisplayName("${ChatColor.RED}${to.name}")
@@ -225,7 +225,7 @@ object TeleportButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 if (!to.isValid) return false
                 if (!to.getOrPut(Keys.TELEPORT_TOGGLE) &&
                         !to.isFollow(player.uniqueId)) return false
@@ -243,13 +243,13 @@ object TeleportButtons {
 
     val TELEPORT_TO_SPAWN = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.OAK_SAPLING).apply {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_SPAWN.asSafety(player.wrappedLocale))
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             player.teleport(player.world.spawnLocation)
             if (player.gameMode == GameMode.SURVIVAL)
                 PlayerSounds.TELEPORT.play(player.world.spawnLocation)
@@ -260,7 +260,7 @@ object TeleportButtons {
 
     val TELEPORT_TO_LAST_BREAK_CHUNK = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             player.getOrPut(Keys.LAST_BREAK_CHUNK) ?: return null
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_LAST_BREAK.asSafety(player.wrappedLocale))
@@ -268,7 +268,7 @@ object TeleportButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             val chunk = player.getOrPut(Keys.LAST_BREAK_CHUNK) ?: return false
             chunk.load(true)
             var location: Location? = null
@@ -298,14 +298,14 @@ object TeleportButtons {
 
     val TELEPORT_TO_HOME = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.TELEPORT_HOME.isGranted(player)) return null
             return ItemStack(Material.RED_BED).apply {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_HOME.asSafety(player.wrappedLocale))
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === TeleportToHomeMenu) return false
             if (!Achievement.TELEPORT_HOME.isGranted(player)) return false
             TeleportToHomeMenu.open(player)

@@ -62,8 +62,8 @@ object DonateHistoryMenu : BookMenu() {
                     }
                     inventory.setItem(index, itemStack)
                 }
-        inventory.setItem(numOfContentsPerPage + 3, prevButton.findItemStack(player))
-        inventory.setItem(numOfContentsPerPage + 5, nextButton.findItemStack(player))
+        inventory.setItem(numOfContentsPerPage + 3, prevButton.toShownItemStack(player))
+        inventory.setItem(numOfContentsPerPage + 5, nextButton.toShownItemStack(player))
 
         return inventory
     }

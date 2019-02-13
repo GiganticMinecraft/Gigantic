@@ -27,7 +27,7 @@ object SkillMenu : Menu() {
     init {
         Skill.values().forEach { skill ->
             registerButton(skill.slot, object : Button {
-                override fun findItemStack(player: Player): ItemStack? {
+                override fun toShownItemStack(player: Player): ItemStack? {
                     if (!skill.isGranted(player)) return null
                     return skill.getIcon(player).apply {
                         setDisplayName(skill.getName(player.wrappedLocale))
@@ -38,7 +38,7 @@ object SkillMenu : Menu() {
                     }
                 }
 
-                override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                     return true
                 }
 

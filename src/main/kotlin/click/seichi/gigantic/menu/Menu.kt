@@ -85,7 +85,7 @@ abstract class Menu : InventoryHolder {
             }
         }
         (0 until size).forEach { slot ->
-            val itemStack = buttonMap[slot]?.findItemStack(player) ?: return@forEach
+            val itemStack = buttonMap[slot]?.toShownItemStack(player) ?: return@forEach
             inventory.setItem(slot, itemStack)
         }
         return inventory

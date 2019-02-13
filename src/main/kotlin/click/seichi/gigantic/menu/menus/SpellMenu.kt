@@ -27,7 +27,7 @@ object SpellMenu : Menu() {
     init {
         Spell.values().forEach { spell ->
             registerButton(spell.slot, object : Button {
-                override fun findItemStack(player: Player): ItemStack? {
+                override fun toShownItemStack(player: Player): ItemStack? {
                     if (!spell.isGranted(player)) return null
                     return spell.getIcon(player).apply {
                         setDisplayName(spell.getName(player.wrappedLocale))
@@ -38,7 +38,7 @@ object SpellMenu : Menu() {
                     }
                 }
 
-                override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                     if (spell == Spell.APOSTOL) {
                         ApostolSettingMenu.open(player)
                         return true

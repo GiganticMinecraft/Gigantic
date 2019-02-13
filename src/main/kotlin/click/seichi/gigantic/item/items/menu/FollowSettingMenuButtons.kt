@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack
 object FollowSettingMenuButtons {
 
     val FOLLOW = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.LIGHT_GRAY_DYE).apply {
                 setDisplayName("${ChatColor.GRAY}" +
                         "${ChatColor.BOLD}" +
@@ -31,7 +31,7 @@ object FollowSettingMenuButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             FollowMenu.open(player)
             return true
         }
@@ -39,7 +39,7 @@ object FollowSettingMenuButtons {
 
     val FOLLOW_PLAYER: (Player) -> Button = { to: Player ->
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return to.getHead().apply {
                     setDisplayName("${ChatColor.WHITE}" +
                             "${ChatColor.BOLD}" +
@@ -54,7 +54,7 @@ object FollowSettingMenuButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 player.unFollow(to.uniqueId)
                 FollowMenu.reopen(player)
                 PlayerSounds.TOGGLE.playOnly(player)
@@ -64,7 +64,7 @@ object FollowSettingMenuButtons {
     }
 
     val FOLLOWER = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.ORANGE_DYE).apply {
                 setDisplayName("${ChatColor.GOLD}" +
                         "${ChatColor.BOLD}" +
@@ -72,7 +72,7 @@ object FollowSettingMenuButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             FollowerMenu.open(player)
             return true
         }
@@ -80,7 +80,7 @@ object FollowSettingMenuButtons {
 
     val FOLLOWER_PLAYER: (Player) -> Button = { to: Player ->
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return to.getHead().apply {
                     setDisplayName("${ChatColor.WHITE}" +
                             "${ChatColor.BOLD}" +
@@ -97,7 +97,7 @@ object FollowSettingMenuButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 if (player.isFollow(to.uniqueId)) return true
                 if (player.follows >= Config.PLAYER_MAX_FOLLOW) return true
                 player.follow(to.uniqueId)
@@ -109,7 +109,7 @@ object FollowSettingMenuButtons {
     }
 
     val FOLLOW_ONLINE = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.PURPLE_DYE).apply {
                 setDisplayName("${ChatColor.LIGHT_PURPLE}" +
                         "${ChatColor.BOLD}" +
@@ -117,7 +117,7 @@ object FollowSettingMenuButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             FollowPlayerMenu.open(player)
             return true
         }
@@ -125,7 +125,7 @@ object FollowSettingMenuButtons {
 
     val FOLLOW_ONLINE_PLAYER: (Player) -> Button = { to: Player ->
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return to.getHead().apply {
                     setDisplayName("${ChatColor.WHITE}" +
                             "${ChatColor.BOLD}" +
@@ -144,7 +144,7 @@ object FollowSettingMenuButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 if (player.follows >= Config.PLAYER_MAX_FOLLOW) return true
                 player.follow(to.uniqueId)
                 FollowPlayerMenu.reopen(player)
@@ -156,14 +156,14 @@ object FollowSettingMenuButtons {
 
     val REFINE = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.HOPPER).apply {
                 setDisplayName("${ChatColor.AQUA}" +
                         FollowSettingMenuMessages.REFINE.asSafety(player.wrappedLocale))
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === PlayerListRefineMenu) return false
             PlayerListRefineMenu.open(player)
             return true
@@ -173,7 +173,7 @@ object FollowSettingMenuButtons {
 
     val REFINE_ITEM: (RefineItem) -> Button = { item: RefineItem ->
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 val isRefine = player.getOrPut(Keys.REFINE_ITEM_MAP[item]!!)
                 val itemStack = if (isRefine) ItemStack(Material.ENDER_EYE)
                 else ItemStack(Material.BLACK_STAINED_GLASS_PANE)
@@ -186,7 +186,7 @@ object FollowSettingMenuButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 player.transform(Keys.REFINE_ITEM_MAP[item]!!) { !it }
                 PlayerSounds.TOGGLE.playOnly(player)
                 PlayerListRefineMenu.reopen(player)

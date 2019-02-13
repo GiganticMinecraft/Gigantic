@@ -20,7 +20,7 @@ object ToolSwitchSettingButtons {
 
     val TOOL: (Tool) -> Button = { tool: Tool ->
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return tool.findItemStack(player)?.apply {
                     setLore(
                             *ToolSwitchMessages.TOOL_SWITCHER_SETTING_BUTTON_LORE(tool.canSwitch(player))
@@ -30,7 +30,7 @@ object ToolSwitchSettingButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 if (!tool.toggle(player)) {
                     player.switchTool()
                 }
@@ -43,7 +43,7 @@ object ToolSwitchSettingButtons {
     }
 
     val AUTO_SWITCH = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             val autoSwitch = player.getOrPut(Keys.AUTO_SWITCH)
             return ItemStack(Material.COMPARATOR).apply {
                 setDisplayName("${ChatColor.WHITE}" +
@@ -55,7 +55,7 @@ object ToolSwitchSettingButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             player.transform(Keys.AUTO_SWITCH) { !it }
             PlayerSounds.TOGGLE.playOnly(player)
             ToolSwitchSettingMenu.reopen(player)

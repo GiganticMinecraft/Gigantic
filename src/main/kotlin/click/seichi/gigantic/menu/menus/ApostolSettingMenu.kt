@@ -33,7 +33,7 @@ object ApostolSettingMenu : Menu() {
         registerButton(0, BackButton(this, SpellMenu))
 
         registerButton(11, object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return ItemStack(Material.DIAMOND_PICKAXE).apply {
                     setDisplayName(ApostolMenuMessages.CURRENT_AREA.asSafety(player.wrappedLocale))
 
@@ -58,7 +58,7 @@ object ApostolSettingMenu : Menu() {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 reopen(player)
                 return true
             }
@@ -67,7 +67,7 @@ object ApostolSettingMenu : Menu() {
 
         // 横幅変更（上げる）
         registerButton(12, object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return ItemStack(Material.YELLOW_STAINED_GLASS_PANE).apply {
                     val breakArea = player.getOrPut(Keys.SPELL_APOSTOL_BREAK_AREA)
                     val nextBreakArea = breakArea.add(2, 0, 0)
@@ -82,7 +82,7 @@ object ApostolSettingMenu : Menu() {
             }
 
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                     val nextBreakArea = breakArea.add(2, 0, 0)
                     val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
@@ -103,14 +103,14 @@ object ApostolSettingMenu : Menu() {
         // 横幅変更（下げる）
         registerButton(10,
                 object : Button {
-                    override fun findItemStack(player: Player): ItemStack? {
+                    override fun toShownItemStack(player: Player): ItemStack? {
                         return ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE).apply {
                             val breakArea = player.getOrPut(Keys.SPELL_APOSTOL_BREAK_AREA)
                             setDisplayName(ApostolMenuMessages.SMALLER_WIDTH(breakArea).asSafety(player.wrappedLocale))
                         }
                     }
 
-                    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                    override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                         player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(-2, 0, 0)
                             if (nextBreakArea.width > 0) {
@@ -130,7 +130,7 @@ object ApostolSettingMenu : Menu() {
         // 高さ変更（上げる）
         registerButton(2,
                 object : Button {
-                    override fun findItemStack(player: Player): ItemStack? {
+                    override fun toShownItemStack(player: Player): ItemStack? {
                         return ItemStack(Material.ORANGE_STAINED_GLASS_PANE).apply {
                             val breakArea = player.getOrPut(Keys.SPELL_APOSTOL_BREAK_AREA)
                             val nextBreakArea = breakArea.add(0, 1, 0)
@@ -144,7 +144,7 @@ object ApostolSettingMenu : Menu() {
                         }
                     }
 
-                    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                    override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                         player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 1, 0)
                             val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
@@ -164,14 +164,14 @@ object ApostolSettingMenu : Menu() {
         // 高さ変更（下げる）
         registerButton(20,
                 object : Button {
-                    override fun findItemStack(player: Player): ItemStack? {
+                    override fun toShownItemStack(player: Player): ItemStack? {
                         return ItemStack(Material.PINK_STAINED_GLASS_PANE).apply {
                             val breakArea = player.getOrPut(Keys.SPELL_APOSTOL_BREAK_AREA)
                             setDisplayName(ApostolMenuMessages.SMALLER_HEIGHT(breakArea).asSafety(player.wrappedLocale))
                         }
                     }
 
-                    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                    override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                         player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, -1, 0)
                             if (nextBreakArea.height > 0) {
@@ -191,7 +191,7 @@ object ApostolSettingMenu : Menu() {
         // 奥行変更（上げる）
         registerButton(3,
                 object : Button {
-                    override fun findItemStack(player: Player): ItemStack? {
+                    override fun toShownItemStack(player: Player): ItemStack? {
                         return ItemStack(Material.MAGENTA_STAINED_GLASS_PANE).apply {
                             val breakArea = player.getOrPut(Keys.SPELL_APOSTOL_BREAK_AREA)
                             val nextBreakArea = breakArea.add(0, 0, 1)
@@ -205,7 +205,7 @@ object ApostolSettingMenu : Menu() {
                         }
                     }
 
-                    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                    override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                         player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 0, 1)
                             val limitOfBreakNum = Apostol.calcLimitOfBreakNumOfApostol(player.maxMana)
@@ -225,14 +225,14 @@ object ApostolSettingMenu : Menu() {
         // 奥行変更（下げる）
         registerButton(19,
                 object : Button {
-                    override fun findItemStack(player: Player): ItemStack? {
+                    override fun toShownItemStack(player: Player): ItemStack? {
                         return ItemStack(Material.LIME_STAINED_GLASS_PANE).apply {
                             val breakArea = player.getOrPut(Keys.SPELL_APOSTOL_BREAK_AREA)
                             setDisplayName(ApostolMenuMessages.SMALLER_DEPTH(breakArea).asSafety(player.wrappedLocale))
                         }
                     }
 
-                    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                    override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                         player.transform(Keys.SPELL_APOSTOL_BREAK_AREA) { breakArea ->
                             val nextBreakArea = breakArea.add(0, 0, -1)
                             if (nextBreakArea.depth > 0) {

@@ -23,7 +23,8 @@ object RelicButtons {
 
     val WILL: (Will, Menu) -> Button = { will, menu ->
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return ItemStack(will.material).apply {
                     setDisplayName("" + will.chatColor +
                             "${ChatColor.BOLD}" +
@@ -33,16 +34,10 @@ object RelicButtons {
                             "${ChatColor.RESET}${ChatColor.WHITE}" +
                             RelicMenuMessages.RELICS.asSafety(player.wrappedLocale)
                     )
-//                    clearLore()
-//                    addLore("${ChatColor.GRAY}" +
-//                            RelicMenuMessages.RELATIONSHIP.asSafety(player.wrappedLocale) +
-//                            "${ChatColor.GREEN}${ChatColor.BOLD}" +
-//                            player.relationship(will).getName(player.wrappedLocale)
-//                    )
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 menu.open(player)
                 return true
             }
@@ -53,7 +48,7 @@ object RelicButtons {
         val relic = willRelic.relic
         val will = willRelic.will
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 val amount = relic.getDroppedNum(player)
                 if (amount == 0L) return null
                 return ItemStack(willRelic.material).apply {
@@ -82,9 +77,7 @@ object RelicButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
-                return true
-            }
+            override fun tryClick(player: Player, event: InventoryClickEvent) = true // TODO: why it returns true but does nothing?
         }
 
     }

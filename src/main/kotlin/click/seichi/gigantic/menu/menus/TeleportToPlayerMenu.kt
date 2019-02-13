@@ -51,11 +51,11 @@ object TeleportToPlayerMenu : BookMenu() {
                 .map { it % numOfPlayerPerPage to playerList[it] }
                 .toMap()
                 .forEach { index, to ->
-                    inventory.setItem(index, TeleportButtons.TELEPORT_PLAYER(to).findItemStack(player))
+                    inventory.setItem(index, TeleportButtons.TELEPORT_PLAYER(to).toShownItemStack(player))
                 }
-        inventory.setItem(numOfPlayerPerPage + 1, backButton.findItemStack(player))
-        inventory.setItem(numOfPlayerPerPage + 3, prevButton.findItemStack(player))
-        inventory.setItem(numOfPlayerPerPage + 5, nextButton.findItemStack(player))
+        inventory.setItem(numOfPlayerPerPage + 1, backButton.toShownItemStack(player))
+        inventory.setItem(numOfPlayerPerPage + 3, prevButton.toShownItemStack(player))
+        inventory.setItem(numOfPlayerPerPage + 5, nextButton.toShownItemStack(player))
 
         return inventory
     }

@@ -38,10 +38,10 @@ object QuestSelectMenu : BookMenu() {
                 .toMap()
                 .forEach { index, quest ->
                     inventory.setItem(index, QuestButtons.QUEST(quest.getClient(player)
-                            ?: return@forEach).findItemStack(player))
+                            ?: return@forEach).toShownItemStack(player))
                 }
-        inventory.setItem(numOfContentsPerPage + 3, prevButton.findItemStack(player))
-        inventory.setItem(numOfContentsPerPage + 5, nextButton.findItemStack(player))
+        inventory.setItem(numOfContentsPerPage + 3, prevButton.toShownItemStack(player))
+        inventory.setItem(numOfContentsPerPage + 5, nextButton.toShownItemStack(player))
 
         return inventory
     }

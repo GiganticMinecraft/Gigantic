@@ -12,7 +12,7 @@ import java.util.*
  */
 class OfflinePlayerHeadButton(private val uuid: UUID) : Button {
 
-    override fun findItemStack(player: Player): ItemStack? {
+    override fun toShownItemStack(player: Player): ItemStack? {
         return getItemStack()
     }
 
@@ -20,7 +20,7 @@ class OfflinePlayerHeadButton(private val uuid: UUID) : Button {
         return Head.getOfflinePlayerHead(uuid)?.clone()
     }
 
-    override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+    override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
         return false
     }
 

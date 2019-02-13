@@ -5,14 +5,15 @@ import org.bukkit.inventory.ItemStack
 
 /**
  * @author tar0ss
+ * @author unicroak
  */
-interface Item {
+interface Icon {
 
     /**
      * ItemStackを取得します
      *
      * @param player Menuを開いているPlayer
      */
-    fun findItemStack(player: Player): ItemStack?
+    fun toShownItemStack(player: Player): ItemStack? = null
 
 }

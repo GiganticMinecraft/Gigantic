@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
  * @author Mon_chi
  * @author tar0ss
  */
-interface Button : Item {
+interface Button : Icon {
 
     /**
      * クリック時に実行されます
@@ -16,5 +16,6 @@ interface Button : Item {
      * @param event クリック時の[InventoryClickEvent]
      * @return 何かしら実行した場合TRUE,それ以外はFALSE
      */
-    fun onClick(player: Player, event: InventoryClickEvent): Boolean
+    fun tryClick(player: Player, event: InventoryClickEvent): Boolean = false
+
 }
