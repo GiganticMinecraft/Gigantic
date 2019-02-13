@@ -5,11 +5,15 @@ package click.seichi.gigantic.config
  */
 object Config : SimpleConfiguration("config") {
 
+    val TIPS_INTERVAL by lazy { getLong("tips.interval") }
+
     val WORLD_SIDE_LENGTH by lazy { getDouble("world.side_length") }
 
     val PLAYER_DEATH_PENALTY by lazy { getDouble("player.death_penalty") }
 
     val PLAYER_MAX_FOLLOW by lazy { getInt("player.max_follow") }
+
+    val PLAYER_MAX_MUTE by lazy { getInt("player.max_mute") }
 
     val PROTECT_RADIUS by lazy { getDouble("player.protect_radius") }
 
@@ -43,14 +47,16 @@ object Config : SimpleConfiguration("config") {
 
     val SPELL_STELLA_CLAIR_PROBABILITY by lazy { getDouble("spell.stella_clair.probability") }
 
-    val SPELL_APOSTOL_MANA_PER_BLOCK by lazy { getDouble("spell.apostol.mana_per_block") }
+    val SPELL_MULTI_BREAK_MANA_PER_BLOCK by lazy { getDouble("spell.multi_break.mana_per_block") }
 
-    val SPELL_APOSTOL_LIMIT_SIZE by lazy { getInt("spell.apostol.limit_size") }
+    val SPELL_MULTI_BREAK_LIMIT_SIZE by lazy { getInt("spell.multi_break.limit_size") }
 
-    val SPELL_APOSTOL_DELAY by lazy { getDouble("spell.apostol.delay") }
+    val SPELL_MULTI_BREAK_DELAY by lazy { getDouble("spell.multi_break.delay") }
 
     val SPELL_SKY_WALK_MANA_PER_BLOCK by lazy { getDouble("spell.sky_walk.mana_per_block") }
 
     val SPELL_SKY_WALK_RADIUS by lazy { getInt("spell.sky_walk.radius") }
+
+    val SPELL_LUNA_FLEX_MANA_PER_DEGREE by lazy { getDouble("spell.luna_flex.mana_per_degree") }
 
 }

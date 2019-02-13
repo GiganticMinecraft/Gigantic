@@ -1,3 +1,6 @@
+tips:
+  interval: 5
+
 player:
   # 死亡時に失う経験値割合(%)
   # ex)
@@ -17,6 +20,9 @@ player:
 
   # フォローできる最大人数
   max_follow: 100
+
+  # ミュートできる最大人数
+  max_mute: 100
 
   # ログイン時の強制読み込みまでの猶予時間(秒)
   load_time: 10
@@ -86,7 +92,7 @@ spell:
     probability: 15.0
 
   # 範囲破壊スキル
-  apostol:
+  multi_break:
     # 1ブロック当たりのマナ消費量
     mana_per_block: 2.0
     # 幅，高さ，広さの最大値
@@ -101,6 +107,12 @@ spell:
     mana_per_block: 0.1
     # 半径
     radius: 2
+
+  # 移動速度改変スキル
+  luna_flex:
+    # １段階ごとの1ブロック当たりのマナ増加量
+    mana_per_degree: 0.5
+
 
 
 # TRUEの時debug.ymlに従う

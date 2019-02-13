@@ -29,7 +29,7 @@ object SpellMenu : Menu() {
             registerButton(spell.slot, object : Button {
                 override fun toShownItemStack(player: Player): ItemStack? {
                     if (!spell.isGranted(player)) return null
-                    return spell.getIcon(player).apply {
+                    return spell.getIcon().apply {
                         setDisplayName(spell.getName(player.wrappedLocale))
                         spell.getLore(player.wrappedLocale)?.let {
                             setLore(*it.toTypedArray())
@@ -39,8 +39,8 @@ object SpellMenu : Menu() {
                 }
 
                 override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-                    if (spell == Spell.APOSTOL) {
-                        ApostolSettingMenu.open(player)
+                    if (spell == Spell.MULTI_BREAK || spell == Spell.LUNA_FLEX) {
+                        SpellSettingMenu.open(player)
                         return true
                     }
                     return false

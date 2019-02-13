@@ -24,13 +24,17 @@ object UserTable : IdTable<UUID>("users") {
 
     val maxCombo = long("max_combo").default(0L)
 
+    val combo = long("combo").default(0L)
+
+    val lastComboTime = long("last_combo_time").default(System.currentTimeMillis())
+
     val spellToggle = bool("spell_toggle").default(false)
 
-    val apostolWidth = integer("apostol_width").default(1)
+    val multiBreakWidth = integer("multi_break_width").default(1)
 
-    val apostolHeight = integer("apostol_height").default(1)
+    val multiBreakHeight = integer("multi_break_height").default(1)
 
-    val apostolDepth = integer("apostol_depth").default(1)
+    val multiBreakDepth = integer("multi_break_depth").default(1)
 
     val teleportToggle = bool("teleport_toggle").default(false)
 
@@ -42,11 +46,15 @@ object UserTable : IdTable<UUID>("users") {
 
     val donation = integer("donation").default(0)
 
+    val givenVoteBonus = integer("given_vote_bonus").default(0)
+
     val isOnline = bool("is_online").default(false)
 
     val autoSwitch = bool("auto_switch").default(true)
 
     val skyWalkToggle = bool("sky_walk_toggle").default(false)
+
+    val walkSpeed = decimal("walk_speed", 5, 1).default(Defaults.WALK_SPEED)
 
     val createdAt = datetime("created_at").default(DateTime.now())
 

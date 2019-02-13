@@ -1,9 +1,6 @@
 package click.seichi.gigantic.item.items.menu
 
-import click.seichi.gigantic.extension.addLore
-import click.seichi.gigantic.extension.setDisplayName
-import click.seichi.gigantic.extension.setLore
-import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.MenuMessages
@@ -25,6 +22,12 @@ object RelicButtons {
         object : Button {
 
             override fun toShownItemStack(player: Player): ItemStack? {
+                val hasNoRelic = WillRelic.values()
+                        .filter { it.will == will }
+                        // 一つもレリックを持っていなければTRUE
+                        .none { player.hasRelic(it.relic) }
+
+                if (hasNoRelic) return null
                 return ItemStack(will.material).apply {
                     setDisplayName("" + will.chatColor +
                             "${ChatColor.BOLD}" +
@@ -38,6 +41,12 @@ object RelicButtons {
             }
 
             override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
+                val hasNoRelic = WillRelic.values()
+                        .filter { it.will == will }
+                        // 一つもレリックを持っていなければTRUE
+                        .none { player.hasRelic(it.relic) }
+
+                if (hasNoRelic) return false
                 menu.open(player)
                 return true
             }

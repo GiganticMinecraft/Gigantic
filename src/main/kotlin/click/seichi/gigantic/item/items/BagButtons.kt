@@ -6,17 +6,23 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.database.dao.DonateHistory
 import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.database.table.DonateHistoryTable
+import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.message.messages.BagMessages
+import click.seichi.gigantic.message.messages.MenuMessages
+import click.seichi.gigantic.message.messages.WillMessages
 import click.seichi.gigantic.message.messages.menu.*
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.DonateTicket
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import click.seichi.gigantic.sound.sounds.WillSpiritSounds
+import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.GameMode
 import org.bukkit.Material
@@ -27,6 +33,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.math.BigDecimal
+import java.util.*
 
 /**
  * @author tar0ss
@@ -40,7 +47,7 @@ object BagButtons {
                 val lore = mutableListOf<String>()
 
                 lore.add(when {
-                    player.getOrPut(Keys.PROFILE_IS_UPDATING) -> ProfileMessages.UPDATING
+                    isCoolTime(player) -> ProfileMessages.UPDATING
                     else -> ProfileMessages.UPDATE
                 }.asSafety(player.wrappedLocale))
 
@@ -81,12 +88,24 @@ object BagButtons {
             }
         }
 
+        private val coolTimeSet = mutableSetOf<UUID>()
+
+        fun isCoolTime(player: Player) = coolTimeSet.contains(player.uniqueId)
+
+        fun setCoolTime(uniqueId: UUID, isCoolTime: Boolean) {
+            if (isCoolTime) {
+                coolTimeSet.add(uniqueId)
+            } else {
+                coolTimeSet.remove(uniqueId)
+            }
+        }
+
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (player.getOrPut(Keys.PROFILE_IS_UPDATING)) return false
+            if (isCoolTime(player)) return true
             PlayerSounds.TOGGLE.playOnly(player)
-            player.offer(Keys.PROFILE_IS_UPDATING, true)
-            player.updateBag()
             val uniqueId = player.uniqueId
+            setCoolTime(uniqueId, true)
+            player.updateBag()
             // 投票，ポム，寄付系のポイントをデータベースから取得後更新
             object : BukkitRunnable() {
                 override fun run() {
@@ -101,8 +120,8 @@ object BagButtons {
                     }
                     object : BukkitRunnable() {
                         override fun run() {
+                            setCoolTime(uniqueId, false)
                             if (!player.isValid) return
-
                             votePoint?.let {
                                 player.force(Keys.VOTE, it)
                             }
@@ -112,7 +131,6 @@ object BagButtons {
                             donation?.let {
                                 player.force(Keys.DONATION, it)
                             }
-                            player.offer(Keys.PROFILE_IS_UPDATING, false)
                             player.updateBag()
                         }
                     }.runTaskLater(Gigantic.PLUGIN, Defaults.PROFILE_UPDATE_TIME * 20)
@@ -237,12 +255,13 @@ object BagButtons {
                     // 見えなくなるバグのため
                     player.showPlayer(Gigantic.PLUGIN, player)
                     player.updateBag()
+                    PlayerSounds.TELEPORT_AFK.play(player.location)
                     return true
                 }
                 GameMode.SPECTATOR -> {
                     player.gameMode = GameMode.SURVIVAL
                     if (afkLocation != null) {
-                        player.teleport(afkLocation)
+                        player.teleportSafely(afkLocation)
                     }
                     player.closeInventory()
                     player.updateBag()
@@ -316,8 +335,8 @@ object BagButtons {
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.FIRST_RELIC.isGranted(player)) return null
             return ItemStack(Material.ENDER_CHEST).apply {
-                    setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
-                            + BagMessages.RELIC.asSafety(player.wrappedLocale))
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.RELIC.asSafety(player.wrappedLocale))
                 clearLore()
                 itemMeta = itemMeta.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -420,6 +439,133 @@ object BagButtons {
             if (!Achievement.FIRST_WILL.isGranted(player)) return false
             if (event.inventory.holder === RelicGeneratorMenu) return false
             RelicGeneratorMenu.open(player)
+            return true
+        }
+
+    }
+
+    val VOTE_BONUS = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.GOLDEN_APPLE).apply {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.VOTE_BONUS.asSafety(player.wrappedLocale))
+                clearLore()
+
+                // もし先ほど獲得した特典があればそれを表示
+                player.getOrPut(Keys.GIVEN_WILL_SET)?.forEach { will ->
+                    addLore(WillMessages.GET_ETHEL_TEXT(will, Defaults.VOTE_BONUS_ETHEL).asSafety(player.wrappedLocale))
+                }
+
+                // クリックしたときの動作説明
+                val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
+                val voteNum = player.vote
+                val bonus = voteNum.minus(givenBonus)
+                if (bonus > 0) {
+                    addLore("${ChatColor.GREEN}${ChatColor.UNDERLINE}${ChatColor.BOLD}"
+                            + BagMessages.TAKE_BONUS.asSafety(player.wrappedLocale)
+                            + "($bonus)")
+                    setEnchanted(true)
+                } else {
+                    addLore("${ChatColor.GRAY}${ChatColor.UNDERLINE}${ChatColor.BOLD}"
+                            + BagMessages.NO_BONUS.asSafety(player.wrappedLocale))
+                    addLore("${ChatColor.RED}"
+                            + BagMessages.TO_TAKE_BONUS.asSafety(player.wrappedLocale))
+                }
+                addLore(MenuMessages.LINE)
+                // 説明文
+                addLore(BagMessages.VOTE_BONUS_DESCRIPTION.asSafety(player.wrappedLocale))
+                addLore(*BagMessages.VOTE_BONUS_FOR_ALL_PLAYER.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                if (Achievement.FIRST_WILL.isGranted(player)) {
+                    addLore(*BagMessages.VOTE_BONUS_FOR_BASIC_WILL.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                } else {
+                    addLore(BagMessages.VOTE_BONUS_FOR_BASIC_WILL_HIDE.asSafety(player.wrappedLocale))
+                }
+                if (Achievement.FIRST_ADVANCED_WILL.isGranted(player)) {
+                    addLore(*BagMessages.VOTE_BONUS_FOR_ADVANCED_WILL.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                } else {
+                    addLore(BagMessages.VOTE_BONUS_FOR_ADVANCED_WILL_HIDE.asSafety(player.wrappedLocale))
+                }
+                if (Achievement.FIRST_WILL.isGranted(player) || Achievement.FIRST_ADVANCED_WILL.isGranted(player)) {
+                    addLore("")
+                    addLore(*BagMessages.VOTE_BONUS_CAUTION.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                }
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
+            val voteNum = player.vote
+            val bonus = voteNum.minus(givenBonus)
+            // ボーナスが無ければ終了
+            if (bonus <= 0) return false
+            // givenBonusを増やす
+            player.offer(Keys.GIVEN_VOTE_BONUS, givenBonus + 1)
+
+            val givenWillSet = mutableSetOf<Will>()
+            // 特典付与処理
+            // フリー特典は自動付与なので付ける必要なし．
+            // 通常意志特典
+            if (Achievement.FIRST_WILL.isGranted(player)) {
+                val willSet = Will.values()
+                        .filter { it.grade == WillGrade.BASIC }
+                        .filter { player.hasAptitude(it) }
+                        .shuffled(Random.generator)
+                        .take(Defaults.VOTE_BONUS_BASIC_WILL_NUM)
+                        .toSet()
+                givenWillSet.addAll(willSet)
+                willSet.forEach {
+                    it.addEthel(player, Defaults.VOTE_BONUS_ETHEL)
+                    Bukkit.getPluginManager().callEvent(SenseEvent(it, player, Defaults.VOTE_BONUS_ETHEL))
+                }
+            }
+            // 高度意志特典
+            if (Achievement.FIRST_ADVANCED_WILL.isGranted(player)) {
+                val willSet = Will.values()
+                        .filter { it.grade == WillGrade.ADVANCED }
+                        .filter { player.hasAptitude(it) }
+                        .shuffled(Random.generator)
+                        .take(Defaults.VOTE_BONUS_ADVANCED_WILL_NUM)
+                        .toSet()
+                givenWillSet.addAll(willSet)
+                willSet.forEach {
+                    it.addEthel(player, Defaults.VOTE_BONUS_ETHEL)
+                    Bukkit.getPluginManager().callEvent(SenseEvent(it, player, Defaults.VOTE_BONUS_ETHEL))
+                }
+            }
+            player.offer(Keys.GIVEN_WILL_SET, givenWillSet)
+            object : BukkitRunnable() {
+                override fun run() {
+                    if (!player.isValid) return
+                    player.offer(Keys.GIVEN_WILL_SET, null)
+                }
+            }.runTaskLater(Gigantic.PLUGIN, 1L)
+            player.updateBag()
+            player.updateSideBar()
+            WillSpiritSounds.SENSED.playOnly(player)
+            return true
+        }
+
+    }
+
+    val SETTINGS = object : Button {
+
+        override fun findItemStack(player: Player): ItemStack? {
+            return ItemStack(Material.TRIPWIRE_HOOK).apply {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + SettingMenuMessages.TITLE.asSafety(player.wrappedLocale))
+                clearLore()
+                itemMeta = itemMeta.apply {
+                    addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                    addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                    addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
+                }
+            }
+        }
+
+        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === SettingMenu) return false
+            SettingMenu.open(player)
             return true
         }
 

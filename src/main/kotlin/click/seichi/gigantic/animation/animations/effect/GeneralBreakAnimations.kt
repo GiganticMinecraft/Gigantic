@@ -21,7 +21,7 @@ object GeneralBreakAnimations {
     }
 
     val FLAME = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.FLAME, location, 2)
+        location.world.spawnParticle(Particle.FLAME, location, 2, 0.0, 0.0, 0.0, 0.2)
     }
 
     val WITCH_SCENT = Animation(0) { location, _ ->

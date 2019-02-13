@@ -6,7 +6,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.message.ChatMessage
+import click.seichi.gigantic.message.LinedChatMessage
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.relic.Relic
@@ -26,7 +26,7 @@ enum class Achievement(
         private val canGranting: (Player) -> Boolean,
         // アンロック時に処理される
         val action: (Player) -> Unit = {},
-        val grantMessage: ChatMessage? = null,
+        val grantMessage: LinedChatMessage? = null,
         private val priority: UpdatePriority = UpdatePriority.NORMAL
 ) {
     // messages
@@ -44,8 +44,14 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.FIRST_WILL
             , priority = UpdatePriority.LOWEST),
     FIRST_RELIC(3, {
-        Relic.values().firstOrNull { relic -> relic.has(it) } != null
+        Relic.values().firstOrNull { relic -> it.hasRelic(relic) } != null
     }, grantMessage = AchievementMessages.FIRST_RELIC),
+    FIRST_ADVANCED_WILL(4, {
+        Will.values()
+                .filter { it.grade == WillGrade.ADVANCED }
+                .firstOrNull { will -> it.hasAptitude(will) } != null
+    }, grantMessage = AchievementMessages.FIRST_ADVANCED_WILL,
+            priority = UpdatePriority.LOWEST),
 
     //TODO 一度すべてのクエストを隠蔽しているので実装時は一気にやる
     // systems
@@ -91,12 +97,15 @@ enum class Achievement(
     SPELL_STELLA_CLAIR(300, {
         MANA_STONE.isGranted(it)
     }, grantMessage = AchievementMessages.UNLOCK_SPELL_STELLA_CLAIR),
-    SPELL_APOSTOL(301, {
+    SPELL_MULTI_BREAK(301, {
         MANA_STONE.isGranted(it)
-    }, grantMessage = AchievementMessages.UNLOCK_SPELL_APOSTOLUS),
+    }, grantMessage = AchievementMessages.UNLOCK_SPELL_MULTI_BREAK),
     SPELL_SKY_WALK(302, {
         MANA_STONE.isGranted(it) && it.wrappedLevel >= 18
     }, grantMessage = AchievementMessages.UNLOCK_SPELL_SKY_WALK),
+    SPELL_LUNA_FLEX(303, {
+        MANA_STONE.isGranted(it) && it.wrappedLevel >= 28
+    }, grantMessage = AchievementMessages.UNLOCK_SPELL_LUNA_FLEX),
 
     // quest order
 
@@ -306,59 +315,32 @@ enum class Achievement(
     companion object {
         // 強制的にプレイヤー表示部分を更新したい場合は[isForced]をtrueに設定
         fun update(player: Player, isForced: Boolean = false) {
-            var isChanged = false
+            var isGranted = false
+            var delay = 1L
             values().sortedBy { it.priority.amount }
-                    .forEach {
-                        if (it.update(player)) {
-                            isChanged = true
-                        }
+                    .filter { it.canGrant(player) && !it.isGranted(player) }
+                    .apply {
+                        if (isNotEmpty()) isGranted = true
+                    }.forEach {
+                        // 解除処理
+                        player.offer(Keys.ACHIEVEMENT_MAP.getValue(it), true)
+                        // 初期処理実行
+                        it.action(player)
+
+                        // メッセージ送信
+                        object : BukkitRunnable() {
+                            override fun run() {
+                                if (!player.isValid) return
+                                it.grantMessage?.sendTo(player)
+                            }
+                        }.runTaskLater(Gigantic.PLUGIN, delay)
+
+                        // メッセージ終了まで待機 + メッセージ間隔用45L
+                        delay += it.grantMessage?.duration?.plus(45L) ?: 0L
                     }
-            if (!isChanged && !isForced) return
+            if (!isGranted && !isForced) return
             player.updateDisplay(true, true)
-        }
-    }
 
-
-    private fun update(player: Player): Boolean {
-        var isChanged = false
-        if (canGrant(player)) {
-            if (!isGranted(player)) {
-                // 現在も解除可能で解除していない時
-                grant(player)
-                isChanged = true
-            }
-        } else {
-            if (isGranted(player)) {
-                // 現在解除できないがすでに解除しているとき
-                revoke(player)
-                isChanged = true
-            }
-        }
-        return isChanged
-    }
-
-    // 与える
-    private fun grant(player: Player) {
-        // 解除処理
-        player.transform(Keys.ACHIEVEMENT_MAP[this] ?: return) { hasUnlocked ->
-            if (!hasUnlocked) {
-                action(player)
-                object : BukkitRunnable() {
-                    override fun run() {
-                        if (!player.isValid) return
-                        grantMessage?.sendTo(player)
-                    }
-                }.runTaskLater(Gigantic.PLUGIN, 1L)
-            }
-            true
-        }
-    }
-
-    // はく奪する
-    private fun revoke(player: Player) {
-        // ロック処理
-        player.transform(Keys.ACHIEVEMENT_MAP[this] ?: return) {
-            false
         }
     }
 

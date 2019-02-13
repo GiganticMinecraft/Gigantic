@@ -1,5 +1,6 @@
 package click.seichi.gigantic.will
 
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.WillMessages
@@ -170,6 +171,8 @@ enum class Will(
     ;
 
     abstract fun canSpawn(player: Player, block: Block): Boolean
+
+    fun addEthel(player: Player, amount: Long) = player.transform(Keys.ETHEL_MAP.getValue(this)) { it + amount }
 
     override fun toString(): String = name.toLowerCase()
 

@@ -3,11 +3,12 @@ package click.seichi.gigantic.animation.animations.effect
 import click.seichi.gigantic.animation.Animation
 import org.bukkit.Material
 import org.bukkit.Particle
+import org.bukkit.inventory.ItemStack
 
 /**
  * @author tar0ss
  */
-object ApostolAnimations {
+object MultiBreakAnimations {
 
     val EXPLOSION = Animation(0) { location, _ ->
         location.world.spawnParticle(Particle.EXPLOSION_NORMAL, location, 1)
@@ -22,7 +23,7 @@ object ApostolAnimations {
     }
 
     val FLAME = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.FLAME, location, 4)
+        location.world.spawnParticle(Particle.FLAME, location, 2, 0.0, 0.0, 0.0, 0.2)
     }
 
     val WITCH_SCENT = Animation(0) { location, _ ->
@@ -35,6 +36,19 @@ object ApostolAnimations {
 
     val BUBBLE = Animation(0) { location, _ ->
         location.world.spawnParticle(Particle.BUBBLE_POP, location, 1)
+    }
+
+    private val alchemiaMap = mapOf(
+            Material.GOLD_ORE to ItemStack(Material.GOLD_INGOT),
+            Material.DIAMOND_ORE to ItemStack(Material.DIAMOND),
+            Material.LAPIS_ORE to ItemStack(Material.LAPIS_LAZULI),
+            Material.REDSTONE_ORE to ItemStack(Material.REDSTONE)
+    )
+
+    val ALCHEMIA = Animation(0) { location, _ ->
+        val type = location.block.type
+        if (!alchemiaMap.containsKey(type)) return@Animation
+        location.world.spawnParticle(Particle.ITEM_CRACK, location, 3, 0.0, 0.0, 0.0, 0.05, alchemiaMap.getValue(type))
     }
 
 

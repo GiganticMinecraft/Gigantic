@@ -1,5 +1,6 @@
 package click.seichi.gigantic.player
 
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
@@ -27,7 +28,7 @@ object Defaults {
     const val WILL_ADVANCED_UNLOCK_AMOUNT = 4000
 
     // will spirit Settings
-    // 意志が消滅するまでの時間(ticks)
+    // 意志が埋まってから消滅するまでの時間(ticks)
     const val WILL_SPIRIT_DEATH_DURATION = 100L
 
     // achievement Settings
@@ -44,5 +45,34 @@ object Defaults {
     const val MAX_HOME = 5
 
     // スカイウォークで設置されるブロック
-    val SKY_WALK_MATERIAL = Material.GLASS
+    val SKY_WALK_AIR_MATERIAL = Material.LIGHT_GRAY_STAINED_GLASS
+    val SKY_WALK_WATER_MATERIAL = Material.BLUE_STAINED_GLASS
+    val SKY_WALK_LAVA_MATERIAL = Material.RED_STAINED_GLASS
+
+    // 1回の投票でもらえる投票p
+    val VOTE_POINT_PER_VOTE = 10
+
+    // 寄付1p獲得に必要な寄付額
+    val DONATITON_PER_DONATE_POINT = 100
+
+    // 投票特典で1種類につき貰えるエーテル量
+    val VOTE_BONUS_ETHEL = 100L
+    // 投票得点で通常意志をもらえる種類数
+    val VOTE_BONUS_BASIC_WILL_NUM = 3
+    // 投票得点で高度意志をもらえる種類数
+    val VOTE_BONUS_ADVANCED_WILL_NUM = 1
+
+    // 標準の移動速度
+    val WALK_SPEED = 0.2.toBigDecimal()
+    // ルナフレックスの最大段階
+    val LUNA_FLEX_MAX_DEGREE = 10.minus(WALK_SPEED.times(10.toBigDecimal()).toInt())
+
+
+    // コンボの1間隔ごとの最大減少コンボ数
+    val MAX_DECREASE_COMBO_PER_STEP = 100
+    // コンボの最大待ち時間（時間）
+    val MAX_COMBO_CONTINUATION_HOUR = 1
+
+    val TIPS_PREFIX = "${ChatColor.YELLOW}" + "[TIPS] " + "${ChatColor.RESET}"
+
 }

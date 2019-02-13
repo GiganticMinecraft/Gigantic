@@ -3,6 +3,7 @@ package click.seichi.gigantic
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.player.Defaults
 import org.bukkit.entity.Player
 
 /**通貨種類
@@ -18,7 +19,7 @@ enum class Currency {
     // 投票
     VOTE_POINT {
         override fun getAmount(player: Player): Int {
-            return player.getOrPut(Keys.VOTE).times(10)
+            return player.getOrPut(Keys.VOTE).times(Defaults.VOTE_POINT_PER_VOTE)
         }
     },
     // Spade 通貨
@@ -30,7 +31,7 @@ enum class Currency {
     // 寄付金
     DONATE_POINT {
         override fun getAmount(player: Player): Int {
-            return player.getOrPut(Keys.DONATION).div(100)
+            return player.getOrPut(Keys.DONATION).div(Defaults.DONATITON_PER_DONATE_POINT)
         }
     },
     ;

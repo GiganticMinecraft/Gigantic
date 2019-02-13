@@ -2,6 +2,7 @@ package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
 import java.math.RoundingMode
 import java.util.*
@@ -71,7 +72,6 @@ object SkillMessages {
                     )
             )
 
-
     val MINE_COMBO = LocalizedText(
             Locale.JAPANESE to "マイン・コンボ"
     )
@@ -87,9 +87,64 @@ object SkillMessages {
                                     "コンボ継続時間: ${Config.SKILL_MINE_COMBO_CONTINUATION_SECONDS.toBigDecimal().setScale(1, RoundingMode.HALF_UP)}秒"
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "コンボが途切れると${Config.SKILL_MINE_COMBO_DECREASE_INTERVAL.toBigDecimal().setScale(1, RoundingMode.HALF_UP)}秒おきに" +
-                                    "最大で100Combo減少する"
+                            Locale.JAPANESE to ""
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "コンボが途切れると${Config.SKILL_MINE_COMBO_DECREASE_INTERVAL.toBigDecimal().setScale(1, RoundingMode.HALF_UP)}秒おきに"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "最大で${Defaults.MAX_DECREASE_COMBO_PER_STEP}Combo減少する"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to ""
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
+                                    "どんなに途切れていても"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
+                                    "${Defaults.MAX_DECREASE_COMBO_PER_STEP.times(10)}コンボ以上減少しないが，"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
+                                    "${Defaults.MAX_COMBO_CONTINUATION_HOUR}時間経つと強制的にリセットされる"
+                    )
+            )
+
+    val JUMP = LocalizedText(
+            Locale.JAPANESE to "ジャンプ"
+    )
+
+    val JUMP_LORE =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "アクティブ効果: スニークしながら" +
+                                    "${ChatColor.LIGHT_PURPLE}" +
+                                    "${Config.ELYTRA_CHARGE_UP_TIME.div(20)}秒" +
+                                    "${ChatColor.GRAY}" +
+                                    "チャージ後"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "スニークを離すと飛び立てる!!"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.RED}" +
+                                    ""
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "落下中にスペースを押すと滑空できます"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.RED}" +
+                                    "落下死" +
+                                    "${ChatColor.GRAY}" +
+                                    "に注意してください．"
                     )
             )
 }

@@ -19,16 +19,16 @@ import java.math.RoundingMode
 /**
  * @author tar0ss
  */
-class Apostol : Miner(), SpellCaster {
+class MultiBreaker : Miner(), SpellCaster {
 
     companion object {
         // 最大同時破壊数 = maxMana * (5/100) / 2
-        fun calcLimitOfBreakNumOfApostol(maxMana: BigDecimal): Int {
+        fun calcLimitOfBreakNumOfMultiBreak(maxMana: BigDecimal): Int {
             return maxMana
                     .divide(100.toBigDecimal(), RoundingMode.HALF_UP)
                     .times(5.toBigDecimal())
-                    .divide(Config.SPELL_APOSTOL_MANA_PER_BLOCK.toBigDecimal(), 10, RoundingMode.HALF_UP)
-                    .coerceAtMost(Math.pow(Config.SPELL_APOSTOL_LIMIT_SIZE.toDouble(), 3.0).toBigDecimal())
+                    .divide(Config.SPELL_MULTI_BREAK_MANA_PER_BLOCK.toBigDecimal(), 10, RoundingMode.HALF_UP)
+                    .coerceAtMost(Math.pow(Config.SPELL_MULTI_BREAK_LIMIT_SIZE.toDouble(), 3.0).toBigDecimal())
                     .toInt()
         }
 
@@ -36,7 +36,7 @@ class Apostol : Miner(), SpellCaster {
             // プレイヤーの向いている方向を取得
             val breakFace = player.calcFace()
             // プレイヤーが選択している破壊範囲を取得
-            val breakArea = player.getOrPut(Keys.SPELL_APOSTOL_BREAK_AREA)
+            val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
 
             val allBlockSet = mutableSetOf<Block>()
 
@@ -166,8 +166,8 @@ class Apostol : Miner(), SpellCaster {
                 // 先にブロックを変換
                 forEach {
                     it.changeBedrock()
-                    it.changeCrustBlock()
                     it.condenseLiquid(false)
+                    it.condenseSkyWalkBlock(false)
                 }
             }.filter {
                 // 種類の制約
@@ -178,7 +178,7 @@ class Apostol : Miner(), SpellCaster {
 
     override fun cast(player: Player, base: Block) {
         // 破壊可能ブロック取得
-        val breakBlockSet = player.remove(Keys.SPELL_APOSTOL_BREAK_BLOCKS)
+        val breakBlockSet = player.remove(Keys.SPELL_MULTI_BREAK_BLOCKS)
 
         if (breakBlockSet == null || breakBlockSet.isEmpty()) return
 
@@ -196,7 +196,7 @@ class Apostol : Miner(), SpellCaster {
         }
 
         player.manipulate(CatalogPlayerCache.EXP) {
-            it.add(breakBlockSet.size.toBigDecimal(), ExpReason.SPELL_APOSTOL)
+            it.add(breakBlockSet.size.toBigDecimal(), ExpReason.SPELL_MULTI_BREAK)
             it.add(bonus.toBigDecimal(), reason = ExpReason.RELIC_BONUS)
         }
 
@@ -206,12 +206,12 @@ class Apostol : Miner(), SpellCaster {
         PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
         // 実際の破壊処理（エフェクト部分）
-        player.getOrPut(Keys.EFFECT).apostolBreak(player, base, breakBlockSet)
+        player.getOrPut(Keys.EFFECT).multiBreak(player, base, breakBlockSet)
     }
 
 
     override fun calcConsumeMana(player: Player, breakBlockSet: Set<Block>): BigDecimal {
-        return Config.SPELL_APOSTOL_MANA_PER_BLOCK.toBigDecimal() * breakBlockSet.size.toBigDecimal()
+        return Config.SPELL_MULTI_BREAK_MANA_PER_BLOCK.toBigDecimal() * breakBlockSet.size.toBigDecimal()
     }
 
     override fun onBreakBlock(player: Player?, block: Block) {

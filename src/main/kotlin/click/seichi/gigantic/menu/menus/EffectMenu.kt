@@ -128,9 +128,9 @@ object EffectMenu : Menu() {
                         addLore(EffectMenuMessages.GENERAL_BREAK.asSafety(player.wrappedLocale) +
                                 "${ChatColor.RESET}${ChatColor.WHITE} " +
                                 if (effect.hasGeneralBreakEffect) "あり" else "なし")
-                        addLore(EffectMenuMessages.APOSTOL.asSafety(player.wrappedLocale) +
+                        addLore(EffectMenuMessages.MULTI_BREAK.asSafety(player.wrappedLocale) +
                                 "${ChatColor.RESET}${ChatColor.WHITE} " +
-                                if (effect.hasApostolEffect) "あり" else "なし")
+                                if (effect.hasMultiBreakEffect) "あり" else "なし")
 
                         addLore(MenuMessages.LINE)
 

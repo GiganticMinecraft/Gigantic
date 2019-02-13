@@ -58,4 +58,11 @@ object EffectSounds {
             1.4F
     )
 
+    val ALCHEMIA = DetailedSound(
+            Sound.BLOCK_STONE_BREAK,
+            SoundCategory.BLOCKS,
+            1F,
+            1.4F
+    )
+
 }

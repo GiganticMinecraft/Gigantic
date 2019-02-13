@@ -102,12 +102,29 @@ object HookedItemMessages {
     val JUMP_LORE = listOf(
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.GRAY}" +
-                            "これを持って" +
-                            "${Config.ELYTRA_CHARGE_UP_TIME.div(20)}秒間スニークすると，"
+                            "スニークしながら" +
+                            "${ChatColor.LIGHT_PURPLE}" +
+                            "${Config.ELYTRA_CHARGE_UP_TIME.div(20)}秒" +
+                            "${ChatColor.GRAY}" +
+                            "チャージ後"
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.GRAY}" +
-                            "大きく飛び立てるぞ！落ちるなよ！"
+                            "スニークを離すと飛び立てる!!"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.RED}" +
+                            ""
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "落下中にスペースを押すと滑空できます"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.RED}" +
+                            "落下死" +
+                            "${ChatColor.GRAY}" +
+                            "に注意してください．"
             )
     )
 
@@ -150,7 +167,7 @@ object HookedItemMessages {
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.GRAY}" +
-                            "これを持っていると魔法が使える"
+                            "これを持っているとマルチ・ブレイクが使える"
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +

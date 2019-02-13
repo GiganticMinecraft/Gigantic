@@ -19,13 +19,12 @@ import click.seichi.gigantic.sound.sounds.PlayerSounds
 import com.google.common.io.ByteStreams
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
+import org.bukkit.block.BlockFace
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.potion.PotionEffect
-import org.bukkit.potion.PotionEffectType
 
 /**
  * @author tar0ss
@@ -50,13 +49,16 @@ class PlayerMonitor : Listener {
 
         player.saturation = Float.MAX_VALUE
         player.foodLevel = 20
-        // 4秒間無敵付与
-        player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,
-                80,
-                5,
-                false,
-                false
-        ))
+        // デフォルトのスピードに設定
+        player.walkSpeed = player.getOrPut(Keys.WALK_SPEED).toFloat()
+
+        // 安全な位置にテレポート
+        if (player.location.block.getRelative(BlockFace.DOWN).isAir) {
+            player.location.chunk.getSpawnableLocation().let {
+                player.teleportSafely(it)
+            }
+        }
+
         // レベル表記を更新
         player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(player.wrappedLevel).plus(player.name)
         player.displayName = PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name)
@@ -96,12 +98,12 @@ class PlayerMonitor : Listener {
     fun onLevelUp(event: LevelUpEvent) {
         val player = event.player
 
-        Achievement.update(event.player)
-
         PlayerMessages.LEVEL_UP_LEVEL(event.level).sendTo(player)
         PlayerMessages.LEVEL_UP_TITLE(event.level).sendTo(player)
         PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
         PlayerSounds.LEVEL_UP.play(player.location)
+
+        Achievement.update(event.player)
 
         player.manipulate(CatalogPlayerCache.MANA) {
             val prevMax = it.max

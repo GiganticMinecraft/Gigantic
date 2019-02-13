@@ -12,6 +12,7 @@ import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.Home
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.ChatColor
+import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -50,16 +51,23 @@ object TeleportToHomeMenu : Menu() {
                             )
                         }
                         else -> ItemStack(Material.RED_BED).apply {
-                            // クリックでテレポート
                             setDisplayName(
                                     "${ChatColor.AQUA}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
                                             home.name
                             )
                             clearLore()
-                            addLore(
-                                    "${ChatColor.GREEN}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
-                                            TeleportMessages.CLICK_TO_TELEPORT_HOME.asSafety(player.wrappedLocale)
-                            )
+                            if (player.gameMode != GameMode.SURVIVAL) {
+                                addLore(
+                                        "${ChatColor.RED}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
+                                                TeleportMessages.HOME_NOT_SURVIVAL.asSafety(player.wrappedLocale)
+                                )
+                            } else {
+                                addLore(
+                                        "${ChatColor.GREEN}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
+                                                TeleportMessages.CLICK_TO_TELEPORT_HOME.asSafety(player.wrappedLocale)
+                                )
+                            }
+
                             if (deleteMap.containsKey(player.uniqueId) && deleteMap[player.uniqueId] == homeId) {
                                 addLore(
                                         "${ChatColor.RED}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
@@ -79,12 +87,13 @@ object TeleportToHomeMenu : Menu() {
                                     "${ChatColor.DARK_RED}" +
                                             TeleportMessages.HOME_DELETE_LORE.asSafety(player.wrappedLocale)
                             )
+
                         }
                     }
                 }
 
                 override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-
+                    if (player.gameMode != GameMode.SURVIVAL) return true
                     val home = player.getOrPut(Keys.HOME_MAP)[homeId]
 
                     // 削除
@@ -130,7 +139,7 @@ object TeleportToHomeMenu : Menu() {
                         PlayerSounds.TOGGLE.playOnly(player)
                     } else {
                         // クリックでテレポート
-                        player.teleport(home.location)
+                        player.teleportSafely(home.location)
                         PlayerSounds.TELEPORT.play(home.location)
                     }
                     reopen(player)

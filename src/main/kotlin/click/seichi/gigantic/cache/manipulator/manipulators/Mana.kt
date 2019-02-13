@@ -57,6 +57,10 @@ class Mana : Manipulator<Mana, PlayerCache> {
         return prev - current
     }
 
+    fun set(other: BigDecimal) {
+        current = other
+    }
+
     fun updateMaxMana(level: Int) {
         max = ManaConfig.MANA_MAP[level] ?: 0.toBigDecimal()
     }

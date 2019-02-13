@@ -1,12 +1,10 @@
 package click.seichi.gigantic.spirit.spirits
 
 import click.seichi.gigantic.animation.animations.WillSpiritAnimations
-import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.isCrust
 import click.seichi.gigantic.extension.relationship
-import click.seichi.gigantic.extension.transform
-import click.seichi.gigantic.message.messages.SideBarMessages
+import click.seichi.gigantic.extension.updateSideBar
 import click.seichi.gigantic.message.messages.WillMessages
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.sound.sounds.WillSpiritSounds
@@ -63,12 +61,9 @@ class WillSpirit(
                 player ?: return@Sensor
                 WillMessages.SENSED_WILL(this).sendTo(player)
                 WillSpiritSounds.SENSED.playOnly(player)
-                addEthel(player, willSize.memory)
+                will.addEthel(player, willSize.memory)
                 Bukkit.getPluginManager().callEvent(SenseEvent(will, player, willSize.memory))
-                SideBarMessages.MEMORY_SIDEBAR(
-                        player,
-                        false
-                ).sendTo(player)
+                player.updateSideBar()
                 remove()
             },
             {
@@ -76,8 +71,6 @@ class WillSpirit(
             },
             60
     )
-
-    private fun addEthel(player: Player, amount: Long) = player.transform(Keys.ETHEL_MAP[will]!!) { it + amount }
 
     override val lifespan = 60 * 20L
 

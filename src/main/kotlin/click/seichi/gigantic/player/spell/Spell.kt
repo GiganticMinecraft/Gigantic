@@ -30,32 +30,39 @@ enum class Spell(
             Achievement.SPELL_STELLA_CLAIR,
             Spells.STELLA_CLAIR
     ),
-    APOSTOL(
+    MULTI_BREAK(
             1,
             1,
             ItemStack(Material.FIRE_CHARGE),
-            SpellMessages.APOSTOL,
-            SpellMessages.APOSTOL_LORE,
-            Achievement.SPELL_APOSTOL,
-            Spells.APOSTOL
+            SpellMessages.MULTI_BREAK,
+            SpellMessages.MULTI_BREAK_LORE,
+            Achievement.SPELL_MULTI_BREAK,
+            Spells.MULTI_BREAK
     ),
     SKY_WALK(
             2,
             2,
-            ItemStack(Material.SUGAR),
+            ItemStack(Material.PRISMARINE_CRYSTALS),
             SpellMessages.SKY_WALK,
             SpellMessages.SKY_WALK_LORE,
             Achievement.SPELL_SKY_WALK,
             Spells.SKY_WALK
-    )
+    ),
+    LUNA_FLEX(3,
+            3,
+            ItemStack(Material.SUGAR),
+            SpellMessages.LUNA_FLEX,
+            SpellMessages.LUNA_FLEX_LORE,
+            Achievement.SPELL_LUNA_FLEX,
+            Spells.LUNA_FLEX
+    ),
     ;
 
     fun tryCast(player: Player) = if (isGranted(player)) invoker.tryInvoke(player) else false
 
     fun isGranted(player: Player) = achievement?.isGranted(player) ?: true
 
-    // 解禁条件を表示するためにplayerを引数に
-    fun getIcon(player: Player) = icon.clone()
+    fun getIcon() = icon.clone()
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)
 

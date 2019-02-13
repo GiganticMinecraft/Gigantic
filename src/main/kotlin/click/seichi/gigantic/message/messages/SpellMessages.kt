@@ -35,11 +35,11 @@ object SpellMessages {
                     )
             )
 
-    val APOSTOL = LocalizedText(
-            Locale.JAPANESE to "アポストル"
+    val MULTI_BREAK = LocalizedText(
+            Locale.JAPANESE to "マルチ・ブレイク"
     )
 
-    val APOSTOL_LORE =
+    val MULTI_BREAK_LORE =
             listOf(
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.GRAY}" +
@@ -47,7 +47,7 @@ object SpellMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "消費: ${Config.SPELL_APOSTOL_MANA_PER_BLOCK}マナ/ブロック"
+                                    "消費: ${Config.SPELL_MULTI_BREAK_MANA_PER_BLOCK}マナ/ブロック"
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
@@ -80,6 +80,30 @@ object SpellMessages {
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
                                     "消費: ${Config.SPELL_SKY_WALK_MANA_PER_BLOCK.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} マナ/ブロック"
+                    )
+            )
+
+    val LUNA_FLEX = LocalizedText(
+            Locale.JAPANESE to "ルナ・フレックス"
+    )
+
+    val LUNA_FLEX_LORE =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "パッシブ効果: 移動速度変更"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                                    "消費: ${Config.SPELL_LUNA_FLEX_MANA_PER_DEGREE.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} マナ/段階"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                                    ""
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
+                                    "クリックで移動速度を設定"
                     )
             )
 

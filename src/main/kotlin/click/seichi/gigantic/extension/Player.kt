@@ -18,6 +18,7 @@ import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.util.NoiseData
@@ -77,7 +78,7 @@ val Player.maxMana: BigDecimal
     get() = getOrPut(Keys.MAX_MANA)
 
 val Player.combo: Long
-    get() = getOrPut(Keys.MINE_COMBO)
+    get() = getOrPut(Keys.COMBO)
 
 val Player.maxCombo: Long
     get() = getOrPut(Keys.MAX_COMBO)
@@ -89,7 +90,7 @@ val Player.comboRank: Int
 val Player.vote: Int
     get() = getOrPut(Keys.VOTE)
 
-// 累計投票ポイント(投票数*10)
+// 累計投票ポイント
 val Player.votePoint: Int
     get() = Currency.VOTE_POINT.getAmount(this)
 // 累計
@@ -98,7 +99,7 @@ val Player.pomme: Int
 // 累計寄付額
 val Player.donation: Int
     get() = getOrPut(Keys.DONATION)
-// 累計寄付p (寄付額/100)
+// 累計寄付p
 val Player.donatePoint: Int
     get() = Currency.DONATE_POINT.getAmount(this)
 
@@ -107,7 +108,7 @@ val Player.effect: GiganticEffect
 
 fun Player.isMaxMana() = mana >= maxMana
 
-fun Player.hasMana(other: BigDecimal) = mana >= other
+fun Player.hasMana() = mana > BigDecimal.ZERO
 
 fun Player.hasAptitude(will: Will) = getOrPut(Keys.APTITUDE_MAP[will]!!)
 
@@ -126,7 +127,27 @@ fun Player.unFollow(uniqueId: UUID) = transform(Keys.FOLLOW_SET) {
 val Player.follows: Int
     get() = getOrPut(Keys.FOLLOW_SET).size
 
-fun Player.relationship(will: Will) = player.getOrPut(Keys.WILL_RELATIONSHIP_MAP[will]!!)
+fun Player.isMute(uniqueId: UUID) = getOrPut(Keys.MUTE_SET).contains(uniqueId)
+
+fun Player.mute(uniqueId: UUID) = transform(Keys.MUTE_SET) {
+    setOf(*it.toTypedArray(), uniqueId)
+}
+
+fun Player.unMute(uniqueId: UUID) = transform(Keys.MUTE_SET) {
+    it.toMutableSet().apply { remove(uniqueId) }
+}
+
+val Player.mutes: Int
+    get() = getOrPut(Keys.MUTE_SET).size
+
+fun Player.relationship(will: Will) = getOrPut(Keys.WILL_RELATIONSHIP_MAP[will]!!)
+
+fun Player.hasRelic(relic: Relic) = relic.getDroppedNum(this) > 0
+
+fun Player.teleportSafely(location: Location) {
+    teleport(location)
+    offer(Keys.PREVIOUS_LOCATION, location)
+}
 
 /**
  * プレイヤーが向いている方向の[BlockFace]を取得する

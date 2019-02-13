@@ -7,6 +7,7 @@ import click.seichi.gigantic.enchantment.ToolEnchantment
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.HandItem
 import click.seichi.gigantic.message.messages.HookedItemMessages
+import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.sound.sounds.PlayerSounds
@@ -108,23 +109,45 @@ object HandItems {
             else ItemStack(Material.AIR)
         }
 
-        override fun tryInteract(player: Player, event: PlayerInteractEvent): Boolean {
+        private val coolTimeSet = mutableSetOf<UUID>()
+
+        fun isCoolTime(player: Player) = coolTimeSet.contains(player.uniqueId)
+
+        fun setCoolTime(uniqueId: UUID, isCoolTime: Boolean) {
+            if (isCoolTime) {
+                coolTimeSet.add(uniqueId)
+            } else {
+                coolTimeSet.remove(uniqueId)
+            }
+        }
+
+        override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
             if (!Achievement.MANA_STONE.isGranted(player)) return false
+            if (player.inventory.heldItemSlot != player.getOrPut(Keys.BELT).toolSlot) return false
             val action = event.action ?: return false
             if (action != Action.RIGHT_CLICK_AIR && action != Action.RIGHT_CLICK_BLOCK) return false
-            val coolTime = !player.getOrPut(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN)
-            if (coolTime) return false
-            player.offer(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN, false)
+            if (isCoolTime(player)) return false
+
+            val uniqueId = player.uniqueId
+            setCoolTime(uniqueId, true)
             Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
-                if (!player.isValid) return@scheduleSyncDelayedTask
-                player.offer(Keys.IS_MANA_STONE_TOGGLE_COOLDOWN, true)
+                setCoolTime(uniqueId, false)
             }, 5L)
-            player.transform(Keys.SPELL_TOGGLE) { spellToggle ->
-                val next = !spellToggle
-                if (next) SpellSounds.TOGGLE_ON.playOnly(player)
-                else SpellSounds.TOGGLE_OFF.playOnly(player)
-                next
+
+            // マナがない場合は強制的にOFF
+            if (!player.hasMana()) {
+                PlayerMessages.NO_MANA.sendTo(player)
+                player.offer(Keys.SPELL_TOGGLE, false)
+                PlayerSounds.FAIL.playOnly(player)
+            } else {
+                player.transform(Keys.SPELL_TOGGLE) { spellToggle ->
+                    val next = !spellToggle
+                    if (next) SpellSounds.TOGGLE_ON.playOnly(player)
+                    else SpellSounds.TOGGLE_OFF.playOnly(player)
+                    next
+                }
             }
+
             player.updateBelt(false, true)
             return true
         }
@@ -160,7 +183,8 @@ object HandItems {
         }
 
         override fun tryInteract(player: Player, event: PlayerInteractEvent): Boolean {
-            return Skill.MINE_BURST.tryCast(player)
+            Skill.MINE_BURST.tryCast(player)
+            return true
         }
 
     }
@@ -187,7 +211,8 @@ object HandItems {
         }
 
         override fun tryInteract(player: Player, event: PlayerInteractEvent): Boolean {
-            return Skill.FLASH.tryCast(player)
+            Skill.FLASH.tryCast(player)
+            return true
         }
 
     }
@@ -213,7 +238,7 @@ object HandItems {
 
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Spell.SKY_WALK.isGranted(player)) return null
-            return ItemStack(Material.SUGAR).apply {
+            return ItemStack(Material.PRISMARINE_CRYSTALS).apply {
                 val toggle = player.getOrPut(Keys.SPELL_SKY_WALK_TOGGLE)
                 setDisplayName(
                         HookedItemMessages.SKY_WALK.asSafety(player.wrappedLocale) +
@@ -232,12 +257,18 @@ object HandItems {
             coolMap[player.uniqueId] = true
             object : BukkitRunnable() {
                 override fun run() {
-                    if (!player.isValid) return
                     coolMap[player.uniqueId] = false
                 }
             }.runTaskLater(Gigantic.PLUGIN, 5L)
-            player.transform(Keys.SPELL_SKY_WALK_TOGGLE) { !it }
-            PlayerSounds.TOGGLE.playOnly(player)
+            // マナがない場合は強制的にOFF
+            if (!player.hasMana()) {
+                PlayerMessages.NO_MANA.sendTo(player)
+                player.offer(Keys.SPELL_SKY_WALK_TOGGLE, false)
+                PlayerSounds.FAIL.playOnly(player)
+            } else {
+                player.transform(Keys.SPELL_SKY_WALK_TOGGLE) { !it }
+                PlayerSounds.TOGGLE.playOnly(player)
+            }
             player.updateBelt(false, false)
             return true
         }

@@ -14,10 +14,11 @@ object WillSpiritAnimations {
 
     val RENDER = { renderingData: WillRenderingData, color: Color, lifeExpectancy: Long ->
         Animation(0) { location, ticks ->
+            if ((renderingData.beatTiming != 0 && lifeExpectancy % renderingData.beatTiming != 0L)) return@Animation
             location.world.spawnColoredParticleSpherically(
                     location,
                     color,
-                    if (lifeExpectancy < 10 * 20 && (renderingData.beatTiming == 0 || lifeExpectancy % renderingData.beatTiming == 0L)) {
+                    if (lifeExpectancy < 10 * 20) {
                         renderingData.min
                     } else {
                         renderingData.max

@@ -2,7 +2,6 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
@@ -10,16 +9,12 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.ComboEvent
-import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.message.messages.PopUpMessages
-import click.seichi.gigantic.popup.PopUp
-import click.seichi.gigantic.popup.StillAnimation
-import click.seichi.gigantic.sound.sounds.PlayerSounds
-import click.seichi.gigantic.util.NoiseData
+import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.Display
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -69,15 +64,22 @@ class PlayerListener : Listener {
         }
         // 全ての設置ブロックを削除
         player.getOrPut(Keys.SPELL_SKY_WALK_PLACE_BLOCKS).apply {
-            forEach {
-                it.type = Material.AIR
+            forEach { block ->
+                // TODO sky walk 側が持つべき
+                if (block.isCondensedWaters || block.isCondensedLavas) return
+                block.type = when (block.type) {
+                    Defaults.SKY_WALK_WATER_MATERIAL -> Material.WATER
+                    Defaults.SKY_WALK_LAVA_MATERIAL -> Material.LAVA
+                    else -> Material.AIR
+                }
+                block.setTorchIfNeeded()
             }
             Gigantic.SKILLED_BLOCK_SET.removeAll(this)
         }
 
         if (player.gameMode == GameMode.SPECTATOR) {
             player.getOrPut(Keys.AFK_LOCATION)?.let {
-                player.teleport(it)
+                player.teleportSafely(it)
             }
             player.gameMode = GameMode.SURVIVAL
         }
@@ -144,36 +146,6 @@ class PlayerListener : Listener {
     }
 
     @EventHandler
-    fun onLevelUp(event: LevelUpEvent) {
-        val player = event.player
-
-        PlayerMessages.LEVEL_UP_LEVEL(event.level).sendTo(player)
-        PlayerMessages.LEVEL_UP_TITLE(event.level).sendTo(player)
-        PopUp(StillAnimation(60L), player.location.noised(NoiseData(sizeY = 3.7)), PopUpMessages.LEVEL_UP())
-                .pop()
-        PlayerAnimations.LAUNCH_FIREWORK.start(player.location)
-        PlayerSounds.LEVEL_UP.play(player.location)
-
-        Achievement.update(player)
-
-        player.manipulate(CatalogPlayerCache.MANA) {
-            val prevMax = it.max
-            it.updateMaxMana(event.level)
-            it.increase(it.max, true)
-            if (prevMax == it.max) return@manipulate
-            if (!Achievement.MANA_STONE.isGranted(player)) return@manipulate
-            PlayerMessages.LEVEL_UP_MANA(prevMax, it.max).sendTo(player)
-        }
-
-        if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
-            PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
-
-        // player list name レベル表記を更新
-        player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(event.level).plus(player.name)
-        player.displayName = PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name)
-    }
-
-    @EventHandler
     fun onCombo(event: ComboEvent) {
         event.player.updateTool()
     }
@@ -213,6 +185,7 @@ class PlayerListener : Listener {
             DeathMessages.DEATH_TELEPORT.sendTo(player)
         }
 
+
         player.manipulate(CatalogPlayerCache.LEVEL) { level ->
             player.manipulate(CatalogPlayerCache.EXP) {
                 val expToCurrentLevel = PlayerLevelConfig.LEVEL_MAP[level.current] ?: BigDecimal.ZERO
@@ -230,6 +203,8 @@ class PlayerListener : Listener {
             }
         }
 
+
+
         player.updateLevel()
         player.updateDisplay(true, true)
     }
@@ -237,11 +212,22 @@ class PlayerListener : Listener {
     @EventHandler
     fun onReSpawn(event: PlayerRespawnEvent) {
         val player = event.player ?: return
+
+
         Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
             if (!player.isValid) return@scheduleSyncDelayedTask
+
+            // HPを3割にする
             player.health = 6.0
             player.updateDisplay(true, true)
+
+            // マナをゼロにする
+            player.manipulate(CatalogPlayerCache.MANA) {
+                it.set(BigDecimal.ZERO)
+            }
+            PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
         }, 1L)
+
     }
 
     @EventHandler
@@ -305,8 +291,9 @@ class PlayerListener : Listener {
         if (player.gameMode != GameMode.SURVIVAL) return
         if (!block.isUnder(player)) return
         if (player.isSneaking) return
-        PlayerMessages.BREAK_UNDER_BLOCK_NOT_SNEAKING.sendTo(player)
         event.isCancelled = true
+        if (!Display.UNDER_PLAYER.isDisplay(player)) return
+        PlayerMessages.BREAK_UNDER_BLOCK_NOT_SNEAKING.sendTo(player)
     }
 
     // スキルで破壊中のブロックを破壊したときキャンセル

@@ -2,7 +2,7 @@ package click.seichi.gigantic.player.spell
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.SpellAnimations
-import click.seichi.gigantic.breaker.spells.Apostol
+import click.seichi.gigantic.breaker.spells.MultiBreaker
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
@@ -57,17 +57,17 @@ object Spells {
         }
     }
 
-    val APOSTOL = object : Invokable {
+    val MULTI_BREAK = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
-            if (!player.hasMana(BigDecimal.ZERO)) return null
-            if (player.getOrPut(Keys.SPELL_APOSTOL_BREAK_AREA).calcBreakNum() <= 1) return null
+            if (!player.hasMana()) return null
+            if (player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA).calcBreakNum() <= 1) return null
             val base = player.getOrPut(Keys.BREAK_BLOCK) ?: return null
-            val breakBlockSet = Apostol.calcBreakBlockSet(player, base)
+            val breakBlockSet = MultiBreaker.calcBreakBlockSet(player, base)
             if (breakBlockSet.isEmpty()) return null
-            player.offer(Keys.SPELL_APOSTOL_BREAK_BLOCKS, breakBlockSet)
+            player.offer(Keys.SPELL_MULTI_BREAK_BLOCKS, breakBlockSet)
             return Consumer { p ->
                 val b = player.getOrPut(Keys.BREAK_BLOCK) ?: return@Consumer
-                Apostol().cast(p, b)
+                MultiBreaker().cast(p, b)
             }
         }
     }
@@ -78,16 +78,14 @@ object Spells {
             return Consumer { p ->
                 // 前回設置したガラスブロック
                 val prevSet = p.getOrPut(Keys.SPELL_SKY_WALK_PLACE_BLOCKS)
-
                 // もし続行不可能なら以前のガラスブロックを削除しておく
                 if (p.gameMode != GameMode.SURVIVAL ||
                         p.isSneaking ||
                         !p.getOrPut(Keys.SPELL_SKY_WALK_TOGGLE) ||
-                        !player.hasMana(BigDecimal.ZERO)) {
+                        !player.hasMana()) {
                     Gigantic.SKILLED_BLOCK_SET.removeAll(prevSet)
                     prevSet.forEach { block ->
-                        block.type = Material.AIR
-                        block.setTorchIfNeeded()
+                        revert(block)
                     }
                     p.offer(Keys.SPELL_SKY_WALK_PLACE_BLOCKS, setOf())
                     return@Consumer
@@ -100,8 +98,7 @@ object Spells {
                 }.apply {
                     Gigantic.SKILLED_BLOCK_SET.removeAll(this)
                 }.forEach { block ->
-                    block.type = Material.AIR
-                    block.setTorchIfNeeded()
+                    revert(block)
                 }
 
                 // 足場設置
@@ -111,7 +108,7 @@ object Spells {
                     if (size == 0) return@apply
                     val consumeMana = calcConsumeMana(size)
                     if (!Config.DEBUG_MODE || !DebugConfig.SPELL_INFINITY) {
-                        player.manipulate(CatalogPlayerCache.MANA) {
+                        p.manipulate(CatalogPlayerCache.MANA) {
                             it.decrease(consumeMana)
                         }
                     }
@@ -119,8 +116,7 @@ object Spells {
                         PlayerMessages.MANA_DISPLAY(p.mana, p.maxMana).sendTo(p)
                     }
                     forEach { block ->
-                        block.type = Defaults.SKY_WALK_MATERIAL
-                        p.playSound(block.centralLocation, Sound.BLOCK_GLASS_PLACE, SoundCategory.BLOCKS, 0.2F, 0.5F)
+                        replace(block)
                     }
                 }
                 // 設置ブロックを保存
@@ -129,6 +125,25 @@ object Spells {
                 Gigantic.SKILLED_BLOCK_SET.addAll(placeBlockSet)
 
             }
+        }
+
+        fun revert(block: Block) {
+            if (block.isCondensedWaters || block.isCondensedLavas) return
+            block.type = when (block.type) {
+                Defaults.SKY_WALK_WATER_MATERIAL -> Material.WATER
+                Defaults.SKY_WALK_LAVA_MATERIAL -> Material.LAVA
+                else -> Material.AIR
+            }
+            block.setTorchIfNeeded()
+        }
+
+        fun replace(block: Block) {
+            block.type = when {
+                block.isWater -> Defaults.SKY_WALK_WATER_MATERIAL
+                block.isLava -> Defaults.SKY_WALK_LAVA_MATERIAL
+                else -> Defaults.SKY_WALK_AIR_MATERIAL
+            }
+            block.world.playSound(block.centralLocation, Sound.BLOCK_GLASS_PLACE, SoundCategory.BLOCKS, 0.2F, 0.5F)
         }
 
         fun calcConsumeMana(num: Int) = num.times(Config.SPELL_SKY_WALK_MANA_PER_BLOCK)
@@ -153,13 +168,67 @@ object Spells {
             }
             val additiveSet = prevSet.filter { allSet.contains(it) }.toSet()
             return allSet.filter { it.isPassable || it.isAir }
-                    .filterNot { it.isWater || it.isLava }
+                    // 水と溶岩も固めるために除外
+//                    .filterNot { it.isWater || it.isLava }
                     .filterNot { it.isSpawnArea }
                     .filterNot { it.y == 0 }
                     .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
                     .toMutableSet().apply {
                         addAll(additiveSet)
                     }.toSet()
+        }
+    }
+
+    val LUNA_FLEX = object : Invokable {
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            return Consumer { p ->
+                // 以前の場所を保存しておく(毎秒必ず実行する)
+                val prevLoc = p.getOrPut(Keys.PREVIOUS_LOCATION)
+                p.offer(Keys.PREVIOUS_LOCATION, p.location)
+                if (prevLoc == null) return@Consumer
+
+                // サバイバルでないまたはマナがない時終了
+                if (p.gameMode != GameMode.SURVIVAL ||
+                        !player.hasMana()) {
+                    // 移動速度補正
+                    if (p.walkSpeed != Defaults.WALK_SPEED.toFloat())
+                        p.walkSpeed = Defaults.WALK_SPEED.toFloat()
+                    return@Consumer
+                }
+
+                //移動速度補正
+                if (p.walkSpeed != p.getOrPut(Keys.WALK_SPEED).toFloat())
+                    p.walkSpeed = p.getOrPut(Keys.WALK_SPEED).toFloat()
+
+                // 段階を取得
+                val degree = p.getOrPut(Keys.WALK_SPEED)
+                        .minus(Defaults.WALK_SPEED)
+                        .times(10.toBigDecimal())
+                        .toInt()
+                        .coerceIn(0..Defaults.LUNA_FLEX_MAX_DEGREE)
+
+                // 初期速度なら終了
+                if (degree <= 0) return@Consumer
+
+                // 移動距離を算出
+                val distance = p.location.distance(prevLoc)
+
+                // 移動していない時終了
+                if (distance == 0.0) return@Consumer
+
+                // マナを計算
+                val consumeMana = degree.toDouble()
+                        .times(Config.SPELL_LUNA_FLEX_MANA_PER_DEGREE)
+                        .times(distance)
+                        .toBigDecimal()
+
+                if (!Config.DEBUG_MODE || !DebugConfig.SPELL_INFINITY) {
+                    p.manipulate(CatalogPlayerCache.MANA) {
+                        it.decrease(consumeMana)
+                    }
+                }
+                PlayerMessages.MANA_DISPLAY(p.mana, p.maxMana).sendTo(p)
+            }
         }
     }
 

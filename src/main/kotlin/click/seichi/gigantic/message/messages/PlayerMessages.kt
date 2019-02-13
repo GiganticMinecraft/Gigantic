@@ -87,6 +87,12 @@ object PlayerMessages {
         ))
     }
 
+    val NO_MANA = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}" +
+                    "マナが足りません"
+    ))
+
+
     val MANA_DISPLAY = { mana: BigDecimal, maxMana: BigDecimal ->
         val interval = maxMana.divide(Defaults.MANA_BAR_NUM.toBigDecimal(), 10, RoundingMode.HALF_UP)
         val amount = mana.divide(interval, 10, RoundingMode.HALF_UP)

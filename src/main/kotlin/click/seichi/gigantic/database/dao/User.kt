@@ -24,13 +24,17 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var maxCombo by UserTable.maxCombo
 
+    var combo by UserTable.combo
+
+    var lastComboTime by UserTable.lastComboTime
+
     var spellToggle by UserTable.spellToggle
 
-    var apostolWidth by UserTable.apostolWidth
+    var multiBreakWidth by UserTable.multiBreakWidth
 
-    var apostolHeight by UserTable.apostolHeight
+    var multiBreakHeight by UserTable.multiBreakHeight
 
-    var apostolDepth by UserTable.apostolDepth
+    var multiBreakDepth by UserTable.multiBreakDepth
 
     var teleportToggle by UserTable.teleportToggle
 
@@ -42,11 +46,15 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var donation by UserTable.donation
 
+    var givenVoteBonus by UserTable.givenVoteBonus
+
     var isOnline by UserTable.isOnline
 
     var autoSwitch by UserTable.autoSwitch
 
     var skyWalkToggle by UserTable.skyWalkToggle
+
+    var walkSpeed by UserTable.walkSpeed
 
     var createdDate by UserTable.createdAt
 

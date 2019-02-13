@@ -8,6 +8,7 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.Display
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.relic.WillRelic
@@ -63,12 +64,12 @@ open class Miner : Breaker {
             }
         }
         // 破壊系
-        var isCastApostol = false
+        var isCastMultiBreak = false
         when {
             !player.getOrPut(Keys.SPELL_TOGGLE) -> {
             }
-            Spell.APOSTOL.tryCast(player) -> {
-                isCastApostol = true
+            Spell.MULTI_BREAK.tryCast(player) -> {
+                isCastMultiBreak = true
             }
         }
 
@@ -86,7 +87,7 @@ open class Miner : Breaker {
                     SkillAnimations.MINE_BURST_ON_BREAK.start(block.centralLocation)
                 }
                 // TODO 音があるかないかで判断すること
-                isCastApostol && effect != GiganticEffect.DEFAULT -> {
+                isCastMultiBreak && effect != GiganticEffect.DEFAULT -> {
                 }
                 else -> PlayerSounds.OBTAIN_EXP(player.combo).playOnly(player)
             }
@@ -100,10 +101,12 @@ open class Miner : Breaker {
         bonus = player.getOrPut(Keys.RELIC_BONUS)
 
         // actionbar
-        if (bonus > 0.0)
-            PlayerMessages.EXP_AND_BONUS(count, bonus).sendTo(player)
-        else if (count > 1)
-            PlayerMessages.EXP(count).sendTo(player)
+        if (Display.GAIN_EXP.isDisplay(player)) {
+            if (bonus > 0.0)
+                PlayerMessages.EXP_AND_BONUS(count, bonus).sendTo(player)
+            else if (count > 1)
+                PlayerMessages.EXP(count).sendTo(player)
+        }
 
 
         player.updateLevel()

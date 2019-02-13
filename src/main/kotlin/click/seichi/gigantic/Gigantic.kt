@@ -6,13 +6,11 @@ import click.seichi.gigantic.command.*
 import click.seichi.gigantic.config.*
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.event.events.TickEvent
-import click.seichi.gigantic.extension.bind
-import click.seichi.gigantic.extension.getOrPut
-import click.seichi.gigantic.extension.isAir
-import click.seichi.gigantic.extension.register
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.spirit.SpiritManager
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
@@ -50,6 +48,13 @@ class Gigantic : JavaPlugin() {
             private set
         var IS_DEBUG: Boolean by Delegates.notNull()
             private set
+        /**
+         * ONにするとすべてのプレイヤーが近くのブロックを掘れるようになる
+         *
+         * コマンドでOn/Off可能
+         * 主に放送中に使用
+         *
+         */
         var IS_LIVE = false
 
         val DEFAULT_LOCALE = Locale.JAPANESE!!
@@ -102,7 +107,9 @@ class Gigantic : JavaPlugin() {
                 ToolListener(),
                 WillListener(),
                 AchievementListener(),
-                SkyWalkListener()
+                SpellListener(),
+                ChatListener(),
+                TipsListener()
         )
 
         registerPacketListeners(
@@ -131,7 +138,9 @@ class Gigantic : JavaPlugin() {
                 UserEffectTable,
                 DonateHistoryTable,
                 UserFollowTable,
-                UserHomeTable
+                UserHomeTable,
+                UserMuteTable,
+                UserDisplayTable
         )
 
         // reflectionを使うので先に生成
@@ -141,8 +150,9 @@ class Gigantic : JavaPlugin() {
 
         // 3秒後にTickEventを毎tick発火
         object : BukkitRunnable() {
+            var ticks = 0L
             override fun run() {
-                Bukkit.getServer().pluginManager.callEvent(TickEvent())
+                Bukkit.getServer().pluginManager.callEvent(TickEvent(ticks++))
             }
         }.runTaskTimer(this, 3 * 20L, 1)
 
@@ -154,7 +164,39 @@ class Gigantic : JavaPlugin() {
 
         SpiritManager.getSpiritSet().forEach { it.remove() }
 
-        server.scheduler.cancelTasks(this)
+        Bukkit.getOnlinePlayers().filterNotNull().forEach { player ->
+            if (!PlayerCacheMemory.contains(player.uniqueId)) return@forEach
+
+            if (player.gameMode == GameMode.SPECTATOR) {
+                player.getOrPut(Keys.AFK_LOCATION)?.let {
+                    player.teleportSafely(it)
+                }
+                player.gameMode = GameMode.SURVIVAL
+            }
+
+            player.getOrPut(Keys.SPELL_SKY_WALK_PLACE_BLOCKS).apply {
+                forEach { block ->
+                    // TODO sky walk 側が持つべき
+                    if (block.isCondensedWaters || block.isCondensedLavas) return
+                    block.type = when (block.type) {
+                        Defaults.SKY_WALK_WATER_MATERIAL -> Material.WATER
+                        Defaults.SKY_WALK_LAVA_MATERIAL -> Material.LAVA
+                        else -> Material.AIR
+                    }
+                    block.setTorchIfNeeded()
+                }
+                Gigantic.SKILLED_BLOCK_SET.removeAll(this)
+            }
+
+            try {
+                PlayerCacheMemory.writeThenRemoved(player.uniqueId)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            server.scheduler.cancelTasks(this)
+            player.kickPlayer("Restarting...Please wait a few seconds.")
+        }
 
         //全ての破壊済ブロックを確認し，破壊されていなければ消す
         SKILLED_BLOCK_SET.filter { !it.isAir }.also {
@@ -163,23 +205,7 @@ class Gigantic : JavaPlugin() {
             it.type = Material.AIR
         }
 
-        Bukkit.getOnlinePlayers().filterNotNull().forEach { player ->
-            if (player.gameMode == GameMode.SPECTATOR) {
-                player.getOrPut(Keys.AFK_LOCATION)?.let { it ->
-                    player.teleport(it)
-                }
-                player.gameMode = GameMode.SURVIVAL
-            }
-            try {
-                PlayerCacheMemory.writeThenRemoved(player.uniqueId)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            player.kickPlayer("Restarting...Please wait a few seconds.")
-        }
-
         logger.info("Gigantic is disabled!!")
-        Bukkit.getPluginManager().disablePlugin(this)
     }
 
     private fun loadConfiguration(vararg configurations: SimpleConfiguration) = configurations.forEach { it.init(this) }

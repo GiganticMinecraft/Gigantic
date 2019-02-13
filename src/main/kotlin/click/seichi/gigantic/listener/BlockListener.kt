@@ -23,6 +23,7 @@ class BlockListener : Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelSpreadGrass(event: BlockSpreadEvent) {
         if (event.newState.type != Material.GRASS_BLOCK) return
+        if (event.source.type != Material.GRASS_BLOCK) return
         event.isCancelled = true
     }
 

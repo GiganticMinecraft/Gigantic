@@ -5,5 +5,5 @@ import click.seichi.gigantic.event.CustomEvent
 /**
  * @author tar0ss
  */
-class TickEvent : CustomEvent() {
+class TickEvent(val ticks: Long) : CustomEvent() {
 }

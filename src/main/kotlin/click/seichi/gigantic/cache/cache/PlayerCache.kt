@@ -54,7 +54,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.TELEPORT_TOGGLE.let {
                 offer(it, it.read(entity))
             }
-            Keys.SPELL_APOSTOL_BREAK_AREA.let {
+            Keys.SPELL_MULTI_BREAK_AREA.let {
                 offer(it, it.read(entity))
             }
             Keys.EFFECT.let {
@@ -72,6 +72,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.FOLLOW_SET.let {
                 offer(it, it.read(entity))
             }
+            Keys.MUTE_SET.let {
+                offer(it, it.read(entity))
+            }
             Keys.AUTO_SWITCH.let {
                 offer(it, it.read(entity))
             }
@@ -81,46 +84,61 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.SPELL_SKY_WALK_TOGGLE.let {
                 offer(it, it.read(entity))
             }
-            Keys.EXP_MAP.forEach { reason, key ->
+            Keys.COMBO.let {
+                offer(it, it.read(entity))
+            }
+            Keys.LAST_COMBO_TIME.let {
+                offer(it, it.read(entity))
+            }
+            Keys.GIVEN_VOTE_BONUS.let {
+                offer(it, it.read(entity))
+            }
+            Keys.WALK_SPEED.let {
+                offer(it, it.read(entity))
+            }
+            Keys.EXP_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.ETHEL_MAP.forEach { will, key ->
+            Keys.ETHEL_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.WILL_SECRET_MAP.forEach { will, key ->
+            Keys.WILL_SECRET_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.APTITUDE_MAP.forEach { will, key ->
+            Keys.APTITUDE_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.SOUL_MONSTER.forEach { boss, key ->
+            Keys.SOUL_MONSTER.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.RELIC_MAP.forEach { relic, key ->
+            Keys.RELIC_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.ACHIEVEMENT_MAP.forEach { func, key ->
+            Keys.ACHIEVEMENT_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.BELT_TOGGLE_MAP.forEach { belt, key ->
+            Keys.BELT_TOGGLE_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.BELT_UNLOCK_MAP.forEach { belt, key ->
+            Keys.BELT_UNLOCK_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.TOOL_TOGGLE_MAP.forEach { tool, key ->
+            Keys.TOOL_TOGGLE_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.TOOL_UNLOCK_MAP.forEach { tool, key ->
+            Keys.TOOL_UNLOCK_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.QUEST_MAP.forEach { quest, key ->
+            Keys.QUEST_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.EFFECT_BOUGHT_MAP.forEach { effect, key ->
+            Keys.EFFECT_BOUGHT_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.EFFECT_BOUGHT_TIME_MAP.forEach { effect, key ->
+            Keys.EFFECT_BOUGHT_TIME_MAP.forEach { _, key ->
+                offer(key, key.read(entity))
+            }
+            Keys.DISPLAY_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
         }
@@ -153,13 +171,16 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.TELEPORT_TOGGLE.let {
                 it.store(entity, getOrDefault(it))
             }
-            Keys.SPELL_APOSTOL_BREAK_AREA.let {
+            Keys.SPELL_MULTI_BREAK_AREA.let {
                 it.store(entity, getOrDefault(it))
             }
             Keys.EFFECT.let {
                 it.store(entity, getOrDefault(it))
             }
             Keys.FOLLOW_SET.let {
+                it.store(entity, getOrDefault(it))
+            }
+            Keys.MUTE_SET.let {
                 it.store(entity, getOrDefault(it))
             }
             Keys.AUTO_SWITCH.let {
@@ -171,46 +192,61 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.SPELL_SKY_WALK_TOGGLE.let {
                 it.store(entity, getOrDefault(it))
             }
-            Keys.EXP_MAP.forEach { reason, key ->
+            Keys.COMBO.let {
+                it.store(entity, getOrDefault(it))
+            }
+            Keys.LAST_COMBO_TIME.let {
+                it.store(entity, getOrDefault(it))
+            }
+            Keys.GIVEN_VOTE_BONUS.let {
+                it.store(entity, getOrDefault(it))
+            }
+            Keys.WALK_SPEED.let {
+                it.store(entity, getOrDefault(it))
+            }
+            Keys.EXP_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.ETHEL_MAP.forEach { will, key ->
+            Keys.ETHEL_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.WILL_SECRET_MAP.forEach { will, key ->
+            Keys.WILL_SECRET_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.APTITUDE_MAP.forEach { will, key ->
+            Keys.APTITUDE_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.SOUL_MONSTER.forEach { boss, key ->
+            Keys.SOUL_MONSTER.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.RELIC_MAP.forEach { relic, key ->
+            Keys.RELIC_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.ACHIEVEMENT_MAP.forEach { func, key ->
+            Keys.ACHIEVEMENT_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.BELT_TOGGLE_MAP.forEach { belt, key ->
+            Keys.BELT_TOGGLE_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.BELT_UNLOCK_MAP.forEach { belt, key ->
+            Keys.BELT_UNLOCK_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.TOOL_TOGGLE_MAP.forEach { tool, key ->
+            Keys.TOOL_TOGGLE_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.TOOL_UNLOCK_MAP.forEach { tool, key ->
+            Keys.TOOL_UNLOCK_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.QUEST_MAP.forEach { quest, key ->
+            Keys.QUEST_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.EFFECT_BOUGHT_MAP.forEach { effect, key ->
+            Keys.EFFECT_BOUGHT_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.EFFECT_BOUGHT_TIME_MAP.forEach { effect, key ->
+            Keys.EFFECT_BOUGHT_TIME_MAP.forEach { _, key ->
+                key.store(entity, getOrDefault(key))
+            }
+            Keys.DISPLAY_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
         }

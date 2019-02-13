@@ -20,6 +20,7 @@ import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.menu.RefineItem
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.Display
 import click.seichi.gigantic.player.DonateTicket
 import click.seichi.gigantic.player.Home
 import click.seichi.gigantic.quest.Quest
@@ -485,18 +486,6 @@ object Keys {
 
     }
 
-
-    val IS_MANA_STONE_TOGGLE_COOLDOWN = object : Key<PlayerCache, Boolean> {
-
-        override val default: Boolean
-            get() = true
-
-        override fun satisfyWith(value: Boolean): Boolean {
-            return true
-        }
-
-    }
-
     val MENU_PAGE = object : Key<PlayerCache, Int> {
         override val default: Int
             get() = 1
@@ -595,7 +584,7 @@ object Keys {
     /**
      * 破壊スキルの破壊範囲
      */
-    val SPELL_APOSTOL_BREAK_AREA = object : DatabaseKey<PlayerCache, BreakArea> {
+    val SPELL_MULTI_BREAK_AREA = object : DatabaseKey<PlayerCache, BreakArea> {
 
         override val default: BreakArea
             get() = BreakArea(1, 1, 1)
@@ -603,18 +592,18 @@ object Keys {
         override fun read(entity: UserEntity): BreakArea {
             val user = entity.user
             return BreakArea(
-                    user.apostolWidth,
-                    user.apostolHeight,
-                    user.apostolDepth
+                    user.multiBreakWidth,
+                    user.multiBreakHeight,
+                    user.multiBreakDepth
             )
         }
 
         override fun store(entity: UserEntity, value: BreakArea) {
             val user = entity.user
             user.run {
-                apostolWidth = value.width
-                apostolHeight = value.height
-                apostolDepth = value.depth
+                multiBreakWidth = value.width
+                multiBreakHeight = value.height
+                multiBreakDepth = value.depth
             }
         }
 
@@ -662,9 +651,19 @@ object Keys {
 
     }
 
-    val MINE_COMBO = object : Key<PlayerCache, Long> {
+    val COMBO = object : DatabaseKey<PlayerCache, Long> {
         override val default: Long
             get() = 0L
+
+        override fun read(entity: UserEntity): Long {
+            val user = entity.user
+            return user.combo
+        }
+
+        override fun store(entity: UserEntity, value: Long) {
+            val user = entity.user
+            user.combo = value
+        }
 
         override fun satisfyWith(value: Long): Boolean {
             return value >= 0L
@@ -672,9 +671,19 @@ object Keys {
 
     }
 
-    val LAST_COMBO_TIME = object : Key<PlayerCache, Long> {
+    val LAST_COMBO_TIME = object : DatabaseKey<PlayerCache, Long> {
         override val default: Long
             get() = System.currentTimeMillis()
+
+        override fun read(entity: UserEntity): Long {
+            val user = entity.user
+            return user.lastComboTime
+        }
+
+        override fun store(entity: UserEntity, value: Long) {
+            val user = entity.user
+            user.lastComboTime = value
+        }
 
         override fun satisfyWith(value: Long): Boolean {
             return true
@@ -818,15 +827,6 @@ object Keys {
         }
     }
 
-    val PROFILE_IS_UPDATING = object : Key<PlayerCache, Boolean> {
-        override val default: Boolean
-            get() = false
-
-        override fun satisfyWith(value: Boolean): Boolean {
-            return true
-        }
-    }
-
     val DONATE_TICKET_LIST = object : Key<PlayerCache, List<DonateTicket>> {
         override val default: List<DonateTicket>
             get() = listOf()
@@ -836,7 +836,7 @@ object Keys {
         }
     }
 
-    val SPELL_APOSTOL_BREAK_BLOCKS = object : Key<PlayerCache, Set<Block>> {
+    val SPELL_MULTI_BREAK_BLOCKS = object : Key<PlayerCache, Set<Block>> {
         override val default: Set<Block>
             get() = setOf()
 
@@ -903,6 +903,46 @@ object Keys {
             // 強制的に書き換えを拒否
             Gigantic.PLUGIN.logger.warning("フォロワーの書き換えは禁止されています")
             return false
+        }
+    }
+
+    val MUTE_SET = object : DatabaseKey<PlayerCache, Set<UUID>> {
+        override val default: Set<UUID>
+            get() = setOf()
+
+        override fun read(entity: UserEntity): Set<UUID> {
+            return entity.userMuteList.map { it.muteId.id.value }.toSet()
+        }
+
+        override fun store(entity: UserEntity, value: Set<UUID>) {
+            val oldSet = read(entity)
+            // 新規Muteを登録
+            value.forEach { muteId ->
+                // 既にMuteしていたら終了
+                if (oldSet.contains(muteId)) return@forEach
+                // ミュートするユーザーを検索
+                val muteUser = User.findById(muteId) ?: return@forEach
+                // 存在すれば追加
+                UserFollow.new {
+                    user = entity.user
+                    follow = muteUser
+                }
+            }
+            // ミュートを外したプレイヤーを削除
+            oldSet.forEach { muteId ->
+                // 現在ミュートしているなら終了
+                if (value.contains(muteId)) return@forEach
+                // 削除するユーザーを検索
+                val muteUser = User.findById(muteId) ?: return@forEach
+                // 存在すれば削除
+                UserFollowTable.deleteWhere {
+                    (UserFollowTable.userId eq entity.user.id).and(UserFollowTable.followId eq muteUser.id)
+                }
+            }
+        }
+
+        override fun satisfyWith(value: Set<UUID>): Boolean {
+            return true
         }
     }
 
@@ -1054,7 +1094,6 @@ object Keys {
         }
     }
 
-
     val SPELL_SKY_WALK_PLACE_BLOCKS = object : Key<PlayerCache, Set<Block>> {
         override val default: Set<Block>
             get() = setOf()
@@ -1082,5 +1121,82 @@ object Keys {
             return true
         }
     }
+
+    val GIVEN_VOTE_BONUS = object : DatabaseKey<PlayerCache, Int> {
+        override val default: Int
+            get() = 0
+
+        override fun read(entity: UserEntity): Int {
+            val user = entity.user
+            return user.givenVoteBonus
+        }
+
+        override fun store(entity: UserEntity, value: Int) {
+            val user = entity.user
+            user.givenVoteBonus = value
+        }
+
+        override fun satisfyWith(value: Int): Boolean {
+            return value >= 0
+        }
+    }
+
+    val GIVEN_WILL_SET = object : Key<PlayerCache, Set<Will>?> {
+        override val default: Set<Will>?
+            get() = null
+
+        override fun satisfyWith(value: Set<Will>?): Boolean {
+            return true
+        }
+    }
+
+    val WALK_SPEED = object : DatabaseKey<PlayerCache, BigDecimal> {
+        override val default: BigDecimal
+            get() = Defaults.WALK_SPEED
+
+        override fun read(entity: UserEntity): BigDecimal {
+            val user = entity.user
+            return user.walkSpeed
+        }
+
+        override fun store(entity: UserEntity, value: BigDecimal) {
+            val user = entity.user
+            user.walkSpeed = value
+        }
+
+        override fun satisfyWith(value: BigDecimal): Boolean {
+            return value in 0.2.toBigDecimal()..1.0.toBigDecimal()
+        }
+    }
+
+    val PREVIOUS_LOCATION = object : Key<PlayerCache, Location?> {
+        override val default: Location?
+            get() = null
+
+        override fun satisfyWith(value: Location?): Boolean {
+            return true
+        }
+    }
+
+    val DISPLAY_MAP: Map<Display, DatabaseKey<PlayerCache, Boolean>> = Display.values().map { display ->
+        display to object : DatabaseKey<PlayerCache, Boolean> {
+            override val default: Boolean
+                get() = true
+
+            override fun read(entity: UserEntity): Boolean {
+                val userDisplay = entity.userDisplayMap.getValue(display)
+                return userDisplay.isDisplay
+            }
+
+            override fun store(entity: UserEntity, value: Boolean) {
+                val userDisplay = entity.userDisplayMap.getValue(display)
+                userDisplay.isDisplay = value
+            }
+
+            override fun satisfyWith(value: Boolean): Boolean {
+                return true
+            }
+        }
+    }.toMap()
 
 }

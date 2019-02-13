@@ -2,7 +2,7 @@
 :cherry_blossom:  **__整地鯖(春) バージョン1.2 追加アップデート情報(2019/01/26)__** :cherry_blossom:  
 
 
-:airplane: 走れ，風のように．ブルズアイ！ :airplane: 
+:airplane: **__走れ，風のように．ブルズアイ！__** :airplane: 
 
 :diamond_shape_with_a_dot_inside: 新しい魔法「スカイ・ウォーク」を実装しました．  
 :diamond_shape_with_a_dot_inside: レベル18より解放されます．  

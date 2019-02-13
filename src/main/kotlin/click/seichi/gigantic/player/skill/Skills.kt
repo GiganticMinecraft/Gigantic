@@ -9,6 +9,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.PopUpMessages
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.Display
 import click.seichi.gigantic.player.Invokable
 import click.seichi.gigantic.popup.PopUp
 import click.seichi.gigantic.popup.SimpleAnimation
@@ -70,7 +71,9 @@ object Skills {
                 Material.VOID_AIR,
                 Material.WATER,
                 Material.LAVA,
-                Defaults.SKY_WALK_MATERIAL
+                Defaults.SKY_WALK_AIR_MATERIAL,
+                Defaults.SKY_WALK_WATER_MATERIAL,
+                Defaults.SKY_WALK_LAVA_MATERIAL
         )
 
         val maxDistance = 50
@@ -90,13 +93,13 @@ object Skills {
                         while (!nextBlock.isSurface) {
                             nextBlock = nextBlock.getRelative(BlockFace.UP)
                         }
-                        nextBlock.centralLocation.add(0.0, 1.75, 0.0).apply {
+                        nextBlock.centralLocation.add(0.0, 0.75, 0.0).apply {
                             direction = p.location.direction
                         }
                     }
                     if (tpLocation != null) {
                         SkillAnimations.FLASH_FIRE.start(p.location)
-                        p.teleport(tpLocation)
+                        p.teleportSafely(tpLocation)
                         SkillAnimations.FLASH_FIRE.start(p.location)
                         SkillSounds.FLASH_FIRE.play(p.location)
                     } else {
@@ -166,12 +169,23 @@ object Skills {
                 // コンボイベント発生
                 Bukkit.getPluginManager().callEvent(ComboEvent(player.combo, player))
 
-                // 現在のコンボ数をプレイヤーに告知
-                PopUp(SimpleAnimation, block.centralLocation, PopUpMessages.MINE_COMBO(player.combo, player.comboRank))
-                        .pop()
+                if (Display.COMBO.isDisplay(player)) {
+                    // 現在のコンボ数をプレイヤーに告知
+                    PopUp(SimpleAnimation, block.centralLocation, PopUpMessages.MINE_COMBO(player.combo, player.comboRank))
+                            .pop()
+                }
             }
         }
 
+    }
+
+    /**
+     * 参照:[click.seichi.gigantic.listenerElytraListener]
+     */
+    val JUMP = object : Invokable {
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            return null
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package click.seichi.gigantic.message.messages.menu
 
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
 import java.util.*
 
@@ -67,7 +68,7 @@ object EffectMenuMessages {
 
     val VOTE_POINT_DESCRIPTION = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GRAY}" +
-                    "JMSから投票することで10投票ポイント獲得できる"
+                    "JMSから投票することで${Defaults.VOTE_POINT_PER_VOTE}投票ポイント獲得できる"
     )
 
     val POMME_DESCRIPTION = LocalizedText(
@@ -77,7 +78,7 @@ object EffectMenuMessages {
 
     val DONATION_DESCRIPTION = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GRAY}" +
-                    "寄付100円につき1寄付ポイント獲得できる"
+                    "寄付${Defaults.DONATITON_PER_DONATE_POINT}円につき1寄付ポイント獲得できる"
     )
 
     val CLICK_TO_SELECT = LocalizedText(
@@ -98,10 +99,10 @@ object EffectMenuMessages {
                     "通常破壊 :"
     )
 
-    val APOSTOL = LocalizedText(
+    val MULTI_BREAK = LocalizedText(
             Locale.JAPANESE to "${ChatColor.AQUA}" +
                     "${ChatColor.BOLD}" +
-                    "アポストル :"
+                    "複数破壊 :"
     )
 
 }

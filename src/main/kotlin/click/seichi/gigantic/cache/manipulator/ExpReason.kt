@@ -10,7 +10,7 @@ enum class ExpReason(val id: Int) {
     COMBO_BONUS(1),
     DEATH_PENALTY(2),
     DEBUG(3),
-    SPELL_APOSTOL(4),
+    SPELL_MULTI_BREAK(4),
     RELIC_BONUS(5),
     ;
 
