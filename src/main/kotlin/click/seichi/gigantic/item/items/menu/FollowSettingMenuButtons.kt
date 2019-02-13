@@ -35,7 +35,7 @@ object FollowSettingMenuButtons {
     }
 
     val MUTE = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.GRAY_DYE).apply {
                 setDisplayName("${ChatColor.GRAY}" +
                         "${ChatColor.BOLD}" +
@@ -43,7 +43,7 @@ object FollowSettingMenuButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             MuteMenu.open(player)
             return true
         }
@@ -77,7 +77,7 @@ object FollowSettingMenuButtons {
 
     val MUTE_PLAYER: (Player) -> Button = { to: Player ->
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return to.getHead().apply {
                     setDisplayName("${ChatColor.WHITE}" +
                             "${ChatColor.BOLD}" +
@@ -88,7 +88,7 @@ object FollowSettingMenuButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 player.unMute(to.uniqueId)
                 MuteMenu.reopen(player)
                 PlayerSounds.TOGGLE.playOnly(player)
@@ -158,7 +158,7 @@ object FollowSettingMenuButtons {
     }
 
     val MUTE_ONLINE = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.PINK_DYE).apply {
                 setDisplayName("${ChatColor.LIGHT_PURPLE}" +
                         "${ChatColor.BOLD}" +
@@ -166,7 +166,7 @@ object FollowSettingMenuButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             MutePlayerMenu.open(player)
             return true
         }
@@ -205,7 +205,7 @@ object FollowSettingMenuButtons {
 
     val MUTE_ONLINE_PLAYER: (Player) -> Button = { to: Player ->
         object : Button {
-            override fun findItemStack(player: Player): ItemStack? {
+            override fun toShownItemStack(player: Player): ItemStack? {
                 return to.getHead().apply {
                     setDisplayName("${ChatColor.WHITE}" +
                             "${ChatColor.BOLD}" +
@@ -220,7 +220,7 @@ object FollowSettingMenuButtons {
                 }
             }
 
-            override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 if (player.mutes >= Config.PLAYER_MAX_MUTE) return true
                 player.mute(to.uniqueId)
                 MutePlayerMenu.reopen(player)

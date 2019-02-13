@@ -446,7 +446,7 @@ object BagButtons {
 
     val VOTE_BONUS = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.GOLDEN_APPLE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.VOTE_BONUS.asSafety(player.wrappedLocale))
@@ -493,7 +493,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
             val voteNum = player.vote
             val bonus = voteNum.minus(givenBonus)
@@ -550,7 +550,7 @@ object BagButtons {
 
     val SETTINGS = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.TRIPWIRE_HOOK).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + SettingMenuMessages.TITLE.asSafety(player.wrappedLocale))
@@ -563,7 +563,7 @@ object BagButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === SettingMenu) return false
             SettingMenu.open(player)
             return true

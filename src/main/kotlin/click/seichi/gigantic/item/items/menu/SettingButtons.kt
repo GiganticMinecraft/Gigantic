@@ -21,7 +21,7 @@ object SettingButtons {
 
     val TOOL_SWITCH_SETTING = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.LADDER).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
@@ -29,7 +29,7 @@ object SettingButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === ToolSwitchSettingMenu) return false
             ToolSwitchSettingMenu.open(player)
             return true
@@ -39,14 +39,14 @@ object SettingButtons {
 
     val DISPLAY_SETTING = object : Button {
 
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.REDSTONE_TORCH).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + SettingMenuMessages.DISPLAY.asSafety(player.wrappedLocale))
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === DisplaySettingMenu) return false
             DisplaySettingMenu.open(player)
             return true

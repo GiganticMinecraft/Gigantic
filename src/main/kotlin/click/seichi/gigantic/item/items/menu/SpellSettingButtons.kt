@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack
 object SpellSettingButtons {
 
     val MULTI_BREAK = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
                 setDisplayName(SpellSettingMenuMessages.CURRENT_AREA.asSafety(player.wrappedLocale))
 
@@ -48,14 +48,14 @@ object SpellSettingButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             return true
         }
 
     }
 
     val BIGGER_WIDTH = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.YELLOW_STAINED_GLASS_PANE).apply {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 val nextBreakArea = breakArea.add(2, 0, 0)
@@ -70,7 +70,7 @@ object SpellSettingButtons {
         }
 
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             player.transform(Keys.SPELL_MULTI_BREAK_AREA) { breakArea ->
                 val nextBreakArea = breakArea.add(2, 0, 0)
                 val limitOfBreakNum = MultiBreaker.calcLimitOfBreakNumOfMultiBreak(player.maxMana)
@@ -90,14 +90,14 @@ object SpellSettingButtons {
     }
 
     val SMALLER_WIDTH = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE).apply {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 setDisplayName(SpellSettingMenuMessages.SMALLER_WIDTH(breakArea).asSafety(player.wrappedLocale))
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             player.transform(Keys.SPELL_MULTI_BREAK_AREA) { breakArea ->
                 val nextBreakArea = breakArea.add(-2, 0, 0)
                 if (nextBreakArea.width > 0) {
@@ -115,7 +115,7 @@ object SpellSettingButtons {
     }
 
     val BIGGER_HEIGHT = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.ORANGE_STAINED_GLASS_PANE).apply {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 val nextBreakArea = breakArea.add(0, 1, 0)
@@ -129,7 +129,7 @@ object SpellSettingButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             player.transform(Keys.SPELL_MULTI_BREAK_AREA) { breakArea ->
                 val nextBreakArea = breakArea.add(0, 1, 0)
                 val limitOfBreakNum = MultiBreaker.calcLimitOfBreakNumOfMultiBreak(player.maxMana)
@@ -148,14 +148,14 @@ object SpellSettingButtons {
     }
 
     val SMALLER_HEIGHT = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.PINK_STAINED_GLASS_PANE).apply {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 setDisplayName(SpellSettingMenuMessages.SMALLER_HEIGHT(breakArea).asSafety(player.wrappedLocale))
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             player.transform(Keys.SPELL_MULTI_BREAK_AREA) { breakArea ->
                 val nextBreakArea = breakArea.add(0, -1, 0)
                 if (nextBreakArea.height > 0) {
@@ -173,7 +173,7 @@ object SpellSettingButtons {
     }
 
     val BIGGER_DEPTH = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.MAGENTA_STAINED_GLASS_PANE).apply {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 val nextBreakArea = breakArea.add(0, 0, 1)
@@ -187,7 +187,7 @@ object SpellSettingButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             player.transform(Keys.SPELL_MULTI_BREAK_AREA) { breakArea ->
                 val nextBreakArea = breakArea.add(0, 0, 1)
                 val limitOfBreakNum = MultiBreaker.calcLimitOfBreakNumOfMultiBreak(player.maxMana)
@@ -206,14 +206,14 @@ object SpellSettingButtons {
     }
 
     val SMALLER_DEPTH = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.LIME_STAINED_GLASS_PANE).apply {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 setDisplayName(SpellSettingMenuMessages.SMALLER_DEPTH(breakArea).asSafety(player.wrappedLocale))
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             player.transform(Keys.SPELL_MULTI_BREAK_AREA) { breakArea ->
                 val nextBreakArea = breakArea.add(0, 0, -1)
                 if (nextBreakArea.depth > 0) {
@@ -232,7 +232,7 @@ object SpellSettingButtons {
 
 
     val LUNA_FLEX = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             if (!Spell.LUNA_FLEX.isGranted(player)) return null
             return ItemStack(Material.SUGAR).apply {
                 val degree = player.getOrPut(Keys.WALK_SPEED)
@@ -254,14 +254,14 @@ object SpellSettingButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             return true
         }
 
     }
 
     val BIGGER_DEGREE = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             if (!Spell.LUNA_FLEX.isGranted(player)) return null
             return ItemStack(Material.ORANGE_STAINED_GLASS_PANE).apply {
                 val degree = player.getOrPut(Keys.WALK_SPEED)
@@ -276,7 +276,7 @@ object SpellSettingButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (!Spell.LUNA_FLEX.isGranted(player)) return false
             val degree = player.getOrPut(Keys.WALK_SPEED)
                     .minus(Defaults.WALK_SPEED)
@@ -296,7 +296,7 @@ object SpellSettingButtons {
     }
 
     val SMALLER_DEGREE = object : Button {
-        override fun findItemStack(player: Player): ItemStack? {
+        override fun toShownItemStack(player: Player): ItemStack? {
             if (!Spell.LUNA_FLEX.isGranted(player)) return null
             return ItemStack(Material.PINK_STAINED_GLASS_PANE).apply {
                 val degree = player.getOrPut(Keys.WALK_SPEED)
@@ -308,7 +308,7 @@ object SpellSettingButtons {
             }
         }
 
-        override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (!Spell.LUNA_FLEX.isGranted(player)) return false
             val degree = player.getOrPut(Keys.WALK_SPEED)
                     .minus(Defaults.WALK_SPEED)

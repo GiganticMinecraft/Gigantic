@@ -33,7 +33,7 @@ object DisplaySettingMenu : Menu() {
 
         Display.values().forEachIndexed { index, display ->
             registerButton(index + 2, object : Button {
-                override fun findItemStack(player: Player): ItemStack? {
+                override fun toShownItemStack(player: Player): ItemStack? {
                     val itemStack = if (display.isDisplay(player)) {
                         ItemStack(Material.ENDER_EYE)
                     } else {
@@ -52,7 +52,7 @@ object DisplaySettingMenu : Menu() {
                     }
                 }
 
-                override fun onClick(player: Player, event: InventoryClickEvent): Boolean {
+                override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                     display.toggle(player)
                     PlayerSounds.TOGGLE.playOnly(player)
                     reopen(player)

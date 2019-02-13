@@ -121,7 +121,7 @@ object HandItems {
             }
         }
 
-        override fun onInteract(player: Player, event: PlayerInteractEvent): Boolean {
+        override fun tryInteract(player: Player, event: PlayerInteractEvent): Boolean {
             if (!Achievement.MANA_STONE.isGranted(player)) return false
             if (player.inventory.heldItemSlot != player.getOrPut(Keys.BELT).toolSlot) return false
             val action = event.action ?: return false
