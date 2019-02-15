@@ -15,7 +15,9 @@ import click.seichi.gigantic.database.UserEntity
 import click.seichi.gigantic.database.dao.User
 import click.seichi.gigantic.database.dao.UserFollow
 import click.seichi.gigantic.database.dao.UserHome
+import click.seichi.gigantic.database.dao.UserMute
 import click.seichi.gigantic.database.table.UserFollowTable
+import click.seichi.gigantic.database.table.UserMuteTable
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.menu.RefineItem
 import click.seichi.gigantic.monster.SoulMonster
@@ -911,7 +913,7 @@ object Keys {
             get() = setOf()
 
         override fun read(entity: UserEntity): Set<UUID> {
-            return entity.userMuteList.map { it.muteId.id.value }.toSet()
+            return entity.userMuteList.map { it.mute.id.value }.toSet()
         }
 
         override fun store(entity: UserEntity, value: Set<UUID>) {
@@ -923,9 +925,9 @@ object Keys {
                 // ミュートするユーザーを検索
                 val muteUser = User.findById(muteId) ?: return@forEach
                 // 存在すれば追加
-                UserFollow.new {
+                UserMute.new {
                     user = entity.user
-                    follow = muteUser
+                    mute = muteUser
                 }
             }
             // ミュートを外したプレイヤーを削除
@@ -935,8 +937,8 @@ object Keys {
                 // 削除するユーザーを検索
                 val muteUser = User.findById(muteId) ?: return@forEach
                 // 存在すれば削除
-                UserFollowTable.deleteWhere {
-                    (UserFollowTable.userId eq entity.user.id).and(UserFollowTable.followId eq muteUser.id)
+                UserMuteTable.deleteWhere {
+                    (UserMuteTable.userId eq entity.user.id).and(UserMuteTable.muteId eq muteUser.id)
                 }
             }
         }

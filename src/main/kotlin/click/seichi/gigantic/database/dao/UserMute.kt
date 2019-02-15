@@ -13,6 +13,6 @@ class UserMute(id: EntityID<Int>) : IntEntity(id) {
 
     var user by User referencedOn UserMuteTable.userId
 
-    var muteId by User referencedOn UserMuteTable.muteId
+    var mute by User referencedOn UserMuteTable.muteId
 
 }
