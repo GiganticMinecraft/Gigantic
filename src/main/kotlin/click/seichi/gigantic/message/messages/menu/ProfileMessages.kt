@@ -93,6 +93,7 @@ object ProfileMessages {
                             locale to Will.values()
                                     .filter { it.grade == WillGrade.BASIC }
                                     .filter { player.hasAptitude(it) }
+                                    .sortedBy { it.displayPriority }
                                     .joinToString(" ") {
                                             "${it.chatColor}${ChatColor.BOLD}" + it.getName(locale)
                                     }
@@ -108,6 +109,7 @@ object ProfileMessages {
                             locale to Will.values()
                                     .filter { it.grade == WillGrade.ADVANCED }
                                     .filter { player.hasAptitude(it) }
+                                    .sortedBy { it.displayPriority }
                                     .joinToString(" ") {
                                         "${it.chatColor}${ChatColor.BOLD}" + it.getName(locale)
                                     }

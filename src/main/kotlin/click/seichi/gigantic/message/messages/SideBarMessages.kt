@@ -4,7 +4,6 @@ import click.seichi.gigantic.extension.ethel
 import click.seichi.gigantic.extension.hasAptitude
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.SideBarMessage
-import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
@@ -28,7 +27,7 @@ object SideBarMessages {
                 willMap.keys.filter {
                     willMap.getValue(it) > 0
                 }.map { will ->
-                    SideBarRow.getRowById(will.id) to LocalizedText(
+                    will.defaultRow to LocalizedText(
                             Locale.JAPANESE.let { locale ->
                                 locale to "${will.chatColor}${ChatColor.BOLD}" +
                                         "${will.getName(locale).let {

@@ -20,10 +20,4 @@ enum class SideBarRow(val toInt: Int) {
     THIRTEEN(2),
     FOURTEEN(1)
     ;
-
-    val id = 14 - toInt + 1
-
-    companion object {
-        fun getRowById(id: Int) = values().first { it.id == id }
-    }
 }
