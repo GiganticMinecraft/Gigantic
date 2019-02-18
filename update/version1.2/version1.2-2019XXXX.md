@@ -10,6 +10,7 @@
 :diamond_shape_with_a_dot_inside: マナがマイクラの空腹ゲージに対応するようになりました  
 :diamond_shape_with_a_dot_inside: マナが3割を切ると，バニラ同様走れなくなります  
 :diamond_shape_with_a_dot_inside: ただし，マナが0になってもダメージを受けることはありません  
+:diamond_shape_with_a_dot_inside: 魔法 **マルチ・ブレイク** 発動時の負荷を削減しました  
 
 
 :bow: **__不具合修正__** :bow:   
