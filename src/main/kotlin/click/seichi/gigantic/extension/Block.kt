@@ -373,10 +373,17 @@ fun Block.update() {
 
 fun Block.update(others: Set<Block>) {
     if (others.isEmpty()) return
-    others.forEach { it.changeRelativeBedrock() }
-    others.forEach { it.condenseRelativeLiquid() }
-    others.forEach { it.condenseRelativeSkyWalkBlock() }
-    others.forEach { it.clearRelativeFloatingBlock() }
+
+    // 周辺ブロックの変更
+    others.flatMap { other -> faceSet.map { face -> other.getRelative(face) } }
+            .filterNot { others.contains(it) }
+            .forEach {
+                it.changeBedrock()
+                it.condenseLiquid(false)
+                it.condenseSkyWalkBlock(false)
+                it.clearFloatingBlock()
+            }
+
     val xzMap = others.groupBy { Pair(it.x, it.z) }
 
     // トーチ処理
