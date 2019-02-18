@@ -6,7 +6,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.message.LinedChatMessage
+import click.seichi.gigantic.message.Message
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.relic.Relic
@@ -26,7 +26,7 @@ enum class Achievement(
         private val canGranting: (Player) -> Boolean,
         // アンロック時に処理される
         val action: (Player) -> Unit = {},
-        val grantMessage: LinedChatMessage? = null,
+        val grantMessage: Message? = null,
         private val priority: UpdatePriority = UpdatePriority.NORMAL
 ) {
     // messages

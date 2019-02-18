@@ -8,6 +8,9 @@ import org.bukkit.entity.Player
  */
 open class ChatMessage(protected val protocol: ChatMessageProtocol, protected val messageText: LocalizedText) : Message {
 
+    override val duration: Long
+        get() = 0L
+
     override fun sendTo(player: Player) = protocol.sendTo(player, messageText.asSafety(player.wrappedLocale))
 
 }

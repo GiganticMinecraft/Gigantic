@@ -19,7 +19,7 @@ class LinedChatMessage(
     }
 
     // チャットが終了するまでの時間を計算
-    val duration = messageText.asSafety(Gigantic.DEFAULT_LOCALE)
+    override val duration = messageText.asSafety(Gigantic.DEFAULT_LOCALE)
             .split(NEW_LINE_SYMBOL)
             .size.times(interval)
 
