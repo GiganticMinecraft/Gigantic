@@ -17,8 +17,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "整地鯖(春)のDiscordに参加してみんなで会話を楽しもう！" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
+                            "整地鯖(春)Discord->" +
                             "${ChatColor.AQUA}" +
                             "https://discord.gg/nmhjtC5"
             ), 2L)),
@@ -46,8 +45,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "みんな大好きサーバマップ" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
+                            "みんな大好きサーバマップ->" +
                             "${ChatColor.AQUA}" +
                             "http://map.spring.seichi.click/"
             ), 2L)),
@@ -55,12 +53,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "整地鯖(春)に関するご質問は" +
-                            "${ChatColor.DARK_PURPLE}${ChatColor.BOLD}" +
-                            "公式Discord" +
-                            "${ChatColor.WHITE}" +
-                            "で受け付けております。" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
+                            "整地鯖(春)に関するご質問->" +
                             "${ChatColor.AQUA}" +
                             "https://discord.gg/nmhjtC5"
             ), 2L)),
@@ -79,15 +72,14 @@ enum class Tips(
                             "${ChatColor.WHITE}" +
                             "OptiFineを導入すると大体の環境で動作が軽くなります。" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.AQUA}" +
+                            "ダウンロード→${ChatColor.AQUA}" +
                             "https://optifine.net/downloads"
             ), 2L)),
     WIKI(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "有志の方が非公式Wikiを作成しています。" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
+                            "非公式Wikiあります→" +
                             "${ChatColor.AQUA}" +
                             "https://springseichi.sokuhou.wiki/"
             ), 2L)),
@@ -95,8 +87,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "公式Twitterアカウントをフォローしてください!!" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
+                            "公式Twitterアカウント->" +
                             "${ChatColor.AQUA}" +
                             "https://twitter.com/springseichi"
             ), 2L)),
@@ -106,17 +97,14 @@ enum class Tips(
                             "${ChatColor.WHITE}" +
                             "当サーバでは、寄付を受け付けております。" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.AQUA}" +
+                            "寄付はこちらから→${ChatColor.AQUA}" +
                             "https://goo.gl/forms/8ZR3MJwtSeTDkGST2"
             ), 2L)),
     HOME(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "ホーム機能を使ってみよう！" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "お気に入りの場所を登録できるぞ！"
+                            "ホーム機能でお気に入りの場所を登録!!(テレポートメニューから)"
             ), 2L), { Achievement.TELEPORT_HOME.isGranted(it) }),
     ADMIN_CAUTION(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
@@ -134,8 +122,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "暴言やスパムを行ったり，執拗に付き纏ってくる人には" +
-                            "ミュート機能を使おう!!"
+                            "ミュート機能で快適整地ライフ!!フォロー設定から利用できるぞ!!"
             ), 2L)),
     SETTINGS(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
@@ -147,8 +134,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "地形にハマって出られないときは，テレポートメニューから" +
-                            "初期スポーンに戻ろう!!"
+                            "地形にハマったときは，テレポートメニューから初期スポーンへGO!!"
             ), 2L)),
     VOTE_ON_NOT_LOGIN(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
