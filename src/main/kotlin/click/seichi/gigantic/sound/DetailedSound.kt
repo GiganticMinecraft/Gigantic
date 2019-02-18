@@ -1,5 +1,6 @@
 package click.seichi.gigantic.sound
 
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
@@ -66,5 +67,14 @@ class DetailedSound(
             volume.coerceIn(0.0F, 2.0F),
             pitch.coerceIn(0.0F, 2.0F)
     )
+
+    fun broadcast() {
+        Bukkit.getServer().onlinePlayers
+                .filterNotNull()
+                .filter { it.isValid }
+                .forEach {
+                    playOnly(it)
+                }
+    }
 
 }

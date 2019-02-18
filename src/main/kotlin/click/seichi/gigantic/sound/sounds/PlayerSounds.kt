@@ -10,6 +10,13 @@ import org.bukkit.SoundCategory
  */
 object PlayerSounds {
 
+    val ACHIEVE_TUTORIAL = DetailedSound(
+            Sound.ENTITY_ENDER_DRAGON_DEATH,
+            SoundCategory.PLAYERS,
+            pitch = 1.2F,
+            volume = 0.5F
+    )
+
     val OBTAIN_EXP = { combo: Long ->
         DetailedSound(
                 Sound.ENTITY_EXPERIENCE_ORB_PICKUP,

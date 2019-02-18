@@ -104,7 +104,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "ホーム機能でお気に入りの場所を登録!!(テレポートメニューから)"
+                            "ホーム機能でお気に入りの場所を登録しよう(テレポートメニューから)"
             ), 2L), { Achievement.TELEPORT_HOME.isGranted(it) }),
     ADMIN_CAUTION(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
@@ -122,19 +122,19 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "ミュート機能で快適整地ライフ!!フォロー設定から利用できるぞ!!"
+                            "ミュート機能で快適整地ライフフォロー設定から利用できるぞ"
             ), 2L)),
     SETTINGS(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "メニューの詳細設定→表示設定からいくつかの表示を切り替えられる!!"
+                            "メニューの詳細設定→表示設定からいくつかの表示を切り替えられる"
             ), 2L)),
     STUCK(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "地形にハマったときは，テレポートメニューから初期スポーンへGO!!"
+                            "地形にハマったときは，テレポートメニューから初期スポーンへGO"
             ), 2L)),
     VOTE_ON_NOT_LOGIN(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
@@ -150,7 +150,7 @@ enum class Tips(
                             "${ChatColor.AQUA}" +
                             "/hub" +
                             "${ChatColor.WHITE}" +
-                            "を使おう!!"
+                            "を使おう"
             ), 2L)),
 
     ;

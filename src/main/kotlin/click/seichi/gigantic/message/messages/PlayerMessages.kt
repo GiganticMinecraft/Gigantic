@@ -47,14 +47,14 @@ object PlayerMessages {
     val LEVEL_UP_LEVEL = { level: Int ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.AQUA}" +
-                        "おめでとう!!レベルが上がった!! ( ${level - 1} → $level )"
+                        "おめでとう!レベルが上がった! ( ${level - 1} → $level )"
         ))
     }
 
     val LEVEL_UP_TITLE = { level: Int ->
         TitleMessage(
                 title = LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.AQUA}レベルアップ!!"
+                        Locale.JAPANESE to "${ChatColor.AQUA}レベルアップ"
                 ),
                 subTitle = LocalizedText(
                         Locale.JAPANESE to "${ChatColor.WHITE}${level - 1} → $level"
@@ -148,7 +148,7 @@ object PlayerMessages {
     val UPDATE_MAX_COMBO = { prevmaxCombo: Long, maxCombo: Long ->
         ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.YELLOW}" +
-                        "最大コンボ数更新!! ($prevmaxCombo → $maxCombo)"
+                        "最大コンボ数更新 ($prevmaxCombo → $maxCombo)"
         ))
     }
 

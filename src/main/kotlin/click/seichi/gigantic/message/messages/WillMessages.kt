@@ -119,7 +119,7 @@ object WillMessages {
                             relation +
                             "${ChatColor.RESET}${ChatColor.WHITE}" +
                             "になった\n" +
-                            "交感できる距離が伸びた!!"
+                            "交感できる距離が伸びた"
                 }
         ))
     }

@@ -15,7 +15,7 @@ object RelicMessages {
     val DROP_TEXT = { drop: SoulMonster.DropRelic ->
         val relic = drop.relic
         LocalizedText(
-                Locale.JAPANESE.let { it to "${ChatColor.LIGHT_PURPLE}${relic.getName(it)}を手に入れた!!" }
+                Locale.JAPANESE.let { it to "${ChatColor.LIGHT_PURPLE}${relic.getName(it)}を手に入れた" }
         )
     }
 

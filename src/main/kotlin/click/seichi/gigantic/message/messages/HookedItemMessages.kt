@@ -110,7 +110,7 @@ object HookedItemMessages {
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.GRAY}" +
-                            "スニークを離すと飛び立てる!!"
+                            "スニークを離すと飛び立てる"
             ),
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.RED}" +
