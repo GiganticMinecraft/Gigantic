@@ -315,6 +315,17 @@ enum class Achievement(
     }, action = {
         it.offer(Keys.APTITUDE_MAP[Will.VENTUS]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.VENTUS)),
+
+
+    WILL_SPECIAL(600, {
+        it.wrappedLevel >= WillGrade.SPECIAL.unlockLevel
+    }, priority = UpdatePriority.HIGH),
+    WILL_SAKURA(601, {
+        WILL_SPECIAL.isGranted(it) &&
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.SAKURA]!!) >= Defaults.WILL_SPECIAL_UNLOCK_AMOUNT
+    }, action = {
+        it.offer(Keys.APTITUDE_MAP[Will.SAKURA]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.SAKURA)),
     ;
 
     /**1から順に [update] される**/

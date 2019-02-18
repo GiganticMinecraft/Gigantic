@@ -118,4 +118,20 @@ object ProfileMessages {
         )
     }
 
+    val PROFILE_WILL_APTITUDE_SPECIAL = { player: Player ->
+        mutableListOf(
+                LocalizedText(
+                        Locale.JAPANESE.let { locale ->
+                            locale to Will.values()
+                                    .filter { it.grade == WillGrade.SPECIAL }
+                                    .filter { player.hasAptitude(it) }
+                                    .sortedBy { it.displayPriority }
+                                    .joinToString(" ") {
+                                        "${it.chatColor}${ChatColor.BOLD}" + it.getName(locale)
+                                    }
+                        }
+                )
+        )
+    }
+
 }

@@ -4,6 +4,7 @@ import click.seichi.gigantic.extension.ethel
 import click.seichi.gigantic.extension.hasAptitude
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.SideBarMessage
+import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
@@ -14,7 +15,8 @@ import java.util.*
  */
 object SideBarMessages {
 
-    val MEMORY_SIDEBAR = { player: Player, isForced: Boolean ->
+    val ETHEL = { player: Player, isForced: Boolean ->
+
         val willMap = Will.values()
                 .filter { player.hasAptitude(it) }
                 .map { it to player.ethel(it) }.toMap()
@@ -27,7 +29,21 @@ object SideBarMessages {
                 willMap.keys.filter {
                     willMap.getValue(it) > 0
                 }.map { will ->
-                    will.defaultRow to LocalizedText(
+                    val row = when (will) {
+                        Will.AQUA -> SideBarRow.TWO
+                        Will.IGNIS -> SideBarRow.THREE
+                        Will.AER -> SideBarRow.FIVE
+                        Will.TERRA -> SideBarRow.ONE
+                        Will.NATURA -> SideBarRow.FOUR
+                        Will.GLACIES -> SideBarRow.SIX
+                        Will.LUX -> SideBarRow.NINE
+                        Will.SOLUM -> SideBarRow.SEVEN
+                        Will.UMBRA -> SideBarRow.TEN
+                        Will.VENTUS -> SideBarRow.EIGHT
+                        // TODO ここは期間で分けるべき(eventWillのenum作るとか？)
+                        Will.SAKURA -> SideBarRow.FOURTEEN
+                    }
+                    row to LocalizedText(
                             Locale.JAPANESE.let { locale ->
                                 locale to "${will.chatColor}${ChatColor.BOLD}" +
                                         "${will.getName(locale).let {

@@ -23,6 +23,9 @@ object Defaults {
     // will Settings
     const val WILL_BASIC_UNLOCK_AMOUNT = 1000
     const val WILL_ADVANCED_UNLOCK_AMOUNT = 4000
+    const val WILL_SPECIAL_UNLOCK_AMOUNT = 2000
+    // 意志の発生確率
+    const val WILL_SPAWN_PROBABILITY = 0.01
 
     // will spirit Settings
     // 意志が埋まってから消滅するまでの時間(ticks)

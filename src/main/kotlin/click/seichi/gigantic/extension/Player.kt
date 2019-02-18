@@ -250,7 +250,7 @@ fun Player.updateBag() {
 }
 
 fun Player.updateSideBar() {
-    SideBarMessages.MEMORY_SIDEBAR(this, true).sendTo(this)
+    SideBarMessages.ETHEL(this, true).sendTo(this)
 }
 
 fun Player.fixHandToTool() {

@@ -31,6 +31,7 @@ class WillListener : Listener {
             when (it.grade) {
                 WillGrade.BASIC -> Achievement.WILL_BASIC.isGranted(player)
                 WillGrade.ADVANCED -> Achievement.WILL_ADVANCED.isGranted(player)
+                WillGrade.SPECIAL -> Achievement.WILL_SPECIAL.isGranted(player)
             }
         }.filter {
             // 適性を持たない

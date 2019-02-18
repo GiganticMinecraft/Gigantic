@@ -38,12 +38,12 @@ enum class WillRelationship(
         fun calcRelationship(player: Player, will: Will): WillRelationship {
 
             // 持っているレリック
-            val pRelicList = relicTypeMap.getValue(will).filter { player.hasRelic(it.relic) }
+            val pRelicList = relicTypeMap[will]?.filter { player.hasRelic(it.relic) } ?: listOf()
             val allNum = pRelicList.fold(0L) { source, willRelic ->
                 source + willRelic.relic.getDroppedNum(player)
             }
             // コンプリート
-            return if (pRelicList.size == relicTypeMap[will]!!.size) {
+            return if (pRelicList.size == relicTypeMap[will]?.size ?: 0) {
                 when {
                     // かつ総数が100以上
                     allNum >= 100 -> PARTNER

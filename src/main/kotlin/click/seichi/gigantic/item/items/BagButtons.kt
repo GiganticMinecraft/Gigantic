@@ -82,6 +82,12 @@ object BagButtons {
                             *ProfileMessages.PROFILE_WILL_APTITUDE_ADVANCED(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
                     ))
                 }
+                if (Will.values().filter { it.grade == WillGrade.SPECIAL }
+                                .firstOrNull { player.hasAptitude(it) } != null) {
+                    lore.addAll(listOf(
+                            *ProfileMessages.PROFILE_WILL_APTITUDE_SPECIAL(player).map { it.asSafety(player.wrappedLocale) }.toTypedArray()
+                    ))
+                }
 
                 setLore(*lore.toTypedArray())
 

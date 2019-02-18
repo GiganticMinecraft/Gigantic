@@ -4,12 +4,12 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.WillMessages
-import click.seichi.gigantic.util.SideBarRow
 import org.bukkit.ChatColor
 import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
+import org.joda.time.DateTime
 import java.util.*
 
 /**
@@ -24,8 +24,6 @@ enum class Will(
         val material: Material,
         val grade: WillGrade,
         private val localizedName: LocalizedText,
-        // サイドバー表示の順番
-        val defaultRow: SideBarRow,
         // 表示の順番
         val displayPriority: Int
 ) {
@@ -44,7 +42,6 @@ enum class Will(
             Material.BLUE_GLAZED_TERRACOTTA,
             WillGrade.BASIC,
             WillMessages.AQUA,
-            SideBarRow.TWO,
             2
 
     ) {
@@ -62,7 +59,6 @@ enum class Will(
             Material.RED_GLAZED_TERRACOTTA,
             WillGrade.BASIC,
             WillMessages.IGNIS,
-            SideBarRow.THREE,
             3
     ) {
         // 高度が29以下であること
@@ -77,7 +73,6 @@ enum class Will(
             Material.WHITE_GLAZED_TERRACOTTA,
             WillGrade.BASIC,
             WillMessages.AER,
-            SideBarRow.FIVE,
             5
     ) {
         // 高度が85以上であること
@@ -92,7 +87,6 @@ enum class Will(
             Material.BROWN_GLAZED_TERRACOTTA,
             WillGrade.BASIC,
             WillMessages.TERRA,
-            SideBarRow.ONE,
             1
     ) {
         // 高度が30以上62以下であり，かつ海，川等のバイオームではないこと
@@ -109,7 +103,6 @@ enum class Will(
             Material.LIME_GLAZED_TERRACOTTA,
             WillGrade.BASIC,
             WillMessages.NATURA,
-            SideBarRow.FOUR,
             4
     ) {
         // 高度が63以上84以下であること
@@ -124,7 +117,6 @@ enum class Will(
             Material.LIGHT_BLUE_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.GLACIES,
-            SideBarRow.SIX,
             6
     ) {
         // 温度が0以下であること
@@ -139,7 +131,6 @@ enum class Will(
             Material.YELLOW_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.LUX,
-            SideBarRow.NINE,
             9
     ) {
         // 温度が1.2以上であること
@@ -154,7 +145,6 @@ enum class Will(
             Material.GRAY_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.SOLUM,
-            SideBarRow.SEVEN,
             7
     ) {
         // 山岳バイオームであること
@@ -170,7 +160,6 @@ enum class Will(
             Material.PURPLE_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.UMBRA,
-            SideBarRow.TEN,
             10
     ) {
         // 森林バイオームであること
@@ -186,13 +175,29 @@ enum class Will(
             Material.LIGHT_GRAY_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.VENTUS,
-            SideBarRow.EIGHT,
             8
     ) {
         // 丘陵
         override fun canSpawn(player: Player, block: Block): Boolean {
             val biome = block.biome ?: return false
             return biome.isHill
+        }
+    },
+    SAKURA(
+            11,
+            Color.fromRGB(254, 244, 244),
+            ChatColor.LIGHT_PURPLE,
+            Material.PINK_GLAZED_TERRACOTTA,
+            WillGrade.SPECIAL,
+            WillMessages.SAKURA,
+            11
+    ) {
+        val from = DateTime("2019-03-01T00:00:00+09:00")
+        val to = DateTime("2019-05-01T00:00:00+09:00")
+        // 期間限定
+        override fun canSpawn(player: Player, block: Block): Boolean {
+            val now = DateTime.now()
+            return now in from..to
         }
     },
     ;
