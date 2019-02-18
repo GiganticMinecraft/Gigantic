@@ -10,9 +10,6 @@ import org.bukkit.entity.Player
  */
 interface Message {
 
-    // メッセージの送信時間
-    val duration: Long
-
     fun sendTo(player: Player)
 
 }

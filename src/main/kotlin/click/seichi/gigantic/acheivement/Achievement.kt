@@ -6,6 +6,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.message.LinedChatMessage
 import click.seichi.gigantic.message.Message
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.player.Defaults
@@ -335,8 +336,10 @@ enum class Achievement(
                             }
                         }.runTaskLater(Gigantic.PLUGIN, delay)
 
-                        // メッセージ終了まで待機 + メッセージ間隔用45L
-                        delay += it.grantMessage?.duration?.plus(45L) ?: 0L
+                        if (it.grantMessage is LinedChatMessage) {
+                            // メッセージ終了まで待機 + メッセージ間隔用45L
+                            delay += it.grantMessage.duration.plus(45L)
+                        }
                     }
             if (!isGranted && !isForced) return
             player.updateDisplay(true, true)

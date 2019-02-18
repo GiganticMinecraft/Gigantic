@@ -13,6 +13,7 @@ class TitleMessage(
         private val stay: Int,
         private val fadeOut: Int
 ) : Message {
+
     override fun sendTo(player: Player) {
         player.sendTitle(
                 title?.asSafety(player.wrappedLocale) ?: "",
