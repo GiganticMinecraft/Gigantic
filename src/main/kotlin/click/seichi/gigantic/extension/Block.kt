@@ -355,7 +355,7 @@ val Block.centralLocation: Location
     get() = location.clone().add(0.5, 0.5, 0.5)
 
 
-fun Block.update() {
+fun Block.update(depth: Int = 0) {
     changeRelativeBedrock()
 
     condenseRelativeLiquid()
@@ -368,7 +368,7 @@ fun Block.update() {
     // 松明をセット
     setTorchIfNeeded()
 
-    fallUpperCrustBlock()
+    fallUpperCrustBlock(depth)
 }
 
 fun Block.update(others: Set<Block>) {
@@ -396,7 +396,7 @@ fun Block.update(others: Set<Block>) {
     // 落下処理
     xzMap.forEach { _, blockList ->
         blockList.maxBy { it.y }?.run {
-            fallUpperCrustBlock()
+            fallUpperCrustBlock(0)
         }
     }
 }
@@ -421,27 +421,27 @@ fun Block.setTorchIfNeeded() {
     }.runTaskLater(Gigantic.PLUGIN, 20L)
 }
 
-private fun Block.fallUpperCrustBlock() {
+private fun Block.fallUpperCrustBlock(depth: Int) {
     object : BukkitRunnable() {
         override fun run() {
             val target = getRelative(BlockFace.UP) ?: return
             when {
-                target.y > 255 -> {
+                target.y > 255 || depth > Config.MAX_BREAKABLE_GRAVITY -> {
                     return
                 }
                 Gigantic.SKILLED_BLOCK_SET.contains(target) -> {
-                    target.update()
+                    target.update(depth + 1)
                 }
                 target.isCrust -> {
                     target.fall()
-                    target.update()
+                    target.update(depth + 1)
                 }
                 target.isLog -> {
                     Cutter().breakRelationalBlock(target, false)
                     return
                 }
                 else -> {
-                    target.update()
+                    target.update(depth + 1)
                 }
             }
 
