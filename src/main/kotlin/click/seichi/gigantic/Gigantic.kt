@@ -156,7 +156,7 @@ class Gigantic : JavaPlugin() {
             }
         }.runTaskTimer(this, 3 * 20L, 1)
 
-        logger.info("Gigantic is enabled!!")
+        logger.info("Gigantic is enabled")
     }
 
 
@@ -205,7 +205,7 @@ class Gigantic : JavaPlugin() {
             it.type = Material.AIR
         }
 
-        logger.info("Gigantic is disabled!!")
+        logger.info("Gigantic is disabled")
     }
 
     private fun loadConfiguration(vararg configurations: SimpleConfiguration) = configurations.forEach { it.init(this) }

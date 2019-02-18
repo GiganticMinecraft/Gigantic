@@ -1,5 +1,6 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.message.Tips
@@ -19,9 +20,12 @@ class TipsListener : Listener {
 
     private val remainSet = tips.map { it.ordinal }.toMutableSet()
 
+    private val interval = if (Gigantic.IS_DEBUG) 20 * 5L
+    else 20L.times(60L).times(Config.TIPS_INTERVAL)
+
     @EventHandler
     fun onTick(event: TickEvent) {
-        if (event.ticks.plus(10) % 20L.times(60L).times(Config.TIPS_INTERVAL) != 0L) return
+        if (event.ticks.plus(10) % interval != 0L) return
         // 一定間隔で呼び出す
 
         // 全て消費したら補充

@@ -1201,4 +1201,22 @@ object Keys {
         }
     }.toMap()
 
+    val TITLE = object : Key<PlayerCache, String?> {
+        override val default: String?
+            get() = null
+
+        override fun satisfyWith(value: String?): Boolean {
+            return true
+        }
+    }
+
+    val SUBTITLE = object : Key<PlayerCache, String?> {
+        override val default: String?
+            get() = null
+
+        override fun satisfyWith(value: String?): Boolean {
+            return true
+        }
+    }
+
 }

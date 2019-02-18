@@ -7,9 +7,12 @@ import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.LinedChatMessage
+import click.seichi.gigantic.message.Message
 import click.seichi.gigantic.message.messages.AchievementMessages
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.relic.Relic
+import click.seichi.gigantic.sound.DetailedSound
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
@@ -26,7 +29,9 @@ enum class Achievement(
         private val canGranting: (Player) -> Boolean,
         // アンロック時に処理される
         val action: (Player) -> Unit = {},
-        val grantMessage: LinedChatMessage? = null,
+        val grantMessage: Message? = null,
+        val broadcastMessage: (Player) -> Message? = { null },
+        val broadcastSound: DetailedSound? = null,
         private val priority: UpdatePriority = UpdatePriority.NORMAL
 ) {
     // messages
@@ -35,7 +40,8 @@ enum class Achievement(
         Tool.SHOVEL.grant(it)
         Tool.AXE.grant(it)
         Belt.DEFAULT.grant(it)
-    }, grantMessage = AchievementMessages.FIRST_JOIN),
+    }, grantMessage = AchievementMessages.FIRST_JOIN
+            , broadcastMessage = { AchievementMessages.FIRST_JOIN_ALL(it) }),
     FIRST_LEVEL_UP(1, {
         it.wrappedLevel >= 2
     }, grantMessage = AchievementMessages.FIRST_LEVEL_UP),
@@ -52,6 +58,10 @@ enum class Achievement(
                 .firstOrNull { will -> it.hasAptitude(will) } != null
     }, grantMessage = AchievementMessages.FIRST_ADVANCED_WILL,
             priority = UpdatePriority.LOWEST),
+    TUTORIAL(5, {
+        it.wrappedLevel >= 200
+    }, broadcastMessage = { AchievementMessages.TUTORIAL_ALL(it) }
+            , broadcastSound = PlayerSounds.ACHIEVE_TUTORIAL),
 
     //TODO 一度すべてのクエストを隠蔽しているので実装時は一気にやる
     // systems
@@ -331,12 +341,16 @@ enum class Achievement(
                         object : BukkitRunnable() {
                             override fun run() {
                                 if (!player.isValid) return
+                                it.broadcastMessage(player)?.broadcast()
+                                it.broadcastSound?.broadcast()
                                 it.grantMessage?.sendTo(player)
                             }
                         }.runTaskLater(Gigantic.PLUGIN, delay)
 
-                        // メッセージ終了まで待機 + メッセージ間隔用45L
-                        delay += it.grantMessage?.duration?.plus(45L) ?: 0L
+                        if (it.grantMessage is LinedChatMessage) {
+                            // メッセージ終了まで待機 + メッセージ間隔用45L
+                            delay += it.grantMessage.duration.plus(45L)
+                        }
                     }
             if (!isGranted && !isForced) return
             player.updateDisplay(true, true)

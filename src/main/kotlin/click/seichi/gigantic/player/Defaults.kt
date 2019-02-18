@@ -9,9 +9,6 @@ import org.bukkit.inventory.ItemStack
  */
 object Defaults {
     const val MANA = 0
-    const val MANA_BAR_NUM = 10
-    const val MANA_CHAR = "★"
-    const val MANA_LOST_CHAR = "☆"
     val ITEM = ItemStack(Material.AIR)
     const val TOOL_ID = 2
     const val BELT_ID = 1

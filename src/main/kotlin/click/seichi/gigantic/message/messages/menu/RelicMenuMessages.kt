@@ -47,7 +47,7 @@ object RelicMenuMessages {
             )
     val GENERATED_RELIC_SUFIX =
             LocalizedText(
-                    Locale.JAPANESE to "」を手に入れた!!"
+                    Locale.JAPANESE to "」を手に入れた"
             )
 
     val RELATIONSHIP = LocalizedText(

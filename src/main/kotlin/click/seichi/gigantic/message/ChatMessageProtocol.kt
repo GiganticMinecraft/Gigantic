@@ -10,7 +10,7 @@ enum class ChatMessageProtocol(val sendTo: (Player, String) -> Unit) {
 
     ACTION_BAR({ player, message -> player.sendActionBar(message) }),
 
-    CHAT({ player, message -> player.sendMessage(message) })
+    CHAT({ player, message -> player.sendMessage(message) }),
 
     ;
 

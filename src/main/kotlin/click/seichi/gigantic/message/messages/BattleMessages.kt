@@ -30,7 +30,7 @@ object BattleMessages {
                         Locale.JAPANESE.let {
                             it to "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
                                     monster.getName(it) +
-                                    " が出現!!"
+                                    " が出現"
                         }
                 ))
     }

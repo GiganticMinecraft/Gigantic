@@ -39,6 +39,13 @@ class PlayerMonitor : Listener {
             return
         }
 
+        player.saturation = Float.MAX_VALUE
+        player.foodLevel = 20
+
+        // ログインメッセージ送信
+        PlayerMessages.LOGIN_CHAT.sendTo(player)
+        PlayerMessages.LOGIN_TITLE.sendTo(player)
+
         // ここで実績を確認する．これ以前では実績を使ってはいけない
         Achievement.update(player, isForced = true)
 
@@ -47,8 +54,7 @@ class PlayerMonitor : Listener {
         if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal())
             PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
-        player.saturation = Float.MAX_VALUE
-        player.foodLevel = 20
+
         // デフォルトのスピードに設定
         player.walkSpeed = player.getOrPut(Keys.WALK_SPEED).toFloat()
 
