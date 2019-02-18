@@ -7,6 +7,7 @@ package click.seichi.gigantic.will
 enum class WillGrade(val unlockLevel: Int) {
     BASIC(20),
     ADVANCED(70),
+    SPECIAL(20),
     ;
 
     override fun toString() = name.toLowerCase()

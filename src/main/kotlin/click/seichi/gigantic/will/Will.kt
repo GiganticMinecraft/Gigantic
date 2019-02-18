@@ -24,7 +24,9 @@ enum class Will(
         val material: Material,
         val grade: WillGrade,
         private val localizedName: LocalizedText,
+        // サイドバー表示の順番
         val defaultRow: SideBarRow,
+        // 表示の順番
         val displayPriority: Int
 ) {
 
