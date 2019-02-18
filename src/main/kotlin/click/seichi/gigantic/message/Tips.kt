@@ -1,7 +1,6 @@
 package click.seichi.gigantic.message
 
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.extension.wrappedLevel
 import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
@@ -41,10 +40,7 @@ enum class Tips(
                             "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
                             "100個" +
                             "${ChatColor.WHITE}" +
-                            "集めるとレリックに変換できるよ！" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "たくさん変換して経験値効率を上げよう！"
+                            "集めるとレリックに変換できるよ！"
             ), 2L), { Achievement.FIRST_WILL.isGranted(it) }),
     SERVER_MAP(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
@@ -59,12 +55,6 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "整地鯖(春)に関するお問い合わせを" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "ギガンティック☆整地鯖運営チームに行わないでください。" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
                             "整地鯖(春)に関するご質問は" +
                             "${ChatColor.DARK_PURPLE}${ChatColor.BOLD}" +
                             "公式Discord" +
@@ -78,16 +68,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "投票すると投票ポイントをGETできます。" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "溜まった投票ポイントはお好みのエフェクトと交換しよう！" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "ギガンティック☆整地鯖のJMSページより投票してください。" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "ギガンティック☆整地鯖,整地鯖(春)双方で投票特典が利用可能です。" +
+                            "投票ポイントを貯めて、お好みのエフェクトと交換しよう！" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
                             "${ChatColor.AQUA}" +
                             "https://minecraft.jp/servers/54d3529e4ddda180780041a7"
@@ -98,9 +79,6 @@ enum class Tips(
                             "${ChatColor.WHITE}" +
                             "OptiFineを導入すると大体の環境で動作が軽くなります。" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "（お友達と一緒に近くを整地する時は必須カモ）" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
                             "${ChatColor.AQUA}" +
                             "https://optifine.net/downloads"
             ), 2L)),
@@ -108,16 +86,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "有志の方がWikiを作成してくださいました。" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "ゲームプレイのお供にいかがですか？" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "※非公式Wikiの内容は整地鯖(春)運営チームに承認されたものではなく，" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "記載内容の正確性も保証しておりませんのでご留意ください。" +
+                            "有志の方が非公式Wikiを作成しています。" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
                             "${ChatColor.AQUA}" +
                             "https://springseichi.sokuhou.wiki/"
@@ -127,9 +96,6 @@ enum class Tips(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
                             "公式Twitterアカウントをフォローしてください!!" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "最新のアップデート内容やお知らせを見ることができます。" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
                             "${ChatColor.AQUA}" +
                             "https://twitter.com/springseichi"
@@ -156,19 +122,11 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "運営チームのなりすましにご注意ください。" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "運営チームのMinecraftIDは\n" +
-                            "${ChatColor.WHITE}" +
-                            "公式Discord #はじめに に全て公開されています。"
+                            "運営チームのなりすましにご注意ください。"
             ), 2L)),
     FRIEND(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
-                            "${ChatColor.WHITE}" +
-                            "友達と一緒に掘りたいときは，フォロー機能を使おう！！" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
                             "${ChatColor.WHITE}" +
                             "相互フォローになれば，近くのブロックも掘れるようになるぞ!"
             ), 2L)),
@@ -176,14 +134,8 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "暴言やスパムを行ったり，執拗に付き纏ってくる人には\n" +
-                            "${ChatColor.WHITE}" +
-                            "ミュート機能を使おう!!" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "ミュートすると，自分へのテレポートを拒否できて，\n" +
-                            "${ChatColor.WHITE}" +
-                            "その人のチャットを非表示にできるぞ!!"
+                            "暴言やスパムを行ったり，執拗に付き纏ってくる人には" +
+                            "ミュート機能を使おう!!"
             ), 2L)),
     SETTINGS(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
@@ -195,8 +147,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "地形にハマって出られないときは，テレポートメニューから\n" +
-                            "${ChatColor.WHITE}" +
+                            "地形にハマって出られないときは，テレポートメニューから" +
                             "初期スポーンに戻ろう!!"
             ), 2L)),
     VOTE_ON_NOT_LOGIN(LinedChatMessage(ChatMessageProtocol.CHAT,
@@ -215,27 +166,6 @@ enum class Tips(
                             "${ChatColor.WHITE}" +
                             "を使おう!!"
             ), 2L)),
-    MULTI_BREAK(LinedChatMessage(ChatMessageProtocol.CHAT,
-            LocalizedText(
-                    Locale.JAPANESE to Defaults.TIPS_PREFIX +
-                            "${ChatColor.WHITE}" +
-                            "魔法 " +
-                            "${ChatColor.LIGHT_PURPLE}" +
-                            "マルチ・ブレイク" +
-                            "${ChatColor.WHITE}" +
-                            "が使えない?" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "☆マークが赤くなっていたらマナが不足しているよ!!" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "マナストーンは手に持ってるかな？\n" +
-                            "${ChatColor.WHITE}" +
-                            "ツールを持ちながら右クリックしてみよう!!" +
-                            LinedChatMessage.NEW_LINE_SYMBOL +
-                            "${ChatColor.WHITE}" +
-                            "破壊範囲の設定はしたかな？魔法メニューから設定しよう!!"
-            ), 2L), { Achievement.SPELL_MULTI_BREAK.isGranted(it) && it.wrappedLevel < 30 }),
 
     ;
 
