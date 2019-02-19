@@ -4,7 +4,6 @@
 
 
 
-
 :eyeglasses: **__細かい変更点__** :eyeglasses:    
 
 :diamond_shape_with_a_dot_inside: TIPSのメッセージをコンパクトサイズに変更しました  
