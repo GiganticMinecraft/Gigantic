@@ -1,10 +1,10 @@
 package click.seichi.gigantic.command
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.extension.junishiOfTime
+import click.seichi.gigantic.extension.moonPhase
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.command.NowMessages
-import click.seichi.gigantic.util.Junishi
-import click.seichi.gigantic.util.MoonPhase
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
@@ -29,8 +29,8 @@ class NowCommand : TabExecutor {
         sender.sendMessage(NowMessages.TIME_IN_REAL(DateTime.now()).asSafety(Gigantic.DEFAULT_LOCALE))
         if (sender is Player) {
             val world = sender.world
-            val junishi = Junishi.now(world).getName(sender.wrappedLocale)
-            val moonPhase = MoonPhase.now(world).getName(sender.wrappedLocale)
+            val junishi = world.junishiOfTime.getName(sender.wrappedLocale)
+            val moonPhase = world.moonPhase.getName(sender.wrappedLocale)
             // マイクラ時刻
             sender.sendMessage(NowMessages.TIME_IN_MINECRAFT(world.time).asSafety(sender.wrappedLocale))
             // 十二支

@@ -1,7 +1,6 @@
 package click.seichi.gigantic.util
 
 import click.seichi.gigantic.message.LocalizedText
-import org.bukkit.World
 import java.util.*
 
 /**
@@ -39,34 +38,4 @@ enum class MoonPhase(
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)
 
-    companion object {
-
-        // 月齢が1週する間隔
-        private const val INTERVAL = 24000L.times(8L)
-
-        // 月が見える時間
-        private const val MOON_RISE_TIME = 12567L
-
-        // 月が沈む
-        private const val MOON_SET_TIME = 22917L
-
-        fun now(world: World): MoonPhase {
-            return when ((world.fullTime % INTERVAL).div(24000).toInt()) {
-                0 -> MANGETSU
-                1 -> IMACHIZUKI
-                2 -> KAGEN
-                3 -> NIZYUROKUYA
-                4 -> SHINGETSU
-                5 -> MIKAZUKI
-                6 -> ZYOGEN
-                7 -> ZYUUSANYA
-                else -> MANGETSU
-            }
-        }
-
-        // 月が昇っているか
-        fun isRisingMoon(world: World): Boolean {
-            return world.time in MOON_RISE_TIME..MOON_SET_TIME
-        }
-    }
 }
