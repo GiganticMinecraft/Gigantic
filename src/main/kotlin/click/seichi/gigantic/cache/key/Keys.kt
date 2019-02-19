@@ -17,6 +17,7 @@ import click.seichi.gigantic.database.dao.UserFollow
 import click.seichi.gigantic.database.dao.UserHome
 import click.seichi.gigantic.database.dao.UserMute
 import click.seichi.gigantic.database.table.UserFollowTable
+import click.seichi.gigantic.database.table.UserHomeTable
 import click.seichi.gigantic.database.table.UserMuteTable
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.menu.RefineItem
@@ -1079,6 +1080,7 @@ object Keys {
 
         override fun store(entity: UserEntity, value: Map<Int, Home>) {
             value.forEach { homeId, home ->
+                UserHomeTable.deleteWhere { (UserHomeTable.userId eq entity.user.id.value) }
                 UserHome.new {
                     this.user = entity.user
                     this.homeId = homeId

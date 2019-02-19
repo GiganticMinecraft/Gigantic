@@ -18,7 +18,7 @@
 :bow: **__不具合修正__** :bow:   
 以下の不具合を修正しました．  
 
-:diamond_shape_with_a_dot_inside: 前回の魔法 **マルチ・ブレイク** の負荷軽減による不具合  
+:diamond_shape_with_a_dot_inside: ホームポイント削除が機能していなかった不具合  
 
 
 作成者: tar0ss  
