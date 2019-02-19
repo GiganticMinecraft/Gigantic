@@ -182,6 +182,15 @@ enum class Relic(
     CUTE_WATERING_POT(1090, RelicMessages.CUTE_WATERING_POT, RelicMessages.CUTE_WATERING_POT_LORE),
     WING(1091, RelicMessages.WING, RelicMessages.WING_LORE),
     NIDUS_AVIS(1092, RelicMessages.NIDUS_AVIS, RelicMessages.NIDUS_AVIS_LORE),
+    ALSTROMERIA_SEED(1093, RelicMessages.ALSTROMERIA_SEED, RelicMessages.ALSTROMERIA_SEED_LORE),
+    NIGHTINGALE_FEATHER(1094, RelicMessages.NIGHTINGALE_FEATHER, RelicMessages.NIGHTINGALE_FEATHER_LORE),
+    OBOROZUKI_SWORD(1095, RelicMessages.OBOROZUKI_SWORD, RelicMessages.OBOROZUKI_SWORD_LORE),
+    SAKURA_RACE_CAKE(1096, RelicMessages.SAKURA_RACE_CAKE, RelicMessages.SAKURA_RACE_CAKE_LORE),
+    CERTIFICATE(1097, RelicMessages.CERTIFICATE, RelicMessages.CERTIFICATE_LORE),
+    SCHOOL_BAG(1098, RelicMessages.SCHOOL_BAG, RelicMessages.SCHOOL_BAG_LORE),
+    KATSUO_SASHIMI(1099, RelicMessages.KATSUO_SASHIMI, RelicMessages.KATSUO_SASHIMI_LORE),
+    BOTAMOCHI(1100, RelicMessages.BOTAMOCHI, RelicMessages.BOTAMOCHI_LORE),
+    PEACH_CORE(1101, RelicMessages.PEACH_CORE, RelicMessages.PEACH_CORE_LORE),
     ;
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)

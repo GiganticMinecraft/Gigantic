@@ -5,6 +5,8 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.RelicMessages
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.util.Junishi
+import click.seichi.gigantic.util.MoonPhase
 import click.seichi.gigantic.will.Will
 import org.bukkit.Material
 import org.bukkit.block.Biome
@@ -480,6 +482,51 @@ enum class WillRelic(
     RLYEH_TEXT(Will.UMBRA, Relic.RLYEH_TEXT, 0.24, Material.ALLIUM, RelicMessages.RLYEH_TEXT_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.DARK_FOREST
+        }
+    },
+    ALSTROMERIA_SEED(Will.SAKURA, Relic.ALSTROMERIA_SEED, 0.1, Material.BRAIN_CORAL, RelicMessages.ALSTROMERIA_SEED_BONUS_LORE) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.type == Material.DIRT
+        }
+    },
+    NIGHTINGALE_FEATHER(Will.SAKURA, Relic.NIGHTINGALE_FEATHER, 0.1, Material.BRAIN_CORAL, RelicMessages.NIGHTINGALE_FEATHER_BONUS_LORE) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.y in 63..84
+        }
+    },
+    OBOROZUKI_SWORD(Will.SAKURA, Relic.OBOROZUKI_SWORD, 0.1, Material.BRAIN_CORAL, RelicMessages.OBOROZUKI_SWORD_BONUS_LORE) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.moonPhase == MoonPhase.MANGETSU
+        }
+    },
+    SAKURA_RACE_CAKE(Will.SAKURA, Relic.SAKURA_RACE_CAKE, 0.25, Material.BRAIN_CORAL, RelicMessages.SAKURA_RACE_CAKE_BONUS_LORE) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.biome == Biome.FOREST
+        }
+    },
+    CERTIFICATE(Will.SAKURA, Relic.CERTIFICATE, 0.2, Material.BRAIN_CORAL, RelicMessages.CERTIFICATE_BONUS_LORE) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.biome == Biome.BEACH
+        }
+    },
+    SCHOOL_BAG(Will.SAKURA, Relic.SCHOOL_BAG, 0.1, Material.BRAIN_CORAL, RelicMessages.SCHOOL_BAG_BONUS_LORE) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.time in 451..11616
+        }
+    },
+    KATSUO_SASHIMI(Will.SAKURA, Relic.KATSUO_SASHIMI, 0.2, Material.BRAIN_CORAL, RelicMessages.KATSUO_SASHIMI_BONUS_LORE) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.biome == Biome.WARM_OCEAN
+        }
+    },
+    BOTAMOCHI(Will.SAKURA, Relic.BOTAMOCHI, 0.1, Material.BRAIN_CORAL, RelicMessages.BOTAMOCHI_BONUS_LORE) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.junishiOfTime == Junishi.HITSUJI
+        }
+    },
+    PEACH_CORE(Will.SAKURA, Relic.PEACH_CORE, 0.1, Material.BRAIN_CORAL, RelicMessages.PEACH_CORE_BONUS_LORE) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.type == Material.GRANITE
         }
     },
 
