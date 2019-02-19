@@ -37,7 +37,6 @@ object EffectMenu : Menu() {
                 return player.getHead().apply {
                     setDisplayName(EffectMenuMessages.PLAYER.asSafety(player.wrappedLocale))
                     clearLore()
-                    // TODO implements
                     addLore(EffectMenuMessages.REMAIN.asSafety(player.wrappedLocale) +
                             EffectMenuMessages.VOTE_POINT.asSafety(player.wrappedLocale) +
                             ": " + "${ChatColor.RESET}" + "${ChatColor.WHITE}" +

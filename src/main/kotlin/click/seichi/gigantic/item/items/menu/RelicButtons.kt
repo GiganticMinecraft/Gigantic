@@ -99,7 +99,7 @@ object RelicButtons {
                 }
             }
 
-            override fun tryClick(player: Player, event: InventoryClickEvent) = true // TODO: why it returns true but does nothing?
+            override fun tryClick(player: Player, event: InventoryClickEvent) = false
         }
 
     }
