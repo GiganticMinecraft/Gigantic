@@ -1,6 +1,7 @@
 package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.GiganticEvent
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.breaker.Cutter
@@ -14,6 +15,7 @@ import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.event.events.RelicGenerateEvent
 import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.message.messages.LoginMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import com.google.common.io.ByteStreams
@@ -43,9 +45,11 @@ class PlayerMonitor : Listener {
         player.foodLevel = 20
 
         // ログインメッセージ送信
-        PlayerMessages.LOGIN_CHAT.sendTo(player)
-        // TODO ここに期間限定のメッセージを記述したい
-        PlayerMessages.LOGIN_TITLE.sendTo(player)
+        LoginMessages.LOGIN_CHAT.sendTo(player)
+        LoginMessages.LOGIN_TITLE.sendTo(player)
+
+        // 期間限定メッセージ送信
+        GiganticEvent.trySendLoginMessageTo(player)
 
         // ここで実績を確認する．これ以前では実績を使ってはいけない
         Achievement.update(player, isForced = true)

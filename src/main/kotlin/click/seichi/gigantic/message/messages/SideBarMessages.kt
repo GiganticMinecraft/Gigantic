@@ -6,6 +6,7 @@ import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.SideBarMessage
 import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import java.util.*
@@ -26,8 +27,9 @@ object SideBarMessages {
                         Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.BOLD}" +
                                 "エーテル"
                 ),
+                // 意志の設定
                 willMap.keys.filter {
-                    willMap.getValue(it) > 0
+                    willMap.getValue(it) > 0 && it.grade != WillGrade.SPECIAL
                 }.map { will ->
                     val row = when (will) {
                         Will.AQUA -> SideBarRow.TWO
@@ -40,8 +42,7 @@ object SideBarMessages {
                         Will.SOLUM -> SideBarRow.SEVEN
                         Will.UMBRA -> SideBarRow.TEN
                         Will.VENTUS -> SideBarRow.EIGHT
-                        // TODO ここは期間で分けるべき(eventWillのenum作るとか？)
-                        Will.SAKURA -> SideBarRow.FOURTEEN
+                        else -> SideBarRow.FOURTEEN
                     }
                     row to LocalizedText(
                             Locale.JAPANESE.let { locale ->

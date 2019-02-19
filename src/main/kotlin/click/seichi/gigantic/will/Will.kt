@@ -1,5 +1,6 @@
 package click.seichi.gigantic.will
 
+import click.seichi.gigantic.GiganticEvent
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.LocalizedText
@@ -9,7 +10,6 @@ import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
-import org.joda.time.DateTime
 import java.util.*
 
 /**
@@ -192,12 +192,9 @@ enum class Will(
             WillMessages.SAKURA,
             11
     ) {
-        val from = DateTime("2019-02-20T00:00:00+09:00")
-        val to = DateTime("2019-05-01T00:00:00+09:00")
         // 期間限定
         override fun canSpawn(player: Player, block: Block): Boolean {
-            val now = DateTime.now()
-            return now in from..to
+            return GiganticEvent.SAKURA.isActive()
         }
     },
     ;
