@@ -29,13 +29,26 @@ object RelicButtons {
 
                 if (hasNoRelic) return null
                 return ItemStack(will.material).apply {
-                    setDisplayName("" + will.chatColor +
-                            "${ChatColor.BOLD}" +
-                            will.getName(player.wrappedLocale) +
-                            RelicMenuMessages.WILL.asSafety(player.wrappedLocale) +
-                            " " +
-                            "${ChatColor.RESET}${ChatColor.WHITE}" +
-                            RelicMenuMessages.RELICS.asSafety(player.wrappedLocale)
+                    setDisplayName(RelicMenuMessages.WILL_RELIC_MENU_TITLE(will).asSafety(player.wrappedLocale))
+                    // 合計個数
+                    var relicNum = 0L
+                    WillRelic.values()
+                            .filter { it.will == will }
+                            .forEach { relicNum += it.relic.getDroppedNum(player) }
+                    // 種類
+                    val type =
+                            WillRelic.values()
+                                    .filter { it.will == will }
+                                    .count { player.hasRelic(it.relic) }
+                    val allType =
+                            WillRelic.values()
+                                    .filter { it.will == will }
+                                    .count()
+                    setLore(
+                            *RelicMenuMessages.WILL_RELIC_MENU_LORE(relicNum, type, allType)
+                                    .map {
+                                        it.asSafety(player.wrappedLocale)
+                                    }.toTypedArray()
                     )
                 }
             }

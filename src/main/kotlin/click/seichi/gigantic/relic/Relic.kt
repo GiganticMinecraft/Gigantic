@@ -6,7 +6,6 @@ import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.RelicMessages
-import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.util.*
@@ -21,7 +20,7 @@ enum class Relic(
         val maxAmount: Long = Long.MAX_VALUE,
         private val icon: ItemStack = Head.RUBY_JEWELLERY.toItemStack()
 ) {
-    CHICKEN_KING_CROWN(
+    /*CHICKEN_KING_CROWN(
             2,
             RelicMessages.CHICKEN_KING_CROWN,
             RelicMessages.CHICKEN_KING_CROWN_LORE,
@@ -87,7 +86,7 @@ enum class Relic(
     WILL_CRYSTAL_RUBY(300, RelicMessages.WILL_CRYSTAL_RUBY),
     WILL_CRYSTAL_FLUORITE(400, RelicMessages.WILL_CRYSTAL_FLUORITE),
     WILL_CRYSTAL_ANDALUSITE(500, RelicMessages.WILL_CRYSTAL_ANDALUSITE),
-    WILL_CRYSTAL_JADE(600, RelicMessages.WILL_CRYSTAL_JADE),
+    WILL_CRYSTAL_JADE(600, RelicMessages.WILL_CRYSTAL_JADE),*/
 
     // relic of will spirit
     BEAST_HORN(1000, RelicMessages.BEAST_HORN, RelicMessages.BEAST_HORN_LORE),

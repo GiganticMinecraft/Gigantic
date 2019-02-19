@@ -2,6 +2,8 @@ package click.seichi.gigantic.message.messages.menu
 
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.will.Will
+import org.bukkit.ChatColor
 import java.util.*
 
 /**
@@ -53,6 +55,37 @@ object RelicMenuMessages {
     val RELATIONSHIP = LocalizedText(
             Locale.JAPANESE to "あなたとの関係: "
     )
+
+    val WILL_RELIC_MENU_TITLE = { will: Will ->
+        LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "" + will.chatColor +
+                            "${ChatColor.BOLD}" +
+                            will.getName(it) +
+                            RelicMenuMessages.WILL.asSafety(it) +
+                            " " +
+                            "${ChatColor.RESET}${ChatColor.WHITE}" +
+                            RelicMenuMessages.RELICS.asSafety(it)
+                }
+        )
+    }
+
+    val WILL_RELIC_MENU_LORE = { num: Long, type: Int, allType: Int ->
+        listOf(
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GREEN}" +
+                                "手に入れたレリック: " +
+                                "${ChatColor.WHITE}" +
+                                "${num}個"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GREEN}" +
+                                "コンプリート達成率: " +
+                                "${ChatColor.WHITE}" +
+                                "$type/$allType"
+                )
+        )
+    }
 
 
 }

@@ -106,9 +106,10 @@ class BattleMonster(
         BattleBars.AWAKE(monster.parameter.health, monster, locale).show(bossBar)
 
         players.map { it.player }.forEach { player ->
-            if (!SoulMonster.VILLAGER.isDefeatedBy(player)) {
+            // TODO implements
+//            if (!SoulMonster.VILLAGER.isDefeatedBy(player)) {
                 BattleMessages.FIRST_AWAKE.sendTo(player)
-            }
+//            }
         }
 
         state = SoulMonsterState.MOVE
@@ -251,9 +252,10 @@ class BattleMonster(
 
             PlayerMessages.HEALTH_DISPLAY(player.wrappedHealth, player.wrappedMaxHealth).sendTo(player)*/
 
-            if (!SoulMonster.ZOMBIE_VILLAGER.isDefeatedBy(player)) {
+            // TODO implements
+//            if (!SoulMonster.ZOMBIE_VILLAGER.isDefeatedBy(player)) {
                 BattleMessages.FIRST_DAMAGE.sendTo(player)
-            }
+//            }
 
             // effects
             SoulMonsterSounds.ATTACK.play(block.centralLocation)

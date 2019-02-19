@@ -5,12 +5,9 @@ import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
-import click.seichi.gigantic.message.messages.MonsterMessages
 import click.seichi.gigantic.monster.ai.SoulMonsterAI
 import click.seichi.gigantic.monster.parameter.SoulMonsterParameter
-import click.seichi.gigantic.monster.parameter.SoulMonsterParameters
 import click.seichi.gigantic.relic.Relic
-import click.seichi.gigantic.will.Will
 import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -32,7 +29,7 @@ enum class SoulMonster(
         private val aiClass: KClass<SoulMonsterAI>,
         vararg dropRelic: DropRelic
 ) {
-    PIG(
+    /*PIG(
             0,
             Head.PIG,
             MonsterMessages.PIG,
@@ -460,7 +457,7 @@ enum class SoulMonster(
             SoulMonsterParameters.LOA,
             SoulMonsterAI::class,
             DropRelic(Relic.WILL_CRYSTAL_JADE)
-    )
+    )*/
 
     ;
 

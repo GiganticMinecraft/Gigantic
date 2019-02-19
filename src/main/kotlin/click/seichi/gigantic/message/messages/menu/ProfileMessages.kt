@@ -3,6 +3,7 @@ package click.seichi.gigantic.message.messages.menu
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.extension.hasAptitude
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor
@@ -80,6 +81,18 @@ object ProfileMessages {
     val PROFILE_DONATION = { donation: Int ->
         LocalizedText(
                 Locale.JAPANESE to "${ChatColor.GREEN}累計寄付額: ${ChatColor.WHITE}$donation"
+        )
+    }
+
+    val PROFILE_RELIC_NUM = { num: Long ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GREEN}累計レリック数: ${ChatColor.WHITE}${num}個"
+        )
+    }
+
+    val PROFILE_RELIC_COMPLETE_RATIO = { type: Int ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GREEN}コンプリート達成率: ${ChatColor.WHITE}$type/${Relic.values().size}"
         )
     }
 

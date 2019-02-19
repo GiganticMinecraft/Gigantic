@@ -112,9 +112,10 @@ class QuestMonsterSpirit(
         )
         SoulMonsterSounds.SPAWN.play(spawnLocation)
         BattleMessages.SPAWN(monster).sendTo(spawner)
-        if (!SoulMonster.VILLAGER.isDefeatedBy(spawner)) {
+        // TODO implements
+//        if (!SoulMonster.VILLAGER.isDefeatedBy(spawner)) {
             BattleMessages.FIRST_SPAWN.sendTo(spawner)
-        }
+//        }
     }
 
     private var elapsedTick = -1L

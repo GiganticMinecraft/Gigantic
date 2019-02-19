@@ -70,6 +70,11 @@ object BagButtons {
                         ProfileMessages.PROFILE_MAX_COMBO(player.maxCombo).asSafety(player.wrappedLocale)
                 )
 
+                if (Achievement.FIRST_RELIC.isGranted(player)) {
+                    lore.add(ProfileMessages.PROFILE_RELIC_NUM(player.relics).asSafety(player.wrappedLocale))
+                    lore.add(ProfileMessages.PROFILE_RELIC_COMPLETE_RATIO(player.relicTypes).asSafety(player.wrappedLocale))
+                }
+
                 if (Will.values().filter { it.grade == WillGrade.BASIC }
                                 .firstOrNull { player.hasAptitude(it) } != null) {
                     lore.addAll(listOf(

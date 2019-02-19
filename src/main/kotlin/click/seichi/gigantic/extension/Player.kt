@@ -149,6 +149,18 @@ fun Player.teleportSafely(location: Location) {
     offer(Keys.PREVIOUS_LOCATION, location)
 }
 
+// レリック合計数
+val Player.relics: Long
+    get() = Relic.values()
+            .map { it.getDroppedNum(this) }
+            .sum()
+
+// レリックの獲得種類数
+val Player.relicTypes: Int
+    get() = Relic.values()
+            .count { hasRelic(it) }
+
+
 /**
  * プレイヤーが向いている方向の[BlockFace]を取得する
  */

@@ -20,7 +20,7 @@ enum class Quest(
         val category: Category,
         vararg monsters: SoulMonster
 ) {
-    PIG(
+    /*PIG(
             0,
             QuestMessages.PIG,
             null,
@@ -186,7 +186,7 @@ enum class Quest(
             null,
             Category.MAIN,
             SoulMonster.LOA
-    ),
+    ),*/
     ;
 
     enum class Category(

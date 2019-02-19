@@ -4,7 +4,6 @@ import click.seichi.gigantic.extension.findBattle
 import click.seichi.gigantic.extension.isCrust
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.monster.SoulMonster
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -42,9 +41,11 @@ class BattleListener : Listener {
         if (battle.chunk == block.chunk) return
         event.isCancelled = true
         PlayerMessages.BREAK_OTHER_CHUNK.sendTo(player)
-        if (!SoulMonster.ZOMBIE_VILLAGER.isDefeatedBy(player)) {
+
+        // TODO implements
+//        if (!SoulMonster.ZOMBIE_VILLAGER.isDefeatedBy(player)) {
             BattleMessages.FIRST_BREAK_OTHER_CHUNK.sendTo(player)
-        }
+//        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

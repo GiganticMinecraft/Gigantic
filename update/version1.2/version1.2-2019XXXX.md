@@ -12,7 +12,8 @@
 
 :eyeglasses: **__細かい変更点__** :eyeglasses:    
 
-:diamond_shape_with_a_dot_inside: 
+:diamond_shape_with_a_dot_inside: レリック一覧にレリックの合計数とコンプリート達成率を記載しました  
+:diamond_shape_with_a_dot_inside: プロフィールにレリック合計数とコンプリート達成率を記載しました  
 
 
 :bow: **__不具合修正__** :bow:   
