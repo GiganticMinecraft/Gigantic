@@ -44,6 +44,7 @@ class PlayerMonitor : Listener {
 
         // ログインメッセージ送信
         PlayerMessages.LOGIN_CHAT.sendTo(player)
+        // TODO ここに期間限定のメッセージを記述したい
         PlayerMessages.LOGIN_TITLE.sendTo(player)
 
         // ここで実績を確認する．これ以前では実績を使ってはいけない

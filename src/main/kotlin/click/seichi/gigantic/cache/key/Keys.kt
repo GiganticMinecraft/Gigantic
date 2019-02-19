@@ -251,8 +251,12 @@ object Keys {
                         get() = 0L
 
                     override fun read(entity: UserEntity): Long {
-                        val userRelic = entity.userRelicMap[it]!!
-                        return userRelic.amount
+                        return if (Gigantic.IS_DEBUG && DebugConfig.WILL_SPIRIT) {
+                            100L
+                        } else {
+                            val userRelic = entity.userRelicMap[it]!!
+                            userRelic.amount
+                        }
                     }
 
                     override fun store(entity: UserEntity, value: Long) {
