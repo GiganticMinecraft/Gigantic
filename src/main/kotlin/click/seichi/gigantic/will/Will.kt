@@ -192,7 +192,7 @@ enum class Will(
             WillMessages.SAKURA,
             11
     ) {
-        val from = DateTime("2019-03-01T00:00:00+09:00")
+        val from = DateTime("2019-02-20T00:00:00+09:00")
         val to = DateTime("2019-05-01T00:00:00+09:00")
         // 期間限定
         override fun canSpawn(player: Player, block: Block): Boolean {
