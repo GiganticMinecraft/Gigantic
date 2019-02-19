@@ -122,7 +122,8 @@ class Gigantic : JavaPlugin() {
                 "tell" to TellCommand(),
                 "reply" to ReplyCommand(),
                 "live" to LiveCommand(),
-                "home" to HomeCommand()
+                "home" to HomeCommand(),
+                "now" to NowCommand()
         )
 
         prepareDatabase(

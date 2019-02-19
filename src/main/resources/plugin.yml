@@ -49,3 +49,10 @@ commands:
     default: default
     permission: gigantic.home
     permission-message: You don't have <permission>
+  now:
+    description: This is datetime command.
+    usage: /now
+    aliases: [n]
+    default: op
+    permission: gigantic.now
+    permission-message: You don't have <permission>
