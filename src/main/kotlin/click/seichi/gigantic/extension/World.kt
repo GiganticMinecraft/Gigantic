@@ -48,7 +48,7 @@ private const val MOON_RISE_TIME = 12567L
 private const val MOON_SET_TIME = 22917L
 
 // 月が昇っているか
-val World.isMoonRising: Boolean
+val World.isMoonTime: Boolean
     get() = time in MOON_RISE_TIME..MOON_SET_TIME
 
 
@@ -70,3 +70,19 @@ val World.junishiOfTime: Junishi
         in 15001..17000 -> Junishi.I
         else -> Junishi.NE
     }
+
+// 日中
+val World.isDay: Boolean
+    get() = time in 451..11616
+
+// 黄昏時
+val World.isTwilight: Boolean
+    get() = time in 11617..13800
+
+// 夜
+val World.isNight: Boolean
+    get() = time in 13800..22549
+
+// 夜明け
+val World.isBreakDown: Boolean
+    get() = time in 22550..23999 || time in 1..450

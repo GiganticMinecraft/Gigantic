@@ -496,7 +496,7 @@ enum class WillRelic(
     },
     OBOROZUKI_SWORD(Will.SAKURA, Relic.OBOROZUKI_SWORD, 0.1, Material.BRAIN_CORAL, RelicMessages.OBOROZUKI_SWORD_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
-            return block.world.moonPhase == MoonPhase.MANGETSU
+            return block.world.moonPhase == MoonPhase.MANGETSU && block.world.isMoonTime
         }
     },
     SAKURA_RACE_CAKE(Will.SAKURA, Relic.SAKURA_RACE_CAKE, 0.25, Material.BRAIN_CORAL, RelicMessages.SAKURA_RACE_CAKE_BONUS_LORE) {
@@ -511,7 +511,7 @@ enum class WillRelic(
     },
     SCHOOL_BAG(Will.SAKURA, Relic.SCHOOL_BAG, 0.1, Material.BRAIN_CORAL, RelicMessages.SCHOOL_BAG_BONUS_LORE) {
         override fun isBonusTarget(block: Block): Boolean {
-            return block.world.time in 451..11616
+            return block.world.isDay
         }
     },
     KATSUO_SASHIMI(Will.SAKURA, Relic.KATSUO_SASHIMI, 0.2, Material.BRAIN_CORAL, RelicMessages.KATSUO_SASHIMI_BONUS_LORE) {
