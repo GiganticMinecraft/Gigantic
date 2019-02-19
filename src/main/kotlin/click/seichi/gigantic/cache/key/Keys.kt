@@ -8,7 +8,6 @@ import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.breaker.BreakArea
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.manipulator.ExpReason
-import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.database.UserEntity
@@ -156,7 +155,7 @@ object Keys {
                     override fun read(entity: UserEntity): Long {
                         val userWill = entity.userWillMap[it]!!
 
-                        return if (Config.DEBUG_MODE && DebugConfig.WILL_SPIRIT) 1000 else userWill.ethel
+                        return if (Gigantic.IS_DEBUG && DebugConfig.WILL_SPIRIT) 1000 else userWill.ethel
                     }
 
                     override fun store(entity: UserEntity, value: Long) {
@@ -251,12 +250,8 @@ object Keys {
                         get() = 0L
 
                     override fun read(entity: UserEntity): Long {
-                        return if (Gigantic.IS_DEBUG && DebugConfig.WILL_SPIRIT) {
-                            100L
-                        } else {
-                            val userRelic = entity.userRelicMap[it]!!
-                            userRelic.amount
-                        }
+                        val userRelic = entity.userRelicMap[it]!!
+                        return if (Gigantic.IS_DEBUG && DebugConfig.WILL_SPIRIT) 100L else userRelic.amount
                     }
 
                     override fun store(entity: UserEntity, value: Long) {
