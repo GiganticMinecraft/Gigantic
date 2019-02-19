@@ -3,21 +3,22 @@
 :cherry_blossom:  **__整地鯖(春) バージョン1.2 追加アップデート情報(2019/02/18)__** :cherry_blossom:  
 
 
+:star: 春の整地祭り :star:  
+
+:diamond_shape_with_a_dot_inside: 期間限定で出現する意志を実装しました  
+:diamond_shape_with_a_dot_inside: 他の意志と同様、一定の条件を満たすことで交感できるようになります  
+:diamond_shape_with_a_dot_inside: レリックもその意志特有のものになります  
 
 
 :eyeglasses: **__細かい変更点__** :eyeglasses:    
 
-:diamond_shape_with_a_dot_inside: TIPSのメッセージをコンパクトサイズに変更しました  
-:diamond_shape_with_a_dot_inside: マナがマイクラの空腹ゲージに対応するようになりました  
-:diamond_shape_with_a_dot_inside: マナが3割を切ると，バニラ同様走れなくなります  
-:diamond_shape_with_a_dot_inside: ただし，マナが0になってもダメージを受けることはありません  
-:diamond_shape_with_a_dot_inside: 魔法 **マルチ・ブレイク** 発動時の負荷を削減しました  
+:diamond_shape_with_a_dot_inside: 
 
 
 :bow: **__不具合修正__** :bow:   
 以下の不具合を修正しました．  
 
-:diamond_shape_with_a_dot_inside: ミュート機能が正しく動作していない不具合   
+:diamond_shape_with_a_dot_inside: 前回の魔法 **マルチ・ブレイク** の負荷軽減による不具合  
 
 
 作成者: tar0ss  

@@ -349,18 +349,20 @@ enum class Achievement(
                         it.action(player)
 
                         // メッセージ送信
-                        object : BukkitRunnable() {
-                            override fun run() {
-                                if (!player.isValid) return
-                                it.broadcastMessage(player)?.broadcast()
-                                it.broadcastSound?.broadcast()
-                                it.grantMessage?.sendTo(player)
-                            }
-                        }.runTaskLater(Gigantic.PLUGIN, delay)
+                        if (Gigantic.IS_DEBUG && DebugConfig.ACHIEVEMENT_ANNOUNCE) {
+                            object : BukkitRunnable() {
+                                override fun run() {
+                                    if (!player.isValid) return
+                                    it.broadcastMessage(player)?.broadcast()
+                                    it.broadcastSound?.broadcast()
+                                    it.grantMessage?.sendTo(player)
+                                }
+                            }.runTaskLater(Gigantic.PLUGIN, delay)
 
-                        if (it.grantMessage is LinedChatMessage) {
-                            // メッセージ終了まで待機 + メッセージ間隔用45L
-                            delay += it.grantMessage.duration.plus(45L)
+                            if (it.grantMessage is LinedChatMessage) {
+                                // メッセージ終了まで待機 + メッセージ間隔用45L
+                                delay += it.grantMessage.duration.plus(45L)
+                            }
                         }
                     }
             if (!isGranted && !isForced) return
