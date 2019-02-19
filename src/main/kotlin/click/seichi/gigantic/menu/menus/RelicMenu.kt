@@ -17,7 +17,7 @@ object RelicMenu : Menu() {
     val relicMenu = this
 
     override val size: Int
-        get() = 2 * 9
+        get() = 3 * 9
 
     override fun getTitle(player: Player): String {
         return RelicMenuMessages.TITLE.asSafety(player.wrappedLocale)
@@ -34,6 +34,7 @@ object RelicMenu : Menu() {
         registerButton(12, RelicButtons.WILL(Will.VENTUS, VentusRelicMenu))
         registerButton(13, RelicButtons.WILL(Will.LUX, LuxRelicMenu))
         registerButton(14, RelicButtons.WILL(Will.UMBRA, UmbraRelicMenu))
+        registerButton(20, RelicButtons.WILL(Will.SAKURA, SakuraRelicMenu))
     }
 
     object TerraRelicMenu : WillRelicMenu(Will.TERRA, 3 * 9) {
@@ -185,6 +186,21 @@ object RelicMenu : Menu() {
             registerButton(34, RelicButtons.WILL_RELIC(WillRelic.BLACK_CLOTH))
             registerButton(48, RelicButtons.WILL_RELIC(WillRelic.BLOODSTAINED_SWORD))
             registerButton(50, RelicButtons.WILL_RELIC(WillRelic.RLYEH_TEXT))
+        }
+    }
+
+    object SakuraRelicMenu : WillRelicMenu(Will.SAKURA, 5 * 9) {
+        init {
+            registerButton(0, BackButton(this, relicMenu))
+            registerButton(3, RelicButtons.WILL_RELIC(WillRelic.ALSTROMERIA_SEED))
+            registerButton(5, RelicButtons.WILL_RELIC(WillRelic.NIGHTINGALE_FEATHER))
+            registerButton(11, RelicButtons.WILL_RELIC(WillRelic.OBOROZUKI_SWORD))
+            registerButton(15, RelicButtons.WILL_RELIC(WillRelic.SAKURA_RACE_CAKE))
+            registerButton(22, RelicButtons.WILL_RELIC(WillRelic.CERTIFICATE))
+            registerButton(29, RelicButtons.WILL_RELIC(WillRelic.SCHOOL_BAG))
+            registerButton(33, RelicButtons.WILL_RELIC(WillRelic.KATSUO_SASHIMI))
+            registerButton(39, RelicButtons.WILL_RELIC(WillRelic.BOTAMOCHI))
+            registerButton(41, RelicButtons.WILL_RELIC(WillRelic.PEACH_CORE))
         }
     }
 

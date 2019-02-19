@@ -15,7 +15,7 @@ import org.bukkit.entity.Player
 object RelicGeneratorMenu : Menu() {
 
     override val size: Int
-        get() = 5 * 9
+        get() = 6 * 9
 
     override val openSound: DetailedSound
         get() = MenuSounds.RELIC_MENU_OPEN
@@ -27,19 +27,22 @@ object RelicGeneratorMenu : Menu() {
     }
 
     init {
-        registerButton(2, RelicGeneratorButtons.SELECT_ETHEL(Will.TERRA))
-        registerButton(10, RelicGeneratorButtons.SELECT_ETHEL(Will.AQUA))
-        registerButton(18, RelicGeneratorButtons.SELECT_ETHEL(Will.IGNIS))
-        registerButton(28, RelicGeneratorButtons.SELECT_ETHEL(Will.NATURA))
-        registerButton(38, RelicGeneratorButtons.SELECT_ETHEL(Will.AER))
-        registerButton(6, RelicGeneratorButtons.SELECT_ETHEL(Will.GLACIES))
-        registerButton(16, RelicGeneratorButtons.SELECT_ETHEL(Will.SOLUM))
-        registerButton(26, RelicGeneratorButtons.SELECT_ETHEL(Will.VENTUS))
-        registerButton(34, RelicGeneratorButtons.SELECT_ETHEL(Will.LUX))
-        registerButton(42, RelicGeneratorButtons.SELECT_ETHEL(Will.UMBRA))
+        registerButton(11, RelicGeneratorButtons.SELECT_ETHEL(Will.TERRA))
+        registerButton(19, RelicGeneratorButtons.SELECT_ETHEL(Will.AQUA))
+        registerButton(27, RelicGeneratorButtons.SELECT_ETHEL(Will.IGNIS))
+        registerButton(37, RelicGeneratorButtons.SELECT_ETHEL(Will.NATURA))
+        registerButton(47, RelicGeneratorButtons.SELECT_ETHEL(Will.AER))
+        registerButton(15, RelicGeneratorButtons.SELECT_ETHEL(Will.GLACIES))
+        registerButton(25, RelicGeneratorButtons.SELECT_ETHEL(Will.SOLUM))
+        registerButton(35, RelicGeneratorButtons.SELECT_ETHEL(Will.VENTUS))
+        registerButton(43, RelicGeneratorButtons.SELECT_ETHEL(Will.LUX))
+        registerButton(51, RelicGeneratorButtons.SELECT_ETHEL(Will.UMBRA))
 
-        registerButton(22, RelicGeneratorButtons.GENERATED)
-        registerButton(40, RelicGeneratorButtons.GENERATE)
+        // 期間限定
+        registerButton(4, RelicGeneratorButtons.SELECT_ETHEL(Will.SAKURA))
+
+        registerButton(31, RelicGeneratorButtons.GENERATED)
+        registerButton(49, RelicGeneratorButtons.GENERATE)
     }
 
 }
