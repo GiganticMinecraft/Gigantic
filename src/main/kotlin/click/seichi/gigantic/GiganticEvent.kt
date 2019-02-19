@@ -14,7 +14,7 @@ enum class GiganticEvent(
 ) {
     // 桜の意志出現イベント
     SAKURA(LoginMessages.EVENT_SAKURA) {
-        val from = DateTime("2019-02-19T00:00:00+09:00")
+        val from = DateTime("2019-03-01T00:00:00+09:00")
         val to = DateTime("2019-05-01T00:00:00+09:00")
         override fun isActive(): Boolean {
             val now = DateTime.now()
