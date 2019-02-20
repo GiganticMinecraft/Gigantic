@@ -367,9 +367,6 @@ fun Block.update() {
     // 最悪空中に残ってしまった時のために，ここで保険
     clearRelativeFloatingBlock()
 
-    // 松明をセット
-    setTorchIfNeeded()
-
     fallUpperCrustBlock()
 }
 
@@ -389,11 +386,9 @@ fun update(player: Player, others: Set<Block>) {
     val xzMap = others.groupBy { Pair(it.x, it.z) }
 
     // トーチ処理
-    if (ToggleSetting.AUTORCH.getToggle(player)) {
-        xzMap.forEach { _, blockList ->
-            blockList.minBy { it.y }?.run {
-                setTorchIfNeeded()
-            }
+    xzMap.forEach { _, blockList ->
+        blockList.minBy { it.y }?.run {
+            setTorchIfNeeded(player)
         }
     }
 
@@ -405,7 +400,19 @@ fun update(player: Player, others: Set<Block>) {
     }
 }
 
-fun Block.setTorchIfNeeded() {
+/**
+ * ブロックの場所に必要であれば松明を自動で設置します。
+ * プレイヤーが存在する場合はy座標が1でない限り、トグル切り替えによって発動の可否が変わります。
+ * 魔法スカイ・ウォークでは、他のプレイヤーが焚いている松明を消さないように、引数にnullを指定して、
+ * 必ず松明を設置するようにしています。
+ *
+ */
+fun Block.setTorchIfNeeded(player: Player?) {
+    // プレイヤーが存在して、トグルがオフでy座標が1でないとき
+    if (player != null &&
+            !ToggleSetting.AUTORCH.getToggle(player) &&
+            y != 1
+    ) return
     val under = getRelative(BlockFace.DOWN)
     if (!under.isCrust) return
     if (x % 4 != 0) return

@@ -3,7 +3,6 @@ package click.seichi.gigantic.breaker
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.PlayerAnimations
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.Bukkit
 import org.bukkit.block.Block
@@ -122,9 +121,8 @@ class Cutter : Miner() {
         PlayerSounds.ON_CUT.play(block.centralLocation)
         block.update()
         // 松明をセット
-        if (player != null && ToggleSetting.AUTORCH.getToggle(player)) {
-            block.setTorchIfNeeded()
-        }
+        block.setTorchIfNeeded(player)
+
     }
 
 }

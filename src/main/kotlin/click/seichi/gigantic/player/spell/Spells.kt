@@ -134,7 +134,7 @@ object Spells {
                 Defaults.SKY_WALK_LAVA_MATERIAL -> Material.LAVA
                 else -> Material.AIR
             }
-            block.setTorchIfNeeded()
+            block.setTorchIfNeeded(null)
         }
 
         fun replace(block: Block) {

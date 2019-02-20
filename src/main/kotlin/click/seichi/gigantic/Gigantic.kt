@@ -109,7 +109,8 @@ class Gigantic : JavaPlugin() {
                 AchievementListener(),
                 SpellListener(),
                 ChatListener(),
-                TipsListener()
+                TipsListener(),
+                NightVisionListener()
         )
 
         registerPacketListeners(
@@ -184,7 +185,7 @@ class Gigantic : JavaPlugin() {
                         Defaults.SKY_WALK_LAVA_MATERIAL -> Material.LAVA
                         else -> Material.AIR
                     }
-                    block.setTorchIfNeeded()
+                    block.setTorchIfNeeded(null)
                 }
                 Gigantic.SKILLED_BLOCK_SET.removeAll(this)
             }
