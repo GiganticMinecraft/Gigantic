@@ -104,7 +104,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "ホーム機能でお気に入りの場所を登録しよう(テレポートメニューから)"
+                            "ホーム機能でお気に入りの場所を登録しよう(テレポートメニュー)"
             ), 2L), { Achievement.TELEPORT_HOME.isGranted(it) }),
     ADMIN_CAUTION(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
