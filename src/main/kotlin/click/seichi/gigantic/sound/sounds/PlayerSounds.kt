@@ -103,4 +103,18 @@ object PlayerSounds {
             volume = 1.0F
     )
 
+    val PICK_UP = DetailedSound(
+            Sound.ENTITY_ITEM_PICKUP,
+            SoundCategory.BLOCKS,
+            pitch = 1.3F,
+            volume = 0.5F
+    )
+
+    val NOTICE = DetailedSound(
+            Sound.ENTITY_ARROW_HIT_PLAYER,
+            SoundCategory.BLOCKS,
+            pitch = 1.4F,
+            volume = 0.4F
+    )
+
 }

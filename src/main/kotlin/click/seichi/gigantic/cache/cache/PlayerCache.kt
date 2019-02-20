@@ -96,6 +96,12 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.WALK_SPEED.let {
                 offer(it, it.read(entity))
             }
+            Keys.TOTEM.let {
+                offer(it, it.read(entity))
+            }
+            Keys.TOTEM_PIECE.let {
+                offer(it, it.read(entity))
+            }
             Keys.EXP_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
@@ -202,6 +208,12 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 it.store(entity, getOrDefault(it))
             }
             Keys.WALK_SPEED.let {
+                it.store(entity, getOrDefault(it))
+            }
+            Keys.TOTEM.let {
+                it.store(entity, getOrDefault(it))
+            }
+            Keys.TOTEM_PIECE.let {
                 it.store(entity, getOrDefault(it))
             }
             Keys.EXP_MAP.forEach { _, key ->

@@ -2,13 +2,14 @@ package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
 import java.util.*
 
 /**
  * @author tar0ss
  */
-object HookedItemMessages {
+object HandItemMessages {
 
     val PICKEL = LocalizedText(
             Locale.JAPANESE to "不思議なピッケル"
@@ -174,5 +175,49 @@ object HookedItemMessages {
                             "右クリックでしまう"
             )
     )
+
+    val FOCUS_TOTEM = LocalizedText(
+            Locale.JAPANESE to
+                    "${ChatColor.BLUE}" +
+                    "フォーカス・トーテム"
+    )
+
+    val FOCUS_TOTEM_LORE =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "致命的なダメージを受けて"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "体力が0になると"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "死から守ってくれる"
+                    )
+            )
+
+
+    val FOCUS_TOTEM_PIECE = { piece: Int ->
+        LocalizedText(
+                Locale.JAPANESE to
+                        "${ChatColor.RED}" +
+                        "フォーカス・トーテムの欠片 $piece / ${Defaults.MAX_TOTEM_PIECE}"
+        )
+    }
+
+    val FOCUS_TOTEM_PIECE_LORE =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "発動後に散らばった残骸を集めたもの"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "ブロックを掘っているとたまに見つかる"
+                    )
+            )
+
 
 }

@@ -75,4 +75,11 @@ object Defaults {
 
     val TIPS_PREFIX = "${ChatColor.YELLOW}" + "[TIPS] " + "${ChatColor.RESET}"
 
+    // [Belt]のトーテムスロット
+    val TOTEM_SLOT = 6
+
+    // スキル　フォーカストーテムの形成に必要な欠片の数
+    val MAX_TOTEM_PIECE = 100
+    // 欠片の発生確率
+    val PIECE_PROBABILITY = 0.02
 }

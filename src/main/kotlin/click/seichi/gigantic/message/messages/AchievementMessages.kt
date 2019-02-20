@@ -224,6 +224,17 @@ object AchievementMessages {
             }
     ), 45L)
 
+
+    val FOCUT_TOTEM = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.YELLOW}" +
+                        "補助スキル: フォーカス・トーテム を覚えた!!" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
+                        "最大体力の半分以上のダメージを受けて体力が0になった時に、死から守ってくれる!!"
+            }
+    ), 45L)
+
     val SWORD = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.YELLOW}" +

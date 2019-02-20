@@ -17,16 +17,20 @@ import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.LoginMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import com.google.common.io.ByteStreams
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.block.BlockFace
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.scheduler.BukkitRunnable
 
 /**
  * @author tar0ss
@@ -141,6 +145,30 @@ class PlayerMonitor : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun onGenerate(event: RelicGenerateEvent) {
         event.player.updateWillRelationship()
+    }
+
+    // 最大体力の半分以上のダメージを受けて死亡時に自動で持ち手をトーテムに設定
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    fun setHand(event: EntityDamageEvent) {
+        val player = event.entity as? Player ?: return
+        val finalDamage = event.finalDamage
+        // 最大体力の半分以上でなければ終了
+        if (finalDamage < player.healthScale.div(2.0)) return
+        // 死亡しなければ終了
+        if (finalDamage < player.health) return
+        // トーテムを持っていなければ終了
+        if (player.getOrPut(Keys.TOTEM) <= 0) return
+        player.transform(Keys.TOTEM) { it.minus(1) }
+        val currentSlot = player.inventory.heldItemSlot
+        player.inventory.heldItemSlot = Defaults.TOTEM_SLOT
+        object : BukkitRunnable() {
+            override fun run() {
+                if (!player.isValid) return
+                player.updateDisplay(applyMainHand = true, applyOffHand = true)
+                player.inventory.heldItemSlot = currentSlot
+            }
+        }.runTaskLater(Gigantic.PLUGIN, 1L)
+
     }
 
 }

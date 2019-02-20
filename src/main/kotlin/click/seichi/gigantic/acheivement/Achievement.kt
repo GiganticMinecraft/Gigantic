@@ -78,9 +78,10 @@ enum class Achievement(
     TELEPORT_LAST_DEATH(103, {
         it.wrappedLevel >= 7
     }, grantMessage = AchievementMessages.TELEPORT_LAST_DEATH),
-    JUMP(104, {
-        it.wrappedLevel >= 15
-    }, grantMessage = AchievementMessages.JUMP),
+    /*   スキル移転により使用せず
+        JUMP(104, {
+            it.wrappedLevel >= 15
+        }, grantMessage = AchievementMessages.JUMP),*/
     TELEPORT_HOME(105, {
         it.wrappedLevel >= 6
     }, grantMessage = AchievementMessages.TELEPORT_HOME),
@@ -102,7 +103,14 @@ enum class Achievement(
     SKILL_MINE_COMBO(202, {
         it.wrappedLevel >= 3
     }, grantMessage = AchievementMessages.UNLOCK_SKILL_MINE_COMBO),
-
+    SKILL_JUMP(203, {
+        it.wrappedLevel >= 18
+    }, grantMessage = AchievementMessages.JUMP),
+    SKILL_FOCUS_TOTEM(204, {
+        it.wrappedLevel >= 15
+    }, action = {
+        it.offer(Keys.TOTEM, 1)
+    }, grantMessage = AchievementMessages.JUMP),
     // spells
     SPELL_STELLA_CLAIR(300, {
         MANA_STONE.isGranted(it)

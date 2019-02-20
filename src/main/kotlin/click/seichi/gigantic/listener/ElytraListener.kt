@@ -39,7 +39,7 @@ class ElytraListener : Listener {
                 .filter { it.isSneaking }
                 .filter { it.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS) >= 0L }
                 .filter { it.getOrPut(Keys.BELT).findItem(it.inventory.heldItemSlot) == HandItems.JUMP }
-                .filter { Achievement.JUMP.isGranted(it) }
+                .filter { Achievement.SKILL_JUMP.isGranted(it) }
                 .toList()
                 .forEach { player ->
                     var ticks = player.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS)
@@ -83,7 +83,7 @@ class ElytraListener : Listener {
         if (!player.isOnGround) return
         val slot = player.inventory.heldItemSlot
         if (player.getOrPut(Keys.BELT).findItem(slot) != HandItems.JUMP) return
-        if (!Achievement.JUMP.isGranted(player)) return
+        if (!Achievement.SKILL_JUMP.isGranted(player)) return
 
         // チャージ開始
         if (event.isSneaking) {

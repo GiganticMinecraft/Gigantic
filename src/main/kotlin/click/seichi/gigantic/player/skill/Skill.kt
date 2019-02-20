@@ -63,13 +63,22 @@ enum class Skill(
     ),
     JUMP(
             5,
-            4,
+            5,
             ItemStack(Material.PHANTOM_MEMBRANE),
             SkillMessages.JUMP,
             SkillMessages.JUMP_LORE,
-            Achievement.JUMP,
+            Achievement.SKILL_JUMP,
             Skills.JUMP
     ),
+    FOCUS_TOTEM(
+            6,
+            4,
+            ItemStack(Material.TOTEM_OF_UNDYING),
+            SkillMessages.FOCUS_TOTEM,
+            SkillMessages.FOCUS_TOTEM_LORE,
+            Achievement.SKILL_FOCUS_TOTEM,
+            Skills.FOCUS_TOTEM
+    )
     ;
 
     fun tryCast(player: Player) = if (isGranted(player)) invoker.tryInvoke(player) else false

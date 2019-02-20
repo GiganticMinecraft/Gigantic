@@ -56,6 +56,10 @@ object UserTable : IdTable<UUID>("users") {
 
     val walkSpeed = decimal("walk_speed", 5, 1).default(Defaults.WALK_SPEED)
 
+    val totem = integer("totem").default(0)
+
+    val totemPiece = integer("totem_piece").default(0)
+
     val createdAt = datetime("created_at").default(DateTime.now())
 
     val updatedAt = datetime("updated_at").default(DateTime.now())

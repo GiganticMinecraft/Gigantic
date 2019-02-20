@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable
  * @author tar0ss
  */
 class Animation(
-        private val ticks: Long,
+        val ticks: Long,
         private val rendering: (Location, Long) -> Unit
 ) {
 

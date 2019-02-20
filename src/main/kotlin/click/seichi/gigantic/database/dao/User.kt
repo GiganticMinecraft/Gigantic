@@ -56,6 +56,10 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var walkSpeed by UserTable.walkSpeed
 
+    var totem by UserTable.totem
+
+    var totemPiece by UserTable.totemPiece
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt

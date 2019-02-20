@@ -6,7 +6,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.enchantment.ToolEnchantment
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.HandItem
-import click.seichi.gigantic.message.messages.HookedItemMessages
+import click.seichi.gigantic.message.messages.HandItemMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
@@ -33,8 +33,8 @@ object HandItems {
         override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_PICKAXE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
-                        HookedItemMessages.PICKEL.asSafety(player.wrappedLocale))
-                addLore(*HookedItemMessages.PICKEL_LORE
+                        HandItemMessages.PICKEL.asSafety(player.wrappedLocale))
+                addLore(*HandItemMessages.PICKEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
                 modifyItemMeta(this@apply, player)
@@ -46,8 +46,8 @@ object HandItems {
         override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_SHOVEL).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
-                        HookedItemMessages.SHOVEL.asSafety(player.wrappedLocale))
-                addLore(*HookedItemMessages.SHOVEL_LORE
+                        HandItemMessages.SHOVEL.asSafety(player.wrappedLocale))
+                addLore(*HandItemMessages.SHOVEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
@@ -60,22 +60,8 @@ object HandItems {
         override fun toShownItemStack(player: Player): ItemStack? {
             return ItemStack(Material.DIAMOND_AXE).apply {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
-                        HookedItemMessages.AXE.asSafety(player.wrappedLocale))
-                addLore(*HookedItemMessages.AXE_LORE
-                        .map { it.asSafety(player.wrappedLocale) }
-                        .toTypedArray()
-                )
-                modifyItemMeta(this@apply, player)
-            }
-        }
-    }
-
-    val SWORD = object : HandItem {
-        override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.DIAMOND_SWORD).apply {
-                setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
-                        HookedItemMessages.SWORD.asSafety(player.wrappedLocale))
-                addLore(*HookedItemMessages.SWORD_LORE
+                        HandItemMessages.AXE.asSafety(player.wrappedLocale))
+                addLore(*HandItemMessages.AXE_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
@@ -101,8 +87,8 @@ object HandItems {
             if (!Achievement.MANA_STONE.isGranted(player)) return null
             val spellToggle = player.getOrPut(Keys.SPELL_TOGGLE)
             return if (spellToggle) ItemStack(Material.NETHER_STAR).apply {
-                setDisplayName(HookedItemMessages.MANA_STONE.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.MANA_STONE_LORE
+                setDisplayName(HandItemMessages.MANA_STONE.asSafety(player.wrappedLocale))
+                setLore(*HandItemMessages.MANA_STONE_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
             }
@@ -174,8 +160,8 @@ object HandItems {
                 }
                 else -> ItemStack(Material.BLAZE_POWDER)
             }.apply {
-                setDisplayName(HookedItemMessages.MINE_BURST.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.MINE_BURST_LORE
+                setDisplayName(HandItemMessages.MINE_BURST.asSafety(player.wrappedLocale))
+                setLore(*HandItemMessages.MINE_BURST_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
@@ -202,8 +188,8 @@ object HandItems {
                 }
                 else -> ItemStack(Material.FEATHER)
             }.apply {
-                setDisplayName(HookedItemMessages.FLASH.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.FLASH_LORE
+                setDisplayName(HandItemMessages.FLASH.asSafety(player.wrappedLocale))
+                setLore(*HandItemMessages.FLASH_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
@@ -220,10 +206,10 @@ object HandItems {
     val JUMP = object : HandItem {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            if (!Achievement.JUMP.isGranted(player)) return null
+            if (!Achievement.SKILL_JUMP.isGranted(player)) return null
             return ItemStack(Material.PHANTOM_MEMBRANE).apply {
-                setDisplayName(HookedItemMessages.JUMP.asSafety(player.wrappedLocale))
-                setLore(*HookedItemMessages.JUMP_LORE
+                setDisplayName(HandItemMessages.JUMP.asSafety(player.wrappedLocale))
+                setLore(*HandItemMessages.JUMP_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
@@ -241,7 +227,7 @@ object HandItems {
             return ItemStack(Material.PRISMARINE_CRYSTALS).apply {
                 val toggle = player.getOrPut(Keys.SPELL_SKY_WALK_TOGGLE)
                 setDisplayName(
-                        HookedItemMessages.SKY_WALK.asSafety(player.wrappedLocale) +
+                        HandItemMessages.SKY_WALK.asSafety(player.wrappedLocale) +
                                 ": " +
                                 if (toggle) "ON" else "OFF"
                 )
@@ -273,6 +259,30 @@ object HandItems {
             return true
         }
 
+    }
+
+    val TOTEM = object : HandItem {
+        override fun toShownItemStack(player: Player): ItemStack? {
+            if (!Skill.FOCUS_TOTEM.isGranted(player)) return null
+            val totem = player.getOrPut(Keys.TOTEM)
+            return if (totem <= 0) itemStackOf(Material.WHEAT_SEEDS) {
+                val totemPiece = player.getOrPut(Keys.TOTEM_PIECE)
+                setDisplayName(player, HandItemMessages.FOCUS_TOTEM_PIECE(totemPiece))
+                setLore(*HandItemMessages.FOCUS_TOTEM_PIECE_LORE
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
+            }
+            else itemStackOf(Material.TOTEM_OF_UNDYING) {
+                amount = totem
+                setDisplayName(player, HandItemMessages.FOCUS_TOTEM)
+                setLore(*HandItemMessages.FOCUS_TOTEM_LORE
+                        .map { it.asSafety(player.wrappedLocale) }
+                        .toTypedArray()
+                )
+            }
+
+        }
     }
 
 

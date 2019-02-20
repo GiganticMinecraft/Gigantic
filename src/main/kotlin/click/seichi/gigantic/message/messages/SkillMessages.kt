@@ -147,4 +147,39 @@ object SkillMessages {
                                     "に注意してください．"
                     )
             )
+
+    val FOCUS_TOTEM = LocalizedText(
+            Locale.JAPANESE to "フォーカス・トーテム"
+    )
+
+    val FOCUS_TOTEM_LORE =
+            listOf(
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "パッシブ効果: 最大体力の" +
+                                    "${ChatColor.LIGHT_PURPLE}" +
+                                    "半分以上" +
+                                    "${ChatColor.GRAY}" +
+                                    "ダメージを"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "受けて体力が0になった時に、プレイヤーを死から守る"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    ""
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "半分以下のダメージでも体力が0になった時に"
+                    ),
+                    LocalizedText(
+                            Locale.JAPANESE to "${ChatColor.GRAY}" +
+                                    "${ChatColor.YELLOW}" +
+                                    "手にトーテムを持った状態" +
+                                    "${ChatColor.GRAY}" +
+                                    "であれば発動する"
+                    )
+            )
 }

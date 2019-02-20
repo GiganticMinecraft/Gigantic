@@ -3,21 +3,33 @@
 :cherry_blossom:  **__整地鯖(春) バージョン1.2 追加アップデート情報(2019/02/18)__** :cherry_blossom:  
 
 
-:star: 春の整地祭り :star:  
 
-:diamond_shape_with_a_dot_inside: 期間限定で出現する意志を実装しました  
-:diamond_shape_with_a_dot_inside: 他の意志と同様、一定の条件を満たすことで交感できるようになります  
-:diamond_shape_with_a_dot_inside: レリックもその意志特有のものになります  
+:confetti_ball: **__空腹なんてなかった__** :confetti_ball:   
+
+:diamond_shape_with_a_dot_inside: @しろつぶ#4655 氏よりマナのテクスチャをご提供頂きました  
+:diamond_shape_with_a_dot_inside: 空腹バーがマナの☆マークになりました  
+:diamond_shape_with_a_dot_inside: @しろつぶ#4655 氏より軽量化テクスチャをご提供頂きました  
+:diamond_shape_with_a_dot_inside: メニューから通常テクスチャと軽量化テクスチャを切り替え可能になりました  
 
 
-:dark_sunglasses: 夜の一人歩きも怖くない :dark_sunglasses: 
+:dark_sunglasses: **__夜の一人歩きには気を付けよう__** :dark_sunglasses: 
 
 :diamond_shape_with_a_dot_inside: 暗視効果が付くようになりました  
 :diamond_shape_with_a_dot_inside: 詳細設定から切り替えられます  
 :diamond_shape_with_a_dot_inside: 松明の設置をオンオフできるようにしました  
 
 
-:eyeglasses: **__細かい変更点__** :eyeglasses:    
+:heart: **__誰も死なせない！__** :heart: 
+
+:diamond_shape_with_a_dot_inside: 新スキル**フォーカス・トーテム**を実装しました  
+:diamond_shape_with_a_dot_inside: レベル15で解放されます  
+:diamond_shape_with_a_dot_inside: 最大体力の半分以上のダメージを受けて体力が0になった時に、死からプレイヤーを守ります  
+:diamond_shape_with_a_dot_inside: 半分以下のダメージでも、体力が0になった時に手にトーテムを持った状態であれば発動されます  
+:diamond_shape_with_a_dot_inside: 再発動にはトーテムが必要になります  
+:diamond_shape_with_a_dot_inside: ブロックを掘ってトーテムの欠片を一定数集めると再発動可能となります  
+
+
+:eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
 :diamond_shape_with_a_dot_inside: レリック一覧にレリックの合計数とコンプリート達成率を記載しました  
 :diamond_shape_with_a_dot_inside: プロフィールにレリック合計数とコンプリート達成率を記載しました  
@@ -30,6 +42,7 @@
 
 :diamond_shape_with_a_dot_inside: ホームポイントの削除機能が正しく動いていなかった不具合  
 :diamond_shape_with_a_dot_inside: ホームポイント自体が機能していなかった不具合  
+:diamond_shape_with_a_dot_inside: 木こりが正しく機能していなかった不具合  
 
 
 作成者: tar0ss  

@@ -10,6 +10,7 @@ import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.HandItem
 import click.seichi.gigantic.item.items.Armors
 import click.seichi.gigantic.item.items.HandItems
+import click.seichi.gigantic.player.Defaults
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -38,6 +39,7 @@ enum class Belt(
             1 to HandItems.FLASH,
             2 to HandItems.MINE_BURST,
             3 to HandItems.SKY_WALK,
+            Defaults.TOTEM_SLOT to HandItems.TOTEM,
             8 to HandItems.JUMP
     ),
     ;

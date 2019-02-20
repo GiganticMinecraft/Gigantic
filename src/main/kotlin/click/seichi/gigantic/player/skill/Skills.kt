@@ -1,5 +1,6 @@
 package click.seichi.gigantic.player.skill
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -13,6 +14,7 @@ import click.seichi.gigantic.player.Invokable
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.popup.PopUp
 import click.seichi.gigantic.popup.SimpleAnimation
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import click.seichi.gigantic.util.Random
 import org.bukkit.Bukkit
@@ -21,6 +23,7 @@ import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import org.bukkit.scheduler.BukkitRunnable
 import java.util.function.Consumer
 
 /**
@@ -185,6 +188,48 @@ object Skills {
     val JUMP = object : Invokable {
         override fun findInvokable(player: Player): Consumer<Player>? {
             return null
+        }
+    }
+
+    val FOCUS_TOTEM = object : Invokable {
+        override fun findInvokable(player: Player): Consumer<Player>? {
+            if (Random.nextDouble() > Defaults.PIECE_PROBABILITY) return null
+
+            val block = player.getOrPut(Keys.BREAK_BLOCK) ?: return null
+
+            val totem = player.getOrPut(Keys.TOTEM)
+
+            if (totem > 0) return null
+
+            return Consumer { p ->
+                val piece = p.getOrPut(Keys.TOTEM_PIECE)
+
+                SkillAnimations.TOTEM_PIECE.absorb(p, block.centralLocation)
+
+                if (piece + 1 >= Defaults.MAX_TOTEM_PIECE) {
+                    p.transform(Keys.TOTEM) { it.plus(1) }
+                    p.offer(Keys.TOTEM_PIECE, 0)
+
+                    // 取得時の音
+                    object : BukkitRunnable() {
+                        override fun run() {
+                            if (!p.isValid) return
+                            PlayerSounds.NOTICE.playOnly(p)
+                        }
+                    }.runTaskLater(Gigantic.PLUGIN, SkillAnimations.TOTEM_PIECE.ticks)
+
+                } else {
+                    p.transform(Keys.TOTEM_PIECE) { it.plus(1) }
+                    // 取得時の音
+                    object : BukkitRunnable() {
+                        override fun run() {
+                            if (!p.isValid) return
+                            PlayerSounds.PICK_UP.playOnly(p)
+                        }
+                    }.runTaskLater(Gigantic.PLUGIN, SkillAnimations.TOTEM_PIECE.ticks)
+                }
+                p.updateBelt(applyMainHand = false, applyOffHand = false)
+            }
         }
     }
 

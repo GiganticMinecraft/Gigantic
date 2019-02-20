@@ -65,6 +65,8 @@ open class Miner : Breaker {
             }
             Spell.STELLA_CLAIR.tryCast(player) -> {
             }
+            Skill.FOCUS_TOTEM.tryCast(player) -> {
+            }
         }
         // 破壊系
         var isCastMultiBreak = false

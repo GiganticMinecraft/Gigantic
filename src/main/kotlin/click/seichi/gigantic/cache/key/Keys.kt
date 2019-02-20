@@ -1229,4 +1229,42 @@ object Keys {
         }
     }
 
+    val TOTEM = object : DatabaseKey<PlayerCache, Int> {
+        override val default: Int
+            get() = 0
+
+        override fun read(entity: UserEntity): Int {
+            val user = entity.user
+            return user.totem
+        }
+
+        override fun store(entity: UserEntity, value: Int) {
+            val user = entity.user
+            user.totem = value
+        }
+
+        override fun satisfyWith(value: Int): Boolean {
+            return value >= 0
+        }
+    }
+
+    val TOTEM_PIECE = object : DatabaseKey<PlayerCache, Int> {
+        override val default: Int
+            get() = 0
+
+        override fun read(entity: UserEntity): Int {
+            val user = entity.user
+            return user.totemPiece
+        }
+
+        override fun store(entity: UserEntity, value: Int) {
+            val user = entity.user
+            user.totemPiece = value
+        }
+
+        override fun satisfyWith(value: Int): Boolean {
+            return value >= 0
+        }
+    }
+
 }

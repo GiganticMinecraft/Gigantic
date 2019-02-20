@@ -33,4 +33,13 @@ object SkillAnimations {
             location.world.spawnParticle(Particle.HEART, location, 1)
         location.world.spawnColoredParticle(location, Color.fromRGB(204, 0, 0), 1)
     }
+
+    val TOTEM_PIECE = Animation(7) { location, ticks ->
+        location.world.spawnParticle(Particle.TOTEM, location, 2,
+                Random.nextGaussian(0.0, 0.07),
+                Random.nextGaussian(0.0, 0.07),
+                Random.nextGaussian(0.0, 0.07), 0.1)
+        location.world.spawnColoredParticle(location, Color.fromRGB(0, 255, 127), 1)
+    }
+
 }
