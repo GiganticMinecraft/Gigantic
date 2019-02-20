@@ -149,7 +149,7 @@ class MultiBreaker : Miner(), SpellCaster {
                 it.y > 0
             }.filter {
                 // 重力値の制約
-                it.calcGravity() <= Config.MAX_BREAKABLE_GRAVITY
+                it.calcCrustGravity() <= Config.MAX_BREAKABLE_GRAVITY
             }.toMutableSet().apply {
                 // 場所の制約
                 if (!player.isSneaking) {
