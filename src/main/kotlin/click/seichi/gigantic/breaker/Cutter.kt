@@ -2,10 +2,8 @@ package click.seichi.gigantic.breaker
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.PlayerAnimations
-import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.isLog
-import click.seichi.gigantic.extension.isTree
-import click.seichi.gigantic.extension.update
+import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.Bukkit
 import org.bukkit.block.Block
@@ -123,6 +121,10 @@ class Cutter : Miner() {
         PlayerAnimations.ON_CUT.start(block.centralLocation)
         PlayerSounds.ON_CUT.play(block.centralLocation)
         block.update()
+        // 松明をセット
+        if (player != null && ToggleSetting.AUTORCH.getToggle(player)) {
+            block.setTorchIfNeeded()
+        }
     }
 
 }

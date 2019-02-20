@@ -1,7 +1,9 @@
 package click.seichi.gigantic.menu.menus
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.setLore
+import click.seichi.gigantic.extension.updateDisplay
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.SettingButtons
@@ -15,6 +17,8 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
+import org.bukkit.scheduler.BukkitRunnable
+import java.util.*
 
 /**
  * @author tar0ss
@@ -51,10 +55,22 @@ object SettingMenu : Menu() {
                     }
                 }
 
+                val coolTimeSet = mutableSetOf<UUID>()
+
                 override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
+                    val uniqueId = player.uniqueId
+                    if (coolTimeSet.contains(uniqueId)) return false
+                    coolTimeSet.add(uniqueId)
+                    object : BukkitRunnable() {
+                        override fun run() {
+                            coolTimeSet.remove(uniqueId)
+                        }
+                    }.runTaskLater(Gigantic.PLUGIN, 5L)
+
                     display.toggle(player)
                     PlayerSounds.TOGGLE.playOnly(player)
                     reopen(player)
+                    player.updateDisplay(true, true)
                     return true
                 }
             })

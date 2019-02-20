@@ -33,6 +33,10 @@ open class Miner : Breaker {
 
         if (!block.isCrust && !block.isTree) {
             block.update()
+            // 松明をセット
+            if (player != null && ToggleSetting.AUTORCH.getToggle(player)) {
+                block.setTorchIfNeeded()
+            }
             return
         }
 
@@ -112,6 +116,10 @@ open class Miner : Breaker {
         player.updateLevel()
 
         block.update()
+        // 松明をセット
+        if (ToggleSetting.AUTORCH.getToggle(player)) {
+            block.setTorchIfNeeded()
+        }
     }
 
 }

@@ -214,8 +214,4 @@ class MultiBreaker : Miner(), SpellCaster {
         return Config.SPELL_MULTI_BREAK_MANA_PER_BLOCK.toBigDecimal() * breakBlockSet.size.toBigDecimal()
     }
 
-    override fun onBreakBlock(player: Player?, block: Block) {
-        block.update()
-    }
-
 }

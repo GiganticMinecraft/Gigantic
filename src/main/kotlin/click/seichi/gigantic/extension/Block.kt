@@ -5,6 +5,7 @@ import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.breaker.Cutter
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.util.Random
 import org.bukkit.Effect
@@ -372,7 +373,7 @@ fun Block.update() {
     fallUpperCrustBlock()
 }
 
-fun Block.update(others: Set<Block>) {
+fun update(player: Player, others: Set<Block>) {
     if (others.isEmpty()) return
 
     // 周辺ブロックの変更
@@ -388,9 +389,11 @@ fun Block.update(others: Set<Block>) {
     val xzMap = others.groupBy { Pair(it.x, it.z) }
 
     // トーチ処理
-    xzMap.forEach { _, blockList ->
-        blockList.minBy { it.y }?.run {
-            setTorchIfNeeded()
+    if (ToggleSetting.AUTORCH.getToggle(player)) {
+        xzMap.forEach { _, blockList ->
+            blockList.minBy { it.y }?.run {
+                setTorchIfNeeded()
+            }
         }
     }
 

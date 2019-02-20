@@ -3,6 +3,7 @@ package click.seichi.gigantic.enchantment
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.player.ToggleSetting
 import org.bukkit.ChatColor
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
@@ -77,7 +78,7 @@ enum class ToolEnchantment(
             LocalizedText(Locale.JAPANESE to "松明")
     ) {
         override fun isMatch(player: Player, itemStack: ItemStack): Boolean {
-            return true
+            return ToggleSetting.AUTORCH.getToggle(player)
         }
 
         override fun calcLevel(player: Player, itemStack: ItemStack): Int {

@@ -26,7 +26,7 @@ object MultiBreakEffectors {
                     target.type = Material.AIR
                 }
                 // 凍結，火成等の処理を最後にまとめる
-                base.update(breakBlockSet)
+                update(player, breakBlockSet)
             }
         }
     }
@@ -42,7 +42,7 @@ object MultiBreakEffectors {
                 }
                 EffectSounds.EXPLOSION.play(base.centralLocation)
                 // 凍結，火成等の処理を最後にまとめる
-                base.update(breakBlockSet)
+                update(player, breakBlockSet)
             }
         }
     }
@@ -64,7 +64,7 @@ object MultiBreakEffectors {
                         MultiBreakAnimations.BLIZZARD.start(target.centralLocation)
                     }
                     EffectSounds.BLIZZARD.play(base.centralLocation)
-                    base.update(breakBlockSet)
+                    update(player, breakBlockSet)
                 }
             }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
         }
@@ -86,7 +86,7 @@ object MultiBreakEffectors {
                         MultiBreakAnimations.MAGIC.start(target.centralLocation)
                     }
                     EffectSounds.MAGIC.play(base.centralLocation)
-                    base.update(breakBlockSet)
+                    update(player, breakBlockSet)
                 }
             }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
         }
@@ -103,7 +103,7 @@ object MultiBreakEffectors {
                 }
                 EffectSounds.FLAME.play(base.centralLocation)
                 // 凍結，火成等の処理を最後にまとめる
-                base.update(breakBlockSet)
+                update(player, breakBlockSet)
             }
         }
     }
@@ -119,7 +119,7 @@ object MultiBreakEffectors {
                 }
                 EffectSounds.WITCH_SCENT.play(base.centralLocation)
                 // 凍結，火成等の処理を最後にまとめる
-                base.update(breakBlockSet)
+                update(player, breakBlockSet)
             }
         }
     }
@@ -141,7 +141,7 @@ object MultiBreakEffectors {
                         MultiBreakAnimations.SLIME.start(target.centralLocation)
                     }
                     EffectSounds.SLIME.play(base.centralLocation)
-                    base.update(breakBlockSet)
+                    update(player, breakBlockSet)
                 }
             }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
         }
@@ -168,7 +168,7 @@ object MultiBreakEffectors {
                         MultiBreakAnimations.BUBBLE.start(target.centralLocation)
                     }
                     EffectSounds.BUBBLE.play(base.centralLocation)
-                    base.update(breakBlockSet)
+                    update(player, breakBlockSet)
                 }
             }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
         }
@@ -207,7 +207,7 @@ object MultiBreakEffectors {
                         target.type = Material.AIR
                     }
                     EffectSounds.ALCHEMIA.play(base.centralLocation)
-                    base.update(breakBlockSet)
+                    update(player, breakBlockSet)
                 }
             }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
         }
