@@ -22,9 +22,9 @@ import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.menu.RefineItem
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
-import click.seichi.gigantic.player.Display
 import click.seichi.gigantic.player.DonateTicket
 import click.seichi.gigantic.player.Home
+import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
@@ -1181,19 +1181,19 @@ object Keys {
         }
     }
 
-    val DISPLAY_MAP: Map<Display, DatabaseKey<PlayerCache, Boolean>> = Display.values().map { display ->
+    val TOGGLE_SETTING_MAP: Map<ToggleSetting, DatabaseKey<PlayerCache, Boolean>> = ToggleSetting.values().map { display ->
         display to object : DatabaseKey<PlayerCache, Boolean> {
             override val default: Boolean
                 get() = true
 
             override fun read(entity: UserEntity): Boolean {
-                val userDisplay = entity.userDisplayMap.getValue(display)
-                return userDisplay.isDisplay
+                val userToggle = entity.userToggleMap.getValue(display)
+                return userToggle.toggle
             }
 
             override fun store(entity: UserEntity, value: Boolean) {
-                val userDisplay = entity.userDisplayMap.getValue(display)
-                userDisplay.isDisplay = value
+                val userToggle = entity.userToggleMap.getValue(display)
+                userToggle.toggle = value
             }
 
             override fun satisfyWith(value: Boolean): Boolean {

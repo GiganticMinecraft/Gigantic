@@ -4,10 +4,8 @@ import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
-import click.seichi.gigantic.menu.menus.setting.DisplaySettingMenu
 import click.seichi.gigantic.menu.menus.setting.ToolSwitchSettingMenu
 import click.seichi.gigantic.message.messages.BagMessages
-import click.seichi.gigantic.message.messages.menu.SettingMenuMessages
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -37,20 +35,4 @@ object SettingButtons {
 
     }
 
-    val DISPLAY_SETTING = object : Button {
-
-        override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.REDSTONE_TORCH).apply {
-                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
-                        + SettingMenuMessages.DISPLAY.asSafety(player.wrappedLocale))
-            }
-        }
-
-        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (event.inventory.holder === DisplaySettingMenu) return false
-            DisplaySettingMenu.open(player)
-            return true
-        }
-
-    }
 }

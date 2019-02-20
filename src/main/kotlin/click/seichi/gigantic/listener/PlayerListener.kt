@@ -14,7 +14,7 @@ import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Defaults
-import click.seichi.gigantic.player.Display
+import click.seichi.gigantic.player.ToggleSetting
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -292,7 +292,7 @@ class PlayerListener : Listener {
         if (!block.isUnder(player)) return
         if (player.isSneaking) return
         event.isCancelled = true
-        if (!Display.UNDER_PLAYER.isDisplay(player)) return
+        if (!ToggleSetting.UNDER_PLAYER.getToggle(player)) return
         PlayerMessages.BREAK_UNDER_BLOCK_NOT_SNEAKING.sendTo(player)
     }
 

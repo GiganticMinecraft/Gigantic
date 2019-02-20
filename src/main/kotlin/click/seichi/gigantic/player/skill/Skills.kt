@@ -9,8 +9,8 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.PopUpMessages
 import click.seichi.gigantic.player.Defaults
-import click.seichi.gigantic.player.Display
 import click.seichi.gigantic.player.Invokable
+import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.popup.PopUp
 import click.seichi.gigantic.popup.SimpleAnimation
 import click.seichi.gigantic.sound.sounds.SkillSounds
@@ -169,7 +169,7 @@ object Skills {
                 // コンボイベント発生
                 Bukkit.getPluginManager().callEvent(ComboEvent(player.combo, player))
 
-                if (Display.COMBO.isDisplay(player)) {
+                if (ToggleSetting.COMBO.getToggle(player)) {
                     // 現在のコンボ数をプレイヤーに告知
                     PopUp(SimpleAnimation, block.centralLocation, PopUpMessages.MINE_COMBO(player.combo, player.comboRank))
                             .pop()

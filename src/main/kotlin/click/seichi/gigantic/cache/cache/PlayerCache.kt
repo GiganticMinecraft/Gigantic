@@ -138,7 +138,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.EFFECT_BOUGHT_TIME_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
-            Keys.DISPLAY_MAP.forEach { _, key ->
+            Keys.TOGGLE_SETTING_MAP.forEach { _, key ->
                 offer(key, key.read(entity))
             }
         }
@@ -246,7 +246,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.EFFECT_BOUGHT_TIME_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
-            Keys.DISPLAY_MAP.forEach { _, key ->
+            Keys.TOGGLE_SETTING_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
         }

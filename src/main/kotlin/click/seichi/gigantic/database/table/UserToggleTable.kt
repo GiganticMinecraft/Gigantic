@@ -5,12 +5,12 @@ import org.jetbrains.exposed.dao.IntIdTable
 /**
  * @author tar0ss
  */
-object UserDisplayTable : IntIdTable("users_displays") {
+object UserToggleTable : IntIdTable("users_toggles") {
 
     val userId = reference("unique_id", UserTable).primaryKey()
 
-    val displayId = integer("display_id").primaryKey()
+    val toggleId = integer("toggle_id").primaryKey()
 
-    val isDisplay = bool("isDisplay").default(true)
+    val toggle = bool("toggle").default(true)
 
 }

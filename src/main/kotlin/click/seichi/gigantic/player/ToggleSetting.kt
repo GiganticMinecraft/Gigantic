@@ -10,7 +10,7 @@ import java.util.*
 /**
  * @author tar0ss
  */
-enum class Display(
+enum class ToggleSetting(
         val id: Int,
         private val localizedName: LocalizedText
 ) {
@@ -22,16 +22,13 @@ enum class Display(
     )),
     COMBO(2, LocalizedText(
             Locale.JAPANESE to "コンボ表示"
-    )),
-    TIPS(3,LocalizedText(
-            Locale.JAPANESE to "TIPS表示"
     ))
     ;
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)
 
-    fun isDisplay(player: Player) = player.getOrPut(Keys.DISPLAY_MAP.getValue(this))
+    fun getToggle(player: Player) = player.getOrPut(Keys.TOGGLE_SETTING_MAP.getValue(this))
 
-    fun toggle(player: Player) = player.transform(Keys.DISPLAY_MAP.getValue(this)) { !it }
+    fun toggle(player: Player) = player.transform(Keys.TOGGLE_SETTING_MAP.getValue(this)) { !it }
 
 }
