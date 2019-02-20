@@ -10,12 +10,19 @@
 :diamond_shape_with_a_dot_inside: レリックもその意志特有のものになります  
 
 
+:dark_sunglasses: 夜の一人歩きも怖くない :dark_sunglasses: 
+
+:diamond_shape_with_a_dot_inside: 暗視効果が付くようになりました  
+:diamond_shape_with_a_dot_inside: 詳細設定から切り替えられます  
+:diamond_shape_with_a_dot_inside: 松明の設置をオンオフできるようにしました  
+
+
 :eyeglasses: **__細かい変更点__** :eyeglasses:    
 
 :diamond_shape_with_a_dot_inside: レリック一覧にレリックの合計数とコンプリート達成率を記載しました  
 :diamond_shape_with_a_dot_inside: プロフィールにレリック合計数とコンプリート達成率を記載しました  
 :diamond_shape_with_a_dot_inside: エフェクトの購入ページと選択ページを別にしました  
-:diamond_shape_with_a_dot_inside: TIPSの表示切替設定を削除しました    
+:diamond_shape_with_a_dot_inside: TIPSの表示切替設定を削除しました  
 
 
 :bow: **__不具合修正__** :bow:   
