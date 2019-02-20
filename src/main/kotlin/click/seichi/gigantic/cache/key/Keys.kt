@@ -1078,8 +1078,8 @@ object Keys {
         }
 
         override fun store(entity: UserEntity, value: Map<Int, Home>) {
+            UserHomeTable.deleteWhere { (UserHomeTable.userId eq entity.user.id.value) }
             value.forEach { homeId, home ->
-                UserHomeTable.deleteWhere { (UserHomeTable.userId eq entity.user.id.value) }
                 UserHome.new {
                     this.user = entity.user
                     this.homeId = homeId

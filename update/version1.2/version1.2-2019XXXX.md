@@ -21,6 +21,7 @@
 以下の不具合を修正しました．  
 
 :diamond_shape_with_a_dot_inside: ホームポイントの削除機能が正しく動いていなかった不具合  
+:diamond_shape_with_a_dot_inside: ホームポイント自体が機能していなかった不具合  
 
 
 作成者: tar0ss  
