@@ -70,9 +70,19 @@ abstract class Menu : InventoryHolder {
      *
      */
     open fun open(player: Player, playSound: Boolean = true) {
+        onOpen(player)
         player.openInventory(createInventory(player))
         if (playSound) openSound.playOnly(player)
     }
+
+    /**
+     * Menuを開いたときに初期化処理を実行します
+     *
+     * @param player Menuを開いたPlayer
+     *
+     */
+    protected open fun onOpen(player: Player) {}
+
 
     protected open fun createInventory(player: Player): Inventory {
         val title = titleColor.toString() + getTitle(player)
@@ -97,7 +107,7 @@ abstract class Menu : InventoryHolder {
      * @param player Menuを開くPlayer
      *
      */
-    fun reopen(player: Player) {
+    open fun reopen(player: Player) {
         open(player, playSound = false)
     }
 

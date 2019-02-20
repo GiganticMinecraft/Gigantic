@@ -1,4 +1,4 @@
-package click.seichi.gigantic.menu.menus
+package click.seichi.gigantic.menu.menus.setting
 
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.setLore
@@ -6,6 +6,7 @@ import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.BackButton
 import click.seichi.gigantic.menu.Menu
+import click.seichi.gigantic.menu.menus.SettingMenu
 import click.seichi.gigantic.message.messages.menu.SettingMenuMessages
 import click.seichi.gigantic.message.messages.menu.ToolSwitchMessages
 import click.seichi.gigantic.player.Display

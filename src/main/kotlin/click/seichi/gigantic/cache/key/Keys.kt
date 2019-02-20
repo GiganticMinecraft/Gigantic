@@ -1220,4 +1220,13 @@ object Keys {
         }
     }
 
+    val MENU_EFFECT_LIST = object : Key<PlayerCache, List<GiganticEffect>> {
+        override val default: List<GiganticEffect>
+            get() = listOf()
+
+        override fun satisfyWith(value: List<GiganticEffect>): Boolean {
+            return true
+        }
+    }
+
 }

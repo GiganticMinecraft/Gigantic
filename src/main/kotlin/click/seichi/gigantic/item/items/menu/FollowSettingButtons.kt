@@ -5,7 +5,8 @@ import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.RefineItem
-import click.seichi.gigantic.menu.menus.*
+import click.seichi.gigantic.menu.menus.PlayerListRefineMenu
+import click.seichi.gigantic.menu.menus.follow.*
 import click.seichi.gigantic.message.messages.menu.FollowSettingMenuMessages
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import org.bukkit.ChatColor
@@ -17,7 +18,7 @@ import org.bukkit.inventory.ItemStack
 /**
  * @author tar0ss
  */
-object FollowSettingMenuButtons {
+object FollowSettingButtons {
 
     val FOLLOW = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {

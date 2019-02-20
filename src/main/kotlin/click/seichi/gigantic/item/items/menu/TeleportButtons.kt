@@ -6,8 +6,8 @@ import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.TeleportMenu
-import click.seichi.gigantic.menu.menus.TeleportToHomeMenu
-import click.seichi.gigantic.menu.menus.TeleportToPlayerMenu
+import click.seichi.gigantic.menu.menus.teleport.TeleportToHomeMenu
+import click.seichi.gigantic.menu.menus.teleport.TeleportToPlayerMenu
 import click.seichi.gigantic.message.messages.menu.TeleportMessages
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.util.Random

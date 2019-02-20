@@ -1,7 +1,7 @@
 package click.seichi.gigantic.menu.menus
 
 import click.seichi.gigantic.extension.wrappedLocale
-import click.seichi.gigantic.item.items.menu.FollowSettingMenuButtons
+import click.seichi.gigantic.item.items.menu.FollowSettingButtons
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.menu.FollowSettingMenuMessages
 import org.bukkit.entity.Player
@@ -20,14 +20,14 @@ object FollowSettingMenu : Menu() {
 
     init {
         // フォロー一覧
-        registerButton(0, FollowSettingMenuButtons.FOLLOW)
+        registerButton(0, FollowSettingButtons.FOLLOW)
         // フォロワー一覧
-        registerButton(1, FollowSettingMenuButtons.FOLLOWER)
+        registerButton(1, FollowSettingButtons.FOLLOWER)
         // フォローする
-        registerButton(2, FollowSettingMenuButtons.FOLLOW_ONLINE)
+        registerButton(2, FollowSettingButtons.FOLLOW_ONLINE)
         // ミュート一覧
-        registerButton(6, FollowSettingMenuButtons.MUTE)
+        registerButton(6, FollowSettingButtons.MUTE)
         // ミュートする
-        registerButton(7, FollowSettingMenuButtons.MUTE_ONLINE)
+        registerButton(7, FollowSettingButtons.MUTE_ONLINE)
     }
 }

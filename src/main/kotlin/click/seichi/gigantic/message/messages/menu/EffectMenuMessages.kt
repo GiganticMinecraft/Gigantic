@@ -18,8 +18,19 @@ object EffectMenuMessages {
             Locale.JAPANESE to "${ChatColor.AQUA}現在使用中のエフェクト"
     )
 
+    val CAUTION = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GREEN}" +
+                    "購入します。よろしいですか？"
+    )
+
     val CAN_BUY = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GREEN}" +
+                    "${ChatColor.UNDERLINE}" +
+                    "クリックで承認"
+    )
+
+    val CAN_BUY_DOUBLE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.YELLOW}" +
                     "${ChatColor.UNDERLINE}" +
                     "クリックで購入"
     )

@@ -1,16 +1,18 @@
-package click.seichi.gigantic.menu.menus
+package click.seichi.gigantic.menu.menus.follow
 
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.extension.isMute
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.BackButton
+import click.seichi.gigantic.item.items.menu.FollowSettingButtons
 import click.seichi.gigantic.item.items.menu.NextButton
 import click.seichi.gigantic.item.items.menu.PrevButton
-import click.seichi.gigantic.item.items.menu.TeleportButtons
 import click.seichi.gigantic.menu.BookMenu
-import click.seichi.gigantic.message.messages.menu.TeleportMessages
+import click.seichi.gigantic.menu.menus.FollowSettingMenu
+import click.seichi.gigantic.message.messages.menu.FollowSettingMenuMessages
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
@@ -18,7 +20,7 @@ import org.bukkit.inventory.Inventory
 /**
  * @author tar0ss
  */
-object TeleportToPlayerMenu : BookMenu() {
+object MuteMenu : BookMenu() {
 
     override val size: Int
         get() = 54
@@ -27,18 +29,18 @@ object TeleportToPlayerMenu : BookMenu() {
 
     private val nextButton = NextButton(this)
     private val prevButton = PrevButton(this)
-    private val backButton = BackButton(this, TeleportMenu)
+    private val backButton = BackButton(this, FollowSettingMenu)
 
     override fun getMaxPage(player: Player): Int {
         return player.getOrPut(Keys.MENU_PLAYER_LIST).size.minus(1).div(numOfPlayerPerPage).plus(1).coerceAtLeast(1)
     }
 
-    override fun init(player: Player) {
+    override fun onOpen(player: Player) {
         player.offer(
                 Keys.MENU_PLAYER_LIST,
-                Bukkit.getOnlinePlayers().toMutableList().apply {
-                    remove(player)
-                }
+                Bukkit.getOnlinePlayers()
+                        .filter { player != it }
+                        .filter { player.isMute(it.uniqueId) }
         )
     }
 
@@ -51,9 +53,9 @@ object TeleportToPlayerMenu : BookMenu() {
                 .map { it % numOfPlayerPerPage to playerList[it] }
                 .toMap()
                 .forEach { index, to ->
-                    inventory.setItem(index, TeleportButtons.TELEPORT_PLAYER(to).toShownItemStack(player))
+                    inventory.setItem(index, FollowSettingButtons.MUTE_PLAYER(to).toShownItemStack(player))
                 }
-        inventory.setItem(numOfPlayerPerPage + 1, backButton.toShownItemStack(player))
+        inventory.setItem(numOfPlayerPerPage, backButton.toShownItemStack(player))
         inventory.setItem(numOfPlayerPerPage + 3, prevButton.toShownItemStack(player))
         inventory.setItem(numOfPlayerPerPage + 5, nextButton.toShownItemStack(player))
 
@@ -61,18 +63,17 @@ object TeleportToPlayerMenu : BookMenu() {
     }
 
     override fun getTitle(player: Player, page: Int): String {
-        return "${TeleportMessages.TELEPORT_TO_PLAYER_TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
+        return "${FollowSettingMenuMessages.MUTE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
         val playerList = player.getOrPut(Keys.MENU_PLAYER_LIST)
         val index = (page - 1) * numOfPlayerPerPage + slot
-        val to = playerList.getOrNull(index) ?: return null
         return when (slot) {
-            numOfPlayerPerPage + 1 -> backButton
+            numOfPlayerPerPage -> backButton
             numOfPlayerPerPage + 3 -> prevButton
             numOfPlayerPerPage + 5 -> nextButton
-            else -> TeleportButtons.TELEPORT_PLAYER(to)
+            else -> FollowSettingButtons.MUTE_PLAYER(playerList.getOrNull(index) ?: return null)
         }
     }
 

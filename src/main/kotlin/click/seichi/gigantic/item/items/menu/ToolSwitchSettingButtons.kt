@@ -3,7 +3,7 @@ package click.seichi.gigantic.item.items.menu
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
-import click.seichi.gigantic.menu.menus.ToolSwitchSettingMenu
+import click.seichi.gigantic.menu.menus.setting.ToolSwitchSettingMenu
 import click.seichi.gigantic.message.messages.menu.ToolSwitchMessages
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.tool.Tool

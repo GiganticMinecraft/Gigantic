@@ -5,7 +5,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
-import click.seichi.gigantic.menu.menus.SpellSettingMenu
+import click.seichi.gigantic.menu.menus.spell.SpellSettingMenu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.SpellSettingMenuMessages
 import click.seichi.gigantic.player.Defaults

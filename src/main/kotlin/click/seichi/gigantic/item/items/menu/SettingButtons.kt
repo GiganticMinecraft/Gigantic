@@ -4,8 +4,8 @@ import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
-import click.seichi.gigantic.menu.menus.DisplaySettingMenu
-import click.seichi.gigantic.menu.menus.ToolSwitchSettingMenu
+import click.seichi.gigantic.menu.menus.setting.DisplaySettingMenu
+import click.seichi.gigantic.menu.menus.setting.ToolSwitchSettingMenu
 import click.seichi.gigantic.message.messages.BagMessages
 import click.seichi.gigantic.message.messages.menu.SettingMenuMessages
 import org.bukkit.ChatColor

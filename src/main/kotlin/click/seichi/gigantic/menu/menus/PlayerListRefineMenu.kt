@@ -2,7 +2,7 @@ package click.seichi.gigantic.menu.menus
 
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.items.menu.BackButton
-import click.seichi.gigantic.item.items.menu.FollowSettingMenuButtons
+import click.seichi.gigantic.item.items.menu.FollowSettingButtons
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.menu.RefineItem
 import click.seichi.gigantic.message.messages.menu.FollowSettingMenuMessages
@@ -25,7 +25,7 @@ object PlayerListRefineMenu : Menu() {
     init {
         registerButton(0, backButton)
         RefineItem.values().forEach { item ->
-            registerButton(item.slot, FollowSettingMenuButtons.REFINE_ITEM(item))
+            registerButton(item.slot, FollowSettingButtons.REFINE_ITEM(item))
         }
     }
 

@@ -1,4 +1,4 @@
-package click.seichi.gigantic.menu.menus
+package click.seichi.gigantic.menu.menus.shop
 
 import click.seichi.gigantic.Currency
 import click.seichi.gigantic.cache.key.Keys
@@ -12,31 +12,26 @@ import click.seichi.gigantic.item.items.menu.EffectButtons
 import click.seichi.gigantic.item.items.menu.NextButton
 import click.seichi.gigantic.item.items.menu.PrevButton
 import click.seichi.gigantic.item.items.menu.ShopButtons
-import click.seichi.gigantic.menu.BookMenu
-import click.seichi.gigantic.message.messages.menu.EffectMenuMessages
+import click.seichi.gigantic.message.messages.menu.ShopMessages
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 
 /**
  * @author tar0ss
  */
-object EffectMenu : BookMenu() {
+object DonateGiftEffectShopMenu : DonateGiftShopMenu() {
 
     override val size: Int
-        get() = 6 * 9
+        get() = 5 * 9
 
     private const val numOfContentsPerPage = 3 * 9
 
-    private const val offset = 18
+    private const val offset = 2 * 9
 
     init {
         registerButton(0, EffectButtons.PLAYER)
-        registerButton(1, EffectButtons.CURRENT_EFFECT)
-        registerButton(3, EffectButtons.DEFAULT_EFFECT)
-        registerButton(6, ShopButtons.VOTE)
-        registerButton(7, ShopButtons.DONATION)
-        registerButton(numOfContentsPerPage + offset + 3, PrevButton(this))
-        registerButton(numOfContentsPerPage + offset + 5, NextButton(this))
+        registerButton(size - 6, PrevButton(this))
+        registerButton(size - 8, NextButton(this))
     }
 
     override fun getMaxPage(player: Player): Int {
@@ -46,8 +41,9 @@ object EffectMenu : BookMenu() {
     override fun onOpen(player: Player) {
         player.offer(Keys.MENU_EFFECT_LIST,
                 GiganticEffect.values()
-                        .filter { it.currency != Currency.DEFAULT }
-                        .filter { it.isBought(player) }
+                        .filter { it.currency == Currency.DONATE_POINT }
+                        .filter { !it.isBought(player) }
+                        .sortedBy { it.amount }
                         .toList()
         )
     }
@@ -61,7 +57,7 @@ object EffectMenu : BookMenu() {
                 .map { it % numOfContentsPerPage to contentList[it] }
                 .toMap()
                 .forEach { index, to ->
-                    inventory.setItem(player, index + offset, EffectButtons.EFFECT(to))
+                    inventory.setItem(player, index + offset, ShopButtons.EFFECT(to))
                 }
         getButtonMap().forEach { slot, button ->
             inventory.setItem(player, slot, button)
@@ -70,13 +66,14 @@ object EffectMenu : BookMenu() {
     }
 
     override fun getTitle(player: Player, page: Int): String {
-        return "${EffectMenuMessages.TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
+        return "${ShopMessages.DONATE_GIFT_EFFECT_SHOP_TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
         val index = (page - 1) * numOfContentsPerPage + slot - offset
-        return getButtonMap()[slot] ?: EffectButtons.EFFECT(player.getOrPut(Keys.MENU_EFFECT_LIST).getOrNull(index)
+        return getButtonMap()[slot] ?: ShopButtons.EFFECT(player.getOrPut(Keys.MENU_EFFECT_LIST).getOrNull(index)
                 ?: return null)
     }
+
 
 }

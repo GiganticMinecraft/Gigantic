@@ -1,4 +1,4 @@
-package click.seichi.gigantic.menu.menus
+package click.seichi.gigantic.menu.menus.follow
 
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
@@ -7,10 +7,11 @@ import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.BackButton
-import click.seichi.gigantic.item.items.menu.FollowSettingMenuButtons
+import click.seichi.gigantic.item.items.menu.FollowSettingButtons
 import click.seichi.gigantic.item.items.menu.NextButton
 import click.seichi.gigantic.item.items.menu.PrevButton
 import click.seichi.gigantic.menu.BookMenu
+import click.seichi.gigantic.menu.menus.FollowSettingMenu
 import click.seichi.gigantic.message.messages.menu.FollowSettingMenuMessages
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -19,7 +20,7 @@ import org.bukkit.inventory.Inventory
 /**
  * @author tar0ss
  */
-object FollowerMenu : BookMenu() {
+object FollowMenu : BookMenu() {
 
     override val size: Int
         get() = 54
@@ -34,12 +35,12 @@ object FollowerMenu : BookMenu() {
         return player.getOrPut(Keys.MENU_PLAYER_LIST).size.minus(1).div(numOfPlayerPerPage).plus(1).coerceAtLeast(1)
     }
 
-    override fun init(player: Player) {
+    override fun onOpen(player: Player) {
         player.offer(
                 Keys.MENU_PLAYER_LIST,
                 Bukkit.getOnlinePlayers()
                         .filter { player != it }
-                        .filter { it.isFollow(player.uniqueId) }
+                        .filter { player.isFollow(it.uniqueId) }
         )
     }
 
@@ -52,7 +53,7 @@ object FollowerMenu : BookMenu() {
                 .map { it % numOfPlayerPerPage to playerList[it] }
                 .toMap()
                 .forEach { index, to ->
-                    inventory.setItem(index, FollowSettingMenuButtons.FOLLOWER_PLAYER(to).toShownItemStack(player))
+                    inventory.setItem(index, FollowSettingButtons.FOLLOW_PLAYER(to).toShownItemStack(player))
                 }
         inventory.setItem(numOfPlayerPerPage, backButton.toShownItemStack(player))
         inventory.setItem(numOfPlayerPerPage + 3, prevButton.toShownItemStack(player))
@@ -62,7 +63,7 @@ object FollowerMenu : BookMenu() {
     }
 
     override fun getTitle(player: Player, page: Int): String {
-        return "${FollowSettingMenuMessages.FOLLOWER.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
+        return "${FollowSettingMenuMessages.FOLLOW.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
@@ -72,7 +73,7 @@ object FollowerMenu : BookMenu() {
             numOfPlayerPerPage -> backButton
             numOfPlayerPerPage + 3 -> prevButton
             numOfPlayerPerPage + 5 -> nextButton
-            else -> FollowSettingMenuButtons.FOLLOWER_PLAYER(playerList.getOrNull(index) ?: return null)
+            else -> FollowSettingButtons.FOLLOW_PLAYER(playerList.getOrNull(index) ?: return null)
         }
     }
 

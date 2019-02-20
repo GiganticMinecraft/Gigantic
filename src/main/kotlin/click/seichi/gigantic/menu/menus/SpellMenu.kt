@@ -6,6 +6,7 @@ import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.Menu
+import click.seichi.gigantic.menu.menus.spell.SpellSettingMenu
 import click.seichi.gigantic.message.messages.menu.SpellMenuMessages
 import click.seichi.gigantic.player.spell.Spell
 import org.bukkit.entity.Player

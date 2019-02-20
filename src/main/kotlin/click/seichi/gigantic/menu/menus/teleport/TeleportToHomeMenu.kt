@@ -1,4 +1,4 @@
-package click.seichi.gigantic.menu.menus
+package click.seichi.gigantic.menu.menus.teleport
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.key.Keys
@@ -6,6 +6,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.BackButton
 import click.seichi.gigantic.menu.Menu
+import click.seichi.gigantic.menu.menus.TeleportMenu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.TeleportMessages
 import click.seichi.gigantic.player.Defaults
@@ -127,13 +128,7 @@ object TeleportToHomeMenu : Menu() {
                         // ホームを設定
                         player.transform(Keys.HOME_MAP) {
                             it.toMutableMap().apply {
-                                put(
-                                        homeId,
-                                        Home(
-                                                homeId,
-                                                player.location
-                                        )
-                                )
+                                put(homeId, Home(homeId, player.location))
                             }
                         }
                         PlayerSounds.TOGGLE.playOnly(player)

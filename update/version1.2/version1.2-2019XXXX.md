@@ -14,6 +14,7 @@
 
 :diamond_shape_with_a_dot_inside: レリック一覧にレリックの合計数とコンプリート達成率を記載しました  
 :diamond_shape_with_a_dot_inside: プロフィールにレリック合計数とコンプリート達成率を記載しました  
+:diamond_shape_with_a_dot_inside: エフェクトの購入ページと選択ページを別にしました  
 
 
 :bow: **__不具合修正__** :bow:   

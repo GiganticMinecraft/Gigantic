@@ -1,17 +1,18 @@
-package click.seichi.gigantic.menu.menus
+package click.seichi.gigantic.menu.menus.teleport
 
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
-import click.seichi.gigantic.extension.isMute
 import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.extension.setItem
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.BackButton
-import click.seichi.gigantic.item.items.menu.FollowSettingMenuButtons
 import click.seichi.gigantic.item.items.menu.NextButton
 import click.seichi.gigantic.item.items.menu.PrevButton
+import click.seichi.gigantic.item.items.menu.TeleportButtons
 import click.seichi.gigantic.menu.BookMenu
-import click.seichi.gigantic.message.messages.menu.FollowSettingMenuMessages
+import click.seichi.gigantic.menu.menus.TeleportMenu
+import click.seichi.gigantic.message.messages.menu.TeleportMessages
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
@@ -19,27 +20,29 @@ import org.bukkit.inventory.Inventory
 /**
  * @author tar0ss
  */
-object MuteMenu : BookMenu() {
+object TeleportToPlayerMenu : BookMenu() {
 
     override val size: Int
         get() = 54
 
     private const val numOfPlayerPerPage = 45
 
-    private val nextButton = NextButton(this)
-    private val prevButton = PrevButton(this)
-    private val backButton = BackButton(this, FollowSettingMenu)
+    init {
+        registerButton(numOfPlayerPerPage, BackButton(this, TeleportMenu))
+        registerButton(numOfPlayerPerPage + 3, PrevButton(this))
+        registerButton(numOfPlayerPerPage + 5, NextButton(this))
+    }
 
     override fun getMaxPage(player: Player): Int {
         return player.getOrPut(Keys.MENU_PLAYER_LIST).size.minus(1).div(numOfPlayerPerPage).plus(1).coerceAtLeast(1)
     }
 
-    override fun init(player: Player) {
+    override fun onOpen(player: Player) {
         player.offer(
                 Keys.MENU_PLAYER_LIST,
-                Bukkit.getOnlinePlayers()
-                        .filter { player != it }
-                        .filter { player.isMute(it.uniqueId) }
+                Bukkit.getOnlinePlayers().toMutableList().apply {
+                    remove(player)
+                }
         )
     }
 
@@ -52,28 +55,22 @@ object MuteMenu : BookMenu() {
                 .map { it % numOfPlayerPerPage to playerList[it] }
                 .toMap()
                 .forEach { index, to ->
-                    inventory.setItem(index, FollowSettingMenuButtons.MUTE_PLAYER(to).toShownItemStack(player))
+                    inventory.setItem(index, TeleportButtons.TELEPORT_PLAYER(to).toShownItemStack(player))
                 }
-        inventory.setItem(numOfPlayerPerPage, backButton.toShownItemStack(player))
-        inventory.setItem(numOfPlayerPerPage + 3, prevButton.toShownItemStack(player))
-        inventory.setItem(numOfPlayerPerPage + 5, nextButton.toShownItemStack(player))
-
+        getButtonMap().forEach { slot, button ->
+            inventory.setItem(player, slot, button)
+        }
         return inventory
     }
 
     override fun getTitle(player: Player, page: Int): String {
-        return "${FollowSettingMenuMessages.MUTE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
+        return "${TeleportMessages.TELEPORT_TO_PLAYER_TITLE.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
         val playerList = player.getOrPut(Keys.MENU_PLAYER_LIST)
         val index = (page - 1) * numOfPlayerPerPage + slot
-        return when (slot) {
-            numOfPlayerPerPage -> backButton
-            numOfPlayerPerPage + 3 -> prevButton
-            numOfPlayerPerPage + 5 -> nextButton
-            else -> FollowSettingMenuButtons.MUTE_PLAYER(playerList.getOrNull(index) ?: return null)
-        }
+        return getButtonMap()[slot] ?: TeleportButtons.TELEPORT_PLAYER(playerList.getOrNull(index) ?: return null)
     }
 
 }

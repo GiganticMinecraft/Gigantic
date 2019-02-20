@@ -10,7 +10,6 @@ import click.seichi.gigantic.effect.effectors.GeneralBreakEffectors
 import click.seichi.gigantic.effect.effectors.MultiBreakEffectors
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
-import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.EffectMessages
 import org.bukkit.Material
@@ -25,8 +24,6 @@ import java.util.*
 enum class GiganticEffect(
         // 変更禁止 id=0はデフォルトエフェクトに対応
         val id: Int,
-        // エフェクトメニューに配置されるスロット
-        val slot: Int,
         // エフェクトメニューに表示されるItemStack
         private val icon: ItemStack,
         // 購入方法
@@ -44,8 +41,6 @@ enum class GiganticEffect(
 ) {
     DEFAULT(
             0,
-            // DEFAULT のみ無意味な値
-            0,
             ItemStack(Material.GRASS_BLOCK),
             Currency.DEFAULT,
             // DEFAULT のみ無意味な値
@@ -58,7 +53,6 @@ enum class GiganticEffect(
     ),
     EXPLOSION(
             1,
-            1,
             ItemStack(Material.TNT),
             Currency.VOTE_POINT,
             50,
@@ -68,7 +62,6 @@ enum class GiganticEffect(
             MultiBreakEffectors.EXPLOSION
     ),
     BLIZZARD(
-            2,
             2,
             ItemStack(Material.PACKED_ICE),
             Currency.VOTE_POINT,
@@ -80,8 +73,7 @@ enum class GiganticEffect(
     ),
     MAGIC(
             3,
-            4 + 9,
-            Head.RAINBOW_WOOL.toItemStack(),
+            ItemStack(Material.RED_WOOL),
             Currency.DONATE_POINT,
             50,
             EffectMessages.MAGIC,
@@ -91,7 +83,6 @@ enum class GiganticEffect(
     ),
     FLAME(
             4,
-            0,
             ItemStack(Material.NETHER_WART),
             Currency.VOTE_POINT,
             30,
@@ -102,7 +93,6 @@ enum class GiganticEffect(
     ),
     WITCH_SCENT(
             5,
-            3 + 9,
             ItemStack(Material.CHORUS_PLANT),
             Currency.DONATE_POINT,
             30,
@@ -113,7 +103,6 @@ enum class GiganticEffect(
     ),
     SLIME(
             6,
-            0 + 9,
             ItemStack(Material.SLIME_BALL),
             Currency.DONATE_POINT,
             10,
@@ -124,7 +113,6 @@ enum class GiganticEffect(
     ),
     BUBBLE(
             7,
-            1 + 9,
             ItemStack(Material.TUBE_CORAL),
             Currency.DONATE_POINT,
             10,
@@ -134,7 +122,6 @@ enum class GiganticEffect(
     ),
     ALCHEMIA(
             8,
-            2 + 9,
             ItemStack(Material.REDSTONE),
             Currency.DONATE_POINT,
             20,
