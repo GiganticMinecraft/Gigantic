@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import org.bukkit.scheduler.BukkitRunnable
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.joda.time.DateTime
 
 /**
  * @author tar0ss
@@ -54,6 +55,7 @@ class DonateCommand : TabExecutor {
                     DonateHistory.new {
                         this@new.user = user
                         this@new.amount = increase
+                        this@new.createdAt = DateTime.now()
                     }
                 }
 

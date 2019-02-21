@@ -43,6 +43,7 @@
 :diamond_shape_with_a_dot_inside: ホームポイントの削除機能が正しく動いていなかった不具合  
 :diamond_shape_with_a_dot_inside: ホームポイント自体が機能していなかった不具合  
 :diamond_shape_with_a_dot_inside: 木こりが正しく機能していなかった不具合  
+:diamond_shape_with_a_dot_inside: 寄付履歴において、明記された時間が最大24時間ずれていた不具合  
 
 
 作成者: tar0ss  

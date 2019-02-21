@@ -2,7 +2,6 @@ package click.seichi.gigantic.database.table
 
 import click.seichi.gigantic.player.Defaults
 import org.jetbrains.exposed.dao.IdTable
-import org.joda.time.DateTime
 import java.util.*
 
 /**
@@ -60,8 +59,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val totemPiece = integer("totem_piece").default(0)
 
-    val createdAt = datetime("created_at").default(DateTime.now())
+    val createdAt = datetime("created_at")
 
-    val updatedAt = datetime("updated_at").default(DateTime.now())
+    val updatedAt = datetime("updated_at")
 
 }

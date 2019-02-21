@@ -13,6 +13,7 @@ import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
 import org.jetbrains.exposed.sql.and
+import org.joda.time.DateTime
 import java.util.*
 
 /**
@@ -25,6 +26,7 @@ class UserEntity(uniqueId: UUID, playerName: String) {
     val user = User.findById(uniqueId)?.apply {
     } ?: User.new(uniqueId) {
         name = playerName.toLowerCase()
+        createdDate = DateTime.now()
     }
 
     val userWillMap = Will.values().map { will ->

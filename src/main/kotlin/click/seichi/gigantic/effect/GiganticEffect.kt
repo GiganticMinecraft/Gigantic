@@ -16,6 +16,7 @@ import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.joda.time.DateTime
 import java.util.*
 
 /**
@@ -163,7 +164,8 @@ enum class GiganticEffect(
 
     // 購入
     fun buy(player: Player) {
-        player.offer(Keys.EFFECT_BOUGHT_MAP[this]!!, true)
+        player.offer(Keys.EFFECT_BOUGHT_MAP.getValue(this), true)
+        player.offer(Keys.EFFECT_BOUGHT_TIME_MAP.getValue(this), DateTime.now())
     }
 
     // 購入可能か
