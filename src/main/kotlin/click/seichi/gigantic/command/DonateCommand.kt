@@ -51,11 +51,13 @@ class DonateCommand : TabExecutor {
                     user.donation += increase
                     messages.add(PointMessages.COMPLETE_STORE)
 
-                    // Historyに追加
-                    DonateHistory.new {
-                        this@new.user = user
-                        this@new.amount = increase
-                        this@new.createdAt = DateTime.now()
+                    if (increase > 0) {
+                        // Historyに追加
+                        DonateHistory.new {
+                            this@new.user = user
+                            this@new.amount = increase
+                            this@new.createdAt = DateTime.now()
+                        }
                     }
                 }
 
