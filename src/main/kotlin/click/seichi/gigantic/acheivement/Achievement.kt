@@ -107,7 +107,8 @@ enum class Achievement(
         it.wrappedLevel >= 18
     }, grantMessage = AchievementMessages.JUMP),
     SKILL_FOCUS_TOTEM(204, {
-        it.wrappedLevel >= 15
+        // TODO implements
+        false/*it.wrappedLevel >= 15*/
     }, action = {
         it.offer(Keys.TOTEM, 1)
     }, grantMessage = AchievementMessages.JUMP),
