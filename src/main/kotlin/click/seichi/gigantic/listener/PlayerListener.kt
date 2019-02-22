@@ -13,8 +13,8 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.ToggleSetting
+import click.seichi.gigantic.player.spell.spells.SkyWalk
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -65,14 +65,7 @@ class PlayerListener : Listener {
         // 全ての設置ブロックを削除
         player.getOrPut(Keys.SPELL_SKY_WALK_PLACE_BLOCKS).apply {
             forEach { block ->
-                // TODO sky walk 側が持つべき
-                if (block.isCondensedWaters || block.isCondensedLavas) return
-                block.type = when (block.type) {
-                    Defaults.SKY_WALK_WATER_MATERIAL -> Material.WATER
-                    Defaults.SKY_WALK_LAVA_MATERIAL -> Material.LAVA
-                    else -> Material.AIR
-                }
-                block.setTorchIfNeeded(null)
+                SkyWalk.revert(block)
             }
             Gigantic.SKILLED_BLOCK_SET.removeAll(this)
         }

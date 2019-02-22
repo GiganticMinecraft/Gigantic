@@ -2,6 +2,7 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.config.Config
+import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.message.Tips
 import click.seichi.gigantic.util.Random
@@ -19,7 +20,7 @@ class TipsListener : Listener {
 
     private val remainSet = tips.map { it.ordinal }.toMutableSet()
 
-    private val interval = if (Gigantic.IS_DEBUG) 20 * 5L
+    private val interval = if (Gigantic.IS_DEBUG && DebugConfig.TIPS_SPEED_UP) 20 * 5L
     else 20L.times(60L).times(Config.TIPS_INTERVAL)
 
     @EventHandler

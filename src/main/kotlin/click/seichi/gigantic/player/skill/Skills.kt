@@ -76,7 +76,8 @@ object Skills {
                 Material.LAVA,
                 Defaults.SKY_WALK_AIR_MATERIAL,
                 Defaults.SKY_WALK_WATER_MATERIAL,
-                Defaults.SKY_WALK_LAVA_MATERIAL
+                Defaults.SKY_WALK_LAVA_MATERIAL,
+                Defaults.SKY_WALK_TORCH_MATERIAL
         )
 
         val maxDistance = 50

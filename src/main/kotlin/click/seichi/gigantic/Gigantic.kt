@@ -10,7 +10,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
-import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.spell.spells.SkyWalk
 import click.seichi.gigantic.spirit.SpiritManager
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
@@ -178,14 +178,7 @@ class Gigantic : JavaPlugin() {
 
             player.getOrPut(Keys.SPELL_SKY_WALK_PLACE_BLOCKS).apply {
                 forEach { block ->
-                    // TODO sky walk 側が持つべき
-                    if (block.isCondensedWaters || block.isCondensedLavas) return
-                    block.type = when (block.type) {
-                        Defaults.SKY_WALK_WATER_MATERIAL -> Material.WATER
-                        Defaults.SKY_WALK_LAVA_MATERIAL -> Material.LAVA
-                        else -> Material.AIR
-                    }
-                    block.setTorchIfNeeded(null)
+                    SkyWalk.revert(block)
                 }
                 Gigantic.SKILLED_BLOCK_SET.removeAll(this)
             }

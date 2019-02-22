@@ -10,3 +10,5 @@ effect_unlock: true
 will_spirit: true
 # manaの消費を失くす
 spell_infinity: true
+# tipsの表示速度を速くする
+tips_speed_up: true

@@ -4,6 +4,7 @@ import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.SpellMessages
 import click.seichi.gigantic.player.Invokable
+import click.seichi.gigantic.player.spell.spells.SkyWalk
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -46,7 +47,7 @@ enum class Spell(
             SpellMessages.SKY_WALK,
             SpellMessages.SKY_WALK_LORE,
             Achievement.SPELL_SKY_WALK,
-            Spells.SKY_WALK
+            SkyWalk
     ),
     LUNA_FLEX(3,
             3,

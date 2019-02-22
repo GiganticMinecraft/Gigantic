@@ -16,4 +16,6 @@ object DebugConfig : SimpleConfiguration("debug") {
     val WILL_SPIRIT by lazy { getBoolean("will_spirit") }
 
     val SPELL_INFINITY by lazy { getBoolean("spell_infinity") }
+
+    val TIPS_SPEED_UP by lazy { getBoolean("tips_speed_up") }
 }
