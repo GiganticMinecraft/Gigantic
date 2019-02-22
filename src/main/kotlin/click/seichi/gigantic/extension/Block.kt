@@ -419,17 +419,15 @@ fun Block.setTorchIfNeeded(player: Player?) {
     if (z % 4 != 0) return
     // 破壊中のブロックが1残ってるので1
     if (under.calcCrustGravity() > 1) return
-    object : BukkitRunnable() {
-        override fun run() {
-            if (!under.isCrust) return
-            if (!under.isSurface) return
-            if (isCrust) return
-            if (isTree) return
-            if (!isAir) return
-            type = Material.TORCH
-            world.playEffect(location, Effect.STEP_SOUND, Material.TORCH)
-        }
-    }.runTaskLater(Gigantic.PLUGIN, 20L)
+    runTaskLater(20L) {
+        if (!under.isCrust) return@runTaskLater
+        if (!under.isSurface) return@runTaskLater
+        if (isCrust) return@runTaskLater
+        if (isTree) return@runTaskLater
+        if (!isAir) return@runTaskLater
+        type = Material.TORCH
+        world.playEffect(location, Effect.STEP_SOUND, Material.TORCH)
+    }
 }
 
 private fun Block.fallUpperCrustBlock() {

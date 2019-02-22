@@ -1,5 +1,6 @@
 package click.seichi.gigantic.item.items.menu
 
+import click.seichi.gigantic.extension.itemStackOf
 import click.seichi.gigantic.extension.setDisplayName
 import click.seichi.gigantic.extension.setLore
 import click.seichi.gigantic.extension.wrappedLocale
@@ -20,7 +21,7 @@ object SettingButtons {
     val TOOL_SWITCH_SETTING = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.LADDER).apply {
+            return itemStackOf(Material.LADDER) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
                 setLore(BagMessages.SWITCH_DETAIL_LORE.asSafety(player.wrappedLocale))

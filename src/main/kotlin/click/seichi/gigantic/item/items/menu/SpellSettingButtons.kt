@@ -24,7 +24,7 @@ object SpellSettingButtons {
 
     val MULTI_BREAK = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.DIAMOND_PICKAXE).apply {
+            return itemStackOf(Material.DIAMOND_PICKAXE) {
                 setDisplayName(SpellSettingMenuMessages.CURRENT_AREA.asSafety(player.wrappedLocale))
 
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
@@ -56,7 +56,7 @@ object SpellSettingButtons {
 
     val BIGGER_WIDTH = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.YELLOW_STAINED_GLASS_PANE).apply {
+            return itemStackOf(Material.YELLOW_STAINED_GLASS_PANE) {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 val nextBreakArea = breakArea.add(2, 0, 0)
                 val limitOfBreakNum = MultiBreaker.calcLimitOfBreakNumOfMultiBreak(player.maxMana)
@@ -91,7 +91,7 @@ object SpellSettingButtons {
 
     val SMALLER_WIDTH = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE).apply {
+            return itemStackOf(Material.LIGHT_BLUE_STAINED_GLASS_PANE) {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 setDisplayName(SpellSettingMenuMessages.SMALLER_WIDTH(breakArea).asSafety(player.wrappedLocale))
             }
@@ -116,7 +116,7 @@ object SpellSettingButtons {
 
     val BIGGER_HEIGHT = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.ORANGE_STAINED_GLASS_PANE).apply {
+            return itemStackOf(Material.ORANGE_STAINED_GLASS_PANE) {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 val nextBreakArea = breakArea.add(0, 1, 0)
                 val limitOfBreakNum = MultiBreaker.calcLimitOfBreakNumOfMultiBreak(player.maxMana)
@@ -149,7 +149,7 @@ object SpellSettingButtons {
 
     val SMALLER_HEIGHT = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.PINK_STAINED_GLASS_PANE).apply {
+            return itemStackOf(Material.PINK_STAINED_GLASS_PANE) {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 setDisplayName(SpellSettingMenuMessages.SMALLER_HEIGHT(breakArea).asSafety(player.wrappedLocale))
             }
@@ -174,7 +174,7 @@ object SpellSettingButtons {
 
     val BIGGER_DEPTH = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.MAGENTA_STAINED_GLASS_PANE).apply {
+            return itemStackOf(Material.MAGENTA_STAINED_GLASS_PANE) {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 val nextBreakArea = breakArea.add(0, 0, 1)
                 val limitOfBreakNum = MultiBreaker.calcLimitOfBreakNumOfMultiBreak(player.maxMana)
@@ -207,7 +207,7 @@ object SpellSettingButtons {
 
     val SMALLER_DEPTH = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.LIME_STAINED_GLASS_PANE).apply {
+            return itemStackOf(Material.LIME_STAINED_GLASS_PANE) {
                 val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
                 setDisplayName(SpellSettingMenuMessages.SMALLER_DEPTH(breakArea).asSafety(player.wrappedLocale))
             }
@@ -234,7 +234,7 @@ object SpellSettingButtons {
     val LUNA_FLEX = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Spell.LUNA_FLEX.isGranted(player)) return null
-            return ItemStack(Material.SUGAR).apply {
+            return itemStackOf(Material.SUGAR) {
                 val degree = player.getOrPut(Keys.WALK_SPEED)
                         .minus(Defaults.WALK_SPEED)
                         .times(10.toBigDecimal())
@@ -263,7 +263,7 @@ object SpellSettingButtons {
     val BIGGER_DEGREE = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Spell.LUNA_FLEX.isGranted(player)) return null
-            return ItemStack(Material.ORANGE_STAINED_GLASS_PANE).apply {
+            return itemStackOf(Material.ORANGE_STAINED_GLASS_PANE) {
                 val degree = player.getOrPut(Keys.WALK_SPEED)
                         .minus(Defaults.WALK_SPEED)
                         .times(10.toBigDecimal())
@@ -298,7 +298,7 @@ object SpellSettingButtons {
     val SMALLER_DEGREE = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Spell.LUNA_FLEX.isGranted(player)) return null
-            return ItemStack(Material.PINK_STAINED_GLASS_PANE).apply {
+            return itemStackOf(Material.PINK_STAINED_GLASS_PANE) {
                 val degree = player.getOrPut(Keys.WALK_SPEED)
                         .minus(Defaults.WALK_SPEED)
                         .times(10.toBigDecimal())

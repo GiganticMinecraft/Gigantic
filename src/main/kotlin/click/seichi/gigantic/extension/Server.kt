@@ -1,7 +1,9 @@
 package click.seichi.gigantic.extension
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.menu.Menu
 import org.bukkit.Server
+import org.bukkit.scheduler.BukkitRunnable
 
 /**
  * @author tar0ss
@@ -11,4 +13,12 @@ fun Server.refreshAllPlayerMenu() {
         val menu = player.openInventory.topInventory.holder as? Menu ?: return@forEach
         menu.reopen(player)
     }
+}
+
+fun runTaskLater(delay: Long, action: () -> Unit) {
+    object : BukkitRunnable() {
+        override fun run() {
+            action()
+        }
+    }.runTaskLater(Gigantic.PLUGIN, delay)
 }

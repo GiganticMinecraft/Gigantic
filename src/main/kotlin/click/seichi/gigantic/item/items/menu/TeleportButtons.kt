@@ -31,7 +31,7 @@ object TeleportButtons {
 
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return null
-            return ItemStack(Material.PLAYER_HEAD).apply {
+            return itemStackOf(Material.PLAYER_HEAD) {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_PLAYER.asSafety(player.wrappedLocale))
             }
         }
@@ -48,7 +48,7 @@ object TeleportButtons {
     val TELEPORT_TO_RANDOM_CHUNK = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.CHORUS_FRUIT).apply {
+            return itemStackOf(Material.CHORUS_FRUIT) {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_RANDOM_CHUNK.asSafety(player.wrappedLocale))
             }
         }
@@ -113,7 +113,7 @@ object TeleportButtons {
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.TELEPORT_LAST_DEATH.isGranted(player)) return null
             player.getOrPut(Keys.LAST_DEATH_CHUNK) ?: return null
-            return ItemStack(Material.BONE).apply {
+            return itemStackOf(Material.BONE) {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_LAST_DEATH.asSafety(player.wrappedLocale))
             }
         }
@@ -152,7 +152,7 @@ object TeleportButtons {
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.TELEPORT_PLAYER.isGranted(player)) return null
             val toggle = player.getOrPut(Keys.TELEPORT_TOGGLE)
-            return ItemStack(Material.DAYLIGHT_DETECTOR).apply {
+            return itemStackOf(Material.DAYLIGHT_DETECTOR) {
                 if (toggle)
                     setDisplayName(TeleportMessages.TELEPORT_TOGGLE_ON.asSafety(player.wrappedLocale))
                 else
@@ -179,14 +179,14 @@ object TeleportButtons {
         object : Button {
             override fun toShownItemStack(player: Player): ItemStack? {
                 return when {
-                    !to.isValid -> ItemStack(Material.GRAY_STAINED_GLASS_PANE).apply {
+                    !to.isValid -> itemStackOf(Material.GRAY_STAINED_GLASS_PANE) {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_INVALID_LORE
                                 .map { it.asSafety(player.wrappedLocale) }
                                 .toTypedArray())
                     }
                     // ミュートされている時×
-                    to.isMute(player.uniqueId) -> ItemStack(Material.PURPLE_STAINED_GLASS_PANE).apply {
+                    to.isMute(player.uniqueId) -> itemStackOf(Material.PURPLE_STAINED_GLASS_PANE) {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_TOGGLE_OFF_LORE
                                 .map { it.asSafety(player.wrappedLocale) }
@@ -194,31 +194,31 @@ object TeleportButtons {
                     }
                     // テレポートできないかつフォローされていない時×
                     !to.getOrPut(Keys.TELEPORT_TOGGLE) &&
-                            !to.isFollow(player.uniqueId) -> ItemStack(Material.PURPLE_STAINED_GLASS_PANE).apply {
+                            !to.isFollow(player.uniqueId) -> itemStackOf(Material.PURPLE_STAINED_GLASS_PANE) {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_TOGGLE_OFF_LORE
                                 .map { it.asSafety(player.wrappedLocale) }
                                 .toTypedArray())
                     }
-                    to.gameMode == GameMode.SPECTATOR -> ItemStack(Material.YELLOW_STAINED_GLASS_PANE).apply {
+                    to.gameMode == GameMode.SPECTATOR -> itemStackOf(Material.YELLOW_STAINED_GLASS_PANE) {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_AFK_LORE
                                 .map { it.asSafety(player.wrappedLocale) }
                                 .toTypedArray())
                     }
-                    to.gameMode != GameMode.SURVIVAL -> ItemStack(Material.BROWN_STAINED_GLASS_PANE).apply {
+                    to.gameMode != GameMode.SURVIVAL -> itemStackOf(Material.BROWN_STAINED_GLASS_PANE) {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_NOT_SURVIVAL_LORE
                                 .map { it.asSafety(player.wrappedLocale) }
                                 .toTypedArray())
                     }
-                    to.world != player.world -> ItemStack(Material.CYAN_STAINED_GLASS_PANE).apply {
+                    to.world != player.world -> itemStackOf(Material.CYAN_STAINED_GLASS_PANE) {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_INVALID_WORLD_LORE(to.world)
                                 .map { it.asSafety(player.wrappedLocale) }
                                 .toTypedArray())
                     }
-                    to.isFlying -> ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE).apply {
+                    to.isFlying -> itemStackOf(Material.LIGHT_BLUE_STAINED_GLASS_PANE) {
                         setDisplayName("${ChatColor.RED}${to.name}")
                         setLore(*TeleportMessages.TELEPORT_PLAYER_FLYING_LORE
                                 .map { it.asSafety(player.wrappedLocale) }
@@ -254,7 +254,7 @@ object TeleportButtons {
     val TELEPORT_TO_SPAWN = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.OAK_SAPLING).apply {
+            return itemStackOf(Material.OAK_SAPLING) {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_SPAWN.asSafety(player.wrappedLocale))
             }
         }
@@ -272,7 +272,7 @@ object TeleportButtons {
 
         override fun toShownItemStack(player: Player): ItemStack? {
             player.getOrPut(Keys.LAST_BREAK_CHUNK) ?: return null
-            return ItemStack(Material.DIAMOND_PICKAXE).apply {
+            return itemStackOf(Material.DIAMOND_PICKAXE) {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_LAST_BREAK.asSafety(player.wrappedLocale))
                 hideAllFlag()
             }
@@ -310,7 +310,7 @@ object TeleportButtons {
 
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.TELEPORT_HOME.isGranted(player)) return null
-            return ItemStack(Material.RED_BED).apply {
+            return itemStackOf(Material.RED_BED) {
                 setDisplayName("${ChatColor.AQUA}" + TeleportMessages.TELEPORT_TO_HOME.asSafety(player.wrappedLocale))
             }
         }

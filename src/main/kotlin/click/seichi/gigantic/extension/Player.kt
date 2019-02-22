@@ -30,7 +30,6 @@ import net.md_5.bungee.chat.ComponentSerializer
 import org.bukkit.*
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
 import java.math.BigDecimal
 import java.util.*
@@ -40,7 +39,7 @@ import kotlin.math.roundToInt
  * @author tar0ss
  */
 
-fun Player.getHead() = ItemStack(Material.PLAYER_HEAD).apply {
+fun Player.getHead() = itemStackOf(Material.PLAYER_HEAD) {
     itemMeta = (itemMeta as SkullMeta).also { meta ->
         meta.owningPlayer = this@getHead
     }

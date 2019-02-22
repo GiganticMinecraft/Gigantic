@@ -71,7 +71,7 @@ object RelicGeneratorButtons {
         override fun toShownItemStack(player: Player): ItemStack? {
             val selected = player.getOrPut(Keys.SELECTED_WILL)
             val generated = player.getOrPut(Keys.GENERATED_RELIC)
-            return ItemStack(Material.END_PORTAL_FRAME).apply {
+            return itemStackOf(Material.END_PORTAL_FRAME) {
                 clearLore()
                 when {
                     // 何も選択していない場合
@@ -93,7 +93,7 @@ object RelicGeneratorButtons {
                 addLore(MenuMessages.LINE)
 
                 if (generated != null) {
-                    val will = Will.findByRelic(generated) ?: return@apply
+                    val will = Will.findByRelic(generated) ?: return@itemStackOf
                     addLore(*RelicMenuMessages.GENERATED_ETHEL_LORE(will, generated)
                             .map { it.asSafety(player.wrappedLocale) }
                             .toTypedArray())

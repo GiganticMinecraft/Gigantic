@@ -22,7 +22,7 @@ object FollowSettingButtons {
 
     val FOLLOW = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.LIGHT_GRAY_DYE).apply {
+            return itemStackOf(Material.LIGHT_GRAY_DYE) {
                 setDisplayName("${ChatColor.GRAY}" +
                         "${ChatColor.BOLD}" +
                         FollowSettingMenuMessages.FOLLOW.asSafety(player.wrappedLocale))
@@ -37,7 +37,7 @@ object FollowSettingButtons {
 
     val MUTE = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.GRAY_DYE).apply {
+            return itemStackOf(Material.GRAY_DYE) {
                 setDisplayName("${ChatColor.GRAY}" +
                         "${ChatColor.BOLD}" +
                         FollowSettingMenuMessages.MUTE.asSafety(player.wrappedLocale))
@@ -100,7 +100,7 @@ object FollowSettingButtons {
 
     val FOLLOWER = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.ORANGE_DYE).apply {
+            return itemStackOf(Material.ORANGE_DYE) {
                 setDisplayName("${ChatColor.GOLD}" +
                         "${ChatColor.BOLD}" +
                         FollowSettingMenuMessages.FOLLOWER.asSafety(player.wrappedLocale))
@@ -145,7 +145,7 @@ object FollowSettingButtons {
 
     val FOLLOW_ONLINE = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.PURPLE_DYE).apply {
+            return itemStackOf(Material.PURPLE_DYE) {
                 setDisplayName("${ChatColor.LIGHT_PURPLE}" +
                         "${ChatColor.BOLD}" +
                         FollowSettingMenuMessages.FOLLOW_ONLINE.asSafety(player.wrappedLocale))
@@ -160,7 +160,7 @@ object FollowSettingButtons {
 
     val MUTE_ONLINE = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.PINK_DYE).apply {
+            return itemStackOf(Material.PINK_DYE) {
                 setDisplayName("${ChatColor.LIGHT_PURPLE}" +
                         "${ChatColor.BOLD}" +
                         FollowSettingMenuMessages.MUTE_ONLINE.asSafety(player.wrappedLocale))
@@ -234,7 +234,7 @@ object FollowSettingButtons {
     val REFINE = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.HOPPER).apply {
+            return itemStackOf(Material.HOPPER) {
                 setDisplayName("${ChatColor.AQUA}" +
                         FollowSettingMenuMessages.REFINE.asSafety(player.wrappedLocale))
             }

@@ -22,7 +22,7 @@ object QuestButtons {
     val QUEST: (QuestClient) -> Button = { client ->
         object : Button {
             override fun toShownItemStack(player: Player): ItemStack? {
-                return ItemStack(Material.ENCHANTED_BOOK).apply {
+                return itemStackOf(Material.ENCHANTED_BOOK) {
                     if (!client.isProcessed) {
                         type = Material.BOOK
                     }

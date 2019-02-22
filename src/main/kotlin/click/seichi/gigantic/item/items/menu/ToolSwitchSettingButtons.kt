@@ -45,7 +45,7 @@ object ToolSwitchSettingButtons {
     val AUTO_SWITCH = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
             val autoSwitch = player.getOrPut(Keys.AUTO_SWITCH)
-            return ItemStack(Material.COMPARATOR).apply {
+            return itemStackOf(Material.COMPARATOR) {
                 setDisplayName("${ChatColor.WHITE}" +
                         ToolSwitchMessages.AUTO_SWITCH.asSafety(player.wrappedLocale) +
                         if (autoSwitch) "${ChatColor.GREEN}${ChatColor.BOLD}ON"

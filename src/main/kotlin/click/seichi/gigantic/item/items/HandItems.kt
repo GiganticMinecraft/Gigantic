@@ -31,41 +31,41 @@ object HandItems {
     val PICKEL = object : HandItem {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.DIAMOND_PICKAXE).apply {
+            return itemStackOf(Material.DIAMOND_PICKAXE) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         HandItemMessages.PICKEL.asSafety(player.wrappedLocale))
                 addLore(*HandItemMessages.PICKEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
-                modifyItemMeta(this@apply, player)
+                modifyItemMeta(this, player)
             }
         }
     }
 
     val SHOVEL = object : HandItem {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.DIAMOND_SHOVEL).apply {
+            return itemStackOf(Material.DIAMOND_SHOVEL) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         HandItemMessages.SHOVEL.asSafety(player.wrappedLocale))
                 addLore(*HandItemMessages.SHOVEL_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
-                modifyItemMeta(this@apply, player)
+                modifyItemMeta(this, player)
             }
         }
     }
 
     val AXE = object : HandItem {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.DIAMOND_AXE).apply {
+            return itemStackOf(Material.DIAMOND_AXE) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.ITALIC}" +
                         HandItemMessages.AXE.asSafety(player.wrappedLocale))
                 addLore(*HandItemMessages.AXE_LORE
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray()
                 )
-                modifyItemMeta(this@apply, player)
+                modifyItemMeta(this, player)
             }
         }
     }
@@ -86,7 +86,7 @@ object HandItems {
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.MANA_STONE.isGranted(player)) return null
             val spellToggle = player.getOrPut(Keys.SPELL_TOGGLE)
-            return if (spellToggle) ItemStack(Material.NETHER_STAR).apply {
+            return if (spellToggle) itemStackOf(Material.NETHER_STAR) {
                 setDisplayName(HandItemMessages.MANA_STONE.asSafety(player.wrappedLocale))
                 setLore(*HandItemMessages.MANA_STONE_LORE
                         .map { it.asSafety(player.wrappedLocale) }
@@ -147,12 +147,12 @@ object HandItems {
             if (!Skill.MINE_BURST.isGranted(player)) return null
             val mineBurst = player.getOrPut(Keys.SKILL_MINE_BURST)
             return when {
-                mineBurst.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
+                mineBurst.duringCoolTime() -> itemStackOf(Material.FLINT_AND_STEEL) {
                     mineBurst.run {
                         amount = remainTimeToFire.toInt()
                     }
                 }
-                mineBurst.duringFire() -> ItemStack(Material.BLAZE_POWDER).apply {
+                mineBurst.duringFire() -> itemStackOf(Material.BLAZE_POWDER) {
                     setEnchanted(true)
                     mineBurst.run {
                         amount = remainTimeToCool.toInt()
@@ -181,7 +181,7 @@ object HandItems {
             if (!Skill.FLASH.isGranted(player)) return null
             val flash = player.getOrPut(Keys.SKILL_FLASH)
             return when {
-                flash.duringCoolTime() -> ItemStack(Material.FLINT_AND_STEEL).apply {
+                flash.duringCoolTime() -> itemStackOf(Material.FLINT_AND_STEEL) {
                     flash.run {
                         amount = remainTimeToFire.toInt()
                     }
@@ -207,7 +207,7 @@ object HandItems {
 
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.SKILL_JUMP.isGranted(player)) return null
-            return ItemStack(Material.PHANTOM_MEMBRANE).apply {
+            return itemStackOf(Material.PHANTOM_MEMBRANE) {
                 setDisplayName(HandItemMessages.JUMP.asSafety(player.wrappedLocale))
                 setLore(*HandItemMessages.JUMP_LORE
                         .map { it.asSafety(player.wrappedLocale) }
@@ -224,7 +224,7 @@ object HandItems {
 
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Spell.SKY_WALK.isGranted(player)) return null
-            return ItemStack(Material.PRISMARINE_CRYSTALS).apply {
+            return itemStackOf(Material.PRISMARINE_CRYSTALS) {
                 val toggle = player.getOrPut(Keys.SPELL_SKY_WALK_TOGGLE)
                 setDisplayName(
                         HandItemMessages.SKY_WALK.asSafety(player.wrappedLocale) +

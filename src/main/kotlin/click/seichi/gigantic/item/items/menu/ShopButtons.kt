@@ -31,7 +31,7 @@ object ShopButtons {
 
     val VOTE = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.ENCHANTED_GOLDEN_APPLE).apply {
+            return itemStackOf(Material.ENCHANTED_GOLDEN_APPLE) {
                 setDisplayName(player, ShopMessages.VOTE)
                 sublime()
             }
@@ -52,7 +52,7 @@ object ShopButtons {
 
     val DONATION = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.DIAMOND).apply {
+            return itemStackOf(Material.DIAMOND) {
                 setDisplayName(player, ShopMessages.DONATION)
                 sublime()
                 setEnchanted(true)

@@ -45,13 +45,13 @@ object TeleportToHomeMenu : Menu() {
                 override fun toShownItemStack(player: Player): ItemStack? {
                     val home = player.getOrPut(Keys.HOME_MAP)[homeId]
                     return when (home) {
-                        null -> ItemStack(Material.BEDROCK).apply {
+                        null -> itemStackOf(Material.BEDROCK) {
                             // クリックでホームを設定
                             setDisplayName("${ChatColor.GREEN}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
                                     TeleportMessages.REGISTER_HOME.asSafety(player.wrappedLocale)
                             )
                         }
-                        else -> ItemStack(Material.RED_BED).apply {
+                        else -> itemStackOf(Material.RED_BED) {
                             setDisplayName(
                                     "${ChatColor.AQUA}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
                                             home.name

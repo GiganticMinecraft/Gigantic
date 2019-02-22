@@ -156,7 +156,7 @@ object BagButtons {
     val DONATE_HISTORY = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.PAPER).apply {
+            return itemStackOf(Material.PAPER) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}" +
                         DonateHistoryMessages.TITLE.asSafety(player.wrappedLocale))
                 hideAllFlag()
@@ -208,7 +208,7 @@ object BagButtons {
     val SKILL = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.BONE).apply {
+            return itemStackOf(Material.BONE) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}" +
                         SkillMenuMessages.TITLE.asSafety(player.wrappedLocale))
                 hideAllFlag()
@@ -227,7 +227,7 @@ object BagButtons {
 
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.MANA_STONE.isGranted(player)) return null
-            return ItemStack(Material.LAPIS_LAZULI).apply {
+            return itemStackOf(Material.LAPIS_LAZULI) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + SpellMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
@@ -245,12 +245,12 @@ object BagButtons {
     val AFK = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
             return when (player.gameMode) {
-                GameMode.SPECTATOR -> ItemStack(Material.POPPY, 1).apply {
+                GameMode.SPECTATOR -> itemStackOf(Material.POPPY) {
                     setDisplayName(
                             BagMessages.BACK_FROM_REST.asSafety(player.wrappedLocale)
                     )
                 }
-                else -> ItemStack(Material.DANDELION, 1).apply {
+                else -> itemStackOf(Material.DANDELION) {
                     setDisplayName(
                             BagMessages.REST.asSafety(player.wrappedLocale)
                     )
@@ -291,7 +291,7 @@ object BagButtons {
     val SPECIAL_THANKS = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.MUSIC_DISC_13).apply {
+            return itemStackOf(Material.MUSIC_DISC_13) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale))
                 clearLore()
@@ -316,7 +316,7 @@ object BagButtons {
 
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.QUEST.isGranted(player)) return null
-            return ItemStack(Material.WRITABLE_BOOK).apply {
+            return itemStackOf(Material.WRITABLE_BOOK) {
                 if (Quest.getOrderedList(player).isEmpty()) {
                     setDisplayName("${ChatColor.GRAY}${ChatColor.UNDERLINE}"
                             + BagMessages.NO_QUEST.asSafety(player.wrappedLocale))
@@ -346,7 +346,7 @@ object BagButtons {
 
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.FIRST_RELIC.isGranted(player)) return null
-            return ItemStack(Material.ENDER_CHEST).apply {
+            return itemStackOf(Material.ENDER_CHEST) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.RELIC.asSafety(player.wrappedLocale))
                 clearLore()
@@ -370,7 +370,7 @@ object BagButtons {
     val TELEPORT_DOOR = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.DARK_OAK_DOOR).apply {
+            return itemStackOf(Material.DARK_OAK_DOOR) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.TELEPORT.asSafety(player.wrappedLocale))
             }
@@ -387,7 +387,7 @@ object BagButtons {
     val TOOL_SWITCH_SETTING = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.LADDER).apply {
+            return itemStackOf(Material.LADDER) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.SWITCH_DETAIL.asSafety(player.wrappedLocale))
                 setLore(BagMessages.SWITCH_DETAIL_LORE.asSafety(player.wrappedLocale))
@@ -406,7 +406,7 @@ object BagButtons {
     val EFFECT = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.ENCHANTING_TABLE).apply {
+            return itemStackOf(Material.ENCHANTING_TABLE) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + EffectMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
@@ -423,7 +423,7 @@ object BagButtons {
     val FOLLOW_SETTING = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.ROSE_BUSH).apply {
+            return itemStackOf(Material.ROSE_BUSH) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + FollowSettingMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
@@ -441,7 +441,7 @@ object BagButtons {
 
         override fun toShownItemStack(player: Player): ItemStack? {
             if (!Achievement.FIRST_WILL.isGranted(player)) return null
-            return ItemStack(Material.END_PORTAL_FRAME).apply {
+            return itemStackOf(Material.END_PORTAL_FRAME) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + RelicGeneratorMenuMessages.TITLE.asSafety(player.wrappedLocale))
             }
@@ -459,7 +459,7 @@ object BagButtons {
     val VOTE_BONUS = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.GOLDEN_APPLE).apply {
+            return itemStackOf(Material.GOLDEN_APPLE) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.VOTE_BONUS.asSafety(player.wrappedLocale))
                 clearLore()
@@ -563,7 +563,7 @@ object BagButtons {
     val SETTINGS = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return ItemStack(Material.TRIPWIRE_HOOK).apply {
+            return itemStackOf(Material.TRIPWIRE_HOOK) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + SettingMenuMessages.TITLE.asSafety(player.wrappedLocale))
                 clearLore()
