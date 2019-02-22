@@ -35,6 +35,7 @@
 :diamond_shape_with_a_dot_inside: プロフィールにレリック合計数とコンプリート達成率を記載しました  
 :diamond_shape_with_a_dot_inside: エフェクトの購入ページと選択ページを別にしました  
 :diamond_shape_with_a_dot_inside: TIPSの表示切替設定を削除しました  
+:diamond_shape_with_a_dot_inside: 魔法 **スカイ・ウォーク**の範囲を1ブロック広く、マナ消費量を半分にしました  
 
 
 :bow: **__不具合修正__** :bow:   

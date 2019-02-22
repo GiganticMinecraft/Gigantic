@@ -104,9 +104,9 @@ spell:
   # 足場補助スキル
   sky_walk:
     # 1ブロック当たりのマナ消費量
-    mana_per_block: 0.1
+    mana_per_block: 0.05
     # 半径
-    radius: 2
+    radius: 3
 
   # 移動速度改変スキル
   luna_flex:
