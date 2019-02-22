@@ -79,7 +79,7 @@ object SpellMessages {
                     ),
                     LocalizedText(
                             Locale.JAPANESE to "${ChatColor.AQUA}" +
-                                    "消費: ${Config.SPELL_SKY_WALK_MANA_PER_BLOCK.toBigDecimal().setScale(1, RoundingMode.HALF_UP)} マナ/ブロック"
+                                    "消費: ${Config.SPELL_SKY_WALK_MANA_PER_BLOCK.toBigDecimal().setScale(2, RoundingMode.HALF_UP)} マナ/ブロック"
                     )
             )
 
