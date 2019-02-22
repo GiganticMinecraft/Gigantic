@@ -1,5 +1,6 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.extension.toRainbow
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LinedChatMessage
 import click.seichi.gigantic.message.LocalizedText
@@ -110,5 +111,31 @@ object LoginMessages {
                     "${ChatColor.LIGHT_PURPLE}" +
                     (1..53).joinToString("") { "-" }
     ), 0L)
+
+    val EVENT_JMS_KING = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE to (1..53).joinToString("") { "-" }.toRainbow() +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.WHITE}" +
+                    "JMS おすすめサーバーリスト 1位達成記念イベント開催中!!" +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.WHITE}" +
+                    "期間中にログインしたレベル20以上の全てのプレイヤーに" +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.WHITE}" +
+                    "特別レリック" +
+                    "${ChatColor.DARK_PURPLE}${ChatColor.BOLD}" +
+                    " 魔王の盃 " +
+                    "${ChatColor.WHITE}" +
+                    "をプレゼント!!" +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.WHITE}" +
+                    "詳しくは" +
+                    "${ChatColor.DARK_PURPLE}" +
+                    "公式ディスコード" +
+                    "${ChatColor.WHITE}" +
+                    "をチェック!!" +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    (1..53).joinToString("") { "-" }.toRainbow()
+    ))
 
 }

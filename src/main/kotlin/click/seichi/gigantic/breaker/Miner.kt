@@ -11,7 +11,7 @@ import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
-import click.seichi.gigantic.relic.WillRelic
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.SkillSounds
 import org.bukkit.Material
@@ -45,7 +45,7 @@ open class Miner : Breaker {
         }
 
 
-        var bonus = WillRelic.calcMultiplier(player, block)
+        var bonus = Relic.calcMultiplier(player, block)
 
         player.manipulate(CatalogPlayerCache.EXP) {
             it.inc()

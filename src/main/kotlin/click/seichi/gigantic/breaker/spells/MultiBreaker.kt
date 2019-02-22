@@ -9,7 +9,7 @@ import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.relic.WillRelic
+import click.seichi.gigantic.relic.Relic
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
@@ -192,7 +192,7 @@ class MultiBreaker : Miner(), SpellCaster {
         }
 
         val bonus = breakBlockSet.fold(0.0) { source, b ->
-            source.plus(WillRelic.calcMultiplier(player, b))
+            source.plus(Relic.calcMultiplier(player, b))
         }
 
         player.manipulate(CatalogPlayerCache.EXP) {

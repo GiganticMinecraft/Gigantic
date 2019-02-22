@@ -1,7 +1,7 @@
 package click.seichi.gigantic.event.events
 
 import click.seichi.gigantic.event.CustomEvent
-import click.seichi.gigantic.relic.WillRelic
+import click.seichi.gigantic.relic.Relic
 import org.bukkit.entity.Player
 
 /**
@@ -9,6 +9,6 @@ import org.bukkit.entity.Player
  */
 class RelicGenerateEvent(
         val player: Player,
-        val generated: WillRelic
+        val generated: Relic
 ) : CustomEvent() {
 }

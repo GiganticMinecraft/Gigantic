@@ -5,6 +5,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.WillMessages
+import click.seichi.gigantic.relic.Relic
 import org.bukkit.ChatColor
 import org.bukkit.Color
 import org.bukkit.Material
@@ -25,7 +26,8 @@ enum class Will(
         val grade: WillGrade,
         private val localizedName: LocalizedText,
         // 表示の順番
-        val displayPriority: Int
+        val displayPriority: Int,
+        vararg relics: Relic
 ) {
 
     /**
@@ -42,8 +44,9 @@ enum class Will(
             Material.BLUE_GLAZED_TERRACOTTA,
             WillGrade.BASIC,
             WillMessages.AQUA,
-            2
-
+            2,
+            Relic.SHELL, Relic.SAIL, Relic.DEEP_SEA_FISH_DIODE, Relic.SEICHI_MACKEREL, Relic.MUSH_FISH,
+            Relic.STEERING_WHEEL, Relic.WOOD_SLAB, Relic.BROKEN_WATERMELON, Relic.CUTE_WATERING_POT
     ) {
         // 高度が30以上62以下であり，かつ海，川等のバイオームであること
         override fun canSpawn(player: Player, block: Block): Boolean {
@@ -59,7 +62,9 @@ enum class Will(
             Material.RED_GLAZED_TERRACOTTA,
             WillGrade.BASIC,
             WillMessages.IGNIS,
-            3
+            3,
+            Relic.BEAST_BONE, Relic.THIN_TOOTH, Relic.BROKEN_IVORY, Relic.WILL_O_WISP, Relic.BIG_FUNG,
+            Relic.CAMP_FIRE_TRACE, Relic.DESERT_CRYSTAL, Relic.CARNIVORE_BONE, Relic.FRIED_POTATO
     ) {
         // 高度が29以下であること
         override fun canSpawn(player: Player, block: Block): Boolean {
@@ -73,7 +78,9 @@ enum class Will(
             Material.WHITE_GLAZED_TERRACOTTA,
             WillGrade.BASIC,
             WillMessages.AER,
-            5
+            5,
+            Relic.BROKEN_BOW, Relic.TIME_CAPSEL, Relic.BROKEN_FORCE_FLAG, Relic.BITTEN_LEATHER_BOOT, Relic.BROKEN_LEAD,
+            Relic.OLD_AXE, Relic.VODKA_BOTTLE, Relic.ACID_GEAR, Relic.SLICED_ROPE, Relic.WEB_SCRAP
     ) {
         // 高度が85以上であること
         override fun canSpawn(player: Player, block: Block): Boolean {
@@ -87,7 +94,9 @@ enum class Will(
             Material.BROWN_GLAZED_TERRACOTTA,
             WillGrade.BASIC,
             WillMessages.TERRA,
-            1
+            1,
+            Relic.USED_COIN, Relic.ADVENTURER_SOLE, Relic.SUPER_MUSHROOM, Relic.RAINBOW_CLAY, Relic.CLAY_IMAGE,
+            Relic.MAMMMOTH_RAW_MEET, Relic.CAT_SAND, Relic.ULURU_SCRAP, Relic.SPHINX
     ) {
         // 高度が30以上62以下であり，かつ海，川等のバイオームではないこと
         override fun canSpawn(player: Player, block: Block): Boolean {
@@ -103,7 +112,9 @@ enum class Will(
             Material.LIME_GLAZED_TERRACOTTA,
             WillGrade.BASIC,
             WillMessages.NATURA,
-            4
+            4,
+            Relic.CACAO_WATERMELON, Relic.SUMMER_DAY, Relic.BIRCH_MUSHROOM, Relic.EGGPLANT, Relic.WHITE_FLOWER,
+            Relic.BANANA_SKIN, Relic.INSECT_HORN, Relic.BROWN_SAP, Relic.DOWN_TREE
     ) {
         // 高度が63以上84以下であること
         override fun canSpawn(player: Player, block: Block): Boolean {
@@ -117,7 +128,9 @@ enum class Will(
             Material.LIGHT_BLUE_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.GLACIES,
-            6
+            6,
+            Relic.FROSTED_PINECONE, Relic.CRYSTAL_OF_SNOW, Relic.FROSTED_FISH, Relic.NOT_MELTTED_ICE, Relic.FROSTED_CRAFTBOX,
+            Relic.ICICLE, Relic.FROSTED_WHEEL, Relic.SOFT_RIME, Relic.CRAMPONS
     ) {
         // 温度が0以下であること
         override fun canSpawn(player: Player, block: Block): Boolean {
@@ -131,7 +144,9 @@ enum class Will(
             Material.YELLOW_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.LUX,
-            9
+            9,
+            Relic.ELIXIR, Relic.OLD_MESSAGE_BOTTLE, Relic.WHITE_APPLE, Relic.BUDDHIST_STATUE, Relic.TREASURE_CASKET,
+            Relic.JIZO, Relic.LIGHTNING_MOSS, Relic.RED_DUST, Relic.BLUE_DUST
     ) {
         // 温度が1.2以上であること
         override fun canSpawn(player: Player, block: Block): Boolean {
@@ -145,7 +160,9 @@ enum class Will(
             Material.GRAY_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.SOLUM,
-            7
+            7,
+            Relic.A_PIECE_OF_CHALK, Relic.BROKEN_TRAP, Relic.FLUX_FOSSIL, Relic.FROSTED_ORE, Relic.MYCELIUM_PICKAXE,
+            Relic.BEAUTIFUL_ORE, Relic.IRON_ARMOR, Relic.INDIGO, Relic.DIAMOND_STONE
     ) {
         // 山岳バイオームであること
         override fun canSpawn(player: Player, block: Block): Boolean {
@@ -160,7 +177,9 @@ enum class Will(
             Material.PURPLE_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.UMBRA,
-            10
+            10,
+            Relic.BEAST_HORN, Relic.BOTTLED_LIQUID, Relic.SLIME_LEES, Relic.PURPLE_CHEESE, Relic.SHADE_ARMOR,
+            Relic.ORICHALCUM, Relic.DARK_MATTER, Relic.BLACK_CLOTH, Relic.BLOODSTAINED_SWORD, Relic.RLYEH_TEXT
     ) {
         // 森林バイオームであること
         override fun canSpawn(player: Player, block: Block): Boolean {
@@ -175,7 +194,9 @@ enum class Will(
             Material.LIGHT_GRAY_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.VENTUS,
-            8
+            8,
+            Relic.RUSTED_COMPASS, Relic.BEAUTIFUL_WING, Relic.TUMBLEWEED, Relic.HORN, Relic.SYLPH_LEAFE,
+            Relic.TENT_CLOTH, Relic.PRICKLE, Relic.WING, Relic.NIDUS_AVIS
     ) {
         // 丘陵
         override fun canSpawn(player: Player, block: Block): Boolean {
@@ -190,7 +211,9 @@ enum class Will(
             Material.PINK_GLAZED_TERRACOTTA,
             WillGrade.SPECIAL,
             WillMessages.SAKURA,
-            11
+            11,
+            Relic.ALSTROMERIA_SEED, Relic.NIGHTINGALE_FEATHER, Relic.OBOROZUKI_SWORD, Relic.SAKURA_RACE_CAKE, Relic.CERTIFICATE,
+            Relic.SCHOOL_BAG, Relic.KATSUO_SASHIMI, Relic.BOTAMOCHI, Relic.PEACH_CORE
     ) {
         // 期間限定
         override fun canSpawn(player: Player, block: Block): Boolean {
@@ -198,6 +221,10 @@ enum class Will(
         }
     },
     ;
+
+    val relicSet = relics.toSet()
+
+    fun has(relic: Relic) = relicSet.contains(relic)
 
     abstract fun canSpawn(player: Player, block: Block): Boolean
 
@@ -210,6 +237,14 @@ enum class Will(
     companion object {
         private val idMap = values().map { it.id to it }.toMap()
 
+        private val relicMap = values().flatMap { will ->
+            will.relicSet.map { relic ->
+                relic to will
+            }
+        }.toMap()
+
         fun findById(id: Int) = idMap[id]
+
+        fun findByRelic(relic: Relic) = relicMap[relic]
     }
 }

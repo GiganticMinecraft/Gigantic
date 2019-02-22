@@ -35,7 +35,7 @@ object MuteMenu : BookMenu() {
         return player.getOrPut(Keys.MENU_PLAYER_LIST).size.minus(1).div(numOfPlayerPerPage).plus(1).coerceAtLeast(1)
     }
 
-    override fun onOpen(player: Player) {
+    override fun onOpen(player: Player, isFirst: Boolean) {
         player.offer(
                 Keys.MENU_PLAYER_LIST,
                 Bukkit.getOnlinePlayers()

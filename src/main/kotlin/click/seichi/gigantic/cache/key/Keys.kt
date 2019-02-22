@@ -28,7 +28,6 @@ import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.relic.Relic
-import click.seichi.gigantic.relic.WillRelic
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
 import click.seichi.gigantic.timer.LingeringTimer
 import click.seichi.gigantic.timer.SimpleTimer
@@ -1012,11 +1011,20 @@ object Keys {
         }
     }
 
-    val GENERETED_WILL_RELIC = object : Key<PlayerCache, WillRelic?> {
-        override val default: WillRelic?
+    val MENU_SPECIAL_RELIC_IS_SELECTED = object : Key<PlayerCache, Boolean> {
+        override val default: Boolean
+            get() = false
+
+        override fun satisfyWith(value: Boolean): Boolean {
+            return true
+        }
+    }
+
+    val GENERATED_RELIC = object : Key<PlayerCache, Relic?> {
+        override val default: Relic?
             get() = null
 
-        override fun satisfyWith(value: WillRelic?): Boolean {
+        override fun satisfyWith(value: Relic?): Boolean {
             return true
         }
     }
@@ -1225,6 +1233,15 @@ object Keys {
             get() = listOf()
 
         override fun satisfyWith(value: List<GiganticEffect>): Boolean {
+            return true
+        }
+    }
+
+    val MENU_RELIC_LIST = object : Key<PlayerCache, List<Relic>> {
+        override val default: List<Relic>
+            get() = listOf()
+
+        override fun satisfyWith(value: List<Relic>): Boolean {
             return true
         }
     }

@@ -31,14 +31,14 @@ object DonateGiftEffectShopMenu : DonateGiftShopMenu() {
     init {
         registerButton(0, EffectButtons.PLAYER)
         registerButton(size - 6, PrevButton(this))
-        registerButton(size - 8, NextButton(this))
+        registerButton(size - 4, NextButton(this))
     }
 
     override fun getMaxPage(player: Player): Int {
         return player.getOrPut(Keys.MENU_EFFECT_LIST).size.minus(1).div(numOfContentsPerPage).plus(1).coerceAtLeast(1)
     }
 
-    override fun onOpen(player: Player) {
+    override fun onOpen(player: Player, isFirst: Boolean) {
         player.offer(Keys.MENU_EFFECT_LIST,
                 GiganticEffect.values()
                         .filter { it.currency == Currency.DONATE_POINT }

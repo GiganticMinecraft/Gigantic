@@ -1,5 +1,7 @@
 package click.seichi.gigantic.menu.menus
 
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.items.menu.RelicGeneratorButtons
 import click.seichi.gigantic.menu.Menu
@@ -21,6 +23,11 @@ object RelicGeneratorMenu : Menu() {
         get() = MenuSounds.RELIC_MENU_OPEN
     override val closeSound: DetailedSound
         get() = MenuSounds.RELIC_MENU_CLOSE
+
+    override fun onOpen(player: Player, isFirst: Boolean) {
+        if (isFirst)
+            player.offer(Keys.SELECTED_WILL, null)
+    }
 
     override fun getTitle(player: Player): String {
         return RelicGeneratorMenuMessages.TITLE.asSafety(player.wrappedLocale)

@@ -12,7 +12,6 @@ object MenuSounds {
             Sound.BLOCK_FENCE_GATE_OPEN,
             SoundCategory.BLOCKS,
             pitch = 0.1F
-
     )
 
     val MENU_CLOSE = DetailedSound(
@@ -24,7 +23,15 @@ object MenuSounds {
     val PAGE_CHANGE = DetailedSound(
             Sound.BLOCK_DISPENSER_LAUNCH,
             SoundCategory.BLOCKS,
-            pitch = 4.0F
+            pitch = 1.4F,
+            volume = 0.6F
+    )
+
+    val CATEGORY_CHANGE = DetailedSound(
+            Sound.BLOCK_PISTON_CONTRACT,
+            SoundCategory.BLOCKS,
+            pitch = 1.4F,
+            volume = 0.4F
     )
 
     val EFFECT_BUY = DetailedSound(

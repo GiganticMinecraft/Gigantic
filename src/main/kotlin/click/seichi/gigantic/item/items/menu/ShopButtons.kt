@@ -39,7 +39,13 @@ object ShopButtons {
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder is VoteGiftShopMenu) return false
-            VoteGiftEffectShopMenu.open(player)
+            if (event.inventory.holder is DonateGiftEffectShopMenu) {
+                MenuSounds.CATEGORY_CHANGE.playOnly(player)
+                VoteGiftEffectShopMenu.open(player, isFirst = false, playSound = false)
+            } else {
+                VoteGiftEffectShopMenu.open(player)
+            }
+
             return true
         }
     }
@@ -55,7 +61,12 @@ object ShopButtons {
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder is DonateGiftShopMenu) return false
-            DonateGiftEffectShopMenu.open(player)
+            if (event.inventory.holder is VoteGiftEffectShopMenu) {
+                MenuSounds.CATEGORY_CHANGE.playOnly(player)
+                DonateGiftEffectShopMenu.open(player, isFirst = false, playSound = false)
+            } else {
+                DonateGiftEffectShopMenu.open(player)
+            }
             return true
         }
     }

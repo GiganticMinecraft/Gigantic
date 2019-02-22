@@ -11,7 +11,7 @@ import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.RelicGeneratorMenuMessages
 import click.seichi.gigantic.message.messages.menu.RelicMenuMessages
 import click.seichi.gigantic.player.Defaults
-import click.seichi.gigantic.relic.WillRelic
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.MenuSounds
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
@@ -22,7 +22,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
-import java.math.RoundingMode
 import kotlin.random.asKotlinRandom
 
 /**
@@ -71,7 +70,7 @@ object RelicGeneratorButtons {
     val GENERATE = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
             val selected = player.getOrPut(Keys.SELECTED_WILL)
-            val generated = player.getOrPut(Keys.GENERETED_WILL_RELIC)
+            val generated = player.getOrPut(Keys.GENERATED_RELIC)
             return ItemStack(Material.END_PORTAL_FRAME).apply {
                 clearLore()
                 when {
@@ -94,18 +93,10 @@ object RelicGeneratorButtons {
                 addLore(MenuMessages.LINE)
 
                 if (generated != null) {
-                    val will = generated.will
-                    val relic = generated.relic
-                    addLore("" + will.chatColor + "${ChatColor.BOLD}" +
-                            will.getName(player.wrappedLocale) +
-                            RelicMenuMessages.GENERATED_ETHEL.asSafety(player.wrappedLocale)
-                    )
-
-                    addLore("" + will.chatColor + "${ChatColor.BOLD}" +
-                            RelicMenuMessages.GENERATED_RELIC_PREFIX.asSafety(player.wrappedLocale) +
-                            relic.getName(player.wrappedLocale) +
-                            RelicMenuMessages.GENERATED_RELIC_SUFIX.asSafety(player.wrappedLocale)
-                    )
+                    val will = Will.findByRelic(generated) ?: return@apply
+                    addLore(*RelicMenuMessages.GENERATED_ETHEL_LORE(will, generated)
+                            .map { it.asSafety(player.wrappedLocale) }
+                            .toTypedArray())
                 }
             }
         }
@@ -117,11 +108,11 @@ object RelicGeneratorButtons {
             player.transform(Keys.ETHEL_MAP[selected]!!) { it - Defaults.RELIC_GENERATOR_REQUIRE_ETHEL }
 
             // ランダムにレリックを選択
-            val willRelic = WillRelic.values().filter { it.will == selected }.random(Random.generator.asKotlinRandom())
+            val relic = Relic.values().filter { selected.has(it) }.random(Random.generator.asKotlinRandom())
             // レリックを付与
-            willRelic.relic.dropTo(player)
+            relic.dropTo(player)
             // レリックを保存
-            player.offer(Keys.GENERETED_WILL_RELIC, willRelic)
+            player.offer(Keys.GENERATED_RELIC, relic)
             // 音を再生
             MenuSounds.RELIC_GENERATE.play(player.location)
             // 更新(サイドバー更新も兼ねて)
@@ -129,13 +120,13 @@ object RelicGeneratorButtons {
             // 再度開く
             RelicGeneratorMenu.reopen(player)
 
-            Bukkit.getPluginManager().callEvent(RelicGenerateEvent(player, willRelic))
+            Bukkit.getPluginManager().callEvent(RelicGenerateEvent(player, relic))
 
             // 更新後にすぐに削除
             object : BukkitRunnable() {
                 override fun run() {
                     if (!player.isValid) return
-                    player.offer(Keys.GENERETED_WILL_RELIC, null)
+                    player.offer(Keys.GENERATED_RELIC, null)
                 }
             }.runTaskLater(Gigantic.PLUGIN, 1L)
             return true
@@ -144,30 +135,20 @@ object RelicGeneratorButtons {
 
     val GENERATED = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
-            val generated = player.getOrPut(Keys.GENERETED_WILL_RELIC) ?: return null
-            val will = generated.will
-            val relic = generated.relic
-            return ItemStack(generated.material).apply {
-                setDisplayName("${ChatColor.RESET}" +
-                        will.chatColor + "${ChatColor.BOLD}" +
-                        relic.getName(player.wrappedLocale) +
-                        "($amount)")
-                setLore(*relic.getLore(player.wrappedLocale).map { "${ChatColor.GRAY}" + it }.toTypedArray())
+            val generated = player.getOrPut(Keys.GENERATED_RELIC) ?: return null
+            val will = Will.findByRelic(generated) ?: return null
+            return generated.getIcon().apply {
+                setDisplayName(player, RelicMenuMessages.RELIC_TITLE(will.chatColor, generated, generated.getDroppedNum(player)))
+                setLore(*generated.getLore(player.wrappedLocale).map { "${ChatColor.GRAY}" + it }.toTypedArray())
                 addLore("${ChatColor.WHITE}" + MenuMessages.LINE)
                 val multiplier = generated.calcMultiplier(player)
-                addLore("${ChatColor.YELLOW}${ChatColor.BOLD}" +
-                        RelicMenuMessages.BONUS_EXP.asSafety(player.wrappedLocale) +
-                        "${ChatColor.RESET}${ChatColor.WHITE}" +
-                        RelicMenuMessages.BREAK_MUL.asSafety(player.wrappedLocale) +
-                        multiplier.toBigDecimal().setScale(2, RoundingMode.HALF_UP))
-                val bonusLore = generated.getLore(player.wrappedLocale)
+                addLore(RelicMenuMessages.BONUS_EXP(multiplier.toBigDecimal()).asSafety(player.wrappedLocale))
+                val bonusLore = generated.getBonusLore(player.wrappedLocale)
                 bonusLore.forEachIndexed { index, s ->
                     if (index == 0) {
-                        addLore("${ChatColor.YELLOW}${ChatColor.BOLD}" +
-                                RelicMenuMessages.CONDITIONS.asSafety(player.wrappedLocale) +
-                                "${ChatColor.RESET}${ChatColor.WHITE}" + s)
+                        addLore(RelicMenuMessages.CONDITIONS_FIRST_LINE(s).asSafety(player.wrappedLocale))
                     } else {
-                        addLore("${ChatColor.RESET}${ChatColor.WHITE}" + s)
+                        addLore(RelicMenuMessages.CONDITIONS(s).asSafety(player.wrappedLocale))
                     }
                 }
             }

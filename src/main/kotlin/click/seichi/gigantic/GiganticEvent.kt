@@ -21,13 +21,22 @@ enum class GiganticEvent(
             return now in from..to
         }
     },
+    // JMS1位記念イベント
+    JMS_KING(LoginMessages.EVENT_JMS_KING) {
+        val from = DateTime("2019-02-23T00:00:00+09:00")
+        val to = DateTime("2019-03-23T00:00:00+09:00")
+        override fun isActive(): Boolean {
+            val now = DateTime.now()
+            return now in from..to
+        }
+    }
     ;
 
     abstract fun isActive(): Boolean
 
     companion object {
         fun trySendLoginMessageTo(player: Player) {
-            values().filter { it.isActive() }
+            values().filter { if (Gigantic.IS_DEBUG) true else it.isActive() }
                     .forEach { it.loginMessage.sendTo(player) }
         }
     }

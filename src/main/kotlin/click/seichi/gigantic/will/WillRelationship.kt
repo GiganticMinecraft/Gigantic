@@ -3,7 +3,6 @@ package click.seichi.gigantic.will
 import click.seichi.gigantic.extension.hasRelic
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.WillMessages
-import click.seichi.gigantic.relic.WillRelic
 import org.bukkit.entity.Player
 import java.util.*
 
@@ -33,14 +32,14 @@ enum class WillRelationship(
     fun getName(locale: Locale) = localizedName.asSafety(locale)
 
     companion object {
-        private val relicTypeMap = WillRelic.values().groupBy { it.will }
+        private val relicTypeMap = Will.values().map { it to it.relicSet }.toMap()
 
         fun calcRelationship(player: Player, will: Will): WillRelationship {
 
             // 持っているレリック
-            val pRelicList = relicTypeMap[will]?.filter { player.hasRelic(it.relic) } ?: listOf()
-            val allNum = pRelicList.fold(0L) { source, willRelic ->
-                source + willRelic.relic.getDroppedNum(player)
+            val pRelicList = relicTypeMap[will]?.filter { player.hasRelic(it) } ?: listOf()
+            val allNum = pRelicList.fold(0L) { source, relic ->
+                source + relic.getDroppedNum(player)
             }
             // コンプリート
             return if (pRelicList.size == relicTypeMap[will]?.size ?: 0) {

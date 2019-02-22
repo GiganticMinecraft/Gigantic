@@ -20,8 +20,8 @@ abstract class BookMenu : Menu() {
 
     abstract fun getMaxPage(player: Player): Int
 
-    override fun open(player: Player, playSound: Boolean) {
-        open(player, 1, true, playSound)
+    override fun open(player: Player, isFirst: Boolean, playSound: Boolean) {
+        open(player, 1, isFirst, playSound)
     }
 
     fun changePage(player: Player, page: Int, playSound: Boolean = true) {
@@ -57,12 +57,12 @@ abstract class BookMenu : Menu() {
         return prevPage in 1..getMaxPage(player)
     }
 
-    private fun open(player: Player, page: Int, isFirstOpen: Boolean, playSound: Boolean) {
-        onOpen(player)
+    private fun open(player: Player, page: Int, isFirst: Boolean, playSound: Boolean) {
+        onOpen(player, isFirst)
         player.offer(Keys.MENU_PAGE, page)
         player.openInventory(createInventory(player))
         if (playSound) {
-            if (isFirstOpen)
+            if (isFirst)
                 openSound.playOnly(player)
             else
                 pageChangeSound.playOnly(player)
@@ -71,7 +71,7 @@ abstract class BookMenu : Menu() {
 
     override fun reopen(player: Player) {
         val current = player.getOrPut(Keys.MENU_PAGE)
-        open(player, current, isFirstOpen = false, playSound = false)
+        open(player, current, isFirst = false, playSound = false)
     }
 
     override fun createInventory(player: Player): Inventory {

@@ -66,11 +66,12 @@ abstract class Menu : InventoryHolder {
      * Menuを開きます
      *
      * @param player Menuを開くPlayer
+     * @param isFirst このメニューを開いた時に呼び出される
      * @param playSound 音を流す時true
      *
      */
-    open fun open(player: Player, playSound: Boolean = true) {
-        onOpen(player)
+    open fun open(player: Player, isFirst: Boolean = true, playSound: Boolean = true) {
+        onOpen(player, isFirst)
         player.openInventory(createInventory(player))
         if (playSound) openSound.playOnly(player)
     }
@@ -81,7 +82,7 @@ abstract class Menu : InventoryHolder {
      * @param player Menuを開いたPlayer
      *
      */
-    protected open fun onOpen(player: Player) {}
+    protected open fun onOpen(player: Player, isFirst: Boolean) {}
 
 
     protected open fun createInventory(player: Player): Inventory {
@@ -108,7 +109,7 @@ abstract class Menu : InventoryHolder {
      *
      */
     open fun reopen(player: Player) {
-        open(player, playSound = false)
+        open(player, isFirst = false, playSound = false)
     }
 
 

@@ -2,8 +2,11 @@ package click.seichi.gigantic.message.messages.menu
 
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.*
 
 /**
@@ -11,9 +14,23 @@ import java.util.*
  */
 object RelicMenuMessages {
 
-    val TITLE = LocalizedText(
-            Locale.JAPANESE to "レリックを選ぶ"
-    )
+    val TITLE: (Will?, Boolean) -> LocalizedText = { selected: Will?, special: Boolean ->
+        when {
+            special -> LocalizedText(
+                    Locale.JAPANESE to "特殊レリック一覧"
+            )
+            selected == null -> LocalizedText(
+                    Locale.JAPANESE to "レリック一覧"
+            )
+            else -> LocalizedText(
+                    Locale.JAPANESE.let {
+                        it to selected.getName(it) +
+                                "のレリック一覧"
+
+                    })
+        }
+
+    }
 
     val NUM = LocalizedText(
             Locale.JAPANESE to "所持数"
@@ -27,30 +44,50 @@ object RelicMenuMessages {
             Locale.JAPANESE to "レリック一覧"
     )
 
-    val CONDITIONS = LocalizedText(
-            Locale.JAPANESE to "条件: "
-    )
+    val CONDITIONS_FIRST_LINE = { line: String ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                        "条件: " +
+                        "${ChatColor.RESET}${ChatColor.WHITE}" +
+                        line
+        )
+    }
+    val CONDITIONS = { line: String ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.RESET}${ChatColor.WHITE}" +
+                        line
+        )
+    }
 
-    val BONUS_EXP = LocalizedText(
-            Locale.JAPANESE to "ボーナス経験値: "
-    )
+    val BONUS_EXP = { mul: BigDecimal ->
+        LocalizedText(
+                Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                        "ボーナス経験値: " +
+                        "${ChatColor.RESET}${ChatColor.WHITE}" +
+                        "整地量 x " +
+                        mul.setScale(2, RoundingMode.HALF_UP)
+        )
+    }
 
-    val BREAK_MUL = LocalizedText(
-            Locale.JAPANESE to "整地量 x "
-    )
-
-    val GENERATED_ETHEL = LocalizedText(
-            Locale.JAPANESE to "のエーテルを${Defaults.RELIC_GENERATOR_REQUIRE_ETHEL}使って"
-    )
-
-    val GENERATED_RELIC_PREFIX =
-            LocalizedText(
-                    Locale.JAPANESE to "レリック「"
-            )
-    val GENERATED_RELIC_SUFIX =
-            LocalizedText(
-                    Locale.JAPANESE to "」を手に入れた"
-            )
+    val GENERATED_ETHEL_LORE = { will: Will, relic: Relic ->
+        listOf(
+                LocalizedText(
+                        Locale.JAPANESE.let {
+                            it to "" + will.chatColor + "${ChatColor.BOLD}" +
+                                    will.getName(it) +
+                                    "のエーテルを" +
+                                    "${Defaults.RELIC_GENERATOR_REQUIRE_ETHEL}" +
+                                    "使って"
+                        }
+                ),
+                LocalizedText(
+                        Locale.JAPANESE.let {
+                            it to "" + will.chatColor + "${ChatColor.BOLD}" +
+                                    "レリック「${relic.getName(it)}」を手に入れた"
+                        }
+                )
+        )
+    }
 
     val RELATIONSHIP = LocalizedText(
             Locale.JAPANESE to "あなたとの関係: "
@@ -70,7 +107,23 @@ object RelicMenuMessages {
         )
     }
 
-    val WILL_RELIC_MENU_LORE = { num: Long, type: Int, allType: Int ->
+    val SPECIAL_RELIC_MENU_TITLE = LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.RESET}${ChatColor.WHITE}" +
+                        "特殊 " +
+                        RelicMenuMessages.RELICS.asSafety(it)
+            }
+    )
+
+    val ALL_RELIC_MENU_TITLE = LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.RESET}${ChatColor.WHITE}" +
+                        "全てのレリックを表示"
+            }
+    )
+
+
+    val RELIC_MENU_LORE = { num: Long, type: Int, allType: Int ->
         listOf(
                 LocalizedText(
                         Locale.JAPANESE to "${ChatColor.GREEN}" +
@@ -85,6 +138,17 @@ object RelicMenuMessages {
                                 "$type/$allType"
                 )
         )
+    }
+
+    val RELIC_TITLE = { chatColor: ChatColor, relic: Relic, amount: Long ->
+        LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "${ChatColor.RESET}" +
+                            chatColor + "${ChatColor.BOLD}" +
+                            relic.getName(it) +
+                            "($amount)"
+                })
+
     }
 
 
