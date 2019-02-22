@@ -9,6 +9,11 @@ import java.util.*
  */
 object ShopMessages {
 
+    val SHOP = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.UNDERLINE}" +
+                    "ショップ"
+    )
+
     val VOTE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
                     "投票特典" +

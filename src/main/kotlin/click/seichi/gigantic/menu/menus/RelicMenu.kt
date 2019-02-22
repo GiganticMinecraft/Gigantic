@@ -51,6 +51,8 @@ object RelicMenu : BookMenu() {
         // 絞り込みをリセットするボタン
         registerButton(8, RelicButtons.ALL_RELIC)
 
+        // 前回破壊したブロックから適用されているレリックを絞り込み
+
 
 
         registerButton(size - 6, PrevButton(this))

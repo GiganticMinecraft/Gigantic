@@ -11,6 +11,7 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.*
 import click.seichi.gigantic.menu.menus.setting.ToolSwitchSettingMenu
+import click.seichi.gigantic.menu.menus.shop.DonateGiftEffectShopMenu
 import click.seichi.gigantic.message.messages.BagMessages
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.WillMessages
@@ -415,6 +416,22 @@ object BagButtons {
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === EffectMenu) return false
             EffectMenu.open(player)
+            return true
+        }
+
+    }
+
+    val SHOP = object : Button {
+
+        override fun toShownItemStack(player: Player): ItemStack? {
+            return itemStackOf(Material.END_CRYSTAL) {
+                setDisplayName(player, ShopMessages.SHOP)
+            }
+        }
+
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === DonateGiftEffectShopMenu) return false
+            DonateGiftEffectShopMenu.open(player)
             return true
         }
 
