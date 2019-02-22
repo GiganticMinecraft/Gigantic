@@ -1323,6 +1323,18 @@ enum class Relic(
             return GiganticEvent.JMS_KING.isActive()
         }
     },
+    BOILED_CANOLA_FLOWER(
+            1103,
+            RelicMessages.BOILED_CANOLA_FLOWER,
+            RelicMessages.BOILED_CANOLA_FLOWER_LORE,
+            RelicMessages.BOILED_CANOLA_FLOWER_BONUS_LORE,
+            0.42,
+            itemStackOf(Material.BRAIN_CORAL)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.biome == Biome.SUNFLOWER_PLAINS && block.type == Material.GRASS_BLOCK
+        }
+    }
 
     ;
 

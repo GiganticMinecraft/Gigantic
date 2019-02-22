@@ -326,6 +326,7 @@ object RelicMessages {
     val BOTAMOCHI = LocalizedText(Locale.JAPANESE to "牡丹餅")
     val PEACH_CORE = LocalizedText(Locale.JAPANESE to "桃の核")
     val CUP_OF_KING = LocalizedText(Locale.JAPANESE to "魔王の盃")
+    val BOILED_CANOLA_FLOWER = LocalizedText(Locale.JAPANESE to "菜の花のおひたし")
     val BEAST_HORN_LORE = listOf(LocalizedText(Locale.JAPANESE to "蝸牛のように湾曲している角"))
     val ELIXIR_LORE = listOf(LocalizedText(Locale.JAPANESE to "遠い土地から流されてきた"))
     val SHELL_LORE = listOf(LocalizedText(Locale.JAPANESE to "綺麗な模様の貝殻"), LocalizedText(Locale.JAPANESE to "誰かが食べた跡が見える"))
@@ -428,6 +429,7 @@ object RelicMessages {
     val BOTAMOCHI_LORE = listOf(LocalizedText(Locale.JAPANESE to "棚から牡丹餅"))
     val PEACH_CORE_LORE = listOf(LocalizedText(Locale.JAPANESE to "かなり古い核"))
     val CUP_OF_KING_LORE = listOf(LocalizedText(Locale.JAPANESE to "JMS一位記念の盃"), LocalizedText(Locale.JAPANESE to "禍々しい雰囲気が漂う"))
+    val BOILED_CANOLA_FLOWER_LORE = listOf(LocalizedText(Locale.JAPANESE to "冬の間じっとしてきた身体に"), LocalizedText(Locale.JAPANESE to "春の目覚めを感じさせる"))
 
     val BEAST_HORN_BONUS_LORE = listOf(LocalizedText(Locale.JAPANESE to "冷帯な環境"))
     val ELIXIR_BONUS_LORE = listOf(LocalizedText(Locale.JAPANESE to "快適な気温"))
@@ -531,4 +533,5 @@ object RelicMessages {
     val BOTAMOCHI_BONUS_LORE = listOf(LocalizedText(Locale.JAPANESE to "未の刻"))
     val PEACH_CORE_BONUS_LORE = listOf(LocalizedText(Locale.JAPANESE to "花崗岩"))
     val CUP_OF_KING_BONUS_LORE = listOf(LocalizedText(Locale.JAPANESE to "JMS一位記念イベント期間中"))
+    val BOILED_CANOLA_FLOWER_BONUS_LORE = listOf(LocalizedText(Locale.JAPANESE to "ひまわり平原かつ芝生ブロック"))
 }
