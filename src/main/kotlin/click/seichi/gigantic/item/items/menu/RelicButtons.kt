@@ -3,6 +3,7 @@ package click.seichi.gigantic.item.items.menu
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
+import click.seichi.gigantic.menu.RelicCategory
 import click.seichi.gigantic.menu.menus.RelicMenu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.RelicMenuMessages
@@ -22,6 +23,8 @@ object RelicButtons {
 
     val WILL: (Will) -> Button = { will: Will ->
         object : Button {
+
+            val category = RelicCategory.getByWill(will)
 
             override fun toShownItemStack(player: Player): ItemStack? {
                 val hasNoRelic = will.relicSet
@@ -51,10 +54,9 @@ object RelicButtons {
                         // 一つもレリックを持っていなければTRUE
                         .none { player.hasRelic(it) }
                 if (hasNoRelic) return false
-                val prevSelect = player.getOrPut(Keys.SELECTED_WILL)
-                if (prevSelect == will) return false
-                player.offer(Keys.SELECTED_WILL, will)
-                player.offer(Keys.MENU_SPECIAL_RELIC_IS_SELECTED, false)
+                val currentCategory = player.getOrPut(Keys.MENU_RELIC_CATEGORY)
+                if (currentCategory == category) return false
+                player.offer(Keys.MENU_RELIC_CATEGORY, category)
                 RelicMenu.open(player, isFirst = false, playSound = false)
                 MenuSounds.CATEGORY_CHANGE.playOnly(player)
                 return true
@@ -92,6 +94,9 @@ object RelicButtons {
     }
 
     val SPECIAL = object : Button {
+
+        val category = RelicCategory.SPECIAL
+
         override fun toShownItemStack(player: Player): ItemStack? {
             val hasNoRelic = Relic.SPECIAL_RELICS
                     // 一つもレリックを持っていなければTRUE
@@ -120,10 +125,9 @@ object RelicButtons {
                     // 一つもレリックを持っていなければTRUE
                     .none { player.hasRelic(it) }
             if (hasNoRelic) return false
-            val special = player.getOrPut(Keys.MENU_SPECIAL_RELIC_IS_SELECTED)
-            if (special) return false
-            player.offer(Keys.MENU_SPECIAL_RELIC_IS_SELECTED, true)
-            player.offer(Keys.SELECTED_WILL, null)
+            val currentCategory = player.getOrPut(Keys.MENU_RELIC_CATEGORY)
+            if (currentCategory == category) return false
+            player.offer(Keys.MENU_RELIC_CATEGORY, category)
             RelicMenu.open(player, isFirst = false, playSound = false)
             MenuSounds.CATEGORY_CHANGE.playOnly(player)
             return true
@@ -131,6 +135,9 @@ object RelicButtons {
     }
 
     val ALL_RELIC = object : Button {
+
+        val category = RelicCategory.ALL
+
         override fun toShownItemStack(player: Player): ItemStack? {
             return itemStackOf(Material.GRASS_BLOCK) {
                 setDisplayName(player, RelicMenuMessages.ALL_RELIC_MENU_TITLE)
@@ -138,8 +145,9 @@ object RelicButtons {
         }
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            player.offer(Keys.MENU_SPECIAL_RELIC_IS_SELECTED, false)
-            player.offer(Keys.SELECTED_WILL, null)
+            val currentCategory = player.getOrPut(Keys.MENU_RELIC_CATEGORY)
+            if (currentCategory == category) return false
+            player.offer(Keys.MENU_RELIC_CATEGORY, category)
             RelicMenu.open(player, isFirst = false, playSound = false)
             MenuSounds.CATEGORY_CHANGE.playOnly(player)
             return true

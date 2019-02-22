@@ -20,6 +20,7 @@ import click.seichi.gigantic.database.table.UserHomeTable
 import click.seichi.gigantic.database.table.UserMuteTable
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.menu.RefineItem
+import click.seichi.gigantic.menu.RelicCategory
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.DonateTicket
@@ -1011,11 +1012,11 @@ object Keys {
         }
     }
 
-    val MENU_SPECIAL_RELIC_IS_SELECTED = object : Key<PlayerCache, Boolean> {
-        override val default: Boolean
-            get() = false
+    val MENU_RELIC_CATEGORY = object : Key<PlayerCache, RelicCategory> {
+        override val default: RelicCategory
+            get() = RelicCategory.ALL
 
-        override fun satisfyWith(value: Boolean): Boolean {
+        override fun satisfyWith(value: RelicCategory): Boolean {
             return true
         }
     }

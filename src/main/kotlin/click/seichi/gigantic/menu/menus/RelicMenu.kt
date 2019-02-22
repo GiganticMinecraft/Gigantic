@@ -7,7 +7,7 @@ import click.seichi.gigantic.item.items.menu.NextButton
 import click.seichi.gigantic.item.items.menu.PrevButton
 import click.seichi.gigantic.item.items.menu.RelicButtons
 import click.seichi.gigantic.menu.BookMenu
-import click.seichi.gigantic.message.messages.menu.RelicMenuMessages
+import click.seichi.gigantic.menu.RelicCategory
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
@@ -64,24 +64,15 @@ object RelicMenu : BookMenu() {
 
     override fun onOpen(player: Player, isFirst: Boolean) {
         if (isFirst) {
-            player.offer(Keys.SELECTED_WILL, null)
-            player.offer(Keys.MENU_SPECIAL_RELIC_IS_SELECTED, false)
+            player.offer(Keys.MENU_RELIC_CATEGORY, RelicCategory.ALL)
         }
 
-        val selected = player.getOrPut(Keys.SELECTED_WILL)
-        val specialRelic = player.getOrPut(Keys.MENU_SPECIAL_RELIC_IS_SELECTED)
+        val category = player.getOrPut(Keys.MENU_RELIC_CATEGORY)
         player.offer(Keys.MENU_RELIC_LIST,
                 Relic.values()
                         .filter { player.hasRelic(it) }
                         .filter {
-                            when {
-                                // 特殊レリックを表示
-                                specialRelic -> Will.findByRelic(it) == null
-                                // 全てのレリックを表示
-                                selected == null -> true
-                                // 指定された意志のレリックを表示
-                                else -> Will.findByRelic(it) == selected
-                            }
+                            category.isContain(it)
                         }
                         .toList()
         )
@@ -105,9 +96,8 @@ object RelicMenu : BookMenu() {
     }
 
     override fun getTitle(player: Player, page: Int): String {
-        val selected = player.getOrPut(Keys.SELECTED_WILL)
-        val specialRelic = player.getOrPut(Keys.MENU_SPECIAL_RELIC_IS_SELECTED)
-        return "${RelicMenuMessages.TITLE(selected, specialRelic).asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
+        val category = player.getOrPut(Keys.MENU_RELIC_CATEGORY)
+        return "${category.menuTitle.asSafety(player.wrappedLocale)} $page/${getMaxPage(player)}"
     }
 
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
@@ -115,21 +105,5 @@ object RelicMenu : BookMenu() {
         return getButtonMap()[slot] ?: RelicButtons.RELIC(player.getOrPut(Keys.MENU_RELIC_LIST)[index])
     }
 
-    enum class RelicFilterCategory {
-        ALL,
-        AQUA,
-        IGNIS,
-        AER,
-        TERRA,
-        NATURA,
-        GLACIES,
-        LUX,
-        SOLUM,
-        UMBRA,
-        VENTUS,
-        SAKURA,
-        SPECIAL,
-        ACTIVE
-    }
 
 }

@@ -14,24 +14,6 @@ import java.util.*
  */
 object RelicMenuMessages {
 
-    val TITLE: (Will?, Boolean) -> LocalizedText = { selected: Will?, special: Boolean ->
-        when {
-            special -> LocalizedText(
-                    Locale.JAPANESE to "特殊レリック一覧"
-            )
-            selected == null -> LocalizedText(
-                    Locale.JAPANESE to "レリック一覧"
-            )
-            else -> LocalizedText(
-                    Locale.JAPANESE.let {
-                        it to selected.getName(it) +
-                                "のレリック一覧"
-
-                    })
-        }
-
-    }
-
     val NUM = LocalizedText(
             Locale.JAPANESE to "所持数"
     )
