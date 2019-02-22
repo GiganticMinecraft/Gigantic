@@ -11,7 +11,6 @@ import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.EffectButtons
 import click.seichi.gigantic.item.items.menu.NextButton
 import click.seichi.gigantic.item.items.menu.PrevButton
-import click.seichi.gigantic.item.items.menu.ShopButtons
 import click.seichi.gigantic.menu.BookMenu
 import click.seichi.gigantic.message.messages.menu.EffectMenuMessages
 import org.bukkit.entity.Player
@@ -33,8 +32,9 @@ object EffectMenu : BookMenu() {
         registerButton(0, EffectButtons.PLAYER)
         registerButton(1, EffectButtons.CURRENT_EFFECT)
         registerButton(3, EffectButtons.DEFAULT_EFFECT)
-        registerButton(6, ShopButtons.VOTE)
-        registerButton(7, ShopButtons.DONATION)
+        // バッグから直接飛べるのでなし
+//        registerButton(6, ShopButtons.VOTE)
+//        registerButton(7, ShopButtons.DONATION)
         registerButton(numOfContentsPerPage + offset + 3, PrevButton(this))
         registerButton(numOfContentsPerPage + offset + 5, NextButton(this))
     }

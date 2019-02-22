@@ -14,7 +14,8 @@ abstract class GiftShopMenu : BookMenu() {
         registerButton(3, ShopButtons.DONATION)
 
         // エフェクトメニューへ
-        registerButton(7, ShopButtons.EFFECT_MENU)
+        // バッグから直接飛べるので無し
+//        registerButton(7, ShopButtons.EFFECT_MENU)
     }
 
 }

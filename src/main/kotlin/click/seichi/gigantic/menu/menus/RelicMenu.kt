@@ -51,8 +51,7 @@ object RelicMenu : BookMenu() {
         // 絞り込みをリセットするボタン
         registerButton(8, RelicButtons.ALL_RELIC)
 
-        // 前回破壊したブロックから適用されているレリックを絞り込み
-
+        // TODO 前回破壊したブロックから適用されているレリックを絞り込み
 
 
         registerButton(size - 6, PrevButton(this))
@@ -114,6 +113,23 @@ object RelicMenu : BookMenu() {
     override fun getButton(player: Player, page: Int, slot: Int): Button? {
         val index = (page - 1) * numOfContentsPerPage + slot - offset
         return getButtonMap()[slot] ?: RelicButtons.RELIC(player.getOrPut(Keys.MENU_RELIC_LIST)[index])
+    }
+
+    enum class RelicFilterCategory {
+        ALL,
+        AQUA,
+        IGNIS,
+        AER,
+        TERRA,
+        NATURA,
+        GLACIES,
+        LUX,
+        SOLUM,
+        UMBRA,
+        VENTUS,
+        SAKURA,
+        SPECIAL,
+        ACTIVE
     }
 
 }
