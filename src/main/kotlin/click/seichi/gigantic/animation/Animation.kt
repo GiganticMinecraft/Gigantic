@@ -63,6 +63,25 @@ class Animation(
     }
 
     /**
+     * ゆっくり上に上昇する
+     * @param 上昇する初期値点
+     * @param 上昇する高さ(相対)
+     */
+    fun rise(startLocation: Location, riseHeight: Double) {
+        object : BukkitRunnable() {
+            var t = 0L
+            override fun run() {
+                val diffY = t * 0.22
+                val spawnLocation = startLocation.clone().add(
+                        0.0, if (diffY < riseHeight) diffY else riseHeight, 0.0
+                )
+                rendering(spawnLocation, t++)
+                if (t > ticks) cancel()
+            }
+        }.runTaskTimer(Gigantic.PLUGIN, 0L, 1L)
+    }
+
+    /**
      * 吸収する
      * @param entity 吸収するエンティティ
      * @param startLocation 開始位置

@@ -116,9 +116,9 @@ class PlayerMonitor : Listener {
         val player = event.player ?: return
         val block = event.block ?: return
 
-        if (Config.DEBUG_MODE)
+        if (Config.DEBUG_MODE) {
             player.sendMessage("tasks: ${Bukkit.getScheduler().pendingTasks.size}")
-
+        }
 
         if (block.isLog && ToolEnchantment.CUTTER.has(player)) {
             Cutter().breakRelationalBlock(block, true)
@@ -169,17 +169,17 @@ class PlayerMonitor : Listener {
         event.player.updateWillRelationship()
     }
 
-    // 最大体力の半分以上のダメージを受けて死亡時に自動で持ち手をトーテムに設定
+    // トーテムに設定
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    fun setHand(event: EntityDamageEvent) {
+    fun tryUseTotem(event: EntityDamageEvent) {
         val player = event.entity as? Player ?: return
         val finalDamage = event.finalDamage
-        // 最大体力の半分以上でなければ終了
-        if (finalDamage < player.healthScale.div(2.0)) return
         // 死亡しなければ終了
         if (finalDamage < player.health) return
-        // トーテムを持っていなければ終了
+        // トーテム0個なら終了
         if (player.getOrPut(Keys.TOTEM) <= 0) return
+        // トーテムを持っていないまたは最大体力の半分以上のダメージを受けていなければ終了
+        if (player.inventory.heldItemSlot != Defaults.TOTEM_SLOT && finalDamage < player.healthScale.div(2.0)) return
         player.transform(Keys.TOTEM) { it.minus(1) }
         val currentSlot = player.inventory.heldItemSlot
         player.inventory.heldItemSlot = Defaults.TOTEM_SLOT
@@ -190,7 +190,6 @@ class PlayerMonitor : Listener {
                 player.inventory.heldItemSlot = currentSlot
             }
         }.runTaskLater(Gigantic.PLUGIN, 1L)
-
     }
 
 }

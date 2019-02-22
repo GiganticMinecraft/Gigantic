@@ -1,6 +1,5 @@
 package click.seichi.gigantic.player.skill
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -23,7 +22,6 @@ import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import org.bukkit.scheduler.BukkitRunnable
 import java.util.function.Consumer
 
 /**
@@ -205,29 +203,20 @@ object Skills {
             return Consumer { p ->
                 val piece = p.getOrPut(Keys.TOTEM_PIECE)
 
-                SkillAnimations.TOTEM_PIECE.absorb(p, block.centralLocation)
+                SkillAnimations.TOTEM_PIECE.start(block.centralLocation)
+
 
                 if (piece + 1 >= Defaults.MAX_TOTEM_PIECE) {
+                    // トーテム完成
                     p.transform(Keys.TOTEM) { it.plus(1) }
                     p.offer(Keys.TOTEM_PIECE, 0)
-
-                    // 取得時の音
-                    object : BukkitRunnable() {
-                        override fun run() {
-                            if (!p.isValid) return
-                            PlayerSounds.NOTICE.playOnly(p)
-                        }
-                    }.runTaskLater(Gigantic.PLUGIN, SkillAnimations.TOTEM_PIECE.ticks)
-
+                    SkillSounds.TOTEM_COMPLETE.playOnly(p)
+                    PlayerMessages.COMPLETE_TOTEM.sendTo(p)
                 } else {
+                    // 欠片を獲得
                     p.transform(Keys.TOTEM_PIECE) { it.plus(1) }
-                    // 取得時の音
-                    object : BukkitRunnable() {
-                        override fun run() {
-                            if (!p.isValid) return
-                            PlayerSounds.PICK_UP.playOnly(p)
-                        }
-                    }.runTaskLater(Gigantic.PLUGIN, SkillAnimations.TOTEM_PIECE.ticks)
+                    PlayerSounds.PICK_UP.playOnly(p)
+                    PlayerMessages.GET_TOTEM_PIECE(p.getOrPut(Keys.TOTEM_PIECE)).sendTo(p)
                 }
                 p.updateBelt(applyMainHand = false, applyOffHand = false)
             }

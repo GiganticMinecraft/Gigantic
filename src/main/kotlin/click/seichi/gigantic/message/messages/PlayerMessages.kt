@@ -2,6 +2,7 @@ package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.message.*
+import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -169,5 +170,17 @@ object PlayerMessages {
                         " 獲得"
         ))
     }
+
+    val GET_TOTEM_PIECE = { num: Int ->
+        ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.GREEN}" +
+                        "トーテムのかけらを獲得($num/${Defaults.MAX_TOTEM_PIECE})"
+        ))
+    }
+
+    val COMPLETE_TOTEM = ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GREEN}" +
+                    "フォーカス・トーテム 再使用可能"
+    ))
 
 }

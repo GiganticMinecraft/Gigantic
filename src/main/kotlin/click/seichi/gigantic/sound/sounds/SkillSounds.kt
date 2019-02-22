@@ -30,14 +30,14 @@ object SkillSounds {
     val FLASH_FIRE = DetailedSound(
             Sound.ENTITY_SNOWBALL_THROW,
             SoundCategory.BLOCKS,
-            pitch = 4.0F,
+            pitch = 2.0F,
             volume = 1.0F
     )
 
     val FLASH_MISS = DetailedSound(
             Sound.ENTITY_PIG_AMBIENT,
             SoundCategory.BLOCKS,
-            pitch = 4.0F,
+            pitch = 2.0F,
             volume = 1.0F
     )
 
@@ -46,6 +46,13 @@ object SkillSounds {
             SoundCategory.BLOCKS,
             pitch = (0.2 + Random.nextGaussian(variance = 0.4)).toFloat(),
             volume = 1.0F
+    )
+
+    val TOTEM_COMPLETE = DetailedSound(
+            Sound.ITEM_TOTEM_USE,
+            SoundCategory.BLOCKS,
+            pitch = 2.0F,
+            volume = 0.1F
     )
 
 }
