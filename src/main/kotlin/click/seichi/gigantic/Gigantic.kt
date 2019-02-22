@@ -118,8 +118,9 @@ class Gigantic : JavaPlugin() {
         )
 
         bindCommands(
-                "vote" to VoteCommand(),
-                "donate" to DonateCommand(),
+                // 本番環境で実装されているとプレイヤーに最悪乗っ取られた場合に対処できないので除外
+//                "vote" to VoteCommand(),
+//                "donate" to DonateCommand(),
                 "tell" to TellCommand(),
                 "reply" to ReplyCommand(),
                 "live" to LiveCommand(),
