@@ -1,12 +1,12 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.GiganticEvent
 import click.seichi.gigantic.extension.ethel
 import click.seichi.gigantic.extension.hasAptitude
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.SideBarMessage
 import click.seichi.gigantic.util.SideBarRow
 import click.seichi.gigantic.will.Will
-import click.seichi.gigantic.will.WillGrade
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import java.util.*
@@ -29,7 +29,13 @@ object SideBarMessages {
                 ),
                 // 意志の設定
                 willMap.keys.filter {
-                    willMap.getValue(it) > 0 && it.grade != WillGrade.SPECIAL
+                    willMap.getValue(it) > 0
+                }.filter {
+                    // イベントは特殊な形でフィルター
+                    when (it) {
+                        Will.SAKURA -> GiganticEvent.SAKURA.isActive()
+                        else -> true
+                    }
                 }.map { will ->
                     val row = when (will) {
                         Will.AQUA -> SideBarRow.TWO
