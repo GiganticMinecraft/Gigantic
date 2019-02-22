@@ -750,7 +750,7 @@ enum class Relic(
             1055,
             RelicMessages.MYCELIUM_PICKAXE,
             RelicMessages.MYCELIUM_PICKAXE_LORE,
-            RelicMessages.FROSTED_ORE_BONUS_LORE,
+            RelicMessages.MYCELIUM_PICKAXE_BONUS_LORE,
             0.4,
             itemStackOf(Material.QUARTZ)
     ) {
@@ -870,7 +870,7 @@ enum class Relic(
             1065,
             RelicMessages.DARK_MATTER,
             RelicMessages.DARK_MATTER_LORE,
-            RelicMessages.ORICHALCUM_BONUS_LORE,
+            RelicMessages.DARK_MATTER_BONUS_LORE,
             0.28,
             itemStackOf(Material.ALLIUM)
     ) {

@@ -530,5 +530,5 @@ object RelicMessages {
     val KATSUO_SASHIMI_BONUS_LORE = listOf(LocalizedText(Locale.JAPANESE to "暖かい海またはぬるい海"))
     val BOTAMOCHI_BONUS_LORE = listOf(LocalizedText(Locale.JAPANESE to "未の刻"))
     val PEACH_CORE_BONUS_LORE = listOf(LocalizedText(Locale.JAPANESE to "花崗岩"))
-    val CUP_OF_KING_BONUS_LORE = listOf(LocalizedText(Locale.JAPANESE to "おすすめサーバーリスト第1位"))
+    val CUP_OF_KING_BONUS_LORE = listOf(LocalizedText(Locale.JAPANESE to "JMS一位記念イベント期間中"))
 }
