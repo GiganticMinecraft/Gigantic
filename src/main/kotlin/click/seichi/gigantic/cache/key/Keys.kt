@@ -1284,4 +1284,24 @@ object Keys {
         }
     }
 
+    val EVENT_JMS_KING_GIVEN_AT = object : DatabaseKey<PlayerCache, DateTime> {
+        override val default: DateTime
+            get() = DateTime.now()
+
+        override fun read(entity: UserEntity): DateTime {
+            val user = entity.user
+            return user.eventJmsKingGivenAt
+        }
+
+        override fun store(entity: UserEntity, value: DateTime) {
+            val user = entity.user
+            user.eventJmsKingGivenAt = value
+        }
+
+        override fun satisfyWith(value: DateTime): Boolean {
+            return true
+        }
+
+    }
+
 }

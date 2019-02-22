@@ -2,6 +2,7 @@ package click.seichi.gigantic.database.table
 
 import click.seichi.gigantic.player.Defaults
 import org.jetbrains.exposed.dao.IdTable
+import org.joda.time.DateTime
 import java.util.*
 
 /**
@@ -58,6 +59,8 @@ object UserTable : IdTable<UUID>("users") {
     val totem = integer("totem").default(0)
 
     val totemPiece = integer("totem_piece").default(0)
+
+    val eventJmsKingGivenAt = datetime("event_jms_king_given_at").default(DateTime("2019-02-21T00:00:00+09:00"))
 
     val createdAt = datetime("created_at")
 

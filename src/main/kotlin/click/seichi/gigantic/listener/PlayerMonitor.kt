@@ -15,9 +15,11 @@ import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.event.events.RelicGenerateEvent
 import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.message.messages.GiganticEventMessages
 import click.seichi.gigantic.message.messages.LoginMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import com.google.common.io.ByteStreams
 import org.bukkit.Bukkit
@@ -31,6 +33,7 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.scheduler.BukkitRunnable
+import org.joda.time.DateTime
 
 /**
  * @author tar0ss
@@ -85,6 +88,25 @@ class PlayerMonitor : Listener {
             writeUTF("GetServer")
         }
         player.sendPluginMessage(Gigantic.PLUGIN, "BungeeCord", out.toByteArray())
+
+        //イベント用コード
+        if (GiganticEvent.JMS_KING.isActive() || Gigantic.IS_DEBUG) {
+            if (player.wrappedLevel < 20) return
+            val givenAt = player.getOrPut(Keys.EVENT_JMS_KING_GIVEN_AT)
+            val now = DateTime.now()
+            if (now.dayOfYear == givenAt.dayOfYear) return
+
+            object : BukkitRunnable() {
+                override fun run() {
+                    if (!player.isValid) return
+                    player.offer(Keys.EVENT_JMS_KING_GIVEN_AT, now)
+                    Relic.CUP_OF_KING.dropTo(player)
+                    PlayerSounds.PICK_UP.playOnly(player)
+                    GiganticEventMessages.DROPPED_RELIC(Relic.CUP_OF_KING).sendTo(player)
+                }
+            }.runTaskLater(Gigantic.PLUGIN, 60L)
+
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

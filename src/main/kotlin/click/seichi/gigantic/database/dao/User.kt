@@ -60,6 +60,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var totemPiece by UserTable.totemPiece
 
+    var eventJmsKingGivenAt by UserTable.eventJmsKingGivenAt
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt
