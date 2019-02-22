@@ -17,7 +17,7 @@ enum class ToggleSetting(
 ) {
     GAIN_EXP(0, LocalizedText(
             Locale.JAPANESE to "獲得経験値表示"
-    ), true),
+    ), false),
     UNDER_PLAYER(1, LocalizedText(
             Locale.JAPANESE to "低い位置のブロック破壊警告"
     ), true),

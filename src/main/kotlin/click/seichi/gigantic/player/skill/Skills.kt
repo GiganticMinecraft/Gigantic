@@ -1,5 +1,6 @@
 package click.seichi.gigantic.player.skill
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -22,6 +23,7 @@ import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import org.bukkit.scheduler.BukkitRunnable
 import java.util.function.Consumer
 
 /**
@@ -205,7 +207,6 @@ object Skills {
 
                 SkillAnimations.TOTEM_PIECE.start(block.centralLocation)
 
-
                 if (piece + 1 >= Defaults.MAX_TOTEM_PIECE) {
                     // トーテム完成
                     p.transform(Keys.TOTEM) { it.plus(1) }
@@ -215,8 +216,13 @@ object Skills {
                 } else {
                     // 欠片を獲得
                     p.transform(Keys.TOTEM_PIECE) { it.plus(1) }
-                    PlayerSounds.PICK_UP.playOnly(p)
                     PlayerMessages.GET_TOTEM_PIECE(p.getOrPut(Keys.TOTEM_PIECE)).sendTo(p)
+                    object : BukkitRunnable() {
+                        override fun run() {
+                            if (!p.isValid) return
+                            PlayerSounds.PICK_UP.playOnly(p)
+                        }
+                    }.runTaskLater(Gigantic.PLUGIN, SkillAnimations.TOTEM_PIECE.ticks)
                 }
                 p.updateBelt(applyMainHand = false, applyOffHand = false)
             }

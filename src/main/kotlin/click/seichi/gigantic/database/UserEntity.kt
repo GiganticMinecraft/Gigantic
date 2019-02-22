@@ -116,6 +116,7 @@ class UserEntity(uniqueId: UUID, playerName: String) {
                 .firstOrNull() ?: UserToggle.new {
             user = this@UserEntity.user
             toggleId = toggleSetting.id
+            toggle = toggleSetting.default
         })
     }.toMap()
 
