@@ -159,7 +159,7 @@ val AIRS = setOf(
         Material.VOID_AIR
 )
 
-val GRASSES = setOf(
+/*val GRASSES = setOf(
         Material.GRASS_BLOCK,
         Material.GRASS_PATH,
         Material.GRASS,
@@ -188,7 +188,7 @@ val GRASSES = setOf(
         Material.ROSE_BUSH,
         Material.PEONY,
         Material.LARGE_FERN
-)
+)*/
 
 val WATER_PLANTS = setOf(
         Material.SEAGRASS,
@@ -237,12 +237,6 @@ val WATERS = setOf(
 
 val TREES = setOf(*LOGS.toTypedArray(), *LEAVES.toTypedArray())
 
-val DIRTS = setOf(
-        Material.DIRT,
-        Material.GRASS_BLOCK,
-        Material.COARSE_DIRT,
-        Material.GRASS_PATH
-)
 
 val INFESTEDS = setOf(
         Material.INFESTED_STONE,
@@ -269,13 +263,6 @@ val ORES = setOf(
         Material.IRON_ORE,
         Material.EMERALD_ORE,
         Material.GOLD_ORE
-)
-
-val STONES = setOf(
-        Material.GRANITE,
-        Material.DIORITE,
-        Material.ANDESITE,
-        Material.STONE
 )
 
 val NETHERS = setOf(
@@ -308,9 +295,6 @@ val Block.isLeaves
 val Block.isTree
     get() = TREES.contains(type)
 
-val Block.isGrass
-    get() = GRASSES.contains(type)
-
 val Block.isWaterPlant
     get() = WATER_PLANTS.contains(type)
 
@@ -331,9 +315,6 @@ val Block.isMossy
 
 val Block.isOre
     get() = ORES.contains(type)
-
-val Block.isStone
-    get() = STONES.contains(type)
 
 val Block.isNether
     get() = NETHERS.contains(type)

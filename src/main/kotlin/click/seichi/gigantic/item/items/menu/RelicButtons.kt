@@ -153,4 +153,41 @@ object RelicButtons {
             return true
         }
     }
+
+    val ACTIVE = object : Button {
+
+        val category = RelicCategory.ACTIVE
+
+        override fun toShownItemStack(player: Player): ItemStack? {
+            val activeRelics = player.getOrPut(Keys.ACTIVE_RELICS)
+            if (activeRelics.isEmpty()) return null
+            return itemStackOf(Material.REDSTONE_BLOCK) {
+                setDisplayName(player, RelicMenuMessages.ACTIVE_RELIC_MENU_TITLE)
+                // 合計個数
+                var relicNum = 0L
+                activeRelics.forEach { relicNum += it.getDroppedNum(player) }
+                // 種類
+                val type = activeRelics.size
+                // 合計ボーナス値
+                val bonus = activeRelics.sumByDouble { it.calcMultiplier(player) }
+                setLore(
+                        *RelicMenuMessages.ACTIVE_RELIC_MENU_LORE(relicNum, type, bonus)
+                                .map {
+                                    it.asSafety(player.wrappedLocale)
+                                }.toTypedArray()
+                )
+            }
+        }
+
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
+            val activeRelics = player.getOrPut(Keys.ACTIVE_RELICS)
+            if (activeRelics.isEmpty()) return false
+            val currentCategory = player.getOrPut(Keys.MENU_RELIC_CATEGORY)
+            if (currentCategory == category) return false
+            player.offer(Keys.MENU_RELIC_CATEGORY, category)
+            RelicMenu.open(player, isFirst = false, playSound = false)
+            MenuSounds.CATEGORY_CHANGE.playOnly(player)
+            return true
+        }
+    }
 }

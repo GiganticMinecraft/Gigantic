@@ -431,7 +431,7 @@ enum class Relic(
             itemStackOf(Material.QUARTZ)
     ) {
         override fun isBonusTarget(block: Block): Boolean {
-            return block.y in 30..62
+            return block.isInfested
         }
     },
     RAINBOW_CLAY(
@@ -1346,6 +1346,8 @@ enum class Relic(
             player.hasRelic(it)
         }.filter {
             it.isBonusTarget(block)
+        }.toSet().apply {
+            player.offer(Keys.ACTIVE_RELICS, this)
         }.map { it.calcMultiplier(player) }.sum()
     }
 

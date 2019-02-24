@@ -51,8 +51,8 @@ object RelicMenu : BookMenu() {
         // 絞り込みをリセットするボタン
         registerButton(8, RelicButtons.ALL_RELIC)
 
-        // TODO 前回破壊したブロックから適用されているレリックを絞り込み
-
+        // active relics
+        registerButton(15, RelicButtons.ACTIVE)
 
         registerButton(size - 6, PrevButton(this))
         registerButton(size - 4, NextButton(this))
@@ -72,7 +72,7 @@ object RelicMenu : BookMenu() {
                 Relic.values()
                         .filter { player.hasRelic(it) }
                         .filter {
-                            category.isContain(it)
+                            category.isContain(player, it)
                         }
                         .toList()
         )

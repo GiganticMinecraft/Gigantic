@@ -97,6 +97,14 @@ object RelicMenuMessages {
             }
     )
 
+    val ACTIVE_RELIC_MENU_TITLE = LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.RESET}${ChatColor.WHITE}" +
+                        "ボーナス発生中 " +
+                        RelicMenuMessages.RELICS.asSafety(it)
+            }
+    )
+
     val ALL_RELIC_MENU_TITLE = LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.RESET}${ChatColor.WHITE}" +
@@ -118,6 +126,24 @@ object RelicMenuMessages {
                                 "コンプリート達成率: " +
                                 "${ChatColor.WHITE}" +
                                 "$type/$allType"
+                )
+        )
+    }
+
+    val ACTIVE_RELIC_MENU_LORE = { num: Long, type: Int, bonus: Double ->
+        listOf(
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.GREEN}" +
+                                "合計" +
+                                "${num}個" +
+                                "$type" +
+                                "種類"
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.YELLOW}" +
+                                "合計ボーナス値: " +
+                                "${ChatColor.WHITE}" +
+                                "${bonus.toBigDecimal().setScale(2, RoundingMode.HALF_UP)}"
                 )
         )
     }

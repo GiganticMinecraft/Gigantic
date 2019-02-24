@@ -213,7 +213,7 @@ enum class Will(
             WillMessages.SAKURA,
             11,
             Relic.ALSTROMERIA_SEED, Relic.NIGHTINGALE_FEATHER, Relic.OBOROZUKI_SWORD, Relic.SAKURA_RACE_CAKE, Relic.CERTIFICATE,
-            Relic.SCHOOL_BAG, Relic.KATSUO_SASHIMI, Relic.BOTAMOCHI, Relic.PEACH_CORE
+            Relic.SCHOOL_BAG, Relic.KATSUO_SASHIMI, Relic.BOTAMOCHI, Relic.PEACH_CORE, Relic.BOILED_CANOLA_FLOWER
     ) {
         // 期間限定
         override fun canSpawn(player: Player, block: Block): Boolean {

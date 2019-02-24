@@ -1305,4 +1305,13 @@ object Keys {
 
     }
 
+    val ACTIVE_RELICS = object : Key<PlayerCache, Set<Relic>> {
+        override val default: Set<Relic>
+            get() = setOf()
+
+        override fun satisfyWith(value: Set<Relic>): Boolean {
+            return true
+        }
+    }
+
 }

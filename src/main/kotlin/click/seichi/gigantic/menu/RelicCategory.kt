@@ -1,8 +1,11 @@
 package click.seichi.gigantic.menu
 
+import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.will.Will
+import org.bukkit.entity.Player
 import java.util.*
 
 /**
@@ -12,7 +15,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
     ALL(LocalizedText(
             Locale.JAPANESE to "レリック一覧"
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return true
         }
     },
@@ -22,7 +25,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
                         "のレリック一覧"
             }
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == Will.AQUA
         }
     },
@@ -32,7 +35,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
                         "のレリック一覧"
             }
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == Will.IGNIS
         }
     },
@@ -42,7 +45,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
                         "のレリック一覧"
             }
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == Will.AER
         }
     },
@@ -52,7 +55,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
                         "のレリック一覧"
             }
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == Will.TERRA
         }
     },
@@ -62,7 +65,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
                         "のレリック一覧"
             }
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == Will.NATURA
         }
     },
@@ -72,7 +75,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
                         "のレリック一覧"
             }
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == Will.GLACIES
         }
     },
@@ -82,7 +85,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
                         "のレリック一覧"
             }
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == Will.LUX
         }
     },
@@ -92,7 +95,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
                         "のレリック一覧"
             }
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == Will.SOLUM
         }
     },
@@ -102,7 +105,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
                         "のレリック一覧"
             }
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == Will.UMBRA
         }
     },
@@ -112,7 +115,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
                         "のレリック一覧"
             }
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == Will.VENTUS
         }
     },
@@ -122,27 +125,27 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
                         "のレリック一覧"
             }
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == Will.SAKURA
         }
     },
     SPECIAL(LocalizedText(
             Locale.JAPANESE to "特殊レリック一覧"
     )) {
-        override fun isContain(relic: Relic): Boolean {
+        override fun isContain(player: Player, relic: Relic): Boolean {
             return Will.findByRelic(relic) == null
         }
     },
     ACTIVE(LocalizedText(
             Locale.JAPANESE to "レリック一覧"
     )) {
-        override fun isContain(relic: Relic): Boolean {
-            return true
+        override fun isContain(player: Player, relic: Relic): Boolean {
+            return player.getOrPut(Keys.ACTIVE_RELICS).contains(relic)
         }
     },
     ;
 
-    abstract fun isContain(relic: Relic): Boolean
+    abstract fun isContain(player: Player, relic: Relic): Boolean
 
     companion object {
         fun getByWill(will: Will) = when (will) {

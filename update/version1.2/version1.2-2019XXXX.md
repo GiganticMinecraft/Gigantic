@@ -32,6 +32,7 @@
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
 :diamond_shape_with_a_dot_inside: レリック一覧にレリックの合計数とコンプリート達成率を記載しました  
+:diamond_shape_with_a_dot_inside: ボーナス発生中のレリック一覧を追加しました  
 :diamond_shape_with_a_dot_inside: プロフィールにレリック合計数とコンプリート達成率を記載しました  
 :diamond_shape_with_a_dot_inside: エフェクトの購入ページと選択ページを別にしました  
 :diamond_shape_with_a_dot_inside: TIPSの表示切替設定を削除しました  
