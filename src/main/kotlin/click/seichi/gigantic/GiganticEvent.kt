@@ -27,7 +27,8 @@ enum class GiganticEvent(
         val to = DateTime("2019-03-24T00:00:00+09:00")
         override fun isActive(): Boolean {
             val now = DateTime.now()
-            return now in from..to
+            // TODO reverse
+            return false/*now in from..to*/
         }
     }
     ;
