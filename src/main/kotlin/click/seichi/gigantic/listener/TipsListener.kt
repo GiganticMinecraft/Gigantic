@@ -20,12 +20,11 @@ class TipsListener : Listener {
 
     private val remainSet = tips.map { it.ordinal }.toMutableSet()
 
-    private val interval = if (Gigantic.IS_DEBUG && DebugConfig.TIPS_SPEED_UP) 20 * 5L
-    else 20L.times(60L).times(Config.TIPS_INTERVAL)
+    private val interval = if (Gigantic.IS_DEBUG && DebugConfig.TIPS_SPEED_UP) 20 * 5L else 20 * 60L * Config.TIPS_INTERVAL
 
     @EventHandler
     fun onTick(event: TickEvent) {
-        if (event.ticks.plus(10) % interval != 0L) return
+        if (interval == 0L || event.ticks.plus(10) % interval != 0L) return
         // 一定間隔で呼び出す
 
         // 全て消費したら補充
@@ -44,7 +43,7 @@ class TipsListener : Listener {
                 .filterNotNull()
                 .filter { it.isValid }
                 .forEach { player ->
-                        message.sendTo(player)
+                    message.sendTo(player)
                 }
     }
 
