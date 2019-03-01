@@ -1,7 +1,6 @@
-package click.seichi.gigantic.head
+package click.seichi.gigantic.util
 
-import com.mojang.authlib.GameProfile
-import com.mojang.authlib.properties.Property
+import click.seichi.gigantic.extension.itemStackOf
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
@@ -9,11 +8,11 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
 
-
 /**
  * @author tar0ss
+ * @author unicroak
  */
-enum class Head(
+enum class CustomHead(
         private val urlString: String
 ) {
     // soul monster heads
@@ -114,38 +113,48 @@ enum class Head(
     ;
 
     companion object {
-        fun getOfflinePlayerHead(uuid: UUID): ItemStack? {
-            val offlinePlayer = Bukkit.getOfflinePlayer(uuid)
-            if (offlinePlayer.name == null) {
-                return null
+        private val profileClazz = Class.forName("com.mojang.authlib.GameProfile")
+        private val profileConstructor = profileClazz.getConstructor(UUID::class.java, String::class.java)
+        private val profileGetPropertiesMethod = profileClazz.getMethod("getProperties")
+
+        private val propertyClazz = Class.forName("com.mojang.authlib.properties.Property")
+        private val propertyConstructor = propertyClazz.getConstructor(String::class.java, String::class.java)
+
+        private val forwardingMultiMapClazz = Class.forName("com.google.common.collect.ForwardingMultimap")
+        private val propertyMapPutMethod = forwardingMultiMapClazz.getMethod("put", Object::class.java, Object::class.java)
+    }
+
+    private val itemStack by lazy {
+        itemStackOf(Material.PLAYER_HEAD) {
+            val profile = profileConstructor.newInstance(UUID.randomUUID(), null)
+            val encodedData = Base64.getEncoder().encode("{textures:{SKIN:{url:\"$urlString\"}}}".toByteArray())
+            val property = propertyConstructor.newInstance("textures", String(encodedData))
+
+            val properties = profileGetPropertiesMethod.invoke(profile)
+            propertyMapPutMethod(properties, encodedData, property)
+
+            itemMeta = itemMeta.apply {
+                val profileField = javaClass.getDeclaredField("profile")
+                        .apply { isAccessible = true }
+
+                profileField.set(this@apply, profile)
             }
-            val itemStack = ItemStack(Material.PLAYER_HEAD, 1)
-            val skullMeta = itemStack.itemMeta as SkullMeta
-            skullMeta.owningPlayer = offlinePlayer
-            skullMeta.displayName = "${ChatColor.YELLOW}${ChatColor.BOLD}${offlinePlayer.name}"
-            itemStack.itemMeta = skullMeta
-            return itemStack
         }
     }
 
-    private val baseItemStack: ItemStack by lazy {
-        val skull = ItemStack(Material.PLAYER_HEAD)
+    fun toItemStack() = itemStack.clone()
 
-        skull.itemMeta = skull.itemMeta.apply {
-            val profile = GameProfile(UUID.randomUUID(), null)
+}
 
-            val encodedData = Base64.getEncoder()
-                    .encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", urlString)
-                            .toByteArray())
-            profile.properties.put("textures", Property("textures", String(encodedData)))
+fun getHeadFromUUID(uuid: UUID): ItemStack? {
+    val player = Bukkit.getOfflinePlayer(uuid) ?: return null
+    if (player.name == null) return null
 
-            val profileField = javaClass.getDeclaredField("profile")
-            profileField.isAccessible = true
-            profileField.set(this, profile)
-        }
+    return itemStackOf(Material.PLAYER_HEAD) {
+        val skullMeta = itemMeta as SkullMeta
+        skullMeta.owningPlayer = player
+        skullMeta.displayName = "${ChatColor.YELLOW}${ChatColor.BOLD}${player.name}"
 
-        skull
+        itemMeta = skullMeta
     }
-
-    fun toItemStack() = baseItemStack.clone()
 }

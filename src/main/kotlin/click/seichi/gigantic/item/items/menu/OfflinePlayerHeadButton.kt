@@ -1,6 +1,6 @@
 package click.seichi.gigantic.item.items.menu
 
-import click.seichi.gigantic.head.Head
+import click.seichi.gigantic.util.getHeadFromUUID
 import click.seichi.gigantic.item.Button
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -17,7 +17,7 @@ class OfflinePlayerHeadButton(private val uuid: UUID) : Button {
     }
 
     fun getItemStack(): ItemStack? {
-        return Head.getOfflinePlayerHead(uuid)?.clone()
+        return getHeadFromUUID(uuid)?.clone()
     }
 
     override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {

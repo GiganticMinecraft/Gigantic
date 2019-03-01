@@ -11,6 +11,7 @@ import click.seichi.gigantic.cache.manipulator.Manipulator
  * @author tar0ss
  */
 abstract class Cache<C : Cache<C>> {
+
     private val keyMap: MutableMap<Key<C, out Any?>, Any?> = mutableMapOf()
 
     @Suppress("UNCHECKED_CAST")
