@@ -1,5 +1,6 @@
 package click.seichi.gigantic.listener
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.WillSpiritAnimations
 import click.seichi.gigantic.cache.key.Keys
@@ -46,7 +47,10 @@ class WillListener : Listener {
         val preSenseWill = preSenseWillSet.random(Random.generator.asKotlinRandom())
 
         player.transform(Keys.WILL_SECRET_MAP.getValue(preSenseWill)) {
-            it.inc()
+            if (Gigantic.IS_DEBUG)
+                it.plus(10)
+            else
+                it.inc()
         }
 
         val secretAmount = player.getOrPut(Keys.WILL_SECRET_MAP.getValue(preSenseWill))
