@@ -24,7 +24,7 @@ object RelicMenu : BookMenu() {
 
     private const val numOfContentsPerPage = 2 * 9
 
-    private const val offset = 27
+    private const val offset = 3 * 9
 
     init {
         // 通常意志

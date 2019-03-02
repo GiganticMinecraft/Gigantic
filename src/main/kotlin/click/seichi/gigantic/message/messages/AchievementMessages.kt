@@ -254,14 +254,23 @@ object AchievementMessages {
                 }
         ), 45L)
     }
-
-    val FIRST_WILL = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+    val FIRST_PRE_SENSE = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE.let {
                 it to "${ChatColor.GRAY}" +
                         "初めての意志に出会った" +
                         LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
-                        "ブロックを破壊すると，稀に意志が出現する" +
+                        "ブロックを破壊すると，稀に意志が出現するようだ" +
+                        LinedChatMessage.NEW_LINE_SYMBOL +
+                        "${ChatColor.GRAY}" +
+                        "たくさんの意志と出会って、意志との友好度を上げてみよう"
+            }
+    ), 45L)
+
+    val FIRST_WILL = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE.let {
+                it to "${ChatColor.GRAY}" +
+                        "友好度がMAXとなり、意志と交感できるようになった" +
                         LinedChatMessage.NEW_LINE_SYMBOL +
                         "${ChatColor.GRAY}" +
                         "意志が出現したら近付いてエーテルを獲得してみよう" +

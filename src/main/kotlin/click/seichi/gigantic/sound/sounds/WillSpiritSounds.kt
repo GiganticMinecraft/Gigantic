@@ -34,4 +34,19 @@ object WillSpiritSounds {
             pitch = 0.6F
     )
 
+    val PRE_SENSE = DetailedSound(
+            Sound.ENTITY_ILLUSIONER_PREPARE_BLINDNESS,
+            SoundCategory.BLOCKS,
+            pitch = 0.6F,
+            volume = 0.8F
+    )
+
+    val PRE_SENSE_COMPLETE = DetailedSound(
+            Sound.UI_TOAST_CHALLENGE_COMPLETE,
+            SoundCategory.BLOCKS,
+            pitch = 1.0F,
+            volume = 0.8F
+    )
+
+
 }

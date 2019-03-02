@@ -20,10 +20,6 @@ object Defaults {
     // Elytra Settings
     const val ELYTRA_BASE_SPEED = 0.05
     const val ELYTRA_BASE_LAUNCH = 3
-    // will Settings
-    const val WILL_BASIC_UNLOCK_AMOUNT = 1000
-    const val WILL_ADVANCED_UNLOCK_AMOUNT = 4000
-    const val WILL_SPECIAL_UNLOCK_AMOUNT = 2000
     // 意志の発生確率
     const val WILL_SPAWN_PROBABILITY = 0.01
 

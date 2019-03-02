@@ -602,4 +602,24 @@ object BagButtons {
 
     }
 
+    val WILL = object : Button {
+
+        override fun toShownItemStack(player: Player): ItemStack? {
+            if (!Achievement.FIRST_PRE_SENSE.isGranted(player)) return null
+            return itemStackOf(Material.HEART_OF_THE_SEA) {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.WILL.asSafety(player.wrappedLocale))
+                clearLore()
+            }
+        }
+
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (!Achievement.FIRST_PRE_SENSE.isGranted(player)) return false
+            if (event.inventory.holder === WillMenu) return false
+            WillMenu.open(player)
+            return true
+        }
+
+    }
+
 }

@@ -1314,4 +1314,13 @@ object Keys {
         }
     }
 
+    val MENU_WILL_LIST = object : Key<PlayerCache, List<Will>> {
+        override val default: List<Will>
+            get() = listOf()
+
+        override fun satisfyWith(value: List<Will>): Boolean {
+            return true
+        }
+    }
+
 }

@@ -5,7 +5,10 @@ import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.spirit.spirits.WillSpirit
 import click.seichi.gigantic.will.Will
+import click.seichi.gigantic.will.WillRelationship
 import org.bukkit.ChatColor
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.*
 
 /**
@@ -155,5 +158,43 @@ object WillMessages {
     val PARTNER = LocalizedText(
             Locale.JAPANESE to "神友"
     )
+
+    val WILL_MENU_TITLE = LocalizedText(
+            Locale.JAPANESE to "意志"
+    )
+
+    val WILL_MENU = { will: Will ->
+        LocalizedText(
+                Locale.JAPANESE.let {
+                    it to
+                            "" + will.chatColor +
+                            will.getName(it) +
+                            "の意志"
+                }
+        )
+    }
+
+    val RELATION = { relation: WillRelationship ->
+        LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "${ChatColor.GREEN}" +
+                            "あなたとの関係: " +
+                            "${ChatColor.WHITE}" +
+                            relation.getName(it)
+                }
+        )
+    }
+
+    val FRIEND_RATIO = { ratio: BigDecimal ->
+        LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "${ChatColor.GREEN}" +
+                            "友好度: " +
+                            "${ChatColor.WHITE}" +
+                            "${ratio.setScale(1, RoundingMode.CEILING)}" +
+                            "%"
+                }
+        )
+    }
 
 }

@@ -9,7 +9,6 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.LinedChatMessage
 import click.seichi.gigantic.message.Message
 import click.seichi.gigantic.message.messages.AchievementMessages
-import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.DetailedSound
 import click.seichi.gigantic.sound.sounds.PlayerSounds
@@ -62,27 +61,35 @@ enum class Achievement(
         it.wrappedLevel >= 200
     }, broadcastMessage = { AchievementMessages.TUTORIAL_ALL(it) }
             , broadcastSound = PlayerSounds.ACHIEVE_TUTORIAL),
+    FIRST_PRE_SENSE(6, {
+        Will.values().firstOrNull { will -> it.isProcessed(will) } != null
+    }, grantMessage = AchievementMessages.FIRST_PRE_SENSE),
 
     //TODO 一度すべてのクエストを隠蔽しているので実装時は一気にやる
     // systems
-    MANA_STONE(100, {
+    MANA_STONE(100,
+            {
         it.wrappedLevel >= 10
     }, grantMessage = AchievementMessages.MANA_STONE,
             priority = UpdatePriority.HIGHEST),
-    TELEPORT_PLAYER(101, {
+    TELEPORT_PLAYER(101,
+            {
         it.wrappedLevel >= 4
     }, grantMessage = AchievementMessages.TELEPORT_PLAYER),
-    QUEST(102, {
+    QUEST(102,
+            {
         false /*it.wrappedLevel >= 5*/
     }, priority = UpdatePriority.HIGHEST),
-    TELEPORT_LAST_DEATH(103, {
+    TELEPORT_LAST_DEATH(103,
+            {
         it.wrappedLevel >= 7
     }, grantMessage = AchievementMessages.TELEPORT_LAST_DEATH),
     /*   スキル移転により使用せず
         JUMP(104, {
             it.wrappedLevel >= 15
         }, grantMessage = AchievementMessages.JUMP),*/
-    TELEPORT_HOME(105, {
+    TELEPORT_HOME(105,
+            {
         it.wrappedLevel >= 6
     }, grantMessage = AchievementMessages.TELEPORT_HOME),
     // 使用するまで保留
@@ -94,34 +101,44 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.SWORD),*/
 
     // skills
-    SKILL_FLASH(200, {
+    SKILL_FLASH(200,
+            {
         it.wrappedLevel >= 5/*Quest.PIG.isCleared(it)*/
     }, grantMessage = AchievementMessages.UNLOCK_FLASH),
-    SKILL_MINE_BURST(201, {
+    SKILL_MINE_BURST(201,
+            {
         it.wrappedLevel >= 8/*Quest.BLAZE.isCleared(it)*/
     }, grantMessage = AchievementMessages.UNLOCK_SKILL_MINE_BURST),
-    SKILL_MINE_COMBO(202, {
+    SKILL_MINE_COMBO(202,
+            {
         it.wrappedLevel >= 3
     }, grantMessage = AchievementMessages.UNLOCK_SKILL_MINE_COMBO),
-    SKILL_JUMP(203, {
+    SKILL_JUMP(203,
+            {
         it.wrappedLevel >= 18
     }, grantMessage = AchievementMessages.JUMP),
-    SKILL_FOCUS_TOTEM(204, {
+    SKILL_FOCUS_TOTEM(204,
+            {
         it.wrappedLevel >= 15
-    }, action = {
+            }, action =
+    {
         it.offer(Keys.TOTEM, 1)
-    }, grantMessage = AchievementMessages.JUMP),
+    }, grantMessage = AchievementMessages.FOCUT_TOTEM),
     // spells
-    SPELL_STELLA_CLAIR(300, {
+    SPELL_STELLA_CLAIR(300,
+            {
         MANA_STONE.isGranted(it)
     }, grantMessage = AchievementMessages.UNLOCK_SPELL_STELLA_CLAIR),
-    SPELL_MULTI_BREAK(301, {
+    SPELL_MULTI_BREAK(301,
+            {
         MANA_STONE.isGranted(it)
     }, grantMessage = AchievementMessages.UNLOCK_SPELL_MULTI_BREAK),
-    SPELL_SKY_WALK(302, {
+    SPELL_SKY_WALK(302,
+            {
         MANA_STONE.isGranted(it) && it.wrappedLevel >= 18
     }, grantMessage = AchievementMessages.UNLOCK_SPELL_SKY_WALK),
-    SPELL_LUNA_FLEX(303, {
+    SPELL_LUNA_FLEX(303,
+            {
         MANA_STONE.isGranted(it) && it.wrappedLevel >= 28
     }, grantMessage = AchievementMessages.UNLOCK_SPELL_LUNA_FLEX),
 
@@ -254,84 +271,109 @@ enum class Achievement(
     }, grantMessage = AchievementMessages.QUEST_ORDER),*/
 
     // will
-    WILL_BASIC(500, {
+    WILL_BASIC(500,
+            {
         it.wrappedLevel >= WillGrade.BASIC.unlockLevel
     }, priority = UpdatePriority.HIGH),
 
-    WILL_AQUA(501, {
+    WILL_AQUA(501,
+            {
         WILL_BASIC.isGranted(it) &&
-                it.getOrPut(Keys.WILL_SECRET_MAP[Will.AQUA]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
-    }, action = {
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.AQUA]!!) >= Will.AQUA.grade.unlockAmount
+            }, action =
+    {
         it.offer(Keys.APTITUDE_MAP[Will.AQUA]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.AQUA)),
-    WILL_IGNIS(502, {
+    WILL_IGNIS(502,
+            {
         WILL_BASIC.isGranted(it) &&
-                it.getOrPut(Keys.WILL_SECRET_MAP[Will.IGNIS]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
-    }, action = {
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.IGNIS]!!) >= Will.IGNIS.grade.unlockAmount
+            }, action =
+    {
         it.offer(Keys.APTITUDE_MAP[Will.IGNIS]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.IGNIS)),
-    WILL_AER(503, {
+    WILL_AER(503,
+            {
         WILL_BASIC.isGranted(it) &&
-                it.getOrPut(Keys.WILL_SECRET_MAP[Will.AER]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
-    }, action = {
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.AER]!!) >= Will.AER.grade.unlockAmount
+            }, action =
+    {
         it.offer(Keys.APTITUDE_MAP[Will.AER]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.AER)),
-    WILL_TERRA(504, {
+    WILL_TERRA(504,
+            {
         WILL_BASIC.isGranted(it) &&
-                it.getOrPut(Keys.WILL_SECRET_MAP[Will.TERRA]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
-    }, action = {
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.TERRA]!!) >= Will.TERRA.grade.unlockAmount
+            }, action =
+    {
         it.offer(Keys.APTITUDE_MAP[Will.TERRA]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.TERRA)),
-    WILL_NATURA(505, {
+    WILL_NATURA(505,
+            {
         WILL_BASIC.isGranted(it) &&
-                it.getOrPut(Keys.WILL_SECRET_MAP[Will.NATURA]!!) >= Defaults.WILL_BASIC_UNLOCK_AMOUNT
-    }, action = {
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.NATURA]!!) >= Will.NATURA.grade.unlockAmount
+            }, action =
+    {
         it.offer(Keys.APTITUDE_MAP[Will.NATURA]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.NATURA)),
 
 
-    WILL_ADVANCED(550, {
+    WILL_ADVANCED(550,
+            {
         it.wrappedLevel >= WillGrade.ADVANCED.unlockLevel
     }, priority = UpdatePriority.HIGH),
-    WILL_GLACIES(551, {
+    WILL_GLACIES(551,
+            {
         WILL_ADVANCED.isGranted(it) &&
-                it.getOrPut(Keys.WILL_SECRET_MAP[Will.GLACIES]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
-    }, action = {
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.GLACIES]!!) >= Will.GLACIES.grade.unlockAmount
+            }, action =
+    {
         it.offer(Keys.APTITUDE_MAP[Will.GLACIES]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.GLACIES)),
-    WILL_LUX(552, {
+    WILL_LUX(552,
+            {
         WILL_ADVANCED.isGranted(it) &&
-                it.getOrPut(Keys.WILL_SECRET_MAP[Will.LUX]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
-    }, action = {
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.LUX]!!) >= Will.LUX.grade.unlockAmount
+            }, action =
+    {
         it.offer(Keys.APTITUDE_MAP[Will.LUX]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.LUX)),
-    WILL_SOLUM(553, {
+    WILL_SOLUM(553,
+            {
         WILL_ADVANCED.isGranted(it) &&
-                it.getOrPut(Keys.WILL_SECRET_MAP[Will.SOLUM]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
-    }, action = {
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.SOLUM]!!) >= Will.SOLUM.grade.unlockAmount
+            }, action =
+    {
         it.offer(Keys.APTITUDE_MAP[Will.SOLUM]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.SOLUM)),
-    WILL_UMBRA(554, {
+    WILL_UMBRA(554,
+            {
         WILL_ADVANCED.isGranted(it) &&
-                it.getOrPut(Keys.WILL_SECRET_MAP[Will.UMBRA]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
-    }, action = {
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.UMBRA]!!) >= Will.UMBRA.grade.unlockAmount
+            }, action =
+    {
         it.offer(Keys.APTITUDE_MAP[Will.UMBRA]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.UMBRA)),
-    WILL_VENTUS(555, {
+    WILL_VENTUS(555,
+            {
         WILL_ADVANCED.isGranted(it) &&
-                it.getOrPut(Keys.WILL_SECRET_MAP[Will.VENTUS]!!) >= Defaults.WILL_ADVANCED_UNLOCK_AMOUNT
-    }, action = {
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.VENTUS]!!) >= Will.VENTUS.grade.unlockAmount
+            }, action =
+    {
         it.offer(Keys.APTITUDE_MAP[Will.VENTUS]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.VENTUS)),
 
 
-    WILL_SPECIAL(600, {
+    WILL_SPECIAL(600,
+            {
         it.wrappedLevel >= WillGrade.SPECIAL.unlockLevel
     }, priority = UpdatePriority.HIGH),
-    WILL_SAKURA(601, {
+    WILL_SAKURA(601,
+            {
         WILL_SPECIAL.isGranted(it) &&
-                it.getOrPut(Keys.WILL_SECRET_MAP[Will.SAKURA]!!) >= Defaults.WILL_SPECIAL_UNLOCK_AMOUNT
-    }, action = {
+                it.getOrPut(Keys.WILL_SECRET_MAP[Will.SAKURA]!!) >= Will.SAKURA.grade.unlockAmount
+            }, action =
+    {
         it.offer(Keys.APTITUDE_MAP[Will.SAKURA]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.SAKURA)),
     ;
