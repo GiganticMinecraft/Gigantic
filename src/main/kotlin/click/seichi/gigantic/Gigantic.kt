@@ -7,7 +7,7 @@ import click.seichi.gigantic.config.*
 import click.seichi.gigantic.database.table.*
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.util.CustomHead
+import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
 import click.seichi.gigantic.player.spell.spells.SkyWalk
@@ -147,7 +147,7 @@ class Gigantic : JavaPlugin() {
         )
 
         // reflectionを使うので先に生成
-        CustomHead.values().forEach { it.toItemStack() }
+        Head.values().forEach { it.toItemStack() }
 
         SpiritManager.onEnabled()
 

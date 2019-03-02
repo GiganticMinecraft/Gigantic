@@ -3,7 +3,7 @@ package click.seichi.gigantic.monster
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.transform
-import click.seichi.gigantic.util.CustomHead
+import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.monster.ai.SoulMonsterAI
 import click.seichi.gigantic.monster.parameter.SoulMonsterParameter
@@ -21,7 +21,7 @@ import kotlin.reflect.full.createInstance
  */
 enum class SoulMonster(
         val id: Int,
-        private val icon: CustomHead?,
+        private val icon: Head?,
         private val localizedName: LocalizedText,
         private val localizedLore: List<LocalizedText>?,
         val color: Color,
