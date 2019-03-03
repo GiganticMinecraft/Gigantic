@@ -32,7 +32,8 @@ object SpecialThanksMenu : Menu() {
             "kamui0429" to "8e62e785-24e8-45cc-bd16-5496e8b9f504",
             "Lucky3028" to "0ea34656-b1c7-45c0-8b89-1ec55a70fe17",
             "shirotubu" to "0a25e0f2-b952-4fe4-9843-3c5608aa2f0c",
-            "nubasu" to "d85b4d71-88b1-4aef-ab98-225f46705f38"
+            "nubasu" to "d85b4d71-88b1-4aef-ab98-225f46705f38",
+            "f_mode" to "d22dc4b7-a1b8-4ff0-a887-9fde3f20970a"
     )
 
     init {

@@ -139,6 +139,8 @@ enum class Tool(
                 Material.PUMPKIN,
                 Material.MELON -> Tool.AXE
 
+                Material.SMOOTH_STONE -> Tool.SHOVEL
+
                 Material.SPONGE,
                 Material.WET_SPONGE -> null
                 else -> null

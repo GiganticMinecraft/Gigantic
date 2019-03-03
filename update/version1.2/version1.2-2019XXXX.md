@@ -31,6 +31,7 @@
 以下の不具合を修正しました．  
 
 :diamond_shape_with_a_dot_inside: スキル**フォーカス・トーテム**解禁時のメッセージが異なっていた不具合  
+:diamond_shape_with_a_dot_inside: 最下層ブロックを破壊しようとしたときに以前より負荷がかかりにくくなりました  
 
 
 
