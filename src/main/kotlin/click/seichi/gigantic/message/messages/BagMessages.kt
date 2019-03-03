@@ -39,6 +39,14 @@ object BagMessages {
     val SERVER_RESOURCE_PACK = listOf(
             LocalizedText(
                     Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
+                            "ブロック破壊時のパーティクルを"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
+                            "消します"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
                             "サーバーリソースパックを"
             ),
             LocalizedText(
