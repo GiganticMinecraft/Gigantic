@@ -5,6 +5,7 @@ import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.WillSpiritAnimations
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.util.Random
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillGrade
@@ -55,13 +56,17 @@ class WillListener : Listener {
 
         val secretAmount = player.getOrPut(Keys.WILL_SECRET_MAP.getValue(preSenseWill))
 
-        if (secretAmount == 0L || secretAmount % (preSenseWill.grade.unlockAmount.div(100)) != 0L) return
+        val interval = preSenseWill.grade.unlockAmount.div(100)
+
+        if (secretAmount == 0L || secretAmount % interval != 0L) return
 
         if (secretAmount < preSenseWill.grade.unlockAmount)
             WillSpiritAnimations.PRE_SENSE(preSenseWill.color).rise(block.centralLocation, 4.5)
         else
             WillSpiritAnimations.PRE_SENSE_COMPLETE(preSenseWill.color).rise(block.centralLocation, 4.5)
 
+        val ratio = secretAmount.div(interval)
+        PlayerMessages.FRIEND_RATIO(preSenseWill, ratio.toInt()).sendTo(player)
         // プレイヤーの達成度を変更
         player.updateBag()
         // 実績解除

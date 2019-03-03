@@ -4,6 +4,7 @@ import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.*
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import java.math.BigDecimal
@@ -221,6 +222,24 @@ object PlayerMessages {
                                 "======"
                 )
         )
+    }
+
+    val FRIEND_RATIO = { will: Will, ratio: Int ->
+        ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "" + will.chatColor + "${ChatColor.BOLD}" +
+                            will.getName(it) + "の意志" +
+                            "${ChatColor.WHITE}との" +
+                            "${ChatColor.GREEN}${ChatColor.BOLD}" +
+                            "友好度" +
+                            "${ChatColor.WHITE}が" +
+                            "${ChatColor.GREEN}${ChatColor.BOLD}" +
+                            "1%" +
+                            "${ChatColor.WHITE}" +
+                            "上昇(合計$ratio%)"
+
+                }
+        ))
     }
 
 }
