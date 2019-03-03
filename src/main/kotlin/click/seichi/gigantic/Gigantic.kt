@@ -59,6 +59,10 @@ class Gigantic : JavaPlugin() {
 
         val DEFAULT_LOCALE = Locale.JAPANESE!!
 
+        val NORMAL_RESOURCE_PACK_URL = "http://map.spring.seichi.click/resourcepacks/Spring_Texture_ver1.2.zip"
+
+        val LIGHT_RESOURCE_PACK_URL = "http://map.spring.seichi.click/resourcepacks/Spring_Texture_No_Particle_ver1.2.zip"
+
         val SKILLED_BLOCK_SET = mutableSetOf<Block>()
 
         fun createInvisibleBossBar(): BossBar = Bukkit.createBossBar(

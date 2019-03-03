@@ -8,6 +8,7 @@
 
 :diamond_shape_with_a_dot_inside: @しろつぶ#4655 氏よりマナのテクスチャをご提供頂きました  
 :diamond_shape_with_a_dot_inside: 空腹バーがマナの☆マークになりました  
+:diamond_shape_with_a_dot_inside: スキル **マイン・バースト** のテクスチャが新しくなりました  
 :diamond_shape_with_a_dot_inside: @しろつぶ#4655 氏より軽量化テクスチャをご提供頂きました  
 :diamond_shape_with_a_dot_inside: メニューから通常テクスチャと軽量化テクスチャを切り替え可能になりました  
 
@@ -23,13 +24,14 @@
 
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
-:diamond_shape_with_a_dot_inside: 
+:diamond_shape_with_a_dot_inside: Tabリストに現在いる地点の詳細情報を表示しました  
 
 
 :bow: **__不具合修正__** :bow:   
 以下の不具合を修正しました．  
 
-:diamond_shape_with_a_dot_inside: 
+:diamond_shape_with_a_dot_inside: スキル **フォーカス・トーテム**解禁時のメッセージが異なっていた不具合  
+
 
 
 作成者: tar0ss  

@@ -7,7 +7,10 @@ import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import click.seichi.gigantic.util.BiomeGroup
+import click.seichi.gigantic.util.HeightGrade
 import click.seichi.gigantic.util.Random
+import click.seichi.gigantic.util.TemperatureGrade
 import org.bukkit.Effect
 import org.bukkit.GameMode
 import org.bukkit.Location
@@ -604,3 +607,12 @@ fun Block.calcGravity() = (1..(255 - y))
         .filter { !it.isAir }
         .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
         .size
+
+val Block.temperatureGrade: TemperatureGrade
+    get() = TemperatureGrade.getByBlock(this)
+
+val Block.heightGrade: HeightGrade
+    get() = HeightGrade.getByBlock(this)
+
+val Block.biomeGroup: BiomeGroup?
+    get() = BiomeGroup.findByBlock(this)

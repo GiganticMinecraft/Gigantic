@@ -62,6 +62,8 @@ class User(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var eventJmsKingGivenAt by UserTable.eventJmsKingGivenAt
 
+    var isNormalTexture by UserTable.isNormalTexture
+
     var createdDate by UserTable.createdAt
 
     var updatedDate by UserTable.updatedAt

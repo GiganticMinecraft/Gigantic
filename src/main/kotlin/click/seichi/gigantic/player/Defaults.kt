@@ -79,4 +79,8 @@ object Defaults {
     val MAX_TOTEM_PIECE = 100
     // 欠片の発生確率
     val PIECE_PROBABILITY = 0.02
+
+    // プレイヤーリストの更新頻度(tick)
+    val PLAYERLIST_UPDATE_INTERVAL = 100L
+
 }

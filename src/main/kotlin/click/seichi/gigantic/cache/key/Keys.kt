@@ -1323,4 +1323,24 @@ object Keys {
         }
     }
 
+    val IS_NORMAL_TEXTURE = object : DatabaseKey<PlayerCache, Boolean> {
+        override val default: Boolean
+            get() = true
+
+        override fun read(entity: UserEntity): Boolean {
+            val user = entity.user
+            return user.isNormalTexture
+        }
+
+        override fun store(entity: UserEntity, value: Boolean) {
+            val user = entity.user
+            user.isNormalTexture = value
+        }
+
+        override fun satisfyWith(value: Boolean): Boolean {
+            return true
+        }
+
+    }
+
 }

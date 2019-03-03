@@ -62,6 +62,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val eventJmsKingGivenAt = datetime("event_jms_king_given_at").default(DateTime("2019-02-21T00:00:00+09:00"))
 
+    val isNormalTexture = bool("is_normal_texture").default(true)
+
     val createdAt = datetime("created_at")
 
     val updatedAt = datetime("updated_at")

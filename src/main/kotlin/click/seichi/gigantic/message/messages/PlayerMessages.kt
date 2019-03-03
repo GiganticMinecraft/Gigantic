@@ -1,9 +1,11 @@
 package click.seichi.gigantic.message.messages
 
 import click.seichi.gigantic.config.PlayerLevelConfig
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.*
 import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
+import org.bukkit.entity.Player
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.*
@@ -19,24 +21,6 @@ object PlayerMessages {
     val DISPLAY_NAME_PREFIX = { level: Int ->
         "[Lv$level]"
     }
-
-    val PLAYER_LIST_HEADER = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.WHITE}" +
-                    "======" +
-                    "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
-                    "整地鯖(春)" +
-                    "${ChatColor.WHITE}" +
-                    "======"
-    )
-
-    val PLAYER_LIST_FOOTER = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.WHITE}" +
-                    "======" +
-                    "${ChatColor.AQUA}${ChatColor.BOLD}" +
-                    "整地専用サーバー" +
-                    "${ChatColor.WHITE}" +
-                    "======"
-    )
 
     val EXP_BAR_DISPLAY = { level: Int, exp: BigDecimal ->
         val expToLevel = PlayerLevelConfig.LEVEL_MAP[level] ?: BigDecimal.ZERO
@@ -182,5 +166,61 @@ object PlayerMessages {
             Locale.JAPANESE to "${ChatColor.GREEN}" +
                     "フォーカス・トーテム 再使用可能"
     ))
+
+    val LOCATION_INFO = { player: Player ->
+        val world = player.world
+        val location = player.location
+        val block = location.block
+        val junishi = world.junishiOfTime
+        val moonPhase = world.moonPhase
+        val biome = location.block.biome
+        val heightGrade = block.heightGrade
+        val temperatureGrade = block.temperatureGrade
+        val biomeGroup = block.biomeGroup
+        TabListMessage(
+                LocalizedText(
+                        Locale.JAPANESE.let {
+                            it to "${ChatColor.WHITE}" +
+                                    "======" +
+                                    "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
+                                    "整地鯖(春)" +
+                                    "${ChatColor.WHITE}" +
+                                    "======" +
+                                    "\n" +
+                                    "${ChatColor.WHITE}" +
+                                    "時間: " +
+                                    "${ChatColor.DARK_AQUA}${ChatColor.BOLD}" +
+                                    "${junishi.getName(it)}の刻 " +
+                                    "${ChatColor.WHITE}" +
+                                    "月齢: " +
+                                    "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                                    moonPhase.getName(it) +
+                                    "\n" +
+                                    "${ChatColor.WHITE}" +
+                                    "高さ: " +
+                                    "${heightGrade.chatColor}${ChatColor.BOLD}" +
+                                    heightGrade.getName(it) +
+                                    "${ChatColor.WHITE} " +
+                                    "気温: " +
+                                    "${temperatureGrade.chatColor}${ChatColor.BOLD}" +
+                                    temperatureGrade.getName(it) +
+                                    "\n" +
+                                    "${ChatColor.WHITE}" +
+                                    "環境: " +
+                                    "${biomeGroup?.chatColor ?: ChatColor.DARK_PURPLE}${ChatColor.BOLD}" +
+                                    "${biomeGroup?.getName(it) ?: ""} " +
+                                    BiomeMessages.BIOME(biome).asSafety(it)
+                        }
+                ),
+                LocalizedText(
+                        Locale.JAPANESE to "${ChatColor.WHITE}" +
+                                "======" +
+                                "${ChatColor.AQUA}${ChatColor.BOLD}" +
+                                "整地専用サーバー" +
+                                "${ChatColor.WHITE}" +
+                                "======"
+                )
+        )
+    }
 
 }

@@ -22,6 +22,33 @@ object BagMessages {
             Locale.JAPANESE to "${ChatColor.YELLOW}${ChatColor.UNDERLINE}戻る"
     )
 
+    val NORMAL_TEXTURE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.WHITE}" +
+                    "軽量化リソースパック: " +
+                    "${ChatColor.YELLOW}" +
+                    "OFF"
+    )
+
+    val LIGHT_TEXTURE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.WHITE}" +
+                    "軽量化リソースパック: " +
+                    "${ChatColor.RED}" +
+                    "ON"
+    )
+
+    val SERVER_RESOURCE_PACK = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
+                            "サーバーリソースパックを"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.YELLOW}" +
+                            "有効" +
+                            "${ChatColor.DARK_GRAY}" +
+                            "にして下さい"
+            )
+    )
+
     val SPECIAL_THANKS_TITLE = LocalizedText(
             Locale.JAPANESE to "Special Thanks"
     )

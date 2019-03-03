@@ -70,7 +70,7 @@ object LoginMessages {
                             "リソースパック手動ダウンロードリンク↓" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
                             "${ChatColor.YELLOW}" +
-                            "https://red.minecraftserver.jp/attachments/download/872/Spring_Texture_ver1.1.zip" +
+                            "http://map.spring.seichi.click/resourcepacks/" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
                             "${ChatColor.WHITE}" +
                             (1..53).joinToString("") { "-" }

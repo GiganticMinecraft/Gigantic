@@ -9,10 +9,12 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.ComboEvent
+import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.player.spell.spells.SkyWalk
 import kotlinx.coroutines.runBlocking
@@ -330,6 +332,18 @@ class PlayerListener : Listener {
         if (block.y != 0) return
         PlayerMessages.FLOOR_BLOCK.sendTo(player)
         event.isCancelled = true
+    }
+
+    @EventHandler
+    fun updatePlayerListHeaderFooter(event: TickEvent) {
+        if (event.ticks % Defaults.PLAYERLIST_UPDATE_INTERVAL != 0L) return
+        Bukkit.getServer().onlinePlayers
+                .asSequence()
+                .filterNotNull()
+                .filter { it.isValid }
+                .forEach { player ->
+                    PlayerMessages.LOCATION_INFO(player).sendTo(player)
+                }
     }
 
 }

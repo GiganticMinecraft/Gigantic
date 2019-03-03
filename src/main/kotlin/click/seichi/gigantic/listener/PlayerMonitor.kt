@@ -77,11 +77,16 @@ class PlayerMonitor : Listener {
             }
         }
 
+        // リソースパック更新
+        if (player.isNormalTexture)
+            player.setResourcePack(Gigantic.NORMAL_RESOURCE_PACK_URL)
+        else
+            player.setResourcePack(Gigantic.LIGHT_RESOURCE_PACK_URL)
+
         // レベル表記を更新
         player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(player.wrappedLevel).plus(player.name)
         player.displayName = PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name)
-        player.playerListHeader = PlayerMessages.PLAYER_LIST_HEADER.asSafety(player.wrappedLocale)
-        player.playerListFooter = PlayerMessages.PLAYER_LIST_FOOTER.asSafety(player.wrappedLocale)
+        PlayerMessages.LOCATION_INFO(player).sendTo(player)
 
         // サーバー名を受信
         val out = ByteStreams.newDataOutput().apply {

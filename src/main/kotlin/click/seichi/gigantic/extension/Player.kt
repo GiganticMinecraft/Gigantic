@@ -161,6 +161,9 @@ val Player.relicTypes: Int
     get() = Relic.values()
             .count { hasRelic(it) }
 
+val Player.isNormalTexture: Boolean
+    get() = getOrPut(Keys.IS_NORMAL_TEXTURE)
+
 
 /**
  * プレイヤーが向いている方向の[BlockFace]を取得する
