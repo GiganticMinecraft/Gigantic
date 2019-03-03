@@ -16,9 +16,7 @@ object WillButtons {
 
     val WILL: (Will) -> Button = { will: Will ->
         object : Button {
-
             override fun toShownItemStack(player: Player): ItemStack? {
-                if (!player.isProcessed(will)) return null
                 return ItemStack(will.material).apply {
                     setDisplayName(player, WillMessages.WILL_MENU(will))
                     clearLore()

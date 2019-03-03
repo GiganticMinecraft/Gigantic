@@ -30,7 +30,6 @@ enum class ToggleSetting(
     NIGHT_VISION(4, LocalizedText(
             Locale.JAPANESE to "暗視"
     ), true),
-
     ;
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)

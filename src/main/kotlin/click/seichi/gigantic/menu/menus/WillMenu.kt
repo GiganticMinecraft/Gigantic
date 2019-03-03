@@ -36,7 +36,7 @@ object WillMenu : BookMenu() {
     override fun onOpen(player: Player, isFirst: Boolean) {
         player.offer(Keys.MENU_WILL_LIST,
                 Will.values()
-                        .filter { player.isProcessed(it) }
+                        .filter { player.isProcessed(it) || player.hasAptitude(it) }
                         .toList()
         )
     }

@@ -177,9 +177,9 @@ object WillMessages {
     val RELATION = { relation: WillRelationship ->
         LocalizedText(
                 Locale.JAPANESE.let {
-                    it to "${ChatColor.GREEN}" +
+                    it to "${ChatColor.WHITE}" +
                             "あなたとの関係: " +
-                            "${ChatColor.WHITE}" +
+                            "${ChatColor.GREEN}${ChatColor.BOLD}" +
                             relation.getName(it)
                 }
         )
@@ -188,9 +188,9 @@ object WillMessages {
     val FRIEND_RATIO = { ratio: BigDecimal ->
         LocalizedText(
                 Locale.JAPANESE.let {
-                    it to "${ChatColor.GREEN}" +
+                    it to "${ChatColor.WHITE}" +
                             "友好度: " +
-                            "${ChatColor.WHITE}" +
+                            "${ChatColor.GREEN}${ChatColor.BOLD}" +
                             "${ratio.setScale(1, RoundingMode.CEILING)}" +
                             "%"
                 }
