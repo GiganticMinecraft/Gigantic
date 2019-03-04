@@ -7,9 +7,11 @@ import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.breaker.BreakArea
 import click.seichi.gigantic.cache.cache.PlayerCache
+import click.seichi.gigantic.cache.cache.RankCache
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
+import click.seichi.gigantic.database.RankEntity
 import click.seichi.gigantic.database.UserEntity
 import click.seichi.gigantic.database.dao.user.User
 import click.seichi.gigantic.database.dao.user.UserFollow
@@ -1341,6 +1343,20 @@ object Keys {
             return true
         }
 
+    }
+
+    val RANK_EXP = object : RankKey<RankCache, Long> {
+        override val default: Long
+            get() = 0L
+
+        override fun read(entity: RankEntity): Long {
+            val rankValue = entity.rankValue
+            return rankValue.exp
+        }
+
+        override fun satisfyWith(value: Long): Boolean {
+            return true
+        }
     }
 
 }
