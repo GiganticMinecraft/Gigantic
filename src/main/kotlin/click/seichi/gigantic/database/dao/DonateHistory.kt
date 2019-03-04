@@ -1,5 +1,6 @@
 package click.seichi.gigantic.database.dao
 
+import click.seichi.gigantic.database.dao.user.User
 import click.seichi.gigantic.database.table.DonateHistoryTable
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.EntityID

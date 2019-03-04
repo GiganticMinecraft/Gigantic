@@ -4,7 +4,8 @@ import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.command.*
 import click.seichi.gigantic.config.*
-import click.seichi.gigantic.database.table.*
+import click.seichi.gigantic.database.table.DonateHistoryTable
+import click.seichi.gigantic.database.table.user.*
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.head.Head
@@ -114,7 +115,8 @@ class Gigantic : JavaPlugin() {
                 SpellListener(),
                 ChatListener(),
                 TipsListener(),
-                NightVisionListener()
+                NightVisionListener(),
+                RankingListener()
         )
 
         registerPacketListeners(
@@ -133,6 +135,7 @@ class Gigantic : JavaPlugin() {
         )
 
         prepareDatabase(
+                // user
                 UserTable,
                 UserWillTable,
                 UserExpTable,

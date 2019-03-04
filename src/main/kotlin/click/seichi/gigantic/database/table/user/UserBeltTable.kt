@@ -1,15 +1,15 @@
-package click.seichi.gigantic.database.table
+package click.seichi.gigantic.database.table.user
 
 import org.jetbrains.exposed.dao.IntIdTable
 
 /**
  * @author tar0ss
  */
-object UserToolTable : IntIdTable("users_tools") {
+object UserBeltTable : IntIdTable("users_belts") {
 
     val userId = reference("unique_id", UserTable).primaryKey()
 
-    val toolId = integer("tool_id").primaryKey()
+    val beltId = integer("belt_id").primaryKey()
 
     val canSwitch = bool("can_switch").default(true)
 

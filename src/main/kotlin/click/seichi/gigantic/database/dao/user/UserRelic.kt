@@ -1,6 +1,6 @@
-package click.seichi.gigantic.database.dao
+package click.seichi.gigantic.database.dao.user
 
-import click.seichi.gigantic.database.table.UserRelicTable
+import click.seichi.gigantic.database.table.user.UserRelicTable
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.IntEntity

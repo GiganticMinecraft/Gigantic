@@ -2,8 +2,8 @@ package click.seichi.gigantic.command
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.database.dao.DonateHistory
-import click.seichi.gigantic.database.dao.User
-import click.seichi.gigantic.database.table.UserTable
+import click.seichi.gigantic.database.dao.user.User
+import click.seichi.gigantic.database.table.user.UserTable
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.command.PointMessages
 import org.bukkit.command.Command

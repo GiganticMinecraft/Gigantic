@@ -1,4 +1,4 @@
-package click.seichi.gigantic.database.table
+package click.seichi.gigantic.database.table.user
 
 import click.seichi.gigantic.player.Defaults
 import org.jetbrains.exposed.dao.IdTable

@@ -22,3 +22,11 @@ fun runTaskLater(delay: Long, action: () -> Unit) {
         }
     }.runTaskLater(Gigantic.PLUGIN, delay)
 }
+
+fun runTaskAsync(action: () -> Unit) {
+    object : BukkitRunnable() {
+        override fun run() {
+            action()
+        }
+    }.runTaskAsynchronously(Gigantic.PLUGIN)
+}

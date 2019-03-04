@@ -1,5 +1,6 @@
 package click.seichi.gigantic.database.table
 
+import click.seichi.gigantic.database.table.user.UserTable
 import org.jetbrains.exposed.dao.IntIdTable
 
 /**

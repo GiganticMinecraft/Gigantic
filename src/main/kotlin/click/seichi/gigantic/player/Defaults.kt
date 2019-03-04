@@ -83,4 +83,6 @@ object Defaults {
     // プレイヤーリストの更新頻度(tick)
     val PLAYERLIST_UPDATE_INTERVAL = 100L
 
+    // ランキングの更新頻度(tick)
+    val RANKING_UPDATE_INTERVAL = 20L * 60L * 5L
 }

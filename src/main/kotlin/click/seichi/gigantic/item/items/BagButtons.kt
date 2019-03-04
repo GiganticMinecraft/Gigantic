@@ -4,7 +4,7 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.database.dao.DonateHistory
-import click.seichi.gigantic.database.dao.User
+import click.seichi.gigantic.database.dao.user.User
 import click.seichi.gigantic.database.table.DonateHistoryTable
 import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.*
