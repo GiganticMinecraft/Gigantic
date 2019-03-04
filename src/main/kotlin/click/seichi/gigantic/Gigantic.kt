@@ -115,8 +115,7 @@ class Gigantic : JavaPlugin() {
                 SpellListener(),
                 ChatListener(),
                 TipsListener(),
-                NightVisionListener(),
-                RankingListener()
+                NightVisionListener()
         )
 
         registerPacketListeners(
