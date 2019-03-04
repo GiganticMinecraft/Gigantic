@@ -273,6 +273,11 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             Keys.TOGGLE_SETTING_MAP.forEach { _, key ->
                 key.store(entity, getOrDefault(key))
             }
+
+            // rank exp 保存
+            var amount = 0.toBigDecimal()
+            Keys.EXP_MAP.values.forEach { amount += getOrDefault(it) }
+            entity.rankExp.amount = amount.toLong()
         }
     }
 

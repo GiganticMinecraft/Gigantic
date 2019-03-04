@@ -3,6 +3,7 @@ package click.seichi.gigantic.database
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.manipulator.ExpReason
+import click.seichi.gigantic.database.dao.rank.RankExp
 import click.seichi.gigantic.database.dao.user.*
 import click.seichi.gigantic.database.table.user.*
 import click.seichi.gigantic.effect.GiganticEffect
@@ -135,4 +136,7 @@ class UserEntity(uniqueId: UUID, playerName: String) {
     val userMuteList = UserMute
             .find { UserMuteTable.userId eq uniqueId }
             .toList()
+
+    val rankExp = RankExp.findById(uniqueId) ?: RankExp.new(uniqueId) {}
+
 }
