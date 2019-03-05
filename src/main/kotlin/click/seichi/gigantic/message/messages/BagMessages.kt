@@ -170,4 +170,9 @@ object BagMessages {
             )
     )
 
+    val RANKING = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GOLD}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
+                    "ランキング"
+    )
+
 }

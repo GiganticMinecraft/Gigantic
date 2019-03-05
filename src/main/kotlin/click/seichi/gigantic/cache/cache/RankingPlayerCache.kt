@@ -1,7 +1,7 @@
 package click.seichi.gigantic.cache.cache
 
-import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.database.RankingEntity
+import click.seichi.gigantic.ranking.Score
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -13,8 +13,8 @@ class RankingPlayerCache(private val uniqueId: UUID) : Cache<RankingPlayerCache>
         transaction {
             val entity = RankingEntity(uniqueId)
 
-            Keys.RANK_EXP.let {
-                force(it, it.read(entity))
+            Score.values().forEach {
+                it.read(entity, this@RankingPlayerCache)
             }
         }
     }

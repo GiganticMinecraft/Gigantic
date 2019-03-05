@@ -1,6 +1,7 @@
 package click.seichi.gigantic
 
 import click.seichi.gigantic.cache.PlayerCacheMemory
+import click.seichi.gigantic.cache.RankingPlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.command.*
 import click.seichi.gigantic.config.*
@@ -243,10 +244,16 @@ class Gigantic : JavaPlugin() {
     }
 
     fun updateRanking() {
-        Score.values().forEach { score ->
-            RANKING_MAP.getOrPut(score) {
-                Ranking(score)
-            }.update()
+        transaction {
+            val uniqueIdSet = mutableSetOf<UUID>()
+            Score.values().forEach { score ->
+                RANKING_MAP.getOrPut(score) {
+                    Ranking(score)
+                }.update()
+                uniqueIdSet.addAll(RANKING_MAP.getValue(score).rankMap.values)
+            }
+            RankingPlayerCacheMemory.clearAll()
+            RankingPlayerCacheMemory.addAll(*uniqueIdSet.toTypedArray())
         }
     }
 

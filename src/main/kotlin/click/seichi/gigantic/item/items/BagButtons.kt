@@ -632,4 +632,22 @@ object BagButtons {
         }
 
     }
+
+
+    val RANKING = object : Button {
+
+        override fun toShownItemStack(player: Player): ItemStack? {
+            return itemStackOf(Material.FIREWORK_ROCKET) {
+                setDisplayName(player, BagMessages.RANKING)
+                sublime()
+            }
+        }
+
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === RankingMenu) return false
+            RankingMenu.open(player)
+            return true
+        }
+
+    }
 }

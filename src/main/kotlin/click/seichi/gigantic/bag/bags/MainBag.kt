@@ -24,6 +24,7 @@ object MainBag : Bag() {
         registerButton(27, BagButtons.FOLLOW_SETTING)
         registerButton(29, BagButtons.VOTE_BONUS)
         registerButton(31, BagButtons.RELIC_GENERATOR)
+        registerButton(33, BagButtons.RANKING)
         registerButton(35, BagButtons.SPECIAL_THANKS)
     }
 
