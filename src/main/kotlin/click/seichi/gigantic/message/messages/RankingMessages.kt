@@ -84,4 +84,12 @@ object RankingMessages {
         )
     }
 
+    val NO_DATA = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GREEN}あなたの順位: " +
+                            "${ChatColor.RED}" +
+                            "不明"
+            )
+    )
+
 }

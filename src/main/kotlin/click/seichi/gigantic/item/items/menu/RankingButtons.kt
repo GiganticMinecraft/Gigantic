@@ -93,8 +93,13 @@ object RankingButtons {
                             val diff = nextRankValue - value
                             // TODO implements
                         }
+                    } else {
+                        setLore(*RankingMessages.NO_DATA
+                                .map {
+                                    it.asSafety(player.wrappedLocale)
+                                }.toTypedArray()
+                        )
                     }
-
                 }
             }
         }

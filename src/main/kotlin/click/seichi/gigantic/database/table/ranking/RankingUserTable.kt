@@ -8,7 +8,7 @@ import java.util.*
  */
 object RankingUserTable : IdTable<UUID>("rankings_users") {
 
-    override val id = RankingScoreTable.uuid("unique_id").primaryKey().entityId()
+    override val id = uuid("unique_id").primaryKey().entityId()
 
     val name = varchar("name", 50).default("No Name")
 }

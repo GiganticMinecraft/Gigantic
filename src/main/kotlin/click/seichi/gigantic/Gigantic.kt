@@ -7,6 +7,7 @@ import click.seichi.gigantic.command.*
 import click.seichi.gigantic.config.*
 import click.seichi.gigantic.database.table.DonateHistoryTable
 import click.seichi.gigantic.database.table.ranking.RankingScoreTable
+import click.seichi.gigantic.database.table.ranking.RankingUserTable
 import click.seichi.gigantic.database.table.user.*
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.extension.*
@@ -158,7 +159,8 @@ class Gigantic : JavaPlugin() {
                 UserMuteTable,
                 UserToggleTable,
                 //ranking
-                RankingScoreTable
+                RankingScoreTable,
+                RankingUserTable
         )
 
         // ランキングデータ生成
