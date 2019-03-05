@@ -276,7 +276,12 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 key.store(entity, getOrDefault(key))
             }
 
+            // ログイン時でもいいけど、ログインに時間がかかるのは良くないのでこっちで
             val rankingEntity = RankingEntity(uniqueId)
+
+            rankingEntity.user.run {
+                name = playerName
+            }
 
             Score.values().forEach { it.write(rankingEntity, this@PlayerCache) }
         }

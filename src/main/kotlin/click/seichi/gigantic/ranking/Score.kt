@@ -36,7 +36,7 @@ enum class Score(
         override fun write(entity: RankingEntity, cache: PlayerCache) {
             var exp = 0.toBigDecimal()
             Keys.EXP_MAP.values.forEach { exp += cache.getOrDefault(it) }
-            entity.rankingScore.exp = exp.toLong()
+            entity.score.exp = exp.toLong()
         }
 
         override fun read(entity: RankingEntity, cache: RankingPlayerCache) {
@@ -55,7 +55,7 @@ enum class Score(
     ) {
         override fun write(entity: RankingEntity, cache: PlayerCache) {
             val value = cache.getOrDefault(Keys.EXP_MAP.getValue(ExpReason.MINE_BLOCK)).toLong()
-            entity.rankingScore.breakBlock = value
+            entity.score.breakBlock = value
         }
 
         override fun read(entity: RankingEntity, cache: RankingPlayerCache) {
@@ -74,7 +74,7 @@ enum class Score(
     ) {
         override fun write(entity: RankingEntity, cache: PlayerCache) {
             val value = cache.getOrDefault(Keys.EXP_MAP.getValue(ExpReason.SPELL_MULTI_BREAK)).toLong()
-            entity.rankingScore.multiBreakBlock = value
+            entity.score.multiBreakBlock = value
         }
 
         override fun read(entity: RankingEntity, cache: RankingPlayerCache) {
@@ -93,7 +93,7 @@ enum class Score(
     ) {
         override fun write(entity: RankingEntity, cache: PlayerCache) {
             val value = cache.getOrDefault(Keys.EXP_MAP.getValue(ExpReason.RELIC_BONUS)).toLong()
-            entity.rankingScore.relicBonus = value
+            entity.score.relicBonus = value
         }
 
         override fun read(entity: RankingEntity, cache: RankingPlayerCache) {
@@ -112,7 +112,7 @@ enum class Score(
     ) {
         override fun write(entity: RankingEntity, cache: PlayerCache) {
             val value = cache.getOrDefault(Keys.MAX_COMBO).toLong()
-            entity.rankingScore.maxCombo = value
+            entity.score.maxCombo = value
         }
 
         override fun read(entity: RankingEntity, cache: RankingPlayerCache) {
@@ -132,7 +132,7 @@ enum class Score(
         override fun write(entity: RankingEntity, cache: PlayerCache) {
             var value = 0L
             Relic.values().forEach { value += cache.getOrDefault(Keys.RELIC_MAP.getValue(it)) }
-            entity.rankingScore.relic = value
+            entity.score.relic = value
         }
 
         override fun read(entity: RankingEntity, cache: RankingPlayerCache) {

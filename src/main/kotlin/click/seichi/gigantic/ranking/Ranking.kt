@@ -18,9 +18,9 @@ class Ranking(val score: Score) {
 
     fun contains(uniqueId: UUID) = uuidMap.contains(uniqueId)
 
-    fun getValue(uniqueId: UUID) = valueMap.getValue(uniqueId)
+    fun findValue(uniqueId: UUID) = valueMap[uniqueId]
 
-    fun getRank(uniqueId: UUID) = uuidMap.getValue(uniqueId)
+    fun findRank(uniqueId: UUID) = uuidMap[uniqueId]
 
     fun findUUID(rank: Int) = rankMap[rank]
 

@@ -1350,7 +1350,7 @@ object Keys {
             get() = 0L
 
         override fun read(entity: RankingEntity): Long {
-            val rankingScore = entity.rankingScore
+            val rankingScore = entity.score
             return rankingScore.exp
         }
 
@@ -1370,7 +1370,7 @@ object Keys {
             get() = 0L
 
         override fun read(entity: RankingEntity): Long {
-            val rankingScore = entity.rankingScore
+            val rankingScore = entity.score
             return rankingScore.breakBlock
         }
 
@@ -1390,7 +1390,7 @@ object Keys {
             get() = 0L
 
         override fun read(entity: RankingEntity): Long {
-            val rankingScore = entity.rankingScore
+            val rankingScore = entity.score
             return rankingScore.multiBreakBlock
         }
 
@@ -1410,7 +1410,7 @@ object Keys {
             get() = 0L
 
         override fun read(entity: RankingEntity): Long {
-            val rankingScore = entity.rankingScore
+            val rankingScore = entity.score
             return rankingScore.relicBonus
         }
 
@@ -1431,7 +1431,7 @@ object Keys {
             get() = 0L
 
         override fun read(entity: RankingEntity): Long {
-            val rankingScore = entity.rankingScore
+            val rankingScore = entity.score
             return rankingScore.maxCombo
         }
 
@@ -1452,7 +1452,7 @@ object Keys {
             get() = 0L
 
         override fun read(entity: RankingEntity): Long {
-            val rankingScore = entity.rankingScore
+            val rankingScore = entity.score
             return rankingScore.relic
         }
 
@@ -1461,6 +1461,25 @@ object Keys {
         }
 
         override fun satisfyWith(value: Long): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
+            return false
+        }
+    }
+
+    val RANK_PLAYER_NAME = object : DatabaseKey<RankingPlayerCache, String, RankingEntity> {
+        override val default: String
+            get() = "No Name"
+
+        override fun read(entity: RankingEntity): String {
+            return entity.user.name
+        }
+
+        override fun store(entity: RankingEntity, value: String) {
+            // Do nothing
+        }
+
+        override fun satisfyWith(value: String): Boolean {
             // 強制的に書き換えを拒否
             Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
             return false
