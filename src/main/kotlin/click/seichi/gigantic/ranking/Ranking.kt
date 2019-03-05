@@ -29,20 +29,13 @@ class Ranking(val score: Score) {
         val _rankMap = mutableMapOf<Int, UUID>()
         val _uuidMap = mutableMapOf<UUID, Int>()
         val _valueMap = mutableMapOf<UUID, Long>()
-        // 同順位処理
-        var rank = 1
-        var prevValue = -1L
         RankingScoreTable.selectAll()
                 .notForUpdate()
                 .orderBy(score.column to score.sortOrder)
                 .limit(10000)
-                .forEachIndexed { index, row ->
+                .forEachIndexed { rank, row ->
                     val uniqueId = row[RankingScoreTable.id].value
                     val value = row[score.column]
-                    if (prevValue != value) {
-                        prevValue = value
-                        rank = index + 1
-                    }
                     _rankMap[rank] = uniqueId
                     _uuidMap[uniqueId] = rank
                     _valueMap[uniqueId] = value

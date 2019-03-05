@@ -15,4 +15,14 @@ object RankingScoreTable : IdTable<UUID>("rankings_scores") {
 
     val exp = long("exp").default(0L).index()
 
+    val breakBlock = long("break_block").default(0L).index()
+
+    val multiBreakBlock = long("multi_break_block").default(0L).index()
+
+    val relicBonus = long("relic_bonus").default(0L).index()
+
+    val maxCombo = long("max_combo").default(0L).index()
+
+    val relic = long("relic").default(0L).index()
+
 }

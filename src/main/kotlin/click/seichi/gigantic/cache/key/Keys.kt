@@ -1350,8 +1350,110 @@ object Keys {
             get() = 0L
 
         override fun read(entity: RankingEntity): Long {
-            val rankValue = entity.rankingScore
-            return rankValue.exp
+            val rankingScore = entity.rankingScore
+            return rankingScore.exp
+        }
+
+        override fun store(entity: RankingEntity, value: Long) {
+            // do nothing
+        }
+
+        override fun satisfyWith(value: Long): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
+            return false
+        }
+    }
+
+    val RANK_BREAK_BLOCK = object : DatabaseKey<RankingPlayerCache, Long, RankingEntity> {
+        override val default: Long
+            get() = 0L
+
+        override fun read(entity: RankingEntity): Long {
+            val rankingScore = entity.rankingScore
+            return rankingScore.breakBlock
+        }
+
+        override fun store(entity: RankingEntity, value: Long) {
+            // do nothing
+        }
+
+        override fun satisfyWith(value: Long): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
+            return false
+        }
+    }
+
+    val RANK_MULTI_BREAK_BLOCK = object : DatabaseKey<RankingPlayerCache, Long, RankingEntity> {
+        override val default: Long
+            get() = 0L
+
+        override fun read(entity: RankingEntity): Long {
+            val rankingScore = entity.rankingScore
+            return rankingScore.multiBreakBlock
+        }
+
+        override fun store(entity: RankingEntity, value: Long) {
+            // do nothing
+        }
+
+        override fun satisfyWith(value: Long): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
+            return false
+        }
+    }
+
+    val RANK_RELIC_BONUS = object : DatabaseKey<RankingPlayerCache, Long, RankingEntity> {
+        override val default: Long
+            get() = 0L
+
+        override fun read(entity: RankingEntity): Long {
+            val rankingScore = entity.rankingScore
+            return rankingScore.relicBonus
+        }
+
+        override fun store(entity: RankingEntity, value: Long) {
+            // do nothing
+        }
+
+        override fun satisfyWith(value: Long): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
+            return false
+        }
+    }
+
+
+    val RANK_MAX_COMBO = object : DatabaseKey<RankingPlayerCache, Long, RankingEntity> {
+        override val default: Long
+            get() = 0L
+
+        override fun read(entity: RankingEntity): Long {
+            val rankingScore = entity.rankingScore
+            return rankingScore.maxCombo
+        }
+
+        override fun store(entity: RankingEntity, value: Long) {
+            // do nothing
+        }
+
+        override fun satisfyWith(value: Long): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
+            return false
+        }
+    }
+
+
+    val RANK_RELIC = object : DatabaseKey<RankingPlayerCache, Long, RankingEntity> {
+        override val default: Long
+            get() = 0L
+
+        override fun read(entity: RankingEntity): Long {
+            val rankingScore = entity.rankingScore
+            return rankingScore.relic
         }
 
         override fun store(entity: RankingEntity, value: Long) {

@@ -14,4 +14,14 @@ class RankingScore(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var exp by RankingScoreTable.exp
 
+    var breakBlock by RankingScoreTable.breakBlock
+
+    var multiBreakBlock by RankingScoreTable.multiBreakBlock
+
+    var relicBonus by RankingScoreTable.relicBonus
+
+    var maxCombo by RankingScoreTable.maxCombo
+
+    var relic by RankingScoreTable.relic
+
 }
