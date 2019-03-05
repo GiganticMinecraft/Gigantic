@@ -130,7 +130,7 @@ enum class Score(
         override fun write(entity: RankingEntity, cache: PlayerCache) {
             var value = 0L
             Relic.values().forEach { value += cache.getOrDefault(Keys.RELIC_MAP.getValue(it)) }
-            entity.rankingScore.maxCombo = value
+            entity.rankingScore.relic = value
         }
 
         override fun read(entity: RankingEntity, cache: RankingPlayerCache) {
