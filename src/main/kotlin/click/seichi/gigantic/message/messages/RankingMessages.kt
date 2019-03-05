@@ -29,7 +29,7 @@ object RankingMessages {
                     "シルバー"
     )
 
-    val RANKED_PLAYER = { score: Score, rank: Int ->
+    val RANKED_PLAYER = { rank: Int, playerName: String ->
         val rankColor = when (rank) {
             1 -> ChatColor.AQUA
             2 -> ChatColor.GOLD
@@ -38,18 +38,14 @@ object RankingMessages {
         }
         LocalizedText(
                 Locale.JAPANESE.let {
-                    it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
-                            "${score.getName(it)} " +
-                            "$rankColor${ChatColor.BOLD}${rank}位"
+                    it to "$rankColor${ChatColor.BOLD}${rank}位" +
+                            " $playerName"
                 }
         )
     }
 
-    val RANKED_PLAYER_LORE = { playerName: String, value: Long ->
+    val RANKED_PLAYER_LORE = { value: Long ->
         listOf(
-                LocalizedText(
-                        Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.BOLD}$playerName"
-                ),
                 LocalizedText(
                         Locale.JAPANESE.let {
                             it to "${ChatColor.WHITE}${ChatColor.BOLD}" +
@@ -59,5 +55,14 @@ object RankingMessages {
         )
     }
 
+    val SCORE = { score: Score ->
+
+        LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "${ChatColor.YELLOW}${ChatColor.BOLD}" +
+                            score.getName(it)
+                }
+        )
+    }
 
 }

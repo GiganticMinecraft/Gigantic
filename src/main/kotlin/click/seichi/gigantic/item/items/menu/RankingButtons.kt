@@ -56,12 +56,24 @@ object RankingButtons {
                 val value = ranking.getValue(uniqueId)
 
                 return Head.getOfflinePlayerHead(uniqueId)?.apply {
-                    setDisplayName(player, RankingMessages.RANKED_PLAYER(score, rank))
-                    setLore(*RankingMessages.RANKED_PLAYER_LORE(player.name, value)
+                    setDisplayName(player, RankingMessages.RANKED_PLAYER(rank, player.name))
+                    setLore(*RankingMessages.RANKED_PLAYER_LORE(value)
                             .map {
                                 it.asSafety(player.wrappedLocale)
                             }.toTypedArray()
                     )
+                }
+            }
+        }
+    }
+
+    val SCORE: (Score) -> Button = { score: Score ->
+        object : Button {
+            override fun toShownItemStack(player: Player): ItemStack? {
+                return score.getIcon().apply {
+                    setDisplayName(player, RankingMessages.SCORE(score))
+                    sublime()
+                    setEnchanted(true)
                 }
             }
         }

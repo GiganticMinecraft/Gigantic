@@ -33,7 +33,8 @@ class Ranking(val score: Score) {
                 .notForUpdate()
                 .orderBy(score.column to score.sortOrder)
                 .limit(10000)
-                .forEachIndexed { rank, row ->
+                .forEachIndexed { index, row ->
+                    val rank = index + 1
                     val uniqueId = row[RankingScoreTable.id].value
                     val value = row[score.column]
                     _rankMap[rank] = uniqueId

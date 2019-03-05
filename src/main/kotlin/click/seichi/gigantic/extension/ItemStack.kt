@@ -2,11 +2,13 @@ package click.seichi.gigantic.extension
 
 import click.seichi.gigantic.message.LocalizedText
 import org.bukkit.ChatColor.RESET
+import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.PotionMeta
 
 
 /**
@@ -82,4 +84,12 @@ fun ItemStack.setEnchanted(flag: Boolean) {
 fun ItemStack.sublime() {
     hideAllFlag()
     itemMeta.isUnbreakable = true
+}
+
+fun potionOf(color: Color): ItemStack {
+    return itemStackOf(Material.POTION) {
+        val potionMeta = itemMeta as PotionMeta
+        potionMeta.color = color
+        itemMeta = potionMeta
+    }
 }

@@ -12,20 +12,21 @@ import org.bukkit.entity.Player
  */
 object RankingMenu : Menu() {
     override val size: Int
-        get() = 9 * 3
+        get() = 9 * 4
 
     override fun getTitle(player: Player): String {
         return RankingMessages.TITLE.asSafety(player.wrappedLocale)
     }
 
     init {
-        registerButton(0, RankingButtons.DIAMOND)
-        registerButton(9, RankingButtons.GOLD)
-        registerButton(18, RankingButtons.SILVER)
+        registerButton(9, RankingButtons.DIAMOND)
+        registerButton(18, RankingButtons.GOLD)
+        registerButton(27, RankingButtons.SILVER)
         Score.values().forEachIndexed { index, score ->
-            registerButton(1 + index, RankingButtons.RANKED_PLAYER(score, 1))
-            registerButton(10 + index, RankingButtons.RANKED_PLAYER(score, 2))
-            registerButton(19 + index, RankingButtons.RANKED_PLAYER(score, 3))
+            registerButton(1 + index, RankingButtons.SCORE(score))
+            registerButton(10 + index, RankingButtons.RANKED_PLAYER(score, 1))
+            registerButton(19 + index, RankingButtons.RANKED_PLAYER(score, 2))
+            registerButton(28 + index, RankingButtons.RANKED_PLAYER(score, 3))
         }
 
     }

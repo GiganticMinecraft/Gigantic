@@ -6,8 +6,10 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.database.RankingEntity
 import click.seichi.gigantic.database.table.ranking.RankingScoreTable
+import click.seichi.gigantic.extension.potionOf
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.relic.Relic
+import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import org.jetbrains.exposed.sql.Column
@@ -20,13 +22,13 @@ import java.util.*
 enum class Score(
         val column: Column<Long>,
         val sortOrder: SortOrder,
-        private val material: Material,
+        private val icon: ItemStack,
         private val localizedName: LocalizedText
 ) {
     EXP(
             RankingScoreTable.exp,
             SortOrder.DESC,
-            Material.EXPERIENCE_BOTTLE,
+            ItemStack(Material.EXPERIENCE_BOTTLE),
             LocalizedText(
                     Locale.JAPANESE to "累計獲得経験値ランキング"
             )
@@ -46,7 +48,7 @@ enum class Score(
     BREAK_BLOCK(
             RankingScoreTable.breakBlock,
             SortOrder.DESC,
-            Material.GRASS_BLOCK,
+            potionOf(Color.GREEN),
             LocalizedText(
                     Locale.JAPANESE to "累計通常破壊量ランキング"
             )
@@ -65,7 +67,7 @@ enum class Score(
     MULTI_BREAK_BLOCK(
             RankingScoreTable.multiBreakBlock,
             SortOrder.DESC,
-            Material.GRASS_BLOCK,
+            potionOf(Color.BLUE),
             LocalizedText(
                     Locale.JAPANESE to "累計範囲破壊量ランキング"
             )
@@ -84,7 +86,7 @@ enum class Score(
     RELIC_BONUS(
             RankingScoreTable.relicBonus,
             SortOrder.DESC,
-            Material.END_STONE_BRICKS,
+            potionOf(Color.PURPLE),
             LocalizedText(
                     Locale.JAPANESE to "累計レリックボーナスランキング"
             )
@@ -103,7 +105,7 @@ enum class Score(
     MAX_COMBO(
             RankingScoreTable.maxCombo,
             SortOrder.DESC,
-            Material.MAGMA_CREAM,
+            potionOf(Color.RED),
             LocalizedText(
                     Locale.JAPANESE to "最大コンボ数ランキング"
             )
@@ -122,7 +124,7 @@ enum class Score(
     RELIC(
             RankingScoreTable.relic,
             SortOrder.DESC,
-            Material.ENDER_CHEST,
+            potionOf(Color.LIME),
             LocalizedText(
                     Locale.JAPANESE to "累計レリック数ランキング"
             )
@@ -141,7 +143,7 @@ enum class Score(
     },
     ;
 
-    fun getIcon() = ItemStack(material)
+    fun getIcon() = icon.clone()
     fun getName(locale: Locale) = localizedName.asSafety(locale)
 
     abstract fun write(entity: RankingEntity, cache: PlayerCache)
