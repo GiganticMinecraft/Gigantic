@@ -83,6 +83,15 @@ object Defaults {
     // プレイヤーリストの更新頻度(tick)
     val PLAYERLIST_UPDATE_INTERVAL = 100L
 
-    // ランキングの更新頻度(tick)
-    val RANKING_UPDATE_INTERVAL = 20L * 60L * 5L
+    // プレイヤーデータ保存時のdelay
+    val PLAYER_DATA_SAVE_DELAY = 20L * 3L
+
+    // ランクデータ更新時のdelay
+    val RANK_DATA_SAVE_DELAY = 20L * 60L + PLAYER_DATA_SAVE_DELAY
+
+    // 総合ランキングの取得レコード数
+    val RANKING_BOUND = 10000
+
+    // TickEventを発火する際のdelay
+    val TICK_EVENT_DELAY = 20L * 3L
 }

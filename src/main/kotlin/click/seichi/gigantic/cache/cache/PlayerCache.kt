@@ -1,7 +1,7 @@
 package click.seichi.gigantic.cache.cache
 
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.database.RankEntity
+import click.seichi.gigantic.database.RankingEntity
 import click.seichi.gigantic.database.UserEntity
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
@@ -275,12 +275,12 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 key.store(entity, getOrDefault(key))
             }
 
-            val rankEntity = RankEntity(uniqueId)
+            val rankingEntity = RankingEntity(uniqueId)
 
-            // rank exp 保存
+            // ranking exp 保存
             var exp = 0.toBigDecimal()
             Keys.EXP_MAP.values.forEach { exp += getOrDefault(it) }
-            rankEntity.rankValue.exp = exp.toLong()
+            rankingEntity.rankingScore.exp = exp.toLong()
         }
     }
 

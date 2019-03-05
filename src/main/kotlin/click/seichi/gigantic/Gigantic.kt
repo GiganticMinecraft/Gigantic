@@ -5,14 +5,17 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.command.*
 import click.seichi.gigantic.config.*
 import click.seichi.gigantic.database.table.DonateHistoryTable
-import click.seichi.gigantic.database.table.rank.RankValueTable
+import click.seichi.gigantic.database.table.ranking.RankingScoreTable
 import click.seichi.gigantic.database.table.user.*
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.spell.spells.SkyWalk
+import click.seichi.gigantic.ranking.Ranking
+import click.seichi.gigantic.ranking.Score
 import click.seichi.gigantic.spirit.SpiritManager
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
@@ -66,6 +69,8 @@ class Gigantic : JavaPlugin() {
         val LIGHT_RESOURCE_PACK_URL = "http://map.spring.seichi.click/resourcepacks/Spring_Texture_No_Particle_ver1.2.zip"
 
         val SKILLED_BLOCK_SET = mutableSetOf<Block>()
+
+        val RANKING_MAP = mutableMapOf<Score, Ranking>()
 
         fun createInvisibleBossBar(): BossBar = Bukkit.createBossBar(
                 "title",
@@ -151,9 +156,12 @@ class Gigantic : JavaPlugin() {
                 UserHomeTable,
                 UserMuteTable,
                 UserToggleTable,
-                //rank
-                RankValueTable
+                //ranking
+                RankingScoreTable
         )
+
+        // ランキングデータ生成
+        updateRanking()
 
         // reflectionを使うので先に生成
         Head.values().forEach { it.toItemStack() }
@@ -166,7 +174,7 @@ class Gigantic : JavaPlugin() {
             override fun run() {
                 Bukkit.getServer().pluginManager.callEvent(TickEvent(ticks++))
             }
-        }.runTaskTimer(this, 3 * 20L, 1)
+        }.runTaskTimer(this, Defaults.TICK_EVENT_DELAY, 1)
 
         logger.info("Gigantic is enabled")
     }
@@ -231,6 +239,14 @@ class Gigantic : JavaPlugin() {
             SchemaUtils.createMissingTablesAndColumns(
                     *tables
             )
+        }
+    }
+
+    fun updateRanking() {
+        Score.values().forEach { score ->
+            RANKING_MAP.getOrPut(score) {
+                Ranking(score)
+            }.update()
         }
     }
 

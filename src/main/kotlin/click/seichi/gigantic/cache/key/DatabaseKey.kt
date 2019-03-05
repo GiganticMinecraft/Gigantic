@@ -1,13 +1,12 @@
 package click.seichi.gigantic.cache.key
 
 import click.seichi.gigantic.cache.cache.Cache
-import click.seichi.gigantic.database.UserEntity
 
 /**
  * @author tar0ss
  */
-interface DatabaseKey<S : Cache<S>, V> : Key<S, V> {
-    fun read(entity: UserEntity): V
+interface DatabaseKey<S : Cache<S>, V, E> : Key<S, V> {
+    fun read(entity: E): V
 
-    fun store(entity: UserEntity, value: V)
+    fun store(entity: E, value: V)
 }

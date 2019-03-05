@@ -30,7 +30,7 @@ abstract class Cache<C : Cache<C>> {
 
     // All return value must be V
     @Suppress("UNCHECKED_CAST")
-    protected fun <V : Any?> getOrDefault(key: Key<C, out V>): V {
+    fun <V : Any?> getOrDefault(key: Key<C, out V>): V {
         return keyMap.getOrDefault(key, key.default) as V
     }
 

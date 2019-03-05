@@ -7,11 +7,11 @@ import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.breaker.BreakArea
 import click.seichi.gigantic.cache.cache.PlayerCache
-import click.seichi.gigantic.cache.cache.RankCache
+import click.seichi.gigantic.cache.cache.RankingPlayerCache
 import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
-import click.seichi.gigantic.database.RankEntity
+import click.seichi.gigantic.database.RankingEntity
 import click.seichi.gigantic.database.UserEntity
 import click.seichi.gigantic.database.dao.user.User
 import click.seichi.gigantic.database.dao.user.UserFollow
@@ -53,7 +53,7 @@ import java.util.*
  */
 object Keys {
 
-    val MAX_COMBO = object : DatabaseKey<PlayerCache, Long> {
+    val MAX_COMBO = object : DatabaseKey<PlayerCache, Long, UserEntity> {
         override val default: Long
             get() = 0L
 
@@ -73,7 +73,7 @@ object Keys {
 
     }
 
-    val LOCALE = object : DatabaseKey<PlayerCache, Locale> {
+    val LOCALE = object : DatabaseKey<PlayerCache, Locale, UserEntity> {
         override val default
             get() = Locale.JAPANESE
 
@@ -93,7 +93,7 @@ object Keys {
 
     }
 
-    val MANA = object : DatabaseKey<PlayerCache, BigDecimal> {
+    val MANA = object : DatabaseKey<PlayerCache, BigDecimal, UserEntity> {
         override val default: BigDecimal
             get() = Defaults.MANA.toBigDecimal()
 
@@ -123,9 +123,9 @@ object Keys {
 
     }
 
-    val EXP_MAP: Map<ExpReason, DatabaseKey<PlayerCache, BigDecimal>> = ExpReason.values()
+    val EXP_MAP: Map<ExpReason, DatabaseKey<PlayerCache, BigDecimal, UserEntity>> = ExpReason.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, BigDecimal> {
+                it to object : DatabaseKey<PlayerCache, BigDecimal, UserEntity> {
                     override val default: BigDecimal
                         get() = BigDecimal.ZERO
 
@@ -148,9 +148,9 @@ object Keys {
             }
             .toMap()
 
-    val ETHEL_MAP: Map<Will, DatabaseKey<PlayerCache, Long>> = Will.values()
+    val ETHEL_MAP: Map<Will, DatabaseKey<PlayerCache, Long, UserEntity>> = Will.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, Long> {
+                it to object : DatabaseKey<PlayerCache, Long, UserEntity> {
                     override val default: Long
                         get() = 0L
 
@@ -173,9 +173,9 @@ object Keys {
             }
             .toMap()
 
-    val WILL_SECRET_MAP: Map<Will, DatabaseKey<PlayerCache, Long>> = Will.values()
+    val WILL_SECRET_MAP: Map<Will, DatabaseKey<PlayerCache, Long, UserEntity>> = Will.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, Long> {
+                it to object : DatabaseKey<PlayerCache, Long, UserEntity> {
                     override val default: Long
                         get() = 0L
 
@@ -197,9 +197,9 @@ object Keys {
             }
             .toMap()
 
-    val APTITUDE_MAP: Map<Will, DatabaseKey<PlayerCache, Boolean>> = Will.values()
+    val APTITUDE_MAP: Map<Will, DatabaseKey<PlayerCache, Boolean, UserEntity>> = Will.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, Boolean> {
+                it to object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
                     override val default: Boolean
                         get() = false
 
@@ -221,9 +221,9 @@ object Keys {
             }
             .toMap()
 
-    val SOUL_MONSTER: Map<SoulMonster, DatabaseKey<PlayerCache, Long>> = SoulMonster.values()
+    val SOUL_MONSTER: Map<SoulMonster, DatabaseKey<PlayerCache, Long, UserEntity>> = SoulMonster.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, Long> {
+                it to object : DatabaseKey<PlayerCache, Long, UserEntity> {
                     override val default: Long
                         get() = 0L
 
@@ -245,9 +245,9 @@ object Keys {
             }
             .toMap()
 
-    val RELIC_MAP: Map<Relic, DatabaseKey<PlayerCache, Long>> = Relic.values()
+    val RELIC_MAP: Map<Relic, DatabaseKey<PlayerCache, Long, UserEntity>> = Relic.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, Long> {
+                it to object : DatabaseKey<PlayerCache, Long, UserEntity> {
                     override val default: Long
                         get() = 0L
 
@@ -269,9 +269,9 @@ object Keys {
             }
             .toMap()
 
-    val ACHIEVEMENT_MAP: Map<Achievement, DatabaseKey<PlayerCache, Boolean>> = Achievement.values()
+    val ACHIEVEMENT_MAP: Map<Achievement, DatabaseKey<PlayerCache, Boolean, UserEntity>> = Achievement.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, Boolean> {
+                it to object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
                     override val default: Boolean
                         get() = false
 
@@ -293,9 +293,9 @@ object Keys {
             }
             .toMap()
 
-    val BELT_TOGGLE_MAP: Map<Belt, DatabaseKey<PlayerCache, Boolean>> = Belt.values()
+    val BELT_TOGGLE_MAP: Map<Belt, DatabaseKey<PlayerCache, Boolean, UserEntity>> = Belt.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, Boolean> {
+                it to object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
                     override val default: Boolean
                         get() = false
 
@@ -317,9 +317,9 @@ object Keys {
             }
             .toMap()
 
-    val BELT_UNLOCK_MAP: Map<Belt, DatabaseKey<PlayerCache, Boolean>> = Belt.values()
+    val BELT_UNLOCK_MAP: Map<Belt, DatabaseKey<PlayerCache, Boolean, UserEntity>> = Belt.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, Boolean> {
+                it to object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
                     override val default: Boolean
                         get() = false
 
@@ -351,7 +351,7 @@ object Keys {
 
     }
 
-    val BELT = object : DatabaseKey<PlayerCache, Belt> {
+    val BELT = object : DatabaseKey<PlayerCache, Belt, UserEntity> {
         override val default: Belt
             get() = Belt.findById(Defaults.BELT_ID)!!
 
@@ -371,7 +371,7 @@ object Keys {
 
     }
 
-    val TOOL = object : DatabaseKey<PlayerCache, Tool> {
+    val TOOL = object : DatabaseKey<PlayerCache, Tool, UserEntity> {
         override val default: Tool
             get() = Tool.findById(Defaults.TOOL_ID)!!
 
@@ -391,9 +391,9 @@ object Keys {
 
     }
 
-    val TOOL_TOGGLE_MAP: Map<Tool, DatabaseKey<PlayerCache, Boolean>> = Tool.values()
+    val TOOL_TOGGLE_MAP: Map<Tool, DatabaseKey<PlayerCache, Boolean, UserEntity>> = Tool.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, Boolean> {
+                it to object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
                     override val default: Boolean
                         get() = true
 
@@ -415,9 +415,9 @@ object Keys {
             }
             .toMap()
 
-    val TOOL_UNLOCK_MAP: Map<Tool, DatabaseKey<PlayerCache, Boolean>> = Tool.values()
+    val TOOL_UNLOCK_MAP: Map<Tool, DatabaseKey<PlayerCache, Boolean, UserEntity>> = Tool.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, Boolean> {
+                it to object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
                     override val default: Boolean
                         get() = false
 
@@ -450,7 +450,7 @@ object Keys {
     }
 
 
-    val SPELL_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
+    val SPELL_TOGGLE = object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
         override val default: Boolean
             get() = false
 
@@ -470,7 +470,7 @@ object Keys {
 
     }
 
-    val TELEPORT_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
+    val TELEPORT_TOGGLE = object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
         override val default: Boolean
             get() = false
 
@@ -530,9 +530,9 @@ object Keys {
                 }
             }.toMap()
 
-    val QUEST_MAP: Map<Quest, DatabaseKey<PlayerCache, QuestClient?>> = Quest.values()
+    val QUEST_MAP: Map<Quest, DatabaseKey<PlayerCache, QuestClient?, UserEntity>> = Quest.values()
             .map {
-                it to object : DatabaseKey<PlayerCache, QuestClient?> {
+                it to object : DatabaseKey<PlayerCache, QuestClient?, UserEntity> {
                     override val default: QuestClient?
                         get() = null
 
@@ -588,7 +588,7 @@ object Keys {
     /**
      * 破壊スキルの破壊範囲
      */
-    val SPELL_MULTI_BREAK_AREA = object : DatabaseKey<PlayerCache, BreakArea> {
+    val SPELL_MULTI_BREAK_AREA = object : DatabaseKey<PlayerCache, BreakArea, UserEntity> {
 
         override val default: BreakArea
             get() = BreakArea(1, 1, 1)
@@ -655,7 +655,7 @@ object Keys {
 
     }
 
-    val COMBO = object : DatabaseKey<PlayerCache, Long> {
+    val COMBO = object : DatabaseKey<PlayerCache, Long, UserEntity> {
         override val default: Long
             get() = 0L
 
@@ -675,7 +675,7 @@ object Keys {
 
     }
 
-    val LAST_COMBO_TIME = object : DatabaseKey<PlayerCache, Long> {
+    val LAST_COMBO_TIME = object : DatabaseKey<PlayerCache, Long, UserEntity> {
         override val default: Long
             get() = System.currentTimeMillis()
 
@@ -695,10 +695,10 @@ object Keys {
 
     }
 
-    val EFFECT_BOUGHT_MAP: Map<GiganticEffect, DatabaseKey<PlayerCache, Boolean>> = GiganticEffect.values()
+    val EFFECT_BOUGHT_MAP: Map<GiganticEffect, DatabaseKey<PlayerCache, Boolean, UserEntity>> = GiganticEffect.values()
             .map { effect ->
                 effect to
-                        object : DatabaseKey<PlayerCache, Boolean> {
+                        object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
 
                             override val default: Boolean
                                 get() = false
@@ -720,10 +720,10 @@ object Keys {
                         }
             }.toMap()
 
-    val EFFECT_BOUGHT_TIME_MAP: Map<GiganticEffect, DatabaseKey<PlayerCache, DateTime>> = GiganticEffect.values()
+    val EFFECT_BOUGHT_TIME_MAP: Map<GiganticEffect, DatabaseKey<PlayerCache, DateTime, UserEntity>> = GiganticEffect.values()
             .map { effect ->
                 effect to
-                        object : DatabaseKey<PlayerCache, DateTime> {
+                        object : DatabaseKey<PlayerCache, DateTime, UserEntity> {
 
                             override val default: DateTime
                                 get() = DateTime.now()
@@ -745,7 +745,7 @@ object Keys {
                         }
             }.toMap()
 
-    val EFFECT = object : DatabaseKey<PlayerCache, GiganticEffect> {
+    val EFFECT = object : DatabaseKey<PlayerCache, GiganticEffect, UserEntity> {
         override val default: GiganticEffect
             get() = GiganticEffect.DEFAULT
 
@@ -765,7 +765,7 @@ object Keys {
     }
 
     // データの読み込みしか行わない特殊なケース
-    val VOTE = object : DatabaseKey<PlayerCache, Int> {
+    val VOTE = object : DatabaseKey<PlayerCache, Int, UserEntity> {
         override val default: Int
             get() = 0
 
@@ -787,7 +787,7 @@ object Keys {
         }
     }
     // データの読み込みしか行わない特殊なケース
-    val POMME = object : DatabaseKey<PlayerCache, Int> {
+    val POMME = object : DatabaseKey<PlayerCache, Int, UserEntity> {
         override val default: Int
             get() = 0
 
@@ -809,7 +809,7 @@ object Keys {
         }
     }
     // データの読み込みしか行わない特殊なケース
-    val DONATION = object : DatabaseKey<PlayerCache, Int> {
+    val DONATION = object : DatabaseKey<PlayerCache, Int, UserEntity> {
         override val default: Int
             get() = 0
 
@@ -849,7 +849,7 @@ object Keys {
         }
     }
 
-    val FOLLOW_SET = object : DatabaseKey<PlayerCache, Set<UUID>> {
+    val FOLLOW_SET = object : DatabaseKey<PlayerCache, Set<UUID>, UserEntity> {
         override val default: Set<UUID>
             get() = setOf()
 
@@ -890,7 +890,7 @@ object Keys {
     }
 
 
-    val FOLLOWER_SET = object : DatabaseKey<PlayerCache, Set<UUID>> {
+    val FOLLOWER_SET = object : DatabaseKey<PlayerCache, Set<UUID>, UserEntity> {
         override val default: Set<UUID>
             get() = setOf()
 
@@ -910,7 +910,7 @@ object Keys {
         }
     }
 
-    val MUTE_SET = object : DatabaseKey<PlayerCache, Set<UUID>> {
+    val MUTE_SET = object : DatabaseKey<PlayerCache, Set<UUID>, UserEntity> {
         override val default: Set<UUID>
             get() = setOf()
 
@@ -977,7 +977,7 @@ object Keys {
         }
     }
 
-    val AUTO_SWITCH = object : DatabaseKey<PlayerCache, Boolean> {
+    val AUTO_SWITCH = object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
         override val default: Boolean
             get() = true
 
@@ -1073,7 +1073,7 @@ object Keys {
         }
     }
 
-    val HOME_MAP = object : DatabaseKey<PlayerCache, Map<Int, Home>> {
+    val HOME_MAP = object : DatabaseKey<PlayerCache, Map<Int, Home>, UserEntity> {
         override val default: Map<Int, Home>
             get() = mapOf()
 
@@ -1117,7 +1117,7 @@ object Keys {
         }
     }
 
-    val SPELL_SKY_WALK_TOGGLE = object : DatabaseKey<PlayerCache, Boolean> {
+    val SPELL_SKY_WALK_TOGGLE = object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
         override val default: Boolean
             get() = false
 
@@ -1136,7 +1136,7 @@ object Keys {
         }
     }
 
-    val GIVEN_VOTE_BONUS = object : DatabaseKey<PlayerCache, Int> {
+    val GIVEN_VOTE_BONUS = object : DatabaseKey<PlayerCache, Int, UserEntity> {
         override val default: Int
             get() = 0
 
@@ -1164,7 +1164,7 @@ object Keys {
         }
     }
 
-    val WALK_SPEED = object : DatabaseKey<PlayerCache, BigDecimal> {
+    val WALK_SPEED = object : DatabaseKey<PlayerCache, BigDecimal, UserEntity> {
         override val default: BigDecimal
             get() = Defaults.WALK_SPEED
 
@@ -1192,8 +1192,8 @@ object Keys {
         }
     }
 
-    val TOGGLE_SETTING_MAP: Map<ToggleSetting, DatabaseKey<PlayerCache, Boolean>> = ToggleSetting.values().map { display ->
-        display to object : DatabaseKey<PlayerCache, Boolean> {
+    val TOGGLE_SETTING_MAP: Map<ToggleSetting, DatabaseKey<PlayerCache, Boolean, UserEntity>> = ToggleSetting.values().map { display ->
+        display to object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
             override val default: Boolean
                 get() = true
 
@@ -1249,7 +1249,7 @@ object Keys {
         }
     }
 
-    val TOTEM = object : DatabaseKey<PlayerCache, Int> {
+    val TOTEM = object : DatabaseKey<PlayerCache, Int, UserEntity> {
         override val default: Int
             get() = 0
 
@@ -1268,7 +1268,7 @@ object Keys {
         }
     }
 
-    val TOTEM_PIECE = object : DatabaseKey<PlayerCache, Int> {
+    val TOTEM_PIECE = object : DatabaseKey<PlayerCache, Int, UserEntity> {
         override val default: Int
             get() = 0
 
@@ -1287,7 +1287,7 @@ object Keys {
         }
     }
 
-    val EVENT_JMS_KING_GIVEN_AT = object : DatabaseKey<PlayerCache, DateTime> {
+    val EVENT_JMS_KING_GIVEN_AT = object : DatabaseKey<PlayerCache, DateTime, UserEntity> {
         override val default: DateTime
             get() = DateTime.now()
 
@@ -1325,7 +1325,7 @@ object Keys {
         }
     }
 
-    val IS_NORMAL_TEXTURE = object : DatabaseKey<PlayerCache, Boolean> {
+    val IS_NORMAL_TEXTURE = object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
         override val default: Boolean
             get() = true
 
@@ -1345,17 +1345,23 @@ object Keys {
 
     }
 
-    val RANK_EXP = object : RankKey<RankCache, Long> {
+    val RANK_EXP = object : DatabaseKey<RankingPlayerCache, Long, RankingEntity> {
         override val default: Long
             get() = 0L
 
-        override fun read(entity: RankEntity): Long {
-            val rankValue = entity.rankValue
+        override fun read(entity: RankingEntity): Long {
+            val rankValue = entity.rankingScore
             return rankValue.exp
         }
 
+        override fun store(entity: RankingEntity, value: Long) {
+            // do nothing
+        }
+
         override fun satisfyWith(value: Long): Boolean {
-            return true
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
+            return false
         }
     }
 

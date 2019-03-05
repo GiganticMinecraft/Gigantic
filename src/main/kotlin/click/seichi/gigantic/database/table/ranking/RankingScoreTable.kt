@@ -1,14 +1,15 @@
-package click.seichi.gigantic.database.table.rank
+package click.seichi.gigantic.database.table.ranking
 
 import org.jetbrains.exposed.dao.IdTable
 import java.util.*
 
 /**
- * ランキングで使用されるカラム列挙
+ * ランキングで使用されるscore
+ * ※必ずlong型にすること
  *
  * @author tar0ss
  */
-object RankValueTable : IdTable<UUID>("ranks") {
+object RankingScoreTable : IdTable<UUID>("rankings_scores") {
 
     override val id = uuid("unique_id").primaryKey().entityId()
 
