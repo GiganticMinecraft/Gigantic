@@ -1,6 +1,8 @@
 package click.seichi.gigantic.item.items.menu
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.cache.RankingPlayerCacheMemory
+import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.item.Button
@@ -76,6 +78,23 @@ object RankingButtons {
                     setDisplayName(player, RankingMessages.SCORE(score))
                     sublime()
                     setEnchanted(true)
+                    if (rank != null && value != null) {
+                        setLore(*RankingMessages.SCORE_LORE(rank, value)
+                                .map {
+                                    it.asSafety(player.wrappedLocale)
+                                }
+                                .toTypedArray())
+                        if (rank > 1) {
+                            val nextrank = rank - 1
+                            val nextRankUniqueId = ranking.findUUID(nextrank) ?: return@apply
+                            val nextRankCache = RankingPlayerCacheMemory.find(nextRankUniqueId) ?: return@apply
+                            val nextRankPlayerName = nextRankCache.getOrPut(Keys.RANK_PLAYER_NAME)
+                            val nextRankValue = ranking.findValue(nextRankUniqueId) ?: return@apply
+                            val diff = nextRankValue - value
+                            // TODO implements
+                        }
+                    }
+
                 }
             }
         }

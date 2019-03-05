@@ -65,4 +65,23 @@ object RankingMessages {
         )
     }
 
+    val SCORE_LORE = { rank: Int, value: Long ->
+        listOf(
+                LocalizedText(
+                        Locale.JAPANESE.let {
+                            it to "${ChatColor.GREEN}" +
+                                    "あなたの順位: " +
+                                    "${ChatColor.WHITE}${ChatColor.BOLD}" +
+                                    "$rank 位"
+                        }
+                ),
+                LocalizedText(
+                        Locale.JAPANESE.let {
+                            it to "${ChatColor.WHITE}${ChatColor.BOLD}" +
+                                    "$value"
+                        }
+                )
+        )
+    }
+
 }

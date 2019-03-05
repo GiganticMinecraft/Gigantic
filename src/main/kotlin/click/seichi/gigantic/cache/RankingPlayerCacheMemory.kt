@@ -11,6 +11,8 @@ object RankingPlayerCacheMemory {
 
     fun get(uniqueId: UUID) = playerCacheMap[uniqueId]!!
 
+    fun find(uniqueId: UUID) = playerCacheMap[uniqueId]
+
     fun contains(uniqueId: UUID) = playerCacheMap.contains(uniqueId)
 
     // transaction内で実行すること
