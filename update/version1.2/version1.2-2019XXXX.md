@@ -7,7 +7,8 @@
 
 :diamond_shape_with_a_dot_inside: ６つの総合ランキングを実装しました  
 :diamond_shape_with_a_dot_inside: ランキング実装後にログインしたプレイヤーのみランク付けされます  
-:diamond_shape_with_a_dot_inside:   
+:diamond_shape_with_a_dot_inside: またプログラムの都合上、名前が"No Name"となる場合があります    
+:diamond_shape_with_a_dot_inside: 一定時間立つと自動で更新がされますのでご安心ください    
 
 
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
