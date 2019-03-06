@@ -62,7 +62,7 @@ object RelicMenu : BookMenu() {
         return player.getOrPut(Keys.MENU_RELIC_LIST).size.minus(1).div(numOfContentsPerPage).plus(1).coerceAtLeast(1)
     }
 
-    override fun onOpen(player: Player, isFirst: Boolean) {
+    override fun onOpen(player: Player, page: Int, isFirst: Boolean) {
         if (isFirst) {
             player.offer(Keys.MENU_RELIC_CATEGORY, RelicCategory.ALL)
         }

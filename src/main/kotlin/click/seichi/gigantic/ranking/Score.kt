@@ -44,6 +44,11 @@ enum class Score(
                 cache.force(it, it.read(entity))
             }
         }
+
+        override fun getValue(rankingPlayer: RankingPlayer): Long {
+            return rankingPlayer.exp
+        }
+
     },
     BREAK_BLOCK(
             RankingScoreTable.breakBlock,
@@ -62,6 +67,10 @@ enum class Score(
             Keys.RANK_BREAK_BLOCK.let {
                 cache.force(it, it.read(entity))
             }
+        }
+
+        override fun getValue(rankingPlayer: RankingPlayer): Long {
+            return rankingPlayer.breakBlock
         }
     },
     MULTI_BREAK_BLOCK(
@@ -82,6 +91,10 @@ enum class Score(
                 cache.force(it, it.read(entity))
             }
         }
+
+        override fun getValue(rankingPlayer: RankingPlayer): Long {
+            return rankingPlayer.multiBreakBlock
+        }
     },
     RELIC_BONUS(
             RankingScoreTable.relicBonus,
@@ -101,6 +114,10 @@ enum class Score(
                 cache.force(it, it.read(entity))
             }
         }
+
+        override fun getValue(rankingPlayer: RankingPlayer): Long {
+            return rankingPlayer.relicBonus
+        }
     },
     MAX_COMBO(
             RankingScoreTable.maxCombo,
@@ -119,6 +136,10 @@ enum class Score(
             Keys.RANK_MAX_COMBO.let {
                 cache.force(it, it.read(entity))
             }
+        }
+
+        override fun getValue(rankingPlayer: RankingPlayer): Long {
+            return rankingPlayer.maxCombo
         }
     },
     RELIC(
@@ -140,6 +161,10 @@ enum class Score(
                 cache.force(it, it.read(entity))
             }
         }
+
+        override fun getValue(rankingPlayer: RankingPlayer): Long {
+            return rankingPlayer.relic
+        }
     },
     ;
 
@@ -149,4 +174,6 @@ enum class Score(
     abstract fun write(entity: RankingEntity, cache: PlayerCache)
 
     abstract fun read(entity: RankingEntity, cache: RankingPlayerCache)
+
+    abstract fun getValue(rankingPlayer: RankingPlayer): Long
 }

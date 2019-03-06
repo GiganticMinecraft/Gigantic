@@ -637,6 +637,8 @@ object BagButtons {
     val RANKING = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {
+            // TODO remove
+            if (!player.isOp) return null
             return itemStackOf(Material.FIREWORK_ROCKET) {
                 setDisplayName(player, BagMessages.RANKING)
                 sublime()
@@ -644,8 +646,10 @@ object BagButtons {
         }
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (event.inventory.holder === RankingMenu) return false
-            RankingMenu.open(player)
+            // TODO remove
+            if (!player.isOp) return false
+            if (event.inventory.holder === RankingSelectMenu) return false
+            RankingSelectMenu.open(player)
             return true
         }
 

@@ -33,7 +33,7 @@ object WillMenu : BookMenu() {
         return player.getOrPut(Keys.MENU_WILL_LIST).size.minus(1).div(numOfContentsPerPage).plus(1).coerceAtLeast(1)
     }
 
-    override fun onOpen(player: Player, isFirst: Boolean) {
+    override fun onOpen(player: Player, page: Int, isFirst: Boolean) {
         player.offer(Keys.MENU_WILL_LIST,
                 Will.values()
                         .filter { player.isProcessed(it) || player.hasAptitude(it) }

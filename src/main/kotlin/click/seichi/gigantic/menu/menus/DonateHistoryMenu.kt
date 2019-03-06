@@ -28,6 +28,8 @@ object DonateHistoryMenu : BookMenu() {
         registerButton(numOfContentsPerPage + 5, NextButton(this))
     }
 
+    override fun onOpen(player: Player, page: Int, isFirst: Boolean) {}
+
     override fun getMaxPage(player: Player): Int {
         return player.getOrPut(Keys.DONATE_TICKET_LIST).size.minus(1).div(numOfContentsPerPage).plus(1).coerceAtLeast(1)
     }

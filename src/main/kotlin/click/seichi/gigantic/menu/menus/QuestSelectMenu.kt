@@ -28,6 +28,8 @@ object QuestSelectMenu : BookMenu() {
         return Quest.getOrderedList(player).size.minus(1).div(numOfContentsPerPage).plus(1).coerceAtLeast(1)
     }
 
+    override fun onOpen(player: Player, page: Int, isFirst: Boolean) {}
+
     override fun setItem(inventory: Inventory, player: Player, page: Int): Inventory {
         val questList = Quest.getOrderedList(player)
         val start = (page - 1) * numOfContentsPerPage

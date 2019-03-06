@@ -30,6 +30,8 @@ import click.seichi.gigantic.player.Home
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
+import click.seichi.gigantic.ranking.RankingPlayer
+import click.seichi.gigantic.ranking.Score
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
 import click.seichi.gigantic.timer.LingeringTimer
@@ -840,6 +842,15 @@ object Keys {
         }
     }
 
+    val MENU_DONATE_TICKET_LIST = object : Key<PlayerCache, List<DonateTicket>> {
+        override val default: List<DonateTicket>
+            get() = listOf()
+
+        override fun satisfyWith(value: List<DonateTicket>): Boolean {
+            return true
+        }
+    }
+
     val SPELL_MULTI_BREAK_BLOCKS = object : Key<PlayerCache, Set<Block>> {
         override val default: Set<Block>
             get() = setOf()
@@ -1485,5 +1496,24 @@ object Keys {
             return false
         }
     }
+
+    val MENU_RANKING_PLAYER_LIST = object : Key<PlayerCache, List<RankingPlayer>> {
+        override val default: List<RankingPlayer>
+            get() = listOf()
+
+        override fun satisfyWith(value: List<RankingPlayer>): Boolean {
+            return true
+        }
+    }
+
+    val MENU_RANKING_SCORE = object : Key<PlayerCache, Score> {
+        override val default: Score
+            get() = Score.EXP
+
+        override fun satisfyWith(value: Score): Boolean {
+            return true
+        }
+    }
+
 
 }

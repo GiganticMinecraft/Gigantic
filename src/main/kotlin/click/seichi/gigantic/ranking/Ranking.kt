@@ -24,6 +24,11 @@ class Ranking(val score: Score) {
 
     fun findUUID(rank: Int) = rankMap[rank]
 
+    fun sliceByRank(rankRange: IntRange) = rankRange.mapNotNull { findUUID(it) }
+
+    val size: Int
+        get() = rankMap.size
+
     // transaction内で実行すること
     fun update() {
         val _rankMap = mutableMapOf<Int, UUID>()

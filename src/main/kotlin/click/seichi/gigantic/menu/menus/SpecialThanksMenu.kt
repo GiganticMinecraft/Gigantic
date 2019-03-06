@@ -5,7 +5,6 @@ import click.seichi.gigantic.item.items.menu.OfflinePlayerHeadButton
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.BagMessages
 import org.bukkit.entity.Player
-import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
 
 /**
@@ -38,11 +37,9 @@ object SpecialThanksMenu : Menu() {
 
     init {
         var index = 0
-        playerMap.values.forEach { uuidString ->
+        playerMap.forEach { name, uuidString ->
             val uuid = UUID.fromString(uuidString) ?: return@forEach
-            val button = OfflinePlayerHeadButton(uuid)
-            val offlinePlayer = (button.getItemStack()?.itemMeta as? SkullMeta)?.owningPlayer ?: return@forEach
-            if (offlinePlayer.name == null) return@forEach
+            val button = OfflinePlayerHeadButton(uuid, name, this)
             registerButton(index, button)
             index++
         }

@@ -45,14 +45,13 @@ object RankingMessages {
     }
 
     val RANKED_PLAYER_LORE = { value: Long ->
-        listOf(
+
                 LocalizedText(
                         Locale.JAPANESE.let {
                             it to "${ChatColor.WHITE}${ChatColor.BOLD}" +
                                     "$value"
                         }
                 )
-        )
     }
 
     val SCORE = { score: Score ->
@@ -90,6 +89,22 @@ object RankingMessages {
                             "${ChatColor.RED}" +
                             "不明"
             )
+    )
+
+    val CLICK_TO_RANKING = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.UNDERLINE}クリックしてランキングを見る"
+    )
+
+    val CLICK_TO_LOAD_HEAD = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.UNDERLINE}クリックしてスキンをロード"
+    )
+
+    val CLICK_TO_LOAD_HEAD_LORE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}※数秒間ゲームが一時停止します"
+    )
+
+    val CLICK_TO_MY_RANKING_PAGE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GREEN}${ChatColor.UNDERLINE}クリックして自分がいるページへ"
     )
 
 }

@@ -1,5 +1,7 @@
 package click.seichi.gigantic.head
 
+import click.seichi.gigantic.extension.itemStackOf
+import click.seichi.gigantic.util.Random
 import com.mojang.authlib.GameProfile
 import com.mojang.authlib.properties.Property
 import org.bukkit.Bukkit
@@ -114,10 +116,23 @@ enum class Head(
     ;
 
     companion object {
-        fun getOfflinePlayerHead(uuid: UUID): ItemStack? {
-            val offlinePlayer = Bukkit.getOfflinePlayer(uuid)
-            if (offlinePlayer.name == null) {
-                return null
+
+        val PLAYER_HEAD_LOAD_SET = mutableSetOf<UUID>()
+
+        fun isLoad(uniqueId: UUID): Boolean {
+            if (Bukkit.getServer().onlinePlayers.map { it.uniqueId }.contains(uniqueId)) return true
+            return PLAYER_HEAD_LOAD_SET.contains(uniqueId)
+        }
+
+        fun load(uniqueId: UUID) {
+            if (Bukkit.getServer().onlinePlayers.map { it.uniqueId }.contains(uniqueId)) return
+            PLAYER_HEAD_LOAD_SET.add(uniqueId)
+        }
+
+        fun getOfflinePlayerHead(uniqueId: UUID): ItemStack {
+            val offlinePlayer = Bukkit.getOfflinePlayer(uniqueId)
+            if (offlinePlayer.name == null || !isLoad(uniqueId)) {
+                return itemStackOf(Random.nextEgg())
             }
             val itemStack = ItemStack(Material.PLAYER_HEAD, 1)
             val skullMeta = itemStack.itemMeta as SkullMeta
