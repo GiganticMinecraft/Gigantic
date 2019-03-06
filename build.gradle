@@ -7,6 +7,7 @@ buildscript {
         coroutines_version = '1.1.0'
         spigot_api_version = '1.13.2-R0.1-SNAPSHOT'
         protcollib_version = '4.4.0-SNAPSHOT'
+        drainage_version = '2.0'
         slf4j_version = '1.7.25'
         exposed_version = '0.12.1'
     }
@@ -73,6 +74,8 @@ dependencies {
     embed group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_version
 
     compile group: 'com.comphenix.protocol', name: 'ProtocolLib', version: protcollib_version
+
+    compile group: 'com.github.blackbracken', name: 'Drainage', version: drainage_version
 
     embed group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: coroutines_version
     embed group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-rx2', version: coroutines_version

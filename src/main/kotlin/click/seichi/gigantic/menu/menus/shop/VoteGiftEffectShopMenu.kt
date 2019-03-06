@@ -43,7 +43,7 @@ object VoteGiftEffectShopMenu : VoteGiftShopMenu() {
                 GiganticEffect.values()
                         .filter { it.currency == Currency.VOTE_POINT }
                         .filter { !it.isBought(player) }
-                        .sortedBy { it.amount }
+                        .sortedBy { it.requireAmount }
                         .toList()
         )
     }

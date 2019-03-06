@@ -56,7 +56,7 @@ object EffectButtons {
     val CURRENT_EFFECT = object : Button {
         override fun toShownItemStack(player: Player): ItemStack? {
             val effect = player.getOrPut(Keys.EFFECT)
-            return effect.getIcon().apply {
+            return effect.icon.apply {
                 setDisplayName(EffectMenuMessages.CURRENT_EFFECT.asSafety(player.wrappedLocale))
                 addLore(effect.getName(player.wrappedLocale))
                 addLore(*effect.getLore(player.wrappedLocale).toTypedArray())
@@ -74,7 +74,7 @@ object EffectButtons {
         val effect = GiganticEffect.DEFAULT
 
         override fun toShownItemStack(player: Player): ItemStack? {
-            return effect.getIcon().apply {
+            return effect.icon.apply {
                 setDisplayName(effect.getName(player.wrappedLocale))
                 setLore(*effect.getLore(player.wrappedLocale).toTypedArray())
                 val current = player.getOrPut(Keys.EFFECT)
@@ -103,7 +103,7 @@ object EffectButtons {
                 if (!effect.isBought(player)) return null
 
                 val itemStack = when {
-                    effect.isBought(player) -> effect.getIcon()
+                    effect.isBought(player) -> effect.icon
                     else -> ItemStack(Material.BEDROCK)
                 }
 

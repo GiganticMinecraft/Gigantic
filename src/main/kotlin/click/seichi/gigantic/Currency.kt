@@ -44,7 +44,7 @@ enum class Currency {
                 .filter { this == it.currency }
                 .filter { it.isBought(player) }
                 .fold(getAmount(player)) { source: Int, effect ->
-                    source - effect.amount
+                    source - effect.requireAmount
                 }
     }
 }

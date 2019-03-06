@@ -10,8 +10,10 @@ import click.seichi.gigantic.effect.effectors.GeneralBreakEffectors
 import click.seichi.gigantic.effect.effectors.MultiBreakEffectors
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.extension.toRainbow
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.EffectMessages
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
@@ -21,42 +23,43 @@ import java.util.*
 
 /**
  * @author tar0ss
+ *
+ * TODO: refactor
  */
-enum class GiganticEffect(
-        // 変更禁止 id=0はデフォルトエフェクトに対応
-        val id: Int,
-        // エフェクトメニューに表示されるItemStack
-        private val icon: ItemStack,
-        // 購入方法
-        val currency: Currency,
-        // 必要ポイント
-        val amount: Int,
-        // 名前
-        private val localizedName: LocalizedText,
-        // 説明文
-        private val localizedLore: Set<LocalizedText>,
-        // 通常破壊のエフェクト
-        private val generalEffector: GeneralBreakEffector? = null,
-        // マルチブレイクのエフェクト
-        private val multiEffector: MultiBreakEffector? = null
-) {
+enum class GiganticEffect(val uniqueId: Int,
+                          private val _icon: ItemStack,
+                          val currency: Currency,
+                          val requireAmount: Int,
+                          val displayName: String,
+                          val description: String,
+                          private val localizedName: LocalizedText,
+                          private val localizedLore: Set<LocalizedText>,
+                          private val generalEffector: GeneralBreakEffector? = null,
+                          private val multiEffector: MultiBreakEffector? = null) {
+
     DEFAULT(
             0,
             ItemStack(Material.GRASS_BLOCK),
             Currency.DEFAULT,
-            // DEFAULT のみ無意味な値
             0,
+            "${ChatColor.WHITE}${ChatColor.BOLD}通常エフェクト",
+            """
+                ${ChatColor.WHITE}マイクラの通常エフェクト
+            """.trimIndent(),
             EffectMessages.DEFAULT,
             EffectMessages.DEFAULT_LORE,
             GeneralBreakEffectors.DEFAULT,
             MultiBreakEffectors.DEFAULT
-
     ),
     EXPLOSION(
             1,
             ItemStack(Material.TNT),
             Currency.VOTE_POINT,
             50,
+            "${ChatColor.RED}${ChatColor.BOLD}エクスプロージョン",
+            """
+                ${ChatColor.WHITE}爆発する
+            """.trimIndent(),
             EffectMessages.EXPLOSION,
             EffectMessages.EXPLOSION_LORE,
             GeneralBreakEffectors.EXPLOSION,
@@ -67,6 +70,10 @@ enum class GiganticEffect(
             ItemStack(Material.PACKED_ICE),
             Currency.VOTE_POINT,
             70,
+            "${ChatColor.AQUA}${ChatColor.BOLD}ブリザード",
+            """
+                ${ChatColor.WHITE}凍結する
+            """.trimIndent(),
             EffectMessages.BLIZZARD,
             EffectMessages.BLIZZARD_LORE,
             generalEffector = GeneralBreakEffectors.BLIZZARD,
@@ -77,6 +84,10 @@ enum class GiganticEffect(
             ItemStack(Material.RED_WOOL),
             Currency.DONATE_POINT,
             50,
+            "マジック".toRainbow(true),
+            """
+                ${"カラフルな羊毛に変身する".toRainbow()}
+            """.trimIndent(),
             EffectMessages.MAGIC,
             EffectMessages.MAGIC_LORE,
             generalEffector = GeneralBreakEffectors.MAGIC,
@@ -87,6 +98,10 @@ enum class GiganticEffect(
             ItemStack(Material.NETHER_WART),
             Currency.VOTE_POINT,
             30,
+            "${ChatColor.GOLD}${ChatColor.BOLD}フレイム",
+            """
+                ${ChatColor.WHITE}燃え散る
+            """.trimIndent(),
             EffectMessages.FLAME,
             EffectMessages.FLAME_LORE,
             generalEffector = GeneralBreakEffectors.FLAME,
@@ -97,6 +112,10 @@ enum class GiganticEffect(
             ItemStack(Material.CHORUS_PLANT),
             Currency.DONATE_POINT,
             30,
+            "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}魔女の残り香",
+            """
+                ${ChatColor.WHITE}心安らぐ香り
+            """.trimIndent(),
             EffectMessages.WITCH_SCENT,
             EffectMessages.WITCH_SCENT_LORE,
             generalEffector = GeneralBreakEffectors.WITCH_SCENT,
@@ -107,6 +126,10 @@ enum class GiganticEffect(
             ItemStack(Material.SLIME_BALL),
             Currency.DONATE_POINT,
             10,
+            "${ChatColor.GREEN}${ChatColor.BOLD}スライム",
+            """
+                ${ChatColor.WHITE}転生したらスライムだった件
+            """.trimIndent(),
             EffectMessages.SLIME,
             EffectMessages.SLIME_LORE,
             generalEffector = GeneralBreakEffectors.SLIME,
@@ -117,6 +140,10 @@ enum class GiganticEffect(
             ItemStack(Material.TUBE_CORAL),
             Currency.DONATE_POINT,
             10,
+            "${ChatColor.AQUA}${ChatColor.BOLD}泡沫の夢",
+            """
+                ${ChatColor.WHITE}Σ(‘A`)ハッ！なんだ夢か...
+            """.trimIndent(),
             EffectMessages.BUBBLE,
             EffectMessages.BUBBLE_LORE,
             multiEffector = MultiBreakEffectors.BUBBLE
@@ -126,6 +153,10 @@ enum class GiganticEffect(
             ItemStack(Material.REDSTONE),
             Currency.DONATE_POINT,
             20,
+            "${ChatColor.GREEN}${ChatColor.BOLD}アルケミア",
+            """
+                ${ChatColor.WHITE}禁忌に触れるもの
+            """.trimIndent(),
             EffectMessages.ALCHEMIA,
             EffectMessages.ALCHEMIA_LORE,
             multiEffector = MultiBreakEffectors.ALCHEMIA
@@ -134,13 +165,19 @@ enum class GiganticEffect(
     ;
 
     companion object {
-        private val idMap = values().map { it.id to it }.toMap()
+        private val idMap = values().map { it.uniqueId to it }.toMap()
         fun findById(id: Int) = idMap[id]
     }
 
     val hasGeneralBreakEffect = generalEffector != null
 
     val hasMultiBreakEffect = multiEffector != null
+
+    val icon: ItemStack
+        get() = _icon.clone()
+
+    val lore: String
+        get() = "$displayName\n${description.trimIndent()}"
 
     fun generalBreak(player: Player, block: Block) {
         (generalEffector ?: DEFAULT.generalEffector)!!.generalBreak(player, block)
@@ -153,8 +190,6 @@ enum class GiganticEffect(
     fun getName(locale: Locale) = localizedName.asSafety(locale)
 
     fun getLore(locale: Locale) = localizedLore.map { it.asSafety(locale) }
-
-    fun getIcon() = icon.clone()
 
     // 購入しているか
     fun isBought(player: Player) = (Config.DEBUG_MODE && DebugConfig.EFFECT_UNLOCK) || player.getOrPut(Keys.EFFECT_BOUGHT_MAP[this]!!)
@@ -171,7 +206,7 @@ enum class GiganticEffect(
     // 購入可能か
     fun canBuy(player: Player): Boolean {
         if (isBought(player)) return false
-        return currency.calcRemainAmount(player) >= amount
+        return currency.calcRemainAmount(player) >= requireAmount
     }
 
     // 選択中か

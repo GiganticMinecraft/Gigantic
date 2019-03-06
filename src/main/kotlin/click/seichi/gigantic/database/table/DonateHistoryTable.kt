@@ -9,7 +9,7 @@ object DonateHistoryTable : IntIdTable("donate_history") {
 
     val userId = reference("unique_id", UserTable).index()
 
-    val amount = integer("amount")
+    val amount = integer("requireAmount")
 
     val createdAt = datetime("created_at")
 

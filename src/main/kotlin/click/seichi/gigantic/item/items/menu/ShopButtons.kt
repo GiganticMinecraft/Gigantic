@@ -90,7 +90,7 @@ object ShopButtons {
     val EFFECT: (GiganticEffect) -> Button = { effect: GiganticEffect ->
         object : Button {
             override fun toShownItemStack(player: Player): ItemStack? {
-                val itemStack = effect.getIcon()
+                val itemStack = effect.icon
 
                 return itemStack.apply {
                     setDisplayName(effect.getName(player.wrappedLocale))
@@ -108,7 +108,7 @@ object ShopButtons {
                     addLore(MenuMessages.LINE)
 
                     //購入方法と購入に必要なポイントを提示
-                    addLore("${effect.amount} " +
+                    addLore("${effect.requireAmount} " +
                             when (effect.currency) {
                                 Currency.VOTE_POINT -> EffectMenuMessages.VOTE_POINT
                                 Currency.POMME -> EffectMenuMessages.POMME

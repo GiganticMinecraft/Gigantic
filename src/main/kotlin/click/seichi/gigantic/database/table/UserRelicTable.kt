@@ -11,6 +11,6 @@ object UserRelicTable : IntIdTable("users_relics") {
 
     val relicId = integer("relic_id").primaryKey()
 
-    val amount = long("amount").default(0L)
+    val amount = long("requireAmount").default(0L)
 
 }

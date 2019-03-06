@@ -43,7 +43,7 @@ object DonateGiftEffectShopMenu : DonateGiftShopMenu() {
                 GiganticEffect.values()
                         .filter { it.currency == Currency.DONATE_POINT }
                         .filter { !it.isBought(player) }
-                        .sortedBy { it.amount }
+                        .sortedBy { it.requireAmount }
                         .toList()
         )
     }

@@ -103,10 +103,10 @@ class UserEntity(uniqueId: UUID, playerName: String) {
 
     val userEffectMap = GiganticEffect.values().map { effect ->
         effect to (UserEffect
-                .find { (UserEffectTable.userId eq uniqueId) and (UserEffectTable.effectId eq effect.id) }
+                .find { (UserEffectTable.userId eq uniqueId) and (UserEffectTable.effectId eq effect.uniqueId) }
                 .firstOrNull() ?: UserEffect.new {
             user = this@UserEntity.user
-            effectId = effect.id
+            effectId = effect.uniqueId
         })
     }.toMap()
 

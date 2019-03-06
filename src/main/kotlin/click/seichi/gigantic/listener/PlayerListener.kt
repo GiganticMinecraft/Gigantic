@@ -1,5 +1,6 @@
 package click.seichi.gigantic.listener
 
+import black.bracken.drainage.dsl.InventoryUI
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.PlayerCacheMemory
@@ -117,7 +118,8 @@ class PlayerListener : Listener {
     fun onInventoryOpen(event: InventoryOpenEvent) {
         if (event.player !is Player) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
-        if (event.inventory.holder is Menu) return
+        if (event.inventory.holder is Menu || event.inventory.holder is InventoryUI) return
+
         event.isCancelled = true
     }
 

@@ -1,5 +1,6 @@
 package click.seichi.gigantic.item.items
 
+import black.bracken.drainage.extension.openInventory
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
@@ -397,7 +398,9 @@ object BagButtons {
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             if (event.inventory.holder === EffectMenu) return false
-            EffectMenu.open(player)
+            val inventory = NewEffectMenu().layout(player).buildInventory()
+            player.openInventory(inventory)
+            //EffectMenu.open(player)
             return true
         }
 

@@ -754,7 +754,7 @@ object Keys {
 
         override fun store(entity: UserEntity, value: GiganticEffect) {
             val user = entity.user
-            user.effectId = value.id
+            user.effectId = value.uniqueId
         }
 
         override fun satisfyWith(value: GiganticEffect): Boolean {
