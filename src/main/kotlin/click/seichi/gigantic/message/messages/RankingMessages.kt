@@ -3,6 +3,7 @@ package click.seichi.gigantic.message.messages
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.ranking.Score
 import org.bukkit.ChatColor
+import org.joda.time.DateTime
 import java.util.*
 
 /**
@@ -10,9 +11,11 @@ import java.util.*
  */
 object RankingMessages {
 
-    val TITLE = LocalizedText(
-            Locale.JAPANESE to "ランキング"
-    )
+    val TITLE = { dateTime: DateTime ->
+        LocalizedText(
+                Locale.JAPANESE to "ランキング ${dateTime.toString("yyyy/MM/dd kk:mm:ss")}"
+        )
+    }
 
     val DIAMOND = LocalizedText(
             Locale.JAPANESE to "${ChatColor.AQUA}${ChatColor.BOLD}" +

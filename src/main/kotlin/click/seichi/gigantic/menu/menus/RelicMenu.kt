@@ -87,10 +87,10 @@ object RelicMenu : BookMenu() {
                 .map { it % numOfContentsPerPage to contentList[it] }
                 .toMap()
                 .forEach { index, relic ->
-                    inventory.setItem(player, index + offset, RelicButtons.RELIC(relic))
+                    inventory.setItemAsync(player, index + offset, RelicButtons.RELIC(relic))
                 }
         getButtonMap().forEach { slot, button ->
-            inventory.setItem(player, slot, button)
+            inventory.setItemAsync(player, slot, button)
         }
         return inventory
     }

@@ -5,7 +5,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
-import click.seichi.gigantic.extension.setItem
+import click.seichi.gigantic.extension.setItemAsync
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.EffectButtons
@@ -57,10 +57,10 @@ object DonateGiftEffectShopMenu : DonateGiftShopMenu() {
                 .map { it % numOfContentsPerPage to contentList[it] }
                 .toMap()
                 .forEach { index, to ->
-                    inventory.setItem(player, index + offset, ShopButtons.EFFECT(to))
+                    inventory.setItemAsync(player, index + offset, ShopButtons.EFFECT(to))
                 }
         getButtonMap().forEach { slot, button ->
-            inventory.setItem(player, slot, button)
+            inventory.setItemAsync(player, slot, button)
         }
         return inventory
     }

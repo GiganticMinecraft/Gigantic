@@ -38,6 +38,7 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.joda.time.DateTime
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -73,6 +74,8 @@ class Gigantic : JavaPlugin() {
         val SKILLED_BLOCK_SET = mutableSetOf<Block>()
 
         val RANKING_MAP = mutableMapOf<Score, Ranking>()
+
+        lateinit var RANKING_UPDATE_TIME: DateTime
 
         fun createInvisibleBossBar(): BossBar = Bukkit.createBossBar(
                 "title",
@@ -246,6 +249,7 @@ class Gigantic : JavaPlugin() {
     }
 
     fun updateRanking() {
+        RANKING_UPDATE_TIME = DateTime.now()
         transaction {
             val uniqueIdSet = mutableSetOf<UUID>()
             Score.values().forEach { score ->

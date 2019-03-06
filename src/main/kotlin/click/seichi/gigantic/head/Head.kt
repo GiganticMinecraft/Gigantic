@@ -116,22 +116,9 @@ enum class Head(
     ;
 
     companion object {
-
-        val PLAYER_HEAD_LOAD_SET = mutableSetOf<UUID>()
-
-        fun isLoad(uniqueId: UUID): Boolean {
-            if (Bukkit.getServer().onlinePlayers.map { it.uniqueId }.contains(uniqueId)) return true
-            return PLAYER_HEAD_LOAD_SET.contains(uniqueId)
-        }
-
-        fun load(uniqueId: UUID) {
-            if (Bukkit.getServer().onlinePlayers.map { it.uniqueId }.contains(uniqueId)) return
-            PLAYER_HEAD_LOAD_SET.add(uniqueId)
-        }
-
         fun getOfflinePlayerHead(uniqueId: UUID): ItemStack {
             val offlinePlayer = Bukkit.getOfflinePlayer(uniqueId)
-            if (offlinePlayer.name == null || !isLoad(uniqueId)) {
+            if (offlinePlayer.name == null) {
                 return itemStackOf(Random.nextEgg())
             }
             val itemStack = ItemStack(Material.PLAYER_HEAD, 1)
@@ -158,7 +145,6 @@ enum class Head(
             profileField.isAccessible = true
             profileField.set(this, profile)
         }
-
         skull
     }
 

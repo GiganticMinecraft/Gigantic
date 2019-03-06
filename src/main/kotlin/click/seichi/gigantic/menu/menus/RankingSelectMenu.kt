@@ -1,5 +1,6 @@
 package click.seichi.gigantic.menu.menus
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.items.menu.RankingButtons
 import click.seichi.gigantic.menu.Menu
@@ -15,7 +16,7 @@ object RankingSelectMenu : Menu() {
         get() = 9 * 4
 
     override fun getTitle(player: Player): String {
-        return RankingMessages.TITLE.asSafety(player.wrappedLocale)
+        return RankingMessages.TITLE(Gigantic.RANKING_UPDATE_TIME).asSafety(player.wrappedLocale)
     }
 
     init {

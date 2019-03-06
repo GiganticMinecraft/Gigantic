@@ -1,5 +1,6 @@
 package click.seichi.gigantic.menu.menus
 
+import click.seichi.gigantic.extension.setItemAsync
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.NextButton
@@ -39,11 +40,10 @@ object QuestSelectMenu : BookMenu() {
                 .map { it % numOfContentsPerPage to questList[it] }
                 .toMap()
                 .forEach { index, quest ->
-                    inventory.setItem(index, QuestButtons.QUEST(quest.getClient(player)
-                            ?: return@forEach).toShownItemStack(player))
+                    inventory.setItemAsync(player, index, QuestButtons.QUEST(quest.getClient(player) ?: return@forEach))
                 }
-        inventory.setItem(numOfContentsPerPage + 3, prevButton.toShownItemStack(player))
-        inventory.setItem(numOfContentsPerPage + 5, nextButton.toShownItemStack(player))
+        inventory.setItemAsync(player, numOfContentsPerPage + 3, prevButton)
+        inventory.setItemAsync(player, numOfContentsPerPage + 5, nextButton)
 
         return inventory
     }

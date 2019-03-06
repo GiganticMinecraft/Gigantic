@@ -5,7 +5,7 @@ import click.seichi.gigantic.cache.RankingPlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
-import click.seichi.gigantic.extension.setItem
+import click.seichi.gigantic.extension.setItemAsync
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.BackButton
@@ -63,10 +63,10 @@ object RankingMenu : BookMenu() {
         val score = player.getOrPut(Keys.MENU_RANKING_SCORE)
         player.getOrPut(Keys.MENU_RANKING_PLAYER_LIST)
                 .forEachIndexed { index, rankingPlayer ->
-                    inventory.setItem(player, index + offset, RankingButtons.RANKING_PLAYER(rankingPlayer, score))
+                    inventory.setItemAsync(player, index + offset, RankingButtons.RANKING_PLAYER(rankingPlayer, score))
                 }
         getButtonMap().forEach { slot, button ->
-            inventory.setItem(player, slot, button)
+            inventory.setItemAsync(player, slot, button)
         }
         return inventory
     }

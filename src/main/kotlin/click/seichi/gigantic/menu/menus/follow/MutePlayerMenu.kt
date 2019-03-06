@@ -1,10 +1,7 @@
 package click.seichi.gigantic.menu.menus.follow
 
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.extension.getOrPut
-import click.seichi.gigantic.extension.isMute
-import click.seichi.gigantic.extension.offer
-import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.BackButton
 import click.seichi.gigantic.item.items.menu.FollowSettingButtons
@@ -53,11 +50,11 @@ object MutePlayerMenu : BookMenu() {
                 .map { it % numOfPlayerPerPage to playerList[it] }
                 .toMap()
                 .forEach { index, to ->
-                    inventory.setItem(index, FollowSettingButtons.MUTE_ONLINE_PLAYER(to).toShownItemStack(player))
+                    inventory.setItemAsync(player, index, FollowSettingButtons.MUTE_ONLINE_PLAYER(to))
                 }
-        inventory.setItem(numOfPlayerPerPage, backButton.toShownItemStack(player))
-        inventory.setItem(numOfPlayerPerPage + 3, prevButton.toShownItemStack(player))
-        inventory.setItem(numOfPlayerPerPage + 5, nextButton.toShownItemStack(player))
+        inventory.setItemAsync(player, numOfPlayerPerPage, backButton)
+        inventory.setItemAsync(player, numOfPlayerPerPage + 3, prevButton)
+        inventory.setItemAsync(player, numOfPlayerPerPage + 5, nextButton)
 
         return inventory
     }

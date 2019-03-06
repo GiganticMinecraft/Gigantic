@@ -50,10 +50,10 @@ object WillMenu : BookMenu() {
                 .map { it % numOfContentsPerPage to contentList[it] }
                 .toMap()
                 .forEach { index, will ->
-                    inventory.setItem(player, index + offset, WillButtons.WILL(will))
+                    inventory.setItemAsync(player, index + offset, WillButtons.WILL(will))
                 }
         getButtonMap().forEach { slot, button ->
-            inventory.setItem(player, slot, button)
+            inventory.setItemAsync(player, slot, button)
         }
         return inventory
     }

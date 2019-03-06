@@ -1,5 +1,6 @@
 package click.seichi.gigantic.menu
 
+import click.seichi.gigantic.extension.setItemAsync
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.sound.sounds.MenuSounds
 import org.bukkit.Bukkit
@@ -96,8 +97,7 @@ abstract class Menu : InventoryHolder {
             }
         }
         (0 until size).forEach { slot ->
-            val itemStack = buttonMap[slot]?.toShownItemStack(player) ?: return@forEach
-            inventory.setItem(slot, itemStack)
+            inventory.setItemAsync(player, slot, buttonMap[slot] ?: return@forEach)
         }
         return inventory
     }
