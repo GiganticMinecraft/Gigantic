@@ -1497,6 +1497,25 @@ object Keys {
         }
     }
 
+    val RANK_LEVEL = object : DatabaseKey<RankingPlayerCache, Int, RankingEntity> {
+        override val default: Int
+            get() = 0
+
+        override fun read(entity: RankingEntity): Int {
+            return entity.user.level
+        }
+
+        override fun store(entity: RankingEntity, value: Int) {
+            // Do nothing
+        }
+
+        override fun satisfyWith(value: Int): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
+            return false
+        }
+    }
+
     val MENU_RANKING_PLAYER_LIST = object : Key<PlayerCache, List<RankingPlayer>> {
         override val default: List<RankingPlayer>
             get() = listOf()

@@ -13,4 +13,6 @@ class RankingUser(id: EntityID<UUID>) : Entity<UUID>(id) {
     companion object : EntityClass<UUID, RankingUser>(RankingUserTable)
 
     var name by RankingUserTable.name
+
+    var level by RankingUserTable.level
 }

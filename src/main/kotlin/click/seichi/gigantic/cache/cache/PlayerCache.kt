@@ -281,6 +281,7 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
 
             rankingEntity.user.run {
                 name = playerName
+                level = getOrDefault(Keys.LEVEL)
             }
 
             Score.values().forEach { it.write(rankingEntity, this@PlayerCache) }

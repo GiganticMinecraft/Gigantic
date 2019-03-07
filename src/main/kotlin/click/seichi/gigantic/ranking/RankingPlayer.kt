@@ -15,6 +15,8 @@ class RankingPlayer(
 
     val name = cache.getOrDefault(Keys.RANK_PLAYER_NAME)
 
+    val level = cache.getOrDefault(Keys.RANK_LEVEL)
+
     val exp = cache.getOrDefault(Keys.RANK_EXP)
 
     val breakBlock = cache.getOrDefault(Keys.RANK_BREAK_BLOCK)

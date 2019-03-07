@@ -13,7 +13,7 @@
 
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
-:diamond_shape_with_a_dot_inside: 
+:diamond_shape_with_a_dot_inside: ランキングにレベルを表示しました  
 
 
 :bow: **__不具合修正__** :bow:   

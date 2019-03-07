@@ -11,4 +11,6 @@ object RankingUserTable : IdTable<UUID>("rankings_users") {
     override val id = uuid("unique_id").primaryKey().entityId()
 
     val name = varchar("name", 50).default("No Name")
+
+    val level = integer("level").default(0)
 }
