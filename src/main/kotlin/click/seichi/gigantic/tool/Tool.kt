@@ -3,7 +3,6 @@ package click.seichi.gigantic.tool
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
-import click.seichi.gigantic.extension.setItemAsync
 import click.seichi.gigantic.extension.transform
 import click.seichi.gigantic.item.HandItem
 import click.seichi.gigantic.item.items.HandItems
@@ -153,7 +152,7 @@ enum class Tool(
 
     fun update(player: Player) {
         val slot = player.getOrPut(Keys.BELT).toolSlot
-        player.inventory.setItemAsync(slot, findItemStack(player) ?: Defaults.ITEM)
+        player.inventory.setItem(slot, findItemStack(player) ?: Defaults.ITEM)
     }
 
 
