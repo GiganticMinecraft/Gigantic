@@ -17,6 +17,9 @@ class RankingPlayerCache(private val uniqueId: UUID) : Cache<RankingPlayerCache>
             Keys.RANK_PLAYER_NAME.let {
                 force(it, it.read(rankingEntity))
             }
+            Keys.RANK_LEVEL.let {
+                force(it, it.read(rankingEntity))
+            }
 
             Score.values().forEach {
                 it.read(rankingEntity, this@RankingPlayerCache)
