@@ -1090,7 +1090,9 @@ object Keys {
 
         override fun read(entity: UserEntity): Map<Int, Home> {
             val userHomeList = entity.userHomeList
-            return userHomeList.map {
+            return userHomeList.filter {
+                Bukkit.getWorld(it.worldId) != null
+            }.map {
                 it.homeId to Home(
                         it.homeId,
                         Location(Bukkit.getWorld(it.worldId), it.x, it.y, it.z),
@@ -1101,7 +1103,9 @@ object Keys {
 
         override fun store(entity: UserEntity, value: Map<Int, Home>) {
             UserHomeTable.deleteWhere { (UserHomeTable.userId eq entity.user.id.value) }
-            value.forEach { homeId, home ->
+            value.filter {
+                it.value.location.world != null
+            }.forEach { homeId, home ->
                 UserHome.new {
                     this.user = entity.user
                     this.homeId = homeId
