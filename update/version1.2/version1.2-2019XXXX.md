@@ -19,7 +19,7 @@
 :bow: **__不具合修正__** :bow:   
 以下の不具合を修正しました．  
 
-:diamond_shape_with_a_dot_inside: 
+:diamond_shape_with_a_dot_inside: ツール切り替えが上手くいかない不具合
 
 
 

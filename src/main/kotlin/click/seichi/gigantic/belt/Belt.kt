@@ -60,22 +60,22 @@ enum class Belt(
      * @param applyOffHandItem オフハンドも更新するかどうか
      */
     fun wear(player: Player, applyTool: Boolean = true, applyOffHandItem: Boolean = true) {
-        player.inventory?.let { inv ->
+        player.inventory?.let { inventory ->
             (0..8).forEach { slot ->
                 if (slot == toolSlot) return@forEach
-                inv.setItem(slot,
+                inventory.setItem(slot,
                         buttonMap[slot]?.toShownItemStack(player) ?: ItemStack(Material.AIR)
                 )
             }
             if (applyTool)
                 player.updateTool()
-            inv.helmet = helmet?.toShownItemStack(player) ?: ItemStack(Material.AIR)
-            inv.chestplate = chestPlate?.toShownItemStack(player) ?: ItemStack(Material.AIR)
-            inv.leggings = leggings?.toShownItemStack(player) ?: ItemStack(Material.AIR)
-            inv.boots = boots?.toShownItemStack(player) ?: ItemStack(Material.AIR)
+            inventory.helmet = helmet?.toShownItemStack(player) ?: ItemStack(Material.AIR)
+            inventory.chestplate = chestPlate?.toShownItemStack(player) ?: ItemStack(Material.AIR)
+            inventory.leggings = leggings?.toShownItemStack(player) ?: ItemStack(Material.AIR)
+            inventory.boots = boots?.toShownItemStack(player) ?: ItemStack(Material.AIR)
 
             if (!applyOffHandItem) return@let
-            inv.itemInOffHand = offHandItem?.toShownItemStack(player) ?: ItemStack(Material.AIR)
+            inventory.itemInOffHand = offHandItem?.toShownItemStack(player) ?: ItemStack(Material.AIR)
         }
     }
 
