@@ -1,6 +1,5 @@
 package click.seichi.gigantic.bag
 
-import click.seichi.gigantic.extension.setItemAsync
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.Menu
 import org.bukkit.entity.Player
@@ -23,7 +22,7 @@ abstract class Bag {
         val holder = player.openInventory.topInventory.holder
         if (holder is Menu) holder.reopen(player)
         forEachIndexed(player) { index, itemStack ->
-            player.inventory.setItemAsync(index, itemStack)
+            player.inventory.setItem(index, itemStack)
         }
     }
 
