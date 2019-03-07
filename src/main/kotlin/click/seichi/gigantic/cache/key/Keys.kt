@@ -21,8 +21,6 @@ import click.seichi.gigantic.database.table.user.UserFollowTable
 import click.seichi.gigantic.database.table.user.UserHomeTable
 import click.seichi.gigantic.database.table.user.UserMuteTable
 import click.seichi.gigantic.effect.GiganticEffect
-import click.seichi.gigantic.menu.RefineItem
-import click.seichi.gigantic.menu.RelicCategory
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.DonateTicket
@@ -30,7 +28,6 @@ import click.seichi.gigantic.player.Home
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
-import click.seichi.gigantic.ranking.RankingPlayer
 import click.seichi.gigantic.ranking.Score
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
@@ -519,18 +516,6 @@ object Keys {
             return true
         }
     }
-
-    val REFINE_ITEM_MAP: Map<RefineItem, Key<PlayerCache, Boolean>> = RefineItem.values()
-            .map {
-                it to object : Key<PlayerCache, Boolean> {
-                    override val default: Boolean
-                        get() = false
-
-                    override fun satisfyWith(value: Boolean): Boolean {
-                        return true
-                    }
-                }
-            }.toMap()
 
     val QUEST_MAP: Map<Quest, DatabaseKey<PlayerCache, QuestClient?, UserEntity>> = Quest.values()
             .map {
@@ -1025,15 +1010,6 @@ object Keys {
         }
     }
 
-    val MENU_RELIC_CATEGORY = object : Key<PlayerCache, RelicCategory> {
-        override val default: RelicCategory
-            get() = RelicCategory.ALL
-
-        override fun satisfyWith(value: RelicCategory): Boolean {
-            return true
-        }
-    }
-
     val GENERATED_RELIC = object : Key<PlayerCache, Relic?> {
         override val default: Relic?
             get() = null
@@ -1238,24 +1214,6 @@ object Keys {
             get() = null
 
         override fun satisfyWith(value: String?): Boolean {
-            return true
-        }
-    }
-
-    val MENU_EFFECT_LIST = object : Key<PlayerCache, List<GiganticEffect>> {
-        override val default: List<GiganticEffect>
-            get() = listOf()
-
-        override fun satisfyWith(value: List<GiganticEffect>): Boolean {
-            return true
-        }
-    }
-
-    val MENU_RELIC_LIST = object : Key<PlayerCache, List<Relic>> {
-        override val default: List<Relic>
-            get() = listOf()
-
-        override fun satisfyWith(value: List<Relic>): Boolean {
             return true
         }
     }
@@ -1513,15 +1471,6 @@ object Keys {
             // 強制的に書き換えを拒否
             Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
             return false
-        }
-    }
-
-    val MENU_RANKING_PLAYER_LIST = object : Key<PlayerCache, List<RankingPlayer>> {
-        override val default: List<RankingPlayer>
-            get() = listOf()
-
-        override fun satisfyWith(value: List<RankingPlayer>): Boolean {
-            return true
         }
     }
 

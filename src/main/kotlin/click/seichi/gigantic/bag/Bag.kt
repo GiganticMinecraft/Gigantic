@@ -1,7 +1,6 @@
 package click.seichi.gigantic.bag
 
 import click.seichi.gigantic.item.Button
-import click.seichi.gigantic.menu.Menu
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
@@ -19,8 +18,6 @@ abstract class Bag {
     }
 
     fun carry(player: Player) {
-        val holder = player.openInventory.topInventory.holder
-        if (holder is Menu) holder.reopen(player)
         forEachIndexed(player) { index, itemStack ->
             player.inventory.setItem(index, itemStack)
         }

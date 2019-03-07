@@ -1,5 +1,6 @@
 package click.seichi.gigantic.listener
 
+import black.bracken.drainage.dsl.InventoryUI
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.PlayerCacheMemory
@@ -11,7 +12,6 @@ import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.event.events.ComboEvent
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Defaults
@@ -117,7 +117,7 @@ class PlayerListener : Listener {
     fun onInventoryOpen(event: InventoryOpenEvent) {
         if (event.player !is Player) return
         if (event.player.gameMode != GameMode.SURVIVAL) return
-        if (event.inventory.holder is Menu) return
+        if (event.inventory.holder is InventoryUI) return
         event.isCancelled = true
     }
 

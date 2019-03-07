@@ -109,7 +109,7 @@ class Gigantic : JavaPlugin() {
         IS_DEBUG = Config.DEBUG_MODE
 
         registerListeners(
-                MenuListener(),
+                BagAndBeltListener(),
                 PlayerListener(),
                 SpiritListener(),
                 PlayerMonitor(),

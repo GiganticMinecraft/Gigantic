@@ -3,8 +3,6 @@ package click.seichi.gigantic.listener
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.isBeltSlot
-import click.seichi.gigantic.menu.BookMenu
-import click.seichi.gigantic.menu.Menu
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -17,7 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 /**
  * @author tar0ss
  */
-class MenuListener : Listener {
+class BagAndBeltListener : Listener {
 
     private val menuActionSet = setOf(
             InventoryAction.PICKUP_ALL,
@@ -33,22 +31,12 @@ class MenuListener : Listener {
         if (player.gameMode != GameMode.SURVIVAL && player.gameMode != GameMode.SPECTATOR) return
         event.isCancelled = true
         if (!menuActionSet.contains(event.action)) return
-        val holder = event.inventory.holder
-
-
         when (event.clickedInventory) {
             event.view.bottomInventory -> {
                 // Belt
                 if (event.isBeltSlot) player.getOrPut(Keys.BELT).findItem(event.slot)?.tryClick(player, event)
                 // Bag
                 else player.getOrPut(Keys.BAG).getButton(event.slot)?.tryClick(player, event)
-            }
-            else -> {
-                // Menu
-                when (holder) {
-                    is BookMenu -> holder.getButton(player, event.slot)?.tryClick(player, event)
-                    is Menu -> holder.getButton(event.slot)?.tryClick(player, event)
-                }
             }
         }
     }
