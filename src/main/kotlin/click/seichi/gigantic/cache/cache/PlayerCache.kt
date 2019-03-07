@@ -1,5 +1,6 @@
 package click.seichi.gigantic.cache.cache
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.database.RankingEntity
 import click.seichi.gigantic.database.UserEntity
@@ -281,7 +282,9 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
 
             rankingEntity.user.run {
                 name = playerName
-                level = getOrDefault(Keys.LEVEL)
+                // デバッグ中はレベル変更の可能性があるので除外
+                if (!Gigantic.IS_DEBUG)
+                    level = getOrDefault(Keys.LEVEL)
             }
 
             Score.values().forEach { it.write(rankingEntity, this@PlayerCache) }
