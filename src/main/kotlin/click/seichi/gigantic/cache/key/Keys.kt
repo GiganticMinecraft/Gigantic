@@ -2,8 +2,6 @@ package click.seichi.gigantic.cache.key
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.bag.Bag
-import click.seichi.gigantic.bag.bags.MainBag
 import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.breaker.BreakArea
 import click.seichi.gigantic.cache.cache.PlayerCache
@@ -23,12 +21,10 @@ import click.seichi.gigantic.database.table.user.UserMuteTable
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.Defaults
-import click.seichi.gigantic.player.DonateTicket
 import click.seichi.gigantic.player.Home
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
-import click.seichi.gigantic.ranking.Score
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
 import click.seichi.gigantic.timer.LingeringTimer
@@ -40,7 +36,6 @@ import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.block.Block
-import org.bukkit.entity.Player
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.joda.time.DateTime
@@ -340,16 +335,6 @@ object Keys {
             }
             .toMap()
 
-    val BAG = object : Key<PlayerCache, Bag> {
-        override val default: Bag
-            get() = MainBag
-
-        override fun satisfyWith(value: Bag): Boolean {
-            return true
-        }
-
-    }
-
     val BELT = object : DatabaseKey<PlayerCache, Belt, UserEntity> {
         override val default: Belt
             get() = Belt.findById(Defaults.BELT_ID)!!
@@ -487,34 +472,6 @@ object Keys {
             return true
         }
 
-    }
-
-    val MENU_PAGE = object : Key<PlayerCache, Int> {
-        override val default: Int
-            get() = 1
-
-        override fun satisfyWith(value: Int): Boolean {
-            return value > 0
-        }
-
-    }
-
-    val PLAYER_LIST_MENU_MAP = object : Key<PlayerCache, Map<Int, UUID>> {
-        override val default: Map<Int, UUID>
-            get() = mapOf()
-
-        override fun satisfyWith(value: Map<Int, UUID>): Boolean {
-            return true
-        }
-    }
-
-    val MENU_PLAYER_LIST = object : Key<PlayerCache, List<Player>> {
-        override val default: List<Player>
-            get() = listOf()
-
-        override fun satisfyWith(value: List<Player>): Boolean {
-            return true
-        }
     }
 
     val QUEST_MAP: Map<Quest, DatabaseKey<PlayerCache, QuestClient?, UserEntity>> = Quest.values()
@@ -818,24 +775,6 @@ object Keys {
         }
     }
 
-    val DONATE_TICKET_LIST = object : Key<PlayerCache, List<DonateTicket>> {
-        override val default: List<DonateTicket>
-            get() = listOf()
-
-        override fun satisfyWith(value: List<DonateTicket>): Boolean {
-            return true
-        }
-    }
-
-    val MENU_DONATE_TICKET_LIST = object : Key<PlayerCache, List<DonateTicket>> {
-        override val default: List<DonateTicket>
-            get() = listOf()
-
-        override fun satisfyWith(value: List<DonateTicket>): Boolean {
-            return true
-        }
-    }
-
     val SPELL_MULTI_BREAK_BLOCKS = object : Key<PlayerCache, Set<Block>> {
         override val default: Set<Block>
             get() = setOf()
@@ -1001,24 +940,6 @@ object Keys {
         }
     }
 
-    val SELECTED_WILL = object : Key<PlayerCache, Will?> {
-        override val default: Will?
-            get() = null
-
-        override fun satisfyWith(value: Will?): Boolean {
-            return true
-        }
-    }
-
-    val GENERATED_RELIC = object : Key<PlayerCache, Relic?> {
-        override val default: Relic?
-            get() = null
-
-        override fun satisfyWith(value: Relic?): Boolean {
-            return true
-        }
-    }
-
     val BREAK_COUNT = object : Key<PlayerCache, Int> {
         override val default: Int
             get() = 0
@@ -1143,15 +1064,6 @@ object Keys {
 
         override fun satisfyWith(value: Int): Boolean {
             return value >= 0
-        }
-    }
-
-    val GIVEN_WILL_SET = object : Key<PlayerCache, Set<Will>?> {
-        override val default: Set<Will>?
-            get() = null
-
-        override fun satisfyWith(value: Set<Will>?): Boolean {
-            return true
         }
     }
 
@@ -1288,16 +1200,6 @@ object Keys {
             return true
         }
     }
-
-    val MENU_WILL_LIST = object : Key<PlayerCache, List<Will>> {
-        override val default: List<Will>
-            get() = listOf()
-
-        override fun satisfyWith(value: List<Will>): Boolean {
-            return true
-        }
-    }
-
     val IS_NORMAL_TEXTURE = object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
         override val default: Boolean
             get() = true
@@ -1475,15 +1377,6 @@ object Keys {
             // 強制的に書き換えを拒否
             Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
             return false
-        }
-    }
-
-    val MENU_RANKING_SCORE = object : Key<PlayerCache, Score> {
-        override val default: Score
-            get() = Score.EXP
-
-        override fun satisfyWith(value: Score): Boolean {
-            return true
         }
     }
 

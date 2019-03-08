@@ -35,8 +35,8 @@ class BagAndBeltListener : Listener {
             event.view.bottomInventory -> {
                 // Belt
                 if (event.isBeltSlot) player.getOrPut(Keys.BELT).findItem(event.slot)?.tryClick(player, event)
-                // Bag
-                else player.getOrPut(Keys.BAG).getButton(event.slot)?.tryClick(player, event)
+                // Bag TODO implements
+//                else player.getOrPut(Keys.BAG).getButton(event.slot)?.tryClick(player, event)
             }
         }
     }

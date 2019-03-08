@@ -28,7 +28,7 @@ enum class Tool(
         private val idMap = values().map { it.id to it }.toMap()
         fun findById(id: Int) = idMap[id]
 
-        fun findSuitableTool(block: Block): Tool? {
+        internal fun findSuitableTool(block: Block): Tool? {
             return when (block.type) {
                 Material.STONE,
                 Material.MOSSY_COBBLESTONE,

@@ -266,7 +266,8 @@ fun Player.updateBelt(applyMainHand: Boolean, applyOffHand: Boolean) {
 }
 
 fun Player.updateBag() {
-    getOrPut(Keys.BAG).carry(this)
+    // TODO implements
+//    getOrPut(Keys.BAG).carry(this)
 }
 
 fun Player.updateSideBar() {

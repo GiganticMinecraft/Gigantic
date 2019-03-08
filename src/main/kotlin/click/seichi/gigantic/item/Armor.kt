@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 class Armor(private val material: Material,
             private val localizedDisplayName: LocalizedText,
             private val localizedLore: List<LocalizedText>
-) : Button {
+) : Icon {
 
     override fun toShownItemStack(player: Player) = itemStackOf(material) {
         setDisplayName(player, localizedDisplayName)
