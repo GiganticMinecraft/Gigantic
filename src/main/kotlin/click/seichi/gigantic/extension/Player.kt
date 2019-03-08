@@ -1,5 +1,7 @@
 package click.seichi.gigantic.extension
 
+import black.bracken.drainage.dsl.InventoryUI
+import black.bracken.drainage.extension.openInventory
 import click.seichi.gigantic.Currency
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.battle.BattleManager
@@ -249,6 +251,8 @@ fun Player.updateDisplay(applyMainHand: Boolean, applyOffHand: Boolean) {
     updateBelt(applyMainHand, applyOffHand)
     updateBag()
     updateSideBar()
+    val ui = player.inventory.holder as? InventoryUI ?: return
+    player.openInventory(ui)
 }
 
 // ツールだけ更新したいときはこれを使う
