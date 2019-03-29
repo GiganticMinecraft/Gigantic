@@ -399,7 +399,7 @@ enum class Achievement(
                         it.action(player)
 
                         // メッセージ送信
-                        if (Gigantic.IS_DEBUG && DebugConfig.ACHIEVEMENT_ANNOUNCE) {
+                        if (!Gigantic.IS_DEBUG || DebugConfig.ACHIEVEMENT_ANNOUNCE) {
                             object : BukkitRunnable() {
                                 override fun run() {
                                     if (!player.isValid) return
