@@ -25,9 +25,9 @@ class Sensor(
     fun update() {
 
         // 条件を満たしているプレイヤーを探索
-        val rangedPlayerSet = location.world.players
-                .filter { meetingConditions(it) }
-                .filterNot { alreadySensedSet.contains(it.uniqueId) }
+        val rangedPlayerSet = location.world?.players
+                ?.filter { meetingConditions(it) }
+                ?.filterNot { alreadySensedSet.contains(it.uniqueId) } ?: listOf()
 
         // 交感中のプレイヤーではないプレイヤーのカウントをリセット
         senseProgressMap

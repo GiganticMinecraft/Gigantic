@@ -16,7 +16,7 @@ object BattleMonsterAnimations {
 
     val AMBIENT = { color: Color ->
         Animation(0) { location, _ ->
-            location.world.spawnColoredParticleSpherically(
+            location.world?.spawnColoredParticleSpherically(
                     location,
                     color,
                     count = 2,
@@ -27,7 +27,7 @@ object BattleMonsterAnimations {
 
     val ATTACK_READY = { color: Color ->
         Animation(20) { location, _ ->
-            location.world.spawnColoredParticle(
+            location.world?.spawnColoredParticle(
                     location,
                     color,
                     noiseData = NoiseData(0.01)
@@ -37,7 +37,7 @@ object BattleMonsterAnimations {
 
     val ATTACK_READY_BLOCK = { data: BlockData ->
         Animation(0) { location, _ ->
-            location.world.spawnParticle(
+            location.world?.spawnParticle(
                     Particle.BLOCK_CRACK,
                     location.clone().add(
                             Random.nextGaussian(variance = 0.5),
@@ -52,7 +52,7 @@ object BattleMonsterAnimations {
 
     val DEFENCE = { color: Color ->
         Animation(20) { location, _ ->
-            location.world.spawnColoredParticle(
+            location.world?.spawnColoredParticle(
                     location,
                     color,
                     noiseData = NoiseData(0.01)
@@ -60,8 +60,8 @@ object BattleMonsterAnimations {
         }
     }
 
-    val DAMAGE_FROM_PLAYER = Animation(0) { location, l ->
-        location.world.spawnParticle(
+    val DAMAGE_FROM_PLAYER = Animation(0) { location, _ ->
+        location.world?.spawnParticle(
                 Particle.DAMAGE_INDICATOR,
                 location,
                 1

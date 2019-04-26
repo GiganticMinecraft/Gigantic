@@ -88,7 +88,7 @@ class BattleMonster(
     }
 
     fun awake(spawnLocation: Location, players: Set<BattlePlayer>) {
-        entity = spawnLocation.world.spawn(spawnLocation, ArmorStand::class.java) {
+        entity = spawnLocation.world!!.spawn(spawnLocation, ArmorStand::class.java) {
             it.run {
                 isVisible = false
                 setBasePlate(false)
@@ -99,7 +99,7 @@ class BattleMonster(
                 setGravity(false)
                 isCustomNameVisible = false
                 isSmall = true
-                helmet = monster.getIcon()
+                this.setHelmet(monster.getIcon())
             }
         }
         players.forEach { bossBar.addPlayer(it.player) }

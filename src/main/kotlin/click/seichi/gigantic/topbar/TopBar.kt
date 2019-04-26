@@ -14,7 +14,7 @@ class TopBar(
         private val style: BarStyle
 ) {
     fun show(bar: BossBar) {
-        bar.title = title
+        bar.setTitle(title)
         bar.progress = progress
         bar.color = color
         bar.style = style

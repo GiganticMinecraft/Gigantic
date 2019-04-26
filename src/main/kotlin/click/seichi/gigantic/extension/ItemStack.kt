@@ -21,8 +21,8 @@ fun itemStackOf(material: Material, applies: ItemStack.() -> Unit = {}): ItemSta
 }
 
 fun ItemStack.setDisplayName(name: String) {
-    itemMeta = itemMeta.also { meta ->
-        meta.displayName = "$RESET$name"
+    itemMeta = itemMeta?.also { meta ->
+        meta.setDisplayName("$RESET$name")
     }
 }
 
@@ -31,20 +31,20 @@ fun ItemStack.setDisplayName(player: Player, text: LocalizedText) {
 }
 
 fun ItemStack.setLore(vararg lore: String) {
-    itemMeta = itemMeta.also { meta ->
+    itemMeta = itemMeta?.also { meta ->
         meta.lore = lore.map { "$RESET$it" }.toList()
     }
 }
 
 fun ItemStack.clearLore() {
-    itemMeta = itemMeta.also { meta ->
+    itemMeta = itemMeta?.also { meta ->
         if (meta.hasLore())
             meta.lore = listOf()
     }
 }
 
 fun ItemStack.addLore(vararg lore: String) {
-    itemMeta = itemMeta.also { meta ->
+    itemMeta = itemMeta?.also { meta ->
         lore.map { "$RESET$it" }.let { newLore ->
             meta.lore = meta.lore?.apply { addAll(newLore) } ?: newLore
         }
@@ -64,7 +64,7 @@ fun ItemStack.addLore(player: Player, localizedTextList: List<LocalizedText>) {
 }
 
 fun ItemStack.hideAllFlag() {
-    itemMeta = itemMeta.also { meta ->
+    itemMeta = itemMeta?.also { meta ->
         ItemFlag.values().forEach {
             meta.addItemFlags(it)
         }
@@ -72,7 +72,7 @@ fun ItemStack.hideAllFlag() {
 }
 
 fun ItemStack.setEnchanted(flag: Boolean) {
-    itemMeta = itemMeta.also { meta ->
+    itemMeta = itemMeta?.also { meta ->
         when (flag) {
             true -> if (!meta.hasEnchants()) meta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 1, true)
             false -> if (meta.hasEnchants()) meta.enchants.map { it.key }.forEach { meta.removeEnchant(it) }
@@ -83,7 +83,7 @@ fun ItemStack.setEnchanted(flag: Boolean) {
 
 fun ItemStack.sublime() {
     hideAllFlag()
-    itemMeta.isUnbreakable = true
+    itemMeta?.isUnbreakable = true
 }
 
 fun potionOf(color: Color): ItemStack {

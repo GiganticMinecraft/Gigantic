@@ -5,11 +5,11 @@ package click.seichi.gigantic.config
  */
 object DatabaseConfig : SimpleConfiguration("database") {
 
-    val HOST: String by lazy { getString("host") }
+    val HOST: String by lazy { getString("host")!! }
 
-    val DATABASE: String by lazy { getString("database") }
+    val DATABASE: String by lazy { getString("database")!! }
 
-    val USER: String by lazy { getString("user") }
+    val USER: String by lazy { getString("user")!! }
 
-    val PASSWORD: String by lazy { getString("password") }
+    val PASSWORD: String by lazy { getString("password")!! }
 }

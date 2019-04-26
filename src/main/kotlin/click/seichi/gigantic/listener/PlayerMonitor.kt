@@ -84,8 +84,8 @@ class PlayerMonitor : Listener {
             player.setResourcePack(Gigantic.LIGHT_RESOURCE_PACK_URL)
 
         // レベル表記を更新
-        player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(player.wrappedLevel).plus(player.name)
-        player.displayName = PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name)
+        player.setPlayerListName(PlayerMessages.PLAYER_LIST_NAME_PREFIX(player.wrappedLevel).plus(player.name))
+        player.setDisplayName(PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name))
         PlayerMessages.LOCATION_INFO(player).sendTo(player)
 
         // サーバー名を受信
@@ -160,8 +160,8 @@ class PlayerMonitor : Listener {
             PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
         // player list name レベル表記を更新
-        player.playerListName = PlayerMessages.PLAYER_LIST_NAME_PREFIX(event.level).plus(player.name)
-        player.displayName = PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name)
+        player.setPlayerListName(PlayerMessages.PLAYER_LIST_NAME_PREFIX(event.level).plus(player.name))
+        player.setDisplayName(PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name))
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

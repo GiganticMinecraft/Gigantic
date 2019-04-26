@@ -15,9 +15,9 @@ import org.bukkit.Particle
 object WillSpiritAnimations {
 
     val RENDER = { renderingData: WillRenderingData, color: Color, lifeExpectancy: Long ->
-        Animation(0) { location, ticks ->
+        Animation(0) { location, _ ->
             if ((renderingData.beatTiming != 0 && lifeExpectancy % renderingData.beatTiming != 0L)) return@Animation
-            location.world.spawnColoredParticleSpherically(
+            location.world?.spawnColoredParticleSpherically(
                     location,
                     color,
                     if (lifeExpectancy < 10 * 20) {
@@ -41,9 +41,9 @@ object WillSpiritAnimations {
             }
 
             if (tick > 60L)
-                location.world.spawnParticle(Particle.END_ROD, location, 5, 0.0, 0.0, 0.0, 0.06)
+                location.world?.spawnParticle(Particle.END_ROD, location, 5, 0.0, 0.0, 0.0, 0.06)
             else
-                location.world.spawnColoredParticleSpherically(
+                location.world?.spawnColoredParticleSpherically(
                         location,
                         color,
                         3,
@@ -63,14 +63,14 @@ object WillSpiritAnimations {
             }
 
             if (tick > 60L)
-                location.world.spawnColoredParticleSpherically(
+                location.world?.spawnColoredParticleSpherically(
                         location,
                         color,
                         15,
                         1.5
                 )
             else
-                location.world.spawnColoredParticleSpherically(
+                location.world?.spawnColoredParticleSpherically(
                         location,
                         color,
                         3,
@@ -81,7 +81,7 @@ object WillSpiritAnimations {
 
     val SENSE = { color: Color ->
         Animation(0) { location, _ ->
-            location.world.spawnColoredParticle(
+            location.world?.spawnColoredParticle(
                     location,
                     color,
                     noiseData = NoiseData(0.01)

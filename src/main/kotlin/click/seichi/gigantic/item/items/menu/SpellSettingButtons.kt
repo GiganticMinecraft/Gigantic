@@ -42,7 +42,7 @@ object SpellSettingButtons {
                         .map { it.asSafety(player.wrappedLocale) }
                         .toTypedArray())
 
-                itemMeta = itemMeta.apply {
+                itemMeta = itemMeta?.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 }
             }

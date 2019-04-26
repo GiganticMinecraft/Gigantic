@@ -14,16 +14,16 @@ import org.bukkit.inventory.ItemStack
 object SpellAnimations {
 
     val STELLA_CLAIR = Animation(15) { location, _ ->
-        location.world.spawnParticle(Particle.DOLPHIN, location, 10,
+        location.world?.spawnParticle(Particle.DOLPHIN, location, 10,
                 Random.nextGaussian(0.0, 0.15),
                 Random.nextGaussian(0.0, 0.15),
                 Random.nextGaussian(0.0, 0.15)
         )
-        location.world.spawnColoredParticle(location, Color.fromRGB(51, 103, 217), 1)
+        location.world?.spawnColoredParticle(location, Color.fromRGB(51, 103, 217), 1)
     }
 
     val GRAND_NATURA_ON_BREAK = Animation(3) { location, _ ->
-        location.world.spawnParticle(Particle.ITEM_CRACK, location, 3,
+        location.world?.spawnParticle(Particle.ITEM_CRACK, location, 3,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
@@ -32,7 +32,7 @@ object SpellAnimations {
     }
 
     val GRAND_NATURA_ON_FIRE = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.TOTEM, location, 4,
+        location.world?.spawnParticle(Particle.TOTEM, location, 4,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3)
@@ -40,12 +40,12 @@ object SpellAnimations {
     }
 
     val AQUA_LINEA_ON_BREAK = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.WATER_WAKE, location, 5,
+        location.world?.spawnParticle(Particle.WATER_WAKE, location, 5,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3)
         )
-        location.world.spawnParticle(Particle.BUBBLE_POP, location, 2,
+        location.world?.spawnParticle(Particle.BUBBLE_POP, location, 2,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3)
@@ -53,7 +53,7 @@ object SpellAnimations {
     }
 
     val AQUA_LINEA_ON_FIRE = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.WATER_SPLASH, location, 10,
+        location.world?.spawnParticle(Particle.WATER_SPLASH, location, 10,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3)

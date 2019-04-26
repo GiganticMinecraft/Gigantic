@@ -16,7 +16,7 @@ object PlayerAnimations {
     }
 
     val ON_CUT = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.VILLAGER_HAPPY, location, 1,
+        location.world?.spawnParticle(Particle.VILLAGER_HAPPY, location, 1,
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3),
                 Random.nextGaussian(0.0, 0.3)

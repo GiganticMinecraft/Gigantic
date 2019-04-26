@@ -20,12 +20,12 @@ class SideBarMessage(
 
     companion object {
         private val scoreboardManager: ScoreboardManager
-            get() = Bukkit.getScoreboardManager()
+            get() = Bukkit.getScoreboardManager()!!
     }
 
     override fun sendTo(player: Player) {
-        player.scoreboard?.let {
-            if (!isForced && it.getObjective(DisplaySlot.SIDEBAR).name != objectiveName) return
+        player.scoreboard.let {
+            if (!isForced && it.getObjective(DisplaySlot.SIDEBAR)?.name != objectiveName) return
             else it.objectives.forEach { it.unregister() }
         }
 

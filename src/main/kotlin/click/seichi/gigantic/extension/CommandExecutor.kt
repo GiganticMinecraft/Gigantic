@@ -17,7 +17,7 @@ fun CommandExecutor.bind(id: String) {
                 logger.warning("${this@bind::class.simpleName}を登録できませんでした")
                 logger.warning("plugin.ymlに$id を登録してください")
             } else {
-                pluginCommand.executor = this@bind
+                pluginCommand.setExecutor(this@bind)
             }
         }
     }

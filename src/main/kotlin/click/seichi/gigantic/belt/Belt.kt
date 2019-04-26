@@ -75,7 +75,7 @@ enum class Belt(
             inventory.boots = boots?.toShownItemStack(player) ?: ItemStack(Material.AIR)
 
             if (!applyOffHandItem) return@let
-            inventory.itemInOffHand = offHandItem?.toShownItemStack(player) ?: ItemStack(Material.AIR)
+            inventory.setItemInOffHand(offHandItem?.toShownItemStack(player) ?: ItemStack(Material.AIR))
         }
     }
 

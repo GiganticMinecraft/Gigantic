@@ -11,31 +11,31 @@ import org.bukkit.inventory.ItemStack
 object MultiBreakAnimations {
 
     val EXPLOSION = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.EXPLOSION_NORMAL, location, 1)
+        location.world?.spawnParticle(Particle.EXPLOSION_NORMAL, location, 1)
     }
 
     val BLIZZARD = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.BLOCK_CRACK, location, 1, Material.PACKED_ICE.createBlockData())
+        location.world?.spawnParticle(Particle.BLOCK_CRACK, location, 1, Material.PACKED_ICE.createBlockData())
     }
 
     val MAGIC = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.NOTE, location, 1)
+        location.world?.spawnParticle(Particle.NOTE, location, 1)
     }
 
     val FLAME = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.FLAME, location, 2, 0.0, 0.0, 0.0, 0.2)
+        location.world?.spawnParticle(Particle.FLAME, location, 2, 0.0, 0.0, 0.0, 0.2)
     }
 
     val WITCH_SCENT = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.SPELL_WITCH, location, 3)
+        location.world?.spawnParticle(Particle.SPELL_WITCH, location, 3)
     }
 
     val SLIME = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.SLIME, location, 1)
+        location.world?.spawnParticle(Particle.SLIME, location, 1)
     }
 
     val BUBBLE = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.BUBBLE_POP, location, 1)
+        location.world?.spawnParticle(Particle.BUBBLE_POP, location, 1)
     }
 
     private val alchemiaMap = mapOf(
@@ -48,7 +48,7 @@ object MultiBreakAnimations {
     val ALCHEMIA = Animation(0) { location, _ ->
         val type = location.block.type
         if (!alchemiaMap.containsKey(type)) return@Animation
-        location.world.spawnParticle(Particle.ITEM_CRACK, location, 3, 0.0, 0.0, 0.0, 0.05, alchemiaMap.getValue(type))
+        location.world?.spawnParticle(Particle.ITEM_CRACK, location, 3, 0.0, 0.0, 0.0, 0.05, alchemiaMap.getValue(type))
     }
 
 

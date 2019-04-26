@@ -136,8 +136,8 @@ abstract class Menu : InventoryHolder {
         if (playSound) closeSound.playOnly(player)
     }
 
-    override fun getInventory(): Inventory? {
-        return null
+    override fun getInventory(): Inventory {
+        return Bukkit.createInventory(null, 9)
     }
 
 }

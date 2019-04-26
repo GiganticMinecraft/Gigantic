@@ -34,7 +34,7 @@ class EntityListener : Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onDamageByBlock(event: EntityDamageByBlockEvent) {
         event.damager ?: return
-        if (event.damager.type != Material.MAGMA_BLOCK) return
+        if (event.damager?.type != Material.MAGMA_BLOCK) return
         event.isCancelled = true
     }
 

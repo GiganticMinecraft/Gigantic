@@ -14,7 +14,7 @@ object MonsterSpiritAnimations {
 
     val AMBIENT_EXHAUST = { color: Color ->
         Animation(8) { location, _ ->
-            location.world.spawnColoredParticle(
+            location.world?.spawnColoredParticle(
                     location,
                     color,
                     noiseData = NoiseData(0.01)
@@ -24,7 +24,7 @@ object MonsterSpiritAnimations {
 
     val AMBIENT = { color: Color ->
         Animation(0) { location, _ ->
-            location.world.spawnColoredParticleSpherically(
+            location.world?.spawnColoredParticleSpherically(
                     location,
                     color,
                     count = 2,
@@ -34,7 +34,7 @@ object MonsterSpiritAnimations {
     }
 
     val AWAKE = Animation(0) { location, _ ->
-        location.world.spawnParticle(
+        location.world?.spawnParticle(
                 Particle.SMOKE_NORMAL,
                 location,
                 2

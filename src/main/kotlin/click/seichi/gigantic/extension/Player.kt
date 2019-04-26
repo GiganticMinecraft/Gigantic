@@ -197,7 +197,7 @@ fun Player.spawnColoredParticle(
         count: Int = 1,
         noiseData: NoiseData = NoiseData()
 ) = (0 until count).forEach { _ ->
-    player.spawnParticle(
+    player?.spawnParticle(
             Particle.REDSTONE,
             location.noised(noiseData),
             0,
@@ -229,16 +229,16 @@ fun Player.updateLevel(isOnLogin: Boolean = false) {
     }
 
     // レベル計算
-    val currentLevel = player.wrappedLevel
+    val currentLevel = player!!.wrappedLevel
     manipulate(CatalogPlayerCache.LEVEL) {
         it.calculate(wrappedExp)
     }
 
-    PlayerMessages.EXP_BAR_DISPLAY(player.wrappedLevel, player.wrappedExp).sendTo(this)
+    PlayerMessages.EXP_BAR_DISPLAY(player!!.wrappedLevel, player!!.wrappedExp).sendTo(this)
 
     // 上昇レベルに応じてEvent call
-    if (player.wrappedLevel > currentLevel && !isOnLogin) {
-        ((currentLevel + 1)..player.wrappedLevel).forEach { level ->
+    if (player!!.wrappedLevel > currentLevel && !isOnLogin) {
+        ((currentLevel + 1)..player!!.wrappedLevel).forEach { level ->
             Bukkit.getPluginManager().callEvent(LevelUpEvent(level, this))
         }
     }

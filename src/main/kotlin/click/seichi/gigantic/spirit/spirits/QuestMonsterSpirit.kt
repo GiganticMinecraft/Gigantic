@@ -59,7 +59,7 @@ class QuestMonsterSpirit(
                 chunk.world.getHighestBlockAt(block.location).centralLocation.add(0.0, -0.5, 0.0)
             }
         }
-        entity = spawnLocation.world.spawn(spawnLocation, ArmorStand::class.java) {
+        entity = spawnLocation.world!!.spawn(spawnLocation, ArmorStand::class.java) {
             it.run {
                 isVisible = false
                 setBasePlate(false)
@@ -70,7 +70,7 @@ class QuestMonsterSpirit(
                 setGravity(false)
                 isCustomNameVisible = false
                 isSmall = true
-                helmet = monster.getIcon()
+                setHelmet(monster.getIcon())
                 headPose = EulerAngle(0.3, 0.0, 0.0)
             }
         }

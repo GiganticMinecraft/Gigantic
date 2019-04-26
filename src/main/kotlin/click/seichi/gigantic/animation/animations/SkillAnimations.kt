@@ -12,7 +12,7 @@ import org.bukkit.Particle
 object SkillAnimations {
 
     val MINE_BURST_ON_BREAK = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.SPELL_MOB, location, 10,
+        location.world?.spawnParticle(Particle.SPELL_MOB, location, 10,
                 Random.nextGaussian(0.0, 0.5),
                 Random.nextGaussian(0.0, 0.5),
                 Random.nextGaussian(0.0, 0.5)
@@ -20,7 +20,7 @@ object SkillAnimations {
     }
 
     val FLASH_FIRE = Animation(0) { location, _ ->
-        location.world.spawnParticle(Particle.SPELL_INSTANT, location, 200,
+        location.world?.spawnParticle(Particle.SPELL_INSTANT, location, 200,
                 Random.nextGaussian(0.0, 0.5),
                 Random.nextGaussian(0.0, 0.5),
                 Random.nextGaussian(0.0, 0.5)
@@ -30,12 +30,12 @@ object SkillAnimations {
 
     val HEAL = Animation(5) { location, ticks ->
         if (ticks == 0L)
-            location.world.spawnParticle(Particle.HEART, location, 1)
-        location.world.spawnColoredParticle(location, Color.fromRGB(204, 0, 0), 1)
+            location.world?.spawnParticle(Particle.HEART, location, 1)
+        location.world?.spawnColoredParticle(location, Color.fromRGB(204, 0, 0), 1)
     }
 
-    val TOTEM_PIECE = Animation(60) { location, ticks ->
-        location.world.spawnParticle(Particle.TOTEM, location.clone().add(
+    val TOTEM_PIECE = Animation(60) { location, _ ->
+        location.world?.spawnParticle(Particle.TOTEM, location.clone().add(
                 0.0, -0.3, 0.0
         ), 1,
                 Random.nextGaussian(0.0, 0.07),

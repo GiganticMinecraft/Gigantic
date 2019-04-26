@@ -445,7 +445,7 @@ private fun Block.fallUpperCrustBlock() {
 
 
 private fun Block.fall() {
-    location.world.spawnFallingBlock(
+    location.world?.spawnFallingBlock(
             location.central.subtract(0.0, 0.5, 0.0),
             blockData
     )

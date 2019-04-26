@@ -72,7 +72,7 @@ object HandItems {
 
     private fun modifyItemMeta(itemStack: ItemStack, player: Player) {
         itemStack.run {
-            itemMeta = itemMeta.apply {
+            itemMeta = itemMeta?.apply {
                 isUnbreakable = true
                 addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 addItemFlags(ItemFlag.HIDE_ENCHANTS)

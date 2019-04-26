@@ -1109,7 +1109,7 @@ object Keys {
                 UserHome.new {
                     this.user = entity.user
                     this.homeId = homeId
-                    this.worldId = home.location.world.uid
+                    this.worldId = home.location.world!!.uid
                     this.x = home.location.x
                     this.y = home.location.y
                     this.z = home.location.z

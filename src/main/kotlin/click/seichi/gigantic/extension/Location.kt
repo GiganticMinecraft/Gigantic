@@ -28,10 +28,10 @@ private val types = arrayOf(FireworkEffect.Type.BALL, FireworkEffect.Type.BALL_L
  *
  */
 fun Location.launchFireWorks() {
-    val firework = world.spawn(this, Firework::class.java)
+    val firework = world?.spawn(this, Firework::class.java)
 
     // 花火の設定情報オブジェクトを取り出す
-    val meta = firework.fireworkMeta
+    val meta = firework?.fireworkMeta ?: return
     val effect = FireworkEffect.builder()
     // 形状をランダムに決める
     effect.with(types[Random.nextInt(types.size)])

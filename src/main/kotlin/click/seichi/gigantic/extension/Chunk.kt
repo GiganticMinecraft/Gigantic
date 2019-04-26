@@ -30,8 +30,8 @@ val Chunk.isBattled: Boolean
     get() = findBattle() != null
 
 val Chunk.isSpawnArea: Boolean
-    get() = abs(x - world.spawnLocation.chunk.x) < world.getGameRuleValue(GameRule.SPAWN_RADIUS).div(16) &&
-            abs(z - world.spawnLocation.chunk.z) < world.getGameRuleValue(GameRule.SPAWN_RADIUS).div(16)
+    get() = abs(x - world.spawnLocation.chunk.x) < world.getGameRuleValue(GameRule.SPAWN_RADIUS)!!.div(16) &&
+            abs(z - world.spawnLocation.chunk.z) < world.getGameRuleValue(GameRule.SPAWN_RADIUS)!!.div(16)
 
 fun Chunk.getSpawnableLocation(): Location {
     val x = Random.nextInt(15)

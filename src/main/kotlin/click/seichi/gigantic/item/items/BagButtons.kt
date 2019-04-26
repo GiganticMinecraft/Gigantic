@@ -296,7 +296,7 @@ object BagButtons {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.SPECIAL_THANKS_TITLE.asSafety(player.wrappedLocale))
                 clearLore()
-                itemMeta = itemMeta.apply {
+                itemMeta = itemMeta?.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
@@ -326,7 +326,7 @@ object BagButtons {
                             + BagMessages.QUEST.asSafety(player.wrappedLocale))
                 }
                 clearLore()
-                itemMeta = itemMeta.apply {
+                itemMeta = itemMeta?.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
@@ -351,7 +351,7 @@ object BagButtons {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.RELIC.asSafety(player.wrappedLocale))
                 clearLore()
-                itemMeta = itemMeta.apply {
+                itemMeta = itemMeta?.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
@@ -567,7 +567,7 @@ object BagButtons {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + SettingMenuMessages.TITLE.asSafety(player.wrappedLocale))
                 clearLore()
-                itemMeta = itemMeta.apply {
+                itemMeta = itemMeta?.apply {
                     addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     addItemFlags(ItemFlag.HIDE_ENCHANTS)
                     addItemFlags(ItemFlag.HIDE_UNBREAKABLE)

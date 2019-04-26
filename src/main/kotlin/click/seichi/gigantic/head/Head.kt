@@ -124,7 +124,7 @@ enum class Head(
             val itemStack = ItemStack(Material.PLAYER_HEAD, 1)
             val skullMeta = itemStack.itemMeta as SkullMeta
             skullMeta.owningPlayer = offlinePlayer
-            skullMeta.displayName = "${ChatColor.YELLOW}${ChatColor.BOLD}${offlinePlayer.name}"
+            skullMeta.setDisplayName("${ChatColor.YELLOW}${ChatColor.BOLD}${offlinePlayer.name}")
             itemStack.itemMeta = skullMeta
             return itemStack
         }
@@ -141,9 +141,10 @@ enum class Head(
                             .toByteArray())
             profile.properties.put("textures", Property("textures", String(encodedData)))
 
-            val profileField = javaClass.getDeclaredField("profile")
-            profileField.isAccessible = true
-            profileField.set(this, profile)
+            // TODO implements
+//            val profileField = javaClass.getDeclaredField("profile")
+//            profileField.isAccessible = true
+//            profileField.set(this, profile)
         }
         skull
     }
