@@ -37,7 +37,7 @@ enum class Skill(
     HEAL(
             2,
             0,
-            ItemStack(Material.POPPY),
+            ItemStack(Material.ROSE_RED),
             SkillMessages.HEAL,
             SkillMessages.HEAL_LORE,
             null,

@@ -3,6 +3,7 @@ package click.seichi.gigantic.relic
 import click.seichi.gigantic.GiganticEvent
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.RelicMessages
 import click.seichi.gigantic.player.Defaults
@@ -1316,7 +1317,7 @@ enum class Relic(
             RelicMessages.CUP_OF_KING_LORE,
             RelicMessages.CUP_OF_KING_BONUS_LORE,
             0.1,
-            itemStackOf(Material.BELL)
+            Head.KING_CROWN.toItemStack()
     ) {
         override fun isBonusTarget(block: Block): Boolean {
             return GiganticEvent.JMS_KING.isActive()

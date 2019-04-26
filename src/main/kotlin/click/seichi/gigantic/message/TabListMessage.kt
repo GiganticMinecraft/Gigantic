@@ -1,9 +1,9 @@
 package click.seichi.gigantic.message
 
 import click.seichi.gigantic.extension.wrappedLocale
-import net.minecraft.server.v1_14_R1.IChatBaseComponent
-import net.minecraft.server.v1_14_R1.PacketPlayOutPlayerListHeaderFooter
-import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer
+import net.minecraft.server.v1_13_R2.IChatBaseComponent
+import net.minecraft.server.v1_13_R2.PacketPlayOutPlayerListHeaderFooter
+import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer
 import org.bukkit.entity.Player
 
 /**

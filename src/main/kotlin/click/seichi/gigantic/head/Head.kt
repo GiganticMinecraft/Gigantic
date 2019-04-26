@@ -141,10 +141,9 @@ enum class Head(
                             .toByteArray())
             profile.properties.put("textures", Property("textures", String(encodedData)))
 
-            // TODO implements
-//            val profileField = javaClass.getDeclaredField("profile")
-//            profileField.isAccessible = true
-//            profileField.set(this, profile)
+            val profileField = javaClass.getDeclaredField("profile")
+            profileField.isAccessible = true
+            profileField.set(this, profile)
         }
         skull
     }
