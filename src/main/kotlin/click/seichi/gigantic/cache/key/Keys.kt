@@ -1553,5 +1553,15 @@ object Keys {
         }
     }
 
+    // 一時保存用
+    val STRIP_COUNT = object : Key<PlayerCache, Long> {
+        override val default: Long
+            get() = 0L
+
+        override fun satisfyWith(value: Long): Boolean {
+            return value >= 0L
+        }
+    }
+
 
 }

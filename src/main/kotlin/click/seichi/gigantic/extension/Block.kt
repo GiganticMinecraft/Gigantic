@@ -418,7 +418,7 @@ private fun Block.fallUpperCrustBlock() {
     if (calcGravity() == 0) return
     object : BukkitRunnable() {
         override fun run() {
-            val target = getRelative(BlockFace.UP) ?: return
+            val target = getRelative(BlockFace.UP)
             when {
                 target.y > 255 -> {
                     return

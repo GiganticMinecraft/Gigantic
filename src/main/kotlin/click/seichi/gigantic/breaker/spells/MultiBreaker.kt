@@ -7,6 +7,7 @@ import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.relic.Relic
 import org.bukkit.block.Block
@@ -190,6 +191,9 @@ class MultiBreaker : SpellCaster {
             }
         }
 
+        val stripCount = breakBlockSet
+                .count { block -> block.y == 1 && block.calcGravity() == 0 }
+
         val relicBonus = breakBlockSet.fold(0.0) { source, b ->
             source.plus(Relic.calcMultiplier(player, b))
         }
@@ -197,10 +201,12 @@ class MultiBreaker : SpellCaster {
         player.manipulate(CatalogPlayerCache.EXP) {
             it.add(breakBlockSet.size.toBigDecimal(), ExpReason.SPELL_MULTI_BREAK)
             it.add(relicBonus.toBigDecimal(), reason = ExpReason.RELIC_BONUS)
+            it.add(stripCount.times(Defaults.STRIP_BONUS).toBigDecimal(), reason = ExpReason.STRIP_MINE_BONUS)
         }
 
         player.transform(Keys.BREAK_COUNT) { it + breakBlockSet.size }
         player.transform(Keys.RELIC_BONUS) { it + relicBonus }
+        player.transform(Keys.STRIP_COUNT) { it + stripCount }
 
         PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 

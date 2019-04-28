@@ -7,6 +7,7 @@ import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.player.skill.Skill
@@ -41,19 +42,29 @@ open class Miner : Breaker {
             return
         }
 
-        var relicBonus = Relic.calcMultiplier(player, block)
+        // 露天掘り
+        var stripBonus = 0L
+        if (block.y == 1 && block.calcGravity() == 0) {
+            stripBonus += Defaults.STRIP_BONUS
+            player.offer(Keys.STRIP_COUNT, 1)
+        }
 
+        // レリック
+        var relicBonus = Relic.calcMultiplier(player, block)
+        player.offer(Keys.RELIC_BONUS, relicBonus)
+
+
+        // 経験値追加
         player.manipulate(CatalogPlayerCache.EXP) {
             it.inc()
             it.add(relicBonus.toBigDecimal(), reason = ExpReason.RELIC_BONUS)
+            it.add(stripBonus.toBigDecimal(), reason = ExpReason.STRIP_MINE_BONUS)
         }
 
         // 破壊対象ブロックをInvoker用に保存
         player.offer(Keys.BREAK_BLOCK, block)
         // 現時点での破壊数を保存
         player.offer(Keys.BREAK_COUNT, 1)
-        // 現時点でのボーナス経験値を保存
-        player.offer(Keys.RELIC_BONUS, relicBonus)
 
         // ヒール系
         when {
@@ -101,6 +112,9 @@ open class Miner : Breaker {
         // 全てのスキルを通して得たボーナス経験値を取得
         relicBonus = player.getOrPut(Keys.RELIC_BONUS)
 
+        // 全てのスキルを通して計算された露天掘りブロック数を取得
+        val stripCount = player.getOrPut(Keys.STRIP_COUNT)
+
         // actionbar
         if (ToggleSetting.GAIN_EXP.getToggle(player)) {
             if (relicBonus > 0.0)
@@ -109,6 +123,12 @@ open class Miner : Breaker {
                 PlayerMessages.EXP(count).sendTo(player)
         }
 
+        // message
+        if (stripCount > 0) {
+            PlayerMessages.STRIP_EXP(stripCount).sendTo(player)
+        }
+
+        player.transform(Keys.STRIP_MINE) { it + stripCount }
 
         player.updateLevel()
 

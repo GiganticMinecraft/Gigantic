@@ -94,4 +94,6 @@ object Defaults {
 
     // TickEventを発火する際のdelay
     val TICK_EVENT_DELAY = 20L * 3L
+
+    val STRIP_BONUS = 100L
 }

@@ -156,6 +156,17 @@ object PlayerMessages {
         ))
     }
 
+    val STRIP_EXP = { count: Long ->
+        ChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+                Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                        "$count 分の露天掘りを達成した ( " +
+                        "${ChatColor.AQUA}${ChatColor.BOLD}" +
+                        "${count.times(Defaults.STRIP_BONUS)} exp" +
+                        "${ChatColor.LIGHT_PURPLE}" +
+                        " 獲得)"
+        ))
+    }
+
     val GET_TOTEM_PIECE = { num: Int ->
         ChatMessage(ChatMessageProtocol.ACTION_BAR, LocalizedText(
                 Locale.JAPANESE to "${ChatColor.GREEN}" +
