@@ -133,7 +133,7 @@ object TeleportMessages {
     )
 
     val TELEPORT_TOGGLE_OFF = LocalizedText(
-            Locale.JAPANESE to "${ChatColor.RED}他プレイヤーのテレポートを常に拒否"
+            Locale.JAPANESE to "${ChatColor.RED}フォロー以外のテレポートを常に拒否"
     )
 
     val RANDOM_TELEPORT_IN_BREAK_TIME = LocalizedText(
