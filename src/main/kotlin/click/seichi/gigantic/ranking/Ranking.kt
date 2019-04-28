@@ -42,6 +42,7 @@ class Ranking(val score: Score) {
                     val rank = index + 1
                     val uniqueId = row[RankingScoreTable.id].value
                     val value = row[score.column]
+                    if (value <= 0) return@forEachIndexed
                     _rankMap[rank] = uniqueId
                     _uuidMap[uniqueId] = rank
                     _valueMap[uniqueId] = value
