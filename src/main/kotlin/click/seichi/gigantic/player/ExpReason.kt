@@ -1,4 +1,4 @@
-package click.seichi.gigantic.cache.manipulator
+package click.seichi.gigantic.player
 
 /**
  * @author tar0ss
@@ -12,6 +12,7 @@ enum class ExpReason(val id: Int) {
     DEBUG(3),
     SPELL_MULTI_BREAK(4),
     RELIC_BONUS(5),
+    STRIP_MINE_BONUS(6),
     ;
 
     companion object {

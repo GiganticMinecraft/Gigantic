@@ -64,6 +64,8 @@ object UserTable : IdTable<UUID>("users") {
 
     val isNormalTexture = bool("is_normal_texture").default(true)
 
+    val stripMine = long("strip_mine").default(0L)
+
     val createdAt = datetime("created_at")
 
     val updatedAt = datetime("updated_at")

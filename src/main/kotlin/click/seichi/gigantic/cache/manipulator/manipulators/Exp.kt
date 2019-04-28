@@ -3,8 +3,8 @@ package click.seichi.gigantic.cache.manipulator.manipulators
 import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.Manipulator
+import click.seichi.gigantic.player.ExpReason
 import java.math.BigDecimal
 
 class Exp : Manipulator<Exp, PlayerCache> {

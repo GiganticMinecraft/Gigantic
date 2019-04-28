@@ -4,7 +4,6 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.PlayerLevelConfig
@@ -15,6 +14,7 @@ import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.DeathMessages
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.player.spell.spells.SkyWalk
 import kotlinx.coroutines.runBlocking
@@ -60,7 +60,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onPlayerQuit(event: PlayerQuitEvent) {
-        val player = event.player ?: return
+        val player = event.player
         if (!PlayerCacheMemory.contains(player.uniqueId)) {
             return
         }

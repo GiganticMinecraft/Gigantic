@@ -42,7 +42,7 @@ class PlayerMonitor : Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        val player = event.player ?: return
+        val player = event.player
 
         if (!PlayerCacheMemory.contains(player.uniqueId)) {
             return
@@ -118,8 +118,8 @@ class PlayerMonitor : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         if (event.player.gameMode != GameMode.SURVIVAL) return
 
-        val player = event.player ?: return
-        val block = event.block ?: return
+        val player = event.player
+        val block = event.block
 
         if (Config.DEBUG_MODE) {
             player.sendMessage("tasks: ${Bukkit.getScheduler().pendingTasks.size}")

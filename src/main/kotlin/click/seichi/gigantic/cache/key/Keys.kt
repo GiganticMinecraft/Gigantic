@@ -8,7 +8,6 @@ import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.breaker.BreakArea
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.cache.RankingPlayerCache
-import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.database.RankingEntity
@@ -24,10 +23,7 @@ import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.menu.RefineItem
 import click.seichi.gigantic.menu.RelicCategory
 import click.seichi.gigantic.monster.SoulMonster
-import click.seichi.gigantic.player.Defaults
-import click.seichi.gigantic.player.DonateTicket
-import click.seichi.gigantic.player.Home
-import click.seichi.gigantic.player.ToggleSetting
+import click.seichi.gigantic.player.*
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.ranking.RankingPlayer
@@ -1535,6 +1531,25 @@ object Keys {
 
         override fun satisfyWith(value: Score): Boolean {
             return true
+        }
+    }
+
+    val STRIP_MINE = object : DatabaseKey<PlayerCache, Long, UserEntity> {
+        override val default: Long
+            get() = 0L
+
+        override fun read(entity: UserEntity): Long {
+            val user = entity.user
+            return user.stripMine
+        }
+
+        override fun store(entity: UserEntity, value: Long) {
+            val user = entity.user
+            user.stripMine = value
+        }
+
+        override fun satisfyWith(value: Long): Boolean {
+            return value >= 0L
         }
     }
 

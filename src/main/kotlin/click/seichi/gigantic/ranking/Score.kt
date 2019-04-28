@@ -3,11 +3,11 @@ package click.seichi.gigantic.ranking
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.cache.RankingPlayerCache
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.database.RankingEntity
 import click.seichi.gigantic.database.table.ranking.RankingScoreTable
 import click.seichi.gigantic.extension.potionOf
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.relic.Relic
 import org.bukkit.Color
 import org.bukkit.Material

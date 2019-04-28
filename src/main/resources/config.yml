@@ -61,10 +61,10 @@ skill:
   # コンボスキル
   mine_combo:
     # 継続可能時間(秒)
-    continuation_seconds: 10.0
+    continuation_seconds: 60.0
     # コンボ減少間隔(秒)
     # 1間隔につきコンボが1割減少する
-    decrease_interval: 10.0
+    decrease_interval: 60.0
 
   # 瞬間移動スキル
   flash:

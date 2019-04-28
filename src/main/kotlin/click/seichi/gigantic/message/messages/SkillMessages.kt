@@ -101,15 +101,7 @@ object SkillMessages {
                             Locale.JAPANESE to ""
                     ),
                     LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
-                                    "どんなに途切れていても"
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
-                                    "${Defaults.MAX_DECREASE_COMBO_PER_STEP.times(10)}コンボ以上減少しないが，"
-                    ),
-                    LocalizedText(
-                            Locale.JAPANESE to "${ChatColor.DARK_GRAY}" +
+                            Locale.JAPANESE to "${ChatColor.RED}" +
                                     "${Defaults.MAX_COMBO_CONTINUATION_HOUR}時間経つと強制的にリセットされる"
                     )
             )

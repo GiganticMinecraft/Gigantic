@@ -7,7 +7,6 @@ import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Key
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.Manipulator
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.cache.manipulator.manipulators.MineCombo
@@ -18,6 +17,7 @@ import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
+import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.tool.Tool

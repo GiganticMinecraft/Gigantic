@@ -211,7 +211,7 @@ enum class Relic(
             RelicMessages.BROKEN_BOW,
             RelicMessages.BROKEN_BOW_LORE,
             RelicMessages.BROKEN_BOW_BONUS_LORE,
-            0.1,
+            0.2,
             itemStackOf(Material.AZURE_BLUET)
     ) {
         override fun isBonusTarget(block: Block): Boolean {
@@ -247,7 +247,7 @@ enum class Relic(
             RelicMessages.BEAUTIFUL_WING,
             RelicMessages.BEAUTIFUL_WING_LORE,
             RelicMessages.BEAUTIFUL_WING_BONUS_LORE,
-            0.1,
+            0.3,
             itemStackOf(Material.LILAC)
     ) {
         override fun isBonusTarget(block: Block): Boolean {
@@ -1219,7 +1219,7 @@ enum class Relic(
             RelicMessages.NIGHTINGALE_FEATHER,
             RelicMessages.NIGHTINGALE_FEATHER_LORE,
             RelicMessages.NIGHTINGALE_FEATHER_BONUS_LORE,
-            0.34,
+            0.44,
             itemStackOf(Material.BRAIN_CORAL)
     ) {
         override fun isBonusTarget(block: Block): Boolean {

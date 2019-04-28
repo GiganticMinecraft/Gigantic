@@ -66,7 +66,7 @@ object Defaults {
 
 
     // コンボの1間隔ごとの最大減少コンボ数
-    val MAX_DECREASE_COMBO_PER_STEP = 100
+    val MAX_DECREASE_COMBO_PER_STEP = 50
     // コンボの最大待ち時間（時間）
     val MAX_COMBO_CONTINUATION_HOUR = 1
 

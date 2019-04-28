@@ -107,7 +107,7 @@ enum class Tool(
                 Material.DEAD_HORN_CORAL_BLOCK,
                 Material.DEAD_FIRE_CORAL_BLOCK,
                 Material.DEAD_BUBBLE_CORAL_BLOCK,
-                Material.DEAD_BRAIN_CORAL_BLOCK -> Tool.PICKEL
+                Material.DEAD_BRAIN_CORAL_BLOCK -> PICKEL
 
                 Material.RED_SAND,
                 Material.DIRT,
@@ -119,7 +119,7 @@ enum class Tool(
                 Material.COARSE_DIRT,
                 Material.PODZOL,
                 Material.SNOW_BLOCK,
-                Material.MYCELIUM -> Tool.SHOVEL
+                Material.MYCELIUM -> SHOVEL
 
                 Material.BIRCH_LOG,
                 Material.ACACIA_LOG,
@@ -137,9 +137,9 @@ enum class Tool(
                 Material.RED_MUSHROOM_BLOCK,
                 Material.BROWN_MUSHROOM_BLOCK,
                 Material.PUMPKIN,
-                Material.MELON -> Tool.AXE
+                Material.MELON -> AXE
 
-                Material.SMOOTH_STONE -> Tool.SHOVEL
+                Material.SMOOTH_STONE -> SHOVEL
 
                 Material.SPONGE,
                 Material.WET_SPONGE -> null

@@ -2,11 +2,11 @@ package click.seichi.gigantic.database
 
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.belt.Belt
-import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.database.dao.user.*
 import click.seichi.gigantic.database.table.user.*
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.monster.SoulMonster
+import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.relic.Relic

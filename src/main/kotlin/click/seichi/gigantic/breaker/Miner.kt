@@ -3,11 +3,11 @@ package click.seichi.gigantic.breaker
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.animation.animations.SkillAnimations
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
@@ -30,26 +30,22 @@ open class Miner : Breaker {
     }
 
     open fun onBreakBlock(player: Player?, block: Block) {
-
-        if (!block.isCrust && !block.isTree) {
-            block.update()
-            // 松明をセット
-            block.setTorchIfNeeded(player)
-
-            return
-        }
-
         if (player == null) {
             block.update()
             return
         }
 
+        if (!block.isCrust && !block.isTree) {
+            block.update()
+            block.setTorchIfNeeded(player)
+            return
+        }
 
-        var bonus = Relic.calcMultiplier(player, block)
+        var relicBonus = Relic.calcMultiplier(player, block)
 
         player.manipulate(CatalogPlayerCache.EXP) {
             it.inc()
-            it.add(bonus.toBigDecimal(), reason = ExpReason.RELIC_BONUS)
+            it.add(relicBonus.toBigDecimal(), reason = ExpReason.RELIC_BONUS)
         }
 
         // 破壊対象ブロックをInvoker用に保存
@@ -57,7 +53,7 @@ open class Miner : Breaker {
         // 現時点での破壊数を保存
         player.offer(Keys.BREAK_COUNT, 1)
         // 現時点でのボーナス経験値を保存
-        player.offer(Keys.RELIC_BONUS, bonus)
+        player.offer(Keys.RELIC_BONUS, relicBonus)
 
         // ヒール系
         when {
@@ -103,12 +99,12 @@ open class Miner : Breaker {
         val count = player.getOrPut(Keys.BREAK_COUNT)
 
         // 全てのスキルを通して得たボーナス経験値を取得
-        bonus = player.getOrPut(Keys.RELIC_BONUS)
+        relicBonus = player.getOrPut(Keys.RELIC_BONUS)
 
         // actionbar
         if (ToggleSetting.GAIN_EXP.getToggle(player)) {
-            if (bonus > 0.0)
-                PlayerMessages.EXP_AND_BONUS(count, bonus).sendTo(player)
+            if (relicBonus > 0.0)
+                PlayerMessages.EXP_AND_BONUS(count, relicBonus).sendTo(player)
             else if (count > 1)
                 PlayerMessages.EXP(count).sendTo(player)
         }

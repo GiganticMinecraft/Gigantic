@@ -1,14 +1,13 @@
 package click.seichi.gigantic.breaker.spells
 
-import click.seichi.gigantic.breaker.Miner
 import click.seichi.gigantic.breaker.SpellCaster
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.cache.manipulator.ExpReason
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.PlayerMessages
+import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.relic.Relic
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
@@ -19,7 +18,7 @@ import java.math.RoundingMode
 /**
  * @author tar0ss
  */
-class MultiBreaker : Miner(), SpellCaster {
+class MultiBreaker : SpellCaster {
 
     companion object {
         // 最大同時破壊数 = maxMana * (5/100) / 2
@@ -191,17 +190,17 @@ class MultiBreaker : Miner(), SpellCaster {
             }
         }
 
-        val bonus = breakBlockSet.fold(0.0) { source, b ->
+        val relicBonus = breakBlockSet.fold(0.0) { source, b ->
             source.plus(Relic.calcMultiplier(player, b))
         }
 
         player.manipulate(CatalogPlayerCache.EXP) {
             it.add(breakBlockSet.size.toBigDecimal(), ExpReason.SPELL_MULTI_BREAK)
-            it.add(bonus.toBigDecimal(), reason = ExpReason.RELIC_BONUS)
+            it.add(relicBonus.toBigDecimal(), reason = ExpReason.RELIC_BONUS)
         }
 
         player.transform(Keys.BREAK_COUNT) { it + breakBlockSet.size }
-        player.transform(Keys.RELIC_BONUS) { it + bonus }
+        player.transform(Keys.RELIC_BONUS) { it + relicBonus }
 
         PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
 
