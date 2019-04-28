@@ -799,7 +799,7 @@ enum class Relic(
             RelicMessages.ORICHALCUM,
             RelicMessages.ORICHALCUM_LORE,
             RelicMessages.ORICHALCUM_BONUS_LORE,
-            0.1,
+            0.4,
             itemStackOf(Material.ALLIUM)
     ) {
         override fun isBonusTarget(block: Block): Boolean {
