@@ -133,15 +133,14 @@ enum class Head(
     private val baseItemStack: ItemStack by lazy {
         val skull = ItemStack(Material.PLAYER_HEAD)
 
-        skull.itemMeta = skull.itemMeta.apply {
+        skull.itemMeta = skull.itemMeta!!.apply {
             val profile = GameProfile(UUID.randomUUID(), null)
 
             val encodedData = Base64.getEncoder()
                     .encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", urlString)
                             .toByteArray())
             profile.properties.put("textures", Property("textures", String(encodedData)))
-
-            val profileField = javaClass.getDeclaredField("profile")
+            val profileField = this@apply.javaClass.getDeclaredField("profile")
             profileField.isAccessible = true
             profileField.set(this, profile)
         }

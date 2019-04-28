@@ -11,7 +11,6 @@ import click.seichi.gigantic.database.table.ranking.RankingUserTable
 import click.seichi.gigantic.database.table.user.*
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.extension.*
-import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
 import click.seichi.gigantic.player.Defaults
@@ -168,9 +167,6 @@ class Gigantic : JavaPlugin() {
 
         // ランキングデータ生成
         updateRanking()
-
-        // reflectionを使うので先に生成
-        Head.values().forEach { it.toItemStack() }
 
         SpiritManager.onEnabled()
 

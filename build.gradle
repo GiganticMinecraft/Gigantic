@@ -68,7 +68,7 @@ dependencies {
     compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: kotlin_version
     compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: kotlin_version
     compile group: 'org.spigotmc', name: 'spigot-api', version: spigot_api_version
-    //compile group: 'org.spigotmc', name: 'spigot', version: spigot_api_version
+//    compile group: 'org.spigotmc', name: 'spigot', version: spigot_api_version
 
     embed group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_version
 
