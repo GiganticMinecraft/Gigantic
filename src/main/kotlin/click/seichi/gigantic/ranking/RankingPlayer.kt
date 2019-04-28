@@ -29,4 +29,6 @@ class RankingPlayer(
 
     val relic = cache.getOrDefault(Keys.RANK_RELIC)
 
+    val stripMine = cache.getOrDefault(Keys.RANK_STRIP_MINE)
+
 }

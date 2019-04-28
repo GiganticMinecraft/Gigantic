@@ -23,7 +23,8 @@ enum class Score(
         val column: Column<Long>,
         val sortOrder: SortOrder,
         private val icon: ItemStack,
-        private val localizedName: LocalizedText
+        private val localizedName: LocalizedText,
+        private val localizedUnit: LocalizedText
 ) {
     EXP(
             RankingScoreTable.exp,
@@ -31,6 +32,9 @@ enum class Score(
             ItemStack(Material.EXPERIENCE_BOTTLE),
             LocalizedText(
                     Locale.JAPANESE to "累計獲得経験値ランキング"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "exp"
             )
     ) {
         override fun write(entity: RankingEntity, cache: PlayerCache) {
@@ -56,6 +60,9 @@ enum class Score(
             potionOf(Color.GREEN),
             LocalizedText(
                     Locale.JAPANESE to "累計通常破壊量ランキング"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "block"
             )
     ) {
         override fun write(entity: RankingEntity, cache: PlayerCache) {
@@ -79,6 +86,9 @@ enum class Score(
             potionOf(Color.BLUE),
             LocalizedText(
                     Locale.JAPANESE to "累計範囲破壊量ランキング"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "block"
             )
     ) {
         override fun write(entity: RankingEntity, cache: PlayerCache) {
@@ -102,6 +112,9 @@ enum class Score(
             potionOf(Color.PURPLE),
             LocalizedText(
                     Locale.JAPANESE to "累計レリックボーナスランキング"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "exp"
             )
     ) {
         override fun write(entity: RankingEntity, cache: PlayerCache) {
@@ -125,6 +138,9 @@ enum class Score(
             potionOf(Color.RED),
             LocalizedText(
                     Locale.JAPANESE to "最大コンボ数ランキング"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "combo"
             )
     ) {
         override fun write(entity: RankingEntity, cache: PlayerCache) {
@@ -148,6 +164,9 @@ enum class Score(
             potionOf(Color.LIME),
             LocalizedText(
                     Locale.JAPANESE to "累計レリック数ランキング"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "個"
             )
     ) {
         override fun write(entity: RankingEntity, cache: PlayerCache) {
@@ -166,10 +185,38 @@ enum class Score(
             return rankingPlayer.relic
         }
     },
+    STRIP_MINE(
+            RankingScoreTable.stripMine,
+            SortOrder.DESC,
+            potionOf(Color.BLACK),
+            LocalizedText(
+                    Locale.JAPANESE to "露天掘り面積ランキング"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "chunk"
+            )
+    ) {
+        override fun write(entity: RankingEntity, cache: PlayerCache) {
+            val value = cache.getOrDefault(Keys.STRIP_MINE)
+            val chunk = value.div(16.0).div(16.0).toLong()
+            entity.score.stripMine = chunk
+        }
+
+        override fun read(entity: RankingEntity, cache: RankingPlayerCache) {
+            Keys.RANK_STRIP_MINE.let {
+                cache.force(it, it.read(entity))
+            }
+        }
+
+        override fun getValue(rankingPlayer: RankingPlayer): Long {
+            return rankingPlayer.stripMine
+        }
+    },
     ;
 
     fun getIcon() = icon.clone()
     fun getName(locale: Locale) = localizedName.asSafety(locale)
+    fun getUnit(locale: Locale) = localizedUnit.asSafety(locale)
 
     abstract fun write(entity: RankingEntity, cache: PlayerCache)
 

@@ -25,4 +25,6 @@ object RankingScoreTable : IdTable<UUID>("rankings_scores") {
 
     val relic = long("relic").default(0L).index()
 
+    val stripMine = long("strip_mine").default(0L).index()
+
 }

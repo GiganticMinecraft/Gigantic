@@ -1516,6 +1516,26 @@ object Keys {
         }
     }
 
+    val RANK_STRIP_MINE = object : DatabaseKey<RankingPlayerCache, Long, RankingEntity> {
+        override val default: Long
+            get() = 0L
+
+        override fun read(entity: RankingEntity): Long {
+            val rankingScore = entity.score
+            return rankingScore.stripMine
+        }
+
+        override fun store(entity: RankingEntity, value: Long) {
+            // do nothing
+        }
+
+        override fun satisfyWith(value: Long): Boolean {
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("書き換えは禁止されています")
+            return false
+        }
+    }
+
     val MENU_RANKING_PLAYER_LIST = object : Key<PlayerCache, List<RankingPlayer>> {
         override val default: List<RankingPlayer>
             get() = listOf()

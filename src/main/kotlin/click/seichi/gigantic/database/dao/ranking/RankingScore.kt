@@ -24,4 +24,6 @@ class RankingScore(id: EntityID<UUID>) : Entity<UUID>(id) {
 
     var relic by RankingScoreTable.relic
 
+    var stripMine by RankingScoreTable.stripMine
+
 }

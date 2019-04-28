@@ -47,12 +47,12 @@ object RankingMessages {
         )
     }
 
-    val RANKED_PLAYER_LORE = { value: Long ->
+    val RANKED_PLAYER_LORE = { value: Long, unit: String ->
 
         LocalizedText(
                 Locale.JAPANESE.let {
                     it to "${ChatColor.WHITE}${ChatColor.BOLD}" +
-                            "$value"
+                            "$value $unit"
                 }
         )
     }

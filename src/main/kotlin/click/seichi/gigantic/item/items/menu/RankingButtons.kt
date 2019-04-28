@@ -64,7 +64,10 @@ object RankingButtons {
                 val value = ranking.findValue(uniqueId) ?: return null
                 return Head.getOfflinePlayerHead(uniqueId).apply {
                     setDisplayName(player, RankingMessages.RANKED_PLAYER(rank, rankingPlayer.name, rankingPlayer.level))
-                    setLore(RankingMessages.RANKED_PLAYER_LORE(value).asSafety(player.wrappedLocale))
+                    setLore(RankingMessages.RANKED_PLAYER_LORE(
+                            value,
+                            score.getUnit(player.wrappedLocale)
+                    ).asSafety(player.wrappedLocale))
                 }
             }
         }
@@ -119,7 +122,10 @@ object RankingButtons {
             override fun toShownItemStack(player: Player): ItemStack? {
                 return Head.getOfflinePlayerHead(rankingPlayer.uniqueId).apply {
                     setDisplayName(player, RankingMessages.RANKED_PLAYER(rankingPlayer.rank, rankingPlayer.name, rankingPlayer.level))
-                    setLore(RankingMessages.RANKED_PLAYER_LORE(score.getValue(rankingPlayer)).asSafety(player.wrappedLocale))
+                    setLore(RankingMessages.RANKED_PLAYER_LORE(
+                            score.getValue(rankingPlayer),
+                            score.getUnit(player.wrappedLocale)
+                    ).asSafety(player.wrappedLocale))
                     sublime()
                 }
             }
