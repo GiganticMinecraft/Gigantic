@@ -118,15 +118,11 @@ open class Miner : Breaker {
 
         // actionbar
         if (ToggleSetting.GAIN_EXP.getToggle(player)) {
-            if (relicBonus > 0.0)
-                PlayerMessages.EXP_AND_BONUS(count, relicBonus).sendTo(player)
-            else if (count > 1)
-                PlayerMessages.EXP(count).sendTo(player)
-        }
-
-        // message
-        if (stripCount > 0) {
-            PlayerMessages.STRIP_EXP(stripCount).sendTo(player)
+            when {
+                stripCount > 0 -> PlayerMessages.STRIP_EXP(stripCount).sendTo(player)
+                relicBonus > 0.0 -> PlayerMessages.EXP_AND_BONUS(count, relicBonus).sendTo(player)
+                count > 1 -> PlayerMessages.EXP(count).sendTo(player)
+            }
         }
 
         player.transform(Keys.STRIP_MINE) { it + stripCount }
