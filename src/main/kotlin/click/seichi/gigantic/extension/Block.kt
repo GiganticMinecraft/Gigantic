@@ -596,13 +596,13 @@ else world.players
         .filter { !it.isFollow(player.uniqueId) }
         .firstOrNull { xzDistance(it) < Config.PROTECT_RADIUS }
 
-fun Block.calcCrustGravity() = (1..(255 - y))
+fun Block.calcCrustGravity(margin: Int = 0) = (1 + margin..(255 - y))
         .map { getRelative(BlockFace.UP, it) }
         .filter { it.isCrust }
         .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
         .size
 
-fun Block.calcGravity() = (1..(255 - y))
+fun Block.calcGravity(margin: Int = 0) = (1 + margin..(255 - y))
         .map { getRelative(BlockFace.UP, it) }
         .filter { !it.isAir }
         .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }

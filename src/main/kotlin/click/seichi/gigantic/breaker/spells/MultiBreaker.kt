@@ -138,6 +138,10 @@ class MultiBreaker : SpellCaster {
                 }
             }
 
+            val minY = allBlockSet.minBy { it.y }?.y ?: 0
+            val maxY = allBlockSet.maxBy { it.y }?.y ?: 0
+            val height = maxY - minY
+
             return allBlockSet.filter {
                 // 因果の制約
                 it != base
@@ -149,7 +153,7 @@ class MultiBreaker : SpellCaster {
                 it.y > 0
             }.filter {
                 // 重力値の制約
-                it.calcCrustGravity() <= Config.MAX_BREAKABLE_GRAVITY
+                it.calcCrustGravity(height - (it.y - minY)) <= Config.MAX_BREAKABLE_GRAVITY
             }.toMutableSet().apply {
                 // 場所の制約
                 if (!player.isSneaking) {
@@ -180,6 +184,8 @@ class MultiBreaker : SpellCaster {
         // 破壊可能ブロック取得
         val breakBlockSet = player.remove(Keys.SPELL_MULTI_BREAK_BLOCKS)
 
+        val breakArea = player.getOrPut(Keys.SPELL_MULTI_BREAK_AREA)
+
         if (breakBlockSet == null || breakBlockSet.isEmpty()) return
 
         // onBreak処理（先にやっておくことで，途中でサーバーが終了したときに対応）
@@ -192,7 +198,7 @@ class MultiBreaker : SpellCaster {
         }
 
         val stripCount = breakBlockSet
-                .count { block -> block.y == 1 && block.calcGravity() == 0 }
+                .count { block -> block.y == 1 && block.calcGravity(breakArea.height - 1) == 0 }
 
         val relicBonus = breakBlockSet.fold(0.0) { source, b ->
             source.plus(Relic.calcMultiplier(player, b))

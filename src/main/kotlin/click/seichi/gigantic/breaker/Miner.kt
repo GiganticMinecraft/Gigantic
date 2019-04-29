@@ -46,8 +46,9 @@ open class Miner : Breaker {
         var stripBonus = 0L
         if (block.y == 1 && block.calcGravity() == 0) {
             stripBonus += Defaults.STRIP_BONUS
-            player.offer(Keys.STRIP_COUNT, 1)
         }
+
+        player.offer(Keys.STRIP_COUNT, if (stripBonus > 0) 1L else 0L)
 
         // レリック
         var relicBonus = Relic.calcMultiplier(player, block)
