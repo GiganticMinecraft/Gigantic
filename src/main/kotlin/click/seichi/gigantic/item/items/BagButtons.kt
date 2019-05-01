@@ -603,35 +603,7 @@ object BagButtons {
 
     }
 
-    val TEXTURE = object : Button {
-        override fun toShownItemStack(player: Player): ItemStack? {
-            return (if (player.isNormalTexture)
-                itemStackOf(Material.GLISTERING_MELON_SLICE) {
-                    setDisplayName(player, BagMessages.NORMAL_TEXTURE)
-                }
-            else itemStackOf(Material.MELON_SLICE) {
-                setDisplayName(player, BagMessages.LIGHT_TEXTURE)
-            }).apply {
-                setLore(*BagMessages.SERVER_RESOURCE_PACK.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
-            }
-        }
 
-        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            player.transform(Keys.IS_NORMAL_TEXTURE) {
-                !it
-            }
-            player.updateBag()
-            PlayerSounds.TOGGLE.playOnly(player)
-
-            if (player.isNormalTexture)
-                player.setResourcePack(Gigantic.NORMAL_RESOURCE_PACK_URL)
-            else
-                player.setResourcePack(Gigantic.LIGHT_RESOURCE_PACK_URL)
-
-            return true
-        }
-
-    }
 
 
     val RANKING = object : Button {
