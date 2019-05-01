@@ -43,7 +43,10 @@ object RelicMenu : BookMenu() {
                 }
 
         // さくら
-        registerButton(6, RelicButtons.WILL(Will.SAKURA))
+        registerButton(5, RelicButtons.WILL(Will.SAKURA))
+
+        // みお
+        registerButton(14, RelicButtons.WILL(Will.MIO))
 
         // スペシャル
         registerButton(7, RelicButtons.SPECIAL)

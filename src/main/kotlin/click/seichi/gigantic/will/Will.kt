@@ -220,6 +220,22 @@ enum class Will(
             return GiganticEvent.SAKURA.isActive()
         }
     },
+    MIO(
+            12,
+            Color.fromRGB(70, 191, 255),
+            ChatColor.DARK_AQUA,
+            Material.CYAN_GLAZED_TERRACOTTA,
+            WillGrade.SPECIAL,
+            WillMessages.MIO,
+            12,
+            Relic.MORNING_GLORY_LEAVES, Relic.FUJI_ROUND_FUN, Relic.HITSUMABUSHI, Relic.MOSQUITO_COIL, Relic.GOLD_FISH,
+            Relic.WIND_BELL, Relic.FIREFLY, Relic.STRAW_HAT, Relic.TERU_TERU, Relic.YUKATA
+    ) {
+        // 期間限定
+        override fun canSpawn(player: Player, block: Block): Boolean {
+            return GiganticEvent.MIO.isActive()
+        }
+    },
     ;
 
     val relicSet = relics.toSet()

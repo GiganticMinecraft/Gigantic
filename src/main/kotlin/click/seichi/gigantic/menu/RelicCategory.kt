@@ -129,6 +129,16 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
             return Will.findByRelic(relic) == Will.SAKURA
         }
     },
+    MIO(LocalizedText(
+            Locale.JAPANESE.let {
+                it to Will.MIO.getName(it) +
+                        "のレリック一覧"
+            }
+    )) {
+        override fun isContain(player: Player, relic: Relic): Boolean {
+            return Will.findByRelic(relic) == Will.MIO
+        }
+    },
     SPECIAL(LocalizedText(
             Locale.JAPANESE to "特殊レリック一覧"
     )) {
@@ -160,6 +170,7 @@ enum class RelicCategory(val menuTitle: LocalizedText) {
             Will.UMBRA -> UMBRA
             Will.VENTUS -> VENTUS
             Will.SAKURA -> SAKURA
+            Will.MIO -> MIO
         }
     }
 }

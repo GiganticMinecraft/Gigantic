@@ -34,6 +34,7 @@ object SideBarMessages {
                     // イベントは特殊な形でフィルター
                     when (it) {
                         Will.SAKURA -> GiganticEvent.SAKURA.isActive()
+                        Will.MIO -> GiganticEvent.MIO.isActive()
                         else -> true
                     }
                 }.map { will ->

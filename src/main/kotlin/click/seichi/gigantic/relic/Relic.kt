@@ -7,6 +7,7 @@ import click.seichi.gigantic.head.Head
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.RelicMessages
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.util.BiomeGroup
 import click.seichi.gigantic.util.Junishi
 import click.seichi.gigantic.util.MoonPhase
 import click.seichi.gigantic.will.Will
@@ -1334,7 +1335,128 @@ enum class Relic(
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.SUNFLOWER_PLAINS && block.type == Material.GRASS_BLOCK
         }
-    }
+    },
+    MORNING_GLORY_LEAVES(
+            1104,
+            RelicMessages.MORNING_GLORY_LEAVES,
+            RelicMessages.MORNING_GLORY_LEAVES_LORE,
+            RelicMessages.MORNING_GLORY_LEAVES_BONUS_LORE,
+            0.12,
+            itemStackOf(Material.PRISMARINE_SHARD)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.isBreakDown
+        }
+    },
+    FUJI_ROUND_FUN(
+            1105,
+            RelicMessages.FUJI_ROUND_FUN,
+            RelicMessages.FUJI_ROUND_FUN_LORE,
+            RelicMessages.FUJI_ROUND_FUN_BONUS_LORE,
+            0.7,
+            itemStackOf(Material.PRISMARINE_SHARD)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.y > 85 && block.biome == Biome.MOUNTAINS
+        }
+    },
+    HITSUMABUSHI(
+            1106,
+            RelicMessages.HITSUMABUSHI,
+            RelicMessages.HITSUMABUSHI_LORE,
+            RelicMessages.HITSUMABUSHI_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.PRISMARINE_SHARD)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.junishiOfTime == Junishi.USHI
+        }
+    },
+    MOSQUITO_COIL(
+            1107,
+            RelicMessages.MOSQUITO_COIL,
+            RelicMessages.MOSQUITO_COIL_LORE,
+            RelicMessages.MOSQUITO_COIL_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.PRISMARINE_SHARD)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.moonPhase == MoonPhase.IMACHIZUKI && block.world.isMoonTime
+        }
+    },
+    GOLD_FISH(
+            1108,
+            RelicMessages.GOLD_FISH,
+            RelicMessages.GOLD_FISH_LORE,
+            RelicMessages.GOLD_FISH_BONUS_LORE,
+            1.0,
+            itemStackOf(Material.PRISMARINE_SHARD)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.biomeGroup == BiomeGroup.OCEAN && block.type == Material.GOLD_ORE
+        }
+    },
+    WIND_BELL(
+            1109,
+            RelicMessages.WIND_BELL,
+            RelicMessages.WIND_BELL_LORE,
+            RelicMessages.WIND_BELL_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.PRISMARINE_SHARD)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.junishiOfTime == Junishi.SARU
+        }
+    },
+    FIREFLY(
+            1110,
+            RelicMessages.FIREFLY,
+            RelicMessages.FIREFLY_LORE,
+            RelicMessages.FIREFLY_BONUS_LORE,
+            0.08,
+            itemStackOf(Material.PRISMARINE_SHARD)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.isNight
+        }
+    },
+    STRAW_HAT(
+            1111,
+            RelicMessages.STRAW_HAT,
+            RelicMessages.STRAW_HAT_LORE,
+            RelicMessages.STRAW_HAT_BONUS_LORE,
+            0.14,
+            itemStackOf(Material.PRISMARINE_SHARD)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.biome == Biome.BADLANDS_PLATEAU || block.biome == Biome.BADLANDS
+        }
+    },
+    TERU_TERU(
+            1112,
+            RelicMessages.TERU_TERU,
+            RelicMessages.TERU_TERU_LORE,
+            RelicMessages.TERU_TERU_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.PRISMARINE_SHARD)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.moonPhase == MoonPhase.ZYUUSANYA && block.world.isMoonTime
+        }
+    },
+    YUKATA(
+            1113,
+            RelicMessages.YUKATA,
+            RelicMessages.YUKATA_LORE,
+            RelicMessages.YUKATA_BONUS_LORE,
+            0.12,
+            itemStackOf(Material.PRISMARINE_SHARD)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.isTwilight
+        }
+    },
+
 
     ;
 

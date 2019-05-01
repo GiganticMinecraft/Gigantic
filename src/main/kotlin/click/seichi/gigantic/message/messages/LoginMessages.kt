@@ -112,6 +112,34 @@ object LoginMessages {
                     (1..53).joinToString("") { "-" }
     ), 0L)
 
+    val EVENT_MIO = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+                    (1..53).joinToString("") { "-" } +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.WHITE}" +
+                    "${ChatColor.AQUA}${ChatColor.BOLD}" +
+                    "夏の整地祭り" +
+                    "${ChatColor.WHITE}" +
+                    " を開催中!!" +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.WHITE}" +
+                    "期間限定意志" +
+                    "${ChatColor.AQUA}${ChatColor.BOLD}" +
+                    " 澪の意志 " +
+                    "${ChatColor.WHITE}" +
+                    "を獲得して、特別なレリックを手に入れよう!!" +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.WHITE}" +
+                    "詳しくは" +
+                    "${ChatColor.DARK_PURPLE}" +
+                    "公式ディスコード" +
+                    "${ChatColor.WHITE}" +
+                    "をチェック!!" +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.LIGHT_PURPLE}" +
+                    (1..53).joinToString("") { "-" }
+    ), 0L)
+
     val EVENT_JMS_KING = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
             Locale.JAPANESE to (1..53).joinToString("") { "-" }.toRainbow() +
                     LinedChatMessage.NEW_LINE_SYMBOL +

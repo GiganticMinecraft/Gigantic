@@ -21,6 +21,15 @@ enum class GiganticEvent(
             return now in from..to
         }
     },
+    // 澪の意志出現イベント
+    MIO(LoginMessages.EVENT_MIO) {
+        val from = DateTime("2019-07-01T00:00:00+09:00")
+        val to = DateTime("2019-09-01T00:00:00+09:00")
+        override fun isActive(): Boolean {
+            val now = DateTime.now()
+            return now in from..to
+        }
+    },
     // JMS1位記念イベント
     JMS_KING(LoginMessages.EVENT_JMS_KING) {
         val from = DateTime("2019-03-01T18:00:00+09:00")
