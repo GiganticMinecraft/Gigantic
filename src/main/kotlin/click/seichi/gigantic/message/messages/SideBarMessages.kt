@@ -31,6 +31,7 @@ object SideBarMessages {
                 willMap.keys.filter {
                     willMap.getValue(it) > 0
                 }.filter {
+                    // TODO ここはこの実装だと新意志実装時に追記し忘れる可能性あり
                     // イベントは特殊な形でフィルター
                     when (it) {
                         Will.SAKURA -> GiganticEvent.SAKURA.isActive()

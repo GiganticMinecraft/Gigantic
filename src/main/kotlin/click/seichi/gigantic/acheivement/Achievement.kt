@@ -376,6 +376,14 @@ enum class Achievement(
     {
         it.offer(Keys.APTITUDE_MAP[Will.SAKURA]!!, true)
     }, grantMessage = AchievementMessages.WILL(Will.SAKURA)),
+    WILL_MIO(602,
+            {
+                WILL_SPECIAL.isGranted(it) &&
+                        it.getOrPut(Keys.WILL_SECRET_MAP[Will.MIO]!!) >= Will.MIO.grade.unlockAmount
+            }, action =
+    {
+        it.offer(Keys.APTITUDE_MAP[Will.MIO]!!, true)
+    }, grantMessage = AchievementMessages.WILL(Will.MIO)),
     ;
 
     /**1から順に [update] される**/
