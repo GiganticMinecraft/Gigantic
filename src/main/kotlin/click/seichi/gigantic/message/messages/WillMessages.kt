@@ -189,6 +189,17 @@ object WillMessages {
         )
     }
 
+    val ETHEL = { amount: Long ->
+        LocalizedText(
+                Locale.JAPANESE.let {
+                    it to "${ChatColor.WHITE}" +
+                            "エーテル: " +
+                            "${ChatColor.GREEN}${ChatColor.BOLD}" +
+                            amount
+                }
+        )
+    }
+
     val FRIEND_RATIO = { ratio: BigDecimal ->
         LocalizedText(
                 Locale.JAPANESE.let {

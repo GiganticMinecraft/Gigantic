@@ -24,6 +24,8 @@ object WillButtons {
                         // あなたとの関係の表示
                         val relation = player.relationship(will)
                         addLore(player, WillMessages.RELATION(relation))
+                        val ethel = player.ethel(will)
+                        addLore(player, WillMessages.ETHEL(ethel))
                     } else {
                         // 友好度の表示
                         val interval = will.grade.unlockAmount.div(100).toBigDecimal()

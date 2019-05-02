@@ -153,6 +153,12 @@ enum class Tips(
                             "${ChatColor.WHITE}" +
                             "を使おう"
             ), 2L)),
+    RELIC_INFO(LinedChatMessage(ChatMessageProtocol.CHAT,
+            LocalizedText(
+                    Locale.JAPANESE to Defaults.TIPS_PREFIX +
+                            "${ChatColor.WHITE}" +
+                            "レリック一覧から最後にボーナスが適用されたレリックが見れる!!"
+            ), 2L)),
 
     ;
 
