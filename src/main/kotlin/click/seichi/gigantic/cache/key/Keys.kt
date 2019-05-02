@@ -29,6 +29,8 @@ import click.seichi.gigantic.quest.QuestClient
 import click.seichi.gigantic.ranking.RankingPlayer
 import click.seichi.gigantic.ranking.Score
 import click.seichi.gigantic.relic.Relic
+import click.seichi.gigantic.sidebar.Log
+import click.seichi.gigantic.sidebar.SideBarType
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
 import click.seichi.gigantic.timer.LingeringTimer
 import click.seichi.gigantic.timer.SimpleTimer
@@ -1583,5 +1585,22 @@ object Keys {
         }
     }
 
+    val ETHEL_DEQUE = object : Key<PlayerCache, Deque<Log>> {
+        override val default: Deque<Log>
+            get() = LinkedList<Log>()
+
+        override fun satisfyWith(value: Deque<Log>): Boolean {
+            return true
+        }
+    }
+
+    val SIDEBAR_TYPE = object : Key<PlayerCache, SideBarType> {
+        override val default: SideBarType
+            get() = SideBarType.Ethel
+
+        override fun satisfyWith(value: SideBarType): Boolean {
+            return true
+        }
+    }
 
 }

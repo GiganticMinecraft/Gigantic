@@ -14,8 +14,7 @@ import org.bukkit.scoreboard.ScoreboardManager
 class SideBarMessage(
         private val objectiveName: String,
         private val title: LocalizedText,
-        private val messageMap: Map<SideBarRow, LocalizedText>,
-        private val isForced: Boolean
+        private val messageMap: Map<SideBarRow, LocalizedText>
 ) : Message {
 
     companion object {
@@ -25,8 +24,9 @@ class SideBarMessage(
 
     override fun sendTo(player: Player) {
         player.scoreboard.let {
-            if (!isForced && it.getObjective(DisplaySlot.SIDEBAR)?.name != objectiveName) return
-            else it.objectives.forEach { it.unregister() }
+            if (it.getObjective(DisplaySlot.SIDEBAR)?.name == objectiveName) {
+                it.objectives.forEach { it.unregister() }
+            }
         }
 
         val scoreboard = scoreboardManager.newScoreboard

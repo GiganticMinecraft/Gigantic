@@ -32,7 +32,7 @@ object Defaults {
     const val ACHIEVEMENT_BLOCK_BREAK_UPDATE_COUNT = 10
 
     // レリック生成に必要なエーテル数
-    const val RELIC_GENERATOR_REQUIRE_ETHEL = 100
+    const val RELIC_GENERATOR_REQUIRE_ETHEL = 100L
 
     const val RELIC_MUL_DIFFX = 0.7
     const val RELIC_MUL_BASE = 1.7
@@ -95,5 +95,9 @@ object Defaults {
     // TickEventを発火する際のdelay
     val TICK_EVENT_DELAY = 20L * 3L
 
+    // 露天掘りで得られる経験値量
     val STRIP_BONUS = 100L
+
+    // サイドバー更新の確認頻度
+    val SIDEBAR_UPDATE_INTERVAL = 1L
 }

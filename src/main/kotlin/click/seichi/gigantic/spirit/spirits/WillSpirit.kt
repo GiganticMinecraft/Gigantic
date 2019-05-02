@@ -4,7 +4,6 @@ import click.seichi.gigantic.animation.animations.WillSpiritAnimations
 import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.isCrust
 import click.seichi.gigantic.extension.relationship
-import click.seichi.gigantic.extension.updateSideBar
 import click.seichi.gigantic.message.messages.WillMessages
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.sound.sounds.WillSpiritSounds
@@ -63,7 +62,6 @@ class WillSpirit(
                 WillSpiritSounds.SENSED.playOnly(player)
                 will.addEthel(player, willSize.memory)
                 Bukkit.getPluginManager().callEvent(SenseEvent(will, player, willSize.memory))
-                player.updateSideBar()
                 remove()
             },
             {

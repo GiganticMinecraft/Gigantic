@@ -1,6 +1,7 @@
 package click.seichi.gigantic.message
 
 import click.seichi.gigantic.acheivement.Achievement
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.player.Defaults
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
@@ -27,9 +28,9 @@ enum class Tips(
                             "${ChatColor.WHITE}" +
                             "コンボは" +
                             "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
-                            "10秒" +
+                            "${Config.SKILL_MINE_COMBO_CONTINUATION_SECONDS}秒" +
                             "${ChatColor.WHITE}" +
-                            "経つと減少していっちゃうよ！気を付けよう！"
+                            "経つと減少するぞ！"
             ), 2L), { Achievement.SKILL_MINE_COMBO.isGranted(it) }),
     ETHEL(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
@@ -39,7 +40,7 @@ enum class Tips(
                             "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" +
                             "100個" +
                             "${ChatColor.WHITE}" +
-                            "集めるとレリックに変換できるよ！"
+                            "集めるとレリックに変換できるぞ！"
             ), 2L), { Achievement.FIRST_WILL.isGranted(it) }),
     SERVER_MAP(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
@@ -61,7 +62,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "投票ポイントを貯めて、お好みのエフェクトと交換しよう！" +
+                            "投票ポイントを貯めて、お好みのエフェクトと交換だ！" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
                             "${ChatColor.AQUA}" +
                             "https://minecraft.jp/servers/54d3529e4ddda180780041a7"
@@ -70,7 +71,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "OptiFineを導入すると大体の環境で動作が軽くなります。" +
+                            "OptiFineを導入すると大体の環境で動作が軽くなるぞ！" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
                             "ダウンロード→${ChatColor.AQUA}" +
                             "https://optifine.net/downloads"
@@ -79,7 +80,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "非公式Wikiあります→" +
+                            "非公式Wiki→" +
                             "${ChatColor.AQUA}" +
                             "https://springseichi.sokuhou.wiki/"
             ), 2L)),
@@ -95,7 +96,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "当サーバでは、寄付を受け付けております。" +
+                            "当サーバでは、寄付を受け付けています" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
                             "寄付はこちらから→${ChatColor.AQUA}" +
                             "https://goo.gl/forms/8ZR3MJwtSeTDkGST2"
@@ -104,13 +105,13 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "ホーム機能でお気に入りの場所を登録しよう(テレポートメニュー)"
+                            "ホーム機能でお気に入りの場所を登録(テレポートメニュー)！"
             ), 2L), { Achievement.TELEPORT_HOME.isGranted(it) }),
     ADMIN_CAUTION(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "運営チームのなりすましにご注意ください。"
+                            "運営チームのなりすましに注意！"
             ), 2L)),
     FRIEND(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
@@ -128,7 +129,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "メニューの詳細設定→表示設定からいくつかの表示を切り替えられる"
+                            "メニューの詳細設定→表示設定から不要な機能をオフにできるぞ！"
             ), 2L)),
     STUCK(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(
@@ -140,7 +141,7 @@ enum class Tips(
             LocalizedText(
                     Locale.JAPANESE to Defaults.TIPS_PREFIX +
                             "${ChatColor.WHITE}" +
-                            "ログインせずに投票しても特典は配布されます。"
+                            "ログインせずに投票しても特典は配布されるぞ！"
             ), 2L)),
     LOBBY(LinedChatMessage(ChatMessageProtocol.CHAT,
             LocalizedText(

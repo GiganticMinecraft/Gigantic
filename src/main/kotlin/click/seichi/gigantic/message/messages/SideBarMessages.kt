@@ -16,7 +16,7 @@ import java.util.*
  */
 object SideBarMessages {
 
-    val ETHEL = { player: Player, isForced: Boolean ->
+    val ETHEL = { player: Player ->
 
         val willMap = Will.values()
                 .filter { player.hasAptitude(it) }
@@ -65,7 +65,6 @@ object SideBarMessages {
                             }
                     )
                 }.toMap()
-                , isForced
         )
     }
 }

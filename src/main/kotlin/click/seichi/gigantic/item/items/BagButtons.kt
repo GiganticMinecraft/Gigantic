@@ -553,7 +553,6 @@ object BagButtons {
                 }
             }.runTaskLater(Gigantic.PLUGIN, 1L)
             player.updateBag()
-            player.updateSideBar()
             WillSpiritSounds.SENSED.playOnly(player)
             return true
         }

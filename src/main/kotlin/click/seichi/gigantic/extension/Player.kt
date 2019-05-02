@@ -15,7 +15,6 @@ import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.event.events.LevelUpEvent
 import click.seichi.gigantic.message.messages.PlayerMessages
-import click.seichi.gigantic.message.messages.SideBarMessages
 import click.seichi.gigantic.message.messages.WillMessages
 import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.relic.Relic
@@ -248,7 +247,6 @@ fun Player.updateLevel(isOnLogin: Boolean = false) {
 fun Player.updateDisplay(applyMainHand: Boolean, applyOffHand: Boolean) {
     updateBelt(applyMainHand, applyOffHand)
     updateBag()
-    updateSideBar()
 }
 
 // ツールだけ更新したいときはこれを使う
@@ -263,10 +261,6 @@ fun Player.updateBelt(applyMainHand: Boolean, applyOffHand: Boolean) {
 
 fun Player.updateBag() {
     getOrPut(Keys.BAG).carry(this)
-}
-
-fun Player.updateSideBar() {
-    SideBarMessages.ETHEL(this, true).sendTo(this)
 }
 
 fun Player.fixHandToTool() {

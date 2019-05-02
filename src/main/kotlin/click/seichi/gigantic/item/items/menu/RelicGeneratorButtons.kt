@@ -120,7 +120,7 @@ object RelicGeneratorButtons {
             // 再度開く
             RelicGeneratorMenu.reopen(player)
 
-            Bukkit.getPluginManager().callEvent(RelicGenerateEvent(player, relic))
+            Bukkit.getPluginManager().callEvent(RelicGenerateEvent(player, relic, selected, Defaults.RELIC_GENERATOR_REQUIRE_ETHEL))
 
             // 更新後にすぐに削除
             object : BukkitRunnable() {

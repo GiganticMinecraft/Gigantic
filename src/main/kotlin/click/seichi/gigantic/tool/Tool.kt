@@ -119,6 +119,7 @@ enum class Tool(
                 Material.COARSE_DIRT,
                 Material.PODZOL,
                 Material.SNOW_BLOCK,
+                Material.SNOW,
                 Material.MYCELIUM -> SHOVEL
 
                 Material.BIRCH_LOG,
