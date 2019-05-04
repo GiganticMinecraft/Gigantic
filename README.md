@@ -20,18 +20,6 @@ Requirement
 * [ProtocolLib 4.4.0-SNAPSHOT](https://dev.bukkit.org/projects/coreprotect)
 
 
-Licence
----
-Copyright &copy; 2018 [unchama](https://github.com/unchama/) by [ギガンティック☆整地鯖][seichi.click]
-
-[No License](https://choosealicense.com/no-license/) : **We are not offering any license.**
-
-当プラグインはライセンスを提供せず、使用を禁じます。<br />
-当プラグインの著作権を含む全ての権利は、[unchama](https://github.com/unchama/)及び[ギガンティック☆整地鯖][seichi.click]が所有しています。<br />
-
-[seichi.click]: http://seichi.click/
-
-
 ## Kotlin Style Guide
 基本的には[スマートテック・ベンチャーズ Kotlinコーディング規約](https://github.com/SmartTechVentures/kotlin-style-guide)に準拠します。
 
