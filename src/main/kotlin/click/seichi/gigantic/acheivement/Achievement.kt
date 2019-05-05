@@ -392,6 +392,10 @@ enum class Achievement(
     }
 
     companion object {
+
+        // 重複確認
+        val hasDuplicateId = values().size != values().map { it.id }.toSet().size
+
         // 強制的にプレイヤー表示部分を更新したい場合は[isForced]をtrueに設定
         fun update(player: Player, isForced: Boolean = false) {
             var isGranted = false

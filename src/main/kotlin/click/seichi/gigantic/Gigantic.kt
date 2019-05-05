@@ -1,5 +1,6 @@
 package click.seichi.gigantic
 
+import click.seichi.gigantic.belt.Belt
 import click.seichi.gigantic.cache.PlayerCacheMemory
 import click.seichi.gigantic.cache.RankingPlayerCacheMemory
 import click.seichi.gigantic.cache.key.Keys
@@ -9,15 +10,24 @@ import click.seichi.gigantic.database.table.DonateHistoryTable
 import click.seichi.gigantic.database.table.ranking.RankingScoreTable
 import click.seichi.gigantic.database.table.ranking.RankingUserTable
 import click.seichi.gigantic.database.table.user.*
+import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.event.events.TickEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.listener.*
 import click.seichi.gigantic.listener.packet.ExperienceOrbSpawn
 import click.seichi.gigantic.player.Defaults
+import click.seichi.gigantic.player.ExpReason
+import click.seichi.gigantic.player.skill.Skill
+import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.player.spell.spells.SkyWalk
+import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.ranking.Ranking
 import click.seichi.gigantic.ranking.Score
+import click.seichi.gigantic.relic.Relic
+import click.seichi.gigantic.sidebar.SideBarType
 import click.seichi.gigantic.spirit.SpiritManager
+import click.seichi.gigantic.tool.Tool
+import click.seichi.gigantic.will.Will
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
 import com.comphenix.protocol.events.PacketListener
@@ -144,6 +154,9 @@ class Gigantic : JavaPlugin() {
                 "now" to NowCommand()
         )
 
+        // データベース作成の前に重複チェック
+        checkDuplicateId()
+
         prepareDatabase(
                 // user
                 UserTable,
@@ -181,7 +194,6 @@ class Gigantic : JavaPlugin() {
 
         logger.info("Gigantic is enabled")
     }
-
 
     override fun onDisable() {
 
@@ -260,4 +272,51 @@ class Gigantic : JavaPlugin() {
         }
     }
 
+
+    private fun checkDuplicateId() {
+        var hasDuplicateId = false
+        if (Will.hasDuplicateId) {
+            logger.warning("Detect duplicate id on Will")
+            hasDuplicateId = true
+        }
+        if (Relic.hasDuplicateId) {
+            logger.warning("Detect duplicate id on Relic")
+            hasDuplicateId = true
+        }
+        if (Belt.hasDuplicateId) {
+            logger.warning("Detect duplicate id on Belt")
+            hasDuplicateId = true
+        }
+        if (Quest.hasDuplicateId) {
+            logger.warning("Detect duplicate id on Quest")
+            hasDuplicateId = true
+        }
+        if (Skill.hasDuplicateId) {
+            logger.warning("Detect duplicate id on Skill")
+            hasDuplicateId = true
+        }
+        if (Spell.hasDuplicateId) {
+            logger.warning("Detect duplicate id on Spell")
+            hasDuplicateId = true
+        }
+        if (Tool.hasDuplicateId) {
+            logger.warning("Detect duplicate id on Tool")
+            hasDuplicateId = true
+        }
+        if (GiganticEffect.hasDuplicateId) {
+            logger.warning("Detect duplicate id on GiganticEffect")
+            hasDuplicateId = true
+        }
+        if (ExpReason.hasDuplicateId) {
+            logger.warning("Detect duplicate id on ExpReason")
+            hasDuplicateId = true
+        }
+        if (SideBarType.hasDuplicateId) {
+            logger.warning("Detect duplicate id on SideBarType")
+            hasDuplicateId = true
+        }
+
+        if (hasDuplicateId)
+            pluginLoader.disablePlugin(this)
+    }
 }

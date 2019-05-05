@@ -461,6 +461,11 @@ enum class SoulMonster(
 
     ;
 
+    companion object {
+        // 重複確認
+        val hasDuplicateId = values().size != values().map { it.id }.toSet().size
+    }
+
     fun getIcon() = icon?.toItemStack() ?: ItemStack(Material.ZOMBIE_HEAD)
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)

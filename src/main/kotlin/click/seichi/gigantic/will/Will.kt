@@ -251,6 +251,9 @@ enum class Will(
     fun getName(locale: Locale) = localizedName.asSafety(locale)
 
     companion object {
+        // 重複確認
+        val hasDuplicateId = values().size != values().map { it.id }.toSet().size
+
         private val idMap = values().map { it.id to it }.toMap()
 
         private val relicMap = values().flatMap { will ->

@@ -16,6 +16,11 @@ enum class SideBarType(
     Ethel(0, EthelLogger())
     ;
 
+    companion object {
+        // 重複確認
+        val hasDuplicateId = values().size != values().map { it.id }.toSet().size
+    }
+
     fun change(player: Player) {
         val current = player.getOrPut(Keys.SIDEBAR_TYPE)
         if (current == this) return

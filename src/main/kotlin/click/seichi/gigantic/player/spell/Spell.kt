@@ -59,6 +59,12 @@ enum class Spell(
     ),
     ;
 
+    companion object {
+        // 重複確認
+        val hasDuplicateId = values().size != values().map { it.id }.toSet().size
+
+    }
+
     fun tryCast(player: Player) = if (isGranted(player)) invoker.tryInvoke(player) else false
 
     fun isGranted(player: Player) = achievement?.isGranted(player) ?: true

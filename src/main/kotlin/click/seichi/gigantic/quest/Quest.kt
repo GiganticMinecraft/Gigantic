@@ -213,6 +213,9 @@ enum class Quest(
     }
 
     companion object {
+        // 重複確認
+        val hasDuplicateId = values().size != values().map { it.id }.toSet().size
+
         val COLOR = ChatColor.LIGHT_PURPLE
 
         fun getOrderedList(player: Player) =
