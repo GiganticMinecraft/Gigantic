@@ -2,8 +2,6 @@ package click.seichi.gigantic.head
 
 import click.seichi.gigantic.extension.itemStackOf
 import click.seichi.gigantic.util.Random
-import com.mojang.authlib.GameProfile
-import com.mojang.authlib.properties.Property
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
