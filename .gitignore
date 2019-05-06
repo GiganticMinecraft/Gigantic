@@ -3,5 +3,5 @@
 build/
 out/
 /bin/
-server/
-libs/
+server*/
+libs*/
