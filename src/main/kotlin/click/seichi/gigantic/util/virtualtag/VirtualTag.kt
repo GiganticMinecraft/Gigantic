@@ -1,6 +1,5 @@
 package click.seichi.gigantic.util.virtualtag
 
-import org.bukkit.entity.Player
 import org.bukkit.util.Vector
 
 /**
@@ -8,10 +7,10 @@ import org.bukkit.util.Vector
  */
 interface VirtualTag {
 
-    fun show(player: Player)
+    fun show()
 
-    fun moveTo(player: Player, delta: Vector)
+    fun push(delta: Vector)
 
-    fun destroy(player: Player)
+    fun destroy()
 
 }

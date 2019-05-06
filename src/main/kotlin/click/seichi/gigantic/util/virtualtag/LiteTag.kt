@@ -15,6 +15,7 @@ import java.util.*
  */
 class LiteTag(var location: Location,
               private val text: String,
+              private val player: Player,
               private val id: Int = Random.nextInt(Int.MAX_VALUE),
               private val uuid: UUID = UUID.randomUUID()) : VirtualTag {
 
@@ -28,7 +29,9 @@ class LiteTag(var location: Location,
         private val protocolManager = Gigantic.PROTOCOL_MG
     }
 
-    override fun show(player: Player) {
+    override fun show() {
+        if (!player.isValid) return
+
         val packet = protocolManager.createPacket(PacketType.Play.Server.SPAWN_ENTITY_LIVING)
 
         packet.integers.apply {
@@ -61,7 +64,9 @@ class LiteTag(var location: Location,
         protocolManager.sendServerPacket(player, packet)
     }
 
-    override fun moveTo(player: Player, delta: Vector) {
+    override fun push(delta: Vector) {
+        if (!player.isValid) return
+
         val packet = protocolManager.createPacket(PacketType.Play.Server.REL_ENTITY_MOVE)
 
         packet.integers.apply {
@@ -74,7 +79,9 @@ class LiteTag(var location: Location,
         protocolManager.sendServerPacket(player, packet)
     }
 
-    override fun destroy(player: Player) {
+    override fun destroy() {
+        if (!player.isValid) return
+
         val packet = protocolManager.createPacket(PacketType.Play.Server.ENTITY_DESTROY)
 
         packet.integerArrays.apply {

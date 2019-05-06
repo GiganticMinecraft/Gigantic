@@ -20,7 +20,7 @@ sealed class PopAnimation(val lifetime: Long) {
 class StillAnimation(lifetime: Long) : PopAnimation(lifetime) {
 
     override fun animate(player: Player, virtualTag: VirtualTag, location: Location) {
-        virtualTag.show(player)
+        virtualTag.show()
     }
 
 }
@@ -28,8 +28,8 @@ class StillAnimation(lifetime: Long) : PopAnimation(lifetime) {
 object SimpleAnimation : PopAnimation(5L) {
 
     override fun animate(player: Player, virtualTag: VirtualTag, location: Location) {
-        virtualTag.show(player)
-        virtualTag.moveTo(player, Vector(
+        virtualTag.show()
+        virtualTag.push(Vector(
                 Random.nextGaussian(variance = 0.03),
                 0.24,
                 Random.nextGaussian(variance = 0.03)
@@ -41,15 +41,15 @@ object SimpleAnimation : PopAnimation(5L) {
 object LongAnimation : PopAnimation(15L) {
 
     override fun animate(player: Player, virtualTag: VirtualTag, location: Location) {
-        virtualTag.show(player)
-        virtualTag.moveTo(player, Vector(
+        virtualTag.show()
+        virtualTag.push(Vector(
                 Random.nextGaussian(variance = 0.03),
                 0.24,
                 Random.nextGaussian(variance = 0.03)
         ))
 
         Gigantic.PLUGIN.apply {
-            server.scheduler.runTaskLater(this@apply, { _ -> virtualTag.moveTo(player, Vector(0.0, 1.0, 0.0)) }, 5L)
+            server.scheduler.runTaskLater(this@apply, { _ -> virtualTag.push(Vector(0.0, 1.0, 0.0)) }, 5L)
         }
     }
 
