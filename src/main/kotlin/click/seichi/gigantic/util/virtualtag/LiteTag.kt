@@ -1,6 +1,7 @@
-package click.seichi.gigantic.util
+package click.seichi.gigantic.util.virtualtag
 
 import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.util.Random
 import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.wrappers.WrappedChatComponent
 import com.comphenix.protocol.wrappers.WrappedDataWatcher
@@ -12,10 +13,11 @@ import java.util.*
 /**
  * @author unicroak
  */
-class VirtualTag(var location: Location,
-                 private val text: String,
-                 private val id: Int = Random.nextInt(Int.MAX_VALUE),
-                 private val uuid: UUID = UUID.randomUUID()) {
+class LiteTag(var location: Location,
+              private val text: String,
+              private val player: Player,
+              private val id: Int = Random.nextInt(Int.MAX_VALUE),
+              private val uuid: UUID = UUID.randomUUID()) : VirtualTag {
 
     companion object {
         private const val BIT_IS_SMALL = 0x01
@@ -27,7 +29,9 @@ class VirtualTag(var location: Location,
         private val protocolManager = Gigantic.PROTOCOL_MG
     }
 
-    fun sendSpawnPacket(player: Player) {
+    override fun show() {
+        if (!player.isValid) return
+
         val packet = protocolManager.createPacket(PacketType.Play.Server.SPAWN_ENTITY_LIVING)
 
         packet.integers.apply {
@@ -60,7 +64,9 @@ class VirtualTag(var location: Location,
         protocolManager.sendServerPacket(player, packet)
     }
 
-    fun sendMovePacket(player: Player, delta: Vector) {
+    override fun push(delta: Vector) {
+        if (!player.isValid) return
+
         val packet = protocolManager.createPacket(PacketType.Play.Server.REL_ENTITY_MOVE)
 
         packet.integers.apply {
@@ -73,7 +79,9 @@ class VirtualTag(var location: Location,
         protocolManager.sendServerPacket(player, packet)
     }
 
-    fun sendDestroyPacket(player: Player) {
+    override fun destroy() {
+        if (!player.isValid) return
+
         val packet = protocolManager.createPacket(PacketType.Play.Server.ENTITY_DESTROY)
 
         packet.integerArrays.apply {
