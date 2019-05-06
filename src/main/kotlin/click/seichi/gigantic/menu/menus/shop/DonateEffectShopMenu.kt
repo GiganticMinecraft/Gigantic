@@ -19,7 +19,7 @@ import org.bukkit.inventory.Inventory
 /**
  * @author tar0ss
  */
-object DonateGiftEffectShopMenu : DonateGiftShopMenu() {
+object DonateEffectShopMenu : DonateShopMenu() {
 
     override val size: Int
         get() = 5 * 9
@@ -41,9 +41,10 @@ object DonateGiftEffectShopMenu : DonateGiftShopMenu() {
     override fun onOpen(player: Player, page: Int, isFirst: Boolean) {
         player.offer(Keys.MENU_EFFECT_LIST,
                 GiganticEffect.values()
-                        .filter { it.currency == Currency.DONATE_POINT }
-                        .filter { !it.isBought(player) }
-                        .sortedBy { it.amount }
+                        .filter { it.product != null }
+                        .filter { it.product!!.currency == Currency.DONATE_POINT }
+                        .filter { it.product!!.boughtAmount(player) == 0 }
+                        .sortedBy { it.product!!.price }
                         .toList()
         )
     }
@@ -56,10 +57,10 @@ object DonateGiftEffectShopMenu : DonateGiftShopMenu() {
                 .filter { contentList.getOrNull(it) != null }
                 .map { it % numOfContentsPerPage to contentList[it] }
                 .toMap()
-                .forEach { index, to ->
+                .forEach { (index, to) ->
                     inventory.setItemAsync(player, index + offset, ShopButtons.EFFECT(to))
                 }
-        getButtonMap().forEach { slot, button ->
+        getButtonMap().forEach { (slot, button) ->
             inventory.setItemAsync(player, slot, button)
         }
         return inventory

@@ -1,6 +1,5 @@
 package click.seichi.gigantic.effect
 
-import click.seichi.gigantic.Currency
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
@@ -12,11 +11,11 @@ import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.EffectMessages
+import click.seichi.gigantic.product.Product
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import org.joda.time.DateTime
 import java.util.*
 
 /**
@@ -25,12 +24,10 @@ import java.util.*
 enum class GiganticEffect(
         // 変更禁止 id=0はデフォルトエフェクトに対応
         val id: Int,
+        // 商品
+        val product: Product?,
         // エフェクトメニューに表示されるItemStack
         private val icon: ItemStack,
-        // 購入方法
-        val currency: Currency,
-        // 必要ポイント
-        val amount: Int,
         // 名前
         private val localizedName: LocalizedText,
         // 説明文
@@ -42,10 +39,8 @@ enum class GiganticEffect(
 ) {
     DEFAULT(
             0,
+            null,
             ItemStack(Material.GRASS_BLOCK),
-            Currency.DEFAULT,
-            // DEFAULT のみ無意味な値
-            0,
             EffectMessages.DEFAULT,
             EffectMessages.DEFAULT_LORE,
             GeneralBreakEffectors.DEFAULT,
@@ -54,9 +49,8 @@ enum class GiganticEffect(
     ),
     EXPLOSION(
             1,
+            Product.EXPLOSION,
             ItemStack(Material.TNT),
-            Currency.VOTE_POINT,
-            50,
             EffectMessages.EXPLOSION,
             EffectMessages.EXPLOSION_LORE,
             GeneralBreakEffectors.EXPLOSION,
@@ -64,9 +58,8 @@ enum class GiganticEffect(
     ),
     BLIZZARD(
             2,
+            Product.BLIZZARD,
             ItemStack(Material.PACKED_ICE),
-            Currency.VOTE_POINT,
-            70,
             EffectMessages.BLIZZARD,
             EffectMessages.BLIZZARD_LORE,
             generalEffector = GeneralBreakEffectors.BLIZZARD,
@@ -74,9 +67,8 @@ enum class GiganticEffect(
     ),
     MAGIC(
             3,
+            Product.MAGIC,
             ItemStack(Material.RED_WOOL),
-            Currency.DONATE_POINT,
-            50,
             EffectMessages.MAGIC,
             EffectMessages.MAGIC_LORE,
             generalEffector = GeneralBreakEffectors.MAGIC,
@@ -84,9 +76,8 @@ enum class GiganticEffect(
     ),
     FLAME(
             4,
+            Product.FLAME,
             ItemStack(Material.NETHER_WART),
-            Currency.VOTE_POINT,
-            30,
             EffectMessages.FLAME,
             EffectMessages.FLAME_LORE,
             generalEffector = GeneralBreakEffectors.FLAME,
@@ -94,9 +85,8 @@ enum class GiganticEffect(
     ),
     WITCH_SCENT(
             5,
+            Product.WITCH_SCENT,
             ItemStack(Material.CHORUS_PLANT),
-            Currency.DONATE_POINT,
-            30,
             EffectMessages.WITCH_SCENT,
             EffectMessages.WITCH_SCENT_LORE,
             generalEffector = GeneralBreakEffectors.WITCH_SCENT,
@@ -104,9 +94,8 @@ enum class GiganticEffect(
     ),
     SLIME(
             6,
+            Product.SLIME,
             ItemStack(Material.SLIME_BALL),
-            Currency.DONATE_POINT,
-            10,
             EffectMessages.SLIME,
             EffectMessages.SLIME_LORE,
             generalEffector = GeneralBreakEffectors.SLIME,
@@ -114,18 +103,16 @@ enum class GiganticEffect(
     ),
     BUBBLE(
             7,
+            Product.BUBBLE,
             ItemStack(Material.TUBE_CORAL),
-            Currency.DONATE_POINT,
-            10,
             EffectMessages.BUBBLE,
             EffectMessages.BUBBLE_LORE,
             multiEffector = MultiBreakEffectors.BUBBLE
     ),
     ALCHEMIA(
             8,
+            Product.ALCHEMIA,
             ItemStack(Material.REDSTONE),
-            Currency.DONATE_POINT,
-            20,
             EffectMessages.ALCHEMIA,
             EffectMessages.ALCHEMIA_LORE,
             multiEffector = MultiBreakEffectors.ALCHEMIA
@@ -134,6 +121,9 @@ enum class GiganticEffect(
     ;
 
     companion object {
+        // 重複確認
+        val hasDuplicateId = values().size != values().map { it.id }.toSet().size
+
         private val idMap = values().map { it.id to it }.toMap()
         fun findById(id: Int) = idMap[id]
     }
@@ -156,23 +146,9 @@ enum class GiganticEffect(
 
     fun getIcon() = icon.clone()
 
-    // 購入しているか
-    fun isBought(player: Player) = (Config.DEBUG_MODE && DebugConfig.EFFECT_UNLOCK) || player.getOrPut(Keys.EFFECT_BOUGHT_MAP[this]!!)
-
-    // 購入した日付
-    fun boughtAt(player: Player) = player.getOrPut(Keys.EFFECT_BOUGHT_TIME_MAP[this]!!)
-
-    // 購入
-    fun buy(player: Player) {
-        player.offer(Keys.EFFECT_BOUGHT_MAP.getValue(this), true)
-        player.offer(Keys.EFFECT_BOUGHT_TIME_MAP.getValue(this), DateTime.now())
-    }
-
-    // 購入可能か
-    fun canBuy(player: Player): Boolean {
-        if (isBought(player)) return false
-        return currency.calcRemainAmount(player) >= amount
-    }
+    fun canSelect(player: Player) = (Config.DEBUG_MODE && DebugConfig.EFFECT_UNLOCK) ||
+            this == DEFAULT ||
+            product?.boughtAmount(player) ?: 0 > 0
 
     // 選択中か
     fun isSelected(player: Player) = player.getOrPut(Keys.EFFECT) == this

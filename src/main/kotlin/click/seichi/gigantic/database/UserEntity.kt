@@ -2,9 +2,10 @@ package click.seichi.gigantic.database
 
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.belt.Belt
+import click.seichi.gigantic.database.dao.PurchaseHistory
 import click.seichi.gigantic.database.dao.user.*
+import click.seichi.gigantic.database.table.PurchaseHistoryTable
 import click.seichi.gigantic.database.table.user.*
-import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.player.ToggleSetting
@@ -101,15 +102,6 @@ class UserEntity(uniqueId: UUID, playerName: String) {
         })
     }.toMap()
 
-    val userEffectMap = GiganticEffect.values().map { effect ->
-        effect to (UserEffect
-                .find { (UserEffectTable.userId eq uniqueId) and (UserEffectTable.effectId eq effect.id) }
-                .firstOrNull() ?: UserEffect.new {
-            user = this@UserEntity.user
-            effectId = effect.id
-        })
-    }.toMap()
-
     val userToggleMap = ToggleSetting.values().map { toggleSetting ->
         toggleSetting to (UserToggle
                 .find { (UserToggleTable.userId eq uniqueId) and (UserToggleTable.toggleId eq toggleSetting.id) }
@@ -134,6 +126,10 @@ class UserEntity(uniqueId: UUID, playerName: String) {
 
     val userMuteList = UserMute
             .find { UserMuteTable.userId eq uniqueId }
+            .toList()
+
+    val userPurchaseList = PurchaseHistory
+            .find { PurchaseHistoryTable.userId eq uniqueId }
             .toList()
 
 }

@@ -85,21 +85,21 @@ val Player.comboRank: Int
     get() = MineCombo.calcComboRank(combo)
 
 // 累計投票数
-val Player.vote: Int
+val Player.totalVote: Int
     get() = getOrPut(Keys.VOTE)
 
 // 累計投票ポイント
-val Player.votePoint: Int
-    get() = Currency.VOTE_POINT.getAmount(this)
+val Player.totalVotePoint: Int
+    get() = Currency.VOTE_POINT.getTotalAmount(this)
 // 累計
-val Player.pomme: Int
-    get() = Currency.POMME.getAmount(this)
+val Player.totalPomme: Int
+    get() = Currency.POMME.getTotalAmount(this)
 // 累計寄付額
-val Player.donation: Int
+val Player.totalDonation: Int
     get() = getOrPut(Keys.DONATION)
 // 累計寄付p
-val Player.donatePoint: Int
-    get() = Currency.DONATE_POINT.getAmount(this)
+val Player.totalDonatePoint: Int
+    get() = Currency.DONATE_POINT.getTotalAmount(this)
 
 val Player.effect: GiganticEffect
     get() = getOrPut(Keys.EFFECT)

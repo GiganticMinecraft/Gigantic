@@ -12,6 +12,7 @@ import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.database.RankingEntity
 import click.seichi.gigantic.database.UserEntity
+import click.seichi.gigantic.database.dao.PurchaseHistory
 import click.seichi.gigantic.database.dao.user.User
 import click.seichi.gigantic.database.dao.user.UserFollow
 import click.seichi.gigantic.database.dao.user.UserHome
@@ -20,7 +21,6 @@ import click.seichi.gigantic.database.table.user.UserFollowTable
 import click.seichi.gigantic.database.table.user.UserHomeTable
 import click.seichi.gigantic.database.table.user.UserMuteTable
 import click.seichi.gigantic.effect.GiganticEffect
-import click.seichi.gigantic.menu.RefineItem
 import click.seichi.gigantic.menu.RelicCategory
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.player.*
@@ -500,15 +500,6 @@ object Keys {
 
     }
 
-    val PLAYER_LIST_MENU_MAP = object : Key<PlayerCache, Map<Int, UUID>> {
-        override val default: Map<Int, UUID>
-            get() = mapOf()
-
-        override fun satisfyWith(value: Map<Int, UUID>): Boolean {
-            return true
-        }
-    }
-
     val MENU_PLAYER_LIST = object : Key<PlayerCache, List<Player>> {
         override val default: List<Player>
             get() = listOf()
@@ -517,18 +508,6 @@ object Keys {
             return true
         }
     }
-
-    val REFINE_ITEM_MAP: Map<RefineItem, Key<PlayerCache, Boolean>> = RefineItem.values()
-            .map {
-                it to object : Key<PlayerCache, Boolean> {
-                    override val default: Boolean
-                        get() = false
-
-                    override fun satisfyWith(value: Boolean): Boolean {
-                        return true
-                    }
-                }
-            }.toMap()
 
     val QUEST_MAP: Map<Quest, DatabaseKey<PlayerCache, QuestClient?, UserEntity>> = Quest.values()
             .map {
@@ -695,56 +674,6 @@ object Keys {
 
     }
 
-    val EFFECT_BOUGHT_MAP: Map<GiganticEffect, DatabaseKey<PlayerCache, Boolean, UserEntity>> = GiganticEffect.values()
-            .map { effect ->
-                effect to
-                        object : DatabaseKey<PlayerCache, Boolean, UserEntity> {
-
-                            override val default: Boolean
-                                get() = false
-
-                            override fun read(entity: UserEntity): Boolean {
-                                val userEffect = entity.userEffectMap[effect]!!
-                                return userEffect.isBought
-                            }
-
-                            override fun store(entity: UserEntity, value: Boolean) {
-                                val userEffect = entity.userEffectMap[effect]!!
-                                userEffect.isBought = value
-                            }
-
-                            override fun satisfyWith(value: Boolean): Boolean {
-                                return true
-                            }
-
-                        }
-            }.toMap()
-
-    val EFFECT_BOUGHT_TIME_MAP: Map<GiganticEffect, DatabaseKey<PlayerCache, DateTime, UserEntity>> = GiganticEffect.values()
-            .map { effect ->
-                effect to
-                        object : DatabaseKey<PlayerCache, DateTime, UserEntity> {
-
-                            override val default: DateTime
-                                get() = DateTime.now()
-
-                            override fun read(entity: UserEntity): DateTime {
-                                val userEffect = entity.userEffectMap[effect]!!
-                                return userEffect.boughtAt
-                            }
-
-                            override fun store(entity: UserEntity, value: DateTime) {
-                                val userEffect = entity.userEffectMap[effect]!!
-                                userEffect.boughtAt = value
-                            }
-
-                            override fun satisfyWith(value: DateTime): Boolean {
-                                return true
-                            }
-
-                        }
-            }.toMap()
-
     val EFFECT = object : DatabaseKey<PlayerCache, GiganticEffect, UserEntity> {
         override val default: GiganticEffect
             get() = GiganticEffect.DEFAULT
@@ -776,7 +705,7 @@ object Keys {
 
         override fun store(entity: UserEntity, value: Int) {
             // データベースが書き換えられていた場合，上書き削除してしまうので
-            // 書き込まなくてよい．ポイントは減ることもないし増えることもない．
+            // 書き込まなくてよい．投票数は減ることもないし増えることもない．
             Gigantic.PLUGIN.logger.warning("投票数のデータベース書き込みは禁止されています")
         }
 
@@ -798,7 +727,7 @@ object Keys {
 
         override fun store(entity: UserEntity, value: Int) {
             // データベースが書き換えられていた場合，上書き削除してしまうので
-            // 書き込まなくてよい．ポイントは減ることもないし増えることもない．
+            // 書き込まなくてよい．ポムは減ることもないし増えることもない．
             Gigantic.PLUGIN.logger.warning("ポムのデータベース書き込みは禁止されています")
         }
 
@@ -820,7 +749,7 @@ object Keys {
 
         override fun store(entity: UserEntity, value: Int) {
             // データベースが書き換えられていた場合，上書き削除してしまうので
-            // 書き込まなくてよい．ポイントは減ることもないし増えることもない．
+            // 書き込まなくてよい．寄付は減ることもないし増えることもない．
             Gigantic.PLUGIN.logger.warning("寄付金のデータベース書き込みは禁止されています")
         }
 
@@ -832,15 +761,6 @@ object Keys {
     }
 
     val DONATE_TICKET_LIST = object : Key<PlayerCache, List<DonateTicket>> {
-        override val default: List<DonateTicket>
-            get() = listOf()
-
-        override fun satisfyWith(value: List<DonateTicket>): Boolean {
-            return true
-        }
-    }
-
-    val MENU_DONATE_TICKET_LIST = object : Key<PlayerCache, List<DonateTicket>> {
         override val default: List<DonateTicket>
             get() = listOf()
 
@@ -1599,6 +1519,37 @@ object Keys {
             get() = SideBarType.Ethel
 
         override fun satisfyWith(value: SideBarType): Boolean {
+            return true
+        }
+    }
+
+    val PURCHASE_TICKET_LIST = object : DatabaseKey<PlayerCache, List<PurchaseTicket>, UserEntity> {
+        override val default: List<PurchaseTicket>
+            get() = listOf()
+
+        override fun read(entity: UserEntity): List<PurchaseTicket> {
+            return entity.userPurchaseList.map { PurchaseTicket(it) }
+        }
+
+        override fun store(entity: UserEntity, value: List<PurchaseTicket>) {
+            val newList = value.toMutableList()
+                    .filter { it.purchaseId == null }
+                    .toList()
+
+            newList.forEach { ticket ->
+                PurchaseHistory.new {
+                    user = entity.user
+                    productId = ticket.product.id
+                    amount = ticket.amount
+                    createdAt = ticket.date
+                    isCancelled = ticket.isCancelled
+                    if (ticket.cancelledAt != null)
+                        cancelledAt = ticket.cancelledAt
+                }
+            }
+        }
+
+        override fun satisfyWith(value: List<PurchaseTicket>): Boolean {
             return true
         }
     }

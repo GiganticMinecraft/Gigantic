@@ -1,6 +1,5 @@
 package click.seichi.gigantic.menu.menus
 
-import click.seichi.gigantic.Currency
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.getOrPut
@@ -32,9 +31,6 @@ object EffectMenu : BookMenu() {
         registerButton(0, EffectButtons.PLAYER)
         registerButton(1, EffectButtons.CURRENT_EFFECT)
         registerButton(3, EffectButtons.DEFAULT_EFFECT)
-        // バッグから直接飛べるのでなし
-//        registerButton(6, ShopButtons.VOTE)
-//        registerButton(7, ShopButtons.DONATION)
         registerButton(numOfContentsPerPage + offset + 3, PrevButton(this))
         registerButton(numOfContentsPerPage + offset + 5, NextButton(this))
     }
@@ -46,8 +42,8 @@ object EffectMenu : BookMenu() {
     override fun onOpen(player: Player, page: Int, isFirst: Boolean) {
         player.offer(Keys.MENU_EFFECT_LIST,
                 GiganticEffect.values()
-                        .filter { it.currency != Currency.DEFAULT }
-                        .filter { it.isBought(player) }
+                        .filter { it != GiganticEffect.DEFAULT }
+                        .filter { it.canSelect(player) }
                         .toList()
         )
     }

@@ -7,10 +7,10 @@ import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.menu.menus.EffectMenu
-import click.seichi.gigantic.menu.menus.shop.DonateGiftEffectShopMenu
-import click.seichi.gigantic.menu.menus.shop.DonateGiftShopMenu
-import click.seichi.gigantic.menu.menus.shop.VoteGiftEffectShopMenu
-import click.seichi.gigantic.menu.menus.shop.VoteGiftShopMenu
+import click.seichi.gigantic.menu.menus.shop.DonateEffectShopMenu
+import click.seichi.gigantic.menu.menus.shop.DonateShopMenu
+import click.seichi.gigantic.menu.menus.shop.VoteEffectShopMenu
+import click.seichi.gigantic.menu.menus.shop.VoteShopMenu
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.EffectMenuMessages
 import click.seichi.gigantic.message.messages.menu.ShopMessages
@@ -38,12 +38,12 @@ object ShopButtons {
         }
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (event.inventory.holder is VoteGiftShopMenu) return false
-            if (event.inventory.holder is DonateGiftEffectShopMenu) {
+            if (event.inventory.holder is VoteShopMenu) return false
+            if (event.inventory.holder is DonateEffectShopMenu) {
                 MenuSounds.CATEGORY_CHANGE.playOnly(player)
-                VoteGiftEffectShopMenu.open(player, isFirst = false, playSound = false)
+                VoteEffectShopMenu.open(player, isFirst = false, playSound = false)
             } else {
-                VoteGiftEffectShopMenu.open(player)
+                VoteEffectShopMenu.open(player)
             }
 
             return true
@@ -60,12 +60,12 @@ object ShopButtons {
         }
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (event.inventory.holder is DonateGiftShopMenu) return false
-            if (event.inventory.holder is VoteGiftEffectShopMenu) {
+            if (event.inventory.holder is DonateShopMenu) return false
+            if (event.inventory.holder is VoteEffectShopMenu) {
                 MenuSounds.CATEGORY_CHANGE.playOnly(player)
-                DonateGiftEffectShopMenu.open(player, isFirst = false, playSound = false)
+                DonateEffectShopMenu.open(player, isFirst = false, playSound = false)
             } else {
-                DonateGiftEffectShopMenu.open(player)
+                DonateEffectShopMenu.open(player)
             }
             return true
         }
@@ -108,12 +108,12 @@ object ShopButtons {
                     addLore(MenuMessages.LINE)
 
                     //購入方法と購入に必要なポイントを提示
-                    addLore("${effect.amount} " +
-                            when (effect.currency) {
+                    val product = effect.product ?: return@apply
+                    addLore("${product.price} " +
+                            when (product.currency) {
                                 Currency.VOTE_POINT -> EffectMenuMessages.VOTE_POINT
                                 Currency.POMME -> EffectMenuMessages.POMME
                                 Currency.DONATE_POINT -> EffectMenuMessages.DONATION
-                                else -> throw Error("$effect is illegal buy type : ${effect.currency}")
                             }.asSafety(player.wrappedLocale) +
                             "${ChatColor.RESET}" +
                             EffectMenuMessages.BUY_TYPE.asSafety(player.wrappedLocale))
@@ -121,7 +121,7 @@ object ShopButtons {
                     addLore("")
 
                     when {
-                        !effect.canBuy(player) -> // 購入できない場合
+                        !product.canBuy(player) -> // 購入できない場合
                             addLore(EffectMenuMessages.CANT_BUY.asSafety(player.wrappedLocale))
                         buyMap[player.uniqueId] == effect -> {// 購入できる場合(2クリック目)
                             addLore(EffectMenuMessages.CAUTION.asSafety(player.wrappedLocale))
@@ -135,13 +135,14 @@ object ShopButtons {
             }
 
             override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
+                val product = effect.product ?: return true
                 // 購入可否判定
-                if (!effect.canBuy(player)) return false
+                if (!product.canBuy(player)) return false
                 val uniqueId = player.uniqueId
                 val menu = event.inventory.holder as? Menu ?: return false
                 if (buyMap[uniqueId] == effect) {
                     // 購入処理
-                    effect.buy(player)
+                    product.buy(player)
                     MenuSounds.EFFECT_BUY.playOnly(player)
                 } else {
                     buyMap[uniqueId] = effect
