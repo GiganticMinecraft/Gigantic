@@ -2,7 +2,7 @@ package click.seichi.gigantic.popup
 
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.util.Random
-import click.seichi.gigantic.util.VirtualTag
+import click.seichi.gigantic.util.virtualtag.VirtualTag
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.util.Vector
@@ -20,7 +20,7 @@ sealed class PopAnimation(val lifetime: Long) {
 class StillAnimation(lifetime: Long) : PopAnimation(lifetime) {
 
     override fun animate(player: Player, virtualTag: VirtualTag, location: Location) {
-        virtualTag.sendSpawnPacket(player)
+        virtualTag.show(player)
     }
 
 }
@@ -28,8 +28,8 @@ class StillAnimation(lifetime: Long) : PopAnimation(lifetime) {
 object SimpleAnimation : PopAnimation(5L) {
 
     override fun animate(player: Player, virtualTag: VirtualTag, location: Location) {
-        virtualTag.sendSpawnPacket(player)
-        virtualTag.sendMovePacket(player, Vector(
+        virtualTag.show(player)
+        virtualTag.moveTo(player, Vector(
                 Random.nextGaussian(variance = 0.03),
                 0.24,
                 Random.nextGaussian(variance = 0.03)
@@ -41,15 +41,15 @@ object SimpleAnimation : PopAnimation(5L) {
 object LongAnimation : PopAnimation(15L) {
 
     override fun animate(player: Player, virtualTag: VirtualTag, location: Location) {
-        virtualTag.sendSpawnPacket(player)
-        virtualTag.sendMovePacket(player, Vector(
+        virtualTag.show(player)
+        virtualTag.moveTo(player, Vector(
                 Random.nextGaussian(variance = 0.03),
                 0.24,
                 Random.nextGaussian(variance = 0.03)
         ))
 
         Gigantic.PLUGIN.apply {
-            server.scheduler.runTaskLater(this@apply, { _ -> virtualTag.sendMovePacket(player, Vector(0.0, 1.0, 0.0)) }, 5L)
+            server.scheduler.runTaskLater(this@apply, { _ -> virtualTag.moveTo(player, Vector(0.0, 1.0, 0.0)) }, 5L)
         }
     }
 

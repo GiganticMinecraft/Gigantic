@@ -1,7 +1,7 @@
 package click.seichi.gigantic.popup
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.util.VirtualTag
+import click.seichi.gigantic.util.virtualtag.LiteTag
 import org.bukkit.Location
 
 /**
@@ -16,7 +16,7 @@ class PopUp(private val animation: PopAnimation,
         private const val SEND_DISTANCE = 32.0
     }
 
-    private val virtualTag = VirtualTag(location, text)
+    private val virtualTag = LiteTag(location, text)
 
     fun pop() {
         location.world?.players
@@ -28,7 +28,7 @@ class PopUp(private val animation: PopAnimation,
                         server.scheduler.runTaskLater(
                                 this@apply,
                                 { _ ->
-                                    if (player.isValid) virtualTag.sendDestroyPacket(player)
+                                    if (player.isValid) virtualTag.destroy(player)
                                 },
                                 animation.lifetime
                         )
