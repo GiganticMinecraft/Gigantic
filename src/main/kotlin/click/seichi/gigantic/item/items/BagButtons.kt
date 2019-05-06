@@ -10,8 +10,8 @@ import click.seichi.gigantic.event.events.SenseEvent
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.*
-import click.seichi.gigantic.menu.menus.shop.DonateGiftEffectShopMenu
-import click.seichi.gigantic.menu.menus.shop.VoteGiftEffectShopMenu
+import click.seichi.gigantic.menu.menus.shop.DonateEffectShopMenu
+import click.seichi.gigantic.menu.menus.shop.VoteEffectShopMenu
 import click.seichi.gigantic.message.messages.BagMessages
 import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.WillMessages
@@ -58,10 +58,10 @@ object BagButtons {
                 lore.addAll(listOf(
                         ProfileMessages.PROFILE_LEVEL(player.wrappedLevel),
                         ProfileMessages.PROFILE_EXP(player.wrappedLevel, player.wrappedExp),
-                        ProfileMessages.PROFILE_VOTE_POINT(player.vote),
+                        ProfileMessages.PROFILE_VOTE_POINT(player.totalVote),
                         // TODO Pomme実装後に実装
-//                        ProfileMessages.PROFILE_POMME(player.pomme),
-                        ProfileMessages.PROFILE_DONATION(player.donation)
+//                        ProfileMessages.PROFILE_POMME(player.totalPomme),
+                        ProfileMessages.PROFILE_DONATION(player.totalDonation)
                 ).map { it.asSafety(player.wrappedLocale) }
                 )
                 if (Achievement.MANA_STONE.isGranted(player)) {
@@ -412,9 +412,9 @@ object BagButtons {
         }
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (event.inventory.holder === DonateGiftEffectShopMenu) return false
-            if (event.inventory.holder === VoteGiftEffectShopMenu) return false
-            DonateGiftEffectShopMenu.open(player)
+            if (event.inventory.holder === DonateEffectShopMenu) return false
+            if (event.inventory.holder === VoteEffectShopMenu) return false
+            DonateEffectShopMenu.open(player)
             return true
         }
 
@@ -471,7 +471,7 @@ object BagButtons {
 
                 // クリックしたときの動作説明
                 val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
-                val voteNum = player.vote
+                val voteNum = player.totalVote
                 val bonus = voteNum.minus(givenBonus)
                 if (bonus > 0) {
                     addLore("${ChatColor.GREEN}${ChatColor.UNDERLINE}${ChatColor.BOLD}"
@@ -507,7 +507,7 @@ object BagButtons {
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
-            val voteNum = player.vote
+            val voteNum = player.totalVote
             val bonus = voteNum.minus(givenBonus)
             // ボーナスが無ければ終了
             if (bonus <= 0) return false

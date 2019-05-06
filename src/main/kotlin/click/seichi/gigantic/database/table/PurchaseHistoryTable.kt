@@ -8,7 +8,6 @@ import org.jetbrains.exposed.dao.IntIdTable
  */
 object PurchaseHistoryTable : IntIdTable("purchase_history") {
 
-
     val userId = reference("unique_id", UserTable).index()
 
     val productId = integer("product_id")

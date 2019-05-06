@@ -100,10 +100,10 @@ object EffectButtons {
     val EFFECT: (GiganticEffect) -> Button = { effect: GiganticEffect ->
         object : Button {
             override fun toShownItemStack(player: Player): ItemStack? {
-                if (!effect.isBought(player)) return null
+                if (!effect.canSelect(player)) return null
 
                 val itemStack = when {
-                    effect.isBought(player) -> effect.getIcon()
+                    effect.canSelect(player) -> effect.getIcon()
                     else -> ItemStack(Material.BEDROCK)
                 }
 
@@ -137,7 +137,7 @@ object EffectButtons {
             }
 
             override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-                if (!effect.isBought(player)) return false
+                if (!effect.canSelect(player)) return false
                 // 選択されている場合
                 if (effect.isSelected(player)) return false
                 // 選択処理

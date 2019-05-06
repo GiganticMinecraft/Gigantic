@@ -68,16 +68,4 @@ object FollowSettingMenuMessages {
             Locale.JAPANESE to "フォローされています"
     )
 
-    val REFINE = LocalizedText(
-            Locale.JAPANESE to "絞り込み"
-    )
-
-    val ONLINE = LocalizedText(
-            Locale.JAPANESE to "オンライン"
-    )
-
-    val CLICK_TO_TOGGLE = LocalizedText(
-            Locale.JAPANESE to "クリックで切り替え"
-    )
-
 }

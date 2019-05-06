@@ -1,11 +1,8 @@
 package click.seichi.gigantic.item.items.menu
 
-import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
-import click.seichi.gigantic.menu.RefineItem
-import click.seichi.gigantic.menu.menus.PlayerListRefineMenu
 import click.seichi.gigantic.menu.menus.follow.*
 import click.seichi.gigantic.message.messages.menu.FollowSettingMenuMessages
 import click.seichi.gigantic.sound.sounds.PlayerSounds
@@ -226,47 +223,6 @@ object FollowSettingButtons {
                 player.mute(to.uniqueId)
                 MutePlayerMenu.reopen(player)
                 PlayerSounds.TOGGLE.playOnly(player)
-                return true
-            }
-        }
-    }
-
-    val REFINE = object : Button {
-
-        override fun toShownItemStack(player: Player): ItemStack? {
-            return itemStackOf(Material.HOPPER) {
-                setDisplayName("${ChatColor.AQUA}" +
-                        FollowSettingMenuMessages.REFINE.asSafety(player.wrappedLocale))
-            }
-        }
-
-        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (event.inventory.holder === PlayerListRefineMenu) return false
-            PlayerListRefineMenu.open(player)
-            return true
-        }
-
-    }
-
-    val REFINE_ITEM: (RefineItem) -> Button = { item: RefineItem ->
-        object : Button {
-            override fun toShownItemStack(player: Player): ItemStack? {
-                val isRefine = player.getOrPut(Keys.REFINE_ITEM_MAP[item]!!)
-                val itemStack = if (isRefine) ItemStack(Material.ENDER_EYE)
-                else ItemStack(Material.BLACK_STAINED_GLASS_PANE)
-                return itemStack.apply {
-                    val color = if (isRefine) ChatColor.GREEN else ChatColor.RED
-                    setDisplayName("$color" +
-                            FollowSettingMenuMessages.ONLINE.asSafety(player.wrappedLocale))
-                    setLore("${ChatColor.WHITE}${ChatColor.UNDERLINE}${ChatColor.BOLD}" +
-                            FollowSettingMenuMessages.CLICK_TO_TOGGLE.asSafety(player.wrappedLocale))
-                }
-            }
-
-            override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-                player.transform(Keys.REFINE_ITEM_MAP[item]!!) { !it }
-                PlayerSounds.TOGGLE.playOnly(player)
-                PlayerListRefineMenu.reopen(player)
                 return true
             }
         }

@@ -7,6 +7,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.command.*
 import click.seichi.gigantic.config.*
 import click.seichi.gigantic.database.table.DonateHistoryTable
+import click.seichi.gigantic.database.table.PurchaseHistoryTable
 import click.seichi.gigantic.database.table.ranking.RankingScoreTable
 import click.seichi.gigantic.database.table.ranking.RankingUserTable
 import click.seichi.gigantic.database.table.user.*
@@ -20,6 +21,7 @@ import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.player.skill.Skill
 import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.player.spell.spells.SkyWalk
+import click.seichi.gigantic.product.Product
 import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.ranking.Ranking
 import click.seichi.gigantic.ranking.Score
@@ -168,12 +170,13 @@ class Gigantic : JavaPlugin() {
                 UserToolTable,
                 UserBeltTable,
                 UserQuestTable,
-                UserEffectTable,
                 DonateHistoryTable,
                 UserFollowTable,
                 UserHomeTable,
                 UserMuteTable,
                 UserToggleTable,
+                // product,
+                PurchaseHistoryTable,
                 //ranking
                 RankingScoreTable,
                 RankingUserTable
@@ -313,6 +316,10 @@ class Gigantic : JavaPlugin() {
         }
         if (SideBarType.hasDuplicateId) {
             logger.warning("Detect duplicate id on SideBarType")
+            hasDuplicateId = true
+        }
+        if (Product.hasDuplicateId) {
+            logger.warning("Detect duplicate id on Product")
             hasDuplicateId = true
         }
 
