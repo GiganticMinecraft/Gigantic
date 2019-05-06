@@ -36,6 +36,7 @@ enum class Currency {
     fun calcRemainAmount(player: Player): Int {
         // 購入した商品で減算
         return player.getOrPut(Keys.PURCHASE_TICKET_LIST)
+                .filter { !it.isCancelled }
                 .filter { it.product.currency == this }
                 .fold(getTotalAmount(player)) { source: Int, ticket ->
                     source - ticket.product.price.times(ticket.amount)

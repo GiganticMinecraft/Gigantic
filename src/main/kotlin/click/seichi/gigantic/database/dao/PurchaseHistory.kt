@@ -20,4 +20,8 @@ class PurchaseHistory(id: EntityID<Int>) : IntEntity(id) {
 
     var createdAt by PurchaseHistoryTable.createdAt
 
+    var isCancelled by PurchaseHistoryTable.isCancelled
+
+    var cancelledAt by PurchaseHistoryTable.cancelledAt
+
 }

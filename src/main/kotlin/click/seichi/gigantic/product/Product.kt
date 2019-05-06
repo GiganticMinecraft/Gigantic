@@ -81,6 +81,7 @@ enum class Product(
     // 購入した個数
     fun boughtAmount(player: Player): Int {
         return getTicketList(player)
+                .filter { !it.isCancelled }
                 .fold(0) { source, ticket ->
                     source + ticket.amount
                 }
@@ -107,15 +108,5 @@ enum class Product(
     fun canBuy(player: Player, amount: Int = 1): Boolean {
         return boughtAmount(player) + amount <= maxAmount &&
                 currency.calcRemainAmount(player) >= price.times(amount)
-    }
-
-    fun cancel(player: Player, ticket: PurchaseTicket): Boolean {
-        var canRemove = false
-        player.transform(Keys.PURCHASE_TICKET_LIST) {
-            it.toMutableList().apply {
-                canRemove = remove(ticket)
-            }
-        }
-        return canRemove
     }
 }

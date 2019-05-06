@@ -17,7 +17,6 @@ import click.seichi.gigantic.database.dao.user.User
 import click.seichi.gigantic.database.dao.user.UserFollow
 import click.seichi.gigantic.database.dao.user.UserHome
 import click.seichi.gigantic.database.dao.user.UserMute
-import click.seichi.gigantic.database.table.PurchaseHistoryTable
 import click.seichi.gigantic.database.table.user.UserFollowTable
 import click.seichi.gigantic.database.table.user.UserHomeTable
 import click.seichi.gigantic.database.table.user.UserMuteTable
@@ -1533,13 +1532,9 @@ object Keys {
         }
 
         override fun store(entity: UserEntity, value: List<PurchaseTicket>) {
-            val oldList = read(entity)
-            val newList = value.toMutableList().apply {
-                removeAll(oldList)
-            }.toList()
-            val deleteList = oldList.toMutableList().apply {
-                removeAll(value)
-            }
+            val newList = value.toMutableList()
+                    .filter { it.purchaseId == null }
+                    .toList()
 
             newList.forEach { ticket ->
                 PurchaseHistory.new {
@@ -1547,13 +1542,9 @@ object Keys {
                     productId = ticket.product.id
                     amount = ticket.amount
                     createdAt = ticket.date
-                }
-            }
-
-            deleteList.forEach { ticket ->
-                PurchaseHistoryTable.deleteWhere {
-                    (PurchaseHistoryTable.userId eq entity.user.id.value) and
-                            (PurchaseHistoryTable.id eq ticket.purchaseId)
+                    isCancelled = ticket.isCancelled
+                    if (ticket.cancelledAt != null)
+                        cancelledAt = ticket.cancelledAt
                 }
             }
         }

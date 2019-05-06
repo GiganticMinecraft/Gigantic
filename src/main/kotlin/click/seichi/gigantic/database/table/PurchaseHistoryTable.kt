@@ -15,4 +15,9 @@ object PurchaseHistoryTable : IntIdTable("purchase_history") {
     val amount = integer("amount")
 
     val createdAt = datetime("created_at")
+
+    val isCancelled = bool("is_cancelled").default(false)
+
+    val cancelledAt = datetime("cancelled_at").nullable()
+
 }

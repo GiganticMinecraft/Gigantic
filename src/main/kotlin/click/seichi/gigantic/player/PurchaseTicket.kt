@@ -12,7 +12,9 @@ class PurchaseTicket(
         val purchaseId: Int?,
         val product: Product,
         val amount: Int,
-        val date: DateTime = DateTime.now()
+        val date: DateTime = DateTime.now(),
+        var isCancelled: Boolean = false,
+        var cancelledAt: DateTime? = null
 ) {
     constructor(purchaseHistory: PurchaseHistory) : this(
             purchaseHistory.id.value,
@@ -21,5 +23,9 @@ class PurchaseTicket(
             purchaseHistory.createdAt
     )
 
+    fun cancel(ticket: PurchaseTicket) {
+        ticket.isCancelled = true
+        ticket.cancelledAt = DateTime.now()
+    }
 
 }
