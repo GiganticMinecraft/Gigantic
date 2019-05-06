@@ -4,6 +4,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.sidebar.bars.EthelLogger
+import click.seichi.gigantic.sidebar.bars.InfoBar
 import org.bukkit.entity.Player
 
 /**
@@ -13,7 +14,8 @@ enum class SideBarType(
         val id: Int,
         val sideBar: SideBar
 ) {
-    Ethel(0, EthelLogger())
+    Ethel(0, EthelLogger()),
+    INFO(1, InfoBar())
     ;
 
     companion object {
