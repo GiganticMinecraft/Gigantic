@@ -60,7 +60,7 @@ class ElytraListener : Listener {
 
     @EventHandler(ignoreCancelled = true)
     fun onMove(event: PlayerMoveEvent) {
-        val player = event.player ?: return
+        val player = event.player
         if (!player.isGliding) return
         // 飛行中の加速
         val unitVector = Vector(0.0, player.location.direction.y, 0.0)
@@ -71,7 +71,7 @@ class ElytraListener : Listener {
     @EventHandler
     fun onChangeItemHeld(event: PlayerItemHeldEvent) {
         val slot = event.newSlot
-        val player = event.player ?: return
+        val player = event.player
         if (player.getOrPut(Keys.BELT).findItem(slot) == HandItems.JUMP) return
         if (player.getOrPut(Keys.ELYTRA_CHARGE_UP_TICKS) < 0) return
         player.offer(Keys.ELYTRA_CHARGE_UP_TICKS, -1)
@@ -79,7 +79,7 @@ class ElytraListener : Listener {
 
     @EventHandler(ignoreCancelled = true)
     fun onToggleSneak(event: PlayerToggleSneakEvent) {
-        val player = event.player ?: return
+        val player = event.player
         if (!player.isOnGround) return
         val slot = player.inventory.heldItemSlot
         if (player.getOrPut(Keys.BELT).findItem(slot) != HandItems.JUMP) return

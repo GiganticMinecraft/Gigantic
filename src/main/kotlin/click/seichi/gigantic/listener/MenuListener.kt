@@ -57,8 +57,7 @@ class MenuListener : Listener {
     fun onInteract(event: PlayerInteractEvent) {
         if (event.action == Action.PHYSICAL) return
 
-        val player = event.player
-                ?.takeIf { it.gameMode == GameMode.SURVIVAL }
+        val player = event.player.takeIf { it.gameMode == GameMode.SURVIVAL }
                 ?: return
         val belt = player.getOrPut(Keys.BELT)
         val slot = player.inventory.heldItemSlot

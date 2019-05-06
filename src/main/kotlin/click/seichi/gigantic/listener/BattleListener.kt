@@ -18,15 +18,15 @@ class BattleListener : Listener {
     @EventHandler
     fun defence(event: PlayerInteractEvent) {
         val block = event.clickedBlock ?: return
-        val player = event.player ?: return
+        val player = event.player
         val battle = player.findBattle() ?: return
         battle.tryDefence(player, block)
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     fun cancelOtherPlayersBattleChunk(event: BlockBreakEvent) {
-        val block = event.block ?: return
-        val player = event.player ?: return
+        val block = event.block
+        val player = event.player
         val battle = block.findBattle() ?: return
         if (battle.isJoined(player) || battle.spawner == player) return
         event.isCancelled = true
@@ -35,8 +35,8 @@ class BattleListener : Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     fun cancelNotBattleChunk(event: BlockBreakEvent) {
-        val block = event.block ?: return
-        val player = event.player ?: return
+        val block = event.block
+        val player = event.player
         val battle = player.findBattle() ?: return
         if (battle.chunk == block.chunk) return
         event.isCancelled = true
@@ -50,8 +50,8 @@ class BattleListener : Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun attack(event: BlockBreakEvent) {
-        val block = event.block ?: return
-        val player = event.player ?: return
+        val block = event.block
+        val player = event.player
         if (!block.isCrust) return
         val battle = player.findBattle() ?: return
         if (battle.chunk == block.chunk)

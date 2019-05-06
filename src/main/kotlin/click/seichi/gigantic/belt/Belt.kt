@@ -63,7 +63,7 @@ enum class Belt(
      * @param applyOffHandItem オフハンドも更新するかどうか
      */
     fun wear(player: Player, applyTool: Boolean = true, applyOffHandItem: Boolean = true) {
-        player.inventory?.let { inventory ->
+        player.inventory.let { inventory ->
             (0..8).forEach { slot ->
                 if (slot == toolSlot) return@forEach
                 inventory.setItem(slot,

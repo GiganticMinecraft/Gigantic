@@ -11,5 +11,4 @@ class SenseEvent(
         val will: Will,
         val player: Player,
         val amount: Long
-) : CustomEvent() {
-}
+) : CustomEvent()

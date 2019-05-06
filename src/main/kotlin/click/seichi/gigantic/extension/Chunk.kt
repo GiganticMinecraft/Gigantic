@@ -17,7 +17,7 @@ fun Chunk.forEachBlock(action: (Block) -> Unit) {
     (0..15).forEach { x ->
         (0..15).forEach { z ->
             (0..256).forEach y@{ y ->
-                val block = getBlock(x, y, z) ?: return@y
+                val block = getBlock(x, y, z)
                 action.invoke(block)
             }
         }

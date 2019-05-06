@@ -40,8 +40,8 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
                     else Defaults.WILL_SPAWN_PROBABILITY,
                     BlockBreakEvent::class.java
             ) { event ->
-                val player = event.player ?: return@RandomSummonCase
-                val block = event.block ?: return@RandomSummonCase
+                val player = event.player
+                val block = event.block
                 if (!block.isCrust && !block.isTree) return@RandomSummonCase
                 val will = Will.values()
                         .filter { player.hasAptitude(it) }
@@ -55,9 +55,9 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
     ),
     MONSTER(
             RandomSummonCase(0.2, BlockBreakEvent::class.java) { event ->
-                val player = event.player ?: return@RandomSummonCase
+                val player = event.player
                 if (!event.block.isCrust && !event.block.isTree) return@RandomSummonCase
-                val chunk = event.block.chunk ?: return@RandomSummonCase
+                val chunk = event.block.chunk
                 if (!Achievement.QUEST.isGranted(player)) return@RandomSummonCase
                 // 他のバトルに参加している場合は終了
                 if (player.findBattle() != null) return@RandomSummonCase

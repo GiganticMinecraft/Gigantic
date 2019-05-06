@@ -20,7 +20,7 @@ class WorldListener : Listener {
 
     @EventHandler
     fun onWorldInit(event: WorldInitEvent) {
-        val world = event.world ?: return
+        val world = event.world
         world.setSpawnFlags(false, false)
         world.pvp = false
         world.difficulty = Difficulty.NORMAL

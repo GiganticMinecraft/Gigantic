@@ -16,7 +16,7 @@ class AchievementListener : Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onBlockBreak(event: BlockBreakEvent) {
-        val player = event.player ?: return
+        val player = event.player
         player.transform(Keys.UPDATE_COUNT) { count ->
             val next = count.inc()
             if (next % Defaults.ACHIEVEMENT_BLOCK_BREAK_UPDATE_COUNT == 0) {
