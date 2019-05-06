@@ -80,7 +80,6 @@ dependencies {
     embed group: "org.jetbrains.exposed", name: "exposed", version: exposed_version
 
     compile fileTree(dir: "libs", include: "*.jar")
-
 }
 
 jar {

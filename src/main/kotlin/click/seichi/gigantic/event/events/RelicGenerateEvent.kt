@@ -13,5 +13,4 @@ class RelicGenerateEvent(
         val generated: Relic,
         val useWill: Will,
         val useAmount: Long
-) : CustomEvent() {
-}
+) : CustomEvent()

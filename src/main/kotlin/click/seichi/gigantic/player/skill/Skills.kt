@@ -93,7 +93,7 @@ object Skills {
                     if (!p.isValid) return@onStart
                     val tpLocation = p.getTargetBlock(transparentMaterialSet, maxDistance).let { block ->
                         if (transparentMaterialSet.contains(block.type)) return@let null
-                        var nextBlock = block ?: return@let null
+                        var nextBlock = block
                         while (!nextBlock.isSurface) {
                             nextBlock = nextBlock.getRelative(BlockFace.UP)
                         }

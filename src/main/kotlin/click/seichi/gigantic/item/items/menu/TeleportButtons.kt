@@ -140,7 +140,7 @@ object TeleportButtons {
             }
             player.teleportSafely(location!!)
             if (player.gameMode == GameMode.SURVIVAL)
-                PlayerSounds.TELEPORT.play(location!!)
+                PlayerSounds.TELEPORT.play(location)
             player.offer(Keys.LAST_DEATH_CHUNK, null)
             return true
         }
@@ -299,7 +299,7 @@ object TeleportButtons {
             }
             player.teleportSafely(location!!)
             if (player.gameMode == GameMode.SURVIVAL)
-                PlayerSounds.TELEPORT.play(location!!)
+                PlayerSounds.TELEPORT.play(location)
             return true
         }
 

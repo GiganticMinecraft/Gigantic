@@ -44,7 +44,7 @@ internal object Random {
             ?.let { it }
             ?: nextWillSizeWithRegularity()
 
-    fun nextColor() = Color.fromRGB(nextInt(255), nextInt(255), nextInt(255))!!
+    fun nextColor() = Color.fromRGB(nextInt(255), nextInt(255), nextInt(255))
 
     private val chatColorSet = setOf(
             ChatColor.YELLOW,

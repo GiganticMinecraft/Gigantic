@@ -14,5 +14,4 @@ data class SoulMonsterParameter(
         // blocks per attack
         val attackTimes: Int,
         val attackMaterial: Material
-) {
-}
+)

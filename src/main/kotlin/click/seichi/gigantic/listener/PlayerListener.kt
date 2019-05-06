@@ -89,7 +89,7 @@ class PlayerListener : Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        val player = event.player ?: return
+        val player = event.player
         /**
          * この処理がないと、cacheがロードされずに参加できてしまう
          */
@@ -171,7 +171,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onDeath(event: PlayerDeathEvent) {
-        val player = event.entity ?: return
+        val player = event.entity
         event.deathMessage = null
         event.keepInventory = true
         event.keepLevel = true
@@ -206,7 +206,7 @@ class PlayerListener : Listener {
 
     @EventHandler
     fun onReSpawn(event: PlayerRespawnEvent) {
-        val player = event.player ?: return
+        val player = event.player
 
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
@@ -241,8 +241,8 @@ class PlayerListener : Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onPlaceBlock(event: BlockPlaceEvent) {
-        val player = event.player ?: return
-        val block = event.block ?: return
+        val player = event.player
+        val block = event.block
         if (player.gameMode != GameMode.SURVIVAL) return
         if (block.type == Material.TORCH) return
         event.isCancelled = true
@@ -250,7 +250,7 @@ class PlayerListener : Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onMultiPlaceBlock(event: BlockMultiPlaceEvent) {
-        val player = event.player ?: return
+        val player = event.player
         if (player.gameMode != GameMode.SURVIVAL) return
         event.isCancelled = true
     }
@@ -258,8 +258,8 @@ class PlayerListener : Listener {
     // スポーン付近を破壊した場合問答無用でキャンセル
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelSpawnArea(event: BlockBreakEvent) {
-        val player = event.player ?: return
-        val block = event.block ?: return
+        val player = event.player
+        val block = event.block
         if (player.gameMode != GameMode.SURVIVAL) return
         if (!block.isSpawnArea) return
         PlayerMessages.SPAWN_PROTECT.sendTo(player)
@@ -269,7 +269,7 @@ class PlayerListener : Listener {
     // ツール以外で破壊したときキャンセル
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelNotToolBreaking(event: BlockBreakEvent) {
-        val player = event.player ?: return
+        val player = event.player
         if (player.gameMode != GameMode.SURVIVAL) return
         val slot = player.inventory.heldItemSlot
         val belt = player.getOrPut(Keys.BELT)
@@ -281,8 +281,8 @@ class PlayerListener : Listener {
     // ツール以外で破壊したときキャンセル
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelNotSneakingUnderBlockBreak(event: BlockBreakEvent) {
-        val player = event.player ?: return
-        val block = event.block ?: return
+        val player = event.player
+        val block = event.block
         if (player.gameMode != GameMode.SURVIVAL) return
         if (!block.isUnder(player)) return
         if (player.isSneaking) return
@@ -294,8 +294,8 @@ class PlayerListener : Listener {
     // スキルで破壊中のブロックを破壊したときキャンセル
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelBrokenBlockBreak(event: BlockBreakEvent) {
-        val player = event.player ?: return
-        val block = event.block ?: return
+        val player = event.player
+        val block = event.block
         if (player.gameMode != GameMode.SURVIVAL) return
         if (!Gigantic.SKILLED_BLOCK_SET.contains(block)) return
         event.isCancelled = true
@@ -304,8 +304,8 @@ class PlayerListener : Listener {
     // プレイヤーの近くを破壊したときキャンセル,ただし相互フォローなら良し
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelNearAnotherPlayer(event: BlockBreakEvent) {
-        val player = event.player ?: return
-        val block = event.block ?: return
+        val player = event.player
+        val block = event.block
         if (player.gameMode != GameMode.SURVIVAL) return
         block.firstOrNullOfNearPlayer(player) ?: return
         PlayerMessages.NOT_BREAK_NEAR_ANOTHER_PLAYER.sendTo(player)
@@ -315,8 +315,8 @@ class PlayerListener : Listener {
     // 重力が１を超えた時キャンセル
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelOverGravity(event: BlockBreakEvent) {
-        val player = event.player ?: return
-        val block = event.block ?: return
+        val player = event.player
+        val block = event.block
         if (player.gameMode != GameMode.SURVIVAL) return
         if (block.calcCrustGravity() <= Config.MAX_BREAKABLE_GRAVITY) return
         PlayerMessages.NOT_BREAK_OVER_GRAVITY.sendTo(player)
@@ -326,8 +326,8 @@ class PlayerListener : Listener {
     // ｙ座標が0ならキャンセル
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun cancelFloorBlock(event: BlockBreakEvent) {
-        val player = event.player ?: return
-        val block = event.block ?: return
+        val player = event.player
+        val block = event.block
         if (player.gameMode != GameMode.SURVIVAL) return
         if (block.y != 0) return
         PlayerMessages.FLOOR_BLOCK.sendTo(player)

@@ -9,5 +9,4 @@ import org.bukkit.entity.Player
 class ComboEvent(
         val combo: Long,
         val player: Player
-) : CustomEvent() {
-}
+) : CustomEvent()

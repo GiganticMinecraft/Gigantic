@@ -50,7 +50,7 @@ enum class Will(
     ) {
         // 高度が30以上62以下であり，かつ海，川等のバイオームであること
         override fun canSpawn(player: Player, block: Block): Boolean {
-            val biome = block.biome ?: return false
+            val biome = block.biome
             if (!biome.isOcean && !biome.isRiver) return false
             return block.y in 30..62
         }
@@ -100,7 +100,7 @@ enum class Will(
     ) {
         // 高度が30以上62以下であり，かつ海，川等のバイオームではないこと
         override fun canSpawn(player: Player, block: Block): Boolean {
-            val biome = block.biome ?: return false
+            val biome = block.biome
             if (biome.isOcean || biome.isRiver) return false
             return block.y in 30..62
         }
@@ -166,7 +166,7 @@ enum class Will(
     ) {
         // 山岳バイオームであること
         override fun canSpawn(player: Player, block: Block): Boolean {
-            val biome = block.biome ?: return false
+            val biome = block.biome
             return biome.isMountain
         }
     },
@@ -183,7 +183,7 @@ enum class Will(
     ) {
         // 森林バイオームであること
         override fun canSpawn(player: Player, block: Block): Boolean {
-            val biome = block.biome ?: return false
+            val biome = block.biome
             return biome.isForest
         }
     },
@@ -200,7 +200,7 @@ enum class Will(
     ) {
         // 丘陵
         override fun canSpawn(player: Player, block: Block): Boolean {
-            val biome = block.biome ?: return false
+            val biome = block.biome
             return biome.isHill
         }
     },

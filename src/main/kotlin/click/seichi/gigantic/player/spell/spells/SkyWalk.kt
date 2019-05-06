@@ -103,7 +103,7 @@ object SkyWalk : Invokable {
     fun calcPlaceBlockSet(player: Player): Set<Block> {
         val prevSet = player.getOrPut(Keys.SPELL_SKY_WALK_PLACE_BLOCKS)
         val pLocBlock = player.location.block
-        val base = pLocBlock.getRelative(BlockFace.DOWN) ?: return setOf()
+        val base = pLocBlock.getRelative(BlockFace.DOWN)
 
         val columnSet = mutableSetOf(base)
         (1..Config.SPELL_SKY_WALK_RADIUS).forEach { length ->

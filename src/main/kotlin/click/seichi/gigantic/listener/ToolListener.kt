@@ -22,7 +22,7 @@ class ToolListener : Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
-        val player = event.player ?: return
+        val player = event.player
         event.isCancelled = true
         var current: Tool? = null
         player.manipulate(CatalogPlayerCache.TOOL_SWITCHER) {
@@ -38,7 +38,7 @@ class ToolListener : Listener {
     // 自動切り替え
     @EventHandler
     fun onInteract(event: PlayerInteractEvent) {
-        val player = event.player ?: return
+        val player = event.player
         if (event.action != Action.LEFT_CLICK_BLOCK) return
         if (event.hand != EquipmentSlot.HAND) return
         if (!player.getOrPut(Keys.AUTO_SWITCH)) return

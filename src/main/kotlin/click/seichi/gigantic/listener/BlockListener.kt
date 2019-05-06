@@ -15,7 +15,7 @@ class BlockListener : Listener {
     // 液体の流れを止める
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onBlockFromTo(event: BlockFromToEvent) {
-        event.block ?: return
+        event.block
         event.isCancelled = true
     }
 
