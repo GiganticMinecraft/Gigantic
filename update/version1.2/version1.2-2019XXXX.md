@@ -15,6 +15,7 @@
 
 :diamond_shape_with_a_dot_inside: テクスチャ切り替えボタンを詳細設定の項目に移動しました  
 :diamond_shape_with_a_dot_inside: エーテル一覧をログ形式に変更しました  
+:diamond_shape_with_a_dot_inside: ボーナス発生中のレリックが範囲破壊時の全てのブロックに適用されるようになりました  
 
 
 :bow: **__不具合修正__** :bow:   
