@@ -20,7 +20,9 @@ class PurchaseTicket(
             purchaseHistory.id.value,
             Product.findById(purchaseHistory.productId)!!,
             purchaseHistory.amount,
-            purchaseHistory.createdAt
+            purchaseHistory.createdAt,
+            purchaseHistory.isCancelled,
+            purchaseHistory.cancelledAt
     )
 
     fun cancel(ticket: PurchaseTicket) {

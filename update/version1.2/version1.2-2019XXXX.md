@@ -9,14 +9,12 @@
 :diamond_shape_with_a_dot_inside: 露天掘り1ブロックにつき100の追加経験値がボーナスとして与えられます  
 :diamond_shape_with_a_dot_inside: 露天掘りした面積のランキングを新しく追加しました  
 
-  
 
 
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
 :diamond_shape_with_a_dot_inside: テクスチャ切り替えボタンを詳細設定の項目に移動しました  
-:diamond_shape_with_a_dot_inside: エーテル一覧はログ形式に変更されました  
-
+:diamond_shape_with_a_dot_inside: エーテル一覧をログ形式に変更しました  
 
 
 :bow: **__不具合修正__** :bow:   
