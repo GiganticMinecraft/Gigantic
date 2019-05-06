@@ -294,7 +294,8 @@ object BagButtons {
         override fun toShownItemStack(player: Player): ItemStack? {
             val type = player.getOrPut(Keys.SIDEBAR_TYPE)
             val nextType = when (type) {
-                SideBarType.Ethel -> SideBarType.Ethel
+                SideBarType.Ethel -> SideBarType.INFO
+                SideBarType.INFO -> SideBarType.Ethel
             }
             return itemStackOf(Material.SIGN) {
                 // TODO implements

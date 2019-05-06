@@ -1,7 +1,7 @@
 package click.seichi.gigantic.popup
 
 import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.util.virtualtag.VanillaTag
+import click.seichi.gigantic.util.virtualtag.LiteTag
 import click.seichi.gigantic.util.virtualtag.VirtualTag
 import org.bukkit.Location
 
@@ -21,7 +21,7 @@ class PopUp(private val animation: PopAnimation,
         location.world?.players
                 ?.filter { player -> player.location.distanceSquared(location) < SEND_DISTANCE }
                 ?.forEach { player ->
-                    val virtualTag: VirtualTag = VanillaTag(location, text)
+                    val virtualTag: VirtualTag = LiteTag(location, text, player)
 
                     animation.animate(player, virtualTag, location)
 

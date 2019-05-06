@@ -22,7 +22,7 @@ class VanillaTag(var location: Location,
             customName = text
             isCustomNameVisible = true
             isSilent = true
-            isVisible = true
+            isVisible = false
             isSmall = true
             setBasePlate(false)
             isMarker = true
