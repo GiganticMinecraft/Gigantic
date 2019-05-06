@@ -200,8 +200,22 @@ class MultiBreaker : SpellCaster {
         val stripCount = breakBlockSet
                 .count { block -> block.y == 1 && block.calcGravity(breakArea.height - 1) == 0 }
 
+
+        val relics = mutableSetOf<Relic>()
         val relicBonus = breakBlockSet.fold(0.0) { source, b ->
-            source.plus(Relic.calcMultiplier(player, b))
+            Relic.calcBonusTargetRelics(player, b).let {
+                relics.addAll(it)
+                val multiplier = it.map { relic ->
+                    relic.calcMultiplier(player)
+                }.sum()
+                source.plus(multiplier)
+            }
+        }
+
+        player.transform(Keys.ACTIVE_RELICS) {
+            relics.toMutableSet().apply {
+                addAll(it)
+            }
         }
 
         player.manipulate(CatalogPlayerCache.EXP) {

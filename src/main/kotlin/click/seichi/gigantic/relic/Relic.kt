@@ -1467,13 +1467,11 @@ enum class Relic(
 
         val SPECIAL_RELICS by lazy { values().filter { Will.findByRelic(it) == null }.toSet() }
 
-        fun calcMultiplier(player: Player, block: Block) = values().filter {
+        fun calcBonusTargetRelics(player: Player, block: Block): Set<Relic> = values().filter {
             player.hasRelic(it)
         }.filter {
             it.isBonusTarget(block)
-        }.toSet().apply {
-            player.offer(Keys.ACTIVE_RELICS, this)
-        }.map { it.calcMultiplier(player) }.sum()
+        }.toSet()
     }
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)

@@ -51,7 +51,12 @@ open class Miner : Breaker {
         player.offer(Keys.STRIP_COUNT, if (stripBonus > 0) 1L else 0L)
 
         // レリック
-        var relicBonus = Relic.calcMultiplier(player, block)
+        val relics = Relic.calcBonusTargetRelics(player, block)
+        var relicBonus = relics.map {
+            it.calcMultiplier(player)
+        }.sum()
+
+        player.offer(Keys.ACTIVE_RELICS, relics)
         player.offer(Keys.RELIC_BONUS, relicBonus)
 
 
