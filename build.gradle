@@ -5,8 +5,8 @@ buildscript {
     ext {
         kotlin_version = '1.3.31'
         coroutines_version = '1.2.1'
-        spigot_api_version = '1.13.2-R0.1-SNAPSHOT'
-        protcollib_version = '4.4.0-SNAPSHOT'
+        spigot_api_version = '1.14-R0.1-SNAPSHOT'
+        protcollib_version = '4.5.0-SNAPSHOT'
         slf4j_version = '1.7.26'
         exposed_version = '0.13.6'
     }
@@ -72,7 +72,7 @@ dependencies {
 
     embed group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlin_version
 
-    compile group: 'com.comphenix.protocol', name: 'ProtocolLib', version: protcollib_version
+//    compile group: 'com.comphenix.protocol', name: 'ProtocolLib', version: protcollib_version
 
     embed group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: coroutines_version
     embed group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-rx2', version: coroutines_version

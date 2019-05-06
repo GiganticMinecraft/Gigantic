@@ -230,6 +230,12 @@ object BiomeMessages {
             Biome.MODIFIED_BADLANDS_PLATEAU -> LocalizedText(
                     Locale.JAPANESE to "変異した荒野高原"
             )
+            Biome.BAMBOO_JUNGLE -> LocalizedText(
+                    Locale.JAPANESE to "竹林"
+            )
+            Biome.BAMBOO_JUNGLE_HILLS -> LocalizedText(
+                    Locale.JAPANESE to "竹林の丘陵"
+            )
         }
     }
 }
