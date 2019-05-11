@@ -2,8 +2,11 @@ package click.seichi.gigantic.listener
 
 import click.seichi.gigantic.event.events.RelicGenerateEvent
 import click.seichi.gigantic.event.events.SenseEvent
-import click.seichi.gigantic.sidebar.SideBarType
+import click.seichi.gigantic.event.events.TickEvent
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.sidebar.bars.EthelLogger
+import click.seichi.gigantic.sidebar.bars.MainBar
+import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 
@@ -13,14 +16,23 @@ import org.bukkit.event.Listener
 class SideBarListener : Listener {
 
     @EventHandler
+    fun onTick(event: TickEvent) {
+        if (event.ticks % Defaults.SIDEBAR_RECORD_INTERVAL * 20L != 0L) return
+        Bukkit.getServer().onlinePlayers
+                .filterNotNull()
+                .filter { it.isValid }
+                .forEach {
+                    MainBar.update(it)
+                }
+    }
+
+    @EventHandler
     fun onSense(event: SenseEvent) {
-        val ethelLogger = SideBarType.Ethel.sideBar as EthelLogger
-        ethelLogger.add(event.player, event.will, event.amount)
+        EthelLogger.add(event.player, event.will, event.amount)
     }
 
     @EventHandler
     fun onGenerateRelic(event: RelicGenerateEvent) {
-        val ethelLogger = SideBarType.Ethel.sideBar as EthelLogger
-        ethelLogger.use(event.player, event.useWill, event.useAmount)
+        EthelLogger.use(event.player, event.useWill, event.useAmount)
     }
 }

@@ -287,3 +287,5 @@ fun Player.updateWillRelationship(isOnLogin: Boolean = false) {
         }
     }
 }
+
+fun Player.getWrappedExp(reason: ExpReason) = Keys.EXP_MAP[reason]?.let { getOrPut(it) } ?: BigDecimal.ZERO

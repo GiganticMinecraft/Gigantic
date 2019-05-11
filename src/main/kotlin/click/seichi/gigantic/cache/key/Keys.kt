@@ -30,7 +30,8 @@ import click.seichi.gigantic.ranking.RankingPlayer
 import click.seichi.gigantic.ranking.Score
 import click.seichi.gigantic.relic.Relic
 import click.seichi.gigantic.sidebar.Log
-import click.seichi.gigantic.sidebar.SideBarType
+import click.seichi.gigantic.sidebar.SideBar
+import click.seichi.gigantic.sidebar.bars.MainBar
 import click.seichi.gigantic.spirit.spirits.QuestMonsterSpirit
 import click.seichi.gigantic.timer.LingeringTimer
 import click.seichi.gigantic.timer.SimpleTimer
@@ -1514,11 +1515,29 @@ object Keys {
         }
     }
 
-    val SIDEBAR_TYPE = object : Key<PlayerCache, SideBarType> {
-        override val default: SideBarType
-            get() = SideBarType.Ethel
+    val CURRENT_SIDEBAR = object : Key<PlayerCache, SideBar> {
+        override val default: SideBar
+            get() = MainBar
 
-        override fun satisfyWith(value: SideBarType): Boolean {
+        override fun satisfyWith(value: SideBar): Boolean {
+            return true
+        }
+    }
+
+    val SIDEBAR_SHOW_UID = object : Key<PlayerCache, UUID> {
+        override val default: UUID
+            get() = UUID.randomUUID()
+
+        override fun satisfyWith(value: UUID): Boolean {
+            return true
+        }
+    }
+
+    val SUSTAINED_SIDEBAR = object : Key<PlayerCache, SideBar> {
+        override val default: SideBar
+            get() = Defaults.SIDEBAR_DEFAULT
+
+        override fun satisfyWith(value: SideBar): Boolean {
             return true
         }
     }

@@ -26,7 +26,6 @@ import click.seichi.gigantic.quest.Quest
 import click.seichi.gigantic.ranking.Ranking
 import click.seichi.gigantic.ranking.Score
 import click.seichi.gigantic.relic.Relic
-import click.seichi.gigantic.sidebar.SideBarType
 import click.seichi.gigantic.spirit.SpiritManager
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
@@ -312,10 +311,6 @@ class Gigantic : JavaPlugin() {
         }
         if (ExpReason.hasDuplicateId) {
             logger.warning("Detect duplicate id on ExpReason")
-            hasDuplicateId = true
-        }
-        if (SideBarType.hasDuplicateId) {
-            logger.warning("Detect duplicate id on SideBarType")
             hasDuplicateId = true
         }
         if (Product.hasDuplicateId) {

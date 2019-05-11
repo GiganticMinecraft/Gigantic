@@ -1,12 +1,12 @@
 package click.seichi.gigantic.sidebar.bars
 
+import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.ethel
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.sidebar.Log
 import click.seichi.gigantic.sidebar.Logger
-import click.seichi.gigantic.sidebar.SideBarType
 import click.seichi.gigantic.will.Will
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
@@ -15,10 +15,11 @@ import java.util.*
 /**
  * @author tar0ss
  */
-class EthelLogger : Logger("ethel") {
+object EthelLogger : Logger("ethel") {
 
-    override val type: SideBarType
-        get() = SideBarType.Ethel
+    override fun canShow(player: Player): Boolean {
+        return Achievement.FIRST_WILL.isGranted(player)
+    }
 
     override fun getDeque(player: Player): Deque<Log> {
         return player.getOrPut(Keys.ETHEL_DEQUE)

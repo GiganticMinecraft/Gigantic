@@ -19,7 +19,6 @@ import click.seichi.gigantic.message.messages.menu.*
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.DonateTicket
 import click.seichi.gigantic.quest.Quest
-import click.seichi.gigantic.sidebar.SideBarType
 import click.seichi.gigantic.sound.sounds.PlayerSounds
 import click.seichi.gigantic.sound.sounds.WillSpiritSounds
 import click.seichi.gigantic.util.Random
@@ -288,24 +287,6 @@ object BagButtons {
             }
         }
 
-    }
-
-    val SIDEBAR_CHANGE = object : Button {
-        override fun toShownItemStack(player: Player): ItemStack? {
-            val type = player.getOrPut(Keys.SIDEBAR_TYPE)
-            val nextType = when (type) {
-                SideBarType.Ethel -> SideBarType.INFO
-                SideBarType.INFO -> SideBarType.Ethel
-            }
-            return itemStackOf(Material.SIGN) {
-                // TODO implements
-            }
-        }
-
-        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            // TODO implements
-            return super.tryClick(player, event)
-        }
     }
 
     val SPECIAL_THANKS = object : Button {
@@ -620,8 +601,6 @@ object BagButtons {
         }
 
     }
-
-
 
 
     val RANKING = object : Button {

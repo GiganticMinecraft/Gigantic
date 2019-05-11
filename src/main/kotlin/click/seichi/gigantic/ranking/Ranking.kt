@@ -1,6 +1,7 @@
 package click.seichi.gigantic.ranking
 
 import click.seichi.gigantic.database.table.ranking.RankingScoreTable
+import click.seichi.gigantic.player.Defaults
 import org.jetbrains.exposed.sql.selectAll
 import java.util.*
 
@@ -37,7 +38,7 @@ class Ranking(val score: Score) {
         RankingScoreTable.selectAll()
                 .notForUpdate()
                 .orderBy(score.column to score.sortOrder)
-                .limit(10000)
+                .limit(Defaults.RANKING_BOUND)
                 .forEachIndexed { index, row ->
                     val rank = index + 1
                     val uniqueId = row[RankingScoreTable.id].value
