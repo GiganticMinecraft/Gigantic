@@ -17,7 +17,7 @@ Development
 Requirement
 ---
 
-* [ProtocolLib 4.4.0-SNAPSHOT](https://dev.bukkit.org/projects/coreprotect)
+* [ProtocolLib 4.4.0-SNAPSHOT](https://www.spigotmc.org/resources/protocollib.1997/)
 
 
 ## Kotlin Style Guide
