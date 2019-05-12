@@ -1,9 +1,10 @@
 package click.seichi.gigantic.sidebar.bars
 
-import click.seichi.gigantic.extension.combo
+import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.extension.getWrappedExp
 import click.seichi.gigantic.extension.mana
 import click.seichi.gigantic.extension.wrappedLevel
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.sidebar.SideBar
 import click.seichi.gigantic.util.SideBarRow
@@ -48,33 +49,41 @@ object MainBar : SideBar("info") {
 
     override fun getMessageMap(player: Player): Map<SideBarRow, String> {
         val info = infoMap[player.uniqueId] ?: return mapOf()
-        return mapOf(
-                // 整地レベル
-                SideBarRow.ONE to "${ChatColor.GREEN}${ChatColor.BOLD} レベル : " +
-                        "${ChatColor.WHITE}${info.level}",
-                SideBarRow.TWO to "${ChatColor.DARK_GRAY}_",
-                // 分間通常破壊量
-                SideBarRow.THREE to "${ChatColor.GREEN}${ChatColor.BOLD}通常破壊: " +
-                        "${ChatColor.WHITE}${info.mineBlockPerMinute.setScale(0, RoundingMode.HALF_UP)}/分",
-                // 分間魔法破壊量
-                SideBarRow.FOUR to "${ChatColor.DARK_AQUA}${ChatColor.BOLD}魔法破壊: " +
-                        "${ChatColor.WHITE}${info.multiBlockPerMinute.setScale(0, RoundingMode.HALF_UP)}/分",
-                // 分間レリックボーナス量
-                SideBarRow.FIVE to "${ChatColor.YELLOW}${ChatColor.BOLD}レリック: " +
-                        "${ChatColor.WHITE}${info.relicBonusPerMinute.setScale(2, RoundingMode.HALF_UP)}/分",
-                // 次のレベルまでの到達予想時間
-                SideBarRow.SIX to "${ChatColor.DARK_GRAY}__",
-                // 分間マナ増減
-                SideBarRow.SEVEN to "${ChatColor.AQUA}${ChatColor.BOLD}  マナ  : " +
-                        "${ChatColor.WHITE}${info.manaPerMinute.setScale(2, RoundingMode.HALF_UP)}/分",
-                // 分間コンボ数
-                SideBarRow.EIGHT to "${ChatColor.GOLD}${ChatColor.BOLD} コンボ : " +
-                        "${ChatColor.WHITE}${info.comboPerMinute}/分",
-                // 次の採掘速度アップまでの到達予想時間
-                SideBarRow.NINE to "${ChatColor.DARK_GRAY}___",
-                SideBarRow.FOURTEEN to "${ChatColor.YELLOW}" +
-                        "     seichi.click"
-        )
+        val map = mutableMapOf<SideBarRow, String>()
+
+        map[SideBarRow.ONE] = "${ChatColor.GREEN}${ChatColor.BOLD} レベル : " +
+                "${ChatColor.WHITE}${info.level}"
+
+        map[SideBarRow.TWO] = "${Defaults.SIDEBAR_HIDE_COLOR}_"
+
+        map[SideBarRow.THREE] = "${ChatColor.GREEN}${ChatColor.BOLD}通常破壊: " +
+                if (info.mineBlockPerMinute >= 99999999.toBigDecimal()) "${ChatColor.RED}測定不能"
+                else "${ChatColor.WHITE}${info.mineBlockPerMinute.setScale(0, RoundingMode.HALF_UP)}/分"
+
+        if (Achievement.SPELL_MULTI_BREAK.isGranted(player))
+            map[SideBarRow.FOUR] = "${ChatColor.DARK_AQUA}${ChatColor.BOLD}魔法破壊: " +
+                    if (info.multiBlockPerMinute >= 99999999.toBigDecimal()) "${ChatColor.RED}測定不能"
+                    else "${ChatColor.WHITE}${info.multiBlockPerMinute.setScale(0, RoundingMode.HALF_UP)}/分"
+
+        if (Achievement.FIRST_RELIC.isGranted(player))
+            map[SideBarRow.FIVE] = "${ChatColor.GOLD}${ChatColor.BOLD}レリック: " +
+                    if (info.relicBonusPerMinute >= (99999.99).toBigDecimal()) "${ChatColor.RED}測定不能"
+                    else "${ChatColor.WHITE}${info.relicBonusPerMinute.setScale(2, RoundingMode.HALF_UP)}/分"
+
+        map[SideBarRow.SIX] = "${Defaults.SIDEBAR_HIDE_COLOR}__"
+
+        if (Achievement.MANA_STONE.isGranted(player))
+            map[SideBarRow.SEVEN] = "${ChatColor.AQUA}${ChatColor.BOLD}  マナ  : " +
+                    if (info.manaPerMinute >= (99999.99).toBigDecimal()) "${ChatColor.RED}測定不能"
+                    else "${ChatColor.WHITE}${info.manaPerMinute.setScale(2, RoundingMode.HALF_UP)}/分"
+
+        if (Achievement.MANA_STONE.isGranted(player))
+            map[SideBarRow.THIRTEEN] = "${Defaults.SIDEBAR_HIDE_COLOR}___"
+
+        map[SideBarRow.FOURTEEN] = "${ChatColor.YELLOW}" +
+                "       seichi.click       "
+
+        return map
     }
 
     private class PlayerInformation(player: Player) {
@@ -108,12 +117,6 @@ object MainBar : SideBar("info") {
                 1 -> recordQueue.peekFirst().mana
                 else -> recordQueue.peekFirst().mana - recordQueue.peekLast().mana
             }
-        val comboPerMinute
-            get() = when (recordQueue.size) {
-                0 -> 0L
-                1 -> recordQueue.peekFirst().combo
-                else -> recordQueue.peekFirst().combo - recordQueue.peekLast().combo
-            }
 
         // 必要のないデータを削除
         fun refresh() {
@@ -132,8 +135,7 @@ object MainBar : SideBar("info") {
                             player.getWrappedExp(ExpReason.MINE_BLOCK),
                             player.getWrappedExp(ExpReason.SPELL_MULTI_BREAK),
                             player.getWrappedExp(ExpReason.RELIC_BONUS),
-                            player.mana,
-                            player.combo
+                            player.mana
                     )
             )
         }
@@ -142,8 +144,7 @@ object MainBar : SideBar("info") {
                 val mineBlock: BigDecimal,
                 val multiBlock: BigDecimal,
                 val relicBonus: BigDecimal,
-                val mana: BigDecimal,
-                val combo: Long
+                val mana: BigDecimal
         ) {
             val createdAt: DateTime = DateTime.now()
         }

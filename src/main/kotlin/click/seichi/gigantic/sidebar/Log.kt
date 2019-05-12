@@ -1,6 +1,6 @@
 package click.seichi.gigantic.sidebar
 
-import org.bukkit.ChatColor
+import click.seichi.gigantic.player.Defaults
 import org.joda.time.DateTime
 
 /**
@@ -14,7 +14,7 @@ class Log(
     val createdAt = DateTime.now()
 
     var text = (_text +
-            " ${ChatColor.DARK_GRAY}" +
+            " ${Defaults.SIDEBAR_HIDE_COLOR}" +
             id
             )
         private set

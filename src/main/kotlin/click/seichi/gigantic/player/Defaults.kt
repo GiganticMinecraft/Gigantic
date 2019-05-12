@@ -107,4 +107,5 @@ object Defaults {
     // サイドバーの記録間隔（秒）
     val SIDEBAR_RECORD_INTERVAL = 5
 
+    val SIDEBAR_HIDE_COLOR = ChatColor.DARK_GRAY
 }

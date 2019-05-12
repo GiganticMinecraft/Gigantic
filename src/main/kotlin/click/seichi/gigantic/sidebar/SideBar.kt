@@ -66,6 +66,21 @@ abstract class SideBar(
 
     private fun show(player: Player) {
 
+        val messageMap = getMessageMap(player)
+        var needUpdate = false
+        val current = player.scoreboard.getObjective(DisplaySlot.SIDEBAR)
+
+        if (current == null || current.name != objectiveName) {
+            needUpdate = true
+        } else {
+            messageMap.values.forEach { score ->
+                if (current.getScore(score).isScoreSet) return@forEach
+                needUpdate = true
+            }
+        }
+
+        if (!needUpdate) return
+
         val new = scoreboardManager.newScoreboard
         val objective = new.registerNewObjective(objectiveName, "dummy", getTitle(player))
 
