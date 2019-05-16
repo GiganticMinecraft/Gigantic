@@ -1,7 +1,6 @@
 package click.seichi.gigantic.sidebar
 
-import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.extension.getOrPut
+import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.util.SideBarRow
 import org.bukkit.entity.Player
 import org.joda.time.DateTime
@@ -15,7 +14,9 @@ abstract class Logger(
         // ログを保存する時間（分）
         private val saveMinutes: Int = 1,
         // ログの表示数(14以下で設定すること)
-        private val maxLog: Int = 14
+        private val maxLog: Int = 14,
+        // ログを表示する時間(tick)
+        private val ticks: Long = Defaults.SIDEBAR_LOGGER_TICKS
 ) : SideBar(objectiveName) {
 
     abstract fun getDeque(player: Player): Deque<Log>
@@ -38,8 +39,7 @@ abstract class Logger(
     private fun update(player: Player) {
         val now = DateTime.now()
         getDeque(player).removeIf { isOld(now, it) }
-        if (player.getOrPut(Keys.SIDEBAR_TYPE) == type)
-            show(player)
+        tryShow(player, ticks)
     }
 
     private fun isOld(now: DateTime, log: Log): Boolean {

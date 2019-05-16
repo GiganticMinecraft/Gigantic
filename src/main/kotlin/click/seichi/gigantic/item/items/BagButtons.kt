@@ -603,8 +603,6 @@ object BagButtons {
     }
 
 
-
-
     val RANKING = object : Button {
 
         override fun toShownItemStack(player: Player): ItemStack? {

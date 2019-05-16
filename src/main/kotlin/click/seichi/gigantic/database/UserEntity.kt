@@ -28,6 +28,7 @@ class UserEntity(uniqueId: UUID, playerName: String) {
     } ?: User.new(uniqueId) {
         name = playerName.toLowerCase()
         createdDate = DateTime.now()
+        updatedDate = DateTime.now()
     }
 
     val userWillMap = Will.values().map { will ->

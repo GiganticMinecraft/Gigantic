@@ -228,7 +228,7 @@ object PlayerMessages {
                         Locale.JAPANESE to "${ChatColor.WHITE}" +
                                 "======" +
                                 "${ChatColor.AQUA}${ChatColor.BOLD}" +
-                                "整地専用サーバー" +
+                                "seichi.click" +
                                 "${ChatColor.WHITE}" +
                                 "======"
                 )

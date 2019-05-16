@@ -86,7 +86,12 @@ class PlayerMonitor : Listener {
         // レベル表記を更新
         player.setPlayerListName(PlayerMessages.PLAYER_LIST_NAME_PREFIX(player.wrappedLevel).plus(player.name))
         player.setDisplayName(PlayerMessages.DISPLAY_NAME_PREFIX(player.wrappedLevel).plus(player.name))
+
+        // タブリストを更新
         PlayerMessages.LOCATION_INFO(player).sendTo(player)
+
+        // 固定バーを表示
+        player.getOrPut(Keys.SUSTAINED_SIDEBAR).tryShow(player)
 
         // サーバー名を受信
         val out = ByteStreams.newDataOutput().apply {

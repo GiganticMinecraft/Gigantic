@@ -1,5 +1,6 @@
 package click.seichi.gigantic.player
 
+import click.seichi.gigantic.sidebar.bars.MainBar
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
@@ -98,6 +99,13 @@ object Defaults {
     // 露天掘りで得られる経験値量
     val STRIP_BONUS = 100L
 
-    // サイドバー更新の確認頻度
-    val SIDEBAR_UPDATE_INTERVAL = 1L
+    // ログを表示する時間(tick)
+    val SIDEBAR_LOGGER_TICKS = 20L * 3
+
+    val SIDEBAR_DEFAULT = MainBar
+
+    // サイドバーの記録間隔（秒）
+    val SIDEBAR_RECORD_INTERVAL = 5
+
+    val SIDEBAR_HIDE_COLOR = ChatColor.DARK_GRAY
 }
