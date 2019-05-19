@@ -1,6 +1,7 @@
 resource:
-  default: "http://map-s1.minecraftserver.jp/resourcepacks/Spring_Texture_ver1.2.zip"
-  no_particle: "http://map-s1.minecraftserver.jp/resourcepacks/Spring_Texture_No_Particle_ver1.2.zip"
+  folder: "http://map-s1.minecraftserver.jp/resourcepacks/"
+  default: "Spring_Texture_ver1.2.zip"
+  no_particle: "Spring_Texture_No_Particle_ver1.2.zip"
 
 tips:
   interval: 5

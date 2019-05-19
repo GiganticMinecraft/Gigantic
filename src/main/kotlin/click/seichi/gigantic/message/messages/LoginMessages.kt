@@ -1,5 +1,6 @@
 package click.seichi.gigantic.message.messages
 
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.toRainbow
 import click.seichi.gigantic.message.ChatMessageProtocol
 import click.seichi.gigantic.message.LinedChatMessage
@@ -70,7 +71,7 @@ object LoginMessages {
                             "リソースパック手動ダウンロードリンク↓" +
                             LinedChatMessage.NEW_LINE_SYMBOL +
                             "${ChatColor.YELLOW}" +
-                            "http://map.spring.seichi.click/resourcepacks/" +
+                            Config.RESOURCE_FOLDER +
                             LinedChatMessage.NEW_LINE_SYMBOL +
                             "${ChatColor.WHITE}" +
                             (1..53).joinToString("") { "-" }
