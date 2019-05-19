@@ -1,6 +1,6 @@
 resource:
-  default: "http://map.spring.seichi.click/resourcepacks/Spring_Texture_ver1.2.zip"
-  no_particle: "http://map.spring.seichi.click/resourcepacks/Spring_Texture_No_Particle_ver1.2.zip"
+  default: "http://map-s1.minecraftserver.jp/resourcepacks/Spring_Texture_ver1.2.zip"
+  no_particle: "http://map-s1.minecraftserver.jp/resourcepacks/Spring_Texture_No_Particle_ver1.2.zip"
 
 tips:
   interval: 5
