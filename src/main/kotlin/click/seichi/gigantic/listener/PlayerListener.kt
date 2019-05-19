@@ -216,11 +216,15 @@ class PlayerListener : Listener {
             player.health = 6.0
             player.updateDisplay(true, true)
 
-            // マナをゼロにする
-            player.manipulate(CatalogPlayerCache.MANA) {
-                it.set(BigDecimal.ZERO)
+            if (Achievement.MANA_STONE.isGranted(player) && player.maxMana > 0.toBigDecimal()) {
+                // マナをゼロにする
+                player.manipulate(CatalogPlayerCache.MANA) {
+                    it.set(BigDecimal.ZERO)
+                }
+                PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
+            } else {
+                player.foodLevel = 20
             }
-            PlayerMessages.MANA_DISPLAY(player.mana, player.maxMana).sendTo(player)
         }, 1L)
 
     }
