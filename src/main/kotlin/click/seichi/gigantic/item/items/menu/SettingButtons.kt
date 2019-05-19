@@ -1,7 +1,7 @@
 package click.seichi.gigantic.item.items.menu
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.key.Keys
+import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.menu.menus.setting.ToolSwitchSettingMenu
@@ -57,9 +57,9 @@ object SettingButtons {
             PlayerSounds.TOGGLE.playOnly(player)
 
             if (player.isNormalTexture)
-                player.setResourcePack(Gigantic.NORMAL_RESOURCE_PACK_URL)
+                player.setResourcePack(Config.RESOURCE_DEFAULT)
             else
-                player.setResourcePack(Gigantic.LIGHT_RESOURCE_PACK_URL)
+                player.setResourcePack(Config.RESOURCE_NO_PARTICLE)
 
             return true
         }

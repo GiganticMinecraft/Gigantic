@@ -5,6 +5,10 @@ package click.seichi.gigantic.config
  */
 object Config : SimpleConfiguration("config") {
 
+    val RESOURCE_DEFAULT by lazy { getString("resource.default")!! }
+
+    val RESOURCE_NO_PARTICLE by lazy { getString("resource.no_particle")!! }
+
     val TIPS_INTERVAL by lazy { getLong("tips.interval") }
 
     val WORLD_SIDE_LENGTH by lazy { getDouble("world.side_length") }

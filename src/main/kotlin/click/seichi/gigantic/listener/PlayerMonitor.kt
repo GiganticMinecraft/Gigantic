@@ -79,9 +79,9 @@ class PlayerMonitor : Listener {
 
         // リソースパック更新
         if (player.isNormalTexture)
-            player.setResourcePack(Gigantic.NORMAL_RESOURCE_PACK_URL)
+            player.setResourcePack(Config.RESOURCE_DEFAULT)
         else
-            player.setResourcePack(Gigantic.LIGHT_RESOURCE_PACK_URL)
+            player.setResourcePack(Config.RESOURCE_NO_PARTICLE)
 
         // レベル表記を更新
         player.setPlayerListName(PlayerMessages.PLAYER_LIST_NAME_PREFIX(player.wrappedLevel).plus(player.name))
