@@ -12,8 +12,12 @@
 
 :eyeglasses: **__その他の細かい変更点__** :eyeglasses:    
 
-:diamond_shape_with_a_dot_inside: テクスチャ切り替えボタンを詳細設定の項目に移動しました  
-:diamond_shape_with_a_dot_inside: ボーナス発生中のレリックが範囲破壊時の全てのブロックに適用されるようになりました  
+
+:bow: **__不具合修正__** :bow:   
+以下の不具合を修正しました．  
+
+:diamond_shape_with_a_dot_inside: マナを使用できないプレイヤーが死亡したときに歩けなくなる不具合  
+
 
 
 作成者: tar0ss  
