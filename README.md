@@ -10,9 +10,9 @@ Description
 
 Development
 ---
-* [IntelliJ IDEA 2018.2.3](https://www.jetbrains.com/idea/)
+* [IntelliJ IDEA 2019.1.3](https://www.jetbrains.com/idea/)
 * [java 1.8](http://www.oracle.com/technetwork/java/javase/overview/index.html)
-* [spigot 1.13.2-R0.1-SNAPSHOT](https://www.spigotmc.org/)
+* [spigot 1.14.2-R0.1-SNAPSHOT](https://www.spigotmc.org/)
 
 Requirement
 ---
