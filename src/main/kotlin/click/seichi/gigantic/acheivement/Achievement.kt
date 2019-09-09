@@ -65,7 +65,6 @@ enum class Achievement(
         Will.values().firstOrNull { will -> it.isProcessed(will) } != null
     }, grantMessage = AchievementMessages.FIRST_PRE_SENSE),
 
-    //TODO 一度すべてのクエストを隠蔽しているので実装時は一気にやる
     // systems
     MANA_STONE(100,
             {
