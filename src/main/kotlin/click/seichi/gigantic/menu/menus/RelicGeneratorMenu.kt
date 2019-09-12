@@ -48,6 +48,7 @@ object RelicGeneratorMenu : Menu() {
         // 期間限定
         registerButton(1, RelicGeneratorButtons.SELECT_ETHEL(Will.SAKURA))
         registerButton(3, RelicGeneratorButtons.SELECT_ETHEL(Will.MIO))
+        registerButton(5, RelicGeneratorButtons.SELECT_ETHEL(Will.KAEDE))
 
         registerButton(31, RelicGeneratorButtons.GENERATED)
         registerButton(49, RelicGeneratorButtons.GENERATE)

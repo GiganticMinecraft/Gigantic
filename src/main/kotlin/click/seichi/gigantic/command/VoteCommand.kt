@@ -4,6 +4,7 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.database.dao.user.User
 import click.seichi.gigantic.database.table.user.UserTable
 import click.seichi.gigantic.message.LocalizedText
+import click.seichi.gigantic.message.messages.command.CommandMessages
 import click.seichi.gigantic.message.messages.command.PointMessages
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -38,7 +39,7 @@ class VoteCommand : TabExecutor {
                 transaction {
                     val userList = User.find { UserTable.name eq playerName }
                     if (userList.empty()) {
-                        messages.add(PointMessages.NO_USER(playerName))
+                        messages.add(CommandMessages.NO_USER(playerName))
                         return@transaction
                     }
                     // 複数同名がいる場合はもっとも最新のデータを更新

@@ -7,6 +7,13 @@ load: STARTUP
 
 
 commands:
+  will:
+    description: This is will command.
+    usage: /will <willName>
+    aliases: [will]
+    default: op
+    permission: gigantic.will
+    permission-message: You don't have <permission>
   vote:
     description: This is vote command.
     usage: /vote <playername> <num>

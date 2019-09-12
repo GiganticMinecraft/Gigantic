@@ -9,15 +9,6 @@ import java.util.*
  */
 object PointMessages {
 
-    val NO_USER = { playerName: String ->
-        LocalizedText(
-                Locale.JAPANESE to "${ChatColor.RED}" +
-                        "指定されたユーザーは見つかりません．\n" +
-                        "player name:$playerName"
-        )
-    }
-
-
     val DETECT_VOTE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GREEN}" +
                     "投票検知"

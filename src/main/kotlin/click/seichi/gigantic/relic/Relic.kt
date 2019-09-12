@@ -1236,7 +1236,7 @@ enum class Relic(
             itemStackOf(Material.BRAIN_CORAL)
     ) {
         override fun isBonusTarget(block: Block): Boolean {
-            return block.world.moonPhase == MoonPhase.MANGETSU && block.world.isMoonTime
+            return block.world.moonPhase == MoonPhase.MIKAZUKI && block.world.isMoonTime
         }
     },
     SAKURA_RACE_CAKE(
@@ -1456,6 +1456,138 @@ enum class Relic(
             return block.world.isTwilight
         }
     },
+    MARBLING_MEAT(
+            1114,
+            RelicMessages.MARBLING_MEAT,
+            RelicMessages.MARBLING_MEAT_LORE,
+            RelicMessages.MARBLING_MEAT_BONUS_LORE,
+            0.4,
+            itemStackOf(Material.LANTERN)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.temperature in -0.5..0.15 && block.world.isMoonTime && block.world.moonPhase == MoonPhase.ZYOGEN
+        }
+    },
+    SHIRANUI(
+            1115,
+            RelicMessages.SHIRANUI,
+            RelicMessages.SHIRANUI_LORE,
+            RelicMessages.SHIRANUI_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.LANTERN)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.junishiOfTime == Junishi.NE
+        }
+    },
+    MOMIJI(
+            1116,
+            RelicMessages.MOMIJI,
+            RelicMessages.MOMIJI_LORE,
+            RelicMessages.MOMIJI_BONUS_LORE,
+            0.08,
+            itemStackOf(Material.LANTERN)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.biome == Biome.WOODED_MOUNTAINS || (block.world.isMoonTime && block.world.moonPhase == MoonPhase.NIZYUROKUYA)
+        }
+    },
+    TOUROU(
+            1117,
+            RelicMessages.TOUROU,
+            RelicMessages.TOUROU_LORE,
+            RelicMessages.TOUROU_BONUS_LORE,
+            0.14,
+            itemStackOf(Material.LANTERN)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.type == Material.DIORITE
+        }
+    },
+    SCARECROW(
+            1118,
+            RelicMessages.SCARECROW,
+            RelicMessages.SCARECROW_LORE,
+            RelicMessages.SCARECROW_BONUS_LORE,
+            0.14,
+            itemStackOf(Material.LANTERN)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.type == Material.ANDESITE
+        }
+    },
+    TSUKIMI_UDON(
+            1119,
+            RelicMessages.TSUKIMI_UDON,
+            RelicMessages.TSUKIMI_UDON_LORE,
+            RelicMessages.TSUKIMI_UDON_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.LANTERN)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.isMoonTime && block.world.moonPhase == MoonPhase.MANGETSU
+        }
+    },
+    CHRYSANTHEMUM_DOLL(
+            1120,
+            RelicMessages.CHRYSANTHEMUM_DOLL,
+            RelicMessages.CHRYSANTHEMUM_DOLL_LORE,
+            RelicMessages.CHRYSANTHEMUM_DOLL_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.LANTERN)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.isMoonTime && block.world.moonPhase == MoonPhase.KAGEN
+        }
+    },
+    SHRIKE_FEATHER(
+            1121,
+            RelicMessages.SHRIKE_FEATHER,
+            RelicMessages.SHRIKE_FEATHER_LORE,
+            RelicMessages.SHRIKE_FEATHER_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.LANTERN)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.junishiOfTime == Junishi.TORI
+        }
+    },
+    PERSIMMON_SEED(
+            1122,
+            RelicMessages.PERSIMMON_SEED,
+            RelicMessages.PERSIMMON_SEED_LORE,
+            RelicMessages.PERSIMMON_SEED_BONUS_LORE,
+            0.11,
+            itemStackOf(Material.LANTERN)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.type == Material.GRAVEL
+        }
+    },
+    SANMA(
+            1123,
+            RelicMessages.SANMA,
+            RelicMessages.SANMA_LORE,
+            RelicMessages.SANMA_BONUS_LORE,
+            0.08,
+            itemStackOf(Material.LANTERN)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.biome == Biome.OCEAN || block.biome == Biome.COLD_OCEAN
+        }
+    },
+//    (
+//    11,
+//    RelicMessages.,
+//    RelicMessages._LORE,
+//    RelicMessages._BONUS_LORE,
+//    0.,
+//    itemStackOf(Material.)
+//    ){
+//        override fun isBonusTarget(block: Block): Boolean {
+//            return
+//        }
+//    },
 
 
     ;

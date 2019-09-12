@@ -4,7 +4,7 @@ import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.message.messages.HomeMessages
-import click.seichi.gigantic.message.messages.command.TellMessages
+import click.seichi.gigantic.message.messages.command.CommandMessages
 import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -30,7 +30,7 @@ class HomeCommand : TabExecutor {
         // consoleなら除外
         if (sender !is Player) {
             sender.sendMessage("${ChatColor.GRAY}" +
-                    TellMessages.CONSOLE.asSafety(Gigantic.DEFAULT_LOCALE))
+                    CommandMessages.CONSOLE.asSafety(Gigantic.DEFAULT_LOCALE))
             return true
         }
         // id

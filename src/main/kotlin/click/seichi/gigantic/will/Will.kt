@@ -156,7 +156,7 @@ enum class Will(
     SOLUM(
             8,
             Color.fromRGB(80, 73, 70),
-            ChatColor.GRAY,
+            ChatColor.DARK_GRAY,
             Material.GRAY_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.SOLUM,
@@ -189,8 +189,8 @@ enum class Will(
     },
     VENTUS(
             10,
-            Color.fromRGB(224, 193, 255),
-            ChatColor.LIGHT_PURPLE,
+            Color.fromRGB(220, 221, 221),
+            ChatColor.GRAY,
             Material.LIGHT_GRAY_GLAZED_TERRACOTTA,
             WillGrade.ADVANCED,
             WillMessages.VENTUS,
@@ -234,6 +234,22 @@ enum class Will(
         // 期間限定
         override fun canSpawn(player: Player, block: Block): Boolean {
             return GiganticEvent.MIO.isActive()
+        }
+    },
+    KAEDE(
+            13,
+            Color.fromRGB(200, 153, 50),
+            ChatColor.GOLD,
+            Material.ORANGE_GLAZED_TERRACOTTA,
+            WillGrade.SPECIAL,
+            WillMessages.KAEDE,
+            13,
+            Relic.MARBLING_MEAT, Relic.SHIRANUI, Relic.MOMIJI, Relic.TOUROU, Relic.SCARECROW,
+            Relic.TSUKIMI_UDON, Relic.CHRYSANTHEMUM_DOLL, Relic.SHRIKE_FEATHER, Relic.PERSIMMON_SEED, Relic.SANMA
+    ) {
+        // 期間限定
+        override fun canSpawn(player: Player, block: Block): Boolean {
+            return GiganticEvent.KAEDE.isActive()
         }
     },
     ;

@@ -64,6 +64,10 @@ object WillMessages {
             Locale.JAPANESE to "澪"
     )
 
+    val KAEDE = LocalizedText(
+            Locale.JAPANESE to "楓"
+    )
+
     val PREFIX_TINY_WILL = LocalizedText(
             Locale.JAPANESE to "僅かな"
     )

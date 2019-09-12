@@ -114,7 +114,7 @@ object LoginMessages {
     ), 0L)
 
     val EVENT_MIO = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
-            Locale.JAPANESE to "${ChatColor.LIGHT_PURPLE}" +
+            Locale.JAPANESE to "${ChatColor.AQUA}" +
                     (1..53).joinToString("") { "-" } +
                     LinedChatMessage.NEW_LINE_SYMBOL +
                     "${ChatColor.WHITE}" +
@@ -137,7 +137,35 @@ object LoginMessages {
                     "${ChatColor.WHITE}" +
                     "をチェック!!" +
                     LinedChatMessage.NEW_LINE_SYMBOL +
-                    "${ChatColor.LIGHT_PURPLE}" +
+                    "${ChatColor.AQUA}" +
+                    (1..53).joinToString("") { "-" }
+    ), 0L)
+
+    val EVENT_KAEDE = LinedChatMessage(ChatMessageProtocol.CHAT, LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GOLD}" +
+                    (1..53).joinToString("") { "-" } +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.WHITE}" +
+                    "${ChatColor.GOLD}${ChatColor.BOLD}" +
+                    "秋の整地祭り" +
+                    "${ChatColor.WHITE}" +
+                    " を開催中!!" +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.WHITE}" +
+                    "期間限定意志" +
+                    "${ChatColor.GOLD}${ChatColor.BOLD}" +
+                    " 楓の意志 " +
+                    "${ChatColor.WHITE}" +
+                    "を獲得して、特別なレリックを手に入れよう!!" +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.WHITE}" +
+                    "詳しくは" +
+                    "${ChatColor.DARK_PURPLE}" +
+                    "公式ディスコード" +
+                    "${ChatColor.WHITE}" +
+                    "をチェック!!" +
+                    LinedChatMessage.NEW_LINE_SYMBOL +
+                    "${ChatColor.GOLD}" +
                     (1..53).joinToString("") { "-" }
     ), 0L)
 

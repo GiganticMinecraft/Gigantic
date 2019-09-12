@@ -8,13 +8,6 @@ import java.util.*
  */
 object TellMessages {
 
-    val CONSOLE = LocalizedText(
-            Locale.JAPANESE to "ゲーム内で実行してください"
-    )
-
-    val NO_PLAYER = LocalizedText(
-            Locale.JAPANESE to "プレイヤーが存在しません"
-    )
 
     val NO_ID = LocalizedText(
             Locale.JAPANESE to "返信先が見つかりません"

@@ -148,7 +148,8 @@ class Gigantic : JavaPlugin() {
                 "reply" to ReplyCommand(),
                 "live" to LiveCommand(),
                 "home" to HomeCommand(),
-                "now" to NowCommand()
+                "now" to NowCommand(),
+                "will" to WillCommand()
         )
 
         // データベース作成の前に重複チェック

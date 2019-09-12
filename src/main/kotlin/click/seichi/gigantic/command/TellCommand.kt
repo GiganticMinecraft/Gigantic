@@ -5,6 +5,7 @@ import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.isFollow
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.message.messages.command.CommandMessages
 import click.seichi.gigantic.message.messages.command.TellMessages
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -31,7 +32,7 @@ class TellCommand : TabExecutor {
         // consoleなら除外
         if (sender !is Player) {
             sender.sendMessage("${ChatColor.GRAY}" +
-                    TellMessages.CONSOLE.asSafety(Gigantic.DEFAULT_LOCALE))
+                    CommandMessages.CONSOLE.asSafety(Gigantic.DEFAULT_LOCALE))
             return true
         }
         // 送り先を取得
@@ -41,7 +42,7 @@ class TellCommand : TabExecutor {
         // 存在しない場合は除外
         if (to == null || !to.isValid) {
             sender.sendMessage("${ChatColor.GRAY}" +
-                    TellMessages.NO_PLAYER.asSafety(sender.wrappedLocale))
+                    CommandMessages.NO_PLAYER.asSafety(sender.wrappedLocale))
             return true
         }
 
