@@ -506,54 +506,8 @@ object BagButtons {
         }
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
-            val voteNum = player.totalVote
-            val bonus = voteNum.minus(givenBonus)
-            // ボーナスが無ければ終了
-            if (bonus <= 0) return false
-            // givenBonusを増やす
-            player.offer(Keys.GIVEN_VOTE_BONUS, givenBonus + 1)
-
-            val givenWillSet = mutableSetOf<Will>()
-            // 特典付与処理
-            // フリー特典は自動付与なので付ける必要なし．
-            // 通常意志特典
-            if (Achievement.FIRST_WILL.isGranted(player)) {
-                val willSet = Will.values()
-                        .filter { it.grade == WillGrade.BASIC }
-                        .filter { player.hasAptitude(it) }
-                        .shuffled(Random.generator)
-                        .take(Defaults.VOTE_BONUS_BASIC_WILL_NUM)
-                        .toSet()
-                givenWillSet.addAll(willSet)
-                willSet.forEach {
-                    it.addEthel(player, Defaults.VOTE_BONUS_ETHEL)
-                    Bukkit.getPluginManager().callEvent(SenseEvent(it, player, Defaults.VOTE_BONUS_ETHEL))
-                }
-            }
-            // 高度意志特典
-            if (Achievement.FIRST_ADVANCED_WILL.isGranted(player)) {
-                val willSet = Will.values()
-                        .filter { it.grade == WillGrade.ADVANCED }
-                        .filter { player.hasAptitude(it) }
-                        .shuffled(Random.generator)
-                        .take(Defaults.VOTE_BONUS_ADVANCED_WILL_NUM)
-                        .toSet()
-                givenWillSet.addAll(willSet)
-                willSet.forEach {
-                    it.addEthel(player, Defaults.VOTE_BONUS_ETHEL)
-                    Bukkit.getPluginManager().callEvent(SenseEvent(it, player, Defaults.VOTE_BONUS_ETHEL))
-                }
-            }
-            player.offer(Keys.GIVEN_WILL_SET, givenWillSet)
-            object : BukkitRunnable() {
-                override fun run() {
-                    if (!player.isValid) return
-                    player.offer(Keys.GIVEN_WILL_SET, null)
-                }
-            }.runTaskLater(Gigantic.PLUGIN, 1L)
-            player.updateBag()
-            WillSpiritSounds.SENSED.playOnly(player)
+            if (event.inventory.holder === VoteConfirmMenu) return false
+            VoteConfirmMenu.open(player)
             return true
         }
 
