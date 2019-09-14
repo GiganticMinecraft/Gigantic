@@ -1576,6 +1576,7 @@ enum class Relic(
             return block.biome == Biome.OCEAN || block.biome == Biome.COLD_OCEAN
         }
     },
+    // TODO implements REI will relic
 //    (
 //    11,
 //    RelicMessages.,
@@ -1595,7 +1596,6 @@ enum class Relic(
     companion object {
         // 重複確認
         val hasDuplicateId = values().size != values().map { it.id }.toSet().size
-
 
         val SPECIAL_RELICS by lazy { values().filter { Will.findByRelic(it) == null }.toSet() }
 
