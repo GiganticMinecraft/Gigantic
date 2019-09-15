@@ -23,6 +23,7 @@ import click.seichi.gigantic.player.spell.Spell
 import click.seichi.gigantic.player.spell.spells.SkyWalk
 import click.seichi.gigantic.product.Product
 import click.seichi.gigantic.quest.Quest
+import click.seichi.gigantic.ranking.Combo30minRanking
 import click.seichi.gigantic.ranking.Ranking
 import click.seichi.gigantic.ranking.Score
 import click.seichi.gigantic.relic.Relic
@@ -180,6 +181,9 @@ class Gigantic : JavaPlugin() {
 
         // ランキングデータ生成
         updateRanking()
+
+        // 30分間隔のコンボランキングタイマー開始
+        Combo30minRanking()
 
         SpiritManager.onEnabled()
 
