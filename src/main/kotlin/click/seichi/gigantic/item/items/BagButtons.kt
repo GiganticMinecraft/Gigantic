@@ -458,11 +458,36 @@ object BagButtons {
 
     val VOTE_BONUS = object : Button {
 
+        var confirm = false
+        var reconfirm = false
+
+        var taskid = -1
+
         override fun toShownItemStack(player: Player): ItemStack? {
+
             return itemStackOf(Material.GOLDEN_APPLE) {
                 setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
                         + BagMessages.VOTE_BONUS.asSafety(player.wrappedLocale))
                 clearLore()
+
+                val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
+                val voteNum = player.totalVote
+                val bonus = voteNum.minus(givenBonus)
+
+                // 確認済み
+                if(confirm) {
+                    // かつ、1回目なら
+                    if (!reconfirm) {
+                        addLore(*BagMessages.VOTE_BONUS_CONFIRM.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                    // かつ、2回目以降かつ、もう受け取れないなら
+                    } else if (reconfirm && bonus <= 0) {
+                        addLore(BagMessages.VOTE_BONUS_RECIVE.asSafety(player.wrappedLocale))
+                    // かつ2回目以降で まだ受け取れるなら
+                    } else if (reconfirm && bonus > 0) {
+                        addLore(*BagMessages.VOTE_BONUS_RECONFIRM.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
+                    }
+                    addLore("")
+                }
 
                 // もし先ほど獲得した特典があればそれを表示
                 player.getOrPut(Keys.GIVEN_WILL_SET)?.forEach { will ->
@@ -470,9 +495,6 @@ object BagButtons {
                 }
 
                 // クリックしたときの動作説明
-                val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
-                val voteNum = player.totalVote
-                val bonus = voteNum.minus(givenBonus)
                 if (bonus > 0) {
                     addLore("${ChatColor.GREEN}${ChatColor.UNDERLINE}${ChatColor.BOLD}"
                             + BagMessages.TAKE_BONUS.asSafety(player.wrappedLocale)
@@ -506,8 +528,87 @@ object BagButtons {
         }
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (event.inventory.holder === VoteConfirmMenu) return false
-            VoteConfirmMenu.open(player)
+            WillSpiritSounds.SENSED.playOnly(player)
+            if(!confirm){
+                val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
+                val voteNum = player.totalVote
+                val bonus = voteNum.minus(givenBonus)
+                // ボーナスが無ければ終了
+                if (bonus <= 0){
+                    player.sendMessage(BagMessages.VOTE_BONUS_NOTFOUND.asSafety(player.wrappedLocale))
+                    player.updateBag()
+                    return false
+                }
+                confirm = true
+            }else if(confirm){
+                val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
+                val voteNum = player.totalVote
+                val bonus = voteNum.minus(givenBonus)
+                // ボーナスが無ければ終了
+                if (bonus <= 0){
+                    confirm = false
+                    reconfirm = false
+                    player.updateBag()
+                    player.sendMessage(BagMessages.VOTE_BONUS_NOTFOUND.asSafety(player.wrappedLocale))
+                    return false
+                }
+
+                if(taskid != -1){
+                    Bukkit.getScheduler().cancelTask(taskid)
+                    taskid = -1
+                }
+
+                // givenBonusを増やす
+                player.offer(Keys.GIVEN_VOTE_BONUS, givenBonus + 1)
+
+                val givenWillSet = mutableSetOf<Will>()
+                // 特典付与処理
+                // フリー特典は自動付与なので付ける必要なし．
+                // 通常意志特典
+                if (Achievement.FIRST_WILL.isGranted(player)) {
+                    val willSet = Will.values()
+                            .filter { it.grade == WillGrade.BASIC }
+                            .filter { player.hasAptitude(it) }
+                            .shuffled(Random.generator)
+                            .take(Defaults.VOTE_BONUS_BASIC_WILL_NUM)
+                            .toSet()
+                    givenWillSet.addAll(willSet)
+                    willSet.forEach {
+                        it.addEthel(player, Defaults.VOTE_BONUS_ETHEL)
+                        Bukkit.getPluginManager().callEvent(SenseEvent(it, player, Defaults.VOTE_BONUS_ETHEL))
+                    }
+                }
+                // 高度意志特典
+                if (Achievement.FIRST_ADVANCED_WILL.isGranted(player)) {
+                    val willSet = Will.values()
+                            .filter { it.grade == WillGrade.ADVANCED }
+                            .filter { player.hasAptitude(it) }
+                            .shuffled(Random.generator)
+                            .take(Defaults.VOTE_BONUS_ADVANCED_WILL_NUM)
+                            .toSet()
+                    givenWillSet.addAll(willSet)
+                    willSet.forEach {
+                        it.addEthel(player, Defaults.VOTE_BONUS_ETHEL)
+                        Bukkit.getPluginManager().callEvent(SenseEvent(it, player, Defaults.VOTE_BONUS_ETHEL))
+                    }
+                }
+                player.offer(Keys.GIVEN_WILL_SET, givenWillSet)
+                object : BukkitRunnable() {
+                    override fun run() {
+                        if (!player.isValid) return
+                        player.offer(Keys.GIVEN_WILL_SET, null)
+                    }
+                }.runTaskLater(Gigantic.PLUGIN, 1L)
+                reconfirm = true
+            }
+            player.updateBag()
+            taskid = object : BukkitRunnable() {
+                override fun run() {
+                    confirm = false
+                    reconfirm = false
+                    player.updateBag()
+                }
+            }.runTaskLater(Gigantic.PLUGIN, 100L).taskId
             return true
         }
 

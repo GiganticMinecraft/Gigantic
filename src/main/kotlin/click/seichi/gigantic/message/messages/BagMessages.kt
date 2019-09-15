@@ -170,6 +170,47 @@ object BagMessages {
             )
     )
 
+    val VOTE_BONUS_CONFIRM = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GREEN}" +
+                            "受け取りますか？"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "(受け取る場合はもう一度クリック)"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "※5秒間待つと中断します"
+            )
+    )
+
+    val VOTE_BONUS_RECONFIRM = listOf(
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GREEN}" +
+                            "受け取りました。もう一回受け取りますか？"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "(受け取る場合はもう一度クリック)"
+            ),
+            LocalizedText(
+                    Locale.JAPANESE to "${ChatColor.GRAY}" +
+                            "※5秒間待つと中断します"
+            )
+    )
+
+    val VOTE_BONUS_NOTFOUND =  LocalizedText(
+            Locale.JAPANESE to "${ChatColor.RED}" +
+                    "受け取れる特典はありません"
+    )
+
+
+    val VOTE_BONUS_RECIVE = LocalizedText(
+            Locale.JAPANESE to "${ChatColor.GREEN}" +
+                    "受け取りました。"
+    )
+
     val RANKING = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GOLD}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
                     "ランキング"
