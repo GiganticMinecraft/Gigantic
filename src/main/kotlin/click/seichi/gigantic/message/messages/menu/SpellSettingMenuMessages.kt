@@ -176,7 +176,8 @@ object SpellSettingMenuMessages {
                         } else {
                             "${ChatColor.GREEN}${ChatColor.BOLD}" + "初期速度"
                         }
-                        + ")"
+                        + "${ChatColor.WHITE}" +
+                        ")"
         )
     }
 

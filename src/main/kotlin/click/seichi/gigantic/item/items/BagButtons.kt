@@ -458,10 +458,10 @@ object BagButtons {
 
     val VOTE_BONUS = object : Button {
 
-        var confirm = false
-        var reconfirm = false
+        var confirm = mutableListOf<UUID>()
+        var reconfirm = mutableListOf<UUID>()
 
-        var taskid = -1
+        var taskid =  mutableMapOf<UUID,Int>()
 
         override fun toShownItemStack(player: Player): ItemStack? {
 
@@ -474,16 +474,18 @@ object BagButtons {
                 val voteNum = player.totalVote
                 val bonus = voteNum.minus(givenBonus)
 
+
+
                 // 確認済み
-                if(confirm) {
+                if(confirm.contains(player.uniqueId)) {
                     // かつ、1回目なら
-                    if (!reconfirm) {
+                    if (!reconfirm.contains(player.uniqueId)) {
                         addLore(*BagMessages.VOTE_BONUS_CONFIRM.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
                     // かつ、2回目以降かつ、もう受け取れないなら
-                    } else if (reconfirm && bonus <= 0) {
+                    } else if (reconfirm.contains(player.uniqueId) && bonus <= 0) {
                         addLore(BagMessages.VOTE_BONUS_RECIVE.asSafety(player.wrappedLocale))
                     // かつ2回目以降で まだ受け取れるなら
-                    } else if (reconfirm && bonus > 0) {
+                    } else if (reconfirm.contains(player.uniqueId) && bonus > 0) {
                         addLore(*BagMessages.VOTE_BONUS_RECONFIRM.map { it.asSafety(player.wrappedLocale) }.toTypedArray())
                     }
                     addLore("")
@@ -529,7 +531,7 @@ object BagButtons {
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
             WillSpiritSounds.SENSED.playOnly(player)
-            if(!confirm){
+            if(!confirm.contains(player.uniqueId)){
                 val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
                 val voteNum = player.totalVote
                 val bonus = voteNum.minus(givenBonus)
@@ -539,23 +541,23 @@ object BagButtons {
                     player.updateBag()
                     return false
                 }
-                confirm = true
-            }else if(confirm){
+                confirm.add(player.uniqueId)
+            }else if(confirm.contains(player.uniqueId)){
                 val givenBonus = player.getOrPut(Keys.GIVEN_VOTE_BONUS)
                 val voteNum = player.totalVote
                 val bonus = voteNum.minus(givenBonus)
                 // ボーナスが無ければ終了
                 if (bonus <= 0){
-                    confirm = false
-                    reconfirm = false
+                    confirm.remove(player.uniqueId)
+                    reconfirm.remove(player.uniqueId)
                     player.updateBag()
                     player.sendMessage(BagMessages.VOTE_BONUS_NOTFOUND.asSafety(player.wrappedLocale))
                     return false
                 }
 
-                if(taskid != -1){
-                    Bukkit.getScheduler().cancelTask(taskid)
-                    taskid = -1
+                if(taskid[player.uniqueId]!=null&&taskid[player.uniqueId]!=-1){
+                    Bukkit.getScheduler().cancelTask(taskid[player.uniqueId]!!)
+                    taskid[player.uniqueId] = -1
                 }
 
                 // givenBonusを増やす
@@ -599,13 +601,13 @@ object BagButtons {
                         player.offer(Keys.GIVEN_WILL_SET, null)
                     }
                 }.runTaskLater(Gigantic.PLUGIN, 1L)
-                reconfirm = true
+                reconfirm.add(player.uniqueId)
             }
             player.updateBag()
-            taskid = object : BukkitRunnable() {
+            taskid[player.uniqueId] = object : BukkitRunnable() {
                 override fun run() {
-                    confirm = false
-                    reconfirm = false
+                    confirm.remove(player.uniqueId)
+                    reconfirm.remove(player.uniqueId)
                     player.updateBag()
                 }
             }.runTaskLater(Gigantic.PLUGIN, 100L).taskId
