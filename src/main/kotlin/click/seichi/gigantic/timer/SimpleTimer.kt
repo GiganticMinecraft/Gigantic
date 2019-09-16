@@ -54,7 +54,7 @@ open class SimpleTimer : Timer {
                 end()
                 return@runTaskTimer false
             }
-            remainTimeToFire = coolTime.minus(seconds).plus(1)
+            remainTimeToFire = coolTime.minus(seconds)
             onCooldown(remainTimeToFire)
             return@runTaskTimer true
         }

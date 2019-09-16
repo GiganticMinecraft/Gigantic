@@ -76,13 +76,13 @@ open class LingeringTimer : Timer {
                         end()
                         return@runTaskTimer false
                     }
-                    remainTimeToFire = coolTime.minus(coolSeconds).plus(1)
+                    remainTimeToFire = coolTime.minus(coolSeconds)
                     onCooldown(remainTimeToFire)
                     return@runTaskTimer true
                 }
                 return@runTaskTimer false
             }
-            remainTimeToCool = duration.minus(fireSeconds).plus(1)
+            remainTimeToCool = duration.minus(fireSeconds)
             onFire(remainTimeToCool)
             return@runTaskTimer true
         }
