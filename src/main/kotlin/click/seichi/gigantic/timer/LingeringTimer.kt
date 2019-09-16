@@ -70,15 +70,15 @@ open class LingeringTimer : Timer {
                 remainTimeToCool = 0L
                 remainTimeToFire = coolTime
                 onCompleteFire()
-                coolTimer@ runTaskTimer(0L, 20L) { coolSeconds ->
+                runTaskTimer(0L, 20L) { coolSeconds ->
                     // 前に分岐を置くことでExceptionでの無限ループ発生を回避
                     if (coolSeconds >= coolTime || isCancelled) {
                         end()
-                        return@coolTimer false
+                        return@runTaskTimer false
                     }
                     remainTimeToFire = coolTime.minus(coolSeconds).plus(1)
                     onCooldown(remainTimeToFire)
-                    return@coolTimer true
+                    return@runTaskTimer true
                 }
                 return@runTaskTimer false
             }
