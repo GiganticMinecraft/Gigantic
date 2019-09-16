@@ -144,6 +144,7 @@ object ShopButtons {
                     // 購入処理
                     product.buy(player)
                     MenuSounds.EFFECT_BUY.playOnly(player)
+                    buyMap.remove(uniqueId)
                 } else {
                     buyMap[uniqueId] = effect
                     PlayerSounds.TOGGLE.playOnly(player)

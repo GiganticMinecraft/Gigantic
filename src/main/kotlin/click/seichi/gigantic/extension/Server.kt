@@ -15,6 +15,14 @@ fun Server.refreshAllPlayerMenu() {
     }
 }
 
+fun runTask(action: () -> Unit) {
+    object : BukkitRunnable() {
+        override fun run() {
+            action()
+        }
+    }.runTask(Gigantic.PLUGIN)
+}
+
 fun runTaskLater(delay: Long, action: () -> Unit) {
     object : BukkitRunnable() {
         override fun run() {
