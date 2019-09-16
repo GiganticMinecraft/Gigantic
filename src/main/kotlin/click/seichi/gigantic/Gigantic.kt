@@ -44,7 +44,6 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.entity.ArmorStand
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.scheduler.BukkitRunnable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
@@ -188,12 +187,10 @@ class Gigantic : JavaPlugin() {
         SpiritManager.onEnabled()
 
         // 3秒後にTickEventを毎tick発火
-        object : BukkitRunnable() {
-            var ticks = 0L
-            override fun run() {
-                Bukkit.getServer().pluginManager.callEvent(TickEvent(ticks++))
-            }
-        }.runTaskTimer(this, Defaults.TICK_EVENT_DELAY, 1)
+        runTaskTimer(Defaults.TICK_EVENT_DELAY, 1) { tick ->
+            Bukkit.getServer().pluginManager.callEvent(TickEvent(tick))
+            return@runTaskTimer true
+        }
 
         logger.info("Gigantic is enabled")
     }

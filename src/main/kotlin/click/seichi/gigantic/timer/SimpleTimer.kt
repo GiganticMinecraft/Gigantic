@@ -1,7 +1,6 @@
 package click.seichi.gigantic.timer
 
-import click.seichi.gigantic.Gigantic
-import org.bukkit.scheduler.BukkitRunnable
+import click.seichi.gigantic.extension.runTaskTimer
 import kotlin.properties.Delegates
 
 /**
@@ -50,18 +49,15 @@ open class SimpleTimer : Timer {
             return
         }
 
-        object : BukkitRunnable() {
-            var elapsedSeconds = 0L
-            override fun run() {
-                if (elapsedSeconds++ >= coolTime || isCancelled) {
-                    cancel()
-                    end()
-                    return
-                }
-                remainTimeToFire = coolTime.minus(elapsedSeconds).plus(1)
-                onCooldown(remainTimeToFire)
+        runTaskTimer(0L, 20L) { seconds ->
+            if (seconds >= coolTime || isCancelled) {
+                end()
+                return@runTaskTimer false
             }
-        }.runTaskTimer(Gigantic.PLUGIN, 0L, 20L)
+            remainTimeToFire = coolTime.minus(seconds).plus(1)
+            onCooldown(remainTimeToFire)
+            return@runTaskTimer true
+        }
     }
 
     private fun end() {

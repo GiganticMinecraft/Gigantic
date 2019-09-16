@@ -32,7 +32,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
-import org.bukkit.scheduler.BukkitRunnable
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.math.BigDecimal
 import java.util.*
@@ -120,35 +119,31 @@ object BagButtons {
             setCoolTime(uniqueId, true)
             player.updateBag()
             // 投票，ポム，寄付系のポイントをデータベースから取得後更新
-            object : BukkitRunnable() {
-                override fun run() {
-                    var votePoint: Int? = null
-                    var pomme: Int? = null
-                    var donation: Int? = null
-                    transaction {
-                        val user = User.findById(uniqueId)!!
-                        votePoint = user.vote
-                        pomme = user.pomme
-                        donation = user.donation
-                    }
-                    object : BukkitRunnable() {
-                        override fun run() {
-                            setCoolTime(uniqueId, false)
-                            if (!player.isValid) return
-                            votePoint?.let {
-                                player.force(Keys.VOTE, it)
-                            }
-                            pomme?.let {
-                                player.force(Keys.POMME, it)
-                            }
-                            donation?.let {
-                                player.force(Keys.DONATION, it)
-                            }
-                            player.updateBag()
-                        }
-                    }.runTaskLater(Gigantic.PLUGIN, Defaults.PROFILE_UPDATE_TIME * 20)
+            runTaskAsync {
+                var votePoint: Int? = null
+                var pomme: Int? = null
+                var donation: Int? = null
+                transaction {
+                    val user = User.findById(uniqueId)!!
+                    votePoint = user.vote
+                    pomme = user.pomme
+                    donation = user.donation
                 }
-            }.runTaskAsynchronously(Gigantic.PLUGIN)
+                runTaskLater(Defaults.PROFILE_UPDATE_TIME * 20) {
+                    setCoolTime(uniqueId, false)
+                    if (!player.isValid) return@runTaskLater
+                    votePoint?.let {
+                        player.force(Keys.VOTE, it)
+                    }
+                    pomme?.let {
+                        player.force(Keys.POMME, it)
+                    }
+                    donation?.let {
+                        player.force(Keys.DONATION, it)
+                    }
+                    player.updateBag()
+                }
+            }
             return true
         }
 
@@ -173,34 +168,30 @@ object BagButtons {
             val uniqueId = player.uniqueId
 
             //　非同期で寄付履歴リストを作成
-            object : BukkitRunnable() {
-                override fun run() {
-                    val donateList: MutableList<DonateTicket> = mutableListOf()
-                    transaction {
-                        DonateHistory
-                                .find { DonateHistoryTable.userId eq uniqueId }
-                                .notForUpdate()
-                                .map { DonateTicket(it.createdAt, it.amount) }
-                                .toList()
-                                .sortedByDescending {
-                                    it.date.millis
-                                }.let {
-                                    donateList.addAll(it)
-                                }
-                    }
-                    object : BukkitRunnable() {
-                        override fun run() {
-                            if (!player.isValid) return
-                            //既に開いていなければ終了
-                            val holder = player.openInventory.topInventory.holder
-                            if (holder != DonateHistoryMenu) return
-                            // 寄付履歴を保存
-                            player.offer(Keys.DONATE_TICKET_LIST, donateList)
-                            DonateHistoryMenu.reopen(player)
-                        }
-                    }.runTaskLater(Gigantic.PLUGIN, Defaults.DONATE_HISTORY_LOAD_TIME * 20)
+            runTaskAsync {
+                val donateList: MutableList<DonateTicket> = mutableListOf()
+                transaction {
+                    DonateHistory
+                            .find { DonateHistoryTable.userId eq uniqueId }
+                            .notForUpdate()
+                            .map { DonateTicket(it.createdAt, it.amount) }
+                            .toList()
+                            .sortedByDescending {
+                                it.date.millis
+                            }.let {
+                                donateList.addAll(it)
+                            }
                 }
-            }.runTaskAsynchronously(Gigantic.PLUGIN)
+                runTaskLater(Defaults.DONATE_HISTORY_LOAD_TIME * 20) {
+                    if (!player.isValid) return@runTaskLater
+                    //既に開いていなければ終了
+                    val holder = player.openInventory.topInventory.holder
+                    if (holder != DonateHistoryMenu) return@runTaskLater
+                    // 寄付履歴を保存
+                    player.offer(Keys.DONATE_TICKET_LIST, donateList)
+                    DonateHistoryMenu.reopen(player)
+                }
+            }
             return true
         }
 

@@ -34,7 +34,6 @@ import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.*
-import org.bukkit.scheduler.BukkitRunnable
 import java.math.BigDecimal
 import java.math.BigInteger
 
@@ -80,11 +79,9 @@ class PlayerListener : Listener {
         }
         val uniqueId = player.uniqueId
 
-        object : BukkitRunnable() {
-            override fun run() {
-                PlayerCacheMemory.writeThenRemoved(uniqueId)
-            }
-        }.runTaskAsynchronously(Gigantic.PLUGIN)
+        runTaskAsync {
+            PlayerCacheMemory.writeThenRemoved(uniqueId)
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

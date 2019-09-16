@@ -5,13 +5,13 @@ import click.seichi.gigantic.animation.animations.effect.MultiBreakAnimations
 import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.effect.effector.MultiBreakEffector
 import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.runTaskLater
 import click.seichi.gigantic.extension.update
 import click.seichi.gigantic.sound.sounds.EffectSounds
 import click.seichi.gigantic.util.Random
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitRunnable
 import kotlin.math.roundToLong
 
 /**
@@ -54,19 +54,17 @@ object MultiBreakEffectors {
             breakBlockSet.forEach { target ->
                 target.type = Material.PACKED_ICE
             }
-            object : BukkitRunnable() {
-                override fun run() {
-                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
-                    breakBlockSet.forEach { target ->
-                        target.type = Material.AIR
-                    }
-                    breakBlockSet.forEach { target ->
-                        MultiBreakAnimations.BLIZZARD.start(target.centralLocation)
-                    }
-                    EffectSounds.BLIZZARD.play(base.centralLocation)
-                    update(player, breakBlockSet)
+            runTaskLater(Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong()) {
+                Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                breakBlockSet.forEach { target ->
+                    target.type = Material.AIR
                 }
-            }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
+                breakBlockSet.forEach { target ->
+                    MultiBreakAnimations.BLIZZARD.start(target.centralLocation)
+                }
+                EffectSounds.BLIZZARD.play(base.centralLocation)
+                update(player, breakBlockSet)
+            }
         }
     }
 
@@ -76,19 +74,17 @@ object MultiBreakEffectors {
             breakBlockSet.forEach { target ->
                 target.type = Random.nextWool()
             }
-            object : BukkitRunnable() {
-                override fun run() {
-                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
-                    breakBlockSet.forEach { target ->
-                        target.type = Material.AIR
-                    }
-                    breakBlockSet.forEach { target ->
-                        MultiBreakAnimations.MAGIC.start(target.centralLocation)
-                    }
-                    EffectSounds.MAGIC.play(base.centralLocation)
-                    update(player, breakBlockSet)
+            runTaskLater(Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong()) {
+                Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                breakBlockSet.forEach { target ->
+                    target.type = Material.AIR
                 }
-            }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
+                breakBlockSet.forEach { target ->
+                    MultiBreakAnimations.MAGIC.start(target.centralLocation)
+                }
+                EffectSounds.MAGIC.play(base.centralLocation)
+                update(player, breakBlockSet)
+            }
         }
     }
 
@@ -131,19 +127,17 @@ object MultiBreakEffectors {
             breakBlockSet.forEach { target ->
                 target.type = Material.SLIME_BLOCK
             }
-            object : BukkitRunnable() {
-                override fun run() {
-                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
-                    breakBlockSet.forEach { target ->
-                        target.type = Material.AIR
-                    }
-                    breakBlockSet.forEach { target ->
-                        MultiBreakAnimations.SLIME.start(target.centralLocation)
-                    }
-                    EffectSounds.SLIME.play(base.centralLocation)
-                    update(player, breakBlockSet)
+            runTaskLater(Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong()) {
+                Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                breakBlockSet.forEach { target ->
+                    target.type = Material.AIR
                 }
-            }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
+                breakBlockSet.forEach { target ->
+                    MultiBreakAnimations.SLIME.start(target.centralLocation)
+                }
+                EffectSounds.SLIME.play(base.centralLocation)
+                update(player, breakBlockSet)
+            }
         }
     }
 
@@ -156,21 +150,19 @@ object MultiBreakEffectors {
                 target.type = Material.WATER
             }
             base.type = Material.WATER
-            object : BukkitRunnable() {
-                override fun run() {
-                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
-                    Gigantic.SKILLED_BLOCK_SET.remove(base)
-                    breakBlockSet.forEach { target ->
-                        target.type = Material.AIR
-                    }
-                    base.type = Material.AIR
-                    breakBlockSet.forEach { target ->
-                        MultiBreakAnimations.BUBBLE.start(target.centralLocation)
-                    }
-                    EffectSounds.BUBBLE.play(base.centralLocation)
-                    update(player, breakBlockSet)
+            runTaskLater(Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong()) {
+                Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                Gigantic.SKILLED_BLOCK_SET.remove(base)
+                breakBlockSet.forEach { target ->
+                    target.type = Material.AIR
                 }
-            }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
+                base.type = Material.AIR
+                breakBlockSet.forEach { target ->
+                    MultiBreakAnimations.BUBBLE.start(target.centralLocation)
+                }
+                EffectSounds.BUBBLE.play(base.centralLocation)
+                update(player, breakBlockSet)
+            }
         }
     }
 
@@ -192,24 +184,20 @@ object MultiBreakEffectors {
                 target.type = randomMaterial()
             }
             // ブロックのtypeを取得するために1tick早めに処理
-            object : BukkitRunnable() {
-                override fun run() {
-                    breakBlockSet.forEach { target ->
-                        MultiBreakAnimations.ALCHEMIA.start(target.centralLocation)
-                    }
+            runTaskLater(Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong().minus(1)) {
+                breakBlockSet.forEach { target ->
+                    MultiBreakAnimations.ALCHEMIA.start(target.centralLocation)
                 }
-            }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong().minus(1))
+            }
 
-            object : BukkitRunnable() {
-                override fun run() {
-                    Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
-                    breakBlockSet.forEach { target ->
-                        target.type = Material.AIR
-                    }
-                    EffectSounds.ALCHEMIA.play(base.centralLocation)
-                    update(player, breakBlockSet)
+            runTaskLater(Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong()) {
+                Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                breakBlockSet.forEach { target ->
+                    target.type = Material.AIR
                 }
-            }.runTaskLater(Gigantic.PLUGIN, Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong())
+                EffectSounds.ALCHEMIA.play(base.centralLocation)
+                update(player, breakBlockSet)
+            }
         }
     }
 

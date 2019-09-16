@@ -1,6 +1,5 @@
 package click.seichi.gigantic.item.items.menu
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
@@ -15,7 +14,6 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
-import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 
 /**
@@ -82,20 +80,18 @@ object HomeButtons {
             override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 if (player.gameMode != GameMode.SURVIVAL) return true
                 val home = player.getOrPut(Keys.HOME_MAP)[homeId]
-
+                val uniqueId = player.uniqueId
                 // 削除
                 if (event.isRightClick) {
                     if (home == null) return true
-                    val deleteHomeId = deleteMap.remove(player.uniqueId)
+                    val deleteHomeId = deleteMap.remove(uniqueId)
                     if (deleteHomeId == null || deleteHomeId != homeId) {
-                        deleteMap[player.uniqueId] = homeId
-                        object : BukkitRunnable() {
-                            override fun run() {
-                                if (!player.isValid) return
-                                deleteMap.remove(player.uniqueId)
-                                TeleportToHomeMenu.reopen(player)
-                            }
-                        }.runTaskLater(Gigantic.PLUGIN, 20L)
+                        deleteMap[uniqueId] = homeId
+                        runTaskLater(20L) {
+                            deleteMap.remove(uniqueId)
+                            if (!player.isValid) return@runTaskLater
+                            TeleportToHomeMenu.reopen(player)
+                        }
                     } else {
                         player.transform(Keys.HOME_MAP) {
                             it.toMutableMap().apply {

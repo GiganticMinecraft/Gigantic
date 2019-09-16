@@ -1,6 +1,5 @@
 package click.seichi.gigantic.item.items.menu
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.event.events.RelicGenerateEvent
@@ -21,7 +20,6 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
-import org.bukkit.scheduler.BukkitRunnable
 import kotlin.random.asKotlinRandom
 
 /**
@@ -123,12 +121,10 @@ object RelicGeneratorButtons {
             Bukkit.getPluginManager().callEvent(RelicGenerateEvent(player, relic, selected, Defaults.RELIC_GENERATOR_REQUIRE_ETHEL))
 
             // 更新後にすぐに削除
-            object : BukkitRunnable() {
-                override fun run() {
-                    if (!player.isValid) return
-                    player.offer(Keys.GENERATED_RELIC, null)
-                }
-            }.runTaskLater(Gigantic.PLUGIN, 1L)
+            runTaskLater(1L) {
+                if (!player.isValid) return@runTaskLater
+                player.offer(Keys.GENERATED_RELIC, null)
+            }
             return true
         }
     }

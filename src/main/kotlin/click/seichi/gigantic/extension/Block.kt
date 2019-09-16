@@ -18,7 +18,6 @@ import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitRunnable
 
 /**
  * @author unicroak
@@ -416,31 +415,29 @@ fun Block.setTorchIfNeeded(player: Player?) {
 
 private fun Block.fallUpperCrustBlock() {
     if (calcGravity() == 0) return
-    object : BukkitRunnable() {
-        override fun run() {
-            val target = getRelative(BlockFace.UP)
-            when {
-                target.y > 255 -> {
-                    return
-                }
-                Gigantic.SKILLED_BLOCK_SET.contains(target) -> {
-                    target.update()
-                }
-                target.isCrust -> {
-                    target.fall()
-                    target.update()
-                }
-                target.isLog -> {
-                    Cutter().breakRelationalBlock(target, false)
-                    return
-                }
-                else -> {
-                    target.update()
-                }
+    runTaskLater(2L) {
+        val target = getRelative(BlockFace.UP)
+        when {
+            target.y > 255 -> {
+                return@runTaskLater
             }
-
+            Gigantic.SKILLED_BLOCK_SET.contains(target) -> {
+                target.update()
+            }
+            target.isCrust -> {
+                target.fall()
+                target.update()
+            }
+            target.isLog -> {
+                Cutter().breakRelationalBlock(target, false)
+                return@runTaskLater
+            }
+            else -> {
+                target.update()
+            }
         }
-    }.runTaskLater(Gigantic.PLUGIN, 2L)
+
+    }
 }
 
 

@@ -1,11 +1,7 @@
 package click.seichi.gigantic.battle
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
-import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.noised
-import click.seichi.gigantic.extension.updateDisplay
-import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.message.messages.PopUpMessages
 import click.seichi.gigantic.message.messages.RelicMessages
@@ -22,7 +18,6 @@ import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 
 /**
@@ -68,16 +63,13 @@ class Battle internal constructor(
         battlers.forEach {
             BattleSounds.START.playOnly(it.player)
         }
-        object : BukkitRunnable() {
-            override fun run() {
-                elapsedTick++
-                update()
-                if (battlers.isEmpty()) {
-                    cancel()
-                    return
-                }
+        runTaskTimer(1L, 1L) { tick ->
+            update()
+            if (battlers.isEmpty()) {
+                return@runTaskTimer false
             }
-        }.runTaskTimer(Gigantic.PLUGIN, 1L, 1L)
+            return@runTaskTimer true
+        }
     }
 
     fun update() {

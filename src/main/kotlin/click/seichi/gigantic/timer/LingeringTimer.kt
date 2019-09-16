@@ -1,7 +1,6 @@
 package click.seichi.gigantic.timer
 
-import click.seichi.gigantic.Gigantic
-import org.bukkit.scheduler.BukkitRunnable
+import click.seichi.gigantic.extension.runTaskTimer
 import kotlin.properties.Delegates
 
 /**
@@ -65,35 +64,28 @@ open class LingeringTimer : Timer {
         isCancelled = false
         remainTimeToCool = duration
         onStart()
-        object : BukkitRunnable() {
-            var elapsedSeconds = 0L
-            override fun run() {
-                // 前に分岐を置くことでExceptionでの無限ループ発生を回避
-                if (elapsedSeconds++ >= duration || isCancelled) {
-                    cancel()
-                    remainTimeToCool = 0L
-                    remainTimeToFire = coolTime
-                    onCompleteFire()
-
-                    object : BukkitRunnable() {
-                        var elapsedSeconds = 0L
-                        override fun run() {
-                            // 前に分岐を置くことでExceptionでの無限ループ発生を回避
-                            if (elapsedSeconds++ >= coolTime || isCancelled) {
-                                cancel()
-                                end()
-                                return
-                            }
-                            remainTimeToFire = coolTime.minus(elapsedSeconds).plus(1)
-                            onCooldown(remainTimeToFire)
-                        }
-                    }.runTaskTimer(Gigantic.PLUGIN, 0L, 20L)
-                    return
+        runTaskTimer(0L, 20L) { fireSeconds ->
+            // 前に分岐を置くことでExceptionでの無限ループ発生を回避
+            if (fireSeconds >= duration || isCancelled) {
+                remainTimeToCool = 0L
+                remainTimeToFire = coolTime
+                onCompleteFire()
+                coolTimer@ runTaskTimer(0L, 20L) { coolSeconds ->
+                    // 前に分岐を置くことでExceptionでの無限ループ発生を回避
+                    if (coolSeconds >= coolTime || isCancelled) {
+                        end()
+                        return@coolTimer false
+                    }
+                    remainTimeToFire = coolTime.minus(coolSeconds).plus(1)
+                    onCooldown(remainTimeToFire)
+                    return@coolTimer true
                 }
-                remainTimeToCool = duration.minus(elapsedSeconds).plus(1)
-                onFire(remainTimeToCool)
+                return@runTaskTimer false
             }
-        }.runTaskTimer(Gigantic.PLUGIN, 0L, 20L)
+            remainTimeToCool = duration.minus(fireSeconds).plus(1)
+            onFire(remainTimeToCool)
+            return@runTaskTimer true
+        }
     }
 
     private fun end() {

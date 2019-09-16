@@ -32,7 +32,6 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.scheduler.BukkitRunnable
 import org.joda.time.DateTime
 
 /**
@@ -106,16 +105,13 @@ class PlayerMonitor : Listener {
             val now = DateTime.now()
             if (now.dayOfYear == givenAt.dayOfYear) return
 
-            object : BukkitRunnable() {
-                override fun run() {
-                    if (!player.isValid) return
-                    player.offer(Keys.EVENT_JMS_KING_GIVEN_AT, now)
-                    Relic.CUP_OF_KING.dropTo(player)
-                    PlayerSounds.PICK_UP.playOnly(player)
-                    GiganticEventMessages.DROPPED_RELIC(Relic.CUP_OF_KING).sendTo(player)
-                }
-            }.runTaskLater(Gigantic.PLUGIN, 60L)
-
+            runTaskLater(60L) {
+                if (!player.isValid) return@runTaskLater
+                player.offer(Keys.EVENT_JMS_KING_GIVEN_AT, now)
+                Relic.CUP_OF_KING.dropTo(player)
+                PlayerSounds.PICK_UP.playOnly(player)
+                GiganticEventMessages.DROPPED_RELIC(Relic.CUP_OF_KING).sendTo(player)
+            }
         }
     }
 
@@ -193,13 +189,11 @@ class PlayerMonitor : Listener {
         player.transform(Keys.TOTEM) { it.minus(1) }
         val currentSlot = player.inventory.heldItemSlot
         player.inventory.heldItemSlot = Defaults.TOTEM_SLOT
-        object : BukkitRunnable() {
-            override fun run() {
-                if (!player.isValid) return
-                player.updateDisplay(applyMainHand = true, applyOffHand = true)
-                player.inventory.heldItemSlot = currentSlot
-            }
-        }.runTaskLater(Gigantic.PLUGIN, 1L)
+        runTaskLater(1L) {
+            if (!player.isValid) return@runTaskLater
+            player.updateDisplay(applyMainHand = true, applyOffHand = true)
+            player.inventory.heldItemSlot = currentSlot
+        }
     }
 
 }

@@ -20,7 +20,6 @@ import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
-import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 
 /**
@@ -238,14 +237,13 @@ object HandItems {
         }
 
         override fun tryInteract(player: Player, event: PlayerInteractEvent): Boolean {
+            val uniqueId = player.uniqueId
             if (!Spell.SKY_WALK.isGranted(player)) return true
             if (coolMap.getOrDefault(player.uniqueId, false)) return true
-            coolMap[player.uniqueId] = true
-            object : BukkitRunnable() {
-                override fun run() {
-                    coolMap[player.uniqueId] = false
-                }
-            }.runTaskLater(Gigantic.PLUGIN, 5L)
+            coolMap[uniqueId] = true
+            runTaskLater(5L) {
+                coolMap[uniqueId] = false
+            }
             // マナがない場合は強制的にOFF
             if (!player.hasMana()) {
                 PlayerMessages.NO_MANA.sendTo(player)

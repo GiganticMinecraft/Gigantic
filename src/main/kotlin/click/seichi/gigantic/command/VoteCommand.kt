@@ -3,13 +3,14 @@ package click.seichi.gigantic.command
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.database.dao.user.User
 import click.seichi.gigantic.database.table.user.UserTable
+import click.seichi.gigantic.extension.runTask
+import click.seichi.gigantic.extension.runTaskAsync
 import click.seichi.gigantic.message.LocalizedText
 import click.seichi.gigantic.message.messages.command.CommandMessages
 import click.seichi.gigantic.message.messages.command.PointMessages
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
-import org.bukkit.scheduler.BukkitRunnable
 import org.jetbrains.exposed.sql.transactions.transaction
 
 /**
@@ -32,38 +33,34 @@ class VoteCommand : TabExecutor {
         // 投票数
         val increase = args[1].toIntOrNull() ?: return false
 
-        // 非同期に実行
-        object : BukkitRunnable() {
-            override fun run() {
-                val messages = mutableListOf<LocalizedText>()
-                transaction {
-                    val userList = User.find { UserTable.name eq playerName }
-                    if (userList.empty()) {
-                        messages.add(CommandMessages.NO_USER(playerName))
-                        return@transaction
-                    }
-                    // 複数同名がいる場合はもっとも最新のデータを更新
-                    val mostRecentUpdateTime = userList.map { it.updatedDate }.sortedDescending().first()
-                    val user = userList.first { it.updatedDate == mostRecentUpdateTime }
-
-                    // プレイヤーがオンライン，オフライン関係なく書き換え
-                    user.vote += increase
-                    messages.add(PointMessages.COMPLETE_STORE)
+        // 非同期
+        runTaskAsync {
+            val messages = mutableListOf<LocalizedText>()
+            transaction {
+                val userList = User.find { UserTable.name eq playerName }
+                if (userList.empty()) {
+                    messages.add(CommandMessages.NO_USER(playerName))
+                    return@transaction
                 }
+                // 複数同名がいる場合はもっとも最新のデータを更新
+                val mostRecentUpdateTime = userList.map { it.updatedDate }.sortedDescending().first()
+                val user = userList.first { it.updatedDate == mostRecentUpdateTime }
 
-                // 全てのメッセージを同期送信
-                object : BukkitRunnable() {
-                    override fun run() {
-                        sender.sendMessage(PointMessages.DETECT_VOTE.asSafety(Gigantic.DEFAULT_LOCALE))
-                        sender.sendMessage("NAME : $playerName ")
-                        sender.sendMessage("NUM : $increase")
-                        messages.forEach { message ->
-                            sender.sendMessage(message.asSafety(Gigantic.DEFAULT_LOCALE))
-                        }
-                    }
-                }.runTask(Gigantic.PLUGIN)
+                // プレイヤーがオンライン，オフライン関係なく書き換え
+                user.vote += increase
+                messages.add(PointMessages.COMPLETE_STORE)
             }
-        }.runTaskAsynchronously(Gigantic.PLUGIN)
+
+            // 全てのメッセージを同期送信
+            runTask {
+                sender.sendMessage(PointMessages.DETECT_VOTE.asSafety(Gigantic.DEFAULT_LOCALE))
+                sender.sendMessage("NAME : $playerName ")
+                sender.sendMessage("NUM : $increase")
+                messages.forEach { message ->
+                    sender.sendMessage(message.asSafety(Gigantic.DEFAULT_LOCALE))
+                }
+            }
+        }
 
         return true
     }

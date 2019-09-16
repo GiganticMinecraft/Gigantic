@@ -1,7 +1,6 @@
 package click.seichi.gigantic.item.items.menu
 
 import click.seichi.gigantic.Currency
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
@@ -21,7 +20,6 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
-import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 
 /**
@@ -148,17 +146,14 @@ object ShopButtons {
                 } else {
                     buyMap[uniqueId] = effect
                     PlayerSounds.TOGGLE.playOnly(player)
-                    object : BukkitRunnable() {
-                        override fun run() {
-                            if (!player.isValid) return
-                            if (buyMap[uniqueId] != effect) return
-                            // 現在のメニューとプレイヤーが開いているメニューを検査
-                            val playerHolder = player.openInventory.topInventory.holder
-                            if (menu != playerHolder) return
-                            buyMap.remove(uniqueId)
-                            menu.reopen(player)
-                        }
-                    }.runTaskLater(Gigantic.PLUGIN, 200L)
+                    runTaskLater(20L * 10L) {
+                        if (buyMap[uniqueId] != effect) return@runTaskLater
+                        buyMap.remove(uniqueId)
+                        if (!player.isValid) return@runTaskLater
+                        // 現在のメニューとプレイヤーが開いているメニューを検査
+                        if (menu != player.findOpenMenu()) return@runTaskLater
+                        menu.reopen(player)
+                    }
                 }
                 menu.reopen(player)
                 return true

@@ -1,12 +1,11 @@
 package click.seichi.gigantic.message
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.getOrPut
 import click.seichi.gigantic.extension.offer
+import click.seichi.gigantic.extension.runTaskLater
 import click.seichi.gigantic.extension.wrappedLocale
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitRunnable
 
 /**
  * @author tar0ss
@@ -27,22 +26,18 @@ open class TitleMessage(
 
         if (title != null) {
             player.offer(Keys.TITLE, nextTitle)
-            object : BukkitRunnable() {
-                override fun run() {
-                    if (!player.isValid) return
-                    player.offer(Keys.TITLE, null)
-                }
-            }.runTaskLater(Gigantic.PLUGIN, fadeIn.plus(stay).plus(fadeOut).toLong())
+            runTaskLater(fadeIn.plus(stay).plus(fadeOut).toLong()) {
+                if (!player.isValid) return@runTaskLater
+                player.offer(Keys.TITLE, null)
+            }
         }
 
         if (subTitle != null) {
             player.offer(Keys.SUBTITLE, nextSubTitle)
-            object : BukkitRunnable() {
-                override fun run() {
-                    if (!player.isValid) return
-                    player.offer(Keys.SUBTITLE, null)
-                }
-            }.runTaskLater(Gigantic.PLUGIN, fadeIn.plus(stay).plus(fadeOut).toLong())
+            runTaskLater(fadeIn.plus(stay).plus(fadeOut).toLong()) {
+                if (!player.isValid) return@runTaskLater
+                player.offer(Keys.SUBTITLE, null)
+            }
         }
         player.sendTitle(
                 nextTitle,

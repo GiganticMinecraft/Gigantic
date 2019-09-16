@@ -1,10 +1,6 @@
 package click.seichi.gigantic.menu.menus
 
-import click.seichi.gigantic.Gigantic
-import click.seichi.gigantic.extension.setDisplayName
-import click.seichi.gigantic.extension.setLore
-import click.seichi.gigantic.extension.updateDisplay
-import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
 import click.seichi.gigantic.item.items.menu.SettingButtons
 import click.seichi.gigantic.menu.Menu
@@ -17,7 +13,6 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
-import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 
 /**
@@ -61,16 +56,13 @@ object SettingMenu : Menu() {
                     val uniqueId = player.uniqueId
                     if (coolTimeSet.contains(uniqueId)) return false
                     coolTimeSet.add(uniqueId)
-                    object : BukkitRunnable() {
-                        override fun run() {
-                            coolTimeSet.remove(uniqueId)
-                        }
-                    }.runTaskLater(Gigantic.PLUGIN, 5L)
-
+                    runTaskLater(5L) {
+                        coolTimeSet.remove(uniqueId)
+                    }
                     display.toggle(player)
                     PlayerSounds.TOGGLE.playOnly(player)
                     reopen(player)
-                    player.updateDisplay(true, true)
+                    player.updateDisplay(applyMainHand = true, applyOffHand = true)
                     return true
                 }
             })

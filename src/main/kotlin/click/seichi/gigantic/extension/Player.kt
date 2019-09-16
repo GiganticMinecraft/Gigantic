@@ -14,6 +14,7 @@ import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.effect.GiganticEffect
 import click.seichi.gigantic.event.events.LevelUpEvent
+import click.seichi.gigantic.menu.Menu
 import click.seichi.gigantic.message.messages.PlayerMessages
 import click.seichi.gigantic.message.messages.WillMessages
 import click.seichi.gigantic.player.ExpReason
@@ -160,9 +161,14 @@ val Player.relicTypes: Int
     get() = Relic.values()
             .count { hasRelic(it) }
 
+// テクスチャがデフォルトと、破壊パーティクルなしの二つがあるので分ける
 val Player.isNormalTexture: Boolean
     get() = getOrPut(Keys.IS_NORMAL_TEXTURE)
 
+// 現在開いているメニューを取得する。無ければnull
+fun Player.findOpenMenu(): Menu? {
+    return openInventory.topInventory.holder as? Menu
+}
 
 /**
  * プレイヤーが向いている方向の[BlockFace]を取得する

@@ -5,6 +5,7 @@ import click.seichi.gigantic.animation.animations.BattleMonsterAnimations
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
 import click.seichi.gigantic.extension.centralLocation
 import click.seichi.gigantic.extension.isAir
+import click.seichi.gigantic.extension.runTaskTimer
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.monster.SoulMonster
@@ -20,7 +21,6 @@ import org.bukkit.block.Block
 import org.bukkit.boss.BossBar
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.EulerAngle
 
 /**
@@ -108,7 +108,7 @@ class BattleMonster(
         players.map { it.player }.forEach { player ->
             // TODO implements
 //            if (!SoulMonster.VILLAGER.isDefeatedBy(player)) {
-                BattleMessages.FIRST_AWAKE.sendTo(player)
+            BattleMessages.FIRST_AWAKE.sendTo(player)
 //            }
         }
 
@@ -203,35 +203,30 @@ class BattleMonster(
 
         attackBlocks.add(attackBlock)
 
-        object : BukkitRunnable() {
-            var ticks = 0L
-            override fun run() {
-                if (ticks++ > 60L) {
-                    if (player.isOnline) {
-                        player.sendBlockChange(block.location, block.blockData)
-                    }
-                    cancel()
-                    return
-                }
-
-                if (!entity.isValid || !player.isValid) return
-
-                if (block.isAir || !attackBlocks.contains(attackBlock)) {
+        runTaskTimer(20L, 1L) { ticks ->
+            if (ticks > 60L) {
+                if (player.isOnline) {
                     player.sendBlockChange(block.location, block.blockData)
-                    return
                 }
-
-                // effects
-                BattleMonsterAnimations.ATTACK_READY_BLOCK(attackBlockData)
-                        .start(block.centralLocation)
-                player.sendBlockChange(block.location, attackBlockData)
-                if (ticks % 10 == 0L) {
-                    SoulMonsterSounds.ATTACK_READY_SUB.play(block.centralLocation)
-                }
-
+                return@runTaskTimer false
             }
 
-        }.runTaskTimer(Gigantic.PLUGIN, 20, 1L)
+            if (!entity.isValid || !player.isValid) return@runTaskTimer true
+
+            if (block.isAir || !attackBlocks.contains(attackBlock)) {
+                player.sendBlockChange(block.location, block.blockData)
+                return@runTaskTimer true
+            }
+
+            // effects
+            BattleMonsterAnimations.ATTACK_READY_BLOCK(attackBlockData)
+                    .start(block.centralLocation)
+            player.sendBlockChange(block.location, attackBlockData)
+            if (ticks % 10 == 0L) {
+                SoulMonsterSounds.ATTACK_READY_SUB.play(block.centralLocation)
+            }
+            return@runTaskTimer true
+        }
 
         // attack
         Bukkit.getScheduler().scheduleSyncDelayedTask(Gigantic.PLUGIN, {
@@ -254,7 +249,7 @@ class BattleMonster(
 
             // TODO implements
 //            if (!SoulMonster.ZOMBIE_VILLAGER.isDefeatedBy(player)) {
-                BattleMessages.FIRST_DAMAGE.sendTo(player)
+            BattleMessages.FIRST_DAMAGE.sendTo(player)
 //            }
 
             // effects
