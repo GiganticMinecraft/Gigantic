@@ -1556,9 +1556,7 @@ object Keys {
         }
 
         override fun satisfyWith(value: List<PurchaseTicket>): Boolean {
-            // 強制的に書き換えを拒否
-            Gigantic.PLUGIN.logger.warning("購入リストの書き換えは禁止されています")
-            return false
+            return true
         }
     }
 

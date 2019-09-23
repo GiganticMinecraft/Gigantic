@@ -108,43 +108,36 @@ enum class Product(
             }
         }
         val uniqueId = player.uniqueId
+        var purchaseId: Int? = null
         //非同期でデータベースに追加
         runTaskAsync {
-            var newHistory: PurchaseHistory? = null
             transaction {
                 val user = User.findById(uniqueId) ?: return@transaction
-                newHistory = PurchaseHistory.new {
-                    this.user = user
-                    this.productId = new.product.id
-                    this.amount = new.amount
-                    this.createdAt = new.date
-                    this.isCancelled = new.isCancelled
+                purchaseId = PurchaseHistory.new {
+                    this@new.user = user
+                    this@new.productId = new.product.id
+                    this@new.amount = new.amount
+                    this@new.createdAt = new.date
+                    this@new.isCancelled = new.isCancelled
                     if (new.cancelledAt != null)
-                        this.cancelledAt = new.cancelledAt
-                }
+                        this@new.cancelledAt = new.cancelledAt
+                }.id.value
             }
             // データベースに挿入した情報を反映する
             runTask {
-                if (newHistory == null) {
+                if (purchaseId == null) {
                     warning(PurchaseMessages.CONSOLE_ERROR_INSERT_DATABASE)
                     warning("UUID:$uniqueId")
                     warning("PurchaseTicket:$new")
                 }
                 if (!player.isValid) return@runTask
-
-                if (newHistory == null) {
+                if (purchaseId == null) {
                     PurchaseMessages.USER_ERROR_INSERT_DATABASE.sendTo(player)
                 }
-                player.transform(Keys.PURCHASE_TICKET_LIST) {
-                    it.toMutableList().apply {
-                        remove(new)
-                        if (newHistory != null) {
-                            add(PurchaseTicket(newHistory!!))
-                        }
-                    }
+                purchaseId?.let { id ->
+                    player.find(Keys.PURCHASE_TICKET_LIST)?.find { it === new }?.setIdIfAbsent(id)
                 }
             }
-
         }
     }
 

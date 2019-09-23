@@ -11,7 +11,7 @@ import java.util.*
 object PurchaseMessages {
 
     val CONSOLE_ERROR_INSERT_DATABASE = LocalizedText(
-            Locale.JAPANESE to "データベースへの挿入に失敗しました。"
+            Locale.JAPANESE to "INSERT ERROR : データベースへの挿入に失敗しました。"
     )
 
     val USER_ERROR_INSERT_DATABASE = ChatMessage(

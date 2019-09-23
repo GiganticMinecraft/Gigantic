@@ -1,6 +1,6 @@
 @here 
 
-:cherry_blossom:  **__整地鯖(春) バージョン1.3 追加アップデート情報(2019/09/13)__** :cherry_blossom:  
+:cherry_blossom:  **__整地鯖(春) バージョン1.2 追加アップデート情報(2019/09/13)__** :cherry_blossom:  
 
 
 :chart_with_upwards_trend: **__バージョンアップ__** :chart_with_upwards_trend:   

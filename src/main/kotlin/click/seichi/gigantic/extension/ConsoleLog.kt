@@ -23,13 +23,13 @@ fun fine(msg: LocalizedText) {
 }
 
 fun warning(str: String) {
-    Bukkit.getLogger().warning(str)
+    Bukkit.getServer().logger.warning(str)
 }
 
 fun info(str: String) {
-    Bukkit.getLogger().info(str)
+    Bukkit.getServer().logger.info(str)
 }
 
 fun fine(str: String) {
-    Bukkit.getLogger().fine(str)
+    Bukkit.getServer().logger.fine(str)
 }

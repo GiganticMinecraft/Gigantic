@@ -47,6 +47,8 @@ fun Player.getHead() = itemStackOf(Material.PLAYER_HEAD) {
 
 fun <V : Any?> Player.getOrPut(key: Key<PlayerCache, V>, value: V = key.default) = PlayerCacheMemory.get(uniqueId).getOrPut(key, value)
 
+fun <V : Any?> Player.find(key: Key<PlayerCache, V>) = PlayerCacheMemory.get(uniqueId).find(key)
+
 fun <V : Any?> Player.remove(key: Key<PlayerCache, V>) = PlayerCacheMemory.get(uniqueId).remove(key)
 
 fun <V : Any?> Player.offer(key: Key<PlayerCache, V>, value: V) = PlayerCacheMemory.get(uniqueId).offer(key, value)

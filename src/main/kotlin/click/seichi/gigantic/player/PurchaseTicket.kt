@@ -9,13 +9,16 @@ import org.joda.time.DateTime
  */
 class PurchaseTicket(
         // こちら側で新規発行する場合はnullにする
-        val purchaseId: Int?,
+        _purchaseId: Int?,
         val product: Product,
         val amount: Int,
         val date: DateTime = DateTime.now(),
         var isCancelled: Boolean = false,
         var cancelledAt: DateTime? = null
 ) {
+    var purchaseId: Int? = _purchaseId
+        private set
+
     constructor(purchaseHistory: PurchaseHistory) : this(
             purchaseHistory.id.value,
             Product.findById(purchaseHistory.productId)!!,
@@ -28,6 +31,11 @@ class PurchaseTicket(
     fun cancel(ticket: PurchaseTicket) {
         ticket.isCancelled = true
         ticket.cancelledAt = DateTime.now()
+    }
+
+    fun setIdIfAbsent(purchaseId: Int) {
+        if (this.purchaseId != null) return
+        this.purchaseId = purchaseId
     }
 
 }
