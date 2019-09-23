@@ -131,7 +131,6 @@ object ShopButtons {
                     setEnchanted(true)
                 }
             }
-
             override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
                 val product = effect.product ?: return true
                 // 購入可否判定
@@ -143,6 +142,7 @@ object ShopButtons {
                     product.buy(player)
                     MenuSounds.EFFECT_BUY.playOnly(player)
                     buyMap.remove(uniqueId)
+
                 } else {
                     buyMap[uniqueId] = effect
                     PlayerSounds.TOGGLE.playOnly(player)

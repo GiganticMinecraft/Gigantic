@@ -12,7 +12,6 @@ import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.config.PlayerLevelConfig
 import click.seichi.gigantic.database.RankingEntity
 import click.seichi.gigantic.database.UserEntity
-import click.seichi.gigantic.database.dao.PurchaseHistory
 import click.seichi.gigantic.database.dao.user.User
 import click.seichi.gigantic.database.dao.user.UserFollow
 import click.seichi.gigantic.database.dao.user.UserHome
@@ -1551,25 +1550,15 @@ object Keys {
         }
 
         override fun store(entity: UserEntity, value: List<PurchaseTicket>) {
-            val newList = value.toMutableList()
-                    .filter { it.purchaseId == null }
-                    .toList()
-
-            newList.forEach { ticket ->
-                PurchaseHistory.new {
-                    user = entity.user
-                    productId = ticket.product.id
-                    amount = ticket.amount
-                    createdAt = ticket.date
-                    isCancelled = ticket.isCancelled
-                    if (ticket.cancelledAt != null)
-                        cancelledAt = ticket.cancelledAt
-                }
-            }
+            // データベースが書き換えられていた場合，上書き削除してしまうので
+            // 書き込まなくてよい．減ることもないし増えることもない．
+            Gigantic.PLUGIN.logger.warning("購入リストのデータベース書き込みは禁止されています")
         }
 
         override fun satisfyWith(value: List<PurchaseTicket>): Boolean {
-            return true
+            // 強制的に書き換えを拒否
+            Gigantic.PLUGIN.logger.warning("購入リストの書き換えは禁止されています")
+            return false
         }
     }
 

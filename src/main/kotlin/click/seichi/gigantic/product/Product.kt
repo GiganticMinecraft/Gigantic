@@ -2,10 +2,13 @@ package click.seichi.gigantic.product
 
 import click.seichi.gigantic.Currency
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.extension.getOrPut
-import click.seichi.gigantic.extension.transform
+import click.seichi.gigantic.database.dao.PurchaseHistory
+import click.seichi.gigantic.database.dao.user.User
+import click.seichi.gigantic.extension.*
+import click.seichi.gigantic.message.messages.PurchaseMessages
 import click.seichi.gigantic.player.PurchaseTicket
 import org.bukkit.entity.Player
+import org.jetbrains.exposed.sql.transactions.transaction
 
 /**
  * @author tar0ss
@@ -98,10 +101,50 @@ enum class Product(
                 this,
                 amount
         )
+        // ユーザー側に反映させる
         player.transform(Keys.PURCHASE_TICKET_LIST) {
             it.toMutableList().apply {
                 add(new)
             }
+        }
+        val uniqueId = player.uniqueId
+        //非同期でデータベースに追加
+        runTaskAsync {
+            var newHistory: PurchaseHistory? = null
+            transaction {
+                val user = User.findById(uniqueId) ?: return@transaction
+                newHistory = PurchaseHistory.new {
+                    this.user = user
+                    this.productId = new.product.id
+                    this.amount = new.amount
+                    this.createdAt = new.date
+                    this.isCancelled = new.isCancelled
+                    if (new.cancelledAt != null)
+                        this.cancelledAt = new.cancelledAt
+                }
+            }
+            // データベースに挿入した情報を反映する
+            runTask {
+                if (newHistory == null) {
+                    warning(PurchaseMessages.CONSOLE_ERROR_INSERT_DATABASE)
+                    warning("UUID:$uniqueId")
+                    warning("PurchaseTicket:$new")
+                }
+                if (!player.isValid) return@runTask
+
+                if (newHistory == null) {
+                    PurchaseMessages.USER_ERROR_INSERT_DATABASE.sendTo(player)
+                }
+                player.transform(Keys.PURCHASE_TICKET_LIST) {
+                    it.toMutableList().apply {
+                        remove(new)
+                        if (newHistory != null) {
+                            add(PurchaseTicket(newHistory!!))
+                        }
+                    }
+                }
+            }
+
         }
     }
 

@@ -36,6 +36,21 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 updatedDate = DateTime.now()
             }
 
+            // 読み込み時のみ値を挿入するもの（読み込み時以外での書き換えが禁止されているもの）
+            Keys.VOTE.let {
+                force(it, it.read(entity))
+            }
+            Keys.POMME.let {
+                force(it, it.read(entity))
+            }
+            Keys.DONATION.let {
+                force(it, it.read(entity))
+            }
+            Keys.PURCHASE_TICKET_LIST.let {
+                force(it, it.read(entity))
+            }
+
+            // 書き換えがあるもの
             Keys.MAX_COMBO.let {
                 offer(it, it.read(entity))
             }
@@ -62,15 +77,6 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
             }
             Keys.EFFECT.let {
                 offer(it, it.read(entity))
-            }
-            Keys.VOTE.let {
-                force(it, it.read(entity))
-            }
-            Keys.POMME.let {
-                force(it, it.read(entity))
-            }
-            Keys.DONATION.let {
-                force(it, it.read(entity))
             }
             Keys.FOLLOW_SET.let {
                 offer(it, it.read(entity))
@@ -112,9 +118,6 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 offer(it, it.read(entity))
             }
             Keys.STRIP_MINE.let {
-                offer(it, it.read(entity))
-            }
-            Keys.PURCHASE_TICKET_LIST.let {
                 offer(it, it.read(entity))
             }
             Keys.EXP_MAP.forEach { (_, key) ->
@@ -232,9 +235,6 @@ class PlayerCache(private val uniqueId: UUID, private val playerName: String) : 
                 it.store(entity, getOrDefault(it))
             }
             Keys.STRIP_MINE.let {
-                it.store(entity, getOrDefault(it))
-            }
-            Keys.PURCHASE_TICKET_LIST.let {
                 it.store(entity, getOrDefault(it))
             }
             Keys.EXP_MAP.forEach { (_, key) ->
