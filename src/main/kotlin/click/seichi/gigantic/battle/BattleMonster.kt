@@ -3,10 +3,7 @@ package click.seichi.gigantic.battle
 import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.BattleMonsterAnimations
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
-import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.isAir
-import click.seichi.gigantic.extension.runTaskTimer
-import click.seichi.gigantic.extension.wrappedLocale
+import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.message.messages.BattleMessages
 import click.seichi.gigantic.monster.SoulMonster
 import click.seichi.gigantic.monster.ai.AttackBlock
@@ -37,7 +34,7 @@ class BattleMonster(
     // 攻撃ブロック
     private val attackBlocks: MutableSet<AttackBlock> = mutableSetOf()
     // モンスターのボスバー
-    private val bossBar: BossBar = Gigantic.createInvisibleBossBar()
+    private val bossBar: BossBar = createInvisibleBossBar()
     // モンスターの実体
     private lateinit var entity: ArmorStand
     private lateinit var location: Location
