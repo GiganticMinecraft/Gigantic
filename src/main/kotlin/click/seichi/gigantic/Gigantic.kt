@@ -152,31 +152,43 @@ class Gigantic : JavaPlugin() {
                 "will" to WillCommand()
         )
 
-        // データベース作成の前に重複チェック
-        checkDuplicateId()
+        // データベース作成の前に検証
+        if (!validateDatabaseProperty()) {
+            // 例外時にはプラグインを終了する
+            pluginLoader.disablePlugin(this)
+            return
+        }
 
-        prepareDatabase(
-                // user
-                UserTable,
-                UserWillTable,
-                UserExpTable,
-                UserMonsterTable,
-                UserRelicTable,
-                UserAchievementTable,
-                UserToolTable,
-                UserBeltTable,
-                UserQuestTable,
-                DonateHistoryTable,
-                UserFollowTable,
-                UserHomeTable,
-                UserMuteTable,
-                UserToggleTable,
-                // product,
-                PurchaseHistoryTable,
-                //ranking
-                RankingScoreTable,
-                RankingUserTable
-        )
+        // データベース作成
+        runCatching {
+            prepareDatabase(
+                    // user
+                    UserTable,
+                    UserWillTable,
+                    UserExpTable,
+                    UserMonsterTable,
+                    UserRelicTable,
+                    UserAchievementTable,
+                    UserToolTable,
+                    UserBeltTable,
+                    UserQuestTable,
+                    DonateHistoryTable,
+                    UserFollowTable,
+                    UserHomeTable,
+                    UserMuteTable,
+                    UserToggleTable,
+                    // product,
+                    PurchaseHistoryTable,
+                    //ranking
+                    RankingScoreTable,
+                    RankingUserTable
+            )
+        }.onFailure { exception ->
+            // 例外時はプラグインを終了する
+            exception.printStackTrace()
+            pluginLoader.disablePlugin(this)
+            return
+        }
 
         // ランキングデータ生成
         updateRanking()
@@ -213,14 +225,10 @@ class Gigantic : JavaPlugin() {
                 forEach { block ->
                     SkyWalk.revert(block)
                 }
-                Gigantic.SKILLED_BLOCK_SET.removeAll(this)
+                SKILLED_BLOCK_SET.removeAll(this)
             }
 
-            try {
-                PlayerCacheMemory.writeThenRemoved(player.uniqueId)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            PlayerCacheMemory.writeThenRemoved(player.uniqueId)
 
             server.scheduler.cancelTasks(this)
             player.kickPlayer("Restarting...Please wait a few seconds.")
@@ -273,50 +281,51 @@ class Gigantic : JavaPlugin() {
     }
 
 
-    private fun checkDuplicateId() {
+    /**
+     * @return 正常：TRUE 異常:FALSE
+     */
+    private fun validateDatabaseProperty(): Boolean {
         var hasDuplicateId = false
         if (Will.hasDuplicateId) {
-            logger.warning("Detect duplicate id on Will")
+            warning("Detect duplicate id on Will")
             hasDuplicateId = true
         }
         if (Relic.hasDuplicateId) {
-            logger.warning("Detect duplicate id on Relic")
+            warning("Detect duplicate id on Relic")
             hasDuplicateId = true
         }
         if (Belt.hasDuplicateId) {
-            logger.warning("Detect duplicate id on Belt")
+            warning("Detect duplicate id on Belt")
             hasDuplicateId = true
         }
         if (Quest.hasDuplicateId) {
-            logger.warning("Detect duplicate id on Quest")
+            warning("Detect duplicate id on Quest")
             hasDuplicateId = true
         }
         if (Skill.hasDuplicateId) {
-            logger.warning("Detect duplicate id on Skill")
+            warning("Detect duplicate id on Skill")
             hasDuplicateId = true
         }
         if (Spell.hasDuplicateId) {
-            logger.warning("Detect duplicate id on Spell")
+            warning("Detect duplicate id on Spell")
             hasDuplicateId = true
         }
         if (Tool.hasDuplicateId) {
-            logger.warning("Detect duplicate id on Tool")
+            warning("Detect duplicate id on Tool")
             hasDuplicateId = true
         }
         if (GiganticEffect.hasDuplicateId) {
-            logger.warning("Detect duplicate id on GiganticEffect")
+            warning("Detect duplicate id on GiganticEffect")
             hasDuplicateId = true
         }
         if (ExpReason.hasDuplicateId) {
-            logger.warning("Detect duplicate id on ExpReason")
+            warning("Detect duplicate id on ExpReason")
             hasDuplicateId = true
         }
         if (Product.hasDuplicateId) {
-            logger.warning("Detect duplicate id on Product")
+            warning("Detect duplicate id on Product")
             hasDuplicateId = true
         }
-
-        if (hasDuplicateId)
-            pluginLoader.disablePlugin(this)
+        return !hasDuplicateId
     }
 }
