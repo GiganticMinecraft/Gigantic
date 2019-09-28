@@ -37,6 +37,9 @@ import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.block.Block
+import org.bukkit.boss.BarColor
+import org.bukkit.boss.BarStyle
+import org.bukkit.boss.BossBar
 import org.bukkit.command.CommandExecutor
 import org.bukkit.entity.ArmorStand
 import org.bukkit.event.Listener
@@ -79,6 +82,14 @@ class Gigantic : JavaPlugin() {
         val RANKING_MAP = mutableMapOf<Score, Ranking>()
 
         lateinit var RANKING_UPDATE_TIME: DateTime
+
+        fun createInvisibleBossBar(): BossBar = Bukkit.createBossBar(
+                "title",
+                BarColor.YELLOW,
+                BarStyle.SOLID
+        ).apply {
+            isVisible = false
+        }
     }
 
     override fun onEnable() {

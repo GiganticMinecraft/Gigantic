@@ -1,10 +1,10 @@
 package click.seichi.gigantic.spirit.spirits
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
 import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.centralLocation
-import click.seichi.gigantic.extension.createInvisibleBossBar
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
@@ -37,7 +37,7 @@ class QuestMonsterSpirit(
     private val senseDuration = 3 * 20L
 
     // モンスターのボスバー
-    private val bossBar: BossBar = createInvisibleBossBar()
+    private val bossBar: BossBar = Gigantic.createInvisibleBossBar()
 
     // モンスターの実体
     private lateinit var entity: ArmorStand
@@ -114,7 +114,7 @@ class QuestMonsterSpirit(
         BattleMessages.SPAWN(monster).sendTo(spawner)
         // TODO implements
 //        if (!SoulMonster.VILLAGER.isDefeatedBy(spawner)) {
-        BattleMessages.FIRST_SPAWN.sendTo(spawner)
+            BattleMessages.FIRST_SPAWN.sendTo(spawner)
 //        }
     }
 
