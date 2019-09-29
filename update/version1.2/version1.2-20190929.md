@@ -12,7 +12,7 @@
 :bow: **__不具合修正__** :bow:   
 以下の不具合を修正しました．  
 
-:diamond_shape_with_a_dot_inside: 
+:diamond_shape_with_a_dot_inside: 露天掘りボーナスが破壊範囲の上に松明がある場合において正しく反映されていなかった不具合
 
 
 

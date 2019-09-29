@@ -44,7 +44,7 @@ open class Miner : Breaker {
 
         // 露天掘り
         var stripBonus = 0L
-        if (block.y == 1 && block.calcGravity() == 0) {
+        if (block.y == 1 && block.calcCrustGravity() == 0) {
             stripBonus += Defaults.STRIP_BONUS
         }
 

@@ -198,7 +198,7 @@ class MultiBreaker : SpellCaster {
         }
 
         val stripCount = breakBlockSet
-                .count { block -> block.y == 1 && block.calcGravity(breakArea.height - 1) == 0 }
+                .count { block -> block.y == 1 && block.calcCrustGravity(breakArea.height - 1) == 0 }
 
 
         val relics = mutableSetOf<Relic>()

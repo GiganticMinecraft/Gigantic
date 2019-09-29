@@ -414,7 +414,7 @@ fun Block.setTorchIfNeeded(player: Player?) {
 }
 
 private fun Block.fallUpperCrustBlock() {
-    if (calcGravity() == 0) return
+    if (calcCrustGravity() == 0) return
     runTaskLater(2L) {
         val target = getRelative(BlockFace.UP)
         when {
@@ -601,7 +601,7 @@ fun Block.calcCrustGravity(margin: Int = 0) = (1 + margin..(255 - y))
 
 fun Block.calcGravity(margin: Int = 0) = (1 + margin..(255 - y))
         .map { getRelative(BlockFace.UP, it) }
-        .filter { !it.isAir }
+        .filter { !it.isAir && it.type != Material.TORCH }
         .filterNot { Gigantic.USE_BLOCK_SET.contains(it) }
         .size
 
