@@ -68,7 +68,7 @@ class PlayerListener : Listener {
             forEach { block ->
                 SkyWalk.revert(block)
             }
-            Gigantic.SKILLED_BLOCK_SET.removeAll(this)
+            Gigantic.USE_BLOCK_SET.removeAll(this)
         }
 
         if (player.gameMode == GameMode.SPECTATOR) {
@@ -298,7 +298,7 @@ class PlayerListener : Listener {
         val player = event.player
         val block = event.block
         if (player.gameMode != GameMode.SURVIVAL) return
-        if (!Gigantic.SKILLED_BLOCK_SET.contains(block)) return
+        if (!Gigantic.USE_BLOCK_SET.contains(block)) return
         event.isCancelled = true
     }
 

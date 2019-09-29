@@ -1,10 +1,10 @@
 package click.seichi.gigantic.spirit.spirits
 
-import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.MonsterSpiritAnimations
 import click.seichi.gigantic.battle.BattleManager
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.centralLocation
+import click.seichi.gigantic.extension.createInvisibleBossBar
 import click.seichi.gigantic.extension.offer
 import click.seichi.gigantic.extension.wrappedLocale
 import click.seichi.gigantic.message.messages.BattleMessages
@@ -17,6 +17,7 @@ import click.seichi.gigantic.spirit.SpiritType
 import click.seichi.gigantic.spirit.spawnreason.SpawnReason
 import click.seichi.gigantic.topbar.bars.BattleBars
 import click.seichi.gigantic.util.Random
+import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.boss.BossBar
 import org.bukkit.entity.ArmorStand
@@ -37,7 +38,7 @@ class QuestMonsterSpirit(
     private val senseDuration = 3 * 20L
 
     // モンスターのボスバー
-    private val bossBar: BossBar = Gigantic.createInvisibleBossBar()
+    private val bossBar: BossBar = Bukkit.getServer().createInvisibleBossBar()
 
     // モンスターの実体
     private lateinit var entity: ArmorStand

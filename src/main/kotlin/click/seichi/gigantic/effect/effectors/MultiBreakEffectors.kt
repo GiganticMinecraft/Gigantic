@@ -50,12 +50,12 @@ object MultiBreakEffectors {
     val BLIZZARD = object : MultiBreakEffector {
 
         override fun multiBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.USE_BLOCK_SET.addAll(breakBlockSet)
             breakBlockSet.forEach { target ->
                 target.type = Material.PACKED_ICE
             }
             runTaskLater(Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong()) {
-                Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                Gigantic.USE_BLOCK_SET.removeAll(breakBlockSet)
                 breakBlockSet.forEach { target ->
                     target.type = Material.AIR
                 }
@@ -70,12 +70,12 @@ object MultiBreakEffectors {
 
     val MAGIC = object : MultiBreakEffector {
         override fun multiBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.USE_BLOCK_SET.addAll(breakBlockSet)
             breakBlockSet.forEach { target ->
                 target.type = Random.nextWool()
             }
             runTaskLater(Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong()) {
-                Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                Gigantic.USE_BLOCK_SET.removeAll(breakBlockSet)
                 breakBlockSet.forEach { target ->
                     target.type = Material.AIR
                 }
@@ -123,12 +123,12 @@ object MultiBreakEffectors {
     val SLIME = object : MultiBreakEffector {
 
         override fun multiBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.USE_BLOCK_SET.addAll(breakBlockSet)
             breakBlockSet.forEach { target ->
                 target.type = Material.SLIME_BLOCK
             }
             runTaskLater(Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong()) {
-                Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                Gigantic.USE_BLOCK_SET.removeAll(breakBlockSet)
                 breakBlockSet.forEach { target ->
                     target.type = Material.AIR
                 }
@@ -144,15 +144,15 @@ object MultiBreakEffectors {
     val BUBBLE = object : MultiBreakEffector {
 
         override fun multiBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
-            Gigantic.SKILLED_BLOCK_SET.add(base)
+            Gigantic.USE_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.USE_BLOCK_SET.add(base)
             breakBlockSet.forEach { target ->
                 target.type = Material.WATER
             }
             base.type = Material.WATER
             runTaskLater(Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong()) {
-                Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
-                Gigantic.SKILLED_BLOCK_SET.remove(base)
+                Gigantic.USE_BLOCK_SET.removeAll(breakBlockSet)
+                Gigantic.USE_BLOCK_SET.remove(base)
                 breakBlockSet.forEach { target ->
                     target.type = Material.AIR
                 }
@@ -179,7 +179,7 @@ object MultiBreakEffectors {
         fun randomMaterial() = alchemySet.random()
 
         override fun multiBreak(player: Player, base: Block, breakBlockSet: Set<Block>) {
-            Gigantic.SKILLED_BLOCK_SET.addAll(breakBlockSet)
+            Gigantic.USE_BLOCK_SET.addAll(breakBlockSet)
             breakBlockSet.forEach { target ->
                 target.type = randomMaterial()
             }
@@ -191,7 +191,7 @@ object MultiBreakEffectors {
             }
 
             runTaskLater(Config.SPELL_MULTI_BREAK_DELAY.times(20.0).roundToLong()) {
-                Gigantic.SKILLED_BLOCK_SET.removeAll(breakBlockSet)
+                Gigantic.USE_BLOCK_SET.removeAll(breakBlockSet)
                 breakBlockSet.forEach { target ->
                     target.type = Material.AIR
                 }

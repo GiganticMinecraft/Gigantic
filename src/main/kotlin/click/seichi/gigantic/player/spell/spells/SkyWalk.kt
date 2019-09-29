@@ -32,7 +32,7 @@ object SkyWalk : Invokable {
                     p.isSneaking ||
                     !p.getOrPut(Keys.SPELL_SKY_WALK_TOGGLE) ||
                     !player.hasMana()) {
-                Gigantic.SKILLED_BLOCK_SET.removeAll(prevSet)
+                Gigantic.USE_BLOCK_SET.removeAll(prevSet)
                 prevSet.forEach { block ->
                     revert(block)
                 }
@@ -45,7 +45,7 @@ object SkyWalk : Invokable {
             prevSet.filterNot {
                 placeBlockSet.contains(it)
             }.apply {
-                Gigantic.SKILLED_BLOCK_SET.removeAll(this)
+                Gigantic.USE_BLOCK_SET.removeAll(this)
             }.forEach { block ->
                 revert(block)
             }
@@ -71,7 +71,7 @@ object SkyWalk : Invokable {
             // 設置ブロックを保存
             p.offer(Keys.SPELL_SKY_WALK_PLACE_BLOCKS, placeBlockSet)
             // globalでも保存
-            Gigantic.SKILLED_BLOCK_SET.addAll(placeBlockSet)
+            Gigantic.USE_BLOCK_SET.addAll(placeBlockSet)
 
         }
     }
@@ -123,7 +123,7 @@ object SkyWalk : Invokable {
 //                    .filterNot { it.isWater || it.isLava }
                 .filterNot { it.isSpawnArea }
                 .filterNot { it.y == 0 }
-                .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
+                .filterNot { Gigantic.USE_BLOCK_SET.contains(it) }
                 .toMutableSet().apply {
                     addAll(additiveSet)
                 }.toSet()

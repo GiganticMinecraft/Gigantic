@@ -421,7 +421,7 @@ private fun Block.fallUpperCrustBlock() {
             target.y > 255 -> {
                 return@runTaskLater
             }
-            Gigantic.SKILLED_BLOCK_SET.contains(target) -> {
+            Gigantic.USE_BLOCK_SET.contains(target) -> {
                 target.update()
             }
             target.isCrust -> {
@@ -460,7 +460,7 @@ private val faceSet = setOf(
 
 private fun Block.changeRelativeBedrock() {
     faceSet.map { getRelative(it) }
-            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
+            .filterNot { Gigantic.USE_BLOCK_SET.contains(it) }
             .forEach { it.changeBedrock() }
 }
 
@@ -472,7 +472,7 @@ fun Block.changeBedrock() {
 
 private fun Block.condenseRelativeLiquid() {
     faceSet.map { getRelative(it) }
-            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
+            .filterNot { Gigantic.USE_BLOCK_SET.contains(it) }
             .forEach {
                 it.condenseLiquid()
             }
@@ -497,7 +497,7 @@ fun Block.condenseLiquid(playSound: Boolean = true) {
 
 private fun Block.condenseRelativeSkyWalkBlock() {
     faceSet.map { getRelative(it) }
-            .filter { Gigantic.SKILLED_BLOCK_SET.contains(it) }
+            .filter { Gigantic.USE_BLOCK_SET.contains(it) }
             .forEach {
                 it.condenseSkyWalkBlock()
             }
@@ -533,7 +533,7 @@ private fun Block.nextCondenseMaterial(): Material {
 
 private fun Block.clearRelativeFloatingBlock() {
     faceSet.map { getRelative(it) }
-            .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
+            .filterNot { Gigantic.USE_BLOCK_SET.contains(it) }
             .forEach { it.clearFloatingBlock() }
 }
 
@@ -596,13 +596,13 @@ else world.players
 fun Block.calcCrustGravity(margin: Int = 0) = (1 + margin..(255 - y))
         .map { getRelative(BlockFace.UP, it) }
         .filter { it.isCrust }
-        .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
+        .filterNot { Gigantic.USE_BLOCK_SET.contains(it) }
         .size
 
 fun Block.calcGravity(margin: Int = 0) = (1 + margin..(255 - y))
         .map { getRelative(BlockFace.UP, it) }
         .filter { !it.isAir }
-        .filterNot { Gigantic.SKILLED_BLOCK_SET.contains(it) }
+        .filterNot { Gigantic.USE_BLOCK_SET.contains(it) }
         .size
 
 val Block.temperatureGrade: TemperatureGrade

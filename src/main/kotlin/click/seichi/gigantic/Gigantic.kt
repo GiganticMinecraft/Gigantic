@@ -37,9 +37,6 @@ import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.block.Block
-import org.bukkit.boss.BarColor
-import org.bukkit.boss.BarStyle
-import org.bukkit.boss.BossBar
 import org.bukkit.command.CommandExecutor
 import org.bukkit.entity.ArmorStand
 import org.bukkit.event.Listener
@@ -77,19 +74,11 @@ class Gigantic : JavaPlugin() {
 
         val DEFAULT_LOCALE = Locale.JAPANESE!!
 
-        val SKILLED_BLOCK_SET = mutableSetOf<Block>()
+        val USE_BLOCK_SET = mutableSetOf<Block>()
 
         val RANKING_MAP = mutableMapOf<Score, Ranking>()
 
         lateinit var RANKING_UPDATE_TIME: DateTime
-
-        fun createInvisibleBossBar(): BossBar = Bukkit.createBossBar(
-                "title",
-                BarColor.YELLOW,
-                BarStyle.SOLID
-        ).apply {
-            isVisible = false
-        }
     }
 
     override fun onEnable() {
@@ -204,7 +193,7 @@ class Gigantic : JavaPlugin() {
             return@runTaskTimer true
         }
 
-        logger.info("Gigantic is enabled")
+        info("Gigantic is enabled")
     }
 
     override fun onDisable() {
@@ -225,7 +214,7 @@ class Gigantic : JavaPlugin() {
                 forEach { block ->
                     SkyWalk.revert(block)
                 }
-                SKILLED_BLOCK_SET.removeAll(this)
+                USE_BLOCK_SET.removeAll(this)
             }
 
             PlayerCacheMemory.writeThenRemoved(player.uniqueId)
@@ -235,13 +224,19 @@ class Gigantic : JavaPlugin() {
         }
 
         //全ての破壊済ブロックを確認し，破壊されていなければ消す
-        SKILLED_BLOCK_SET.filter { !it.isAir }.also {
-            logger.info("破壊されているはずのブロックが${it.size}個 破壊されていなかったため，削除しました．")
+        USE_BLOCK_SET.filter { !it.isAir }.also {
+            info("破壊されているはずのブロックが${it.size}個 破壊されていなかったため，削除しました．")
         }.forEach {
             it.type = Material.AIR
         }
 
-        logger.info("Gigantic is disabled")
+        info("Gigantic is disabled")
+
+        if (!isEnabled) {
+            warning("Gigantic is not working.")
+            warning("white list on.")
+            server.setWhitelist(true)
+        }
     }
 
     private fun loadConfiguration(vararg configurations: SimpleConfiguration) = configurations.forEach { it.init(this) }
