@@ -30,6 +30,9 @@ enum class ToggleSetting(
     NIGHT_VISION(4, LocalizedText(
             Locale.JAPANESE to "暗視"
     ), true),
+    SEE_OTHER_WILL_SPIRIT(5, LocalizedText(
+            Locale.JAPANESE to "他の人の意志の表示"
+    ), true),
     ;
 
     fun getName(locale: Locale) = localizedName.asSafety(locale)

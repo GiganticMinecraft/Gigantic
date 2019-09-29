@@ -51,7 +51,7 @@ class WillSpirit(
             },
             { player, count ->
                 player ?: return@Sensor
-                WillSpiritAnimations.SENSE(will.color).link(player, location, meanY = 0.9)
+                WillSpiritAnimations.SENSE(this).link(player, location, meanY = 0.9)
                 if (count % 10 == 0L) {
                     WillSpiritSounds.SENSE_SUB.playOnly(player)
                 }
@@ -98,7 +98,7 @@ class WillSpirit(
                 Math.sin(Math.toRadians(lifeExpectancy.times(speed) % 360.0)) * multiplier,
                 0.0
         )
-        WillSpiritAnimations.RENDER(willSize.renderingData, will.color, lifeExpectancy).start(renderLocation)
+        WillSpiritAnimations.RENDER(this).start(renderLocation)
     }
 
     override fun onSpawn() {
