@@ -1,5 +1,6 @@
 package click.seichi.gigantic.breaker.spells
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.breaker.SpellCaster
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.catalog.CatalogPlayerCache
@@ -191,7 +192,7 @@ class MultiBreaker : SpellCaster {
         // onBreak処理（先にやっておくことで，途中でサーバーが終了したときに対応）
         // すべてのエフェクトの実行速度に影響を与えないようにする．
 
-        if (!Config.DEBUG_MODE || !DebugConfig.SPELL_INFINITY) {
+        if (!Gigantic.IS_DEBUG || !DebugConfig.SPELL_INFINITY) {
             player.manipulate(CatalogPlayerCache.MANA) {
                 it.decrease(calcConsumeMana(player, breakBlockSet))
             }

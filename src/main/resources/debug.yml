@@ -1,3 +1,6 @@
+# TRUEの時に以下全ての設定に従う
+# データベースの書き込みは行わない
+debug_mode: false
 # 接続時のレベル
 level: 1
 # Achievementを一時的に全て利用可能にする

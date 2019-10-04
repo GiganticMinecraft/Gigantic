@@ -56,7 +56,7 @@ object SkyWalk : Invokable {
             }.apply {
                 if (size == 0) return@apply
                 val consumeMana = calcConsumeMana(size)
-                if (!Config.DEBUG_MODE || !DebugConfig.SPELL_INFINITY) {
+                if (!Gigantic.IS_DEBUG || !DebugConfig.SPELL_INFINITY) {
                     p.manipulate(CatalogPlayerCache.MANA) {
                         it.decrease(consumeMana)
                     }

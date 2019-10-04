@@ -33,8 +33,6 @@ object Config : SimpleConfiguration("config") {
 
     val MAX_BREAKABLE_GRAVITY by lazy { getInt("player.max_breakable_gravity") }
 
-    val DEBUG_MODE by lazy { getBoolean("debug_mode") }
-
     val SKILL_HEAL_RATIO by lazy { getDouble("skill.heal.ratio") }
 
     val SKILL_HEAL_PROBABILITY by lazy { getDouble("skill.heal.probability") }

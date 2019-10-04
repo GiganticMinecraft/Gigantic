@@ -1,7 +1,7 @@
 package click.seichi.gigantic.effect
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.effect.effector.GeneralBreakEffector
 import click.seichi.gigantic.effect.effector.MultiBreakEffector
@@ -146,7 +146,7 @@ enum class GiganticEffect(
 
     fun getIcon() = icon.clone()
 
-    fun canSelect(player: Player) = (Config.DEBUG_MODE && DebugConfig.EFFECT_UNLOCK) ||
+    fun canSelect(player: Player) = (Gigantic.IS_DEBUG && DebugConfig.EFFECT_UNLOCK) ||
             this == DEFAULT ||
             product?.boughtAmount(player) ?: 0 > 0
 

@@ -1,10 +1,10 @@
 package click.seichi.gigantic.cache.manipulator.manipulators
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.cache.cache.Cache
 import click.seichi.gigantic.cache.cache.PlayerCache
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.cache.manipulator.Manipulator
-import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.tool.Tool
 
@@ -42,7 +42,7 @@ class ToolSwitcher : Manipulator<ToolSwitcher, PlayerCache> {
         return true
     }
 
-    private fun canSwitch(tool: Tool) = Config.DEBUG_MODE || ((map[tool] ?: false) && (unlockMap[tool] ?: false))
+    private fun canSwitch(tool: Tool) = Gigantic.IS_DEBUG || ((map[tool] ?: false) && (unlockMap[tool] ?: false))
 
     /**
      * ツール変更を試みる

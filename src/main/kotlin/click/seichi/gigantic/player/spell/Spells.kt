@@ -1,5 +1,6 @@
 package click.seichi.gigantic.player.spell
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.animation.animations.SpellAnimations
 import click.seichi.gigantic.breaker.spells.MultiBreaker
 import click.seichi.gigantic.cache.key.Keys
@@ -108,7 +109,7 @@ object Spells {
                         .times(distance)
                         .toBigDecimal()
 
-                if (!Config.DEBUG_MODE || !DebugConfig.SPELL_INFINITY) {
+                if (!Gigantic.IS_DEBUG || !DebugConfig.SPELL_INFINITY) {
                     p.manipulate(CatalogPlayerCache.MANA) {
                         it.decrease(consumeMana)
                     }

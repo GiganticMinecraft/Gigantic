@@ -122,7 +122,7 @@ class PlayerMonitor : Listener {
         val player = event.player
         val block = event.block
 
-        if (Config.DEBUG_MODE) {
+        if (Gigantic.IS_DEBUG) {
             player.sendMessage("tasks: ${Bukkit.getScheduler().pendingTasks.size}")
         }
 

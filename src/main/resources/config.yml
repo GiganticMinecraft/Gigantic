@@ -120,8 +120,6 @@ spell:
 
 
 
-# TRUEの時debug.ymlに従う
-# データベースの書き込みは行わない
-debug_mode: false
+
 
 

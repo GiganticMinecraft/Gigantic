@@ -101,7 +101,7 @@ class Gigantic : JavaPlugin() {
                 ManaConfig
         )
 
-        IS_DEBUG = Config.DEBUG_MODE
+        IS_DEBUG = DebugConfig.DEBUG_MODE
 
         registerListeners(
                 MenuListener(),

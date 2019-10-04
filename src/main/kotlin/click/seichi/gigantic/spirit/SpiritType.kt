@@ -1,9 +1,9 @@
 package click.seichi.gigantic.spirit
 
 
+import click.seichi.gigantic.Gigantic
 import click.seichi.gigantic.acheivement.Achievement
 import click.seichi.gigantic.cache.key.Keys
-import click.seichi.gigantic.config.Config
 import click.seichi.gigantic.config.DebugConfig
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.player.Defaults
@@ -36,7 +36,7 @@ enum class SpiritType(vararg summonCases: SummonCase<*>) {
 
     WILL(
             RandomSummonCase(
-                    if (Config.DEBUG_MODE && DebugConfig.WILL_SPIRIT) 1.00
+                    if (Gigantic.IS_DEBUG && DebugConfig.WILL_SPIRIT) 1.00
                     else Defaults.WILL_SPAWN_PROBABILITY,
                     BlockBreakEvent::class.java
             ) { event ->
