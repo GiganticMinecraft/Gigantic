@@ -5,7 +5,7 @@ package click.seichi.gigantic.config
  */
 object DebugConfig : SimpleConfiguration("debug") {
 
-    val DEBUG_MODE by lazy { Config.getBoolean("debug_mode") }
+    val DEBUG_MODE by lazy { getBoolean("debug_mode") }
 
     val LEVEL by lazy { getInt("level") }
 
