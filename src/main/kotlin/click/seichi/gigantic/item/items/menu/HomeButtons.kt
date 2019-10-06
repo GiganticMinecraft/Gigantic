@@ -1,5 +1,7 @@
 package click.seichi.gigantic.item.items.menu
 
+import click.seichi.gigantic.Gigantic
+import click.seichi.gigantic.GiganticServer
 import click.seichi.gigantic.cache.key.Keys
 import click.seichi.gigantic.extension.*
 import click.seichi.gigantic.item.Button
@@ -8,6 +10,7 @@ import click.seichi.gigantic.message.messages.MenuMessages
 import click.seichi.gigantic.message.messages.menu.TeleportMessages
 import click.seichi.gigantic.player.Home
 import click.seichi.gigantic.sound.sounds.PlayerSounds
+import com.google.common.io.ByteStreams
 import org.bukkit.ChatColor
 import org.bukkit.GameMode
 import org.bukkit.Material
@@ -115,9 +118,21 @@ object HomeButtons {
                     }
                     PlayerSounds.TOGGLE.playOnly(player)
                 } else {
-                    // クリックでテレポート
-                    player.teleportSafely(home.location)
-                    PlayerSounds.TELEPORT.play(home.location)
+                    if (home.serverId == Gigantic.SERVER_ID) {
+                        // クリックでテレポート
+                        player.teleportSafely(home.location)
+                        PlayerSounds.TELEPORT.play(home.location)
+                    } else {
+                        val gServer = GiganticServer.findById(home.serverId) ?: return true
+                        // 別サーバーに移動
+                        ByteStreams.newDataOutput().apply {
+                            writeUTF("Connect")
+                            writeUTF(gServer.bungeeName)
+                        }.toByteArray().let {
+                            home.teleportOnSwitch = true
+                            player.sendPluginMessage(Gigantic.PLUGIN, "BungeeCord", it)
+                        }
+                    }
                 }
                 TeleportToHomeMenu.reopen(player)
                 return true

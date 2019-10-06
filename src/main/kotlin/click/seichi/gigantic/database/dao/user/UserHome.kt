@@ -14,8 +14,8 @@ class UserHome(id: EntityID<Int>) : IntEntity(id) {
     var user by User referencedOn UserHomeTable.userId
 
     var homeId by UserHomeTable.homeId
-// TODO Add server name
-//    var serverName by UserHomeTable.serverName
+
+    var serverId by UserHomeTable.serverId
 
     var worldId by UserHomeTable.worldId
 
@@ -27,4 +27,5 @@ class UserHome(id: EntityID<Int>) : IntEntity(id) {
 
     var name by UserHomeTable.name
 
+    var teleportOnSwitch by UserHomeTable.teleportOnSwitch
 }

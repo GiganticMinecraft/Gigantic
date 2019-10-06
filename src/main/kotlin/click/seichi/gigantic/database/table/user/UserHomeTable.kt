@@ -1,5 +1,6 @@
 package click.seichi.gigantic.database.table.user
 
+import click.seichi.gigantic.GiganticServer
 import org.jetbrains.exposed.dao.IntIdTable
 
 /**
@@ -11,8 +12,7 @@ object UserHomeTable : IntIdTable("users_homes") {
 
     val homeId = integer("home_id").primaryKey()
 
-    // TODO サーバー間移動も可能にする
-//    val serverName = varchar("server_name", 10)
+    val serverId = integer("server_id").default(GiganticServer.SPRING_ONE.id)
 
     val worldId = uuid("world_id")
 
@@ -23,5 +23,7 @@ object UserHomeTable : IntIdTable("users_homes") {
     val z = double("z")
 
     val name = varchar("name", 20)
+
+    val teleportOnSwitch = bool("teleport_on_switch").default(false)
 
 }

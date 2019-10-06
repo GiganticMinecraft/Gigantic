@@ -17,6 +17,7 @@ import click.seichi.gigantic.player.Defaults
 import click.seichi.gigantic.player.ExpReason
 import click.seichi.gigantic.player.ToggleSetting
 import click.seichi.gigantic.player.spell.spells.SkyWalk
+import click.seichi.gigantic.sound.sounds.PlayerSounds
 import kotlinx.coroutines.runBlocking
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -96,6 +97,16 @@ class PlayerListener : Listener {
         }
 
         if (!player.isOp) player.gameMode = GameMode.SURVIVAL
+
+        // 必要であればホームにテレポートさせる
+        player.getOrPut(Keys.HOME_MAP).map { it.value }
+                .firstOrNull { it.teleportOnSwitch && it.isValid }
+                ?.let {
+                    it.teleportOnSwitch = false
+                    player.teleportSafely(it.location)
+                    PlayerSounds.TELEPORT.play(it.location)
+                }
+
 
         player.updateLevel(true)
 

@@ -37,7 +37,6 @@ import click.seichi.gigantic.timer.SimpleTimer
 import click.seichi.gigantic.tool.Tool
 import click.seichi.gigantic.will.Will
 import click.seichi.gigantic.will.WillRelationship
-import org.bukkit.Bukkit
 import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.block.Block
@@ -991,48 +990,41 @@ object Keys {
                 }
     }.toMap()
 
-    val SERVER_NAME = object : Key<PlayerCache, String?> {
-        override val default: String?
-            get() = null
-
-        override fun satisfyWith(value: String?): Boolean {
-            // 強制的に書き換えを拒否
-            Gigantic.PLUGIN.logger.warning("サーバーネームの書き換えは禁止されています")
-            return false
-        }
-    }
-
     val HOME_MAP = object : DatabaseKey<PlayerCache, Map<Int, Home>, UserEntity> {
         override val default: Map<Int, Home>
             get() = mapOf()
 
         override fun read(entity: UserEntity): Map<Int, Home> {
             val userHomeList = entity.userHomeList
-            return userHomeList.filter {
-                Bukkit.getWorld(it.worldId) != null
-            }.map {
+            return userHomeList.map {
                 it.homeId to Home(
                         it.homeId,
-                        Location(Bukkit.getWorld(it.worldId), it.x, it.y, it.z),
-                        it.name
+                        it.serverId,
+                        it.worldId,
+                        it.x,
+                        it.y,
+                        it.z,
+                        it.name,
+                        it.teleportOnSwitch
                 )
             }.toMap()
         }
 
         override fun store(entity: UserEntity, value: Map<Int, Home>) {
             UserHomeTable.deleteWhere { (UserHomeTable.userId eq entity.user.id.value) }
-            value.filter {
-                it.value.location.world != null
-            }.forEach { homeId, home ->
+            value.forEach { (homeId, home) ->
                 UserHome.new {
                     this.user = entity.user
                     this.homeId = homeId
-                    this.worldId = home.location.world!!.uid
-                    this.x = home.location.x
-                    this.y = home.location.y
-                    this.z = home.location.z
+                    this.serverId = home.serverId
+                    this.worldId = home.worldId
+                    this.x = home.x
+                    this.y = home.y
+                    this.z = home.z
                     this.name = home.name
+                    this.teleportOnSwitch = home.teleportOnSwitch
                 }
+
             }
         }
 

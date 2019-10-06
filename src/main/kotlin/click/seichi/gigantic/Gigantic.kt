@@ -58,6 +58,9 @@ class Gigantic : JavaPlugin() {
     companion object {
         lateinit var PLUGIN: Gigantic
             private set
+        private lateinit var GIGANTIC_SERVER: GiganticServer
+        val SERVER_ID = GIGANTIC_SERVER.id
+        val SERVER_BUNGEE_NAME = GIGANTIC_SERVER.bungeeName
         // protocolLib manager
         lateinit var PROTOCOL_MG: ProtocolManager
             private set
@@ -86,7 +89,6 @@ class Gigantic : JavaPlugin() {
         PROTOCOL_MG = ProtocolLibrary.getProtocolManager()
 
         Bukkit.getServer().messenger.registerOutgoingPluginChannel(this, "BungeeCord")
-        Bukkit.getServer().messenger.registerIncomingPluginChannel(this, "BungeeCord", GiganticMessageListener())
 
         server.worlds.forEach { world ->
             // Remove all armor stands
@@ -98,10 +100,24 @@ class Gigantic : JavaPlugin() {
                 PlayerLevelConfig,
                 DatabaseConfig,
                 DebugConfig,
-                ManaConfig
+                ManaConfig,
+                ServerConfig
         )
 
         IS_DEBUG = DebugConfig.DEBUG_MODE
+
+        // サーバーネームを取得する
+        GiganticServer.findByBungeeName(ServerConfig.BUNGEE_NAME).let {
+            if (it == null) {
+                // 存在しない場合はプラグインを終了する
+                warning("${ServerConfig.BUNGEE_NAME} is not available." +
+                        "available server name list:${GiganticServer.bungeeNameMap}")
+                pluginLoader.disablePlugin(this)
+                return
+            }
+            GIGANTIC_SERVER = it
+        }
+
 
         registerListeners(
                 MenuListener(),
