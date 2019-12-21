@@ -59,8 +59,8 @@ class Gigantic : JavaPlugin() {
         lateinit var PLUGIN: Gigantic
             private set
         private lateinit var GIGANTIC_SERVER: GiganticServer
-        val SERVER_ID = GIGANTIC_SERVER.id
-        val SERVER_BUNGEE_NAME = GIGANTIC_SERVER.bungeeName
+        var SERVER_ID by Delegates.notNull<Int>()
+        var SERVER_BUNGEE_NAME by Delegates.notNull<String>()
         // protocolLib manager
         lateinit var PROTOCOL_MG: ProtocolManager
             private set
@@ -116,6 +116,8 @@ class Gigantic : JavaPlugin() {
                 return
             }
             GIGANTIC_SERVER = it
+            SERVER_ID = GIGANTIC_SERVER.id
+            SERVER_BUNGEE_NAME = GIGANTIC_SERVER.bungeeName
         }
 
 
@@ -248,11 +250,11 @@ class Gigantic : JavaPlugin() {
 
         info("Gigantic is disabled")
 
-        if (!isEnabled) {
-            warning("Gigantic is not working.")
-            warning("white list on.")
-            server.setWhitelist(true)
-        }
+//        if (!isEnabled) {
+//            warning("Gigantic is not working.")
+//            warning("white list on.")
+//            server.setWhitelist(true)
+//        }
     }
 
     private fun loadConfiguration(vararg configurations: SimpleConfiguration) = configurations.forEach { it.init(this) }
