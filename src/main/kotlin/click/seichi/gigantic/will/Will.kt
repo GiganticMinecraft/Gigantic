@@ -252,6 +252,22 @@ enum class Will(
             return GiganticEvent.KAEDE.isActive()
         }
     },
+    REI(
+            14,
+            Color.fromRGB(255, 250, 250),
+            ChatColor.WHITE,
+            Material.GLASS,
+            WillGrade.SPECIAL,
+            WillMessages.REI,
+            14,
+            Relic.KOTATSU, Relic.CLAWS, Relic.ORANGE_PEEL, Relic.ODEN, Relic.CRANE_FEATHER,
+            Relic.HORNED_OWL_HORN, Relic.GROUPER, Relic.PUFFER_FISH, Relic.OYSTER, Relic.ANGLERFISH_LIPS
+    ) {
+        // 期間限定
+        override fun canSpawn(player: Player, block: Block): Boolean {
+            return GiganticEvent.REI.isActive()
+        }
+    },
     ;
 
     val relicSet = relics.toSet()

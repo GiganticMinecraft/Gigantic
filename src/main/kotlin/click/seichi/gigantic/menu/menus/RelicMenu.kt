@@ -51,6 +51,9 @@ object RelicMenu : BookMenu() {
         // かえで
         registerButton(6, RelicButtons.WILL(Will.KAEDE))
 
+        // れい
+        registerButton(15, RelicButtons.WILL(Will.REI))
+
         // スペシャル
         registerButton(7, RelicButtons.SPECIAL)
 
@@ -58,7 +61,7 @@ object RelicMenu : BookMenu() {
         registerButton(8, RelicButtons.ALL_RELIC)
 
         // active relics
-        registerButton(15, RelicButtons.ACTIVE)
+        registerButton(16, RelicButtons.ACTIVE)
 
         registerButton(size - 6, PrevButton(this))
         registerButton(size - 4, NextButton(this))

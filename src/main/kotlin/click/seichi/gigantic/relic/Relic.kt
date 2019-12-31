@@ -1569,14 +1569,133 @@ enum class Relic(
             RelicMessages.SANMA,
             RelicMessages.SANMA_LORE,
             RelicMessages.SANMA_BONUS_LORE,
-            0.08,
+            0.12,
             itemStackOf(Material.LANTERN)
     ) {
         override fun isBonusTarget(block: Block): Boolean {
             return block.biome == Biome.OCEAN || block.biome == Biome.COLD_OCEAN
         }
     },
-    // TODO implements REI will relic
+    KOTATSU(
+            1124,
+            RelicMessages.KOTATSU,
+            RelicMessages.KOTATSU_LORE,
+            RelicMessages.KOTATSU_BONUS_LORE,
+            0.14,
+            itemStackOf(Material.SNOWBALL)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.type == Material.MAGMA_BLOCK
+        }
+    },
+    CLAWS(
+            1125,
+            RelicMessages.CLAWS,
+            RelicMessages.CLAWS_LORE,
+            RelicMessages.CLAWS_BONUS_LORE,
+            0.06,
+            itemStackOf(Material.SNOWBALL)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.type == Material.SAND
+        }
+    },
+    ORANGE_PEEL(
+            1126,
+            RelicMessages.ORANGE_PEEL,
+            RelicMessages.ORANGE_PEEL_LORE,
+            RelicMessages.ORANGE_PEEL_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.SNOWBALL)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.junishiOfTime == Junishi.MI
+        }
+    },
+    ODEN(
+            1127,
+            RelicMessages.ODEN,
+            RelicMessages.ODEN_LORE,
+            RelicMessages.ODEN_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.SNOWBALL)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.moonPhase == MoonPhase.SHINGETSU && block.world.isMoonTime
+        }
+    },
+    CRANE_FEATHER(
+            1128,
+            RelicMessages.CRANE_FEATHER,
+            RelicMessages.CRANE_FEATHER_LORE,
+            RelicMessages.CRANE_FEATHER_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.SNOWBALL)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.junishiOfTime == Junishi.U
+        }
+    },
+    HORNED_OWL_HORN(
+            1129,
+            RelicMessages.HORNED_OWL_HORN,
+            RelicMessages.HORNED_OWL_HORN_LORE,
+            RelicMessages.HORNED_OWL_HORN_BONUS_LORE,
+            0.18,
+            itemStackOf(Material.SNOWBALL)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.isBreakDown && block.biome == Biome.DARK_FOREST
+        }
+    },
+    GROUPER(
+            1130,
+            RelicMessages.GROUPER,
+            RelicMessages.GROUPER_LORE,
+            RelicMessages.GROUPER_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.SNOWBALL)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.biome == Biome.DEEP_COLD_OCEAN || block.biome == Biome.DEEP_OCEAN
+        }
+    },
+    PUFFER_FISH(
+            1131,
+            RelicMessages.PUFFER_FISH,
+            RelicMessages.PUFFER_FISH_LORE,
+            RelicMessages.PUFFER_FISH_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.SNOWBALL)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.type == Material.PODZOL
+        }
+    },
+    OYSTER(
+            1132,
+            RelicMessages.OYSTER,
+            RelicMessages.OYSTER_LORE,
+            RelicMessages.OYSTER_BONUS_LORE,
+            0.06,
+            itemStackOf(Material.SNOWBALL)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.type == Material.STONE
+        }
+    },
+    ANGLERFISH_LIPS(
+            1133,
+            RelicMessages.ANGLERFISH_LIPS,
+            RelicMessages.ANGLERFISH_LIPS_LORE,
+            RelicMessages.ANGLERFISH_LIPS_BONUS_LORE,
+            0.1,
+            itemStackOf(Material.SNOWBALL)
+    ) {
+        override fun isBonusTarget(block: Block): Boolean {
+            return block.world.junishiOfTime == Junishi.TORA
+        }
+    },
 //    (
 //    11,
 //    RelicMessages.,
