@@ -414,7 +414,7 @@ fun Block.setTorchIfNeeded(player: Player?) {
 }
 
 private fun Block.fallUpperCrustBlock() {
-    if (calcCrustGravity() == 0) return
+    if (calcGravity() == 0) return
     runTaskLater(2L) {
         val target = getRelative(BlockFace.UP)
         when {
