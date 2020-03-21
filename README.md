@@ -1,6 +1,6 @@
 Gigantic Plugin
 ======
-Gigantic Plugin（以下、当プラグイン）は、[ギガンティック☆整地鯖][seichi.click]（以下、当サーバ）のSpigotプラグインです。<br />
+Gigantic Plugin（以下、当プラグイン）は、[ギガンティック☆整地鯖](https://seichi.click)（以下、当サーバ）のSpigotプラグインです。<br />
 
 Description
 ---
