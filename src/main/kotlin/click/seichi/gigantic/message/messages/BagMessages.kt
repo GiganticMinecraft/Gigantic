@@ -213,7 +213,6 @@ object BagMessages {
                     "受け取れる特典はありません"
     )
 
-
     val VOTE_BONUS_RECIVE = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GREEN}" +
                     "受け取りました。"
@@ -230,7 +229,6 @@ object BagMessages {
     val WIKI_MESSAGE_UNOFFICIAL = LocalizedText(
             Locale.JAPANESE to "非公式WikiのURL: " + "${ChatColor.RED}${ChatColor.UNDERLINE}" + "https://springseichi.sokuhou.wiki"
     )
-
 
     val RANKING = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GOLD}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +
