@@ -102,8 +102,17 @@ object BagMessages {
             Locale.JAPANESE to "受け取れる特典がありません"
     )
 
+
     val TO_TAKE_BONUS = LocalizedText(
             Locale.JAPANESE to "反映されない場合はプロフィールを更新して下さい"
+    )
+
+    val VOTE_PAGE_DESCRIPTION = LocalizedText(
+            Locale.JAPANESE to "JMS投票ページにアクセス"
+    )
+
+    val VOTE_PAGE_MESSAGE = LocalizedText(
+            Locale.JAPANESE to "JMS投票ページのURL↓ " + "${ChatColor.RED}${ChatColor.UNDERLINE}" + "https://minecraft.jp/servers/play.seichi.click"
     )
 
     val VOTE_BONUS_DESCRIPTION = LocalizedText(
@@ -210,6 +219,19 @@ object BagMessages {
             Locale.JAPANESE to "${ChatColor.GREEN}" +
                     "受け取りました。"
     )
+
+    val WIKI_DESCRIPTION = LocalizedText(
+            Locale.JAPANESE to "Wikiにアクセス"
+    )
+
+    val WIKI_MESSAGE_OFFICIAL = LocalizedText(
+            Locale.JAPANESE to "公式WikiのURL: " + "${ChatColor.RED}${ChatColor.UNDERLINE}" + "https://www.seichi.network/spring"
+    )
+
+    val WIKI_MESSAGE_UNOFFICIAL = LocalizedText(
+            Locale.JAPANESE to "非公式WikiのURL: " + "${ChatColor.RED}${ChatColor.UNDERLINE}" + "https://springseichi.sokuhou.wiki"
+    )
+
 
     val RANKING = LocalizedText(
             Locale.JAPANESE to "${ChatColor.GOLD}${ChatColor.BOLD}${ChatColor.UNDERLINE}" +

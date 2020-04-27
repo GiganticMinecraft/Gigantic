@@ -447,6 +447,25 @@ object BagButtons {
 
     }
 
+    val VOTE_PAGE = object : Button {
+
+        override fun toShownItemStack(player: Player): ItemStack? {
+            return itemStackOf(Material.CLAY_BALL) {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.VOTE_PAGE_DESCRIPTION.asSafety(player.wrappedLocale))
+                clearLore()
+            }
+        }
+
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === FollowSettingMenu) return false
+            player.sendMessage(BagMessages.VOTE_PAGE_MESSAGE.asSafety(player.wrappedLocale))
+            player.closeInventory()
+            return true
+        }
+
+    }
+
     val VOTE_BONUS = object : Button {
 
         var confirm = mutableListOf<UUID>()
@@ -593,6 +612,26 @@ object BagButtons {
                 if (!player.isValid) return@runTaskLater
                 player.updateBag()
             }
+            return true
+        }
+
+    }
+
+    val WIKI = object : Button {
+
+        override fun toShownItemStack(player: Player): ItemStack? {
+            return itemStackOf(Material.BOOKSHELF) {
+                setDisplayName("${ChatColor.AQUA}${ChatColor.UNDERLINE}"
+                        + BagMessages.WIKI_DESCRIPTION.asSafety(player.wrappedLocale))
+                clearLore()
+            }
+        }
+
+        override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
+            if (event.inventory.holder === FollowSettingMenu) return false
+            player.sendMessage(BagMessages.WIKI_MESSAGE_OFFICIAL.asSafety(player.wrappedLocale))
+            player.sendMessage(BagMessages.WIKI_MESSAGE_UNOFFICIAL.asSafety(player.wrappedLocale))
+            player.closeInventory()
             return true
         }
 
