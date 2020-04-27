@@ -102,7 +102,6 @@ object BagMessages {
             Locale.JAPANESE to "受け取れる特典がありません"
     )
 
-
     val TO_TAKE_BONUS = LocalizedText(
             Locale.JAPANESE to "反映されない場合はプロフィールを更新して下さい"
     )
