@@ -458,7 +458,6 @@ object BagButtons {
         }
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (event.inventory.holder === FollowSettingMenu) return false
             player.sendMessage(BagMessages.VOTE_PAGE_MESSAGE.asSafety(player.wrappedLocale))
             player.closeInventory()
             return true
@@ -628,7 +627,6 @@ object BagButtons {
         }
 
         override fun tryClick(player: Player, event: InventoryClickEvent): Boolean {
-            if (event.inventory.holder === FollowSettingMenu) return false
             player.sendMessage(BagMessages.WIKI_MESSAGE_OFFICIAL.asSafety(player.wrappedLocale))
             player.sendMessage(BagMessages.WIKI_MESSAGE_UNOFFICIAL.asSafety(player.wrappedLocale))
             player.closeInventory()
