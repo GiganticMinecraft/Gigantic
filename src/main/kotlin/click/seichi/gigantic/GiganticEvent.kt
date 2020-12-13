@@ -39,7 +39,7 @@ enum class GiganticEvent(
         override fun isActive(): Boolean {
             val now = DateTime.now()
             val year = now.year
-            return now in from.withYear(year)..to.withYear(year + 1)
+            return now in from.withYear(year)..to.withYear(year)
         }
     },
     // 玲の意志出現イベント
@@ -49,7 +49,7 @@ enum class GiganticEvent(
         override fun isActive(): Boolean {
             val now = DateTime.now()
             val year = now.year
-            return now in from.withYear(year)..to.withYear(year)
+            return now !in to.withYear(year)..from.withYear(year)
         }
     },
     // JMS1位記念イベント
